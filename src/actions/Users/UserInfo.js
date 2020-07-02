@@ -104,7 +104,6 @@ export function InsertMakerDetailRequest(data, token) {
       })
   }
 };
-
 export function InsertMakerDetail() {
     return {
       type: types.INSERT_MAKER_DETAIL

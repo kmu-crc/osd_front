@@ -295,10 +295,10 @@ class ModifyMaker extends Component {
       const tag = nextProps.MakerDetail.tag.split(",");
       tag.pop();
 
-      const equipment = nextProps.MakerDetail.tag.split(",");
+      const equipment = nextProps.MakerDetail.maker_equipment.split(",");
       equipment.pop();
 
-      const technique = nextProps.MakerDetail.tag.split(",");
+      const technique = nextProps.MakerDetail.maker_technique.split(",");
       technique.pop();
 
       this.setState({

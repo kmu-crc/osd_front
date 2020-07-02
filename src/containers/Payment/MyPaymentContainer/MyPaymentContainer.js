@@ -14,6 +14,7 @@ class MyPaymentContainer extends Component {
 
 
   render() {
+    console.log(this.props);
     return (
       <ScrollList
         getListRequest={this.getList}

@@ -159,9 +159,11 @@ const AuthorBox = styled.div`
   font-weight: 300;
   color: #707070;
   text-align: center;
-  margin-top: 120px;
-  margin-left: 13px;
-  padding: 8px;
+  margin-top: 110px;
+//   margin-left: 13px;
+  margin-left:6px;
+  margin-bottom:12px;
+  padding: 5px;
 `;
 
 export const CreateStep = (props) => {

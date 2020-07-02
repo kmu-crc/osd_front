@@ -57,8 +57,15 @@ const TextWrapper = styled.div`
     line-height: 18px;
   }
 `;
+const TypeWrapper = styled.div`
+  height:23px;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+`
 const NumberWrapper = styled.div`
-  margin-top: 23px;
+  // margin-top: 23px;
   display: flex;
   flex-direction: row;
   .price {
@@ -88,6 +95,11 @@ const PrivateLabel = styled.div`
   color: white;
   border-radius: 15px;
 `;
+const TypeText = styled.div`
+  font-size:9px;
+  font-weight:100;
+  color:red;
+`
 const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 };
 class Item extends Component {
   Keeper = () => {
@@ -104,6 +116,7 @@ class Item extends Component {
     // () => item.uid ? item.private ? alert("비공개!") : null : alert("이 아이템의 상세내용을 가져올 수 없습니다.")
   }
   render() {
+    console.log(this.props);
     const item = this.props.data || empty;
     const date = new Date(item.create_time).getFullYear() + '/' + new Date(item.create_time).getMonth() + '/' + new Date(item.create_time).getDate();
     const img = item ? item.thumbnail : noimg;
@@ -125,6 +138,18 @@ class Item extends Component {
           </div>
         </TextWrapper>
         {/* numbers */}
+        <TypeWrapper>
+        <TypeText>
+          {item.type===0?"디자인":null}
+          {item.type===1?"프로젝트":null}
+          {item.type===2?"기술자문/상담":null}
+          {item.type===3?"경험":null}
+          {item.type===4?"정보/데이터":null}
+          {item.type===5?"아이디어/노하우":null}
+          {item.type===6?"지적재산권":null}
+          {item.type===7?"제작품":null}
+        </TypeText>
+        </TypeWrapper>
         <NumberWrapper>
           <div className="price">{PointFormat(item.price / (parseInt(item.price)>9999?10000:1000) || 0)}{parseInt(item.price)>9999?"만원":"천원"}</div>
           <div className="score">

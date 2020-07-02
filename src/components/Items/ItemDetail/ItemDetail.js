@@ -227,7 +227,6 @@ const Introduction = styled.div`
       justify-content:center;
       align-items:flex-end;
       padding:10px;
-      border-radius: 20px;
       background:linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255,01.0));
     }
   }
@@ -243,6 +242,26 @@ const Introduction = styled.div`
   }
 
 
+`;
+const TagPiece = styled.div`
+    width: max-content;
+    min-width: 30px;
+    background-color: #EFEFEF;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    color: #707070;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    .close {
+        margin-left: 10px;
+        width: max-content;
+        height: max-content;
+        padding: 0px 2px;
+    }
 `;
 
 const CoverGrident = styled.div`
@@ -507,11 +526,11 @@ class ItemDetail extends Component {
   }
 
   render() {
-    console.log("itemdetail", this.props);
     const item = this.props.item;
     const { expandingContent, expandingReview, expandingBoard } = this.state;
-    const { score } = this.props.item;
-    console.log(score);
+    const {score} = this.props.item;
+    let tag = this.props.ItemDetail.tag+"";
+
 
     const isWrapperContent = window.document.getElementById("detail_board") &&
       window.document.getElementById("detail_board").scrollHeight > window.document.getElementById("detail_board").clientHeight;
@@ -575,10 +594,36 @@ class ItemDetail extends Component {
                 </div>
 
 
-                <Introduction >
-                  <div className="wrapItem">
-                    <div className="title">아이템 설명</div>
-                    <div id="itemDescription" className="text" dangerouslySetInnerHTML={{ __html: `${item.description || ""}` }} />
+                <Introduction id="Introduction">
+                  <div className="wrapItem"> 
+                    <div className="title">설명</div>
+                    <div id="itemDescription" className="text" 
+                    dangerouslySetInnerHTML={{ __html: `${item.description||""}`}}
+                    />
+                    <div className="title">유형</div>
+                    <div className="text flex">
+                      {item.type===0?"디자인":null}
+                      {item.type===1?"프로젝트":null}
+                      {item.type===2?"기술자문/상담":null}
+                      {item.type===3?"경험":null}
+                      {item.type===4?"정보/데이터":null}
+                      {item.type===5?"아이디어/노하우":null}
+                      {item.type===6?"지적재산권":null}
+                      {item.type===7?"제작품":null}
+                    </div>
+                    <div className="title">태그</div>
+                    <div className="text flex">
+                    {
+                      tag.indexOf(",")==-1?null:tag.split(",").map((item, index) => {
+                        return (
+                          <TagPiece key={index}>
+                            {item}
+                          </TagPiece>
+                        );
+                      })
+                    }
+                  </div>
+
                     <div className="gradient_box" ><div>▾</div></div>
                   </div>
                 </Introduction>
@@ -676,10 +721,11 @@ class ItemDetail extends Component {
                 <div
                   style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: "#FFFFFF" }}>게시판</div>
               </div>
-              <ItemQuestionContainer user_id={item.user_id} isExpanding={(result) => { this.setState({ isexpandingBoard: result }) }} />
-              {this.state.isexpandingBoard && <CoverGrident isGradient={!expandingBoard} />}
+              <ItemQuestionContainer user_id={item.user_id} isExpanding={(result)=>{this.setState({isexpandingBoard:result})}}/>
+              {!this.state.isexpandingBoard&&<CoverGrident isGradient={!expandingBoard}/>}
             </Board>
-            {this.state.isexpandingBoard &&
+            {!this.state.isexpandingBoard&&
+
               <ExpandingButton width={1600}>
                 <div onClick={() => this.setState({ expandingBoard: !expandingBoard })} className="button">
                   <div className="font">
@@ -720,18 +766,19 @@ class ItemDetail extends Component {
                   />
                 </div>
                 : null}
-              {expandingContent === false && <CoverGrident isGradient={!expandingContent} />}
+
+                {/* {isWrapperContent&&<CoverGrident isGradient={!expandingContent}/>} */}
+
             </Content>
-            {/* {!isWrapperContent && */}
-            <ExpandingButton width={1600}>
+           {/* {isWrapperContent&&
+           <ExpandingButton width={1600}>
               <div onClick={() => this.setState({ expandingContent: !expandingContent })} className="button">
                 <div className="font">
                   {expandingContent ? "▲ 접기" : "▼ 펼쳐보기"}
                 </div>
               </div>
             </ExpandingButton>
-            {/* } */}
-
+           }  */}
           </div>
 
         </Wrapper>

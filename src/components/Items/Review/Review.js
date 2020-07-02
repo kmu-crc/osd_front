@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Star from "components/Commons/Star";
 import noimg from "source/noimg.png";
+import { Rating } from 'semantic-ui-react'
 
 const Wrapper = styled.div`
 
@@ -39,11 +40,14 @@ const Thumbnail = styled.div`
 
 class Review extends Component {
   render() {
-    const item = this.props.data
+    const item = this.props.data;
+    const RenderingStar = ()=>{
+      return <Rating name="score" icon='star' defaultRating={parseInt(item.score,10)||0} maxRating={5} disabled size="huge" />
+    }
     return (<Wrapper onClick={() => this.props.handler(item)}>
       <Thumbnail imageURL={item.m_img} />
       <div className="content">
-        <div className="row">{Star(item.score, 28)}</div>
+        <div className="row"><RenderingStar/></div>
         <div className="row">{item.nick_name}</div>
         <div className="row2">{item.comment && item.comment.slice(0, 64)}{item.comment && item.comment.length > 64 ? "..." : ""}</div>
       </div>

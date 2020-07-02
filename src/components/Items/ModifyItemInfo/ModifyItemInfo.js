@@ -37,6 +37,13 @@ const MainBox = styled.div`
     padding-left:130px;
     padding-top:36px;
   }
+  .buttonBox{
+    width:100%;
+    display:flex;
+    padding-left:130px;
+    padding-top:36px;
+    margin-bottom:70px;
+  }
   .font_red {
     width: 7px;
     height: 7px;
@@ -48,13 +55,14 @@ const RedButton = styled.div`
   width: 290px;
   height: 70px;
   font-family: Noto Sans KR;
-  font-size: 20px;
+  font-size:30px;
   font-weight: 500;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: ${props => props.gray ? "gray" : "red"};
+  cursor:pointer;
   // position: absolute;
   // left:${props => props.left};
   // bottom:${props => props.bottom};
@@ -173,6 +181,7 @@ const InputTextarea = styled.textarea`
   readonly;
   resize:none;
   padding: 0.67857143em 1em;
+  white-space:pre-wrap;
 
 `;
 const DropBox = styled(Dropdown)`
@@ -212,6 +221,9 @@ const NaviMenu = styled.div`
   
   .active{
     color: red;
+  }
+  .mousePointer{
+    cursor:pointer;
   }
 `;
 const NoInviteMemberBox = styled.div`
@@ -269,7 +281,35 @@ class ModifyItemInfo extends Component {
     this.onHandleAdditionalMember = this.onHandleAdditionalMember.bind(this);
     this.onHandleRadio = this.onHandleRadio.bind(this);
   };
+  async componentDidMount() {
+    console.log("++++++++++",this.props.ItemDetail);
+    const { ItemDetail } = this.props;
+    let additional = await {
+      description: ItemDetail.description,
+      price: ItemDetail.price,
+      public: ItemDetail.public,
+      "contact-type": ItemDetail["contact-type"],
+      "selling-type": ItemDetail["selling-type"],
+      members: ItemDetail.members,
+    }
+    // console.log(ItemDetail, additional);
+    const item = await {
+      title: ItemDetail.title,
+      category_level1: ItemDetail.category_level1,
+      category_level2: ItemDetail.category_level2,
+      tag: ItemDetail.tag.indexOf(",")==-1?[]:ItemDetail.tag.split(","),
+      itemType: ItemDetail.type,
+      thumbnail: ItemDetail.thumbnail.l_img,
+      type: ItemDetail.upload_type,
+      //
+      additional: additional,
+    }
+    await this.setState(item);
+    console.log(this.state, this.props.ItemDetail);
+  };
   onSubmit(event) {
+    // alert("?");
+    // return;
     event.preventDefault();
     this.setState({ loading: true });
     const members = this.state.alone ? [] : this.state.additional.members
@@ -277,39 +317,29 @@ class ModifyItemInfo extends Component {
       ...this.state.additional,
     };
     additional.members = members;
-
-    //const data = {
-    //  // basic
-    //  title: this.state.title,
-    //  files: [{
-    //    value: this.state.thumbnail,
-    //    name: this.state.thumbnail_name
-    //  }],
-    //  tag: this.state.tag,
-    //  category1: this.state.category_level1,
-    //  category2: this.state.category_level2,
-    //  itemType: this.state.itemType,
-    //  // additional
-    //  additional: additional, // content: this.state.content, step: this.state.steps,
-    //  type: this.state.type,
-    //  private: this.state.private
-    //};
-    // console.log(data);
-    // return;
-
-    //    this.props.UpdateItemRequest(data, this.props.ItemDetail["item-id"], this.props.token)
-    //      .then(result => {
-    //        if (result.res.success) {
-    //          alert("아이템이 수정 되었습니다. 아이템상세페이지로 이동합니다.");
-    //          // this.props.GetItemDetailRequest(this.props.id, this.props.token);
-    //          window.location.href = `/productDetail/${result.id}`
-    //        } else {
-    //          alert("아이템 수정을 실패하였습니다.");
-    //        }
-    //      })
-    //      .catch(error => {
-    //        alert("오류내용:" + error.message);
-    //      });
+    let data = {
+      // basic
+      title: this.state.title,
+      files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name }],
+      tag: this.state.tag, category1: this.state.category_level1, category2: this.state.category_level2,
+      itemType: this.state.itemType,
+      // additional
+      additional: this.state.additional, content: this.state.content, step: this.state.steps,
+      type: this.state.type, private: this.state.private
+    };
+    data.additional.description = data.additional.description.replace(/(?:\r\n|\r|\n)/g,'<br />');
+       this.props.UpdateItemRequest(data, this.props.ItemDetail["item-id"], this.props.token)
+         .then(result => {
+           if (result.res.success) {
+             alert("아이템이 수정 되었습니다. 아이템상세페이지로 이동합니다.");
+             window.location.href = `/productDetail/${this.props.id}`
+           } else {
+             alert("아이템 수정을 실패하였습니다.");
+           }
+         })
+         .catch(error => {
+           alert("오류내용:" + error.message);
+         });
     this.setState({ loading: false });
   };
   async onClickCategorylevel1(event, { value }) {
@@ -353,6 +383,7 @@ class ModifyItemInfo extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
   onHandleReturnedTags(param) {
+    console.log(param);
     this.setState({ tag: param });
   };
   async deleteThisItem() {
@@ -369,34 +400,13 @@ class ModifyItemInfo extends Component {
         })
     this.setState({ loading: false });
   };
-  async componentDidMount() {
-    const { ItemDetail } = this.props;
-    const additional = await {
-      description: ItemDetail.description,
-      price: ItemDetail.price,
-      public: ItemDetail.public,
-      "contact-type": ItemDetail["contact-type"],
-      "selling-type": ItemDetail["selling-type"],
-      members: ItemDetail.members,
-    }
-    // console.log(ItemDetail, additional);
-    const item = await {
-      title: ItemDetail.title,
-      category_level1: ItemDetail.category_level1,
-      category_level2: ItemDetail.category_level2,
-      tag: ItemDetail.tag,
-      itemType: ItemDetail.type,
-      thumbnail: ItemDetail.thumbnail.l_img,
-      type: ItemDetail.upload_type,
-      //
-      additional: additional,
-    }
-    await this.setState(item);
-    console.log(this.state, this.props.ItemDetail);
-  };
+
   async onHandleAdditionalText(event) {
     let copy = { ...this.state.additional };
+    // console.log(document.getElementById(event.target.id).value.replace(""));
+    // copy[event.target.name] = document.getElementsByName(event.target.name).value.("\r\n","<br/>");
     copy[event.target.name] = event.target.value;
+    // alert(copy[event.target.name]);
     await this.setState({ additional: copy });
   };
   async getPriceValue(value) {
@@ -433,8 +443,8 @@ class ModifyItemInfo extends Component {
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
     const { /* edit, */ itemType, tab } = this.state;
     const Mandatory = () => <span className="font_red" title="필수사항입니다."> * </span>
-    // console.log(this.state, this.props);
-
+    // console.log(this.state.tag,this.state.tag.indexOf(","));
+    // console.log(this.state.additional&&this.state.additional.description.replace(/<br \/>/gi,'\n'));
     return (<MainBox>
       {this.state.loading ? <Loading /> : null}
 
@@ -442,8 +452,8 @@ class ModifyItemInfo extends Component {
       <div className="title">아이템 수정</div>
 
       <NaviMenu>
-        <div className={tab === "basic" ? "active" : ""} onClick={() => this.setState({ tab: "basic" })}>기본/추가정보변경</div>
-        <div className={tab === "contents" ? "active" : ""} onClick={() => this.setState({ tab: "contents" })}>컨텐츠변경</div>
+        <div className={tab === "basic" ? "active mousePointer" : "mousePointer"} onClick={() => this.setState({ tab: "basic" })}>기본/추가정보변경</div>
+        <div className={tab === "contents" ? "active mousePointer" : "mousePointer"} onClick={() => this.setState({ tab: "contents" })}>컨텐츠변경</div>
       </NaviMenu>
 
       {/* 공통/기본입력사항 */}
@@ -477,7 +487,7 @@ class ModifyItemInfo extends Component {
               <div className="wrapper flex">
                 <div className="label">태그</div>
                 <div>
-                  <InputTag width={370} taglist={this.props.ItemDetail.tag.split(',')} getValue={this.onHandleReturnedTags} />
+                  <InputTag width={370} taglist={this.state.tag} getValue={this.onHandleReturnedTags} />
                 </div>
               </div>
 
@@ -512,16 +522,16 @@ class ModifyItemInfo extends Component {
                     <Field title="설명">
                       <InputTextarea
                         onChange={this.onHandleAdditionalText}
-                        value={(this.state.additional && this.state.additional.description) || ""}
+                        value={(this.state.additional && this.state.additional.description.replace(/<br \/>/gi,'\n')) || ""}
                         name="description"
                         width={483} height={99}
-                      />
+                      ></InputTextarea>
                     </Field>
                     <Field title="구입 비용">
                       <InputPrice
                         getValue={this.getPriceValue}
                         name="price"
-                        price={this.state.additional.price / 1000}
+                        price={this.state.additional.price}
                       />
                     </Field>
                   </React.Fragment> : null}
@@ -532,9 +542,9 @@ class ModifyItemInfo extends Component {
                     <Field title="설명">
                       <InputTextarea
                         onChange={this.onHandleAdditionalText}
-                        value={(this.state.additional && this.state.additional.description) || ""}
+                        value={(this.state.additional && this.state.additional.description.replace(/<br \/>/gi,'\n')) || ""}
                         name="description"
-                        width={483} height={99} />
+                        width={483} height={99} ></InputTextarea>
                     </Field>
                     <Field title="팀원 초대">
                       <div style={{display:"flex"}}>
@@ -563,7 +573,7 @@ class ModifyItemInfo extends Component {
                       <InputPrice
                         getValue={this.getPriceValue}
                         name="price"
-                        price={this.state.additional.price / 1000}
+                        price={this.state.additional.price}
                       />
                     </Field>
                   </React.Fragment> : null}
@@ -572,14 +582,14 @@ class ModifyItemInfo extends Component {
                   // <ItemConsulting return={this.onHandleAdditional} /> 
                   (<React.Fragment>
                     <Field title="설명">
-                      <InputTextarea onChange={this.onHandleChange} value={this.state.description} name="description" width={483} height={99} /></Field>
+                      <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi,'\n')} name="description" width={483} height={99} ></InputTextarea></Field>
                     {/* <Field title="자문/상담 방법"> 온라인 */}
                     {/* <RadioType checked={1} return={this.onHandleReturn} name="contact-method" Options={typeOnOff} /> */}
                     {/* </Field> */}
                     <Field title="내용 공개 여부">
                       <RadioType checked={1} return={this.onHandleReturn} value={this.state.public} name="public" Options={["예", "아니오"]} /></Field>
                     <Field title="자문/상담 비용">
-                      <InputPrice placeholder="시간당" name="price" getValue={this.getPriceValue} price={this.state.price} />
+                      <InputPrice placeholder="시간당" name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                     </Field>
                   </React.Fragment>) : null}
 
@@ -587,9 +597,9 @@ class ModifyItemInfo extends Component {
                   // <ItemExperience return={this.onHandleAdditional} /> 
                   (<React.Fragment>
                     <Field title="설명">
-                      <InputTextarea onChange={this.onHandleChange} value={this.state.description} name="description" width={483} height={99} /></Field>
+                      <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi,'\n')} name="description" width={483} height={99} ></InputTextarea></Field>
                     <Field title="구입 비용">
-                      <InputPrice name="price" getValue={this.getPriceValue} price={this.state.price} />
+                      <InputPrice name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                     </Field>
                   </React.Fragment>) : null}
 
@@ -597,9 +607,9 @@ class ModifyItemInfo extends Component {
                   // <ItemInfoData return={this.onHandleAdditional} /> 
                   (<React.Fragment>
                     <Field title="설명">
-                      <InputTextarea onChange={this.onHandleChange} value={this.state.description} name="description" width={483} height={99} /></Field>
+                      <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi,'\n')} name="description" width={483} height={99} ></InputTextarea></Field>
                     <Field title="구입 비용">
-                      <InputPrice name="price" getValue={this.getPriceValue} price={this.state.price} />
+                      <InputPrice name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                       {/* <InputText onChange={this.onHandleChange} name="price" width={370} /> */}
                     </Field>
                   </React.Fragment>) : null}
@@ -608,9 +618,9 @@ class ModifyItemInfo extends Component {
                   // <ItemIdea return={this.onHandleAdditional} /> 
                   (<React.Fragment>
                     <Field title="설명">
-                      <InputTextarea onChange={this.onHandleChange} value={this.props.description} name="description" width={483} height={99} /></Field>
+                      <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi,'\n')} name="description" width={483} height={99} ></InputTextarea></Field>
                     <Field title="구입 비용">
-                      <InputPrice name="price" getValue={this.getPriceValue} price={this.state.price} />
+                      <InputPrice name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                     </Field>
                   </React.Fragment>) : null}
 
@@ -618,7 +628,7 @@ class ModifyItemInfo extends Component {
                   // <ItemPatent return={this.onHandleAdditional} /> 
                   (<React.Fragment>
                     <Field title="설명">
-                      <InputTextarea onChange={this.onHandleChange} value={this.state.description} name="description" width={483} height={99} /></Field>
+                      <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi,'\n')} name="description" width={483} height={99} ></InputTextarea></Field>
                     <Field title="내용">
                       <div style={{ display: "flex", flexDirection: "column" }}>
                         {this.state.content.length > 0 &&
@@ -631,7 +641,7 @@ class ModifyItemInfo extends Component {
                     <Field title="판매 방식 선택">
                       <RadioType return={this.onHandleReturn} name="selling-type" Options={["양도", "독점 사용권", "일반 사용권"]} /></Field>Î
                     <Field title="구입 비용">
-                      <InputPrice name="price" getValue={this.getPriceValue} price={this.state.price} />
+                      <InputPrice name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                     </Field>
                   </React.Fragment >) : null}
 
@@ -639,13 +649,14 @@ class ModifyItemInfo extends Component {
                   // <ItemProduct return={this.onHandleAdditional} /> 
                   (<React.Fragment>
                     <Field title="설명">
-                      <InputTextarea onChange={this.onHandleChange} value={this.state.description} name="description" width={483} height={99} /></Field>
+                      <InputTextarea id="description" onChange={this.onHandleAdditionalText}
+                      value={this.state.additional.description.replace(/<br \/>/gi,'\n')} name="description" width={483} height={99} ></InputTextarea></Field>
                     {/* <Field title="상세 이미지">
                         <div style={{ display: "flex", flexDirection: "column" }}>
                           <ThumbnailList return={this.onHandleImageList} width={650} />
                           <Context >(이미지 최대 10장 업로드 가능)</Context></div></Field> */}
                     <Field title="구입 비용">
-                      <InputPrice name="price" getValue={this.getPriceValue} price={this.state.price} />
+                      <InputPrice name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                     </Field>
                   </React.Fragment>)
                   : null}
@@ -683,7 +694,7 @@ class ModifyItemInfo extends Component {
 
       {/* 버튼 */}
       {itemType > -1 && tab === "basic" ?
-        (<div className="contentsBox" style={{ width: "max-content", marginLeft: "auto", marginRight: "25px" }}>
+        (<div className="buttonBox" style={{ width: "max-content", marginLeft: "auto", marginRight: "85px" }}>
           <RedButton onClick={this.onSubmit}>수정</RedButton>
           {/* <RedButton gray onClick={() => {
             if (window.confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
