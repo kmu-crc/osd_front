@@ -265,6 +265,12 @@ class ModifyMaker extends Component {
     this.handleShowModal = this.handleShowModal.bind(this);
     this.onClickCancel = this.onClickCancel.bind(this);
   }
+  componentDidMount() {
+    if (this.props.userInfo == null) {
+      alert("로그인해주세요.");
+      window.location.href = '/signin'
+    }
+  }
   componentWillUpdate(nextProps) {
     if (this.props.MakerDetail.image !== nextProps.MakerDetail.image ||
       this.props.MakerDetail.user_id !== nextProps.MakerDetail.user_id ||
@@ -451,59 +457,60 @@ class ModifyMaker extends Component {
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
-
+    console.log("break:", this.props);
     return (
       <React.Fragment>
         {this.state.open && <CreateGroupContainer id={this.props.id} handleShowModal={this.handleShowModal} open={this.state.open} />}
-        <MainBox>
-          <div className="title">메이커 관리</div>
-          <div className="contentsBox">
-            <ThumbnailBox>
-              <div className="label">썸네일 등록</div>
-              <Margin height={70} />
-              <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
-              <label htmlFor="file">
-                {this.state.thumbnail == null ?
-                  <div className="thumbnail"><div>첨부</div></div>
-                  :
-                  <Thumbnail imageURL={this.state.thumbnail} />
-                }
-              </label>
-            </ThumbnailBox>
-            {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton> */}
-            <FormBox>
+        {this.props.userInfo &&
+          <MainBox>
+            <div className="title">메이커 관리</div>
+            <div className="contentsBox">
+              <ThumbnailBox>
+                <div className="label">썸네일 등록</div>
+                <Margin height={70} />
+                <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
+                <label htmlFor="file">
+                  {this.state.thumbnail == null ?
+                    <div className="thumbnail"><div>첨부</div></div>
+                    :
+                    <Thumbnail imageURL={this.state.thumbnail} />
+                  }
+                </label>
+              </ThumbnailBox>
+              {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton> */}
+              <FormBox>
 
-              <div className="wrapper flex">
-                <div className="label">닉네임</div>
-                {this.props.userInfo.nickName}
-              </div>
-
-              <div className="wrapper flex">
-                <div className="label">설명</div>
-                <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={483} height={99} />
-              </div>
-
-              <div className="wrapper flex">
-                <div className="label">카테고리</div>
-                <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
-                <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
-              </div>
-
-              <div className="wrapper flex">
-                <div className="label">태그</div>
-                <div>
-                  <InputTag taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
+                <div className="wrapper flex">
+                  <div className="label">닉네임</div>
+                  {this.props.userInfo.nickName}
                 </div>
-              </div>
 
-              <div className="wrapper flex">
-                <div className="label">위치</div>
-                <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} />
-                <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)} selection options={LocationList} placeholder="시/도"
-                  onChange={this.onChangeLocation} />
-              </div>
+                <div className="wrapper flex">
+                  <div className="label">설명</div>
+                  <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={483} height={99} />
+                </div>
 
-              {/* <div className="wrapper_noflex ">
+                <div className="wrapper flex">
+                  <div className="label">카테고리</div>
+                  <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
+                  <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
+                </div>
+
+                <div className="wrapper flex">
+                  <div className="label">태그</div>
+                  <div>
+                    <InputTag taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
+                  </div>
+                </div>
+
+                <div className="wrapper flex">
+                  <div className="label">위치</div>
+                  <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} />
+                  <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)} selection options={LocationList} placeholder="시/도"
+                    onChange={this.onChangeLocation} />
+                </div>
+
+                {/* <div className="wrapper_noflex ">
                 {
                   this.state.career.map((item, index) => {
                     console.log(item);
@@ -513,66 +520,66 @@ class ModifyMaker extends Component {
                   })
                 }
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
-              {/* <Button width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
+                {/* <Button width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
                   <Icon name="plus" /><div className="label">경력 추가하기</div>
                 </Button>
               </div> */}
 
-              <div className="wrapper flex">
-                <div className="label">보유장비</div>
-                <div>
-                  <InputTag taglist={this.state.equipment} getValue={this.handleAddEquipment} placeholder="보유장비를 입력하고 [enter]키를 누르세요" width={483} />
+                <div className="wrapper flex">
+                  <div className="label">보유장비</div>
+                  <div>
+                    <InputTag taglist={this.state.equipment} getValue={this.handleAddEquipment} placeholder="보유장비를 입력하고 [enter]키를 누르세요" width={483} />
+                  </div>
                 </div>
-              </div>
 
-              <div className="wrapper flex">
-                <div className="label">보유기술</div>
-                <div>
-                  <InputTag taglist={this.state.technique} getValue={this.handleAddTechnique} placeholder="보유장비 입력하고 [enter]키를 누르세요" width={483} />
+                <div className="wrapper flex">
+                  <div className="label">보유기술</div>
+                  <div>
+                    <InputTag taglist={this.state.technique} getValue={this.handleAddTechnique} placeholder="보유장비 입력하고 [enter]키를 누르세요" width={483} />
+                  </div>
                 </div>
-              </div>
 
-            </FormBox>
-          </div>
-          <div className="contentsBox">
-            <SubBox>
-              <div className="title">경험</div>
-              <div className="labelBox">
-                <div className="number_label">번호</div>
-                <div className="text_label">업무</div>
-                <div className="text_label">기간</div>
-                <div className="text_label">내용</div>
-              </div>
-              <div className="wrapper_noflex ">
-                {this.state.career.map((item, index) => {
-                  console.log("career", item)
-                  return (
-                    <CreateCareer item={item} number={(item.number) + 1} onChangeCareer={this.onChangeCareer} key={index} />
-                  );
-                })}
-                {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
-                <Button /*onClick={this.onSubmit}*/ width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
-                  <Icon name="plus" /><div className="label">경험 추가</div>
-                </Button>
-              </div>
-            </SubBox>
-          </div>
-          <div className="contentsBox">
-            <SubBox>
-              <div className="titleBox">
-                <div className="title">갤러리</div>
-                <div className="title redText" onClick={this.handleShowModal}>갤러리 등록</div>
-              </div>
-              <div className="contensts">
-                {<HaveInGalleryContainer id={this.props.id} isModify={true} />}
-              </div>
-            </SubBox>
-          </div>
-          <div className="contentsBox">
-            <GrayButton value={"취소"} onClick={this.onClickCancel} isConfirm={true} />
-            <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true} />
-          </div>
-        </MainBox>
+              </FormBox>
+            </div>
+            <div className="contentsBox">
+              <SubBox>
+                <div className="title">경험</div>
+                <div className="labelBox">
+                  <div className="number_label">번호</div>
+                  <div className="text_label">업무</div>
+                  <div className="text_label">기간</div>
+                  <div className="text_label">내용</div>
+                </div>
+                <div className="wrapper_noflex ">
+                  {this.state.career.map((item, index) => {
+                    console.log("career", item)
+                    return (
+                      <CreateCareer item={item} number={(item.number) + 1} onChangeCareer={this.onChangeCareer} key={index} />
+                    );
+                  })}
+                  {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
+                  <Button /*onClick={this.onSubmit}*/ width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
+                    <Icon name="plus" /><div className="label">경험 추가</div>
+                  </Button>
+                </div>
+              </SubBox>
+            </div>
+            <div className="contentsBox">
+              <SubBox>
+                <div className="titleBox">
+                  <div className="title">갤러리</div>
+                  <div className="title redText" onClick={this.handleShowModal}>갤러리 등록</div>
+                </div>
+                <div className="contensts">
+                  {<HaveInGalleryContainer id={this.props.id} isModify={true} />}
+                </div>
+              </SubBox>
+            </div>
+            <div className="contentsBox">
+              <GrayButton value={"취소"} onClick={this.onClickCancel} isConfirm={true} />
+              <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true} />
+            </div>
+          </MainBox>}
       </React.Fragment>
     );
   };

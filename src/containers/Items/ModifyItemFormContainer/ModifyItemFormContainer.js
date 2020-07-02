@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { DeleteItemRequest, UpdateItemRequest, GetItemDetailRequest } from "actions/Item";
-// import { SearchMemberRequest } from "actions/Commons/Search";
 import ModifyItemInfo from "components/Items/ModifyItemInfo";
+// import { SearchMemberRequest } from "actions/Commons/Search";
 
 class ModifyItemFormContainer extends Component {
   state = {

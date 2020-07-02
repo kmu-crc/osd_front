@@ -263,6 +263,7 @@ const TagPiece = styled.div`
         padding: 0px 2px;
     }
 `;
+
 const CoverGrident=styled.div`
   display:${props=>props.isGradient?"block":"none"};
   width:100%;
@@ -271,7 +272,7 @@ const CoverGrident=styled.div`
   z-index:900;
   left:0;
   top:0;
-  background:${props=>props.isGradient?"linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255,1.0))":null};
+  background:${props => props.isGradient ? "linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255,1.0))" : null};
 `
 const Board = styled.div`
   // *{border: 1px solid red;}
@@ -424,7 +425,7 @@ const ExpandingButton = styled.div`
     }
 `;
 
-const MemberBox=styled.div`
+const MemberBox = styled.div`
     width:300px;
     height:200px;
     position:absolute;
@@ -467,7 +468,7 @@ class ItemDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShowmember:false,
+      isShowmember: false,
       isLike: this.props.like == null ? false : this.props.like,
       expandingContent: false, expandingReview: false, expandingBoard: false,
       isexpandingContent: false, isexpandingReview: false, isexpandingBoard: false,
@@ -530,36 +531,37 @@ class ItemDetail extends Component {
     const {score} = this.props.item;
     let tag = this.props.ItemDetail.tag+"";
 
-    const isWrapperContent = window.document.getElementById("detail_board")&&
-    window.document.getElementById("detail_board").scrollHeight>window.document.getElementById("detail_board").clientHeight;
-    console.log(window.document.getElementById("detail_board")&&
-    window.document.getElementById("detail_board").scrollHeight>window.document.getElementById("detail_board").clientHeight)
+
+    const isWrapperContent = window.document.getElementById("detail_board") &&
+      window.document.getElementById("detail_board").scrollHeight > window.document.getElementById("detail_board").clientHeight;
+    console.log(window.document.getElementById("detail_board") &&
+      window.document.getElementById("detail_board").scrollHeight > window.document.getElementById("detail_board").clientHeight)
     // console.log(window.document.getElementById("detail_board")&&window.document.getElementById("detail_board").
     // ,window.document.getElementById("detail_board")&&window.document.getElementById("detail_board").scrollHeight)
-    
-    const RenderStar = ()=>{
-      return  <Rating size="massive" name="score" icon='star' defaultRating={parseInt(score,10)} maxRating={5} disabled />
+
+    const RenderStar = () => {
+      return <Rating size="massive" name="score" icon='star' defaultRating={parseInt(score, 10)} maxRating={5} disabled />
     }
-    const MemberListBox=()=>{
-      return(
+    const MemberListBox = () => {
+      return (
         <MemberBox>
-        <div onClick={()=>{this.setState({isShowmember:!this.state.isShowmember})}} className="close">
+          <div onClick={() => { this.setState({ isShowmember: !this.state.isShowmember }) }} className="close">
             <Cross angle={45} color={"#000000"} weight={2} width={15} height={15} />
-        </div>
-        
-        <div className="member_list">
-        {
-            item.members.map((item,index)=>{
-              return(
-                <PeerBox imgURL = {item.s_img} key={index}>
-                  <div className="thumbnail"/>
-                  <div className="name_label">{item.nick_name}</div>
-                </PeerBox>
-              );
-            })
-        }  
-        </div>
-        </MemberBox> 
+          </div>
+
+          <div className="member_list">
+            {
+              item.members.map((item, index) => {
+                return (
+                  <PeerBox imgURL={item.s_img} key={index}>
+                    <div className="thumbnail" />
+                    <div className="name_label">{item.nick_name}</div>
+                  </PeerBox>
+                );
+              })
+            }
+          </div>
+        </MemberBox>
       );
     }
     return item ?
@@ -580,16 +582,17 @@ class ItemDetail extends Component {
 
                 <div className="title">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
                 <div className="expert line">
-                  {(this.props.userInfo && item.members && item.members.length > 0&&this.state.isShowmember)
-                  ? <MemberListBox/>
-                  : null}  
+                  {(this.props.userInfo && item.members && item.members.length > 0 && this.state.isShowmember)
+                    ? <MemberListBox />
+                    : null}
                   <div className="who" />
-                  <div className="nick" onClick={()=>this.setState({isShowmember:!this.state.isShowmember})}>{item.userName}
-                  {this.props.userInfo && item.members && item.members.length > 0
-                  ?
-                  `외 ${item.members.length}명`:null}
-                  </div>     
+                  <div className="nick" onClick={() => this.setState({ isShowmember: !this.state.isShowmember })}>{item.userName}
+                    {this.props.userInfo && item.members && item.members.length > 0
+                      ?
+                      `외 ${item.members.length}명` : null}
+                  </div>
                 </div>
+
 
                 <Introduction id="Introduction">
                   <div className="wrapItem"> 
@@ -631,8 +634,8 @@ class ItemDetail extends Component {
                     <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
                       {/* {Star(item.score, 28)}({item.total || 0}) */}
                       {/* <Rating name="score" icon='star' defaultRating={parseInt(score,10)} maxRating={5} disabled /> */}
-                      <RenderStar/>
-                      </div>
+                      <RenderStar />
+                    </div>
                   </div>
                 </div>
 
@@ -658,12 +661,13 @@ class ItemDetail extends Component {
                           <div className="text">아이템 수정/삭제</div>
                         </div>
                       </div>
-                      : null}
-                    <div className="button first">
-                      <div onClick={_ => this.buyThisItem(_, item)} >
-                        <div className="text">아이템구입</div>
+                      :
+                      <div className="button first">
+                        <div onClick={_ => this.buyThisItem(_, item)} >
+                          <div className="text">아이템구입</div>
+                        </div>
                       </div>
-                    </div>
+                    }
                     {this.state.isLike === false ?
                       <div className="button second" onClick={this.onClickLike}>
                         <div className="text">관심항목추가</div></div>
@@ -686,26 +690,26 @@ class ItemDetail extends Component {
 
               <ItemReviewContainer
                 user_id={item.user_id}
-                handler={detail => this.setState({ reviewdetail: true, detail: detail })} 
-                isExpanding={(result)=>{this.setState({isexpandingReview:result})}}/>
+                handler={detail => this.setState({ reviewdetail: true, detail: detail })}
+                isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} />
 
               {this.state.reviewdetail ?
                 <ReviewDetailModal
                   open={this.state.reviewdetail}
                   close={() => this.setState({ reviewdetail: false })}
                   detail={this.state.detail} /> : null}
-            {this.state.isexpandingReview&&<CoverGrident isGradient={!expandingReview}/>}
+              {this.state.isexpandingReview && <CoverGrident isGradient={!expandingReview} />}
             </Board>
 
             {
-              this.state.isexpandingReview&&
+              this.state.isexpandingReview &&
               <ExpandingButton width={1600}>
-              <div onClick={() => this.setState({ expandingReview: !expandingReview })} className="button">
-                <div className="font">
-                  {expandingReview ? "▲접기" : "▼펼쳐보기"}
+                <div onClick={() => this.setState({ expandingReview: !expandingReview })} className="button">
+                  <div className="font">
+                    {expandingReview ? "▲접기" : "▼펼쳐보기"}
+                  </div>
                 </div>
-              </div>
-            </ExpandingButton>
+              </ExpandingButton>
             }
 
           </div>
@@ -720,10 +724,11 @@ class ItemDetail extends Component {
               {!this.state.isexpandingBoard&&<CoverGrident isGradient={!expandingBoard}/>}
             </Board>
             {!this.state.isexpandingBoard&&
+
               <ExpandingButton width={1600}>
                 <div onClick={() => this.setState({ expandingBoard: !expandingBoard })} className="button">
                   <div className="font">
-                  {expandingBoard ? "▲접기" : "▼펼쳐보기"}
+                    {expandingBoard ? "▲접기" : "▼펼쳐보기"}
                   </div>
                 </div>
               </ExpandingButton>
@@ -742,22 +747,22 @@ class ItemDetail extends Component {
               {item && item.upload_type === "blog"
                 ? <div className="detail_board" id="detail_board">
                   <CardSourceDetailContainer
-                  bought={item.bought}
-                  isCancel
-                  cardId={item.cardId}
-                // edit={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
-                />
+                    bought={item.bought}
+                    isCancel
+                    cardId={item.cardId}
+                  // edit={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
+                  />
                 </div>
-                   : null}
+                : null}
               {item && item.upload_type === "project"
-                ? 
+                ?
                 <div className="detail_board" id="detail_board">
                   <ItemStepContainer
-                  item={item}
-                  id={item["item-id"]}
-                  bought={item.bought}
-                // editor={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
-                /> 
+                    item={item}
+                    id={item["item-id"]}
+                    bought={item.bought}
+                  // editor={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
+                  />
                 </div>
                 : null}
                 {/* {isWrapperContent&&<CoverGrident isGradient={!expandingContent}/>} */}
@@ -766,12 +771,11 @@ class ItemDetail extends Component {
            <ExpandingButton width={1600}>
               <div onClick={() => this.setState({ expandingContent: !expandingContent })} className="button">
                 <div className="font">
-                {expandingContent ? "▲접기" : "▼펼쳐보기"}
+                  {expandingContent ? "▲ 접기" : "▼ 펼쳐보기"}
                 </div>
               </div>
             </ExpandingButton>
            }  */}
-             
           </div>
 
         </Wrapper>
