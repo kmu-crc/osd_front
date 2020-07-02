@@ -57,6 +57,7 @@ const TagPiece = styled.div`
         width: max-content;
         height: max-content;
         padding: 0px 2px;
+        cursor:pointer;
     }
 `;
 const WarningBox = styled.div`
@@ -124,10 +125,11 @@ export class InputTag extends Component {
         }
     }
     returnData = async e => {
+        console.log(this.state.tag);
         this.props.getValue && await this.props.getValue(this.state.tag);
     }
     init = async () => {
-        await this.setState({ tag: this.props.tag || [] });
+        await this.setState({ tag: this.props.taglist || [] });
         this.returnData();
     }
     onEnterKeyDown = async (event) => {
@@ -179,6 +181,8 @@ export class InputTag extends Component {
     render() {
         const TagBox = this.state.tag.map((item, index) => {
             return (
+                item==""?
+                null:
                 <TagPiece key={index}>
                     {item}
                     <div id={index} onClick={this.onDeleteTag} className="close">x</div>

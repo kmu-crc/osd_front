@@ -401,7 +401,8 @@ class RequestList extends Component {
               </div>
             </WriteNormalArticleModal>
             :
-            <CreateNormalArticleButton onClick={() => this.setState({ write: true })}>
+            <CreateNormalArticleButton onClick={() => {
+              this.setState({ write: true,content:"" })}}>
               <div className="button">
                 <div className="font">게시글 작성</div>
               </div>

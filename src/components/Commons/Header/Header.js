@@ -233,7 +233,7 @@ class Header extends Component {
     // active variables
     const designerActive = (location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1) && (location.indexOf(`/request`) === -1)
     const makerActive = (location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) && (location.indexOf(`/request`) === -1)
-    const itemActive = (location.indexOf("/product") !== -1 || location.indexOf("/productDetail") !== -1) && (location.indexOf(`/request`) === -1)
+    const itemActive = (location.indexOf("/product") !== -1 || (location.indexOf("/createproduct") !== -1)|| (location.indexOf("/productModify") !== -1)|| location.indexOf("/productDetail") !== -1) && (location.indexOf(`/request`) === -1)
     const requestActive = (location.indexOf("/request") !== -1)
     const searchtype = designerActive ? "designer" : makerActive ? "maker" : itemActive ? "item" : null;
 

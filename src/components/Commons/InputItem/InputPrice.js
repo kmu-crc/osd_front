@@ -73,12 +73,12 @@ export class InputPrice extends Component {
         if (prevProps.price !== this.props.price) {
             // console.log(this.props.price);
             this.setState({
-                price: this.props.price/1000,
+                price: this.props.price,
             })
         }
     }
     returnData = async e => {
-        this.props.getValue && await this.props.getValue(this.state.price*1000);
+        this.props.getValue && await this.props.getValue(this.state.price);
     }
     init = async () => {
         await this.setState({ price: this.props.price || 0 });
@@ -104,15 +104,15 @@ export class InputPrice extends Component {
                         id="price"
                         width={this.props.width == null ? "150" : this.props.width}
                         placeholder={this.props.placeholder}
-                        value={this.state.price*1000 || 0}
+                        value={this.state.price || 0}
                         onChange={this.onChangePrice}
                     /><div className="won">원</div>
 
-                    <Button onClick={() => this.onClickButton(1000/1000)}><div className="text">+1천</div></Button>
-                    <Button onClick={() => this.onClickButton(10000/1000)}><div className="text">+1만</div></Button>
-                    <Button onClick={() => this.onClickButton(50000/1000)}><div className="text">+5만</div></Button>
-                    <Button onClick={() => this.onClickButton(100000/1000)}><div className="text">+10만</div></Button>
-                    <Button onClick={() => this.onClickButton(1000000/1000)}><div className="text">+100만</div></Button>
+                    <Button onClick={() => this.onClickButton(1000)}><div className="text">+1천</div></Button>
+                    <Button onClick={() => this.onClickButton(10000)}><div className="text">+1만</div></Button>
+                    <Button onClick={() => this.onClickButton(50000)}><div className="text">+5만</div></Button>
+                    <Button onClick={() => this.onClickButton(100000)}><div className="text">+10만</div></Button>
+                    <Button onClick={() => this.onClickButton(1000000)}><div className="text">+100만</div></Button>
                 </FormBox>
             </React.Fragment>
         );

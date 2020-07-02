@@ -612,6 +612,8 @@ class CreateProductForm extends Component {
     };
     // console.log("sent:", data);
     // return;
+    data.additional.description = data.additional.description.replace(/(?:\r\n|\r|\n)/g,'<br />');
+
     this.props.CreateDesignRequest(data, this.props.token)
       .then(result => {
         this.setState({ loading: false });
@@ -1017,7 +1019,9 @@ class ItemProject extends Component {
     this.returnState();
   }
   async onHandleChange(event) {
-    await this.setState({ [event.target.name]: event.target.value });
+    let text= event.target.value;
+    text.replaceAll("\n","<br/>");
+    await this.setState({ [event.target.name]: text });
     this.returnState();
   }
   async getPriceValue(value) {
