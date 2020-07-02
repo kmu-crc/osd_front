@@ -35,6 +35,7 @@ const ReplyForm = styled.textarea`
         border-radius:20px;
         background-color:#E6E6E6;
         border:none;
+        padding:20px;
 `
 const Button = styled.div`
     display:flex;
@@ -44,6 +45,7 @@ const Button = styled.div`
     border:3px solid #707070;
     border-radius:20px;
     margin-left:20px;
+    cursor:pointer;
     .text{
         font-weight:500;
         font-size:20px
@@ -169,7 +171,7 @@ class ItemQuestion extends Component {
         const { question, userInfo, total, user_id } = this.props;
         const { reply, this_reply, this_comment, page } = this.state;
         const master = user_id === (userInfo && userInfo.uid);
-
+        console.log(master,",",user_id,userInfo.uid);
         const Question = (props) => {
             // console.log(props);
             return (

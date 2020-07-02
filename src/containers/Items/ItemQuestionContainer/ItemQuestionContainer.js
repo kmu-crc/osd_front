@@ -43,14 +43,14 @@ class ItemQuestionContainer extends Component {
     render() {
         return (
         <React.Fragment>
-        {this.props.question&&
-        this.props.question.length>0?
+        {/* {this.props.question&&
+        this.props.question.length>0? */}
         <ItemQuestion id={this.props.match.params.id} getData={this.getData} request={this.requestQuestion} {...this.props} />
-        :
+        {/* :
         <BlankBox>
         <div className="text">해당 항목 없음</div>
         </BlankBox>
-        }
+        } */}
         </React.Fragment>
         );
     }

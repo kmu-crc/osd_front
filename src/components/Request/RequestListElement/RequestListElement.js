@@ -13,7 +13,7 @@ import { Icon } from "semantic-ui-react";
 const ListElement = styled.div`
   margin: 0 auto 0.9rem;
   // margin-left: ${props => props.left || 0}px;
-  font-size: 13px;
+  font-size: 15px;
   border-radius: 3px 3px 3px 3px;
   overflow: hidden;
   box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
@@ -69,8 +69,10 @@ const ListElement = styled.div`
   }
   .date{
     min-width:20%;
+    display:flex;
     align-items:center;
     padding:5px;
+    overflow:hidden;
   }
 `;
 const ThumbnailWriter = styled.div`
@@ -86,7 +88,7 @@ const ThumbnailWriter = styled.div`
 class DesignerBoardElement extends Component {
   render() {
     const item = this.props.data;
-    // console.log("item:", item);
+    console.log("item:", item);
     // const Element = () =>
     
     return (

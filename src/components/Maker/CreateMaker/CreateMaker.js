@@ -368,14 +368,16 @@ class CreateMaker extends Component {
     // if (data.files.length <= 0 || data.files[0].value === (this.props.MyDetail.profileImg&&this.props.MyDetail.profileImg.m_img)) {
     //   delete data.files;
     // }
+    console.log(this.props.token);
+    // return;
     this.props.InsertMakerDetailRequest(data, this.props.token)
       .then(res => {
-        console.log("res", res);
-        const result = res;
+        console.log("res", res.res);
+        const result = res.res;
         if (result.success) {
           alert("정보가 수정되었습니다.");
           //this.props.history.push(`/`);
-          window.location.href = "/designer";
+          // window.location.href = "/designer";
         } else {
           alert("다시 시도해주세요");
           this.setState({
@@ -390,6 +392,28 @@ class CreateMaker extends Component {
           loading: false
         });
       });
+    // this.props.InsertMakerDetailRequest(data, this.props.token)
+    //   .then(res => {
+    //     console.log("res", res);
+    //     const result = res;
+    //     if (result.success) {
+    //       alert("정보가 수정되었습니다.");
+    //       //this.props.history.push(`/`);
+    //       window.location.href = "/maker";
+    //     } else {
+    //       alert("다시 시도해주세요");
+    //       this.setState({
+    //         loading: false
+    //       });
+    //     }
+    //   })
+    //   .catch(e => {
+    //     console.log("실패", e);
+    //     alert("다시 시도해주세요");
+    //     this.setState({
+    //       loading: false
+    //     });
+    //   });
 
     window.location.href = "/myPage"
   }
