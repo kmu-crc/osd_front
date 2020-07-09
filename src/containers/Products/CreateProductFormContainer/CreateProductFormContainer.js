@@ -20,8 +20,8 @@ class CreateProductFormContainer extends Component {
   render() {
     return (
       <React.Fragment>
-        {/* {this.props.keep// || this.props.userInfo.isDesigner === 1 || this.props.userInfo.isMaker === 1 */}
-          ? <CreateProductForm {...this.props} />
+        {/* {this.props.keep// || this.props.userInfo.isDesigner === 1 || this.props.userInfo.isMaker === 1 ?*/}
+        <CreateProductForm {...this.props} />
         {/* : <p style={{ color: "#FFF" }}> 권한을 확인 중입니다.</p>} */}
       </React.Fragment>
     )

@@ -450,7 +450,7 @@ class ModifyMaker extends Component {
         });
       });
 
-    // window.location.href="/mypage";
+    window.location.href="/mypage";
   }
 
 

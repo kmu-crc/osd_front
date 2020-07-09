@@ -217,7 +217,7 @@ const Introduction = styled.div`
       overflow: hidden;
     }
     .gradient_box{
-      display:${props=>props.isLong?"none":"block"};
+      display:${props => props.isLong ? "none" : "block"};
       position:absolute;
       left:0px;
       top:0px;
@@ -264,8 +264,8 @@ const TagPiece = styled.div`
     }
 `;
 
-const CoverGrident=styled.div`
-  display:${props=>props.isGradient?"block":"none"};
+const CoverGrident = styled.div`
+  display:${props => props.isGradient ? "block" : "none"};
   width:100%;
   height:100%;
   position:absolute;
@@ -623,6 +623,7 @@ class ItemDetail extends Component {
                       })
                     }
                   </div>
+
                     <div className="gradient_box" ><div>▾</div></div>
                   </div>
                 </Introduction>
@@ -741,7 +742,7 @@ class ItemDetail extends Component {
             <Content
               id="contents_rgn"
               style={{ marginTop: "15px", overflow: "hidden" }}
-              // height={expandingContent ? "100%" : "400px"}
+              height={expandingContent ? "100%" : "400px"}
               width={1600}>
               <div className="title">아이템 상세내용</div>
               {item && item.upload_type === "blog"
@@ -765,7 +766,9 @@ class ItemDetail extends Component {
                   />
                 </div>
                 : null}
+
                 {/* {isWrapperContent&&<CoverGrident isGradient={!expandingContent}/>} */}
+
             </Content>
            {/* {isWrapperContent&&
            <ExpandingButton width={1600}>
