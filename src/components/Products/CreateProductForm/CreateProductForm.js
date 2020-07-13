@@ -1020,7 +1020,9 @@ class ItemProject extends Component {
   }
   async onHandleChange(event) {
     let text= event.target.value;
-    text.replaceAll("\n","<br/>");
+    if(text!=""){
+      text.replaceAll("\n","<br/>");
+    }
     await this.setState({ [event.target.name]: text });
     this.returnState();
   }
