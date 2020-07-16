@@ -171,7 +171,6 @@ class ItemQuestion extends Component {
         const { question, userInfo, total, user_id } = this.props;
         const { reply, this_reply, this_comment, page } = this.state;
         const master = user_id === (userInfo && userInfo.uid);
-        console.log(master,",",user_id,userInfo.uid);
         const Question = (props) => {
             // console.log(props);
             return (
