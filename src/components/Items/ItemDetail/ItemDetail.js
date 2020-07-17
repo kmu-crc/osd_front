@@ -28,13 +28,11 @@ const Wrapper = styled.div`
   .flex-align-column {
     flex-direction: column;
   };
-
 `;
 const ItemImages = styled.div`
   width: 600px;
   height: 600px;
   margin-left: 25px; 
-
   .main-image {
     border: 1px solid #EFEFEF;
     overflow-x: auto;
@@ -70,9 +68,7 @@ const ItemInfo = styled.div`
   border-radius: 20px; 
   // padding: 20px 35px 10px 15px;
   padding:35px;
-
   // *{ border: 1px solid red; };
-
   .title {
     font-size: 34px;
     line-height: 50px;
@@ -231,7 +227,6 @@ const Introduction = styled.div`
     }
   }
   
-
   &:hover{
     .gradient_box{
       display:none;
@@ -240,8 +235,6 @@ const Introduction = styled.div`
       overflow: auto;
     }
   }
-
-
 `;
 const TagPiece = styled.div`
     width: max-content;
@@ -447,7 +440,6 @@ const MemberBox = styled.div`
       width:100%;
       oveflow-y:auto;
     }
-
 `
 const PeerBox = styled.div`
   width:100%;
@@ -461,7 +453,6 @@ const PeerBox = styled.div`
     border-radius:20px;
     margin:5px;
   }
-
 `
 
 class ItemDetail extends Component {
@@ -528,8 +519,8 @@ class ItemDetail extends Component {
   render() {
     const item = this.props.item;
     const { expandingContent, expandingReview, expandingBoard } = this.state;
-    const {score} = this.props.item;
-    let tag = this.props.ItemDetail.tag+"";
+    const { score } = this.props.item;
+    let tag = this.props.ItemDetail.tag + "";
 
 
     const isWrapperContent = window.document.getElementById("detail_board") &&
@@ -595,35 +586,34 @@ class ItemDetail extends Component {
 
 
                 <Introduction id="Introduction">
-                  <div className="wrapItem"> 
+                  <div className="wrapItem">
                     <div className="title">설명</div>
-                    <div id="itemDescription" className="text" 
-                    dangerouslySetInnerHTML={{ __html: `${item.description||""}`}}
+                    <div id="itemDescription" className="text"
+                      dangerouslySetInnerHTML={{ __html: `${item.description || ""}` }}
                     />
                     <div className="title">유형</div>
                     <div className="text flex">
-                      {item.type===0?"디자인":null}
-                      {item.type===1?"프로젝트":null}
-                      {item.type===2?"기술자문/상담":null}
-                      {item.type===3?"경험":null}
-                      {item.type===4?"정보/데이터":null}
-                      {item.type===5?"아이디어/노하우":null}
-                      {item.type===6?"지적재산권":null}
-                      {item.type===7?"제작품":null}
+                      {item.type === 0 ? "디자인" : null}
+                      {item.type === 1 ? "프로젝트" : null}
+                      {item.type === 2 ? "기술자문/상담" : null}
+                      {item.type === 3 ? "경험" : null}
+                      {item.type === 4 ? "정보/데이터" : null}
+                      {item.type === 5 ? "아이디어/노하우" : null}
+                      {item.type === 6 ? "지적재산권" : null}
+                      {item.type === 7 ? "제작품" : null}
                     </div>
                     <div className="title">태그</div>
                     <div className="text flex">
-                    {
-                      tag.indexOf(",")==-1?null:tag.split(",").map((item, index) => {
-                        return (
-                          <TagPiece key={index}>
-                            {item}
-                          </TagPiece>
-                        );
-                      })
-                    }
-                  </div>
-
+                      {
+                        tag.indexOf(",") == -1 ? null : tag.split(",").map((item, index) => {
+                          return (
+                            <TagPiece key={index}>
+                              {item}
+                            </TagPiece>
+                          );
+                        })
+                      }
+                    </div>
                     <div className="gradient_box" ><div>▾</div></div>
                   </div>
                 </Introduction>
@@ -721,10 +711,10 @@ class ItemDetail extends Component {
                 <div
                   style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: "#FFFFFF" }}>게시판</div>
               </div>
-              <ItemQuestionContainer user_id={item.user_id} isExpanding={(result)=>{this.setState({isexpandingBoard:result})}}/>
-              {!this.state.isexpandingBoard&&<CoverGrident isGradient={!expandingBoard}/>}
+              <ItemQuestionContainer user_id={item.user_id} isExpanding={(result) => { this.setState({ isexpandingBoard: result }) }} />
+              {!this.state.isexpandingBoard && <CoverGrident isGradient={!expandingBoard} />}
             </Board>
-            {!this.state.isexpandingBoard&&
+            {!this.state.isexpandingBoard &&
 
               <ExpandingButton width={1600}>
                 <div onClick={() => this.setState({ expandingBoard: !expandingBoard })} className="button">
@@ -742,7 +732,7 @@ class ItemDetail extends Component {
             <Content
               id="contents_rgn"
               style={{ marginTop: "15px", overflow: "hidden" }}
-              height={expandingContent ? "100%" : "400px"}
+              // height={expandingContent ? "100%" : "400px"}
               width={1600}>
               <div className="title">아이템 상세내용</div>
               {item && item.upload_type === "blog"
@@ -766,11 +756,9 @@ class ItemDetail extends Component {
                   />
                 </div>
                 : null}
-
-                {/* {isWrapperContent&&<CoverGrident isGradient={!expandingContent}/>} */}
-
+              {/* {isWrapperContent&&<CoverGrident isGradient={!expandingContent}/>} */}
             </Content>
-           {/* {isWrapperContent&&
+            {/* {isWrapperContent&&
            <ExpandingButton width={1600}>
               <div onClick={() => this.setState({ expandingContent: !expandingContent })} className="button">
                 <div className="font">
@@ -789,5 +777,3 @@ class ItemDetail extends Component {
 }
 
 export default ItemDetail;
-
-
