@@ -296,6 +296,7 @@ class Designer extends Component {
         }
     }
     render() {
+      console.log(this.state.data);
         const designer = this.state.data;
         const tiny = window.innerWidth <= opendesign_css.resolutions.SmallMaxWidth;
         const img = (designer && designer.imgURL != null) ? designer.imgURL.l_img : noimg;
@@ -339,7 +340,7 @@ class Designer extends Component {
                         <div className="update">
                             {DateFormat(designer.update_time)}</div>
                         <div className="cate">
-                            {designer.categoryName || "전체"}</div>
+                            {designer.level2_name||designer.level1_name || "전체"}</div>
                         <div className="counter">
                             <div className="view">
                                 <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
