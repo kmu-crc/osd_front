@@ -580,7 +580,7 @@ export function ForkDesignRequest(design_id, user_id, token) {
         dispatch(ForkDesign())
         return fetch(`${host}/design/forkDesign/${design_id}/${user_id}`, {
             headers: { "Content-Type": "application/json", 'x-access-token': token },
-            method: "get"
+            method: "GET"
         }).then((response) => {
             return response.json()
         }).then((data) => {
