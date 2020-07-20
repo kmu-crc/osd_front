@@ -58,6 +58,12 @@ const UNLIKE_GROUP = "UNLIKE_GROUP"
 const UNLIKE_GROUP_SUCCESS = "UNLIKE_GROUP_SUCCESS"
 const UNLIKE_GROUP_FAILURE = "UNLIKE_GROUP_FAILURE"
 
+const GET_GROUP_NOTICE = "GET_GROUP_NOTICE"
+const GET_GROUP_NOTICE_SUCCESS = "GET_GROUP_NOTICE_SUCCESS"
+const GET_GROUP_NOTICE_FAILURE = "GET_GROUP_NOTICE_FAILURE"
+const GET_GROUP_MY_NOTICE_SUCCESS = "GET_GROUP_MY_NOTICE_SUCCESS"
+const GET_GROUP_MY_NOTICE_FAILURE = "GET_GROUP_MY_NOTICE_FAILURE"
+
 
 const GetGroupDetail = (data) => ({ type: GET_GROUP_DETAIL, GroupDetail: data })
 const GetGroupCount = (data) => ({ type: GET_GROUP_COUNT, Count: data })
@@ -116,6 +122,13 @@ const GetMyExistGroupListSuccess = (data) => ({ type: GET_MY_EXIST_GROUP_LIST_SU
 const GetExistGroupListFailure = (data) => ({ type: GET_MY_EXIST_GROUP_LIST_FAILURE, success: data.success })
 
 
+const GetGroupNotice = () => ({ type: GET_GROUP_NOTICE });
+const GetGroupNoticeSuccess = data => ({ type: GET_GROUP_NOTICE_SUCCESS, success: true, data: data });
+const GetGroupNoticeFailure = error => ({ type: GET_GROUP_NOTICE_FAILURE, success: false, error: error });
+const GetGroupNoticeYouJoined = (data) => ({ type: GET_GROUP_MY_NOTICE_SUCCESS, sucess: true, data: data });
+const GetGroupNoticeYouJoinedFailed = (error) => ({ type: GET_GROUP_MY_NOTICE_FAILURE, sucess: false, error: error });
+
+
 const initialState = {
   DeleteGroup: { status: "INIT" },
   WaitingList: { status: "INIT" },
@@ -124,6 +137,7 @@ const initialState = {
   MyExistList: { status: "INIT" },
   MyList: { status: "INIT" },
   CreateGroup: { status: "INIT" },
+  GroupNotice: { status: "INIT" },
   status: {
     GroupDetail: [],
     Count: { like: 0, design: 0, group: 0 },
@@ -134,14 +148,17 @@ const initialState = {
     MyDesignList: [],
     MyGroupList: [],
     MyExistDesignList: [],
-    MyExistGroupList: []
+    MyExistGroupList: [],
+    GroupNotice: [],
+    GroupMyNotice: [],
   }
 }
 
 
 export function Group(state, action) {
-  if (typeof state === "undefined")
-    state = initialState
+  if (typeof state === "undefined") {
+    state = initialState;
+  }
 
   switch (action.type) {
     case DELETE_GROUP:
@@ -403,6 +420,38 @@ export function Group(state, action) {
           status: { $set: "Failure" }
         }
       })
+
+    case GET_GROUP_NOTICE:
+      return update(state, {
+        GroupNotice: { status: { $set: "WAITING" } }
+      })
+    case GET_GROUP_NOTICE_SUCCESS:
+      return update(state, {
+        GroupNotice: {
+          status: { $set: "SUCCESS" }
+        },
+        status: {
+          GroupNotice: { $set: action.data },
+        }
+      })
+    case GET_GROUP_NOTICE_FAILURE:
+      return update(state, {
+        GroupNotice: {
+          status: { $set: "Failure" }
+        },
+        status: {
+          GroupNotice: { $set: [] },
+        }
+      })
+    case GET_GROUP_MY_NOTICE_SUCCESS:
+      return update(state, {
+        status: { GroupMyNotice: { $set: action.data }, }
+      })
+    case GET_GROUP_MY_NOTICE_FAILURE:
+      return update(state, {
+        status: { GroupMyNotice: { $set: [] }, }
+      })
+
     default:
       return state
   }
@@ -875,3 +924,112 @@ export function DeleteDesignInGroupRequest(id, designid) {
     })
   }
 }
+
+
+export function GetAllNoticeYourGroupRequest(id) {
+  const url = `${host}/group/getAllNotiMygroup/${id}`;
+  console.log("URL:", url);
+
+  return (dispatch) => {
+    dispatch(GetGroupNotice());
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        dispatch(GetGroupNoticeSuccess(data.data))
+      })
+      .catch(error => {
+        console.error(error);
+        dispatch(GetGroupNoticeFailure(error))
+      })
+  }
+}
+export function GetGroupNoticeYouJoinedRequest(id, user_id) {
+  const url = `${host}/group/getNotiGroupIJoined/${id}/${user_id}`;
+  console.log("URL:", url);
+
+  return (dispatch) => {
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET"
+    }).then(res => res.json())
+      .then(data => {
+        console.log("group >>", data)
+        return dispatch(GetGroupNoticeYouJoined(!data ? [] : data.data))
+      })
+      .catch(error => {
+        console.error(error);
+        return dispatch(GetGroupNoticeYouJoinedFailed())
+      })
+  }
+}
+export function HasReadNoticeRequest(id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/`;
+    fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(err => reject(err));
+  })
+}
+
+
+
+export function CreateGroupNoticeRequest(token, obj) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/createGroupNotice`
+    console.log("URL:", url, obj);
+    // return;
+    return fetch(url, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(obj)
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(error => reject(error));
+  });
+}
+
+export function GetLastestGroupNoticeRequest(group_id) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/lastest-notice/${group_id}`;
+    console.log("URL:", url);
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .then(error => reject(error));
+  });
+};
+export function GetTotalCountGroupNoticeRequest(group_id) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/total-count-notice/${group_id}`;
+    console.log("URL:", url);
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .then(error => reject(error));
+  });
+};
+export function GetGroupNoticeListRequest(group_id, page) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/notice-list/${group_id}/${page}`;
+    console.log("URL:", url);
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .then(error => reject(error));
+  });
+};

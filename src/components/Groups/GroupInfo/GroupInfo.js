@@ -1,39 +1,42 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
-
 import IconView from "source/IconView"
 import iEdit from "source/edit.png"
 import iForked from "source/baseline_library_books_black_48dp.png"
 import iThumbUp from "source/thumbup_icon_black.png"
 import iINOUT from "source/inout.svg"
 import thumbup from "source/baseline_thumb_up_black_48dp_2x.png"
-// import dots from "source/baseline_more_vert_black_48dp.png";
 import noimg from "source/noimg.png";
-
 import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";
 import { geturl } from 'config';
-import { Icon } from 'semantic-ui-react'
-
+import { Modal, Icon } from 'semantic-ui-react'
 import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
 import TextFormat from 'modules/TextFormat';
-// import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import opendesign_style from "opendesign_style";
+import Cross from "components/Commons/Cross";
+// import { confirm } from "components/Commons/Confirm/Confirm";
+// import dots from "source/baseline_more_vert_black_48dp.png";
+import {
+    GetLastestGroupNoticeRequest, GetTotalCountGroupNoticeRequest,
+    CreateGroupNoticeRequest,
+} from "redux/modules/group";
+import TextController from "components/Designs/CardSourceDetail/TextControllerPlus.js";
+import GroupNoticeListContainer from "containers/Groups/GroupNoticeListContainer";
 
-const NewAlarmLogo=styled.div`
-width:10px;
-height:100%;
-display:flex;
-margin-right:2px;
-.circle{
-    background-color:red;
-    width:7px;
-    height:7px;
-    border-radius:50%;
-}
-
-`
+const NewAlarmLogo = styled.div`
+    width:10px;
+    height:100%;
+    display:flex;
+    margin-right:2px;
+    .circle{
+        background-color:red;
+        width:7px;
+        height:7px;
+        border-radius:50%;
+    }
+`;
 const Thumbnail = styled.div`
     position:relative;
     min-width: 170px;
@@ -55,15 +58,12 @@ const Thumbnail = styled.div`
         max-height:100px;
         margin-right:20px;
     }
-`
+`;
 const MainBox = styled.div`
-
+    // *{border: 1px solid black;}
     width:100%;
     position:relative;
     .wrapper{
-        // *{
-        //     border:1px solid black;
-        // }
         width:100%;
         height:100%;
         background-color:#EFEFEF;
@@ -137,7 +137,7 @@ const MainBox = styled.div`
             }
         }
     }
-`
+`;
 const OneSideBox = styled.div`
     width:200px;
     height:100%;
@@ -191,7 +191,24 @@ const OneSideBox = styled.div`
             }
         }
     }
-
+    .count-box{
+        width:200px;
+        display:flex;
+        align-items:center;
+        text-align:left;
+        font-weight:500;
+        .icon-wrapper{
+            display:flex;
+            margin-right:20px;
+            align-items:center;
+        }
+        .label{
+            color:#707070;
+            margin-left:5px;
+            width:max-content;
+            font-size:15px;
+        }
+    }
 
     @media only screen and (min-width : ${1024}px) 
     and (max-width : ${opendesign_style.resolutions.LargeMinWidth}px) {
@@ -251,78 +268,87 @@ const OneSideBox = styled.div`
             justify-content:space-between;
         }
     }
-`
+`;
 const TwoSideBox = styled.div`
+    min-width: 165px;
+    max-height: 170px;
 
-min-width:165px;
-max-height:170px;
-margin-top:50px;
-.countBox{
-
-}
-.explainBox{
-    *{
-        color:#707070;
-    }
-    width: ${props => props.w}px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content:space-between;
-    .creater {
-        width: max-content;
-        height: 25px;
-        font-size: 17px;
-        font-weight: 500;
-        line-height: 25px;
-        text-align: left;
-        font-family: Noto Sans KR;
-    }
-    .explanationRegion{
+    .countBox {}
+    .explainBox {
+        *{ color:#707070; }
+        width: ${props => props.w}px;
+        margin-top: 30px;
         display: flex;
-        height: 90px;
-        font-size: 17px;
-        color: #707070;
-        line-height: 30px;
-        .explain-text {
-            width:${props => props.w}px;
-                    height: 100%;
-                    font-size: 20px;
-                    font-weight: 200;
-                    font-family: Noto Sans KR;
-                    line-height: 30px;
-                    color: #707070;
-    
-                    white-space: nowrap; 
-                    overflow: hidden; 
-                    text-overflow: ellipsis; 
-                    white-space: normal; 
-                    text-align: left; 
-                    word-wrap: break-word; 
-                    display: -webkit-box; 
-                    -webkit-line-clamp: 3; 
-                    -webkit-box-orient: vertical;
+        flex-direction: column;
+        justify-content:space-between;
+
+        .wrapper {
+            position: relative;
+        }
+        .bottom{
+            position: absolute; 
+            bottom: 20px;
+        }
+        .notice-box {
+            display: flex;
+            font-size: 16px;
+
+            .more {
+                margin-left: 25px;
+                font-size: 1.2rem;
+                color: #F00;
+                cursor: pointer;
+            }
+            .new-notice {
+               margin-left: 15px;
+               font-size: 0.9rem;
+               height: 20px;
+               background-color: #F00;
+               border-radius: 10px;
+               cursor: pointer; 
+               color: white;
+               font-weight: 500;
+               padding: 0px 5px;
+            }
+        }
+        .creater {
+            .down {
+              margin-top: 5px;
+            }
+            width: max-content;
+            height: 25px;
+            font-size: 17px;
+            font-weight: 500;
+            line-height: 25px;
+            text-align: left;
+            font-family: Noto Sans KR;
+        }
+        .explanationRegion{
+            display: flex;
+            height: 90px;
+            font-size: 17px;
+            color: #707070;
+            line-height: 30px;
+            .explain-text {
+                width:${props => props.w}px;
+                height: 100%;
+                font-size: 20px;
+                font-weight: 200;
+                font-family: Noto Sans KR;
+                line-height: 30px;
+                color: #707070;
+                white-space: nowrap; 
+                overflow: hidden; 
+                text-overflow: ellipsis; 
+                white-space: normal; 
+                text-align: left; 
+                word-wrap: break-word; 
+                display: -webkit-box; 
+                -webkit-line-clamp: 3; 
+                -webkit-box-orient: vertical;
+            }
         }
     }
-    .count-box{
-        width:200px;
-        display:flex;
-        align-items:center;
-        text-align:left;
-        font-weight:500;
-        .icon-wrapper{
-            display:flex;
-            margin-right:20px;
-            align-items:center;
-        }
-        .label{
-            color:#707070;
-            margin-left:5px;
-            width:max-content;
-            font-size:15px;
-        }
-    }
-}
 
     @media only screen and (min-width : ${opendesign_style.resolutions.MediumMinWidth}px) 
     and (max-width : ${1024}px) {
@@ -343,8 +369,8 @@ margin-top:50px;
         display:none;
     }
 
-`
-const ThreeSideBox= styled.div`
+`;
+const ThreeSideBox = styled.div`
     margin-left: auto;
     display: flex;
     flex-direction: column !important;
@@ -394,11 +420,10 @@ const ThreeSideBox= styled.div`
     and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
         display:none;
     }
-`
-
+`;
 const MobileSeeMore = styled.div`
     margin-top:15px;
-    display:${props=>props.isShow==false?"none":"flex"};
+    display:${props => props.isShow == false ? "none" : "flex"};
     flex-direction:column;
     width:100%;
     .explain-box{
@@ -427,17 +452,17 @@ const MobileSeeMore = styled.div`
             background-color:#DEDEDE;
         }
     }
-    `
-    const MiniIcon = styled.div`
+`;
+const MiniIcon = styled.div`
     width: 30px; 
     height: 30px; 
     background: url(${props => props.iconName}); 
     background-size: contain; 
     background-position: center center; 
     background-repeat: no-repeat;
-    opacity: ${props => props.like_opacity==null?1:props.like_opacity};
+    opacity: ${props => props.like_opacity == null ? 1 : props.like_opacity};
 
-`
+`;
 const PopupBox = styled.div`
     position:absolute;
     top:47px;
@@ -462,157 +487,6 @@ const PopupBox = styled.div`
         line-height:40px;
     }
 `;
-const Header = styled.div`
-    width: ${props => props.width}px;
-    display: flex;
-    @media only screen and (min-width : ${0}px) and (max-width : ${900}px) {
-        margin-top: 50px;
-    }
-`;
-const GroupTitleWrapper = styled.div`
-    width: max-content;
-    height: 30px;
-    color: #707070;
-    font-size: 20px;
-    font-weight: 500;
-    font-family: Noto Sans KR;
-    text-align: left;
-    line-height: 25px;
-    margin-top: 15px;
-    margin-left: 10px;
-    cursor: default;
-`;
-const Arrow = styled.div`
-    width: 12px;
-    height: 14px;
-    bacgkground: #707070;
-    opacity: 0.55;
-    border-left: 14px solid #707070;
-    border-bottom: 6px solid transparent;
-    border-top: 6px solid transparent;
-    margin: 3px 3px;
-`;
-const ThumbnailBox = styled.div`
-    width: 170px;
-    min-width: 170px;
-    height: 170px;
-    border-radius: 15px;
-    background-color: #D6D6D6;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    background-image: ${props => `url(${props.imageURL})`};
-`;
-const ExplainBox = styled.div`
-    @media only screen and (min-width : ${0}px) and (max-width : ${630}px) {
-        display: none;
-    }
-    position: relative;
-    .board {
-        margin-left: 35px;
-        .creater {
-            width: max-content;
-            height: 30px;
-            margin-bottom: 15px;
-            font-size: 17px;
-            font-weight: 500;
-            color: #707070;
-            text-align: left;
-            line-height: 29px;
-        }
-        .explanationRegion{
-            display: flex;
-            height: 90px;
-            font-size: 17px;
-            color: #707070;
-            line-height: 30px;
-
-            .explaination {
-                width:${props => props.w}px;
-                // min-width: 250px;
-                // max-width: 1350px;
-                height: 100%;
-                font-size: 20px;
-                font-weight: 200;
-                font-family: Noto Sans KR;
-                line-height: 30px;
-                color: #707070;
-
-                white-space: nowrap; 
-                overflow: hidden; 
-                text-overflow: ellipsis; 
-                white-space: normal; 
-                text-align: left; 
-                word-wrap: break-word; 
-                display: -webkit-box; 
-                -webkit-line-clamp: 3; 
-                -webkit-box-orient: vertical;
-            }
-        }
-    }
-    .CountView {
-        width: 300px;
-        height: 22px;
-        position: absolute;
-        display: flex;
-        left: 231px;
-        bottom: 0px;
-        .countItem {
-            height: 100%;
-            display: flex;
-            margin-right: 20px;
-            .count_label {
-                width: max-content;
-                height: 100%
-                margin-left:5px;
-            }
-        } 
-    }
-    }
-`;
-const ButtonRegion = styled.div`
-    margin-left: auto;
-    display: flex;
-    flex-direction: column !important;
-
-    .ButtonItem {
-        width: max-content;
-        height: 30px;
-        display: flex;
-        margin-top: 10px;
-        cursor: pointer;
-        .button_text_label{
-            width: 150px;
-            height: 20px;
-            margin-top: 10px;
-            font-size: 17px;
-            font-weight: 300;
-            font-family: Noto Sans KR;
-            text-align: right;
-            color: #707070
-        }
-    }
-    .time_label{
-        font-size:17px;
-        font-weight:300;
-        font-family:Noto Sans KR;
-        color:#707070;
-        letter-spacing:0;
-        text-align:right;
-        line-height:27px;
-        margin-top:46px;
-    }
-    .Join_label {
-        // width: 79px;
-        height: 40px;
-        margin-top: 15px;
-        margin-left: auto;
-        color: #FF0000;
-        font-size: 20px;
-        cursor: pointer
-    }
-    }
-`;
 const NormalIcon = styled.div`
     width: 35px;
     height: 35px;
@@ -623,11 +497,114 @@ const NormalIcon = styled.div`
     background-repeat: no-repeat;
     opacity: ${props => props.opacity};
 `;
+const NoticeModal = styled(Modal)`
+    padding: 60px;
+    max-width: 800px;
+    width: 400px;
+    .close-box {
+        cursor:pointer;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+    .header-txt {
+        display: flex;
+        margin-bottom:20px;
+        .left {
+            margin-left: auto;
+            margin-right: 25px;
+        }
+        .new-notice {
+            font-size: 0.9rem;
+            background-color: #F00;
+            border-radius: 10px;
+            cursor: pointer; 
+            color: white;
+            font-weight: 500;
+            padding: 5px 10px;
+         }
+    }
+    .body-container {
+        width: 100%;
+        .bold {
+            font-weight: 500;
+        }
+        .inputText{
+            width: 350px;
+            margin-left: 67px;
+            padding-left: 22px;
+            padding-right: 22px;
+            font-size: 20px;
+            font-weight:300;
+            font-family:Noto Sans KR;
+            line-height:29px;
+            color:#707070;
+            border:none;
+            border-radius:5px;
+            outline:none;
+            background-color:#EFEFEF;
+          }
+        .title-container {
+            display: flex;
+            margin-bottom: 35px;
+        }
+    }
+    .button-container {
+        display: flex;
+        text-align: center;
+        width: 100%;
+        justify-content: flex-end;
+        margin-top: 25px;
+
+        .submit {
+            border-radius: 10px;
+            padding: 10px;
+            background-color: red;
+            color: white;
+            width: 75px;
+            margin-left: 10px;
+            cursor: default;
+        }
+        .cancel {
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #707070;
+            color: white;
+            width: 75px;
+            margin-left: 10px;
+            cursor: default;
+        }
+    }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+    and (max-width : ${1024}px) { 
+        min-width:100%;
+     }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
+        min-width:100%;
+     }
+`;
 
 class GroupInfoComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = { w: window.innerWidth > 1920 ? 1920 : window.innerWidth, joinDialog: false, likeDialog: false, forkDialog: 0, manager: false, isSeeMore:false, };
+        this.state = {
+            w: window.innerWidth > 1920 ? 1920 : window.innerWidth,
+            joinDialog: false,
+            likeDialog: false,
+            forkDialog: 0,
+            noticeDialog: false,
+            noticeDetail: false,
+            newNoticeDialog: false,
+            manager: false,
+            isSeeMore: false,
+
+            notice: "", noticeCount: 0,
+            // new-notice
+            "notice-title": "",
+            "notice-content": "",
+        };
+
         this.needLogin = this.needLogin.bind(this);
         this.like = this.like.bind(this);
         this.handleMoreViewDescription = this.handleMoreViewDescription.bind(this);
@@ -635,11 +612,32 @@ class GroupInfoComponent extends Component {
         this.changeEditMode = this.changeEditMode.bind(this);
         this.gotoGroup = this.gotoGroup.bind(this);
         this.handleResize = this.handleResize.bind(this);
+        this.requestNewNotice = this.requestNewNotice.bind(this);
+        this.onChangeNoticeContent = this.onChangeNoticeContent.bind(this);
     }
+
     handleResize = () => {
         this.setState({ w: window.innerWidth > 1920 ? 1920 : window.innerWidth });
     }
     componentDidMount() {
+        GetTotalCountGroupNoticeRequest(this.props.id)
+            .then(data => {
+                if (data.success) {
+                    this.setState({ noticeCount: data.data });
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            })
+        GetLastestGroupNoticeRequest(this.props.id)
+            .then(data => {
+                if (data.success) {
+                    this.setState({ notice: data.data });
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            })
         window.addEventListener("resize", this.handleResize);
     }
     componentWillUnmount() {
@@ -649,7 +647,7 @@ class GroupInfoComponent extends Component {
         window.location.href = geturl() + `/groupDetail/${id}`
     }
     async needLogin() {
-       await alert("로그인 해주세요.","확인");
+        await alert("로그인 해주세요.", "확인");
     }
     async like() {
         if (!this.props.userInfo) {
@@ -669,7 +667,7 @@ class GroupInfoComponent extends Component {
         }
     }
     async handleMoreViewDescription(description) {
-        await alert(description,"확인");
+        await alert(description, "확인");
     }
     gotoGroupModify() {
         let href = window.location.href.substring(0, window.location.href.search("groupDetail"));
@@ -682,330 +680,336 @@ class GroupInfoComponent extends Component {
             window.location.reload();
         }
     }
+    requestNewNotice() {
+        if (this.state["notice-title"] == "") {
+            alert("공지사항의 제목을 입력해주세요.");
+            return;
+        }
+        if (this.state["notice-content"] == "") {
+            alert("공지사항의 내용을 입력해주세요.");
+            return;
+        }
+        const obj = { group_id: this.props.id, title: this.state["notice-title"], content: this.state["notice-content"] };
+
+        CreateGroupNoticeRequest &&
+            this.props.token &&
+            CreateGroupNoticeRequest(this.props.token, obj)
+                .then(() => {
+                    alert("공지사항 작성을 완료하였습니다.");
+                })
+                .catch(() => {
+                    alert("작성을 실패하였습니다.");
+                });
+
+        this.setState({
+            newNoticeDialog: false,
+            noticeDialog: true,
+            "notice-title": "",
+            "notice-content": ""
+        })
+    }
+    onChangeNoticeContent(data) {
+        this.setState({ "notice-content": data.content });
+    }
 
     render() {
-        console.log("GROUPINFO==========",this.props);
+        console.log("=============GROUPINFO==========", this.props);
         const { like, GroupDetail, userInfo } = this.props;
         const group_user_id = GroupDetail && GroupDetail.user_id;
         const user_id = userInfo && userInfo.uid;
         const isEditor = group_user_id === user_id;
         const { w, manager } = this.state;
 
-        console.log("::GROUPINFO::\n", this.props, );
-        // console.log(new Date(GroupDetail.create_time).toLocaleDateString());
 
+        const lastest = this.state.notice;
+        const noticeCount = this.state.noticeCount;
 
-        return (
-            <React.Fragment>
-                
-                {this.state.likeDialog ?
-                    <PopupBox>
-                        <div className="message_label">
-                            관심 그룹으로 등록되었습니다.<br />
+        return (<React.Fragment>
+
+            {/*  */}
+            {this.state.likeDialog
+                ? <PopupBox>
+                    <div className="message_label">
+                        관심 그룹으로 등록되었습니다.<br />
                         내 정보에서 확인 가능합니다.
                         </div>
-                    </PopupBox>
-                    : null}
-                <MainBox>
+                </PopupBox>
+                : null}
+
+            {/*  */}
+            {this.state.noticeDialog
+                ? <NoticeModal
+                    open={this.state.noticeDialog}
+                    onClose={() => this.setState({ noticeDialog: false })}>
+
+                    <div className="close-box" onClick={() => this.setState({ noticeDialog: false })} >
+                        <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
+                    </div>
+
+                    <div className="header-txt">
+                        <h2>전체</h2>
+                        <div className="left">
+                            {user_id === this.props.GroupDetail.user_id ?
+                                <div
+                                    className="new-notice"
+                                    onClick={() => { this.setState({ newNoticeDialog: true }) }}>
+                                    새 공지사항 등록하기</div> : null}
+                        </div>
+                    </div>
+
+                    <div className="body-container">
+                        <GroupNoticeListContainer id={this.props.id} open={(detail) => {
+                            this.setState({ noticeDetail: true, notice: detail })
+                        }} />
+                    </div>
+                </NoticeModal>
+                : null}
+
+            {/*  */}
+            {this.state.noticeDetail
+                ? <NoticeModal open={this.state.noticeDetail} onClose={() => this.setState({ noticeDetail: false })}>
+                    <div className="close-box" onClick={() => this.setState({ noticeDetail: false })} >
+                        <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
+                    </div>
+                    <Modal.Content>
+                        <div>
+                            <h2>{this.state.notice.title}</h2>
+                        </div>
+                        <div className="body-container">
+                            <hr />
+                            <div dangerouslySetInnerHTML={{ __html: this.state.notice.content }}>{}</div>
+                        </div>
+                    </Modal.Content>
+                </NoticeModal>
+                : null}
+
+            {this.state.newNoticeDialog
+                ? <NoticeModal
+                    open={this.state.newNoticeDialog} onClose={() => this.setState({ newNoticeDialog: false })}>
+                    <div className="close-box" onClick={() => this.setState({ newNoticeDialog: false })} >
+                        <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
+                    </div>
+                    <div className="header-txt"><h2>공지사항 등록하기</h2></div>
+                    <Modal.Content>
+                        {/* <div className="header-txt"> */}
+                        {/* <h4>새로운 공지사항을 등록합니다.</h4> */}
+                        {/* </div> */}
+                        <div className="body-container">
+                            <div className="title-container">
+                                <div>
+                                    <h3 style={{ color: "#707070" }}>제목</h3>
+                                </div>
+                                <input
+                                    type="text" className="inputText"
+                                    value={this.state["notice-title"]}
+                                    onChange={event =>
+                                        this.setState({ "notice-title": event.target.value })} />
+                            </div>
+                            <div>
+                                <TextController
+                                    item={{ content: "" }}
+                                    getValue={(data) =>
+                                        this.onChangeNoticeContent(data)} />
+                            </div>
+                        </div>
+                        <div className="button-container">
+                            <div onClick={() => this.requestNewNotice()}
+                                className="submit">
+                                등록</div>
+                            <div onClick={() => this.setState({ newNoticeDialog: false, "notice-title": "", "notice-content:": "" })}
+                                className="cancel">
+                                취소</div>
+                        </div>
+                    </Modal.Content>
+                </NoticeModal>
+                : null}
+
+            {/*  */}
+            <MainBox>
                 <div className="wrapper">
+                    {/*  */}
                     <OneSideBox>
                         <div className="flexBox">
-                              {GroupDetail.grand_parentTitle ?
-                              <React.Fragment>
-                                  <div onClick={() => this.gotoGroup(GroupDetail.grand_parentId)}
-                                      className="parent-title"> 
-                                      <div className="label"><TextFormat txt={GroupDetail.grand_parentTitle} /></div>
-                                      <Icon className="triangle right" size="large" color="grey"/>
-                                  </div>
-                              </React.Fragment>
-                              : null}
-                              {GroupDetail.parentName ?
-                                      <React.Fragment>
-                                      <div
-                                          onClick={() => this.gotoGroup(GroupDetail.parentId)}
-                                          className="parent-title">
-                                          <div className="label"><TextFormat txt={GroupDetail.parentName} /></div>
-                                          <Icon className="triangle right" size="large" color="grey"/>
-                                      </div>
-                                      </React.Fragment>
-                              : null}
-                              <div className="title"><TextFormat txt={GroupDetail.title} /></div>
+                            {GroupDetail.grand_parentTitle ?
+                                <React.Fragment>
+                                    <div onClick={() => this.gotoGroup(GroupDetail.grand_parentId)}
+                                        className="parent-title">
+                                        <div className="label"><TextFormat txt={GroupDetail.grand_parentTitle} /></div>
+                                        <Icon className="triangle right" size="large" color="grey" />
+                                    </div>
+                                </React.Fragment>
+                                : null}
+                            {GroupDetail.parentName ?
+                                <React.Fragment>
+                                    <div
+                                        onClick={() => this.gotoGroup(GroupDetail.parentId)}
+                                        className="parent-title">
+                                        <div className="label"><TextFormat txt={GroupDetail.parentName} /></div>
+                                        <Icon className="triangle right" size="large" color="grey" />
+                                    </div>
+                                </React.Fragment>
+                                : null}
+                            <div className="title"><TextFormat txt={GroupDetail.title} /></div>
                         </div>
-                        <Thumbnail  imageURL={(GroupDetail && GroupDetail.img && GroupDetail.img.l_img) ? GroupDetail.img.l_img : noimg} />
+                        <Thumbnail imageURL={(GroupDetail && GroupDetail.img && GroupDetail.img.l_img) ? GroupDetail.img.l_img : noimg} />
+                        {/* count */}
+                        <div className="count-box">
+                            <div className="icon-wrapper">
+                                <IconView width="22px" height="11px" fill="#000000" opacity="0.55" />
+                                <div className="label">{NumberFormat(GroupDetail.view || 0)}</div>
+                            </div>
+                            <div className="icon-wrapper">
+                                <img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} />
+                                <div className="label">{NumberFormat(GroupDetail.like || 0)}</div>
+                            </div>
+                            <div className="icon-wrapper">
+                                {/* <i className="announcement icon" style={{ color: "black", opacity: "0.5" }}></i> */}
+                                {/* <div className="label">{NumberFormat(0 || 0)}</div> */}
+                                <img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55" }} />
+                                <div className="label">{NumberFormat(GroupDetail.design || 0 + GroupDetail.group || 0)}</div>
+                            </div>
+                        </div>
                         <div className="mobileMode">
                             <TextFormat txt={`개설자 : ${GroupDetail.userName}`} chars={15} />
                             <div className="count-box">
-                                        <div className="icon-wrapper">
-                                                <IconView width="22px" height="11px" fill="#000000" opacity="0.55" />
-                                                <div className="label">{NumberFormat(GroupDetail.view || 0)}</div>
-                                        </div>
-                                        <div className="icon-wrapper">
-                                                <img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} />
-                                                <div className="label">{NumberFormat(GroupDetail.like || 0)}</div>
-                                        </div>
-                                        <div className="icon-wrapper">
-                                                <img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55"}} />
-                                                <div className="label">{NumberFormat(GroupDetail.design || 0 + GroupDetail.group || 0)}</div>
-                                        </div>
+                                <div className="icon-wrapper">
+                                    <IconView width="22px" height="11px" fill="#000000" opacity="0.55" />
+                                    <div className="label">{NumberFormat(GroupDetail.view || 0)}</div>
+                                </div>
+                                <div className="icon-wrapper">
+                                    <img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} />
+                                    <div className="label">{NumberFormat(GroupDetail.like || 0)}</div>
+                                </div>
+                                <div className="icon-wrapper">
+                                    <img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55" }} />
+                                    <div className="label">{NumberFormat(GroupDetail.design || 0 + GroupDetail.group || 0)}</div>
+                                </div>
                             </div>
                         </div>
                     </OneSideBox>
-                    <TwoSideBox w={w-450}>
-                                <div className="explainBox">
-                                    <div className="creater">
-                                        <TextFormat txt={`개설자 : ${GroupDetail.userName}`} />
-                                    </div>
-                                    <div className="explanationRegion">
-                                        <p className="explain-text">
-                                        {GroupDetail.explanation}
-                                        </p>
-                                    </div>
-                                                                             {/* count */}
-                              <div className="count-box">
-                                    <div className="icon-wrapper">
-                                            <IconView width="22px" height="11px" fill="#000000" opacity="0.55" />
-                                            <div className="label">{NumberFormat(GroupDetail.view || 0)}</div>
-                                    </div>
-                                    <div className="icon-wrapper">
-                                            <img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} />
-                                            <div className="label">{NumberFormat(GroupDetail.like || 0)}</div>
-                                    </div>
-                                    <div className="icon-wrapper">
-                                            <img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55"}} />
-                                            <div className="label">{NumberFormat(GroupDetail.design || 0 + GroupDetail.group || 0)}</div>
-                                    </div>
+
+                    {/*  */}
+                    <TwoSideBox w={w - 450}>
+                        <div className="explainBox wrapper">
+                            <div className={`creater ${!this.props.group_notice ? "down" : ""}`} >
+                                <TextFormat txt={`개설자 : ${GroupDetail.userName}`} />
                             </div>
+
+                            <div className="explanationRegion">
+                                <p className="explain-text">
+                                    {GroupDetail.explanation}
+                                </p>
+                            </div>
+                            <div className="notice-box bottom">
+                                {lastest ?
+                                    <React.Fragment>
+                                        <div
+                                            style={{ display: "flex", cursor: "pointer" }}
+                                            onClick={() => this.setState({ noticeDetail: true })}>
+                                            <i className="icon announcement" style={{ fontSize: "20px" }}></i>
+                                            {/* <p style={{ fontWeight: "900" }}>[공지]</p> */}
+                                            <p style={{ marginLeft: "10px" }}>{lastest.title}</p>
+                                        </div>
+
+                                        {noticeCount > 1
+                                            ? <div onClick={() => this.setState({ noticeDialog: true })}
+                                                className="more">[더보기]</div>
+                                            : null}
+
+                                    </React.Fragment>
+                                    : null}
+
+                                {user_id === this.props.GroupDetail.user_id ?
+                                    <div
+                                        className="notice-box new-notice"
+                                        onClick={() => { this.setState({ newNoticeDialog: true }) }}>
+                                        새 공지사항 등록하기</div> : null}
+
+                            </div>
+
                         </div>
                     </TwoSideBox>
-                            {/* right */}
-                                <ThreeSideBox>
-                                    <div>
-                                    {isEditor
-                                        ? <React.Fragment>
-                                            <div className="join_label_">
-                                                <JoinGroupContainer /></div>
 
-                                            <div className="ButtonItem" onClick={this.gotoGroupModify}>
-                                                <div className="button_text_label">그룹 정보 수정하기</div>
-                                                <NormalIcon imageURL={iEdit} opacity={0.5} /></div>
+                    {/* right */}
+                    <ThreeSideBox>
+                        <div>
+                            {isEditor
+                                ? <React.Fragment>
+                                    <div className="join_label_">
+                                        <JoinGroupContainer /></div>
 
-                                            <div className="ButtonItem" onClick={this.changeEditMode}>
-                                                
-                                                <div className="button_text_label displayFlex">
+                                    <div className="ButtonItem" onClick={this.gotoGroupModify}>
+                                        <div className="button_text_label">그룹 정보 수정하기</div>
+                                        <NormalIcon imageURL={iEdit} opacity={0.5} /></div>
 
-                                                    {manager ? "관리모드 종료" : "그룹 관리하기"}</div>
-                                                <NormalIcon imageURL={iINOUT} opacity={0.5} />
-                                                {this.props.waitingDesign.length>0||this.props.waitingGroup.length>0?
-                                                    manager?null:<NewAlarmLogo><div className="circle"/></NewAlarmLogo>
-                                                    :null}
-                                                </div>
+                                    <div className="ButtonItem" onClick={this.changeEditMode}>
 
-                                        </React.Fragment>
-                                        : <React.Fragment>
-                                            <div className="join_label_">
-                                                <JoinGroupContainer /></div>
+                                        <div className="button_text_label displayFlex">
 
-                                            <div className="ButtonItem" onClick={this.like}>
-                                                <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
-                                                <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} /></div>
-
-                                        </React.Fragment>}
+                                            {manager ? "관리모드 종료" : "그룹 관리하기"}</div>
+                                        <NormalIcon imageURL={iINOUT} opacity={0.5} />
+                                        {this.props.waitingDesign.length > 0 || this.props.waitingGroup.length > 0 ?
+                                            manager ? null : <NewAlarmLogo><div className="circle" /></NewAlarmLogo>
+                                            : null}
                                     </div>
-                                    <div className="time_label">
-                                        <div>최근 업데이트 {GroupDetail && DateFormat(GroupDetail.update_time)}</div>
-                                        <div>등록 일자 {GroupDetail&&new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').substring(0,new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').length-1)}</div>
-                                        </div> 
 
-                                </ThreeSideBox>
-                                <MobileSeeMore isShow={this.state.isSeeMore}>
-                                            <div className="explain-box font_middle">{GroupDetail.explanation}</div>
-                                            <div className="_txt font_smallthan font_fit">최근 업데이트 {DateFormat(GroupDetail.update_time)}</div>
-                                            <div className="_txt font_smallthan font_fit">등록 일자 
-                                                {GroupDetail && new Date(GroupDetail.create_time).toLocaleDateString('ko-KR')
-                                                .substring(0, new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').length - 1)}
-                                            </div>
-                                            <div className="icon-box">
-                                                <div className="icon-wrapper">
-                                                    <div className="icon-piece"><JoinGroupContainer isIcon={true}/></div>
-                                                </div>
+                                </React.Fragment>
+                                : <React.Fragment>
+                                    <div className="join_label_">
+                                        <JoinGroupContainer /></div>
 
-                                               {isEditor === true ?
-                                                <div className="icon-wrapper">
-                                                    <div onClick={this.gotoGroupModify} className="icon-piece"><MiniIcon iconName={iEdit}/><div className="font_small">그룹수정</div></div>
-                                                </div>
-                                                :                                 
-                                               <div className="icon-wrapper" >
-                                                   <div className="icon-piece" onClick={this.like}><MiniIcon like_opacity={like ? 1 : 0.45} iconName={thumbup}/><div className="font_small">관심그룹</div></div>
-                                                </div>
-                                                }
-                                                {isEditor === true?
-                                                <div className="icon-wrapper">
-                                                    <div onClick={this.changeEditMode} className="icon-piece"><Icon color="grey" className="exchange" size="big"/><div className="font_small">{manager ? "관리종료" : "그룹관리"}</div></div>
-                                                </div>
-                                                :
-                                                null
-                                                }
-                                            </div>
-                        </MobileSeeMore>
-                        <div className="seemore cursor_pointer" onClick={()=>{this.setState({isSeeMore:!this.state.isSeeMore})}}>
-                            <div className="txt">{this.state.isSeeMore==false?"▼ 더보기":"▲ 접기"}</div>
-                            {/* <div className="txt">더보기</div> */}
+                                    <div className="ButtonItem" onClick={this.like}>
+                                        <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
+                                        <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} /></div>
+
+                                </React.Fragment>}
                         </div>
+                        <div className="time_label">
+                            <div>최근 업데이트 {GroupDetail && DateFormat(GroupDetail.update_time)}</div>
+                            <div>등록 일자 {GroupDetail && new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
+                        </div>
+
+                    </ThreeSideBox>
+
+                    {/*  */}
+                    <MobileSeeMore isShow={this.state.isSeeMore}>
+                        <div className="explain-box font_middle">{GroupDetail.explanation}</div>
+                        <div className="_txt font_smallthan font_fit">최근 업데이트 {DateFormat(GroupDetail.update_time)}</div>
+                        <div className="_txt font_smallthan font_fit">등록 일자
+                                                {GroupDetail && new Date(GroupDetail.create_time).toLocaleDateString('ko-KR')
+                                .substring(0, new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').length - 1)}
+                        </div>
+                        <div className="icon-box">
+                            <div className="icon-wrapper">
+                                <div className="icon-piece"><JoinGroupContainer isIcon={true} /></div>
+                            </div>
+
+                            {isEditor === true ?
+                                <div className="icon-wrapper">
+                                    <div onClick={this.gotoGroupModify} className="icon-piece"><MiniIcon iconName={iEdit} /><div className="font_small">그룹수정</div></div>
+                                </div>
+                                :
+                                <div className="icon-wrapper" >
+                                    <div className="icon-piece" onClick={this.like}><MiniIcon like_opacity={like ? 1 : 0.45} iconName={thumbup} /><div className="font_small">관심그룹</div></div>
+                                </div>
+                            }
+                            {isEditor === true ?
+                                <div className="icon-wrapper">
+                                    <div onClick={this.changeEditMode} className="icon-piece"><Icon color="grey" className="exchange" size="big" /><div className="font_small">{manager ? "관리종료" : "그룹관리"}</div></div>
+                                </div>
+                                :
+                                null
+                            }
+                        </div>
+                    </MobileSeeMore>
+                    <div className="seemore cursor_pointer" onClick={() => { this.setState({ isSeeMore: !this.state.isSeeMore }) }}>
+                        <div className="txt">{this.state.isSeeMore == false ? "▼ 더보기" : "▲ 접기"}</div>
+                        {/* <div className="txt">더보기</div> */}
+                    </div>
                 </div>
-                </MainBox>
-            </React.Fragment >)
+            </MainBox>
+        </React.Fragment >)
     }
 };
 
 export default GroupInfoComponent;
-
-
-
-// return (
-//     <React.Fragment>
-        
-//         {this.state.likeDialog ?
-//             <PopupBox>
-//                 <div className="message_label">
-//                     관심 그룹으로 등록되었습니다.<br />
-//                 내 정보에서 확인 가능합니다.
-//                 </div>
-//             </PopupBox>
-//             : null}
-//         <MainBox>
-//         <Header width={w}>
-//             {GroupDetail ? // case of detail exist
-//                 <div style={{ width: `${w}px`, height: "250px", backgroundColor: "#EFEFEF", display: "flex", flexDirection: "row" }}>
-//                     {/* left */}
-//                     <div>
-//                         {/* title */}
-//                         <div
-//                             style={{ display: "flex", flexDirection: "row", }}>
-
-//                             {GroupDetail.grand_parentTitle ?
-//                                 <React.Fragment>
-//                                     <div
-//                                         onClick={() => this.gotoGroup(GroupDetail.grand_parentId)}
-//                                         style={{
-//                                             marginLeft: "15px",
-//                                             marginRight: "15px",
-//                                             marginTop: "15px",
-//                                             curspor: "pointer",
-//                                             display: "flex",
-//                                             flexDirection: "row",
-//                                         }}
-//                                     >
-//                                         <TextFormat txt={GroupDetail.grand_parentTitle} /> <Arrow />
-//                                     </div>
-//                                 </React.Fragment>
-//                                 : null}
-
-//                             {GroupDetail.parentName ?
-//                                 <React.Fragment>
-//                                     <div
-//                                         onClick={() => this.gotoGroup(GroupDetail.parentId)}
-//                                         style={{
-//                                             marginLeft: "15px",
-//                                             marginRight: "15px",
-//                                             marginTop: "15px",
-//                                             curspor: "pointer",
-//                                             display: "flex",
-//                                             flexDirection: "row",
-//                                         }}
-//                                     >
-//                                         <TextFormat txt={GroupDetail.parentName} /> <Arrow />
-//                                     </div>
-//                                 </React.Fragment>
-//                                 : <div style={{ marginLeft: "15px" }}>&nbsp;</div>}
-
-//                             <GroupTitleWrapper>
-//                                 <TextFormat txt={GroupDetail.title} />
-//                             </GroupTitleWrapper>
-
-//                         </div>
-
-//                         {/* thumbnail + detail + description */}
-//                         <div style={{ width: "max-content" }}>
-//                             <div style={{ width: "max-content", marginTop: "15px", marginLeft: "25px", display: "flex", flexDirection: "row" }}>
-
-//                                 {/* thumbnail */}
-//                                 <Thumbnail
-//                                     imageURL={(GroupDetail && GroupDetail.img && GroupDetail.img.l_img) ? GroupDetail.img.l_img : noimg} />
-
-
-//                                 {/* detail + description  */}
-//                                 <ExplainBox w={w - 450}>
-//                                     <div className="board">
-//                                         {/*  */}
-//                                         <div className="creater">
-//                                             <TextFormat txt={`개설자 : ${GroupDetail.userName}`} />
-//                                         </div>
-//                                         <div className="explanationRegion">
-//                                             <p className="explaination">
-//                                                 {GroupDetail.explanation}
-//                                             </p>
-//                                         </div>
-//                                         {/* count */}
-//                                         <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
-//                                             <div style={{ display: "flex", marginRight: "20px" }}>
-//                                                 <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
-//                                                 <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(GroupDetail.view || 0)}</div>
-//                                             </div>
-//                                             <div style={{ display: "flex", marginRight: "20px" }}>
-//                                                 <div><img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} /></div>
-//                                                 <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(GroupDetail.like || 0)}</div>
-//                                             </div>
-//                                             <div style={{ display: "flex" }}>
-//                                                 <div style={{ marginTop: "5px" }}><img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55", marginTop: "10px" }} /></div>
-//                                                 <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px', marginTop: "4px" }}>{NumberFormat(GroupDetail.design || 0 + GroupDetail.group || 0)}</div>
-//                                             </div>
-//                                         </div>
-//                                     </div>
-//                                 </ExplainBox>
-
-
-//                             </div>
-//                         </div>
-//                     </div>
-//                     {/* right */}
-//                     <div style={{ marginLeft: "auto", marginRight: "15px" }}>
-//                         <ButtonRegion>
-//                             {isEditor
-//                                 ? <React.Fragment>
-//                                     <div className="Join_label">
-//                                         <JoinGroupContainer /></div>
-
-//                                     <div className="ButtonItem" onClick={this.gotoGroupModify}>
-//                                         <div className="button_text_label">그룹 정보 수정하기</div>
-//                                         <NormalIcon imageURL={iEdit} opacity={0.5} /></div>
-
-//                                     <div className="ButtonItem" onClick={this.changeEditMode}>
-//                                         <div className="button_text_label">{manager ? "관리모드 종료" : "그룹 관리하기"}</div>
-//                                         <NormalIcon imageURL={iINOUT} opacity={0.5} /></div>
-
-//                                 </React.Fragment>
-//                                 : <React.Fragment>
-//                                     <div className="Join_label">
-//                                         <JoinGroupContainer /></div>
-
-//                                     <div className="ButtonItem" onClick={this.like}>
-//                                         <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
-//                                         <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} /></div>
-
-//                                 </React.Fragment>}
-
-//                             <div className="time_label">
-//                                 <div>최근 업데이트 {GroupDetail && DateFormat(GroupDetail.child_update_time)}</div>
-//                                 <div>등록 일자 {GroupDetail&&new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').substring(0,new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').length-1)}</div>
-//                                 </div> 
-
-//                         </ButtonRegion>
-//                     </div>
-//                 </div>
-//                 : // case of no GroupDetail 
-//                 <div >
-
-//                 </div>}
-//         </Header>
-//         </MainBox>
-//     </React.Fragment >)

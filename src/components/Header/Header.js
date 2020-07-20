@@ -229,6 +229,9 @@ class Header extends Component {
                 Socket.on("getNoti", alarm => {
                     this.setState({ alarm: alarm })
                 })
+                Socket.on("disconnect", () => {
+                    console.log("disconnected");
+                })
             } catch (err) {
                 //TODO v2: doesn't meaning in client, so! report administrator e-mail
                 console.error(err);
