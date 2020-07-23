@@ -160,7 +160,7 @@ class DesignListContainer extends Component {
   }
   async getList(page) {
     const { main_category, sub_category, keyword, this_order } = this.state;
-    return this.props.GetDesignListRequest(page, this_order.keyword, main_category.value, sub_category.value, keyword);
+    return this.props.GetDesignListRequest(page, this_order.keyword||null, main_category.value||null, sub_category.value||null, keyword||null);
   }
   changeCategory(category) {
     if (this.state.this_category === category) {
