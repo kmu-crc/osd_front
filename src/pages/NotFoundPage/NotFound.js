@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
+import ClientTemplate from "templates/ClientTemplate";
 
 const NotFoundContainer = styled.div`
     width: 1920px;
@@ -12,11 +13,11 @@ const NotFoundContainer = styled.div`
 
 class NotFound extends Component {
     render() {
-        return (<React.Fragment>
+        return (<ClientTemplate>
             <NotFoundContainer >
-            <Link to="/">gotoMain</Link>ERROR404: page not found
+                <Link to="/">gotoMain</Link>ERROR404: page not found
             </NotFoundContainer>
-        </React.Fragment>)
+        </ClientTemplate>)
     }
 }
 

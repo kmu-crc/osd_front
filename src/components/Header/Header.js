@@ -230,7 +230,6 @@ class Header extends Component {
                     this.setState({ alarm: alarm })
                 })
             } catch (err) {
-                //TODO v2: doesn't meaning in client, so! report administrator e-mail
                 console.error(err);
             }
         }

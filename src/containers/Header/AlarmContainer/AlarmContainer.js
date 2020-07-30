@@ -7,13 +7,27 @@ import Socket from "modules/Socket"
 
 class AlarmContainer extends Component {
     handleAlarmConfirm = (userID, alarmID) => {
-        Socket.emit("confirm", { user_id: userID, alarmId: alarmID });
+        try {
+            Socket.emit("confirm", { user_id: userID, alarmId: alarmID });
+        }
+        catch (err) {
+            console.error(err);
+        }
     }
     handleAllAlarmConfirm = () => {
-        Socket.emit("allConfirm", { user_id: this.props.userInfo.uid })
+        try {
+            Socket.emit("allConfirm", { user_id: this.props.userInfo.uid })
+        }
+        catch (err) {
+            console.error(err);
+        }
     }
     render() {
-        return <Alarm handleAllAlarmConfirm={this.handleAllAlarmConfirm} handleAlarmConfirm={this.handleAlarmConfirm} {...this.props} />
+        return (<Alarm
+            {...this.props}
+            handleAllAlarmConfirm={this.handleAllAlarmConfirm}
+            handleAlarmConfirm={this.handleAlarmConfirm}
+        />)
     }
 }
 const mapDisaptchToProps = (dispatch) => {
