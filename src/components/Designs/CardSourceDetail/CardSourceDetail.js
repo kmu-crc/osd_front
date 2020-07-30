@@ -1,20 +1,17 @@
 import React, { Component, Fragment } from "react";
 import update from "react-addons-update";
-// import { Controller } from "./Controller";
 import styled from "styled-components";
 import FileIcon from "components/Commons/FileIcon";
 import Loading from "components/Commons/Loading";
 import { FileUploadRequest } from "redux/modules/design";
-
 import osdcss from "opendesign_style";
 import FileController from "./FileController";
-// import TextController from "./TextControllerClassic";
 import TextController from "./TextControllerPlus";
-import EmbController from "./EmbController";
+import LinkController from "./LinkController";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
-// css styling
+// CSS STYLED
 const ControllerWrap = styled.div`
   position: relative;
   width: 100%;
@@ -137,6 +134,13 @@ const ViewContent = styled.div`
     word-break: break-all;
     line-height: 25px;
     color: inherit;
+  }
+  .linkWrap {
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 500;
+    font-family: Noto Sans KR;
   }
   & .goEdit {
     display: none;
@@ -508,7 +512,10 @@ class CardSourceDetail extends Component {
 
                     : (item.type === "TEXT") ?
                       <div className="textWrap" dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
-                      : <div>올바른형식의 아이템이 아닙니다.</div>}
+
+                      : (item.type === "LINK") ?
+                        <div className="linkWrap"><a target="_blank" href={`${item.content}`}>{item.content}</a></div>
+                        : <div>올바른형식의 아이템이 아닙니다.</div>}
             </div>
           )}
         </ViewContent>}
@@ -516,12 +523,14 @@ class CardSourceDetail extends Component {
       {/* edit mode */}
       {(edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
         content && content.length > 0 ? (<Fragment>
-          {content.map(item => {
-            return (<ControllerWrap key={item.uid}>
+          {content.map((item, index) => {
+            return (<ControllerWrap key={item.uid + index}>
               <div className="contentWrap">
                 {item.type === "FILE" ? (<FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />) : null}
                 {item.type === "TEXT" ? (<TextController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />) : null}
-                {item.type === "EMBED" ? (<EmbController />) : null}
+                {item.type === "LINK" ?
+                  <LinkController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                  : null}
               </div>
 
               <DelBtn className="editBtn" type="button" onClick={() => this.onDelete(item.order)}>
@@ -634,14 +643,28 @@ class AddContent extends Component {
       if (this.props.getValue) this.props.getValue(this.state);
     }
   }
+
   render() {
     return (
       <ControllerWrap2>
         <div className="innerBox" >
-          <NewController onClick={() => this.addContent("FILE")} width="max-content" minWidth="116px" height="29px">파일 등록하기</NewController>
-          <NewController onClick={() => this.addContent("TEXT")} width="max-content" minWidth="134px" height="29px">텍스트 입력하기</NewController>
+          <NewController
+            onClick={() => this.addContent("FILE")}
+            width="max-content" minWidth="116px" height="29px">
+            파일 등록하기</NewController>
+          <NewController
+            onClick={() => this.addContent("TEXT")}
+            width="max-content" minWidth="134px" height="29px">
+            텍스트 입력하기</NewController>
+          <NewController
+            onClick={() => this.addContent("LINK")}
+            width="max-content" minWidth="134px" height="29px">
+            하이퍼링크 등록하기</NewController>
         </div>
-        {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
+
+        {this.state.type === "FILE" &&
+          <FileController item={this.state} getValue={this.returnData} />}
+
       </ControllerWrap2>
     );
   }
