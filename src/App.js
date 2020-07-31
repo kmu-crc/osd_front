@@ -80,6 +80,7 @@ class App extends Component {
             <Route path="/footerPrivacy" component={FooterPrivacy} />
             <Route path="/footerPara" component={FooterPara} />
             <Route component={NotFoundPage} />
+            <Route path="/notfound" component={NotFoundPage} />
           </Switch>
         </ClientTemplate>
       </BrowserRouter>
