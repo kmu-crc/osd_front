@@ -318,7 +318,9 @@ export function GetDesignCountRequest(id) {
             }
             dispatch(GetDesignCount(data))
         }).catch((err) => {
-            console.log("err", err)
+            // alert("디자인 정보를 가져오지 못했습니다. 메인페이지로 돌아갑니다.");
+            window.location.href = '/notfound';
+            console.error("err", err)
         })
     }
 }
