@@ -297,14 +297,7 @@ class CardSourceDetail extends Component {
   async onChangeValue(data, order) {
     let copyContent = [...this.state.content];
     copyContent[order] = data;
-    // for (var i = 0; i < copyContent.length; i++) {
-    // if (copyContent[i].order === order) {
-    // copyContent[i].content = data.content;
-    // }
-    // }
     this.setState({ content: copyContent });
-    // console.error(data, order, this.state);
-    // this.setState({ content: update(this.state.content, { [order]: { content: { $set: data.content } } }) });
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async onDelete(order) {
