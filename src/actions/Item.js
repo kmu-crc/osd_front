@@ -271,6 +271,90 @@ const GetItemQuestionFailure = error => ({
   type: types.GET_ITEM_QUESTION_FAILURE
 });
 
+// payment message
+export const CreatePaymentMessageRequest = (data, id, token) => {
+  return dispatch => {
+    dispatch(CreatepaymentMessage());
+    const url = `${host}/item/detail/${id}/paymentMessage`;
+    return fetch(url, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(res => res && dispatch(CreatePaymentMessageSuccess(res)))
+      .catch(error => dispatch(CreatePaymentMessageFailure(error)));
+  };
+};
+
+const CreatepaymentMessage = () => ({
+  type: types.CREATE_PAYMENT_MESSAGE
+});
+const CreatePaymentMessageSuccess = res => ({
+  type: types.CREATE_PAYMENT_MESSAGE_SUCCESS, data: res
+});
+const CreatePaymentMessageFailure = error => ({
+  type: types.CREATE_PAYMENT_MESSAGE_FAILURE
+});
+
+export const DeletePaymentMessageRequest = (id, content_id, token) => {
+  return dispatch => {
+    dispatch(DeletePaymentMessage());
+    const url = `${host}/item/detail/${id}/deletePaymentMessage/${content_id}`;
+    return fetch(url, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "DELETE"
+    })
+      .then(res => res.json())
+      .then(res => dispatch(DeletePaymentMessageSuccess(res)))
+      .catch(error => dispatch(DeletePaymentMessageFailure(error)));
+  };
+};
+
+const DeletePaymentMessage = () => ({
+  type: types.DELETE_PAYMENT_MESSAGE
+});
+const DeletePaymentMessageSuccess = res => ({
+  type: types.DELETE_PAYMENT_MESSAGE_SUCCESS, data: res
+});
+const DeletePaymentMessageFailure = error => ({
+  type: types.DELETE_PAYMENT_MESSAGE_FAILURE
+});
+
+export const GetPaymentMessageRequest = (id, page) => {
+  console.log(id);
+  return dispatch => {
+    dispatch(GetPaymentMessage());
+    const url = `${host}/item/detail/${id}/paymentMessage/${page}`;
+    // console.log(url);
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(data => dispatch(GetPaymenetMessageSuccess(data)))
+      .catch(error => dispatch(GetPaymentMessageFailure(error)));
+  };
+};
+
+const GetPaymentMessage = () => ({
+  type: types.GET_PAYMENT_MESSAGE
+});
+const GetPaymenetMessageSuccess = data => ({
+  type: types.GET_PAYMENT_MESSAGE_SUCCESS, payload: data,
+});
+const GetPaymentMessageFailure = error => ({
+  type: types.GET_PAYMENT_MESSAGE_FAILURE
+});
+
+
+
+
+
+
+
+
+
 // question or answer
 export const CreateItemQuestionRequest = (data, id, token) => {
   return dispatch => {

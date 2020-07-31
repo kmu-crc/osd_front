@@ -13,6 +13,7 @@ const initialState = {
       card_count: 0,
       view_count: 0
     },
+    isbuy:false,
   }
 };
 
@@ -37,6 +38,12 @@ export function ProductDetail(state, action) {
       return update(state, {
         status: {
           Count: { $set: action.Count }
+        }
+      });
+    case types.GET_DID_YOU_BUY_IT:
+      return update(state,{
+        status:{
+          isbuy:{$set:action.isbuy}
         }
       });
     default:

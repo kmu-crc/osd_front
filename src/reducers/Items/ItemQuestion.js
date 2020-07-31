@@ -12,7 +12,17 @@ const initialState = {
         status: "INIT"
     },
     status: {
-        Question: [], Total: 0
+        Question: [], Total: 0,
+        PaymentMessage:[],msgTotal:0,
+    },
+    GetPaymentMessage: {
+        status: "INIT"
+    },
+    PaymentMessage:{
+        status:"INIT"
+    },
+    DeletePaymentMessage:{
+        status:"INIT"
     }
 };
 
@@ -35,7 +45,7 @@ export function ItemQuestion(state, action) {
                 },
                 status: {
                     Question: { $set: action.payload.data.questions },
-                    Total: { $set: action.payload.data.total }
+                    Total: { $set: action.payload.data.total }  
                 }
             });
         case types.GET_ITEM_QUESTION_FAILURE:
@@ -77,6 +87,65 @@ export function ItemQuestion(state, action) {
         case types.DELETE_ITEM_QUESTION_FAILURE:
             return update(state, {
                 DeleteItemQuestion: {
+                    status: { $set: "FAILURE" }
+                }
+            });
+        case types.CREATE_PAYMENT_MESSAGE:
+            return update(state, {
+                PaymentMessage: {
+                    status: { $set: "WATTING" }
+                }
+            });
+        case types.CREATE_PAYMENT_MESSAGE_SUCCESS:
+            return update(state, {
+                PaymentMessage: {
+                    status: { $set: "SUCCESS" }
+                }
+            });
+        case types.CREATE_PAYMENT_MESSAGE_FAILURE:
+            return update(state, {
+                PaymentMessage: {
+                    status: { $set: "FAILURE" }
+                }
+            });
+        case types.DELETE_PAYMENT_MESSAGE:
+            return update(state, {
+                DeletePaymentMessage: {
+                    status: { $set: "WATTING" }
+                }
+            });
+        case types.DELETE_PAYMENT_MESSAGE_SUCCESS:
+            return update(state, {
+                DeletePaymentMessage: {
+                    status: { $set: "SUCCESS" }
+                }
+            });
+        case types.DELETE_PAYMENT_MESSAGE_FAILURE:
+            return update(state, {
+                DeletePaymentMessage: {
+                    status: { $set: "FAILURE" }
+                }
+            });
+        case types.GET_PAYMENT_MESSAGE:
+            return update(state, {
+                GetPaymentMessage: {
+                    status: { $set: "WATTING" }
+                }
+            });
+        case types.GET_PAYMENT_MESSAGE_SUCCESS:
+            // console.log(action.payload);
+            return update(state, {
+                GetPaymentMessage: {
+                    status: { $set: "SUCCESS" }
+                },
+                status: {
+                    PaymentMessage: { $set: action.payload.data.purchaseMessageList },
+                    msgTotal: { $set: action.payload.data.total }
+                }
+            });
+        case types.GET_PAYMENT_MESSAGE_FAILURE:
+            return update(state, {
+                GetPaymentMessage: {
                     status: { $set: "FAILURE" }
                 }
             });

@@ -1,6 +1,7 @@
 import * as types from "actions/ActionTypes";
 import host from "config";
 
+
 // Payment
 export const GetThisPurchasedRequest = (id, token) => {
     return dispatch => {
@@ -81,7 +82,41 @@ const GetItemPaymentSuccess = data => ({
 const GetItemPaymentFailure = error => ({
     type: types.GET_ITEM_PAYMENT_FAILURE
 });
-
+// get my sales-list
+export const GetMySalesRequest = (token, page) => {
+    return dispatch => {
+        const url = `${host}/payment/getsales/${page}`;
+        // console.log(url, token)
+        return fetch(url, {
+            headers: { "Content-Type": "application/json", "x-access-token": token },
+            method: "GET"
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                dispatch(
+                page === 0
+                    ? GetMySalesClear(data || [])
+                    : GetMySales(data || []))})
+            .catch(error => dispatch(GetMySalesFailure(error)));
+    };
+};
+const GetMySales = data => ({
+    type: types.GET_MY_SALES,
+    MySales: data.data.payments,
+    MyTotal: data.data.total
+});
+const GetMySalesClear = data => ({
+    type: types.GET_MY_SALES_CLEAR,
+    MySales: data.data.payments,
+    MySalesAdded: [],
+    MyTotal: data.data.total
+});
+const GetMySalesFailure = error => ({
+    type: types.GET_MY_SALES_FAILURE,
+    MySales: [],
+    MySalesAdded: []
+});
 // get my payment-list
 export const GetMyPaymentRequest = (token, page) => {
     return dispatch => {

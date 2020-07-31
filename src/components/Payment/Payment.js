@@ -276,7 +276,7 @@ class Payment extends Component {
         }
     }
     purchaseThisItem(total) {
-        this.props.purchase(this.props.item, { ...this.props.options, total: total });
+        this.props.purchase(this.props.item);
     }
     render() {
         console.log(this.props);
@@ -323,7 +323,7 @@ class Payment extends Component {
                             <div className="contents flex_center border_gray_left">
                                 <div className="sub_Box">
                                     <div className="font_mini" >total</div>
-                                    <div className="font_big">{NumberFormat(total)}{unit}</div>
+                                    <div className="font_small">{NumberFormat(total)}{unit}</div>
                                 </div>
                             </div>
                         </InfoBox>

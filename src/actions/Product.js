@@ -77,6 +77,18 @@ const GetProductDetail = (data) => {
   console.log("GetProductDetail:",data);
   return { type: types.GET_PRODUCT_DETAIL, ProductDetail: data }
 };
+//is buy
+export function GetDidYouBuyItRequest(item_id,user_id) {
+  return (dispatch) => {
+    const url =  `${host}/product/getBuyit/${item_id}/${user_id}`;
+    return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
+      .then(res => res.json())
+      .then(data => dispatch(GetDidYouBuyIt(data || {isbuy:false})))
+      .catch(err => console.log("err", err));
+  }
+};
+function GetDidYouBuyIt(data) { return { type: types.GET_DID_YOU_BUY_IT, isbuy: data } };
+//
 export function GetProductCountRequest(id) {
   return (dispatch) => {
     const url =  `${host}/product/getCount/${id}`;

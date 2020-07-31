@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import ItemDetail from "components/Items/ItemDetail";
+import ItemPurchase from "components/Items/ItemPurchase";
 import Loading from "components/Commons/Loading";
 import {
   // GetProductDetailRequest,
@@ -12,19 +12,24 @@ import { CreateItemPaymentRequest,  /*GetItemPaymentRequest*/ } from "actions/Pa
 import { GetItemDetailRequest } from "actions/Item";
 import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 import { GetMyPointRequest, } from "actions/Point";
+import { GetPaymentMessageRequest, CreatePaymentMessageRequest, /*DeleteItemQuestionRequest*/ } from "actions/Item";
 
-class ProductDetailContainer extends Component {
+class ProductPurchaseContainer extends Component {
   constructor(props) {
     super(props);
     this.Payment = this.Payment.bind(this);
   }
   componentDidMount() {
+    console.log(this.props.payment,this.props.id);
     this.props.GetItemDetailRequest(this.props.id, this.props.token)
       .then(this.props.userInfo &&this.props.GetDidYouBuyItRequest(this.props.id, this.props.userInfo.uid))
       .then(this.props.GetLikeProductRequest(this.props.id, this.props.token))
       .then(
         this.props.userInfo &&
-        this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token));
+        this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token))
+      .then(
+        this.props.GetPaymentMessageRequest(this.props.payment,0)
+        )
   }
   Payment(item, option) {
     this.props.CreateItemPaymentRequest(
@@ -58,13 +63,14 @@ class ProductDetailContainer extends Component {
     return this.props.ItemDetail ?
       this.props.ItemDetail.private === 1 && !yours ?
         this.ThisIsPrivateItem() :
-        <ItemDetail purchase={this.Payment} itemId={this.props.ItemDetail["item-id"]} item={this.props.ItemDetail} {...this.props} />
+        <ItemPurchase purchase={this.Payment} itemId={this.props.ItemDetail["item-id"]} item={this.props.ItemDetail} {...this.props} />
       : <Loading />
   }
 }
 
 const mapStateToProps = (state) => ({
   ItemDetail: state.ItemDetail.status.ItemDetail,
+  paymentMessageList:state.ItemQuestion.status.PaymentMessage,
   Count: state.ProductDetail.status.Count,
   isbuy: state.ProductDetail.status.isbuy,
   like: state.ProductLike.status.like,
@@ -86,6 +92,8 @@ const mapDispatchToProps = (dispatch) => ({
   addCartRequest: (items, token) => dispatch(addCartRequest(items, token)),
   GetMyPointRequest: (id, token) => dispatch(GetMyPointRequest(id, token)),
   CreateItemPaymentRequest: (data, id, token) => dispatch(CreateItemPaymentRequest(data, id, token)),
+  GetPaymentMessageRequest: (id, page) => dispatch(GetPaymentMessageRequest(id, page)),
+  CreatePaymentMessageRequest: (data, id, token) => dispatch(CreatePaymentMessageRequest(data, id, token)),
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductDetailContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductPurchaseContainer));

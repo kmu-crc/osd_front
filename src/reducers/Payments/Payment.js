@@ -6,6 +6,8 @@ const initialState = {
     MyPayment: { status: "INIT" },
     MyRequestItem: { status: "INIT" },
 
+
+
     status: {
         isPurchased: false,
 
@@ -15,6 +17,10 @@ const initialState = {
         MyPayment: [],
         MyPaymentAdded: [],
         MyTotal: 0,
+
+        MySales: [],
+        MySalesAdded: [],
+        MySalesTotal: 0,
 
         MyRequestItem: [],
         MyRequestItemAdded: [],
@@ -75,7 +81,30 @@ export function Payment(state, action) {
                     MyPaymentAdded: { $set: action.MyPayment }
                 }
             });
-
+        case types.GET_MY_SALES:
+            console.log(action);
+            return update(state, {
+                status: {
+                    MySales: { $set: action.MySales },
+                    MySalesAdded: { $push: action.MySales },
+                    MyTotal: { $set: action.MyTotal }
+                }
+            });
+        case types.GET_MY_SALES_CLEAR:
+            return update(state, {
+                status: {
+                    MySales: { $set: action.MySales },
+                    MySalesAdded: { $set: action.MySales },
+                    MyTotal: { $set: action.MyTotal }
+                }
+            });
+        case types.GET_MY_SALES_FAILURE:
+            return update(state, {
+                status: {
+                    MySales: { $set: action.MySales },
+                    MySalesAdded: { $set: action.MySales }
+                }
+            });
 
         case types.GET_MY_REQUST_ITEM:
             console.log(action);

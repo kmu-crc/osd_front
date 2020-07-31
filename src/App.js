@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 // REDUX //
 import { GetCategoryAllRequest } from "actions/Categorys";
 // MARKET //
-import ProductListPage, { ProductDetailPage } from "pages/ProductPage";
+import ProductListPage, { ProductDetailPage,ProductPurchasePage } from "pages/ProductPage";
 import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage";
 import MakerListPage, { MakerDetailPage } from "pages/MakerPage";
 import CreateProductPage from "pages/CreateProductPage";
@@ -72,6 +72,9 @@ class App extends Component {
             <Route path="/productModify/:id" component={RequiresAuth(ModifyItemPage)} />
             <Route path="/productDetail/:id" component={ProductDetailPage} />
             <Route path="/product/:sorting?/:cate1?/:cate2?" component={ProductListPage} />
+            {/*PURCHASE*/}
+            <Route path="/productPurchase/:id/:payment" component={ProductPurchasePage} />
+
             {/* REQUEST */}
             <Route path="/createRequest" component={RequiresAuth(CreateRequestPage)} />
             <Route path="/requestDetail/:id" component={RequestDetailPage} />

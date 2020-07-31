@@ -201,22 +201,6 @@ const ListElement = styled.div`
     padding:5px;
     // padding-left:15px;
   }
-  // .title{
-  //   min-width:70%;
-  //   padding:5px;
-  // }
-  // .writer{
-  //   min-width:10%;
-  //   padding:5px;
-  //   display:flex;
-  //   // justify-content:center;
-  // }
-  // .date{
-  //   min-width:20%;
-  //   padding:5px;
-  //   display:flex;
-  //   // justify-content:center;
-  // }
 `;
 
 class RequestList extends Component {

@@ -8,6 +8,7 @@ import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer
 import LikeInMakerContainer from "containers/Maker/LikeInMakerContainer/LikeInMakerContainer";
 import LikeInItemContainer from "containers/Products/LikeInItemContainer/LikeInItemContainer";
 import MyPaymentContainer from "containers/Payment/MyPaymentContainer";
+import MySalesContainer from "containers/Payment/MySalesContainer";
 import MyRequestItemContainer from "containers/Payment/MyRequestItemContainer";
 import UploadItemContainer from "containers/Items/UploadItemContainer/UploadItemContainer";
 import MyProjectItemContainer from "containers/Items/MyProjectItemContainer/MyProjectItemContainer";
@@ -318,6 +319,7 @@ class MyDetail extends Component {
       "request_item",
       "modify_myinfo",
       "my_point_status",
+      "sell_item",
     ]
     this.setState({ selectMenu: menuNames.indexOf(event.target.id) });
   }
@@ -398,8 +400,16 @@ class MyDetail extends Component {
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 9 ? "red" : null} id="modify_myinfo">내 정보 수정</MenuButton>
               <div className="hrLine" />
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 0 ? "red" : null} id="orderlist">구입아이템</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 0 ? "red" : null} id="orderlist">구입 아이템</MenuButton>
               <div className="hrLine" />
+              {(MyDetail.isDesigner==1||MyDetail.isMaker==1)?
+              <React.Fragment>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 11? "red" : null} id="sell_item">판매 아이템</MenuButton>
+              <div className="hrLine" />
+              </React.Fragment>
+              :
+              null  
+              }
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 8 ? "red" : null} id="request_item">의뢰아이템</MenuButton>
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 7 ? "red" : null} id="upload_item">등록 아이템</MenuButton>
@@ -437,6 +447,9 @@ class MyDetail extends Component {
                 <MyUploadDesignReqBoardContainer id={this.props.userInfo.uid} />}
               {selectMenu === 6 &&
                 <MyUploadMakerReqBoardContainer id={this.props.userInfo.uid} />
+              }
+              {selectMenu === 11 &&
+                <MySalesContainer id={this.props.userInfo.uid} />
               }
             </BoardBox>
           </div>

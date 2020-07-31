@@ -1,23 +1,70 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Star from "components/Commons/Star";
 import noimg from "source/noimg.png";
 import Cross from "components/Commons/Cross"
 
 import who from "source/thumbnail.png";
 import CardSourceDetailContainer from "containers/Items/CardSourceDetailContainer";
 import ItemStepContainer from "containers/Items/ItemStepContainer";
-import ItemQuestionContainer from "containers/Items/ItemQuestionContainer";
-import ItemReviewContainer from "containers/Items/ItemReviewContainer";
-import PointFormat from "modules/PointFormat";
-import ReviewDetailModal from "components/Commons/ReviewDetailModal";
-import ConnectedMemberContainer from "containers/Items/ConnectedMemberContainer";
 import { Rating } from 'semantic-ui-react'
-// import {confirmAlert} from "react-confirm-alert";
-// import {options} from "components/Commons/InputItem/AlertConfirm"
-// import NumberFormat from "modules/NumberFormat";
-import { Link } from "react-router-dom";
 
+const MessageBox = styled.div`
+  padding:10px;
+`
+const CustomButton = styled.div`
+    width:${props => props.width}px;
+    height:${props => props.height}px;
+    border:1px solid #dddddd;
+    background-color:${props => props.backgroundColor};
+    font-size:${props => props.fontSize}pt;
+    font-weight:500;
+    color:white;
+    text-align:center;
+    padding:${props => props.padding}px;
+    margin-top:-1px;
+    border-radius:20px;
+    &:hover{
+        // background-color:${props => props.onMouseColor};
+        cursor:pointer;
+    }
+`
+
+const InputText = styled.input.attrs({ type: "text" })`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:43px;
+  border-radius:20px;
+  font-family:Noto Sans KR;
+  font-size:20px;
+  background-color:#E9E9E9;
+  margin-right:21px;
+  outline:none;
+  border:0px;
+  padding: 0.67857143em 1em;
+
+`;
+const MessageWrapper = styled.div`
+    width:100%;
+    display:flex;
+    justify-content:${props=>props.isMy?"flex-start":"flex-start"};
+    align-items:flex-end;
+    flex-direction:${props=>props.isMy?"row-reverse":"row"};
+    margin-bottom:10px;
+  .msg_bubble{
+    max-width:400px;
+    background-color:${props=>props.isMy?"#EAA18A":"#EFEFEF"};
+    padding:10px;
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    border-radius:10px;
+  }
+  .msg_time{
+    width:max-content;
+    height:min-content;
+    font-size:10px;
+    margin:5px;
+  }
+`
 const Wrapper = styled.div`
   // * { border: 1px solid red; };
   margin-top: 50px;
@@ -185,7 +232,7 @@ const ItemInfo = styled.div`
 `;
 const Introduction = styled.div`
   position: relative;
-  height: 250px;
+  height: 100%;
   opacity: 1;
   font-family: Noto Sans KR;
   .wrapItem{
@@ -455,7 +502,7 @@ const PeerBox = styled.div`
   }
 `
 
-class ItemDetail extends Component {
+class ItemPurchase extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -464,7 +511,8 @@ class ItemDetail extends Component {
       expandingContent: false, expandingReview: false, expandingBoard: false,
       isexpandingContent: false, isexpandingReview: false, isexpandingBoard: false,
       //for review detail
-      reviewdetail: false, detail: null
+      reviewdetail: false, detail: null,
+      message:"",
     }
     this.onClickLike = this.onClickLike.bind(this);
     this.buyThisItem = this.buyThisItem.bind(this);
@@ -472,6 +520,8 @@ class ItemDetail extends Component {
     this.selectMethod = this.selectMethod.bind(this);
     this.gotoChargePoint = this.gotoChargePoint.bind(this);
     this.purchaseThisItem = this.purchaseThisItem.bind(this);
+    this.writeMessage = this.writeMessage.bind(this);
+    this.onChangeMessage = this.onChangeMessage.bind(this);
   };
   componentWillUpdate(nextProps) {
     if (this.props.like !== nextProps.like) {
@@ -517,20 +567,27 @@ class ItemDetail extends Component {
   purchaseThisItem() {
     this.props.purchase(this.props.item);
   }
+  onChangeMessage(event){
+    this.setState({message:event.target.value});
+    document.getElementById("advicebox").focus();
+  }
+  async writeMessage(){
+    console.log(this.props.id,this.props.token);
+    const data = {
+      payment_id:this.props.payment,
+      from_id:this.props.userInfo.uid,
+      message:this.state.message,
+    }
+    await this.props.CreatePaymentMessageRequest(data,this.props.id,this.props.token)
+    await this.props.GetPaymentMessageRequest(this.props.payment,0)
+  }
 
   render() {
+    console.log(this.props);
     const item = this.props.item;
     const { expandingContent, expandingReview, expandingBoard } = this.state;
     const { score } = this.props.item;
     let tag = this.props.ItemDetail.tag + "";
-
-
-    const isWrapperContent = window.document.getElementById("detail_board") &&
-      window.document.getElementById("detail_board").scrollHeight > window.document.getElementById("detail_board").clientHeight;
-    console.log(window.document.getElementById("detail_board") &&
-      window.document.getElementById("detail_board").scrollHeight > window.document.getElementById("detail_board").clientHeight)
-    // console.log(window.document.getElementById("detail_board")&&window.document.getElementById("detail_board").
-    // ,window.document.getElementById("detail_board")&&window.document.getElementById("detail_board").scrollHeight)
 
     const RenderStar = () => {
       return <Rating size="massive" name="score" icon='star' defaultRating={parseInt(score, 10)} maxRating={5} disabled />
@@ -557,12 +614,36 @@ class ItemDetail extends Component {
         </MemberBox>
       );
     }
+    const Type_productContent=()=>{
+      return <Content
+      id="contents_rgn"
+      style={{ marginTop: "15px", overflow: "hidden" }}
+      // height={expandingContent ? "100%" : "400px"}
+      width={1600}>
+
+    </Content>
+    }
+    const Type_adviceContent=()=>{
+      return <Content
+      id="contents_rgn"
+      style={{ marginTop: "15px", overflow: "hidden" }}
+      // height={expandingContent ? "100%" : "400px"}
+      width={1600}>
+
+    </Content>
+    }
+
+    const Type_closeContent=()=>{
+      return <Content
+      id="contents_rgn"
+      style={{ marginTop: "15px", overflow: "hidden" }}
+      // height={expandingContent ? "100%" : "400px"}
+      width={1600}>
+
+    </Content>
+    }
     return item ?
       <React.Fragment>
-        {/* {(this.props.userInfo && item.members && item.members.length > 1)
-          ? <ConnectedMemberContainer id={this.props.itemId} members={item.members} userInfo={this.props.userInfo} />
-          : null} */}
-
         <Wrapper>
           {/* thumbnail and item-info */}
           <div className="line">
@@ -619,172 +700,79 @@ class ItemDetail extends Component {
                     <div className="gradient_box" ><div>▾</div></div>
                   </div>
                 </Introduction>
-
-                <div className="expert line">
-                  <div className="price-and-score line">
-                    <div className="price" style={{ marginRight: "35px" }}>
-                      {PointFormat(item.price / 1000 || 0)} 천원</div>
-                    <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
-                      {/* {Star(item.score, 28)}({item.total || 0}) */}
-                      {/* <Rating name="score" icon='star' defaultRating={parseInt(score,10)} maxRating={5} disabled /> */}
-                      <RenderStar />
-                    </div>
-                  </div>
-                </div>
-
-                {/* 
-                <div className="options">
-                { / * {item.options.map(opt => <Options key={opt} data={opt} />)} * / }
-                <div className="combo-wrapper line">
-                <div className="text">모양</div>
-                <div className="box WIDTH360"></div>
-                </div>
-                <div className="combo-wrapper line">
-                <div className="text">수량</div>
-                <div className="box WIDTH178"></div>
-                </div>
-                </div>
-            */}
-
-                <div className="bottom">
-                  <div className="buttons line">
-                    {item.user_id === (this.props.userInfo && this.props.userInfo.uid) ?
-                      <div className="button first">
-                        <div onClick={this.modifyThisItem}>
-                          <div className="text">아이템 수정/삭제</div>
-                        </div>
-                      </div>
-                      :
-
-                      <div className="button first">
-                      <Link onClick={(e)=>{
-                        return this.props.isbuy>0?
-                          window.confirm("이미 구매하신 이력이 존재합니다. 계속 진행하겠습니까?")?null:e.preventDefault()
-                          :null
-                      }} to={{
-                        pathname: `/payment`, state: {
-                          item:this.props.item,
-                          custom:null,
-                          options:null
-                        }
-                      }}> 
-                        <div>
-                        {/* <div onClick={_ => this.buyThisItem(_, item)} > */}
-
-                          <div className="text">아이템 구입</div>
-                        </div>
-                        </Link>
-                      </div>
-                    }
-                    {this.state.isLike === false ?
-                      <div className="button second" onClick={this.onClickLike}>
-                        <div className="text">관심항목추가</div></div>
-                      :
-                      <div className="button second active" onClick={this.onClickLike}>
-                        <div className="text">관심항목</div></div>}
-                  </div>
-                </div>
               </div>
             </ItemInfo>
 
           </div>
 
-          {/* review and board */}
-          <div style={{ marginTop: "35px" }}>
-            <Board style={{ marginTop: "15px", overflow: "hidden" }} height={expandingReview ? "100%" : "315px"}>
-              <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", display: "flex" }}>
-                <div style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: "#FFFFFF" }}>리뷰</div>
-              </div>
-
-              <ItemReviewContainer
-                user_id={item.user_id}
-                handler={detail => this.setState({ reviewdetail: true, detail: detail })}
-                isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} />
-
-              {this.state.reviewdetail ?
-                <ReviewDetailModal
-                  open={this.state.reviewdetail}
-                  close={() => this.setState({ reviewdetail: false })}
-                  detail={this.state.detail} /> : null}
-              {this.state.isexpandingReview && <CoverGrident isGradient={!expandingReview} />}
-            </Board>
-
-            {
-              this.state.isexpandingReview &&
-              <ExpandingButton width={1600}>
-                <div onClick={() => this.setState({ expandingReview: !expandingReview })} className="button">
-                  <div className="font">
-                    {expandingReview ? "▲접기" : "▼펼쳐보기"}
-                  </div>
-                </div>
-              </ExpandingButton>
-            }
-
-          </div>
-
-          <div style={{ marginTop: "35px" }}>
-            <Board style={{ marginTop: "15px", overflow: "hidden" }} height={expandingBoard ? "100%" : "250px"}>
-              <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", display: "flex" }}>
-                <div
-                  style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: "#FFFFFF" }}>게시판</div>
-              </div>
-              <ItemQuestionContainer user_id={item.user_id} isExpanding={(result) => { this.setState({ isexpandingBoard: result }) }} />
-              {!this.state.isexpandingBoard && <CoverGrident isGradient={!expandingBoard} />}
-            </Board>
-            {!this.state.isexpandingBoard &&
-
-              <ExpandingButton width={1600}>
-                <div onClick={() => this.setState({ expandingBoard: !expandingBoard })} className="button">
-                  <div className="font">
-                    {expandingBoard ? "▲접기" : "▼펼쳐보기"}
-                  </div>
-                </div>
-              </ExpandingButton>
-            }
-
-          </div>
-
           {/* item-contents */}
           <div style={{ marginTop: "35px" }}>
-            <Content
-              id="contents_rgn"
-              style={{ marginTop: "15px", overflow: "hidden" }}
-              // height={expandingContent ? "100%" : "400px"}
-              width={1600}>
+          <Content
+            id="contents_rgn"
+            style={{ marginTop: "15px", overflow: "hidden" }}
+            width={1600}>
+{/** -------------------- CLOSE CONTENT ----------------------- */}
+            {item&&(item.type==0||item.type==3||item.type==4||item.type==5||item.type==6)?
+            <React.Fragment>
+                  <div className="title">아이템 상세내용</div>
+                  {item && item.upload_type === "blog"? <div className="detail_board" id="detail_board">
+                      <CardSourceDetailContainer bought={item.bought} isCancel  cardId={item.cardId} />
+                    </div>
+                    : null}
+                  {item && item.upload_type === "project"?
+                    <div className="detail_board" id="detail_board">
+                      <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} />
+                    </div>
+                    : null}
+            </React.Fragment>
+            :null}
+{/** -------------------- PROJECT ----------------------- */}
+            {item&&(item.type==1)? 
+            <React.Fragment>
               <div className="title">아이템 상세내용</div>
-              {item && item.upload_type === "blog"
-                ? <div className="detail_board" id="detail_board">
-                  <CardSourceDetailContainer
-                    bought={item.bought}
-                    isCancel
-                    cardId={item.cardId}
-                  // edit={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
-                  />
-                </div>
-                : null}
-              {item && item.upload_type === "project"
-                ?
-                <div className="detail_board" id="detail_board">
-                  <ItemStepContainer
-                    item={item}
-                    id={item["item-id"]}
-                    bought={item.bought}
-                  // editor={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
-                  />
-                </div>
-                : null}
-              {/* {isWrapperContent&&<CoverGrident isGradient={!expandingContent}/>} */}
-            </Content>
-            {/* {isWrapperContent&&
-           <ExpandingButton width={1600}>
-              <div onClick={() => this.setState({ expandingContent: !expandingContent })} className="button">
-                <div className="font">
-                  {expandingContent ? "▲ 접기" : "▼ 펼쳐보기"}
-                </div>
+                {item && item.upload_type === "blog"? 
+                  <div className="detail_board" id="detail_board">
+                    <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} />
+                  </div>
+                  : null}
+                {item && item.upload_type === "project"?
+                  <div className="detail_board" id="detail_board">
+                    <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} />
+                  </div>
+                  : null}
+            </React.Fragment>
+            :null}
+{/** -------------------- ADVICE ----------------------- */}
+            {item&&(item.type==2)?
+            <React.Fragment>
+              <div className="title">자문/상담</div>
+              <MessageBox>
+                {
+                  this.props.paymentMessageList&&
+                  this.props.paymentMessageList.map((item,index)=>{
+                    return <MessageWrapper isMy={item.from_id==this.props.userInfo.uid}> 
+                      <div className="msg_bubble">{item.message}</div>      
+                      <div className="msg_time">{item.create_time}</div>    
+                    </MessageWrapper>
+                  })
+                }
+              </MessageBox>
+              <div style={{display:"flex"}}>
+              <InputText id="advicebox" value={this.state.message} onChange={this.onChangeMessage}/>
+              <CustomButton width="100" height="30px" backgroundColor="#707070" fontSize="12" padding="5" onClick={this.writeMessage}>보내기</CustomButton>
               </div>
-            </ExpandingButton>
-           }  */}
+            </React.Fragment>
+            :null}
+{/** -------------------- PRODUCT CONTENT ----------------------- */}
+            {item&&(item.type==7)?
+            <React.Fragment>
+                    <div className="title">제작품 문의</div>
+            </React.Fragment>
+            :null}
+
+            </Content>
           </div>
+{/** ---------------------------------------------------------- */}
 
         </Wrapper>
       </React.Fragment>
@@ -793,4 +781,4 @@ class ItemDetail extends Component {
   }
 }
 
-export default ItemDetail;
+export default ItemPurchase;
