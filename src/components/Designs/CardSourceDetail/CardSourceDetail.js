@@ -236,7 +236,14 @@ const EditorBottonWrapper = styled.div`
 class CardSourceDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = { edit: false, content: this.props.content || [], origin: this.props.origin || [], loading: false };
+
+    this.state = {
+      edit: false,
+      content: this.props.content || [],
+      origin: this.props.origin || [],
+      loading: false
+    };
+
     this.onSubmit = this.onSubmit.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.changeMode = this.changeMode.bind(this);
@@ -245,8 +252,8 @@ class CardSourceDetail extends Component {
     this.onChangeValue = this.onChangeValue.bind(this);
     this.onChangeFile = this.onChangeFile.bind(this);
     this.moveItem = this.moveItem.bind(this);
-    this.moveUpItem = this.moveUpItem.bind(this);
-    this.moveDownItem = this.moveDownItem.bind(this);
+    // this.verifyContentOrder = this.verifyContentOrder.bind(this);
+
   }
   componentDidMount() {
     if (this.props.uid !== "new") {
@@ -288,14 +295,9 @@ class CardSourceDetail extends Component {
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async onChangeValue(data, order) {
-    // let copyContent = [...this.state.content];
-    // for (var i = 0; i < copyContent.length; i++) {
-    // if (copyContent[i].order === order) {
-    // copyContent[i].content = data.content;
-    // }
-    // }
-    // this.setState({ content: copyContent });
-    this.setState({ content: update(this.state.content, { [order]: { content: { $set: data.content } } }) });
+    let copyContent = [...this.state.content];
+    copyContent[order] = data;
+    this.setState({ content: copyContent });
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async onDelete(order) {
@@ -337,36 +339,22 @@ class CardSourceDetail extends Component {
     await this.setState({ content: newContent })
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
-  async moveItem(data) {
+  async moveItem(A, B) {
     if (!this.state.content) {
       return;
     }
-    let copyContent = [...this.state.content];
-    let indexOld = -1;
-    let indexNew = -1;
-    for (var i = 0; i < copyContent.length; i++) {
-      if (copyContent[i].order === data.old) {
-        indexOld = i;
+    const copy = [...this.state.content];
+    [copy[A], copy[B]] = [copy[B], copy[A]];
+    copy.map((ele, index) => {
+      if (ele.order !== index) {
+        ele.order = index;
       }
-      if (copyContent[i].order === data.new) {
-        indexNew = i;
-      }
-    }
-    let t = copyContent[indexOld];
-    copyContent[indexOld] = copyContent[indexNew];
-    copyContent[indexNew] = t;
-    copyContent[indexNew].order = data.new;
-    copyContent[indexOld].order = data.old;
-    await this.setState({ content: copyContent });
+      return ele;
+    })
+    this.setState({ content: copy });
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
+    return;
   }
-  async moveUpItem(order) {
-    this.moveItem({ old: order, new: order - 1 });
-  };
-  async moveDownItem(order) {
-    this.moveItem({ old: order, new: order + 1 });
-  };
-
   async onSubmit(event) {
     let newContent = [...this.state.content];
     let oldContent = [...this.state.origin];
@@ -470,6 +458,7 @@ class CardSourceDetail extends Component {
   changeMode() {
     this.setState({ edit: !this.state.edit });
   }
+
   render() {
     const { edit, content, loading } = this.state;
     console.log("content:", this.state.content);
@@ -487,7 +476,7 @@ class CardSourceDetail extends Component {
       {this.props.uid && (!edit && !this.props.edit) && content.length > 0 &&
         <ViewContent>
           {content.map((item, index) =>
-            <div key={index + item.uid}>
+            <div key={index + item}>
               {(item.type === "FILE" && item.data_type === "image") ?
                 <div className="imgContent" >
                   <img src={item.content} alt="이미지" download={item.file_name} />
@@ -524,24 +513,36 @@ class CardSourceDetail extends Component {
       {(edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
         content && content.length > 0 ? (<Fragment>
           {content.map((item, index) => {
-            console.log("item---",item);
-            return (<ControllerWrap key={item.uid + index}>
+            console.log("item---", item);
+            return (<ControllerWrap key={item + index}>
               <div className="contentWrap">
-                {item.type === "FILE" ? (<FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />) : null}
-                {item.type === "TEXT" ? (<TextController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />) : null}
-                {item.type === "LINK" ?
-                  <LinkController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                  : null}
+                {item.type === "FILE" ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} /> : null}
+                {item.type === "TEXT" ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} /> : null}
+                {item.type === "LINK" ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} /> : null}
               </div>
 
-              <DelBtn className="editBtn" type="button" onClick={() => this.onDelete(item.order)}>
-                <i className="trash alternate icon large" /></DelBtn>
+              <DelBtn
+                type="button"
+                className="editBtn"
+                onClick={() => this.onDelete(item.order)}>
+                <i className="trash alternate icon large" />
+              </DelBtn>
+
               {content.length - 1 >= item.order && item.order !== 0 ?
-                <UpBtn type="button" className="editBtn" onClick={() => this.moveUpItem(item.order)}>
-                  <i className="angle up alternate icon large" /></UpBtn> : null}
+                <UpBtn
+                  type="button"
+                  className="editBtn"
+                  onClick={() => this.moveItem(item.order, item.order - 1)}>
+                  <i className="angle up alternate icon large" />
+                </UpBtn> : null}
+
               {content.length - 1 !== item.order && item.order >= 0 ?
-                <DownBtn type="button" className="editBtn" onClick={() => this.moveDownItem(item.order)}>
-                  <i className="angle down alternate icon large" /></DownBtn> : null}
+                <DownBtn
+                  type="button"
+                  className="editBtn"
+                  onClick={() => this.moveItem(item.order, item.order + 1)}>
+                  <i className="angle down alternate icon large" />
+                </DownBtn> : null}
             </ControllerWrap>)
           })}
           <AddContent getValue={this.onAddValue} order={content.length} />
