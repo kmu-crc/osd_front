@@ -24,6 +24,12 @@ const LinkMenu = styled.div`
 `;
 
 class LinkController extends Component {
+  constructor(props){
+    super(props);
+    this.state={};
+    this.onSave=this.onSave.bind(this);
+    this.onChangeLink=this.onChangeLink.bind(this);
+  }
   state = {};
   componentDidMount() {
     if (this.props.item) {
@@ -37,9 +43,13 @@ class LinkController extends Component {
   // document.getElementById("linkValContainer").innerText = this.props.value;
   // }
   // }
-  onSave = async () => {
-    const newValue = document.getElementById('linkValContainer').innerHTML;
-    await this.setState({ content: newValue });
+  async onChangeLink(event){
+    await this.setState({ content: event.target.innerHTML });
+    // this.props.getValue(this.state);
+  }
+  async onSave(event){
+    // const newValue = document.getElementById('linkValContainer').innerHTML;
+    // await this.setState({ content: newValue });
     this.props.getValue(this.state);
   }
   setInit = () => {
@@ -50,11 +60,12 @@ class LinkController extends Component {
 
   render() {
     const { item } = this.props;
-    console.log("hyper-link", item);
+    // console.log("hyper-link", item);
     return (
       <LinkEditWrap>
         <LinkMenu>링크달기</LinkMenu>
         <div
+          onInput={this.onChangeLink}
           dangerouslySetInnerHTML={{ __html: item.content }}
           contentEditable="true"
           id="linkValContainer"

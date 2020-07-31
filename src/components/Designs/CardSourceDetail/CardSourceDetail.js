@@ -472,7 +472,7 @@ class CardSourceDetail extends Component {
   }
   render() {
     const { edit, content, loading } = this.state;
-    console.log("debug - CardSourceDetail:", this.state.loading, "loading");
+    console.log("content:", this.state.content);
     return (<div>
       {loading ? <Loading /> : null}
       {/* <ButtonContainer>
@@ -524,6 +524,7 @@ class CardSourceDetail extends Component {
       {(edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
         content && content.length > 0 ? (<Fragment>
           {content.map((item, index) => {
+            console.log("item---",item);
             return (<ControllerWrap key={item.uid + index}>
               <div className="contentWrap">
                 {item.type === "FILE" ? (<FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />) : null}
