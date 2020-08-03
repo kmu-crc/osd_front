@@ -21,7 +21,7 @@ import TextFormat from 'modules/TextFormat';
 import { alert } from "components/Commons/Alert/Alert";
 import opendesign_style from "opendesign_style";
 
-const NewAlarmLogo=styled.div`
+const NewAlarmLogo = styled.div`
 width:10px;
 height:100%;
 display:flex;
@@ -32,7 +32,6 @@ margin-right:2px;
     height:7px;
     border-radius:50%;
 }
-
 `
 const Thumbnail = styled.div`
     position:relative;
@@ -344,7 +343,7 @@ margin-top:50px;
     }
 
 `
-const ThreeSideBox= styled.div`
+const ThreeSideBox = styled.div`
     margin-left: auto;
     display: flex;
     flex-direction: column !important;
@@ -398,7 +397,7 @@ const ThreeSideBox= styled.div`
 
 const MobileSeeMore = styled.div`
     margin-top:15px;
-    display:${props=>props.isShow==false?"none":"flex"};
+    display:${props => props.isShow == false ? "none" : "flex"};
     flex-direction:column;
     width:100%;
     .explain-box{
@@ -428,14 +427,14 @@ const MobileSeeMore = styled.div`
         }
     }
     `
-    const MiniIcon = styled.div`
+const MiniIcon = styled.div`
     width: 30px; 
     height: 30px; 
     background: url(${props => props.iconName}); 
     background-size: contain; 
     background-position: center center; 
     background-repeat: no-repeat;
-    opacity: ${props => props.like_opacity==null?1:props.like_opacity};
+    opacity: ${props => props.like_opacity == null ? 1 : props.like_opacity};
 
 `
 const PopupBox = styled.div`
@@ -627,7 +626,7 @@ const NormalIcon = styled.div`
 class GroupInfoComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = { w: window.innerWidth > 1920 ? 1920 : window.innerWidth, joinDialog: false, likeDialog: false, forkDialog: 0, manager: false, isSeeMore:false, };
+        this.state = { w: window.innerWidth > 1920 ? 1920 : window.innerWidth, joinDialog: false, likeDialog: false, forkDialog: 0, manager: false, isSeeMore: false, };
         this.needLogin = this.needLogin.bind(this);
         this.like = this.like.bind(this);
         this.handleMoreViewDescription = this.handleMoreViewDescription.bind(this);
@@ -649,7 +648,7 @@ class GroupInfoComponent extends Component {
         window.location.href = geturl() + `/groupDetail/${id}`
     }
     async needLogin() {
-       await alert("로그인 해주세요.","확인");
+        await alert("로그인 해주세요.", "확인");
     }
     async like() {
         if (!this.props.userInfo) {
@@ -669,7 +668,7 @@ class GroupInfoComponent extends Component {
         }
     }
     async handleMoreViewDescription(description) {
-        await alert(description,"확인");
+        await alert(description, "확인");
     }
     gotoGroupModify() {
         let href = window.location.href.substring(0, window.location.href.search("groupDetail"));
@@ -684,20 +683,20 @@ class GroupInfoComponent extends Component {
     }
 
     render() {
-        console.log("GROUPINFO==========",this.props);
+        console.log("GROUPINFO==========", this.props);
         const { like, GroupDetail, userInfo } = this.props;
         const group_user_id = GroupDetail && GroupDetail.user_id;
         const user_id = userInfo && userInfo.uid;
         const isEditor = group_user_id === user_id;
         const { w, manager } = this.state;
 
-        console.log("::GROUPINFO::\n", this.props, );
+        console.log("::GROUPINFO::\n", this.props,);
         // console.log(new Date(GroupDetail.create_time).toLocaleDateString());
 
 
         return (
             <React.Fragment>
-                
+
                 {this.state.likeDialog ?
                     <PopupBox>
                         <div className="message_label">
@@ -707,305 +706,162 @@ class GroupInfoComponent extends Component {
                     </PopupBox>
                     : null}
                 <MainBox>
-                <div className="wrapper">
-                    <OneSideBox>
-                        <div className="flexBox">
-                              {GroupDetail.grand_parentTitle ?
-                              <React.Fragment>
-                                  <div onClick={() => this.gotoGroup(GroupDetail.grand_parentId)}
-                                      className="parent-title"> 
-                                      <div className="label"><TextFormat txt={GroupDetail.grand_parentTitle} /></div>
-                                      <Icon className="triangle right" size="large" color="grey"/>
-                                  </div>
-                              </React.Fragment>
-                              : null}
-                              {GroupDetail.parentName ?
-                                      <React.Fragment>
-                                      <div
-                                          onClick={() => this.gotoGroup(GroupDetail.parentId)}
-                                          className="parent-title">
-                                          <div className="label"><TextFormat txt={GroupDetail.parentName} /></div>
-                                          <Icon className="triangle right" size="large" color="grey"/>
-                                      </div>
-                                      </React.Fragment>
-                              : null}
-                              <div className="title"><TextFormat txt={GroupDetail.title} /></div>
-                        </div>
-                        <Thumbnail  imageURL={(GroupDetail && GroupDetail.img && GroupDetail.img.l_img) ? GroupDetail.img.l_img : noimg} />
-                        <div className="mobileMode">
-                            <TextFormat txt={`개설자 : ${GroupDetail.userName}`} chars={15} />
-                            <div className="count-box">
-                                        <div className="icon-wrapper">
-                                                <IconView width="22px" height="11px" fill="#000000" opacity="0.55" />
-                                                <div className="label">{NumberFormat(GroupDetail.view || 0)}</div>
+                    <div className="wrapper">
+                        <OneSideBox>
+                            <div className="flexBox">
+                                {GroupDetail.grand_parentTitle ?
+                                    <React.Fragment>
+                                        <div onClick={() => this.gotoGroup(GroupDetail.grand_parentId)}
+                                            className="parent-title">
+                                            <div className="label"><TextFormat txt={GroupDetail.grand_parentTitle} /></div>
+                                            <Icon className="triangle right" size="large" color="grey" />
                                         </div>
-                                        <div className="icon-wrapper">
-                                                <img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} />
-                                                <div className="label">{NumberFormat(GroupDetail.like || 0)}</div>
+                                    </React.Fragment>
+                                    : null}
+                                {GroupDetail.parentName ?
+                                    <React.Fragment>
+                                        <div
+                                            onClick={() => this.gotoGroup(GroupDetail.parentId)}
+                                            className="parent-title">
+                                            <div className="label"><TextFormat txt={GroupDetail.parentName} /></div>
+                                            <Icon className="triangle right" size="large" color="grey" />
                                         </div>
-                                        <div className="icon-wrapper">
-                                                <img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55"}} />
-                                                <div className="label">{NumberFormat(GroupDetail.design || 0 + GroupDetail.group || 0)}</div>
-                                        </div>
+                                    </React.Fragment>
+                                    : null}
+                                <div className="title"><TextFormat txt={GroupDetail.title} /></div>
                             </div>
-                        </div>
-                    </OneSideBox>
-                    <TwoSideBox w={w-450}>
-                                <div className="explainBox">
-                                    <div className="creater">
-                                        <TextFormat txt={`개설자 : ${GroupDetail.userName}`} />
+                            <Thumbnail imageURL={(GroupDetail && GroupDetail.img && GroupDetail.img.l_img) ? GroupDetail.img.l_img : noimg} />
+                            <div className="mobileMode">
+                                <TextFormat txt={`개설자 : ${GroupDetail.userName}`} chars={15} />
+                                <div className="count-box">
+                                    <div className="icon-wrapper">
+                                        <IconView width="22px" height="11px" fill="#000000" opacity="0.55" />
+                                        <div className="label">{NumberFormat(GroupDetail.view || 0)}</div>
                                     </div>
-                                    <div className="explanationRegion">
-                                        <p className="explain-text">
+                                    <div className="icon-wrapper">
+                                        <img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} />
+                                        <div className="label">{NumberFormat(GroupDetail.like || 0)}</div>
+                                    </div>
+                                    <div className="icon-wrapper">
+                                        <img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55" }} />
+                                        <div className="label">{NumberFormat(GroupDetail.design || 0 + GroupDetail.group || 0)}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </OneSideBox>
+                        <TwoSideBox w={w - 450}>
+                            <div className="explainBox">
+                                <div className="creater">
+                                    <TextFormat txt={`개설자 : ${GroupDetail.userName}`} />
+                                </div>
+                                <div className="explanationRegion">
+                                    <p className="explain-text">
                                         {GroupDetail.explanation}
-                                        </p>
-                                    </div>
-                                                                             {/* count */}
-                              <div className="count-box">
+                                    </p>
+                                </div>
+                                {/* count */}
+                                <div className="count-box">
                                     <div className="icon-wrapper">
-                                            <IconView width="22px" height="11px" fill="#000000" opacity="0.55" />
-                                            <div className="label">{NumberFormat(GroupDetail.view || 0)}</div>
-                                    </div>
-                                    <div className="icon-wrapper">
-                                            <img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} />
-                                            <div className="label">{NumberFormat(GroupDetail.like || 0)}</div>
+                                        <IconView width="22px" height="11px" fill="#000000" opacity="0.55" />
+                                        <div className="label">{NumberFormat(GroupDetail.view || 0)}</div>
                                     </div>
                                     <div className="icon-wrapper">
-                                            <img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55"}} />
-                                            <div className="label">{NumberFormat(GroupDetail.design || 0 + GroupDetail.group || 0)}</div>
+                                        <img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} />
+                                        <div className="label">{NumberFormat(GroupDetail.like || 0)}</div>
                                     </div>
+                                    <div className="icon-wrapper">
+                                        <img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55" }} />
+                                        <div className="label">{NumberFormat(GroupDetail.design || 0 + GroupDetail.group || 0)}</div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </TwoSideBox>
-                            {/* right */}
-                                <ThreeSideBox>
-                                    <div>
-                                    {isEditor
-                                        ? <React.Fragment>
-                                            <div className="join_label_">
-                                                <JoinGroupContainer /></div>
+                        </TwoSideBox>
+                        {/* right */}
+                        <ThreeSideBox>
+                            <div>
+                                {isEditor
+                                    ? <React.Fragment>
+                                        <div className="join_label_">
+                                            <JoinGroupContainer /></div>
 
-                                            <div className="ButtonItem" onClick={this.gotoGroupModify}>
-                                                <div className="button_text_label">그룹 정보 수정하기</div>
-                                                <NormalIcon imageURL={iEdit} opacity={0.5} /></div>
+                                        <div className="ButtonItem" onClick={this.gotoGroupModify}>
+                                            <div className="button_text_label">그룹 정보 수정하기</div>
+                                            <NormalIcon imageURL={iEdit} opacity={0.5} /></div>
 
-                                            <div className="ButtonItem" onClick={this.changeEditMode}>
-                                                
-                                                <div className="button_text_label displayFlex">
+                                        <div className="ButtonItem" onClick={this.changeEditMode}>
 
-                                                    {manager ? "관리모드 종료" : "그룹 관리하기"}</div>
-                                                <NormalIcon imageURL={iINOUT} opacity={0.5} />
-                                                {this.props.waitingDesign.length>0||this.props.waitingGroup.length>0?
-                                                    manager?null:<NewAlarmLogo><div className="circle"/></NewAlarmLogo>
-                                                    :null}
-                                                </div>
+                                            <div className="button_text_label displayFlex">
 
-                                        </React.Fragment>
-                                        : <React.Fragment>
-                                            <div className="join_label_">
-                                                <JoinGroupContainer /></div>
+                                                {manager ? "관리모드 종료" : "그룹 관리하기"}</div>
+                                            <NormalIcon imageURL={iINOUT} opacity={0.5} />
+                                            {this.props.waitingDesign.length > 0 || this.props.waitingGroup.length > 0 ?
+                                                manager ? null : <NewAlarmLogo><div className="circle" /></NewAlarmLogo>
+                                                : null}
+                                        </div>
 
-                                            <div className="ButtonItem" onClick={this.like}>
-                                                <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
-                                                <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} /></div>
+                                    </React.Fragment>
+                                    : <React.Fragment>
+                                        <div className="join_label_">
+                                            <JoinGroupContainer /></div>
 
-                                        </React.Fragment>}
-                                    </div>
-                                    <div className="time_label">
-                                        <div>최근 업데이트 {GroupDetail && DateFormat(GroupDetail.update_time)}</div>
-                                        <div>등록 일자 {GroupDetail&&new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').substring(0,new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').length-1)}</div>
-                                        </div> 
+                                        <div className="ButtonItem" onClick={this.like}>
+                                            <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
+                                            <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} /></div>
 
-                                </ThreeSideBox>
-                                <MobileSeeMore isShow={this.state.isSeeMore}>
-                                            <div className="explain-box font_middle">{GroupDetail.explanation}</div>
-                                            <div className="_txt font_smallthan font_fit">최근 업데이트 {DateFormat(GroupDetail.update_time)}</div>
-                                            <div className="_txt font_smallthan font_fit">등록 일자 
+                                    </React.Fragment>}
+                            </div>
+                            <div className="time_label">
+                                <div>최근 업데이트 {GroupDetail && DateFormat(GroupDetail.update_time)}</div>
+                                <div>등록 일자 {GroupDetail && new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
+                            </div>
+
+                        </ThreeSideBox>
+                        <MobileSeeMore isShow={this.state.isSeeMore}>
+                            <div className="explain-box font_middle">{GroupDetail.explanation}</div>
+                            <div className="_txt font_smallthan font_fit">최근 업데이트 {DateFormat(GroupDetail.update_time)}</div>
+                            <div className="_txt font_smallthan font_fit">등록 일자
                                                 {GroupDetail && new Date(GroupDetail.create_time).toLocaleDateString('ko-KR')
-                                                .substring(0, new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').length - 1)}
-                                            </div>
-                                            <div className="icon-box">
-                                                <div className="icon-wrapper">
-                                                    <div className="icon-piece"><JoinGroupContainer isIcon={true}/></div>
-                                                </div>
+                                    .substring(0, new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').length - 1)}
+                            </div>
+                            <div className="icon-box">
+                                <div className="icon-wrapper">
+                                    <div className="icon-piece"><JoinGroupContainer isIcon={true} /></div>
+                                </div>
 
-                                               {isEditor === true ?
-                                                <div className="icon-wrapper">
-                                                    <div onClick={this.gotoGroupModify} className="icon-piece"><MiniIcon iconName={iEdit}/><div className="font_small">그룹수정</div></div>
-                                                </div>
-                                                :                                 
-                                               <div className="icon-wrapper" >
-                                                   <div className="icon-piece" onClick={this.like}><MiniIcon like_opacity={like ? 1 : 0.45} iconName={thumbup}/><div className="font_small">관심그룹</div></div>
-                                                </div>
-                                                }
-                                                {isEditor === true?
-                                                <div className="icon-wrapper">
-                                                    <div onClick={this.changeEditMode} className="icon-piece"><Icon color="grey" className="exchange" size="big"/><div className="font_small">{manager ? "관리종료" : "그룹관리"}</div></div>
-                                                </div>
-                                                :
-                                                null
-                                                }
-                                            </div>
+                                {isEditor === true ?
+                                    <div className="icon-wrapper">
+                                        <div onClick={this.gotoGroupModify} className="icon-piece"><MiniIcon iconName={iEdit} /><div className="font_small">그룹수정</div></div>
+                                    </div>
+                                    :
+                                    <div className="icon-wrapper" >
+                                        <div className="icon-piece" onClick={this.like}><MiniIcon like_opacity={like ? 1 : 0.45} iconName={thumbup} /><div className="font_small">관심그룹</div></div>
+                                    </div>
+                                }
+                                {isEditor === true ?
+                                    <div className="icon-wrapper">
+                                        <div onClick={this.changeEditMode} className="icon-piece"><Icon color="grey" className="exchange" size="big" /><div className="font_small">{manager ? "관리종료" : "그룹관리"}</div></div>
+                                    </div>
+                                    :
+                                    null
+                                }
+                            </div>
                         </MobileSeeMore>
-                        <div className="seemore cursor_pointer" onClick={()=>{this.setState({isSeeMore:!this.state.isSeeMore})}}>
-                            <div className="txt">{this.state.isSeeMore==false?"▼ 더보기":"▲ 접기"}</div>
+                        <div className="seemore cursor_pointer" onClick={() => { this.setState({ isSeeMore: !this.state.isSeeMore }) }}>
+                            <div className="txt">{this.state.isSeeMore == false ? "▼ 더보기" : "▲ 접기"}</div>
                             {/* <div className="txt">더보기</div> */}
                         </div>
-                </div>
+                    </div>
                 </MainBox>
+
+
+                {/* proto-type */}
+                <div style={{ position: "relative", border: "1px solid transparent", width: "max-content", marginLeft: "auto", marginRight: "10px", marginTop: "10px" }}>
+                    <span style={{ position: "absolute", top: "1px", left: "-5px", backgroundColor: "red", width: "10px", height: "10px", borderRadius: "50%" }}>&nbsp;</span>
+                    <i className="announcement icon" style={{ textAlign: "center", lineHeight: "36px", fontSize: "36px", color: "gray" }}></i>
+                </div>
             </React.Fragment >)
     }
 };
 
 export default GroupInfoComponent;
 
-
-
-// return (
-//     <React.Fragment>
-        
-//         {this.state.likeDialog ?
-//             <PopupBox>
-//                 <div className="message_label">
-//                     관심 그룹으로 등록되었습니다.<br />
-//                 내 정보에서 확인 가능합니다.
-//                 </div>
-//             </PopupBox>
-//             : null}
-//         <MainBox>
-//         <Header width={w}>
-//             {GroupDetail ? // case of detail exist
-//                 <div style={{ width: `${w}px`, height: "250px", backgroundColor: "#EFEFEF", display: "flex", flexDirection: "row" }}>
-//                     {/* left */}
-//                     <div>
-//                         {/* title */}
-//                         <div
-//                             style={{ display: "flex", flexDirection: "row", }}>
-
-//                             {GroupDetail.grand_parentTitle ?
-//                                 <React.Fragment>
-//                                     <div
-//                                         onClick={() => this.gotoGroup(GroupDetail.grand_parentId)}
-//                                         style={{
-//                                             marginLeft: "15px",
-//                                             marginRight: "15px",
-//                                             marginTop: "15px",
-//                                             curspor: "pointer",
-//                                             display: "flex",
-//                                             flexDirection: "row",
-//                                         }}
-//                                     >
-//                                         <TextFormat txt={GroupDetail.grand_parentTitle} /> <Arrow />
-//                                     </div>
-//                                 </React.Fragment>
-//                                 : null}
-
-//                             {GroupDetail.parentName ?
-//                                 <React.Fragment>
-//                                     <div
-//                                         onClick={() => this.gotoGroup(GroupDetail.parentId)}
-//                                         style={{
-//                                             marginLeft: "15px",
-//                                             marginRight: "15px",
-//                                             marginTop: "15px",
-//                                             curspor: "pointer",
-//                                             display: "flex",
-//                                             flexDirection: "row",
-//                                         }}
-//                                     >
-//                                         <TextFormat txt={GroupDetail.parentName} /> <Arrow />
-//                                     </div>
-//                                 </React.Fragment>
-//                                 : <div style={{ marginLeft: "15px" }}>&nbsp;</div>}
-
-//                             <GroupTitleWrapper>
-//                                 <TextFormat txt={GroupDetail.title} />
-//                             </GroupTitleWrapper>
-
-//                         </div>
-
-//                         {/* thumbnail + detail + description */}
-//                         <div style={{ width: "max-content" }}>
-//                             <div style={{ width: "max-content", marginTop: "15px", marginLeft: "25px", display: "flex", flexDirection: "row" }}>
-
-//                                 {/* thumbnail */}
-//                                 <Thumbnail
-//                                     imageURL={(GroupDetail && GroupDetail.img && GroupDetail.img.l_img) ? GroupDetail.img.l_img : noimg} />
-
-
-//                                 {/* detail + description  */}
-//                                 <ExplainBox w={w - 450}>
-//                                     <div className="board">
-//                                         {/*  */}
-//                                         <div className="creater">
-//                                             <TextFormat txt={`개설자 : ${GroupDetail.userName}`} />
-//                                         </div>
-//                                         <div className="explanationRegion">
-//                                             <p className="explaination">
-//                                                 {GroupDetail.explanation}
-//                                             </p>
-//                                         </div>
-//                                         {/* count */}
-//                                         <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
-//                                             <div style={{ display: "flex", marginRight: "20px" }}>
-//                                                 <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
-//                                                 <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(GroupDetail.view || 0)}</div>
-//                                             </div>
-//                                             <div style={{ display: "flex", marginRight: "20px" }}>
-//                                                 <div><img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} /></div>
-//                                                 <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(GroupDetail.like || 0)}</div>
-//                                             </div>
-//                                             <div style={{ display: "flex" }}>
-//                                                 <div style={{ marginTop: "5px" }}><img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55", marginTop: "10px" }} /></div>
-//                                                 <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px', marginTop: "4px" }}>{NumberFormat(GroupDetail.design || 0 + GroupDetail.group || 0)}</div>
-//                                             </div>
-//                                         </div>
-//                                     </div>
-//                                 </ExplainBox>
-
-
-//                             </div>
-//                         </div>
-//                     </div>
-//                     {/* right */}
-//                     <div style={{ marginLeft: "auto", marginRight: "15px" }}>
-//                         <ButtonRegion>
-//                             {isEditor
-//                                 ? <React.Fragment>
-//                                     <div className="Join_label">
-//                                         <JoinGroupContainer /></div>
-
-//                                     <div className="ButtonItem" onClick={this.gotoGroupModify}>
-//                                         <div className="button_text_label">그룹 정보 수정하기</div>
-//                                         <NormalIcon imageURL={iEdit} opacity={0.5} /></div>
-
-//                                     <div className="ButtonItem" onClick={this.changeEditMode}>
-//                                         <div className="button_text_label">{manager ? "관리모드 종료" : "그룹 관리하기"}</div>
-//                                         <NormalIcon imageURL={iINOUT} opacity={0.5} /></div>
-
-//                                 </React.Fragment>
-//                                 : <React.Fragment>
-//                                     <div className="Join_label">
-//                                         <JoinGroupContainer /></div>
-
-//                                     <div className="ButtonItem" onClick={this.like}>
-//                                         <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
-//                                         <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} /></div>
-
-//                                 </React.Fragment>}
-
-//                             <div className="time_label">
-//                                 <div>최근 업데이트 {GroupDetail && DateFormat(GroupDetail.child_update_time)}</div>
-//                                 <div>등록 일자 {GroupDetail&&new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').substring(0,new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').length-1)}</div>
-//                                 </div> 
-
-//                         </ButtonRegion>
-//                     </div>
-//                 </div>
-//                 : // case of no GroupDetail 
-//                 <div >
-
-//                 </div>}
-//         </Header>
-//         </MainBox>
-//     </React.Fragment >)

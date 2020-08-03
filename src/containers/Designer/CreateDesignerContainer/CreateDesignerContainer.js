@@ -3,18 +3,21 @@ import { connect } from 'react-redux'
 import { GetMyDetailRequest, UpdateUserDetailRequest } from "redux/modules/personal"
 import { GetCategoryAllRequest } from "redux/modules/category"
 import CreateDesigner from "components/Designers/CreateDesigner/CreateDesigner"
-import {  CheckNickNameRequest } from "redux/modules/auth"
+import { CheckNickNameRequest } from "redux/modules/auth"
+import ClientTemplate from "templates/ClientTemplate"
 
 
 class CreateDesignerContainer extends Component {
-  componentDidMount()
-{
-  this.props.GetCategoryAllRequest();
-  this.props.GetMyDetailRequest(this.props.token);
-}
+  componentDidMount() {
+    this.props.GetCategoryAllRequest();
+    this.props.GetMyDetailRequest(this.props.token);
+  }
   render() {
-    console.log("designer",this.props);
-    return (<CreateDesigner {...this.props} />)
+    console.log("designer", this.props);
+    return (<ClientTemplate>
+      <CreateDesigner {...this.props} />
+    </ClientTemplate>
+    )
   }
 }
 

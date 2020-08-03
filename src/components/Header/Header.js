@@ -225,9 +225,13 @@ class Header extends Component {
     componentDidMount() {
         if (this.props.valid) {
             try {
+                console.log("SOCKET INIT");
                 Socket.emit("INIT", this.props.userInfo.uid)
                 Socket.on("getNoti", alarm => {
                     this.setState({ alarm: alarm })
+                })
+                Socket.on("disconnect", () => {
+                    console.log("disconnected");
                 })
             } catch (err) {
                 //TODO v2: doesn't meaning in client, so! report administrator e-mail

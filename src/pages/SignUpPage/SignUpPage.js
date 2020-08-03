@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import SignUpContainer from "containers/Registration/SignUpContainer";
-
+import ClientTemplate from "templates/ClientTemplate"
 const SignUpContent = styled.div`
   width: 100%;
   height: 100vh;
@@ -27,10 +27,11 @@ const SignUpContent = styled.div`
 
 class SignUpPage extends Component {
   render() {
-    return (
+    return (<ClientTemplate>
       <SignUpContent>
-        <SignUpContainer/>
+        <SignUpContainer />
       </SignUpContent>
+    </ClientTemplate>
     )
   }
 }
