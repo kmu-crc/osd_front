@@ -10,7 +10,7 @@ import styled from "styled-components";
 import ReactCrop from 'react-image-crop';
 import "react-image-crop/dist/ReactCrop.css";
 import FileController from "../CardSourceDetail/FileController";
-import EmbController from "../CardSourceDetail/EmbController";
+import LinkController from "../CardSourceDetail/LinkController";
 import TextController from "../CardSourceDetail/TextControllerPlus";
 import TemplateGridEditor from "components/Designs/CreateDesign/TemplateGridEditor";
 import { geturl } from "config";
@@ -1220,9 +1220,14 @@ class CreateDesignMobile extends Component {
                               initClick={this.state.click}
                               getValue={(data) => this.onChangeValue(data, item.order)} />
                             : null}
-                          {item.type === "EMBED" ?
-                            (<EmbController />)
+
+                          {item.type === "LINK" ?
+                            <LinkController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
                             : null}
+
+                          {/* {item.type === "EMBED" ? */}
+                          {/* (<EmbController />) */}
+                          {/* : null} */}
                           {/* </div> */}
                           <DelBtn
                             type="button"
@@ -1413,6 +1418,11 @@ class AddContent extends Component {
             height="29px">
 
             텍스트 입력하기</NewController>
+
+          <NewController
+            onClick={() => this.addContent("LINK")}
+            width="max-content" minWidth="134px" height="29px">
+            하이퍼링크 등록하기</NewController>
 
           {this.props.order === 0 ?
             <NewController

@@ -318,7 +318,9 @@ export function GetDesignCountRequest(id) {
             }
             dispatch(GetDesignCount(data))
         }).catch((err) => {
-            console.log("err", err)
+            // alert("디자인 정보를 가져오지 못했습니다. 메인페이지로 돌아갑니다.");
+            window.location.href = '/notfound';
+            console.error("err", err)
         })
     }
 }
@@ -580,7 +582,7 @@ export function ForkDesignRequest(design_id, user_id, token) {
         dispatch(ForkDesign())
         return fetch(`${host}/design/forkDesign/${design_id}/${user_id}`, {
             headers: { "Content-Type": "application/json", 'x-access-token': token },
-            method: "get"
+            method: "GET"
         }).then((response) => {
             return response.json()
         }).then((data) => {

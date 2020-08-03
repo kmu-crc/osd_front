@@ -66,16 +66,14 @@ class App extends Component {
           <Route path="/designerDetail/:id" component={DesignerDetailPage} />
           <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
           <Route path="/createdesigner" component={RequiresAuth(CreateDesigner)} />
-
-          {/* GROUP E - etc. */}
-          <Route path="/resetPw" component={ResetPwPage} />
           <Route path="/footerPrivacy" component={FooterPrivacy} />
           <Route path="/footerPara" component={FooterPara} />
           <Route component={NotFoundPage} />
-
+          <Route path="/notfound" component={NotFoundPage} />
         </Switch>
-
-      </BrowserRouter>)
+        </ClientTemplate>
+      </BrowserRouter >
+    )
   }
 }
 
