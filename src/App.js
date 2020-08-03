@@ -71,14 +71,11 @@ class App extends Component {
           <Route component={NotFoundPage} />
           <Route path="/notfound" component={NotFoundPage} />
         </Switch>
-        </ClientTemplate>
       </BrowserRouter >
     )
   }
 }
 
 export default App;
-
-
 
 
