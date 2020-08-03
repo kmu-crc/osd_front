@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
+import ClientTemplate from "templates/ClientTemplate";
 
 const NotFoundContainer = styled.div`
     margin: auto;
@@ -22,7 +23,7 @@ const NotFoundContainer = styled.div`
 
 class NotFound extends Component {
     render() {
-        return (<React.Fragment>
+        return (<ClientTemplate>
             <NotFoundContainer >
                 <div className="message">
                     페이지를 찾을 수 없습니다.
@@ -34,7 +35,7 @@ class NotFound extends Component {
                     <h3>이 디자인은 어떠세요?</h3>
                 </div>
             </NotFoundContainer>
-        </React.Fragment>)
+        </ClientTemplate>)
     }
 }
 

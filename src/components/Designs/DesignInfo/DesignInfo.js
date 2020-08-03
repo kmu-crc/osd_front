@@ -18,8 +18,10 @@ import DesignComment from "components/Designs/GridEditor/DesignComment";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import { YesIHaveReadNewComment, } from "redux/modules/design";
-import { Icon } from 'semantic-ui-react'
-import opendesign_style from "opendesign_style"
+import { Icon } from 'semantic-ui-react';
+import opendesign_style from "opendesign_style";
+
+import Socket from "modules/Socket"
 
 // new style
 const Thumbnail = styled.div`
@@ -55,7 +57,7 @@ const Thumbnail = styled.div`
             background-size: cover; 
         }
     }
-`
+`;
 const MainBox = styled.div`
     width:100%;
     position:relative;
@@ -142,7 +144,7 @@ const MainBox = styled.div`
             }
         }
     }
-`
+`;
 const CustomIcon = styled.div`
     width: 35px; 
     height: 35px; 
@@ -153,7 +155,7 @@ const CustomIcon = styled.div`
     background-repeat: no-repeat;
     opacity: ${props => props.like_opacity == null ? 1 : props.like_opacity};
 
-`
+`;
 const MiniIcon = styled.div`
     width: 30px; 
     height: 30px; 
@@ -161,12 +163,12 @@ const MiniIcon = styled.div`
     background-size: contain; 
     background-position: center center; 
     background-repeat: no-repeat;
-    opacity: ${props => props.like_opacity==null?1:props.like_opacity};
+    opacity: ${props => props.like_opacity == null ? 1 : props.like_opacity};
 
-`
+`;
 const MobileSeeMore = styled.div`
     margin-top:15px;
-    display:${props=>props.isShow===false?"none":"flex"};
+    display:${props => props.isShow === false ? "none" : "flex"};
     flex-direction:column;
     width:100%;
     .explain-box{
@@ -195,8 +197,8 @@ const MobileSeeMore = styled.div`
             background-color:#DEDEDE;
         }
     }
-    `
-const ThreeSideBox=styled.div`
+`;
+const ThreeSideBox = styled.div`
     *{
         text-align:right;
         font-family:Noto Sans KR;
@@ -228,7 +230,7 @@ const ThreeSideBox=styled.div`
         width:100%;
         height:max-content;
     }
-`
+`;
 const TwoSideBox = styled.div`    
     min-width:165px;
     margin-left:30px;
@@ -320,7 +322,7 @@ const TwoSideBox = styled.div`
     }
 
     
-`
+`;
 const OneSideBox = styled.div`
     *{
         color:#707070;
@@ -464,8 +466,7 @@ const OneSideBox = styled.div`
             }
         }
     }
-`
-
+`;
 const DesignMemberList = styled.div`
     display: ${props => props.display};
     z-index: 900;
@@ -604,7 +605,6 @@ const ListItem = styled.div`
         padding:0px;
     }
 `;
-
 const LikeDialogContainer = styled.div`
     width:100%;
     height:100%;
@@ -678,6 +678,86 @@ const DesignCommentModalContainer = styled(Modal)`
 
      }
 `;
+const ChatAndNoticeWrapper = styled.div`
+    display: flex;
+    position: relative;
+    border: 1px solid transparent;
+    width: max-content;
+    margin-left: auto;
+    margin-right: 10px;
+    margin-top: 10px;
+
+    .notice {
+        position: relative;
+
+        span {
+            position: absolute;
+            background-color: red;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            z-index: 1;
+            color: white;
+            font-weight: 500;
+            text-align: center;
+            font-size: 10px;
+        };
+
+        .video-chat-icon {
+            border: 1px solid red;
+            opacity: 0.6;
+            background-size: cover;
+            width: 45px;
+            height: 45px;
+        };
+
+        i {
+            text-align: center;
+            line-height: 36px;
+            font-size: 36px;
+            color: gray;
+            z-index: 0;
+        };
+        .text {
+            text-align: center;
+            font-size: 12px;
+            color: #707070;
+        };
+    }
+    .chat {
+        position: relative;
+        span {
+            position: absolute;
+            top: 2px;
+            left: 3px;
+            background-color: red;
+            width: 17px;
+            height: 17px;
+            border-radius: 50% 
+            z-index: 1;
+            font-size: 10px;
+            color: white;
+            padding: 0px;
+            font-weight: 900;
+            line-height: 10px;
+            text-align: center;
+        };
+        i {
+            text-align: center;
+            line-height: 36px;
+            font-size: 34px;
+            color: gray;
+            z-index: 0;
+        };
+        .text {
+            text-align: center;
+            font-size: 12px;
+            color: #707070;
+        };
+    }
+`;
+
+
 class DesignInfo extends Component {
 
     constructor(props) {
@@ -686,7 +766,10 @@ class DesignInfo extends Component {
             posX: -1, posY: -1, w: window.innerWidth > 1920 ? 1920 : window.innerWidth,
             likeDialog: false, forkDialog: 0, memberDialog: false,
             forkDesignList: false, memberList: false,
-            comment: false,isSeeMore:false,
+            comment: false, isSeeMore: false,
+            // chat
+            liveVC: false, already: false,
+            msg_cnt: 0,
         };
         this.like = this.like.bind(this);
         this.needLogin = this.needLogin.bind(this);
@@ -695,7 +778,6 @@ class DesignInfo extends Component {
         this.getMemberList = this.getMemberList.bind(this);
         this.getDesignComment = this.getDesignComment.bind(this);
         this.onMoveForkDesign = this.onMoveForkDesign.bind(this);
-
     }
     memberRef = React.createRef();
     forkRef = React.createRef();
@@ -739,6 +821,19 @@ class DesignInfo extends Component {
     }
     componentDidMount() {
         window.addEventListener("resize", this.handleResize);
+        if (this.props.valid) {
+            try {
+                Socket.emit('design-init', {
+                    design: this.props.id, user: this.props.userInfo.uid
+                });
+                Socket.on('check-new-message-count', data => {
+                    console.log('check new msg cnt', data);
+                    this.setState({ msg_cnt: data });
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        }
     }
     componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize);
@@ -856,6 +951,24 @@ class DesignInfo extends Component {
         this.setState({ comment: false });
     }
 
+
+    openChat = () => {
+        if (this.props.userInfo) {
+            const url = geturl() + `/chat/${this.props.DesignDetail.uid}`;
+            const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,top=100,left=100,width=580,height=500,scrollbars=no`;
+            this.chatwindow = window.open(url, "chat", options);
+            // console.log(this.chatwindow.closed);
+            // this.chatwindow.addEventListener('close', () => {
+            //     alert("chat closed :)");
+            //     console.log(this.chatwindow.closed);
+            // })
+        }
+        else {
+            this.needLogin();
+        }
+    }
+
+
     render() {
         const { isMyDesign, editor, DesignDetail, Count, like, WaitingList, CountDesignComment } = this.props
         const { w } = this.state;
@@ -931,170 +1044,191 @@ class DesignInfo extends Component {
                 </DesignMemberList>
             );
         }
-
-        return (
-            <React.Fragment>
-                {/* modals */}
-                {this.state.memberList ? <MemberModal /> : null}
-                {this.state.comment ? <DesignCommentModal /> : null}
-
-                <MainBox>
-
-                    {/* dialog */}
-                    {this.state.likeDialog ?
-                        <LikeDialogContainer>
-                            <div className="likeDialog">
-                                <div className="txt">
-                                    관심 디자인으로 등록되었습니다.<br />
+        const LikeDialogModal = () => {
+            return (<LikeDialogContainer>
+                <div className="likeDialog">
+                    <div className="txt">
+                        관심 디자인으로 등록되었습니다.<br />
                             내 정보에서 확인 가능합니다.
                             </div>
-                            </div>
-                        </LikeDialogContainer>
-                        : null}
-                    <div className="wrapper">
-                        <Thumbnail imageURL={thumbnail}>
-                            {DesignDetail.parent_design && <div className="fork-mark" />}
-                        </Thumbnail>
-                        <OneSideBox>
-                            <div className="title" title={DesignDetail.title}>
-                                <TextFormat txt={DesignDetail.title} />
-                            </div>
-                            <div className="info">
-                                {DesignDetail.parent_design &&
-                                    <div className="goto-parent" onClick={() => this.goParentDesign(DesignDetail.parent_design)}
-                                        title={DesignDetail.parent_title}>
-                                        {DesignDetail.parent_title.slice(0, 4)}
-                                        {DesignDetail.parent_title.length > 4 && "..."}에서 파생됨
+                </div>
+            </LikeDialogContainer>
+            )
+        }
+        return (<React.Fragment>
+
+            {/* modals */}
+            {this.state.memberList
+                ? <MemberModal />
+                : null}
+            {this.state.comment
+                ? <DesignCommentModal />
+                : null}
+            {this.state.likeDialog
+                ? <LikeDialogModal />
+                : null}
+
+            <MainBox>
+                <div className="wrapper">
+                    <Thumbnail imageURL={thumbnail}>
+                        {DesignDetail.parent_design && <div className="fork-mark" />}
+                    </Thumbnail>
+                    <OneSideBox>
+                        <div className="title" title={DesignDetail.title}>
+                            <TextFormat txt={DesignDetail.title} />
+                        </div>
+                        <div className="info">
+                            {DesignDetail.parent_design &&
+                                <div className="goto-parent" onClick={() => this.goParentDesign(DesignDetail.parent_design)}
+                                    title={DesignDetail.parent_title}>
+                                    {DesignDetail.parent_title.slice(0, 4)}
+                                    {DesignDetail.parent_title.length > 4 && "..."}에서 파생됨
                                     </div>}
 
-                                <div className="flexBox position_relative">
-                                    <button className="transparent_btn cursor_pointer" onClick={this.openMemberList} >
-                                        <div className="flexBox font_fit font_middle cursor_pointer">
-                                            <TextFormat txt={DesignDetail.userName} chars={11} />
-                                            <div style={{ fontSize: "0.95rem" }}>
-                                                {(DesignDetail.member && DesignDetail.member.length > 1) ? `외 ${(DesignDetail.member.length - 1).toString()}명 ` : null}
-                                            </div>
+                            <div className="flexBox position_relative">
+                                <button className="transparent_btn cursor_pointer" onClick={this.openMemberList} >
+                                    <div className="flexBox font_fit font_middle cursor_pointer">
+                                        <TextFormat txt={DesignDetail.userName} chars={11} />
+                                        <div style={{ fontSize: "0.95rem" }}>
+                                            {(DesignDetail.member && DesignDetail.member.length > 1) ? `외 ${(DesignDetail.member.length - 1).toString()}명 ` : null}
                                         </div>
-                                    </button>
-                                    {WaitingList && WaitingList.length > 0 ? <div style={{ marginTop: "5px", fontSize: "0.95rem", padding: "0", height: "0.95rem", color: "red" }}>new!</div> : null}
-                                    {!isMyDesign && this.state.memberList && <MemberListModal />}
-                                </div>
-                                <div className="flexBox">
-                                    <div className="comment-box" onClick={this.getDesignComment} >
-                                        <div className="txt font_red">댓글</div>
-                                        <div className="count font_red">{Count && Count.comment_count ? NumberFormat(Count.comment_count) : 0}</div>
                                     </div>
-                                    {CountDesignComment && CountDesignComment > 0 ? <div style={{ marginLeft: "5px", fontSize: "0.95rem", padding: "0", height: "0.95rem", color: "red" }}>new!</div> : null}
+                                </button>
+                                {WaitingList && WaitingList.length > 0 ? <div style={{ marginTop: "5px", fontSize: "0.95rem", padding: "0", height: "0.95rem", color: "red" }}>new!</div> : null}
+                                {!isMyDesign && this.state.memberList && <MemberListModal />}
+                            </div>
+                            <div className="flexBox">
+                                <div className="comment-box" onClick={this.getDesignComment} >
+                                    <div className="txt font_red">댓글</div>
+                                    <div className="count font_red">{Count && Count.comment_count ? NumberFormat(Count.comment_count) : 0}</div>
                                 </div>
+                                {CountDesignComment && CountDesignComment > 0 ? <div style={{ marginLeft: "5px", fontSize: "0.95rem", padding: "0", height: "0.95rem", color: "red" }}>new!</div> : null}
+                            </div>
 
-                                <div className="flexBox">
-                                    {DesignDetail.children_count["count(*)"] > 0 &&
-                                        <button className="transparent_btn_nomargin cursor_pointer font_red font_bold font_middle" onClick={this.openForkList}>
-                                            파생된 디자인&nbsp;<span className="font_red">{DesignDetail.children_count["count(*)"]}</span>
-                                        </button>}
+                            <div className="flexBox">
+                                {DesignDetail.children_count["count(*)"] > 0 &&
+                                    <button className="transparent_btn_nomargin cursor_pointer font_red font_bold font_middle" onClick={this.openForkList}>
+                                        파생된 디자인&nbsp;<span className="font_red">{DesignDetail.children_count["count(*)"]}</span>
+                                    </button>}
+                            </div>
+                            {this.state.forkDesignList && <ForkDesignListModal />}
+                        </div>
+                        <div className="count-box">
+                            <IconView width="20px" height="17px" fill="#707070" />
+                            <div className="view-count">{NumberFormat(Count.view_count)}</div>
+                            <i className="material-icons">&#xE8DC;</i>
+                            <div className="like-count">{NumberFormat(Count.like_count)}</div>
+                        </div>
+                    </OneSideBox>
+                    <TwoSideBox w={w - 750}>
+                        <div className="descriptionContainer">
+                            <div className="category-name">{DesignDetail.categoryName}</div>
+                            <p className="txt">
+                                {DesignDetail.explanation}
+                            </p>
+                        </div>
+                    </TwoSideBox>
+                    <ThreeSideBox>
+                        <div className="content_box">
+                            <div className="cursor_pointer font_red font_bold font_big"
+                                onClick={() => this.forkDesign()}>파생 디자인 생성</div>
+                            {isMyDesign === false &&
+                                <div className="flexBox margin_top">
+                                    {editor === false ?
+                                        DesignDetail && DesignDetail.waitingStatus === 1 ?
+                                            <div className="_txt transparent_btn font_red font_fit font_big">가입승인 대기중</div>
+                                            : <div className="_txt transparent_btn cursor_pointer font_red font_fit font_big" onClick={this.joinMember} >멤버 가입 신청</div> : undefined}
+                                </div>}
+                            {isMyDesign === true ?
+                                <div className="cursor_pointer flexBox margin_top alignItem_end" onClick={this.gotoDesignModify}  >
+                                    <div className="_txt font_midBig font_fit" style={{ lineHeight: "20px" }}>디자인 수정하기</div>
+                                    <CustomIcon iconName={iEdit} />
                                 </div>
-                                {this.state.forkDesignList && <ForkDesignListModal />}
-                            </div>
-                            <div className="count-box">
-                                <IconView width="20px" height="17px" fill="#707070" />
-                                <div className="view-count">{NumberFormat(Count.view_count)}</div>
-                                <i className="material-icons">&#xE8DC;</i>
-                                <div className="like-count">{NumberFormat(Count.like_count)}</div>
-                            </div>
-                        </OneSideBox>
-                        <TwoSideBox w={w - 750}>
-                            <div className="descriptionContainer">
-                                <div className="category-name">{DesignDetail.categoryName}</div>
-                                <p className="txt">
-                                    {DesignDetail.explanation}
-                                </p>
-                            </div>
-                        </TwoSideBox>
-                        <ThreeSideBox>
-                            <div className="content_box">
-                                <div className="cursor_pointer font_red font_bold font_big"
-                                    onClick={() => this.forkDesign()}>파생 디자인 생성</div>
-                                {isMyDesign === false &&
-                                    <div className="flexBox margin_top">
-                                        {editor === false ?
-                                            DesignDetail && DesignDetail.waitingStatus === 1 ?
-                                                <div className="_txt transparent_btn font_red font_fit font_big">가입승인 대기중</div>
-                                                : <div className="_txt transparent_btn cursor_pointer font_red font_fit font_big" onClick={this.joinMember} >멤버 가입 신청</div> : undefined}
-                                    </div>}
-                                {isMyDesign === true ?
-                                    <div className="cursor_pointer flexBox margin_top alignItem_end" onClick={this.gotoDesignModify}  >
-                                        <div className="_txt font_midBig font_fit" style={{ lineHeight: "20px" }}>디자인 수정하기</div>
-                                        <CustomIcon iconName={iEdit} />
+                                :
+                                <div className="cursor_pointer flexBox margin_top alignItem_end" onClick={this.like} >
+                                    <div className="_txt font_midBig font_fit margin_bottom_small" >관심 디자인 {like ? "취소하기" : "등록하기"}</div>
+                                    <CustomIcon like_opacity={like ? 1 : 0.45} iconName={thumbup} />
+                                </div>}
+                            {isMyDesign === true ?
+                                null :
+                                <div className="cursor_pointer flexBox margin_top alignItem_end" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>
+                                    <div className="_txt font_midBig font_fit margin_bottom_small">메시지 보내기</div>
+                                    <CustomIcon iconName={email} />
+                                </div>}
+                        </div>
+                        <div className="content_box">
+                            {/* <div className="update-time">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div> */}
+                            <div className="_txt font_midBig font_fit margin_bottom">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
+                            <div className="_txt font_midBig font_fit">등록 일자 {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
+                        </div>
+                    </ThreeSideBox>
+                    <MobileSeeMore isShow={this.state.isSeeMore}>
+                        <div className="explain-box font_middle">{DesignDetail.explanation}</div>
+                        <div className="_txt font_smallthan font_fit">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
+                        <div className="_txt font_smallthan font_fit">등록 일자
+                                                {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR')
+                                .substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}
+                        </div>
+                        <div className="icon-box">
+                            {editor === false ?
+                                DesignDetail && DesignDetail.waitingStatus === 1 ?
+                                    <div className="icon-wrapper">
+                                        <div className="icon-piece"><Icon color="grey" className="sign in" size="big" />
+                                            <div className="font_small">승인대기</div></div>
                                     </div>
                                     :
-                                    <div className="cursor_pointer flexBox margin_top alignItem_end" onClick={this.like} >
-                                        <div className="_txt font_midBig font_fit margin_bottom_small" >관심 디자인 {like ? "취소하기" : "등록하기"}</div>
-                                        <CustomIcon like_opacity={like ? 1 : 0.45} iconName={thumbup} />
-                                    </div>}
-                                {isMyDesign === true ?
-                                    null :
-                                    <div className="cursor_pointer flexBox margin_top alignItem_end" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>
-                                        <div className="_txt font_midBig font_fit margin_bottom_small">메시지 보내기</div>
-                                        <CustomIcon iconName={email} />
-                                    </div>}
-                            </div>
-                            <div className="content_box">
-                                {/* <div className="update-time">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div> */}
-                                <div className="_txt font_midBig font_fit margin_bottom">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
-                                <div className="_txt font_midBig font_fit">등록 일자 {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
-                            </div>
-                        </ThreeSideBox>
-                        <MobileSeeMore isShow={this.state.isSeeMore}>
-                                            <div className="explain-box font_middle">{DesignDetail.explanation}</div>
-                                            <div className="_txt font_smallthan font_fit">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
-                                            <div className="_txt font_smallthan font_fit">등록 일자 
-                                                {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR')
-                                                .substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}
-                                            </div>
-                                            <div className="icon-box">
-                                               {editor === false ?
-                                                DesignDetail && DesignDetail.waitingStatus === 1 ?
-                                                <div className="icon-wrapper">
-                                                    <div className="icon-piece"><Icon color="grey" className="sign in" size="big"/>
-                                                    <div className="font_small">승인대기</div></div> 
-                                                </div>
-                                                :
-                                                <div className="icon-wrapper">
-                                                   <div onClick={this.joinMember}  className="icon-piece"><Icon color="grey" className="sign in" size="big"/>
-                                                   <div className="font_small">가입신청</div></div> 
-                                                </div>
-                                                :
-                                                null
-                                               }
-                                               <div className="icon-wrapper"><div onClick={() => this.forkDesign()} className="icon-piece"><Icon color="grey" className="fork" size="big"/><div className="font_small">디자인파생</div></div></div>
-                                               <div className="icon-wrapper"><div onClick={this.getDesignComment} className="icon-piece"><Icon color="grey" className="talk" size="big"/><div className="font_small">덧글</div></div></div>
-                                               {isMyDesign === true ?
-                                                null
-                                                :
-                                                <div className="icon-wrapper">
-                                                    <div onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)} className="icon-piece"><Icon color="grey" className="mail" size="big"/><div className="font_small">메시지</div></div>
-                                                </div>
-                                               }
-                                               {isMyDesign === true ?
-                                                <div className="icon-wrapper">
-                                                    <div onClick={this.gotoDesignModify} className="icon-piece"><MiniIcon iconName={iEdit}/><div className="font_small">디자인수정</div></div>
-                                                </div>
-                                                :                                 
-                                               <div className="icon-wrapper" >
-                                                   <div className="icon-piece" onClick={this.like}><MiniIcon like_opacity={like ? 1 : 0.45} iconName={thumbup}/><div className="font_small">관심디자인</div></div>
-                                                </div>
-                                                }
-                                            </div>
-                        </MobileSeeMore>
-                        <div className="seemore cursor_pointer" onClick={()=>{this.setState({isSeeMore:!this.state.isSeeMore})}}>
-                            <div className="txt">{this.state.isSeeMore===false?"▼ 더보기":"▲ 접기"}</div>
-                            {/* <div className="txt">더보기</div> */}
+                                    <div className="icon-wrapper">
+                                        <div onClick={this.joinMember} className="icon-piece"><Icon color="grey" className="sign in" size="big" />
+                                            <div className="font_small">가입신청</div></div>
+                                    </div>
+                                :
+                                null
+                            }
+                            <div className="icon-wrapper"><div onClick={() => this.forkDesign()} className="icon-piece"><Icon color="grey" className="fork" size="big" /><div className="font_small">디자인파생</div></div></div>
+                            <div className="icon-wrapper"><div onClick={this.getDesignComment} className="icon-piece"><Icon color="grey" className="talk" size="big" /><div className="font_small">덧글</div></div></div>
+                            {isMyDesign === true ?
+                                null
+                                :
+                                <div className="icon-wrapper">
+                                    <div onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)} className="icon-piece"><Icon color="grey" className="mail" size="big" /><div className="font_small">메시지</div></div>
+                                </div>
+                            }
+                            {isMyDesign === true ?
+                                <div className="icon-wrapper">
+                                    <div onClick={this.gotoDesignModify} className="icon-piece"><MiniIcon iconName={iEdit} /><div className="font_small">디자인수정</div></div>
+                                </div>
+                                :
+                                <div className="icon-wrapper" >
+                                    <div className="icon-piece" onClick={this.like}><MiniIcon like_opacity={like ? 1 : 0.45} iconName={thumbup} /><div className="font_small">관심디자인</div></div>
+                                </div>
+                            }
                         </div>
+                    </MobileSeeMore>
+                    <div className="seemore cursor_pointer" onClick={() => { this.setState({ isSeeMore: !this.state.isSeeMore }) }}>
+                        <div className="txt">{this.state.isSeeMore === false ? "▼ 더보기" : "▲ 접기"}</div>
+                        {/* <div className="txt">더보기</div> */}
                     </div>
-                </MainBox>
-            </React.Fragment >
-        )
+                </div>
+            </MainBox>
+
+            {/* proto-type: design-notice button, design-alarm button */}
+            <ChatAndNoticeWrapper>
+                <div
+                    className="chat"
+                    title="디자인 멤버들과 채팅을 시작합니다."
+                    onClick={this.openChat}>
+
+                    {this.state.msg_cnt > 0 ?
+                        <span>{this.state.msg_cnt}</span> : null}
+                    <i className="chat icon"></i>
+                    <div className="text">채팅</div>
+                </div>
+
+            </ChatAndNoticeWrapper>
+
+        </React.Fragment >)
     }
 };
+
 
 export default DesignInfo;

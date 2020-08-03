@@ -233,7 +233,6 @@ class Header extends Component {
                     console.log("disconnected");
                 })
             } catch (err) {
-                //TODO v2: doesn't meaning in client, so! report administrator e-mail
                 console.error(err);
             }
         }

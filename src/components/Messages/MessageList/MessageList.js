@@ -464,9 +464,13 @@ class Messages extends React.Component {
       this.selectMember({
         email: null, nick_name: this.props.name, uid: id
       })
-      Socket.on("reload_msglist", () => {
-        this.setState({ render: true })
-      })
+      try {
+        Socket.on("reload_msglist", () => {
+          this.setState({ render: true })
+        })
+      } catch (err) {
+        console.error(err);
+      }
     }
     if (this.props.id && this.props.name) {
       this.setMsgId(-1, this.props.id, this.props.name)
@@ -552,8 +556,8 @@ class Messages extends React.Component {
     // let msg = ``;
     const innerHtmlValue = document.getElementById("sendMsgBox").innerHTML;
     console.log(innerHtmlValue);
-   
-    if (innerHtmlValue=="") {
+
+    if (innerHtmlValue == "") {
       await alert("텍스트를 입력해주세요.", "확인");
       return;
     }
@@ -569,7 +573,7 @@ class Messages extends React.Component {
       });
 
 
-      document.getElementById("sendMsgBox").innerHTML="";
+    document.getElementById("sendMsgBox").innerHTML = "";
     // this.initMsgValue();
   }
   // handleChangeMsgValue(event) {
@@ -661,9 +665,9 @@ class Messages extends React.Component {
                   </div>
                   <div className="send">
                     <div className="sendBox">
-                      <SendMessageTextarea  contentEditable="true" id="sendMsgBox">
+                      <SendMessageTextarea contentEditable="true" id="sendMsgBox">
                       </SendMessageTextarea>
-                      </div>
+                    </div>
                     <SendButton className="cursor_pointer" onClick={this.onSubmitForm}>
                       <div className="sendButton_label">전송하기</div></SendButton>
                   </div>
