@@ -187,6 +187,17 @@ const ChatBox = styled.div`
       clear: both;
       margin-bottom: 70px;
   }
+  .newchat {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #EFEFEF;
+    border: 1px solid #707070;
+    border-radius: 15px;
+    color: #707070;
+    font-weight: 500;
+    font-size: 16px;
+  }
 `;
 const MyMessage = styled.div`
   max-width:100%;
@@ -475,7 +486,7 @@ class Chat extends React.Component {
                 </div>
               </div>
               {this.state.newchat ?
-                <div style={{ position: "absolute", top: "0", backgroundColor: "red" }} onClick={() => {
+                <div className="newchat" onClick={() => {
                   let scroll = document.getElementById("scroll");
                   scroll.scrollTop = scroll.scrollHeight;
                   this.setState({ newchat: null });

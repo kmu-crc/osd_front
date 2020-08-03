@@ -11,7 +11,7 @@ import styled from "styled-components";
 import TextFormat from 'modules/TextFormat';
 import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";
-import host, { geturl } from "config";
+import { geturl } from "config";
 import { Modal } from "semantic-ui-react";
 import DesignMemberContainer from "containers/Designs/DesignMemberContainer";
 import DesignComment from "components/Designs/GridEditor/DesignComment";
@@ -20,10 +20,10 @@ import { alert } from "components/Commons/Alert/Alert";
 import { YesIHaveReadNewComment, } from "redux/modules/design";
 import { Icon } from 'semantic-ui-react';
 import opendesign_style from "opendesign_style";
-import ChatWindow from "windows/ChatWindow";
 
-import Socket from "modules/Socket"// new style
+import Socket from "modules/Socket"
 
+// new style
 const Thumbnail = styled.div`
     .fork-mark {
         position: absolute;
@@ -57,7 +57,7 @@ const Thumbnail = styled.div`
             background-size: cover; 
         }
     }
-`
+`;
 const MainBox = styled.div`
     width:100%;
     position:relative;
@@ -144,7 +144,7 @@ const MainBox = styled.div`
             }
         }
     }
-`
+`;
 const CustomIcon = styled.div`
     width: 35px; 
     height: 35px; 
@@ -155,7 +155,7 @@ const CustomIcon = styled.div`
     background-repeat: no-repeat;
     opacity: ${props => props.like_opacity == null ? 1 : props.like_opacity};
 
-`
+`;
 const MiniIcon = styled.div`
     width: 30px; 
     height: 30px; 
@@ -165,7 +165,7 @@ const MiniIcon = styled.div`
     background-repeat: no-repeat;
     opacity: ${props => props.like_opacity == null ? 1 : props.like_opacity};
 
-`
+`;
 const MobileSeeMore = styled.div`
     margin-top:15px;
     display:${props => props.isShow === false ? "none" : "flex"};
@@ -197,7 +197,7 @@ const MobileSeeMore = styled.div`
             background-color:#DEDEDE;
         }
     }
-    `
+`;
 const ThreeSideBox = styled.div`
     *{
         text-align:right;
@@ -230,7 +230,7 @@ const ThreeSideBox = styled.div`
         width:100%;
         height:max-content;
     }
-`
+`;
 const TwoSideBox = styled.div`    
     min-width:165px;
     margin-left:30px;
@@ -322,7 +322,7 @@ const TwoSideBox = styled.div`
     }
 
     
-`
+`;
 const OneSideBox = styled.div`
     *{
         color:#707070;
@@ -466,8 +466,7 @@ const OneSideBox = styled.div`
             }
         }
     }
-`
-
+`;
 const DesignMemberList = styled.div`
     display: ${props => props.display};
     z-index: 900;
@@ -606,7 +605,6 @@ const ListItem = styled.div`
         padding:0px;
     }
 `;
-
 const LikeDialogContainer = styled.div`
     width:100%;
     height:100%;
@@ -680,7 +678,6 @@ const DesignCommentModalContainer = styled(Modal)`
 
      }
 `;
-
 const ChatAndNoticeWrapper = styled.div`
     display: flex;
     position: relative;
@@ -759,15 +756,7 @@ const ChatAndNoticeWrapper = styled.div`
         };
     }
 `;
-const ChatModalContainer = styled(Modal)`
-    .close-box {
-        cursor:pointer;
-        position: absolute;
-        right:10px;
-        top:10px;
-    }
 
-`;
 
 class DesignInfo extends Component {
 
@@ -832,8 +821,6 @@ class DesignInfo extends Component {
     }
     componentDidMount() {
         window.addEventListener("resize", this.handleResize);
-        this.props.userInfo && this.requestCheckAlreadyThereIn();
-        this.props.userInfo && this.requestCheckVChatOnLive();
         if (this.props.valid) {
             try {
                 Socket.emit('design-init', {
@@ -964,63 +951,17 @@ class DesignInfo extends Component {
         this.setState({ comment: false });
     }
 
-    requestHowManyChatISouldRead = () => {
-        return new Promise(resolve => {
-            // const designId = this.props.DesignDetail.uid;
-            // const url = `https://13.209.155.202:3000/checkRoom/${designId}`
-            // fetch(url,
-            //     { headers: { "Content-Type": "application/json" }, method: "get" })
-            //     .then(res => res.json())
-            //     .then(res => this.setState({ liveVC: res.exists }))
-            //     .catch(err => console.error(err));
-            resolve(true);
-        });
-    }
-    requestCheckVChatOnLive = () => {
-        return new Promise(resolve => {
-            // const designId = this.props.DesignDetail.uid;
-            // const url = `https://13.209.155.202:3000/checkRoom/${designId}`
-            // fetch(url,
-            //     { headers: { "Content-Type": "application/json" }, method: "get" })
-            //     .then(res => res.json())
-            //     .then(res => this.setState({ liveVC: res.exists }))
-            //     .catch(err => console.error(err));
-            resolve(true);
-        });
-    }
-    requestCheckAlreadyThereIn = () => {
-        return new Promise(resolve => {
-            // const designId = this.props.DesignDetail.uid;
-            // const url = `https://13.209.155.202:3000/checkAlreadyThereIn/${designId}/${this.props.userInfo.uid}`
-            // fetch(url,
-            //     { headers: { "Content-Type": "application/json" }, method: "get" })
-            //     .then(res => res.json())
-            //     .then(res => this.setState({ already: res.exists }))
-            //     .catch(err => console.error(err));
-            resolve(true);
-        });
-    }
+
     openChat = () => {
         if (this.props.userInfo) {
-            // - request alarm -
-            // const url = `https://https.opensrcdesign.com/vchat/notify_to_members/${this.props.DesignDetail.uid}/${this.props.userInfo.uid}`;
-            // fetch(url,
-            //     { headers: { "Content-Type": "application/json" }, method: "get" })
-            //     .then(res => res.json())
-            //     .then(res => {
-            //         if (res.result === "completed") {
-            //             console.log("alarm processing finished");
-            //         }
-            //     })
-            //     .catch(err => console.error(err))
             const url = geturl() + `/chat/${this.props.DesignDetail.uid}`;
             const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,top=100,left=100,width=580,height=500,scrollbars=no`;
             this.chatwindow = window.open(url, "chat", options);
-            console.log(this.chatwindow.closed);
-            this.chatwindow.addEventListener('close', () => {
-                alert("chat closed :)");
-                console.log(this.chatwindow.closed);
-            })
+            // console.log(this.chatwindow.closed);
+            // this.chatwindow.addEventListener('close', () => {
+            //     alert("chat closed :)");
+            //     console.log(this.chatwindow.closed);
+            // })
         }
         else {
             this.needLogin();
@@ -1126,8 +1067,6 @@ class DesignInfo extends Component {
             {this.state.likeDialog
                 ? <LikeDialogModal />
                 : null}
-            {this.state.chatWin
-                ? <><ChatWindow /></> : null}
 
             <MainBox>
                 <div className="wrapper">
@@ -1276,9 +1215,9 @@ class DesignInfo extends Component {
             <ChatAndNoticeWrapper>
                 <div
                     className="chat"
-                    title="채팅중"
-                    onClick={
-                        this.openChat}>
+                    title="디자인 멤버들과 채팅을 시작합니다."
+                    onClick={this.openChat}>
+
                     {this.state.msg_cnt > 0 ?
                         <span>{this.state.msg_cnt}</span> : null}
                     <i className="chat icon"></i>
@@ -1290,5 +1229,6 @@ class DesignInfo extends Component {
         </React.Fragment >)
     }
 };
+
 
 export default DesignInfo;
