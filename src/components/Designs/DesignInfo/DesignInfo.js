@@ -703,7 +703,6 @@ const ChatWrapper = styled.div`
         };
 
         .video-chat-icon {
-            border: 1px solid red;
             opacity: 0.6;
             background-size: cover;
             width: 45px;
