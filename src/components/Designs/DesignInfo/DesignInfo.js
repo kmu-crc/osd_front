@@ -1212,19 +1212,17 @@ class DesignInfo extends Component {
             </MainBox>
 
             {/* proto-type: design-notice button, design-alarm button */}
-            <ChatAndNoticeWrapper>
+            {/* <ChatAndNoticeWrapper>
                 <div
                     className="chat"
                     title="디자인 멤버들과 채팅을 시작합니다."
                     onClick={this.openChat}>
-
                     {this.state.msg_cnt > 0 ?
                         <span>{this.state.msg_cnt}</span> : null}
                     <i className="chat icon"></i>
                     <div className="text">채팅</div>
                 </div>
-
-            </ChatAndNoticeWrapper>
+            </ChatAndNoticeWrapper> */}
 
         </React.Fragment >)
     }
