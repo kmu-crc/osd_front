@@ -271,7 +271,6 @@ class GridEditorMobile extends Component {
                     isTeam={editor}
                     boardId={Step.uid}
                     designId={design.uid}
-                    order={DesignDetailStep.length}
                 />}
 
             {editor &&

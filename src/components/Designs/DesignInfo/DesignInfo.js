@@ -21,7 +21,6 @@ import { YesIHaveReadNewComment, } from "redux/modules/design";
 import { Icon } from 'semantic-ui-react';
 import opendesign_style from "opendesign_style";
 import vChatIcon from "source/video-chat-icon.png";
-
 import Socket from "modules/Socket";
 
 // new style
@@ -708,7 +707,6 @@ const ChatAndNoticeWrapper = styled.div`
             border: 1px solid red;
             opacity: 0.6;
             background-size: cover;
-            // background-image: url(${vChatIcon});
             width: 45px;
             height: 45px;
         };
@@ -730,13 +728,19 @@ const ChatAndNoticeWrapper = styled.div`
         position: relative;
         span {
             position: absolute;
-            top: 1px;
-            left: 5px;
+            top: 2px;
+            left: 3px;
             background-color: red;
-            width: 10px;
-            height: 10px;
+            width: 17px;
+            height: 17px;
             border-radius: 50% 
             z-index: 1;
+            font-size: 10px;
+            color: white;
+            padding: 0px;
+            font-weight: 900;
+            line-height: 10px;
+            text-align: center;
         };
         i {
             text-align: center;
@@ -765,7 +769,7 @@ class DesignInfo extends Component {
             comment: false, isSeeMore: false,
             // chat
             liveVC: false, already: false,
-
+            msg_cnt: 0,
         };
         this.like = this.like.bind(this);
         this.needLogin = this.needLogin.bind(this);
@@ -774,7 +778,6 @@ class DesignInfo extends Component {
         this.getMemberList = this.getMemberList.bind(this);
         this.getDesignComment = this.getDesignComment.bind(this);
         this.onMoveForkDesign = this.onMoveForkDesign.bind(this);
-
     }
     memberRef = React.createRef();
     forkRef = React.createRef();
@@ -826,6 +829,10 @@ class DesignInfo extends Component {
                 Socket.on('vchat-on-air', data => {
                     console.log('check VC on air', data);
                     this.setState({ liveVC: data });
+                    Socket.on('check-new-message-count', data => {
+                        console.log('check new msg cnt', data);
+                        this.setState({ msg_cnt: data });
+                    });
                 });
             } catch (err) {
                 console.error(err);
@@ -961,6 +968,19 @@ class DesignInfo extends Component {
             } catch (e) {
                 console.error(e);
             }
+        }
+    }
+
+    openChat = () => {
+        if (this.props.userInfo) {
+            const url = geturl() + `/chat/${this.props.DesignDetail.uid}`;
+            const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,top=100,left=100,width=580,height=500,scrollbars=no`;
+            this.chatwindow = window.open(url, "chat", options);
+            // console.log(this.chatwindow.closed);
+            // this.chatwindow.addEventListener('close', () => {
+            //     alert("chat closed :)");
+            //     console.log(this.chatwindow.closed);
+            // })
         }
         else {
             this.needLogin();
@@ -1226,6 +1246,15 @@ class DesignInfo extends Component {
                     </div>
                 </div>
 
+                <div
+                    className="chat"
+                    title="디자인 멤버들과 채팅을 시작합니다."
+                    onClick={this.openChat}>
+                    {this.state.msg_cnt > 0 ?
+                        <span>{this.state.msg_cnt}</span> : null}
+                    <i className="chat icon"></i>
+                    <div className="text">채팅</div>
+                </div>
             </ChatAndNoticeWrapper>
 
         </React.Fragment >)

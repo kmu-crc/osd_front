@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import GroupDetailContainer from "containers/Groups/GroupDetailContainer";
-import ClientTemplate from "templates/ClientTemplate"
+import ClientTemplate from "templates/ClientTemplate";
+
 export class GroupDetailPage extends Component {
   render() {
     return (

@@ -71,7 +71,7 @@ class GroupListContainer extends Component {
       reload: false,
       search: null,
       count: 0,
-      this_order: { text: "최신순", keyword: "update" }
+      this_order: this.props.sort=="like"?{text:"인기순",keyword:"like"}:{ text: "최신순", keyword: "update" }
     }
     this.handleResize = this.handleResize.bind(this);
   }
@@ -100,6 +100,8 @@ class GroupListContainer extends Component {
     await this.setState({ this_order: order });
     this.handleReload();
     this.getList(0);
+    const orderkeyword = order.keyword==null?"update":`${order.keyword}`;
+    window.location.href = "/group/"+orderkeyword;
   }
   getList = async (page) => {
     const keyword = this.state.search

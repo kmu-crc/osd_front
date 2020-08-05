@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import GroupListContainer from "containers/Groups/GroupListContainer"
-import ClientTemplate from "templates/ClientTemplate"
+import ClientTemplate from "templates/ClientTemplate";
+
 class GroupListPage extends Component {
   render() {
     return (

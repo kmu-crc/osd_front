@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import DesignListContainer from "containers/Designs/DesignListContainer";
-import ClientTemplate from "templates/ClientTemplate"
+import ClientTemplate from "templates/ClientTemplate";
+
 class DesignListPage extends Component {
   render() {
     return (

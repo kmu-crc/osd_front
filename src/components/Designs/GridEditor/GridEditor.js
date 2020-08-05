@@ -263,15 +263,27 @@ class GridEditor extends Component {
             <div style={{ position: "relative" }}>
                 {design.uid ?
                     <React.Fragment>
-                        {left ? <LeftWhitePane width={138} height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
-                            <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} />
+                        {left ? <LeftWhitePane
+                            width={138} height={h}
+                            background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
+                                <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} />
                         </LeftWhitePane> : null}
 
-                        {right ? <RightWhitePane width={138} height={h} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
-                            <Arrow angle="180deg" c gap={gap} right={50} onClick={this.ScrollRight} />
+                        {right ? <RightWhitePane
+                            width={138} height={h} right={0}
+                            background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
+                                <Arrow angle="180deg" c gap={gap} right={50} onClick={this.ScrollRight} />
                         </RightWhitePane> : null}
 
-                        {editor && newcard ? <NewCardModal isTeam={editor} boardId={boardId} designId={this.props.design.uid} order={this.props.DesignDetailStep.length} open={newcard} close={() => this.setState({ newcard: false })} /> : null}
+                        {editor && newcard
+                            ? <NewCardModal
+                                isTeam={editor}
+                                boardId={boardId}
+                                designId={this.props.design.uid}
+                                open={newcard}
+                                close={() => this.setState({ newcard: false })} />
+                            : null}
+
                         {card && <CardModal
                             isTeam={editor}
                             edit={userInfo && (userInfo.uid === cardDetail.user_id)}
@@ -281,15 +293,30 @@ class GridEditor extends Component {
                             boardId={boardId}
                             designId={this.props.design.uid}
                             card={cardDetail} />}
-                        {editor && <NewStepModal {...this.props} open={newstep} newStep={this.NewStep} close={this.CloseNewStep} />}
-                        {editor && <EditStepModal open={editstep} title={title} where={where} steps={DesignDetailStep} RemoveStep={this.RemoveStep} EditStep={this.EditStep} close={this.CloseEditStep} />}
+
+                        {editor &&
+                            <NewStepModal
+                                {...this.props}
+                                open={newstep}
+                                newStep={this.NewStep}
+                                close={this.CloseNewStep} />}
+
+                        {editor &&
+                            <EditStepModal
+                                open={editstep}
+                                title={title}
+                                where={where}
+                                steps={DesignDetailStep}
+                                RemoveStep={this.RemoveStep}
+                                EditStep={this.EditStep}
+                                close={this.CloseEditStep} />}
 
                         <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
                             <GridEditorWrapper ref={this.grid}>
                                 <div style={{ width: window.innerWidth + "px" }} className="Editor" ref={this.temp}>
                                     {/* ------------단계 ------------*/}
                                     {DesignDetailStep && DesignDetailStep.length > 0 &&
-                                        <SortableDesignSteps editStep={this.OpenEditStep} design_id={this.props.design.uid} editor={editor ? true : false} items={DesignDetailStep} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} userInfo={userInfo}/>}
+                                        <SortableDesignSteps editStep={this.OpenEditStep} design_id={this.props.design.uid} editor={editor ? true : false} items={DesignDetailStep} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} userInfo={userInfo} />}
                                     {editor && <div style={{ display: "flex", marginTop: "10px", marginLeft: "10px" }}>
                                         <CreateStep onClick={this.OpenNewStep} step={"단계"} /><div style={{ width: "300px" }}>&nbsp;</div>
                                     </div>}

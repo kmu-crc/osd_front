@@ -4,7 +4,7 @@ import { GetMyDetailRequest, UpdateUserDetailRequest } from "redux/modules/perso
 import { GetCategoryAllRequest } from "redux/modules/category"
 import CreateDesigner from "components/Designers/CreateDesigner/CreateDesigner"
 import { CheckNickNameRequest } from "redux/modules/auth"
-import ClientTemplate from "templates/ClientTemplate"
+import ClientTemplate from "templates/ClientTemplate";
 
 
 class CreateDesignerContainer extends Component {

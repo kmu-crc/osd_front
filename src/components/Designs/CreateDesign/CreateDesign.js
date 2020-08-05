@@ -11,7 +11,7 @@ import ReactCrop from 'react-image-crop';
 import "react-image-crop/dist/ReactCrop.css";
 import osdcss from "opendesign_style";
 import FileController from "../CardSourceDetail/FileController";
-import EmbController from "../CardSourceDetail/EmbController";
+import LinkController from "../CardSourceDetail/LinkController";
 import TextController from "../CardSourceDetail/TextControllerPlus";
 import TemplateGridEditor from "components/Designs/CreateDesign/TemplateGridEditor";
 import { geturl } from "config";
@@ -1333,9 +1333,13 @@ class CreateDesign extends Component {
                                 initClick={this.state.click}
                                 getValue={(data) => this.onChangeValue(data, item.order)} />)
                               : null}
-                            {item.type === "EMBED" ?
-                              (<EmbController />)
+                            {item.type === "LINK" ?
+                              <LinkController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
                               : null}
+
+                            {/* {item.type === "EMBED" ?
+                              (<EmbController />)
+                              : null} */}
                           </div>
                           <DelBtn
                             type="button"
@@ -1407,9 +1411,8 @@ class CreateDesign extends Component {
             {/* buttons*/}
             <div className="buttonBox">
               <CustomButton
-                onClick={async() => 
-                  {    
-                    if (await confirm("등록 중인 내용이 저장되지 않습니다. 취소하시겠습니까?", "예", "아니오")) {
+                onClick={async () => {
+                  if (await confirm("등록 중인 내용이 저장되지 않습니다. 취소하시겠습니까?", "예", "아니오")) {
                     window.history.go(-1)
                   }
                 }}
@@ -1572,6 +1575,11 @@ class AddContent extends Component {
         <div className="innerBox">
           <NewController className="first txt" onClick={() => this.addContent("FILE")} width="max-content" minWidth="116px" height="29px">파일 등록하기</NewController>
           <NewController className="txt" onClick={() => this.addContent("TEXT")} width="max-content" minWidth="134px" height="29px">텍스트 입력하기</NewController>
+          <NewController
+            onClick={() => this.addContent("LINK")}
+            width="max-content" minWidth="134px" height="29px">
+            하이퍼링크 등록하기</NewController>
+
           {this.props.order === 0 ?
             <NewController className="txt complecated" width="max-content" height="29px">
               <div onClick={this.changeType} className="txt">템플릿 선택하기</div>

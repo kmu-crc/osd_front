@@ -29,6 +29,7 @@ import FooterPara from "components/Commons/FooterTerm"
 import Notice from "components/Header/Notice";
 import CheckAuth from "containers/Commons/CheckAuth";
 import VChatPage from "pages/VChatPage";
+import ChatPage from "pages/ChatPage";
 
 class App extends Component {
   render() {
@@ -36,8 +37,9 @@ class App extends Component {
       <BrowserRouter>
         <Notice />
         <Switch>
+          {/* no client template */}
+          <Route path="/chat/:id" component={CheckAuth(ChatPage)} />
           <Route path="/vchat/:id" component={CheckAuth(VChatPage)} />
-
           {/* GROUP A - main */}
           <Route exact path="/" component={MainPage} />
           <Route path="/signup" component={SignUpPage} />
@@ -48,38 +50,28 @@ class App extends Component {
           <Route path="/myModify" component={RequiresAuth(MyDetailModifyPage)} />
           <Route path="/message/:id?/:name?" component={RequiresAuth(MessagePage)} />
           <Route path="/search/:sort?/:keyword?" component={SearchPage} />
-
           {/* GROUP B - design */}
           <Route path="/design/:sorting?/:cate1?/:cate2?" component={DesignListPage} />
           <Route path="/designDetail/:id" component={DesignDetailPage} />
           <Route path="/createdesign" component={RequiresAuth(CreateDesignPage)} />
           <Route path="/designModify/:id" component={RequiresAuth(ModifyDesignPage)} />
-
           {/* GROUP C - group */}
           <Route path="/group/:sorting?" component={GroupListPage} />
           <Route path="/groupDetail/:id/" component={GroupDetailPage} />
           <Route path="/createGroup" component={RequiresAuth(CreateGroupPage)} />
           <Route path="/modifygroup/:id" component={RequiresAuth(ModifyGroupPage)} />
-
           {/* GROUP D - designer */}
           <Route path="/designerDetail/:id" component={DesignerDetailPage} />
           <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
           <Route path="/createdesigner" component={RequiresAuth(CreateDesigner)} />
-
-          {/* GROUP E - etc. */}
-          <Route path="/resetPw" component={ResetPwPage} />
-
           <Route path="/footerPrivacy" component={FooterPrivacy} />
           <Route path="/footerPara" component={FooterPara} />
           <Route component={NotFoundPage} />
-
+          <Route path="/notfound" component={NotFoundPage} />
         </Switch>
-      </BrowserRouter>)
+      </BrowserRouter >
+    )
   }
 }
 
 export default App;
-
-
-
-
