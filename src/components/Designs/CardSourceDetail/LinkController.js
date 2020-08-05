@@ -82,11 +82,15 @@ class LinkController extends Component {
   }
   componentDidMount() {
     this.setState(this.props.item);
-    this.props.item.content &&
-      this.setState({
-        url: JSON.parse(this.props.item.content).url || "",
-        description: JSON.parse(this.props.item.content).description || ""
-      });
+    try {
+      this.props.item.content &&
+        this.setState({
+          url: JSON.parse(this.props.item.content).url || "",
+          description: JSON.parse(this.props.item.content).description || ""
+        });
+    } catch (_) {
+      this.setState({ url: "", description: "" });
+    }
   }
   async handleChange(event) {
     await this.setState({ url: event.target.value });

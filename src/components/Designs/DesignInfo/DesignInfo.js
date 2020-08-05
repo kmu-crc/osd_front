@@ -1247,7 +1247,7 @@ class DesignInfo extends Component {
                 </div>
 
                 <div
-                    className="chat"
+                    className="notice"
                     title="디자인 멤버들과 채팅을 시작합니다."
                     onClick={this.openChat}>
                     {this.state.msg_cnt > 0 ?
