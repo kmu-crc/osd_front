@@ -678,10 +678,9 @@ const DesignCommentModalContainer = styled(Modal)`
 
      }
 `;
-const ChatAndNoticeWrapper = styled.div`
+const ChatWrapper = styled.div`
     display: flex;
     position: relative;
-    border: 1px solid transparent;
     width: max-content;
     margin-left: auto;
     margin-right: 10px;
@@ -715,37 +714,6 @@ const ChatAndNoticeWrapper = styled.div`
             text-align: center;
             line-height: 36px;
             font-size: 36px;
-            color: gray;
-            z-index: 0;
-        };
-        .text {
-            text-align: center;
-            font-size: 12px;
-            color: #707070;
-        };
-    }
-    .chat {
-        position: relative;
-        span {
-            position: absolute;
-            top: 2px;
-            left: 3px;
-            background-color: red;
-            width: 17px;
-            height: 17px;
-            border-radius: 50% 
-            z-index: 1;
-            font-size: 10px;
-            color: white;
-            padding: 0px;
-            font-weight: 900;
-            line-height: 10px;
-            text-align: center;
-        };
-        i {
-            text-align: center;
-            line-height: 36px;
-            font-size: 34px;
             color: gray;
             z-index: 0;
         };
@@ -1231,9 +1199,9 @@ class DesignInfo extends Component {
             </MainBox>
 
             {/* proto-type: design-notice button, design-alarm button */}
-            <ChatAndNoticeWrapper>
+            <ChatWrapper>
                 <div
-                    className="chat"
+                    className="notice"
                     title="디자인 멤버들과 화상회의를 시작합니다."
                     onClick={this.openVideoChat}>
 
@@ -1245,17 +1213,22 @@ class DesignInfo extends Component {
                         {"화상회의 "}{this.state.liveVC ? "참여" : "개설"}
                     </div>
                 </div>
-
                 <div
                     className="notice"
                     title="디자인 멤버들과 채팅을 시작합니다."
                     onClick={this.openChat}>
-                    {this.state.msg_cnt > 0 ?
-                        <span>{this.state.msg_cnt}</span> : null}
-                    <i className="chat icon"></i>
-                    <div className="text">채팅</div>
+
+                    {this.state.msg_cnt > 0 ? <span>{this.state.msg_cnt}</span> : null}
+                    <div className="video-chat-icon">
+                        <i className="talk big icon"></i>
+                    </div>
+                    <div className="text">
+                        채팅
+                    </div>
                 </div>
-            </ChatAndNoticeWrapper>
+
+            </ChatWrapper>
+
 
         </React.Fragment >)
     }

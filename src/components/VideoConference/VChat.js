@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import io from 'socket.io-client'
 import Video from './video'
 import Videos from './videos'
-import Chat from './chat'
-import './vchat.css';
 import host from "config";
 
 class VChat extends Component {
