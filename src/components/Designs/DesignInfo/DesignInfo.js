@@ -348,7 +348,20 @@ const OneSideBox = styled.div`
         height: 120px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: space-start;
+
+        .author {
+            display: flex;
+        }
+        .original-design-button {
+            margin-top: 10px;
+        }
+        .fork-design-count {
+            margin-top: 10px;
+        }
+        .comment-box {
+            margin-top: 10px;
+        }
     }
 
     .comment-box{
@@ -1060,7 +1073,7 @@ class DesignInfo extends Component {
                         <div className="info">
 
                             {/* author and member, member modal enable button */}
-                            <div style={{ display: "flex" }}>
+                            <div className="author" >
                                 <button
                                     className="transparent_btn cursor_pointer font_bold"
                                     onClick={this.openMemberList} >
@@ -1085,7 +1098,7 @@ class DesignInfo extends Component {
 
                             {/* origin-design */}
                             {DesignDetail.parent_design &&
-                                <div className="fork-design-count">
+                                <div className="original-design-button">
                                     <button
                                         className="transparent_btn_nomargin cursor_pointer font_red font_bold font_middle"
                                         onClick={() => this.goParentDesign(DesignDetail.parent_design)}>
