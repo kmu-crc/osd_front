@@ -424,11 +424,13 @@ class Chat extends React.Component {
   sendMessageEnter() {
     if (window.event.keyCode == 13) {
       let message = document.getElementById('chat-input')
-      this.socket.emit('chat', {
-        message: message.value
-      }, () => {
-        console.log(`message : ${message.value}`)
-      })
+      try {
+        this.socket.emit('chat', { message: message.value }, () => {
+          console.log(`message : ${message.value}`)
+        });
+      } catch (e) {
+        console.error(e);
+      }
       message.value = ''
     }
   };
@@ -462,7 +464,7 @@ class Chat extends React.Component {
       <Wrapper>
         <ChatBox>
           <div className="chat-box-header">
-            {(this.props.DesignDetail && this.props.DesignDetail.title) || "디자인"}채팅방
+            {(this.props.DesignDetail && this.props.DesignDetail.title) || "디자인"} 채팅방
 
             <span className="chat-box-toggle">
               <span onClick={() => this.saveChatLog()}>
