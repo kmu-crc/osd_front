@@ -22,6 +22,7 @@ import { Icon } from 'semantic-ui-react';
 import opendesign_style from "opendesign_style";
 
 import Socket from "modules/Socket"
+import Loading from 'components/Commons/Loading';
 
 // new style
 const Thumbnail = styled.div`
@@ -325,16 +326,15 @@ const TwoSideBox = styled.div`
 `;
 const OneSideBox = styled.div`
     *{
-        color:#707070;
+        color: #707070;
     }
-
-    position:relative;
-    width:165px;
-    min-width:165px;
-    height:220px;
-    .title{
+    position: relative;
+    width: 165px;
+    min-width: 165px;
+    height: 220px;
+    .title {
         display: block !important;
-        width:max-content !important;
+        width: max-content !important;
         height: 29px;
         color: #707070;
         font-size: 20px;
@@ -344,75 +344,56 @@ const OneSideBox = styled.div`
         cursor: pointer;
     }
 
-    .info{
-        margin-top:5px;
-        .goto-parent {
-            position: relative;
-            width: 165px;
-            height: 25px;
-            color: #FF0000;
-            font-size: 17px;
-            font-weight: 300;
-            text-align: left;
-            line-height: 25px;
-            cursor: pointer;
-            &.no {
-                cursor: default;
-            }
+    .info {
+        height: 120px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-start;
+
+        .author {
+            display: flex;
+        }
+        .original-design-button {
+            margin-top: 10px;
+        }
+        .fork-design-count {
+            margin-top: 10px;
+        }
+        .comment-box {
+            margin-top: 10px;
         }
     }
-    .comment-box {
-        width: max-content;
+
+    .comment-box{
         display: flex;
+        flex-direction: row;
+        font-size: 1.1rem;
         cursor: pointer;
-        margin-top: 10px;
-        color: #FF0000;
-        font-family: Noto Sans KR;
-        font-weight: 300;
-        .txt {
-            font-size: 17px;
-        }
-        .count {
-            margin-left: 10px;
-            font-size: 15px
-        }
     }
     .count-box {
-        position:absolute;
-        bottom:0px;
+        position: absolute;
+        bottom: 0px;
         width: 100%;
-        height: max-content;
         font-size: 15px;
         color: #707070;
         font-weight: 500;
         text-align: left;
         display: flex;
-        align-items:flex-end;
-        .view-count {
-            margin-top: auto;
-            margin-left: 6px;
-            width: 34px;
-            margin-right:15px;
-        }
-        .like-count {
-            margin-top: auto;
-            margin-left: 6px;
-            width: 34px;
-            margin-right:15px;
-        }        
-        .smallMode-category-name {
-            margin-top: 42px;
-            width: max-content;
-            height: 25px;
-            color: #FF0000;
-            font-size: 17px;
-            font-weight: 300;
-            line-height: 25px;
-            text-align: left;
-            font-family: Noto Sans KR;
-            display:none;
+        align-items: flex-end;
+
+        .count-element {
+            display: flex;
+            flex-direction: rows;
+
+            .icon {
+                margin-left: 5px;
+            }
+            .number {
+                margin-left: 2px;
+            }
         }
     }
+
     @media only screen and (min-width : ${1024}px) 
     and (max-width : ${opendesign_style.resolutions.LargeMinWidth}px) {
         height:220px;
@@ -575,8 +556,8 @@ const ListItem = styled.div`
     padding-left:15px;
     padding-top: 15px;
     flex-direction: column;
-    width: 365px;
-    height: 85px;
+    // width: 365px;
+    // height: 85px;
     display: flex;
     border-bottom: 1px solid #B7B7B7;
     color: #707070;
@@ -1003,33 +984,37 @@ class DesignInfo extends Component {
                 </DesignCommentModalContainer>)
         }
         const MemberListModal = () => {
-            return (
-                <React.Fragment>
-
-                    <DesignMemberList ref={this.memberRef} top={this.state.posY} left={this.state.posX} >
-                        <div className="close-box" onClick={() => this.setState({ memberList: false })} >
-                            <Cross angle={45} width={30} height={30} />
-                        </div>
-                        <div className="list">
-                            {DesignDetail.member && DesignDetail.member.length > 0 &&
-                                DesignDetail.member.map((mem, i) =>
-                                    <DesignMemberListElement face={mem.thumbnail ? mem.thumbnail.s_img : noface} key={i} >
-                                        <div className="face" />
-                                        <div className="nick-name">{mem.nick_name}</div>
-                                        {DesignDetail.user_id === mem.user_id &&
-                                            <div title={"팀장"} ><i className="star icon" /></div>}
-                                    </DesignMemberListElement>)}</div>
-                    </DesignMemberList>
-                </React.Fragment>
-            );
+            return (<DesignCommentModalContainer
+                open={this.state.memberList} onClose={() => this.setState({ memberList: false })}>
+                {/* <DesignMemberList ref={this.memberRef} top={this.state.posY} left={this.state.posX} > */}
+                <div className="close-box" onClick={() => this.setState({ memberList: false })} >
+                    <Cross angle={45} width={30} height={30} />
+                </div>
+                <div><h2>디자인 맴버 목록</h2></div>
+                <div className="list">
+                    {DesignDetail.member && DesignDetail.member.length > 0 &&
+                        DesignDetail.member.map((mem, i) =>
+                            <DesignMemberListElement face={mem.thumbnail ? mem.thumbnail.s_img : noface} key={i} >
+                                <div className="face" />
+                                <div className="nick-name">{mem.nick_name}</div>
+                                {DesignDetail.user_id === mem.user_id &&
+                                    <div title={"팀장"} ><i className="star icon" /></div>}
+                            </DesignMemberListElement>)}</div>
+                {/* </DesignMemberList> */}
+            </DesignCommentModalContainer>);
         }
         const ForkDesignListModal = () => {
             return (
-                <DesignMemberList ref={this.forkRef} top={this.state.posY} left={this.state.posX}>
+                <DesignCommentModalContainer open={this.state.forkDesignList} onClose={() => this.setState({ forkDesignList: false })}>
                     <div className="close-box" onClick={() => this.setState({ forkDesignList: false })} >
                         <Cross angle={45} color={"#000000"} weight={3} width={30} height={30} />
                     </div>
-                    <div className="list">
+
+                    <div style={{ marginTop: "10px", marginBottom: "10px" }}>
+                        <h3>이 디자인을 파생한 디자인들의 목록입니다.</h3>
+                    </div>
+
+                    <div style={{ overflowY: "auto" }}>
                         {this.props.forkDesignList && this.props.forkDesignList.map((item, idx) => {
                             return (<ListItem key={item + idx} img={item.p_s_img}>
                                 <div className="wrapper" onClick={() => this.onMoveForkDesign(item.uid)} >
@@ -1041,7 +1026,7 @@ class DesignInfo extends Component {
                                 </div>
                             </ListItem>)
                         })}</div>
-                </DesignMemberList>
+                </DesignCommentModalContainer>
             );
         }
         const LikeDialogModal = () => {
@@ -1067,59 +1052,103 @@ class DesignInfo extends Component {
             {this.state.likeDialog
                 ? <LikeDialogModal />
                 : null}
+            {this.state.forkDesignList
+                ? <ForkDesignListModal />
+                : null}
+            {!isMyDesign && this.state.memberList && <MemberListModal />}
+
 
             <MainBox>
                 <div className="wrapper">
                     <Thumbnail imageURL={thumbnail}>
                         {DesignDetail.parent_design && <div className="fork-mark" />}
                     </Thumbnail>
+
                     <OneSideBox>
+                        {/* title */}
                         <div className="title" title={DesignDetail.title}>
                             <TextFormat txt={DesignDetail.title} />
                         </div>
-                        <div className="info">
-                            {DesignDetail.parent_design &&
-                                <div className="goto-parent" onClick={() => this.goParentDesign(DesignDetail.parent_design)}
-                                    title={DesignDetail.parent_title}>
-                                    {DesignDetail.parent_title.slice(0, 4)}
-                                    {DesignDetail.parent_title.length > 4 && "..."}에서 파생됨
-                                    </div>}
 
-                            <div className="flexBox position_relative">
-                                <button className="transparent_btn cursor_pointer" onClick={this.openMemberList} >
+                        <div className="info">
+
+                            {/* author and member, member modal enable button */}
+                            <div className="author" >
+                                <button
+                                    className="transparent_btn cursor_pointer font_bold"
+                                    onClick={this.openMemberList} >
                                     <div className="flexBox font_fit font_middle cursor_pointer">
-                                        <TextFormat txt={DesignDetail.userName} chars={11} />
+                                        <TextFormat
+                                            txt={DesignDetail.userName} chars={11} />
                                         <div style={{ fontSize: "0.95rem" }}>
-                                            {(DesignDetail.member && DesignDetail.member.length > 1) ? `외 ${(DesignDetail.member.length - 1).toString()}명 ` : null}
+                                            {(DesignDetail.member && DesignDetail.member.length > 1)
+                                                ? `외 ${(DesignDetail.member.length - 1).toString()}명 `
+                                                : null}
                                         </div>
                                     </div>
                                 </button>
-                                {WaitingList && WaitingList.length > 0 ? <div style={{ marginTop: "5px", fontSize: "0.95rem", padding: "0", height: "0.95rem", color: "red" }}>new!</div> : null}
-                                {!isMyDesign && this.state.memberList && <MemberListModal />}
-                            </div>
-                            <div className="flexBox">
-                                <div className="comment-box" onClick={this.getDesignComment} >
-                                    <div className="txt font_red">댓글</div>
-                                    <div className="count font_red">{Count && Count.comment_count ? NumberFormat(Count.comment_count) : 0}</div>
-                                </div>
-                                {CountDesignComment && CountDesignComment > 0 ? <div style={{ marginLeft: "5px", fontSize: "0.95rem", padding: "0", height: "0.95rem", color: "red" }}>new!</div> : null}
+
+                                {WaitingList && WaitingList.length > 0
+                                    ? <div style={{
+                                        marginTop: "5px", fontSize: "0.95rem", padding: "0",
+                                        height: "0.95rem", color: "red", fontWeight: "500",
+                                    }}>new!</div>
+                                    : null}
                             </div>
 
-                            <div className="flexBox">
+                            {/* origin-design */}
+                            {DesignDetail.parent_design &&
+                                <div className="original-design-button">
+                                    <button
+                                        className="transparent_btn_nomargin cursor_pointer font_red font_bold font_middle"
+                                        onClick={() => this.goParentDesign(DesignDetail.parent_design)}>
+                                        {DesignDetail.parent_title.slice(0, 6)}
+                                        {DesignDetail.parent_title.length > 6 && "..."}에서 파생됨
+                                    </button>
+                                </div>}
+
+                            {/* fork-design modal enable button */}
+                            <div className="fork-design-count">
                                 {DesignDetail.children_count["count(*)"] > 0 &&
                                     <button className="transparent_btn_nomargin cursor_pointer font_red font_bold font_middle" onClick={this.openForkList}>
                                         파생된 디자인&nbsp;<span className="font_red">{DesignDetail.children_count["count(*)"]}</span>
                                     </button>}
                             </div>
-                            {this.state.forkDesignList && <ForkDesignListModal />}
+
+                            {/* comment-button */}
+                            <div className="comment-box" onClick={this.getDesignComment} >
+                                <div className="txt font_red">댓글작성</div>
+                                {CountDesignComment && CountDesignComment > 0 ?
+                                    <div style={{
+                                        marginLeft: "5px", fontWeight: "500",
+                                        fontSize: "0.95rem", padding: "0",
+                                        height: "0.95rem", color: "red"
+                                    }}>new!</div> : null}
+                            </div>
+
                         </div>
+
+                        {/* count-box */}
                         <div className="count-box">
-                            <IconView width="20px" height="17px" fill="#707070" />
-                            <div className="view-count">{NumberFormat(Count.view_count)}</div>
-                            <i className="material-icons">&#xE8DC;</i>
-                            <div className="like-count">{NumberFormat(Count.like_count)}</div>
+                            <div className="count-element">
+                                <div className="icon"><i className="icon eye"></i></div>
+                                <div className="number">{NumberFormat(Count.view_count)}</div>
+                            </div>
+                            <div className="count-element">
+                                <div className="icon"><i className="icon thumbs up"></i></div>
+                                <div className="number">{NumberFormat(Count.like_count)}</div>
+                            </div>
+                            <div className="count-element">
+                                <div className="icon"><i className="icon comment"></i></div>
+                                <div className="number" style={{ width: "max-content", display: "flex" }}>
+                                    {Count && Count.comment_count ?
+                                        NumberFormat(Count.comment_count) : 0}
+                                </div>
+                            </div>
                         </div>
+
                     </OneSideBox>
+
                     <TwoSideBox w={w - 750}>
                         <div className="descriptionContainer">
                             <div className="category-name">{DesignDetail.categoryName}</div>
@@ -1128,6 +1157,7 @@ class DesignInfo extends Component {
                             </p>
                         </div>
                     </TwoSideBox>
+
                     <ThreeSideBox>
                         <div className="content_box">
                             <div className="cursor_pointer font_red font_bold font_big"
@@ -1162,11 +1192,12 @@ class DesignInfo extends Component {
                             <div className="_txt font_midBig font_fit">등록 일자 {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
                         </div>
                     </ThreeSideBox>
+
                     <MobileSeeMore isShow={this.state.isSeeMore}>
                         <div className="explain-box font_middle">{DesignDetail.explanation}</div>
                         <div className="_txt font_smallthan font_fit">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
                         <div className="_txt font_smallthan font_fit">등록 일자
-                                                {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR')
+                        {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR')
                                 .substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}
                         </div>
                         <div className="icon-box">
@@ -1204,27 +1235,28 @@ class DesignInfo extends Component {
                             }
                         </div>
                     </MobileSeeMore>
-                    <div className="seemore cursor_pointer" onClick={() => { this.setState({ isSeeMore: !this.state.isSeeMore }) }}>
-                        <div className="txt">{this.state.isSeeMore === false ? "▼ 더보기" : "▲ 접기"}</div>
+
+                    <div className="seemore cursor_pointer"
+                        onClick={() => { this.setState({ isSeeMore: !this.state.isSeeMore }) }}>
+                        <div className="txt">
+                            {this.state.isSeeMore === false ? "▼ 더보기" : "▲ 접기"}</div>
                         {/* <div className="txt">더보기</div> */}
                     </div>
                 </div>
             </MainBox>
 
             {/* proto-type: design-notice button, design-alarm button */}
-            <ChatAndNoticeWrapper>
+            {/* <ChatAndNoticeWrapper>
                 <div
                     className="chat"
                     title="디자인 멤버들과 채팅을 시작합니다."
                     onClick={this.openChat}>
-
                     {this.state.msg_cnt > 0 ?
                         <span>{this.state.msg_cnt}</span> : null}
                     <i className="chat icon"></i>
                     <div className="text">채팅</div>
                 </div>
-
-            </ChatAndNoticeWrapper>
+            </ChatAndNoticeWrapper> */}
 
         </React.Fragment >)
     }
@@ -1232,3 +1264,8 @@ class DesignInfo extends Component {
 
 
 export default DesignInfo;
+
+
+
+
+/*  */

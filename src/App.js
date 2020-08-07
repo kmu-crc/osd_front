@@ -22,12 +22,10 @@ import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage"
 import CreateDesigner from "containers/Designer/CreateDesignerContainer/CreateDesignerContainer"
 // + etc.
 import RequiresAuth from "containers/Commons/RequiresAuth"
-import ResetPwPage from "pages/ResetPwPage"
 import NotFoundPage from "pages/NotFoundPage"
 import FooterPrivacy from "components/Commons/FooterPrivacy"
 import FooterPara from "components/Commons/FooterTerm"
 import Notice from "components/Header/Notice";
-import CheckAuth from "containers/Commons/CheckAuth";
 import ChatPage from "pages/ChatPage";
 
 class App extends Component {
@@ -37,7 +35,7 @@ class App extends Component {
         <Notice />
         <Switch>
           {/* no client template */}
-          <Route path="/chat/:id" component={CheckAuth(ChatPage)} />
+          <Route path="/chat/:id" component={ChatPage} />
 
           {/* GROUP A - main */}
           <Route exact path="/" component={MainPage} />

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ChatContainer from "containers/Chat/ChatContainer";
+import CheckAuth from "containers/Commons/CheckAuth";
 
 class ChatPage extends Component {
   componentDidMount() {
@@ -17,5 +18,4 @@ class ChatPage extends Component {
     );
   }
 }
-
-export default ChatPage;
+export default CheckAuth(ChatPage);

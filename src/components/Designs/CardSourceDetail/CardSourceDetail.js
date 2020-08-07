@@ -33,7 +33,7 @@ const UpBtn = styled.button`
  position: absolute;
  top: 0;
  left: 85%;
- transform: translate(-50%, -50%);
+ transform: translate(-50%, 0%);
  border: 0;
  padding: 0;
  width: 45px;
@@ -59,7 +59,7 @@ const DownBtn = styled.button`
  position: absolute;
  top: 0;
  left: 90%;
- transform: translate(-50%, -50%);
+ transform: translate(-50%, 0%);
  border: 0;
  padding: 0;
  width: 45px;
@@ -85,7 +85,7 @@ const DelBtn = styled.button`
   position: absolute;
   top: 0;
   left: 95%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0%);
   border: 0;
   padding: 0;
   width: 45px;
@@ -106,7 +106,27 @@ const DelBtn = styled.button`
     display: block;
   }
 `;
+const LinkPreview = styled.div`
+  text-align: center;
 
+  .title {
+    font-size: .9rem;
+    color: #707070;
+  }
+  .url {
+    font-size: 2rem;
+    line-height: 2.1rem;
+    padding: .5rem; 
+    color: #0645AD;
+  }
+  .description {
+    font-size: .9rem;
+    line-height: .9rem;
+    font-weight: 300;
+    color: #FF0000;
+    padding: .5rem; 
+  }
+`;
 const ViewContent = styled.div`
   position: relative;
   .imgContent{
@@ -503,7 +523,16 @@ class CardSourceDetail extends Component {
                       <div className="textWrap" dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
 
                       : (item.type === "LINK") ?
-                        <div className="linkWrap"><a target="_blank" href={`${item.content}`}>{item.content}</a></div>
+                        <div className="linkWrap">
+                          <LinkPreview>
+                            <div className="url">
+                              <a target="_blank" href={`${JSON.parse(item.content).url}`}>
+                                {JSON.parse(item.content).url}</a>
+                            </div>
+                            <div className="description">*{JSON.parse(item.content).description}</div>
+                          </LinkPreview>
+                        </div>
+
                         : <div>올바른형식의 아이템이 아닙니다.</div>}
             </div>
           )}
@@ -515,10 +544,17 @@ class CardSourceDetail extends Component {
           {content.map((item, index) => {
             console.log("item---", item);
             return (<ControllerWrap key={item + index}>
+
               <div className="contentWrap">
-                {item.type === "FILE" ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} /> : null}
-                {item.type === "TEXT" ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} /> : null}
-                {item.type === "LINK" ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} /> : null}
+                {(item.type === "FILE")
+                  ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />
+                  : null}
+                {(item.type === "TEXT")
+                  ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                  : null}
+                {(item.type === "LINK")
+                  ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                  : null}
               </div>
 
               <DelBtn
@@ -549,7 +585,7 @@ class CardSourceDetail extends Component {
         </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
       ) : null}
 
-      <ButtonContainer >
+      <ButtonContainer>
         {(this.props.edit && this.props.uid) &&
           <EditorBottonWrapper>
             <button onClick={this.onCancel} className="cancel" type="button">

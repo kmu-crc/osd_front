@@ -194,19 +194,19 @@ class SignInModal extends Component {
     signin = async (event) => {
 
         const { email, password } = this.state
-        
+
         // ---------------- 예외처리
         let checkedMail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         if (email === "") {
-            await alert("아이디를 입력해주세요","확인");
+            await alert("아이디를 입력해주세요", "확인");
             return;
         }
         else if (checkedMail.test(this.state.email) === false) {
-            await alert("이메일 형식이 올바르지 않습니다","확인");
+            await alert("이메일 형식이 올바르지 않습니다", "확인");
             return;
         }
         else if (password === "") {
-            await alert("비밀번호를 입력해주세요","확인");
+            await alert("비밀번호를 입력해주세요", "확인");
             return;
         }
         // -----------------------
@@ -217,15 +217,15 @@ class SignInModal extends Component {
                 if (res.type === "opendesign/authentication/AUTH_SIGNIN_SUCCESS") {
                     // alert('로그인에 성공하였습니다.') // SetSession("opendesign_token",res.token)
                     this.props.signin()
-                    .then(window.history.back())
+                    //.then(window.history.back())
                 }
                 else {
-                    await alert('로그인에 실패하였습니다',"확인");
+                    await alert('로그인에 실패하였습니다', "확인");
                     this.setState({ password: "" })
                     //this.onClose()
                 }
-                })
-        }
+            })
+    }
     async checkEmail() {
         const data = { email: this.state.email }
         let returnvalue = true;
@@ -267,15 +267,15 @@ class SignInModal extends Component {
         let checkedMail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
         if (this.state.email === "") {
-            await alert("아이디를 입력해주세요","확인");
+            await alert("아이디를 입력해주세요", "확인");
             return;
         }
         else if (checkedMail.test(this.state.email) === false) {
-            await alert("올바른 양식이 아닙니다","확인");
+            await alert("올바른 양식이 아닙니다", "확인");
             return;
         }
         else if (await this.checkEmail() === false) {
-            await alert("등록되지 않은 아이디입니다","확인");
+            await alert("등록되지 않은 아이디입니다", "확인");
             return;
         }
 
@@ -283,7 +283,7 @@ class SignInModal extends Component {
         this.props.FindPwRequest(data);
         this.setState({ loading: true });
 
-        await alert("해당 아이디로 메일 전송이 완료되었습니다","확인");
+        await alert("해당 아이디로 메일 전송이 완료되었습니다", "확인");
         this.props.close();
     };
 
@@ -316,7 +316,7 @@ class SignInModal extends Component {
                                 </div>
                                 <div className="subItemBox">
                                     <div className="titleLabel">아직 계정이 없으신가요?</div>
-                                    <div className="titleLabel"><Link style={{ color: "#FF0000"}} to="/signup" onClick={this.onClose}>회원가입</Link>
+                                    <div className="titleLabel"><Link style={{ color: "#FF0000" }} to="/signup" onClick={this.onClose}>회원가입</Link>
                                     </div>
                                 </div>
                             </MainBox>
