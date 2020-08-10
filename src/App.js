@@ -26,11 +26,8 @@ import NotFoundPage from "pages/NotFoundPage"
 import FooterPrivacy from "components/Commons/FooterPrivacy"
 import FooterPara from "components/Commons/FooterTerm"
 import Notice from "components/Header/Notice";
-<<<<<<< HEAD
 import CheckAuth from "containers/Commons/CheckAuth";
 import VChatPage from "pages/VChatPage";
-=======
->>>>>>> 587b1052e0911579af5549e5b9e4d339226caef3
 import ChatPage from "pages/ChatPage";
 
 class App extends Component {
