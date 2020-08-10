@@ -4,10 +4,8 @@ import ClientTemplate from "templates/ClientTemplate";
 
 export class DesignDetailPage extends Component {
   render() {
-    return (
-      <ClientTemplate>
-        <DesignDetailContainer id={this.props.match.params.id} />
-      </ClientTemplate>
-    );
+    return (<ClientTemplate>
+      <DesignDetailContainer id={this.props.match.params.id} />
+    </ClientTemplate>);
   }
 }

@@ -1,0 +1,99 @@
+.chatbox {
+  z-Index: 2;
+  position: fixed;
+  top: 0px;
+  right: -2px;
+  margin: 5px;
+  width: 300px;
+  height: 579px;
+  bottom: 120px;
+  background-color: white;
+  border-radius:10px;
+}
+
+.chatout {
+height: 472px;
+overflow-y: auto;
+}
+
+.chatdata {
+width:100%;
+padding: 9px;
+border-radius: 5px;
+/* border: 1px solid #999; */
+/* width: 280px; */
+height: 35px;
+outline:none;
+border:none;
+background-color:#EFEFEF;
+}
+
+.inputbox {
+/* border:1px solid black; */
+width:100%;
+height:max-content;
+position: absolute;
+bottom: 0;
+}
+
+/* p{
+width: 240px;
+float: left;
+margin-left: 5px;
+word-wrap: break-word;
+background: #4080ff;
+padding: 3%;
+color: white;
+border-radius: 10px;
+} */
+
+h3{
+/* background-color: red; #4080ff */
+background-color: red;
+height:10%;
+color: #fff;
+}
+
+.chatbox2 {
+width: 300px;
+border: 1px solid #e8e6e6;
+margin: 1px;
+position: absolute;
+min-height: 590px; }
+
+.chat {
+max-height: 75%;
+overflow-y: auto;
+max-width: 350px;
+padding:20px;
+}
+.inputbutton {
+/* border:1px solid blue; */
+display:flex;
+margin-bottom:5px;
+}
+.customButton{
+  width:33.4%;
+  /* height:50px; */
+  display:flex;
+  /* flex-direction:column; */
+  justify-content:center;
+  align-items:center;
+  background-color:#EFEFEF;
+  color:white;
+  outline:none;
+  font-size:11px;
+  padding:5px;
+  border:none;
+  margin-top:1px;
+  color:#707070;
+  cursor:pointer;
+}
+.marginLeft{
+  margin-left:1px;
+}
+
+.msgBox{
+  width:100%;
+  background-color: blue;
+}

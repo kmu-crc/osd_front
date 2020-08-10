@@ -5,7 +5,7 @@ import iAlarm from "source/alarm.png";
 import noimg from "source/noimg.png";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
-
+import { geturl } from "config";
 import opendesign_style from "opendesign_style"
 
 const AlarmIcon = styled.div`
@@ -115,7 +115,6 @@ class Alarm extends Component {
         }
     }
     alarmConfirm = (userID, alarmID) => {
-        // console.log("alarm-confirm:", userID, ",", alarmID)
         this.props.handleAlarmConfirm(userID, alarmID)
     }
     allAlarmConfirm = async () => {
@@ -168,7 +167,7 @@ class Alarm extends Component {
                 msg = `${from}님이 디자인 카드에 댓글을 달았습니다.`;
             } else if (item.kinds === "COMMENT_COMMENT") {
                 msg = `${to}님의 디자인 댓글에 답변이 달렸습니다.`;
-            } else if (item.kinds === "LIVE_CHAT"){
+            } else if (item.kinds === "LIVE_CHAT") {
                 // const date = new Date();
                 msg = `${from}님이 회의를 개설하였습니다.`
             }
@@ -371,10 +370,15 @@ class Alarm extends Component {
         });
         alarmlist = [];
     }
+    gotoVChat = (item) => {
+        const url = `${geturl()}/vchat/${item.content_id}`;
+        const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,top=100,left=100,width=1280,height=1000,scrollbars=no`;
+        this.vchatwindow = window.open(url, "vchat", options);
+        this.alarmConfirm(item.user_id, item.uid);
+    }
 
     getAlarmItem = (item) => {
         const MAXLENGTH = 32;
-        // const targetThumbnail = item.targetThumbnail || noimg;
 
         if (item.type === "DESIGN" && item.kinds === "COMMENT") {
             return <React.Fragment>
@@ -383,13 +387,21 @@ class Alarm extends Component {
                 </div>
             </React.Fragment>
         }
-        else if(item.type==="DESIGN"&& item.kinds === "LIVE_CHAT"){
-            const date = new Date();/////////// 회의시작날짜입력
+        else if (item.type === "DESIGN" && item.kinds === "LIVE_CHAT") {
+            const date = new Date();
             return <React.Fragment>
                 <div style={{ display: "flex", flexDirection: "column", fontSize: "16px" }}>
                     <TextFormat txt={item.title} chars={MAXLENGTH - 15} />
-                    <div style={{fontSize:"12px"}}>
-                    {`${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDate()}일`} 
+                    <div style={{ fontSize: "12px" }}>
+                        {`${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDate()}일`}
+                    </div>
+                    <div style={{ width: "max-content", display: "flex", alignItems: "flex-end" }}>
+                        {item.confirm === 0 ?
+                            <div style={{ width: "max-content", height: "max-content", display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
+                                <div onClick={() => this.gotoVChat(item)} style={{ cursor: "pointer", marginLeft: "auto", color: "#FF0000", fontSize: "15px" }}>참여</div>
+                                <div onClick={() => this.alarmConfirm(item.user_id, item.uid)} style={{ cursor: "pointer", marginLeft: "15px", color: "#707070", fontSize: "15px" }}>거절</div>
+                            </div>
+                            : null}
                     </div>
                 </div>
             </React.Fragment>
@@ -472,7 +484,8 @@ class Alarm extends Component {
     render() {
         const alarms = this.props.alarm && this.props.alarm.list;
         alarms && alarms.length > 0 && alarms.sort((a, b) => (a.confirm > b.confirm) ? 1 : (a.create_time < b.create_time) ? 1 : -1);
-        // console.log(alarms);
+
+        console.log(alarms);
 
         return (
             <React.Fragment>
@@ -544,7 +557,7 @@ class Alarm extends Component {
                     </div>
                 </div>
 
-            </React.Fragment>
+            </React.Fragment >
         )
     }
 }

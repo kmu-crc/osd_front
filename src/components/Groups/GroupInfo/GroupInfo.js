@@ -368,7 +368,6 @@ const TwoSideBox = styled.div`
     and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
         display:none;
     }
-
 `;
 const ThreeSideBox = styled.div`
     margin-left: auto;
@@ -604,7 +603,6 @@ class GroupInfoComponent extends Component {
             "notice-title": "",
             "notice-content": "",
         };
-
         this.needLogin = this.needLogin.bind(this);
         this.like = this.like.bind(this);
         this.handleMoreViewDescription = this.handleMoreViewDescription.bind(this);
@@ -719,10 +717,9 @@ class GroupInfoComponent extends Component {
         const user_id = userInfo && userInfo.uid;
         const isEditor = group_user_id === user_id;
         const { w, manager } = this.state;
-
-
         const lastest = this.state.notice;
         const noticeCount = this.state.noticeCount;
+        console.log("::GROUPINFO::\n", this.props,);
 
         return (<React.Fragment>
 

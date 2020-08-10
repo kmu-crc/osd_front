@@ -6,8 +6,7 @@ class MyDetailModifyPage extends Component {
   render() {
     return (<ClientTemplate>
       <ModifyMyDetailContainer token={this.props.token} history={this.props.history} />
-    </ClientTemplate>
-    );
+    </ClientTemplate>);
   }
 }
 

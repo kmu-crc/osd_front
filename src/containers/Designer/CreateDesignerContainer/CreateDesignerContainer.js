@@ -14,7 +14,10 @@ class CreateDesignerContainer extends Component {
   }
   render() {
     console.log("designer", this.props);
-    return (<CreateDesigner {...this.props} />)
+    return (<ClientTemplate>
+      <CreateDesigner {...this.props} />
+    </ClientTemplate>
+    )
   }
 }
 

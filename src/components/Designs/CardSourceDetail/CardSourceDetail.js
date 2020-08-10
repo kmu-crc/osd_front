@@ -11,6 +11,14 @@ import LinkController from "./LinkController";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
+function IsJsonString(str) {
+  try {
+    var json = JSON.parse(str);
+    return (typeof json === 'object');
+  } catch (e) {
+    return false;
+  }
+}
 // CSS STYLED
 const ControllerWrap = styled.div`
   position: relative;
@@ -526,10 +534,21 @@ class CardSourceDetail extends Component {
                         <div className="linkWrap">
                           <LinkPreview>
                             <div className="url">
-                              <a target="_blank" href={`${JSON.parse(item.content).url}`}>
-                                {JSON.parse(item.content).url}</a>
+                              <a target="_blank" href={`${
+                                IsJsonString(item.content)
+                                  ? JSON.parse(item.content).hasOwnProperty('url')
+                                    ? JSON.parse(item.content).url : "invalid" : "invalid"}`}>
+                                {
+                                  IsJsonString(item.content)
+                                    ? JSON.parse(item.content).hasOwnProperty('url')
+                                      ? JSON.parse(item.content).url : "invalid" : "invalid"}
+                              </a>
                             </div>
-                            <div className="description">*{JSON.parse(item.content).description}</div>
+                            <div className="description">{
+                              IsJsonString(item.content)
+                                ? JSON.parse(item.content).hasOwnProperty('description')
+                                  ? "*" + JSON.parse(item.content).description : "" : ""}
+                            </div>
                           </LinkPreview>
                         </div>
 
@@ -539,51 +558,53 @@ class CardSourceDetail extends Component {
         </ViewContent>}
 
       {/* edit mode */}
-      {(edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
-        content && content.length > 0 ? (<Fragment>
-          {content.map((item, index) => {
-            console.log("item---", item);
-            return (<ControllerWrap key={item + index}>
+      {
+        (edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
+          content && content.length > 0 ? (<Fragment>
+            {content.map((item, index) => {
+              console.log("item---", item);
+              return (<ControllerWrap key={item + index}>
 
-              <div className="contentWrap">
-                {(item.type === "FILE")
-                  ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />
-                  : null}
-                {(item.type === "TEXT")
-                  ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                  : null}
-                {(item.type === "LINK")
-                  ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                  : null}
-              </div>
+                <div className="contentWrap">
+                  {(item.type === "FILE")
+                    ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />
+                    : null}
+                  {(item.type === "TEXT")
+                    ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    : null}
+                  {(item.type === "LINK")
+                    ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    : null}
+                </div>
 
-              <DelBtn
-                type="button"
-                className="editBtn"
-                onClick={() => this.onDelete(item.order)}>
-                <i className="trash alternate icon large" />
-              </DelBtn>
-
-              {content.length - 1 >= item.order && item.order !== 0 ?
-                <UpBtn
+                <DelBtn
                   type="button"
                   className="editBtn"
-                  onClick={() => this.moveItem(item.order, item.order - 1)}>
-                  <i className="angle up alternate icon large" />
-                </UpBtn> : null}
+                  onClick={() => this.onDelete(item.order)}>
+                  <i className="trash alternate icon large" />
+                </DelBtn>
 
-              {content.length - 1 !== item.order && item.order >= 0 ?
-                <DownBtn
-                  type="button"
-                  className="editBtn"
-                  onClick={() => this.moveItem(item.order, item.order + 1)}>
-                  <i className="angle down alternate icon large" />
-                </DownBtn> : null}
-            </ControllerWrap>)
-          })}
-          <AddContent getValue={this.onAddValue} order={content.length} />
-        </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
-      ) : null}
+                {content.length - 1 >= item.order && item.order !== 0 ?
+                  <UpBtn
+                    type="button"
+                    className="editBtn"
+                    onClick={() => this.moveItem(item.order, item.order - 1)}>
+                    <i className="angle up alternate icon large" />
+                  </UpBtn> : null}
+
+                {content.length - 1 !== item.order && item.order >= 0 ?
+                  <DownBtn
+                    type="button"
+                    className="editBtn"
+                    onClick={() => this.moveItem(item.order, item.order + 1)}>
+                    <i className="angle down alternate icon large" />
+                  </DownBtn> : null}
+              </ControllerWrap>)
+            })}
+            <AddContent getValue={this.onAddValue} order={content.length} />
+          </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
+        ) : null
+      }
 
       <ButtonContainer>
         {(this.props.edit && this.props.uid) &&
@@ -594,7 +615,7 @@ class CardSourceDetail extends Component {
               <i className="icon outline save" />저장</button>
           </EditorBottonWrapper>}
       </ButtonContainer>
-    </div>);
+    </div >);
   }
 }
 
@@ -609,26 +630,26 @@ const ControllerWrap2 = styled.div`
   border: 1px dashed ${osdcss.color.grayScale.scale6};
   & .initWrap {
     & > ul {
-      display: flex;
+                                display: flex;
       // box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
     }
     & > span {
-      color: ${osdcss.color.grayScale.scale6};
+                                color: ${osdcss.color.grayScale.scale6};
     }
   }
   &:hover {
-    background-color: #FAFAFA;
+                                background - color: #FAFAFA;
     & .initWrap {
       & > ul {
-        display: flex;
+                                display: flex;
       }
       & > span {
-        color: ${osdcss.color.grayScale.scale6};
+                                color: ${osdcss.color.grayScale.scale6};
       }
     }
   }
   .innerBox {
-    display: flex;
+                                display: flex;
     height: 45px;
     align-items: center;
     justify-content: center;
@@ -650,7 +671,7 @@ const NewController = styled.li`
   cursor: pointer;
 
   @media only screen and (max-width: 480px) {
-    font-size: 16px;
+                                font - size: 16px;
     margin-left: 15px;
     width: max-content;
   }

@@ -1,6 +1,7 @@
-import socketIOClient from "socket.io-client";
+import io from "socket.io-client";
 import host from "config";
-console.log("host:",host);
-let Socket = socketIOClient(host)
-
+console.log("host:", host);
+let Socket = io(host);
+// + '/opendesign', { path: '/webrtc/socket.io' });//io.connect();//null//socketIOClient(host)
+// let Socket = null;
 export default Socket

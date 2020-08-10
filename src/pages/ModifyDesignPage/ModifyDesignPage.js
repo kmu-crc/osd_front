@@ -4,11 +4,9 @@ import ClientTemplate from "templates/ClientTemplate";
 
 class ModifyDesignPage extends Component {
   render() {
-    return (
-      <ClientTemplate>
-        <ModifyDesignContainer id={this.props.match.params.id} />
-      </ClientTemplate>
-    );
+    return (<ClientTemplate>
+      <ModifyDesignContainer id={this.props.match.params.id} />
+    </ClientTemplate>);
   }
 }
 

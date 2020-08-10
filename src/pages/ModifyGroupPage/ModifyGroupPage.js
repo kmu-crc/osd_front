@@ -4,11 +4,9 @@ import ClientTemplate from "templates/ClientTemplate";
 
 class ModifyGroupPage extends Component {
   render() {
-    return (
-      <ClientTemplate>
-        <ModifyGroupContainer id={this.props.match.params.id} {...this.props} />
-      </ClientTemplate>
-    );
+    return (<ClientTemplate>
+      <ModifyGroupContainer id={this.props.match.params.id} {...this.props} />
+    </ClientTemplate>);
   }
 }
 

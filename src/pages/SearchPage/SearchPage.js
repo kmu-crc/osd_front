@@ -6,7 +6,6 @@ class SearchPage extends Component {
   render() {
     // console.log(this.props.match.params.type, this.props.match.params.sort, this.props.match.params.keyword);
     return (<ClientTemplate>
-
       <SearchContainer
         history={this.props.history}
         // type={this.props.match.params.type ? this.props.match.params.type : null}
