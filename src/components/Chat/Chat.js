@@ -3,9 +3,9 @@ import styled from "styled-components";
 import host from "config";
 import { alert } from "components/Commons/Alert/Alert";
 import io from "socket.io-client";
+import who from "source/thumbnail.png";
 
 const Wrapper = styled.div`
-  // height: 100%;
   background: #EFEFEF;      
   .center-text {
     display: flex;
@@ -234,7 +234,7 @@ const MyMessage = styled.div`
 `;
 const Me = (data) => {
   return (
-    <MyMessage key={data.uid}>
+    <MyMessage >
       <div className="userName">
         {data.memberName || "나"}
       </div>
@@ -253,23 +253,32 @@ const YouMessage = styled.div`
   display:flex;
   flex-direction:column;
   margin-bottom:10px   
+
   .userName {
     min-width:max-content;
     font-size:11px;
     font-weight:500;
   }
   .messageWrapper {
-    display:flex;
+    display: flex;
+    .thumbnail {
+      background-image: url(${props => props.thumbnail});
+      width: 50px;
+      height: 50px;
+      background-size: cover;
+      background-position: center center;
+      border-radius: 50%;
+    }
     .message {
-      margin-top:5px;
-      overflow:hidden;
-      width:max-content;
-      word-wrap:break-word;
-      padding:10px;
-      border-radius:10px;
-      background-color:#EFEFEF;
-      color:#707070;
-      text-align:left;
+      margin-top: 5px;
+      overflow: hidden;
+      width: max-content;
+      word-wrap: break-word;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: #FFFFEE;
+      color: #707070;
+      text-align: left;
     }
     .count {
 
@@ -277,11 +286,13 @@ const YouMessage = styled.div`
   }
 `;
 const You = (data) => {
-  return (<YouMessage key={data.uid}>
+  console.log(data);
+  return (<YouMessage thumbnail={data.thumbnail || who}>
     <div className="userName">
-      {data.memberName || "다른사람"}
+      {data.memberName || "디자인맴버"}
     </div>
     <div className="messageWrapper">
+      <div className="thumbnail" ></div>
       <div className="message">
         {data.message}</div>
       <div className="count">
@@ -317,20 +328,47 @@ class Chat extends React.Component {
       window.close();
       return;
     }
-    // socket connection
-    this.socket = io.connect(
-      this.serviceIP, {
-      // path: '/webrtc',
-      query: {
-        'roomNum': this.props.id,
-        'memberName': this.props.userInfo.nickName,
-        'memberId': this.props.userInfo.uid,
-        'thumbnail': this.props.userInfo.thumbnail.s_img
-      }
-    });
     try {
+      // SOCKET CONNECTION
+      this.socket = io.connect(
+        this.serviceIP, {
+        // path: '/webrtc',
+        query: {
+          'roomNum': this.props.id,
+          'memberName': this.props.userInfo.nickName,
+          'memberId': this.props.userInfo.uid,
+          'thumbnail': this.props.userInfo.thumbnail.s_img
+        }
+      });
+      this.socket.on('read', data => {
+        console.log('on read', data);
+        const copy = [...this.state.chat];
+        data && data.length > 0 ? data.map(chat => {
+          const idx = copy.findIndex(x => x.uid === chat.chat_msg_id);
+          if (idx > 0) {
+            copy[idx].count = chat.count;
+          }
+        }) :
+          copy && copy.length > 0 && copy.map(chat => {
+            chat.count = 0;
+          })
+        // console.log(copy);
+        this.setState({ chat: copy });
+      });
+      //this.socket.on('read', data => {
+      //  console.error('read', data);
+      //  const copy = [...this.state.chat];
+      //  copy.map(chat => {
+      //    if (chat.count > 0 && chat.user_id !== data.user_id) {
+      //      chat.count -= 1;
+      //    }
+      //    return chat;
+      //  });
+      //  this.setState({ chat: copy });
+      //});
       this.socket.on('chat', data => {
         // state method
+        console.log('on chat');
         const copy = [...this.state.chat];
         copy.push(data);
         this.setState({ chat: copy });
@@ -344,7 +382,7 @@ class Chat extends React.Component {
       });
       this.socket.on('load', data => {
         if (data && data.length > 0) {
-          console.log("chats", data);
+          console.log("on load", data);
           const copy = [];
           data.reverse();
           data.map(chat => {
@@ -375,16 +413,8 @@ class Chat extends React.Component {
             return `${chat.nick_name}(${chat.create_time}):\r\n${chat.message}\r\n`;
           }), `chatlog-${this.props.DesignDetail.title}-${dformat}.txt`)
       });
-      this.socket.on('read', (data) => {
-        const copy = [...this.state.chat];
-        copy.map(chat => {
-          if (chat.count > 0 && chat.user_id !== data.user_id) {
-            chat.count -= 1;
-          }
-          return chat;
-        })
-        this.setState({ chat: copy });
-      })
+
+
     }
     catch (e) {
       console.error(e);
@@ -402,7 +432,7 @@ class Chat extends React.Component {
   requestChat() {
     try {
       this.socket.emit('load', { page: this.state.page, design_id: this.props.id }, () => {
-        console.log('request load chat');
+        console.log('request');
       });
     } catch (e) {
       console.error(e);
@@ -414,7 +444,7 @@ class Chat extends React.Component {
       this.socket.emit('chat', {
         message: message.value
       }, () => {
-        console.log(`message : ${message.value}`);
+        // console.log(`message : ${message.value}`);
       })
     } catch (e) {
       console.error(e);
@@ -424,11 +454,13 @@ class Chat extends React.Component {
   sendMessageEnter() {
     if (window.event.keyCode == 13) {
       let message = document.getElementById('chat-input')
-      this.socket.emit('chat', {
-        message: message.value
-      }, () => {
-        console.log(`message : ${message.value}`)
-      })
+      try {
+        this.socket.emit('chat', { message: message.value }, () => {
+          // console.log(`message : ${message.value}`)
+        });
+      } catch (e) {
+        console.error(e);
+      }
       message.value = ''
     }
   };
@@ -462,7 +494,7 @@ class Chat extends React.Component {
       <Wrapper>
         <ChatBox>
           <div className="chat-box-header">
-            {(this.props.DesignDetail && this.props.DesignDetail.title) || "디자인"}채팅방
+            {(this.props.DesignDetail && this.props.DesignDetail.title) || "디자인"} 채팅방
 
             <span className="chat-box-toggle">
               <span onClick={() => this.saveChatLog()}>
@@ -480,9 +512,15 @@ class Chat extends React.Component {
             <div onScroll={this.handleScroll} id='scroll' className="chat-logs">
               <div className='chat'>
                 <div id="output">
-                  {this.state.chat && this.state.chat.length > 0 && this.state.chat.map(chat => {
-                    return this.props.userInfo.uid === chat.user_id ? Me(chat) : You(chat);
-                  })}
+                  {this.state.chat &&
+                    this.state.chat.length > 0 &&
+                    this.state.chat.map((chat, index) => {
+                      return <div key={chat.uid + index}>
+                        {this.props.userInfo.uid === chat.user_id
+                          ? Me(chat)
+                          : You(chat)}
+                      </div>
+                    })}
                 </div>
               </div>
               {this.state.newchat ?
@@ -501,6 +539,7 @@ class Chat extends React.Component {
               id="chat-input"
               placeholder="Send a message..."
               className='chatdata'
+              autoComplete="off"
               onKeyDown={this.sendMessageEnter}
             />
             <button onClick={this.sendMessage} className="chat-submit" id="chat-submit">
