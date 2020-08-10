@@ -3,9 +3,9 @@ import styled from "styled-components";
 import host from "config";
 import { alert } from "components/Commons/Alert/Alert";
 import io from "socket.io-client";
+import who from "source/thumbnail.png";
 
 const Wrapper = styled.div`
-  // height: 100%;
   background: #EFEFEF;      
   .center-text {
     display: flex;
@@ -253,23 +253,32 @@ const YouMessage = styled.div`
   display:flex;
   flex-direction:column;
   margin-bottom:10px   
+
   .userName {
     min-width:max-content;
     font-size:11px;
     font-weight:500;
   }
   .messageWrapper {
-    display:flex;
+    display: flex;
+    .thumbnail {
+      background-image: url(${props => props.thumbnail});
+      width: 50px;
+      height: 50px;
+      background-size: cover;
+      background-position: center center;
+      border-radius: 50%;
+    }
     .message {
-      margin-top:5px;
-      overflow:hidden;
-      width:max-content;
-      word-wrap:break-word;
-      padding:10px;
-      border-radius:10px;
-      background-color:#EFEFEF;
-      color:#707070;
-      text-align:left;
+      margin-top: 5px;
+      overflow: hidden;
+      width: max-content;
+      word-wrap: break-word;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: #FFFFEE;
+      color: #707070;
+      text-align: left;
     }
     .count {
 
@@ -277,11 +286,13 @@ const YouMessage = styled.div`
   }
 `;
 const You = (data) => {
-  return (<YouMessage >
+  console.log(data);
+  return (<YouMessage thumbnail={data.thumbnail || who}>
     <div className="userName">
-      {data.memberName || "다른사람"}
+      {data.memberName || "디자인맴버"}
     </div>
     <div className="messageWrapper">
+      <div className="thumbnail" ></div>
       <div className="message">
         {data.message}</div>
       <div className="count">
@@ -528,6 +539,7 @@ class Chat extends React.Component {
               id="chat-input"
               placeholder="Send a message..."
               className='chatdata'
+              autoComplete="off"
               onKeyDown={this.sendMessageEnter}
             />
             <button onClick={this.sendMessage} className="chat-submit" id="chat-submit">
