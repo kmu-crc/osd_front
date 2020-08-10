@@ -1231,7 +1231,7 @@ class DesignInfo extends Component {
                 </div>
             </MainBox>
 
-            {/* <ChatWrapper>
+            <ChatWrapper>
                 <div
                     className="notice"
                     title="디자인 멤버들과 화상회의를 시작합니다."
@@ -1258,7 +1258,7 @@ class DesignInfo extends Component {
                         채팅
                     </div>
                 </div>
-            </ChatWrapper> */}
+            </ChatWrapper>
 
         </React.Fragment >)
     }

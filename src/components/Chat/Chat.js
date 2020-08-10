@@ -188,6 +188,7 @@ const ChatBox = styled.div`
       margin-bottom: 70px;
   }
   .newchat {
+    padding: 10px;
     position: absolute;
     top: 10px;
     left: 10px;
@@ -528,7 +529,7 @@ class Chat extends React.Component {
                   let scroll = document.getElementById("scroll");
                   scroll.scrollTop = scroll.scrollHeight;
                   this.setState({ newchat: null });
-                }}>{this.state.newchat.message}</div>
+                }}>새로운 메시지: {this.state.newchat.message}</div>
                 : null}
             </div>
           </div>
