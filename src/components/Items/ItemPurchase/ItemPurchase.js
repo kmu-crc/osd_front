@@ -674,7 +674,7 @@ class ItemPurchase extends Component {
                     <div id="itemDescription" className="text"
                       dangerouslySetInnerHTML={{ __html: `${item.description || ""}` }}
                     />
-                    <div className="title">유형</div>
+                    {/* <div className="title">유형</div>
                     <div className="text flex">
                       {item.type === 0 ? "디자인" : null}
                       {item.type === 1 ? "프로젝트" : null}
@@ -696,7 +696,7 @@ class ItemPurchase extends Component {
                           );
                         })
                       }
-                    </div>
+                    </div> */}
                     <div className="gradient_box" ><div>▾</div></div>
                   </div>
                 </Introduction>
