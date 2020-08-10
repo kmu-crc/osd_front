@@ -334,7 +334,7 @@ class Chat extends React.Component {
         const copy = [...this.state.chat];
         data && data.length > 0 ? data.map(chat => {
           const idx = copy.findIndex(x => x.uid === chat.chat_msg_id);
-          if (idx) {
+          if (idx > 0) {
             copy[idx].count = chat.count;
           }
         }) :
