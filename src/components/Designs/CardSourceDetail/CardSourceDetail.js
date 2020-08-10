@@ -544,10 +544,10 @@ class CardSourceDetail extends Component {
                                       ? JSON.parse(item.content).url : "invalid" : "invalid"}
                               </a>
                             </div>
-                            <div className="description">*{
-                                  IsJsonString(item.content)
-                                    ? JSON.parse(item.content).hasOwnProperty('description')
-                                      ? JSON.parse(item.content).description : "invalid" : "invalid"} 
+                            <div className="description">{
+                              IsJsonString(item.content)
+                                ? JSON.parse(item.content).hasOwnProperty('description')
+                                  ? "*" + JSON.parse(item.content).description : "" : ""}
                             </div>
                           </LinkPreview>
                         </div>
