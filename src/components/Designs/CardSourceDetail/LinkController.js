@@ -43,6 +43,15 @@ const LinkElement = styled.div`
     border: 1px solid #707070;
     padding: 1rem;
     overflow-y: auto;
+    input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #EFEFEF;
+      :focus {
+        outline: none;
+      }
+    }
   }
 `;
 
@@ -82,11 +91,15 @@ class LinkController extends Component {
   }
   componentDidMount() {
     this.setState(this.props.item);
-    this.props.item.content &&
-      this.setState({
-        url: JSON.parse(this.props.item.content).url || "",
-        description: JSON.parse(this.props.item.content).description || ""
-      });
+    try {
+      this.props.item.content &&
+        this.setState({
+          url: JSON.parse(this.props.item.content).url || "",
+          description: JSON.parse(this.props.item.content).description || ""
+        });
+    } catch (_) {
+      this.setState({ url: "", description: "" });
+    }
   }
   async handleChange(event) {
     await this.setState({ url: event.target.value });
@@ -118,14 +131,17 @@ class LinkController extends Component {
       </LinkPreview>
 
       <LinkElement>
-        <div className="title">주소</div>
+        <div className="title">url주소</div>
 
         <div className="content">
-          <ContentEditable
-            getText
-            html={url}
+          <input
+            // <ContentEditable
+            // getText
+            // html={url}
+            autoComplete="off"
             onChange={this.handleChange}
             onBlur={this.onSaveUrl}
+          // />
           />
         </div>
 
@@ -135,9 +151,11 @@ class LinkController extends Component {
         <div className="title">설명</div>
 
         <div className="content">
-          <ContentEditable
-            getText
-            html={description}
+          <input
+            // <ContentEditable
+            // getText
+            // html={description}
+            autoComplete="off"
             onChange={this.handleChangeDescription}
             onBlur={this.onSaveDescription}
           />

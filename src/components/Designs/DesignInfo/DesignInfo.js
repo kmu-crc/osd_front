@@ -20,7 +20,7 @@ import { alert } from "components/Commons/Alert/Alert";
 import { YesIHaveReadNewComment, } from "redux/modules/design";
 import { Icon } from 'semantic-ui-react';
 import opendesign_style from "opendesign_style";
-
+import vChatIcon from "source/video-chat-icon.png";
 import Socket from "modules/Socket"
 import Loading from 'components/Commons/Loading';
 
@@ -659,10 +659,9 @@ const DesignCommentModalContainer = styled(Modal)`
 
      }
 `;
-const ChatAndNoticeWrapper = styled.div`
+const ChatWrapper = styled.div`
     display: flex;
     position: relative;
-    border: 1px solid transparent;
     width: max-content;
     margin-left: auto;
     margin-right: 10px;
@@ -685,7 +684,6 @@ const ChatAndNoticeWrapper = styled.div`
         };
 
         .video-chat-icon {
-            border: 1px solid red;
             opacity: 0.6;
             background-size: cover;
             width: 45px;
@@ -696,37 +694,6 @@ const ChatAndNoticeWrapper = styled.div`
             text-align: center;
             line-height: 36px;
             font-size: 36px;
-            color: gray;
-            z-index: 0;
-        };
-        .text {
-            text-align: center;
-            font-size: 12px;
-            color: #707070;
-        };
-    }
-    .chat {
-        position: relative;
-        span {
-            position: absolute;
-            top: 2px;
-            left: 3px;
-            background-color: red;
-            width: 17px;
-            height: 17px;
-            border-radius: 50% 
-            z-index: 1;
-            font-size: 10px;
-            color: white;
-            padding: 0px;
-            font-weight: 900;
-            line-height: 10px;
-            text-align: center;
-        };
-        i {
-            text-align: center;
-            line-height: 36px;
-            font-size: 34px;
             color: gray;
             z-index: 0;
         };
@@ -804,12 +771,16 @@ class DesignInfo extends Component {
         window.addEventListener("resize", this.handleResize);
         if (this.props.valid) {
             try {
-                Socket.emit('design-init', {
+                Socket.emit('design-init-for-vchat', {
                     design: this.props.id, user: this.props.userInfo.uid
                 });
-                Socket.on('check-new-message-count', data => {
-                    console.log('check new msg cnt', data);
-                    this.setState({ msg_cnt: data });
+                Socket.on('vchat-on-air', data => {
+                    console.log('check VC on air', data);
+                    this.setState({ liveVC: data });
+                    Socket.on('check-new-message-count', data => {
+                        console.log('check new msg cnt', data);
+                        this.setState({ msg_cnt: data });
+                    });
                 });
             } catch (err) {
                 console.error(err);
@@ -860,7 +831,7 @@ class DesignInfo extends Component {
             await alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.", "확인")
             return this.props.history.push("/myModify")
         }
-        if (await confirm(`${this.props.DesignDetail.title.slice(0, 16)}${this.props.DesignDetail.title.length > 16 && "..."})
+        if (await confirm(`${this.props.DesignDetail.title.slice(0, 16)}${this.props.DesignDetail.title.length > 16 ? "..." : ""})
         파생 디자인을 생성하시겠습니까?`, "확인") === true) {
             await this.setState({ forkDialog: 1 });
             this.doFork();
@@ -932,6 +903,21 @@ class DesignInfo extends Component {
         this.setState({ comment: false });
     }
 
+    openVideoChat = () => {
+        if (this.props.userInfo) {
+            const url = geturl() + `/vchat/${this.props.DesignDetail.uid}`
+            const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,top=100,left=100,width=1280,height=1000,scrollbars=no`;
+            this.vchatwindow = window.open(url, "vchat", options);
+            try {
+                // if (this.state.liveVC === false) {
+                if (this.props.userInfo.uid === this.props.DesignDetail.user_id) {
+                    Socket.emit('invited-member-to-vchat', { user_id: this.props.userInfo.uid, design_id: this.props.DesignDetail.uid })
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    }
 
     openChat = () => {
         if (this.props.userInfo) {
@@ -1245,18 +1231,34 @@ class DesignInfo extends Component {
                 </div>
             </MainBox>
 
-            {/* proto-type: design-notice button, design-alarm button */}
-            {/* <ChatAndNoticeWrapper>
+            <ChatWrapper>
                 <div
-                    className="chat"
+                    className="notice"
+                    title="디자인 멤버들과 화상회의를 시작합니다."
+                    onClick={this.openVideoChat}>
+
+                    {this.state.liveVC ? <span>ON</span> : null}
+                    <div className="video-chat-icon">
+                        <i className="video icon"></i>
+                    </div>
+                    <div className="text">
+                        {"화상회의 "}{this.state.liveVC ? "참여" : "개설"}
+                    </div>
+                </div>
+                <div
+                    className="notice"
                     title="디자인 멤버들과 채팅을 시작합니다."
                     onClick={this.openChat}>
-                    {this.state.msg_cnt > 0 ?
-                        <span>{this.state.msg_cnt}</span> : null}
-                    <i className="chat icon"></i>
-                    <div className="text">채팅</div>
+
+                    {this.state.msg_cnt > 0 ? <span>{this.state.msg_cnt}</span> : null}
+                    <div className="video-chat-icon">
+                        <i className="talk big icon"></i>
+                    </div>
+                    <div className="text">
+                        채팅
+                    </div>
                 </div>
-            </ChatAndNoticeWrapper> */}
+            </ChatWrapper>
 
         </React.Fragment >)
     }

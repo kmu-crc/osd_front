@@ -4,11 +4,9 @@ import ClientTemplate from "templates/ClientTemplate";
 
 class CreateGroupPage extends Component {
   render() {
-    return (
-      <ClientTemplate>
-        <CreateGroupContainer />
-      </ClientTemplate>
-    );
+    return (<ClientTemplate>
+      <CreateGroupContainer />
+    </ClientTemplate>);
   }
 }
 
