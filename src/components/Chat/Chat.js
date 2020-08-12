@@ -542,6 +542,7 @@ class Chat extends React.Component {
               className='chatdata'
               autoComplete="off"
               onKeyDown={this.sendMessageEnter}
+              autoComplete="off"
             />
             <button onClick={this.sendMessage} className="chat-submit" id="chat-submit">
               <i className="material-icons">send</i>
