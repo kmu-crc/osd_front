@@ -906,7 +906,7 @@ class DesignInfo extends Component {
     openVideoChat = () => {
         if (this.props.userInfo) {
             const url = geturl() + `/vchat/${this.props.DesignDetail.uid}`
-            const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,top=100,left=100,width=1280,height=1000,scrollbars=no`;
+            const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,top=100,left=100,width=1280,height=720,scrollbars=no`;
             this.vchatwindow = window.open(url, "vchat", options);
             try {
                 // if (this.state.liveVC === false) {
