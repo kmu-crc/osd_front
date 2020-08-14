@@ -659,6 +659,7 @@ const DesignCommentModalContainer = styled(Modal)`
 
      }
 `;
+
 const ChatWrapper = styled.div`
     display: flex;
     position: relative;
@@ -922,7 +923,7 @@ class DesignInfo extends Component {
     openChat = () => {
         if (this.props.userInfo) {
             const url = geturl() + `/chat/${this.props.DesignDetail.uid}`;
-            const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,top=100,left=100,width=580,height=500,scrollbars=no`;
+            const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=650,scrollbars=no`;
             this.chatwindow = window.open(url, "chat", options);
             // console.log(this.chatwindow.closed);
             // this.chatwindow.addEventListener('close', () => {
