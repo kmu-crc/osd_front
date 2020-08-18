@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
-import VChat from "components/VideoConference"
+// import VChat from "components/VideoConference"
 import { GetDesignDetailRequest } from "redux/modules/design";
 import host from "config";
+import NewVChat from "components/NewVideoChat";
 
 class VChatContainer extends Component {
     constructor(props) {
@@ -60,7 +61,7 @@ class VChatContainer extends Component {
     render() {
         return this.state.valid &&
             this.props.userInfo
-            ? <VChat {...this.props} />
+            ? <NewVChat {...this.props} />
             : <div>VALIDATING YOUR INFORMATION</div>
     }
 }
