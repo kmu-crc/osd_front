@@ -5,11 +5,26 @@ import { alert } from "components/Commons/Alert/Alert";
 import io from "socket.io-client";
 import who from "source/thumbnail.png";
 import { Icon } from "semantic-ui-react";
-import exiticon from "source/exiticon.png";
-import downicon from "source/downloadicon.png";
+import exiticon from "source/exiticon.svg";
+import downicon from "source/saveicon.svg";
 
-
+const DateBox=styled.div`
+  width:100%;
+  display:flex;
+  justify-content:center;
+  margin-top:10px;
+  margin-bottom:10px;
+  .date{
+    width:max-content;
+    height:20px;
+    font-size:13px;
+    color:#707070;
+  }
+`
 const Wrapper = styled.div`
+*{
+  font-family:Noto Sans CJK KR;
+}
   background: #EFEFEF;      
   .center-text {
     display: flex;
@@ -59,7 +74,9 @@ const ChatBox = styled.div`
     height: auto;
     border: 1px solid #ccc;  
     overflow: hidden;
+    
   }
+
   .chat-box-body:after {
     content: "";
     background-color: #EFEFEF;
@@ -128,9 +145,27 @@ const ChatBox = styled.div`
     height: 35px;  
   }
   .chat-logs {
+    *{
+      border:1px solid black;
+    }
     padding:15px; 
     height:370px;
     overflow-y:scroll;
+    .dateBox{
+      border:1px solid black;
+      width:100%;
+      display:flex;
+      justify-content:center;
+      margin-top:10px;
+      margin-bottom:10px;
+      .date{
+        border:1px solid black;
+  
+        width:max-content;
+        height:20px;
+        font-size:13px;
+      }
+    }
   }
   .chat-logs::-webkit-scrollbar-track {
 	  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -267,12 +302,21 @@ const MyMessage = styled.div`
   }
 `;
 const Me = (data) => {
+  let updateT = new Date(data.create_time);
+  let updateMin = updateT.getMinutes();
+  let updateHour = updateT.getHours();
+  const ampm = updateHour < 12 ? "오전 " : "오후 ";
+  updateHour = updateHour % 12;
+  const updateMinT = updateMin < 10 ? "0" + updateMin.toString() : updateMin.toString();
+  const updateHourT = updateHour < 10 ? "0" + updateHour.toString() : updateHour.toString();
+
+  const dateTime = ampm + updateHourT + ":" + updateMinT;
   return (
     <MyMessage >
       <div className="messageWrapper">
         <div className="wrapper">
           <div className="count">{data.count > 0 ? data.count : ""}</div>
-          <div className="time">오후 7:39</div>
+          <div className="time">{dateTime}</div>
         </div>
         <div className="message">
           {data.message}</div>
@@ -366,7 +410,7 @@ const Shape = styled.div`
   background-repeat: no-repeat;
   width:${props=>props.width==null?"100%":`${props.width}px`};
   height:${props=>props.height==null?"100%":`${props.height}px`};
-  opacity:0.4;
+  opacity:1;
 `
 const Chatting = styled.div`
   background-color:#EFEFEF;
@@ -507,19 +551,40 @@ const Chatting = styled.div`
     padding:10px;
   `
   const YouOverlay = (data) => {
-    console.log(data);
+
+    let updateT = new Date(data.create_time);
+    let updateMin = updateT.getMinutes();
+    let updateHour = updateT.getHours();
+    const ampm = updateHour < 12 ? "오전 " : "오후 ";
+    updateHour = updateHour % 12;
+    const updateMinT = updateMin < 10 ? "0" + updateMin.toString() : updateMin.toString();
+    const updateHourT = updateHour < 10 ? "0" + updateHour.toString() : updateHour.toString();
+  
+    const dateTime = ampm + updateHourT + ":" + updateMinT;
+
+
+    console.log(dateTime);
     return (<YouMessage thumbnail={data.thumbnail || who}>
       <div className="messageWrapper">
         <div className="messageOverlay">
           {data.message}</div>
         <div className="wrapper">
           <div className="count">{data.count > 0 ? data.count : ""}</div>
-          <div className="time">오후 7:39</div>
+      <div className="time">{dateTime}</div>
         </div>
       </div>
     </YouMessage>)
   };
 const You = (data) => {
+  let updateT = new Date(data.create_time);
+  let updateMin = updateT.getMinutes();
+  let updateHour = updateT.getHours();
+  const ampm = updateHour < 12 ? "오전 " : "오후 ";
+  updateHour = updateHour % 12;
+  const updateMinT = updateMin < 10 ? "0" + updateMin.toString() : updateMin.toString();
+  const updateHourT = updateHour < 10 ? "0" + updateHour.toString() : updateHour.toString();
+
+  const dateTime = ampm + updateHourT + ":" + updateMinT;
   console.log(data);
   return (<YouMessage thumbnail={data.thumbnail || who}>
     <div className="userName">
@@ -531,7 +596,7 @@ const You = (data) => {
         {data.message}</div>
       <div className="wrapper">
         <div className="count">{data.count > 0 ? data.count : ""}</div>
-        <div className="time">오후 7:39</div>
+        <div className="time">{dateTime}</div>
       </div>
     </div>
   </YouMessage>)
@@ -735,15 +800,16 @@ class Chat extends React.Component {
   render() {
     let beforeChat=-1;
     let nowChat=-1;
-
+    let beforeDate=new Date();
+    let nowDate=new Date();
     return (
         <Chatting>
           <div className="headerBox displayflex Hcentering Vcentering">
             <div onClick={() => this.closeChat()} className="exitButton displayflex Hcentering Vcentering">
-              <Shape imgURL={exiticon} width={20} height={20}/>
+              <Shape imgURL={exiticon} width={15} height={15}/>
             </div>
             <div onClick={() => this.saveChatLog()} className="downloadButton displayflex Hcentering Vend">
-               <Shape imgURL={downicon} width={20} height={20}/>
+               <Shape imgURL={downicon} width={15} height={15}/>
             </div>
             <div>
               <div className="fontRed">{(this.props.DesignDetail && this.props.DesignDetail.title) || "디자인"}</div>
@@ -752,18 +818,42 @@ class Chat extends React.Component {
 
           <div className="chat-box-body">
             <div onScroll={this.handleScroll} id='scroll' className="chat-logs">
-              <div className='chat'>
-                <div id="output">
                   {this.state.chat &&
                     this.state.chat.length > 0 &&
                     this.state.chat.map((chat, index) => {
                       beforeChat=nowChat;
                       nowChat=chat.user_id;
-                      return <div key={chat.uid + index}>
+                      beforeDate=new Date(nowDate);
+                      nowDate=new Date(chat.create_time);
+                      
+                      const year=nowDate.getFullYear();
+                      const month=nowDate.getMonth()+1;
+                      const day=nowDate.getDate();
+
+                      let date=year+"년 "+month+"월 "+day+"일";
+                      
+                      return( 
+                      <React.Fragment>       
+                      {
+                        beforeDate.getDate()!=nowDate.getDate()||
+                        beforeDate.getMonth()!=nowDate.getMonth()||
+                        beforeDate.getDate()!=nowDate.getDate()?
+                        <DateBox>
+                          <div className="date">
+                            {date}
+                          </div>
+                        </DateBox>
+                      :null
+                      }
+
+                      <div key={chat.uid + index}>
+
                         {this.props.userInfo.uid === chat.user_id
                           ? Me(chat)
                           : beforeChat == chat.user_id ? YouOverlay(chat):You(chat)}
                       </div>
+                      </React.Fragment>
+                      )
                     })}
                 </div>
               </div>
@@ -774,8 +864,6 @@ class Chat extends React.Component {
                   this.setState({ newchat: null });
                 }}>새로운 메시지: {this.state.newchat.message}</div>
                 : null}
-            </div>
-          </div>
 
           <div className="chatInput">
             <ChatArea
