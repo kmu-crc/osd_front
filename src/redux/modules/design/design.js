@@ -346,7 +346,8 @@ export function GetDesignDetailRequest(id, token) {
                 data = []
                 return dispatch(DesignNotFound())
             }
-            return dispatch(GetDesignDetail(data)) && data;
+            dispatch(GetDesignDetail(data));
+            return data;
         }).catch((error) => {
             console.log("err", error)
         })
