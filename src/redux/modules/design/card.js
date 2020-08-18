@@ -241,7 +241,7 @@ export const FileUploadRequest = file => {
         await formData.append('source', file[0]);
         console.log(formData);
         fetch(`${host}/upload/tmp`, {
-            // header: { 'Content-Type': 'multipart/form-data' },
+            header: { 'Content-Type': 'multipart/form-data' },
             method: "POST",
             body: formData,
         })
