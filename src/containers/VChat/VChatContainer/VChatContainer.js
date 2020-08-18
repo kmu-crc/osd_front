@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
-import VChat from "components/VideoConference"
+// import VChat from "components/VideoConference"
 import { GetDesignDetailRequest } from "redux/modules/design";
 import host from "config";
+import NewVChat from "components/NewVideoChat";
 
 class VChatContainer extends Component {
     constructor(props) {
         super(props);
-        this.state = { valid: false }
+        this.state = { valid: false, design: {} }
         this.requestCheckAlreadyThereIn = this.requestCheckAlreadyThereIn.bind(this);
     }
     requestCheckAlreadyThereIn = () => {
@@ -42,11 +43,14 @@ class VChatContainer extends Component {
                             alert("회원이 아닙니다.");
                             window.history.back();
                         }
+                        this.setState({ design: data });
+                        this.setState({ valid: true });
+                        console.log('validated');
                     } else {
                         alert("디자인정보가 잘못되었습니다.");
                         window.history.back();
                     }
-                    // console.log(data);
+                    // console.log('design-detail', data);
                 })
         // .then(async () => {
         // const in_there = await this.requestCheckAlreadyThereIn();
@@ -55,18 +59,19 @@ class VChatContainer extends Component {
         // 접속한 맴버가 이미 방에 있는지 체크
         // alert("이미 접속중입니다. 열려있는 창이 있는지 다시 확인해주세요.");
         // window.history.back();
-        this.setState({ valid: true });
     }
     render() {
         return this.state.valid &&
             this.props.userInfo
-            ? <VChat {...this.props} />
-            : <div>VALIDATING YOUR INFORMATION</div>
+            ? <NewVChat
+                userInfo={this.props.userInfo}
+                design={this.state.design} />
+            : <div>
+                VALIDATING YOUR INFORMATION</div>
     }
 }
 
 const mapStateToProps = (state) => ({
-    DesignDetail: state.Design.status.DesignDetail,
     userInfo: state.Authentication.status.userInfo,
     token: state.Authentication.status.token,
 });

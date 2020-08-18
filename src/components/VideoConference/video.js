@@ -15,9 +15,9 @@ class Video extends Component {
     }
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.videoStream !== this.props.videoStream) {
-      this.video.srcObject = this.props.videoStream
-    }
+    // if (prevProps.videoStream !== this.props.videoStream) {
+    // this.video.srcObject = this.props.videoStream
+    // }
   }
   // componentWillReceiveProps(nextProps) {
   // console.log(nextProps.videoStream)
@@ -85,6 +85,7 @@ class Video extends Component {
         style={{ ...this.props.frameStyle }}
       >
         <video
+          onClick={() => this.props.onClick && this.props.onClick()}
           id={this.props.id}
           muted={this.props.muted}
           autoPlay

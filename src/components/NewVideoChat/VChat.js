@@ -1,96 +1,134 @@
 import React, { Component } from 'react';
+// css
 import styled from "styled-components";
-import Video from './video'
-import Videos from './videos'
-import host from "config";
+import ScrollContainer from 'react-indiana-drag-scroll'
+// func
+import Video from "./video";
+import host, { geturl } from "config";
 import io from 'socket.io-client'
-/*
-요구사항
- 로컬 카메라 영상을 가져오고, 출력한다.
- 로컬 공유화면 영상을 가져오고 출력한다. 같은탭만 공유됨...
- 로컬 영상 송신
-
-기능 테스트 및 보완
-  - 로컬 카메라영상 (좌측하단에 위치)
-  - 로컬 공유영상 (좌측하단에 위치)
-*/
-
-
-/* video style */
-const local_camera_video_style = {
-  zIndex: 1,
-  position: 'fixed',
-  bottom: 0,
-  backgroundColor: 'white',
-  // minWidth: '158px',
-  // minHeight: '153px',
-  width: '153px',
-  height: '153px',
-}
-const local_share_video_style = {
-  zIndex: 1,
-  position: 'fixed',
-  bottom: 0,
-  left: "153px",
-  // top: "558px",
-  // left: "15px",
-  backgroundColor: 'white',
-  minWidth: '158px',
-  minHeight: '153px',
-  width: '153px',
-  height: '153px',
-}
-const selected_video_style = {
-  zIndex: 0,
-  position: 'fixed',
-  bottom: 0,
-  minWidth: '100%',
-  minHeight: '100%',
-  backgroundColor: 'black'
-};
-const remote_video_style = {
-  zIndex: 1,
-  // position: 'fixed',
-  bottom: 0,
-  backgroundColor: 'white',
-  // minWidth: '158px',
-  // minHeight: '153px',
-  width: '53px',
-  height: '53px',
-}
-const RemoteVideosContainer = styled.div`
+const VideoChatContainer = styled.div`
+  // *{border: 1px solid red;}
+  width: ${props => props.w}px; 
+  height:${props => props.h}px;
 `;
-const BarContainer = styled.div`
-  z-index: 10;
+const ButtonBarContainer = styled.div`
+  z-index: 300;
+  margin-top: 13px;
+  padding-left: 25px;
+  padding-right: 16px;
   position: fixed;
-  top: 0;
-  min-width: 100%;
-  min-height: 5%;
+  width: 100%;
+  display: flex;
+  flex-direction: rows;
+  justify-content: space-between; 
   background-color: transparent;
+
+  .btn {
+    cursor: pointer;
+    text-align: center;
+
+    &.chat {
+      width: 51px;
+      background: transparent;
+    }
+    &.share {
+      width: 103px;
+      height: 35px;
+      border-radius: 36px;
+      background: rgba(125, 125, 125, 0.5);
+      padding: 8px 25px;
+    }
+    &.exit {
+      width: 64px;
+      height: 32px;
+      border-radius: 32px;
+      background: rgba(255, 0, 0, 1.0);
+      padding: 6px 12px;
+    }    
+  }
+  .txt {
+    color: rgba(255, 255, 255, 1.0);
+    width: max-content;
+  }
+`;
+const BigVideoScreen = styled.div`
+  z-index: 200;
+  background-color: black;
+  color: white;
+  text-algin: center;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  video {
+    width: 100%;
+    height: 100%;
+  }
+  .txt {
+    margin: auto;
+    font-size: 2rem;
+  }
+`;
+const VideosContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  position: fixed;
+  bottom: 16px;
+  left: 15px;
+  width: 1249px; //100%;
+  background-color: transparent;
 
-  .share-btn {
-    margin-top: 13px;
-    width: 103px;
-    height: 35px;
-    background-color: rgba(112, 112, 112, 0.5);
-    // opacity: 0.5;
-    border-radius: 36px;
-    border: 1px solid #707070;
-    margin: auto;
-    display: flex;
-    .btn-txt {
-      margin: auto;
-      width: max-content;
+  .me {
+
+  }
+  .others {
+    position: relative;
+    margin-left: 10px;
+    width: 980px;
+    .member-count {
+      margin-left: auto;
+      margin-top: 30px;
+      width: 72px;
+      height: 26px;
+      border-radius: 36px;
+      background-color: rgba(125, 125, 125, 0.5);
       text-align: center;
-      font: Medium 13px/19px Noto Sans CJK KR;
-      // letter-spacing: 0px;
-      color: #FFFFFF
+      color: white;
+      font-familiy: Noto Sans KR;
+      font-weight: 300;
+      font-size: 11px;
+      line-height: 15px;
+      padding: 5px 7px;
+    }
+    .inner {
+      width: 100%;
+      overflow: hidden;
+      position: absolute;
+      display: flex;
+      flex-direction: row;
+      height: 77px;
+      bottom: 0px;
+      .peer {
+        transform: translate(0, 10px);
+        margin-right: 14px;
+      }
     }
   }
 `;
+
+
+// position: absolute;
+// bottom: 0px;
+// left: 284px;
+// display: flex;
+// overflow-x: auto;
+// overflow-y: hidden;
+// flex-direction: row;
+// background-color: white;
+// width: 980px;
+// .peer {
+//   width: max-content;
+//   display: flex;
+// }
 const constraint = {
   basic: {
     audio: false,
@@ -108,12 +146,10 @@ class VChat extends Component {
       remoteStream: null,
       peerConnections: {},
       thumbnails: [],
-
       // stream
       selectedVideo: null, // 큰 화면 영상
       localStream: null, // 로컬 카메라
       localShare: null, // 로컬 공유영상
-
       //webRTC STUN server
       pc_config: {
         "iceServers": [{
@@ -127,10 +163,26 @@ class VChat extends Component {
           'OfferToReceiveVideo': true
         }
       },
-
       // state
       closed: false,
 
+      // ...
+      selected: "me",
+      screen: "nick_name",
+
+      peers: [
+        { screen: "camera", nick_name: "안녕 나는 김철수", thumbnail: null },
+        { screen: "camera", nick_name: "안녕 나는 김철수", thumbnail: null },
+        { screen: "camera", nick_name: "안녕 나는 김철수", thumbnail: null },
+        { screen: "camera", nick_name: "안녕 나는 김철수", thumbnail: null },
+        { screen: "camera", nick_name: "안녕 나는 김철수", thumbnail: null },
+        { screen: "camera", nick_name: "안녕 나는 김철수", thumbnail: null },
+        { screen: "camera", nick_name: "안녕 나는 김철수", thumbnail: null },
+        { screen: "camera", nick_name: "안녕 나는 김철수", thumbnail: null },
+        { screen: "camera", nick_name: "안녕 나는 김철수", thumbnail: null },
+        { screen: "camera", nick_name: "안녕 나는 김철수", thumbnail: null },
+        { screen: "camera", nick_name: "안녕 나는 김철수", thumbnail: null },
+        { screen: "camera", nick_name: "안녕 나는 김철수", thumbnail: null },]
     }
     this.socket = null;
     this.resize_window = this.resize_window.bind(this);
@@ -141,8 +193,10 @@ class VChat extends Component {
     this.switchVideo = this.switchVideo.bind(this);
     this.whoisOnline = this.whoisOnline.bind(this);
     this.createPeerConnection = this.createPeerConnection.bind(this);
-  }
 
+    this.videoselected = this.videoselected.bind(this);
+    ;
+  }
   // previous functions //
   whoisOnline() {
     // console.log('whoisonline');
@@ -172,8 +226,7 @@ class VChat extends Component {
           })
         }
       }
-      pc.oniceconnectionstatechange = (e) => {
-      }
+      pc.oniceconnectionstatechange = (e) => { }
       pc.ontrack = (e) => {
         let _remoteStream = null
         let remoteStreams = this.state.remoteStreams
@@ -365,7 +418,6 @@ class VChat extends Component {
       selectedVideo: video
     })
   }
-
   componentWillUnmount() {
     if (this.socket) {
       this.socket.close();
@@ -375,71 +427,119 @@ class VChat extends Component {
       .forEach(track => track.stop());
   }
   componentDidMount() {
+    console.log(this.props);
     window.addEventListener('resize', (event) => this.resize_window(event));
     this.resize_window(null);
     this.set_local_stream();
     this.socket_connection_setting();
   }
+  videoselected(stream) {
+    if (stream && this.video) {
+      console.log(stream, this.video.srcObject);
+      this.video.srcObject = stream;
+    }
+  }
 
   render() {
-    console.log('remote-streams', this.state.remoteStreams)
-    return (<React.Fragment>
-
-      {/* top bar - buttons */}
-      <BarContainer>
-        <div
-          className="share-btn"
-          onClick={() => this.set_share_screen()}>
-          <span className="btn-txt">
-            화면공유
-          </span>
+    return (<VideoChatContainer w={window.innerWidth} h={window.innerHeight}>
+      {/* top */}
+      <ButtonBarContainer>
+        <div className='btn chat' onClick={() => {
+          const url = geturl() + `/chat/${this.props.design.uid}`;
+          const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
+          window.open(url, "chat", options);
+        }}>
+          <span className='txt'>채팅</span>
         </div>
-      </BarContainer>
+        <div className='btn share' onClick={() =>
+          this.set_share_screen()}>
+          <span className='txt'>화면공유</span>
+        </div>
+        <div className='btn exit' onClick={() => {
+          window.open('', '_self').close();
+        }}>
+          <span className='txt'>나가기</span>
+        </div>
 
-      {/* selected video */}
-      <Video
-        videoStyles={selected_video_style}
-        videoStream={this.state.selectedVideo}
-      // autoPlay
-      />
+      </ButtonBarContainer>
 
-      {/* local camera video */}
-      <Video
-        onClick={() => this.setState({ selectedVideo: this.state.localStream })}
-        videoStyles={local_camera_video_style}
-        videoStream={this.state.localStream}
-        autoPlay
-      />
-      {/* local share video */}
-      <Video
-        onClick={() => this.setState({ selectedVideo: this.state.localShare })}
-        videoStyles={local_share_video_style}
-        videoStream={this.state.localShare}
-        autoPlay
-      />
+      {/* middle*/}
+      <BigVideoScreen>
+        <video
+          id={"big-screen"}
+          autoPlay
+          ref={(ref) => { this.video = ref }}
+        />
+      </BigVideoScreen>
 
-      {/*  */}
-      <div style={{ marginLeft: "auto", width: "500px" }}>
-        {this.state.remoteStreams
-          && this.state.remoteStreams.length > 0
-          ?
-          this.state.remoteStreams.map((stream, idx) => {
-            // const track = stream.getTracks().filter(track => track.kind === 'video')
+      {/* bottom*/}
+      <VideosContainer>
+        <div className="me"
+        >
+          <Video
+            onClick={() => {
+              this.setState({
+                selectedVideo: this.state.localStream,
+                selected: "me"
+              });
+              this.videoselected(this.state.localStream);
+            }}
+            id={this.props.userInfo.uid}
+            autoPlay
+            control={true}
+            screen={"camera"}
+            stream={this.state.localStream}
+            itsMe={true}
+            nick_name={this.props.userInfo.nick_name || "안녕 나는 김철수"} />
+          {/* {this.state.localShare ? */}
+          <Video
+            onClick={() => {
+              this.setState({
+                selectedVideo: this.state.localShare,
+                selected: "me"
+              });
+              this.videoselected(this.state.localShare);
+            }}
+            id={this.props.userInfo.uid}
+            autoPlay
+            control={false}
+            screen={"camera"}
+            stream={this.state.localShare}
+            itsMe={true}
+            nick_name={this.props.userInfo.nick_name || "안녕 나는 김철수"} />
+          {/* : null} */}
+        </div>
 
-            return <Video
-              key={idx}
-              videoStream={stream.stream}
-              videoStyles={remote_video_style}
-            />
-          })
-          : null}
-      </div>
-      {/* <Videos */}
-      {/* thumbnails={this.state.thumbnails} */}
-      {/* switchVideo={this.switchVideo} */}
-      {/* remoteStreams={this.state.remoteStreams} */}
-      {/* /> */}
-    </React.Fragment>)
+        <div className="others">
+          <div className="member-count">
+            참여자&nbsp;
+            {("?") || "-"}
+            /
+            {(this.props.design
+              && this.props.design.member
+              && this.props.design.member.length) || "-"}
+          </div>
+          <ScrollContainer vertical={false} className="inner scroll-container">
+            {this.state.peers &&
+              this.state.peers.length > 0 &&
+              this.state.peers.map((peer, idx) =>
+                <div
+                  className="peer"
+                  key={idx + peer.nick_name}
+                  onClick={() => this.setState({ selected: idx })}>
+
+                  <Video
+                    {...peer}
+                    itsMe={false}
+                    selected={idx === this.state.selected} />
+                </div>
+              )}
+          </ScrollContainer>
+        </div>
+      </VideosContainer>
+
+
+    </VideoChatContainer >)
   }
 }
 
