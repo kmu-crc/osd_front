@@ -9,11 +9,16 @@ import icon_mic_off from 'source/video-chat-icon-mic-off.svg';
 const Me = styled.div`
   width: 259px;
   height: 146px;
-  background-color: black;
+  background-color: green;
   position: relative;
   display: flex;
   border: 1px solid #707070;
-
+  
+  video {
+    width: 259px;
+    margin: 0;
+    padding: 0;
+  }
   .txt {
     margin: auto;
     width: max-content;
@@ -102,6 +107,7 @@ const NotMe = styled.div`
   }
 `;
 const VideoContainer = styled.div`
+  color: white;
 `;
 class Video extends Component {
   constructor(props) {
@@ -109,29 +115,49 @@ class Video extends Component {
     this.state = {
       // screen: 'camera', // "camera", "share", "nick-name"
       mic: false, cam: true, // option(it's me only)
-
+    }
+  }
+  componentDidMount() {
+    if (this.props.stream) {
+      this.video.srcObject = this.props.stream;
+    }
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.stream != prevProps.stream) {
+      this.video.srcObject = this.props.stream;
     }
   }
 
   render() {
     return (<VideoContainer>
-
       {this.props.itsMe
         ? <Me thumbnail={null}>
-          {(this.props.screen === "camera") ||
+          {(this.props.screen === "camera")
+            ?
+            <video
+              onClick={() => this.props.onClick && this.props.onClick()}
+              id={this.props.uid}
+              // muted={this.props.muted}
+              autoPlay
+              ref={(ref) => { this.video = ref }}
+            />
+            :
             (this.props.screen === "share")
-            ? <video />
-            : <div className="txt">{this.props.nick_name}</div>}
+              ?
+              <video className="mini" />
+              : <div className="txt">{this.props.nick_name}</div>}
 
-          <div className="control">
-            <div
-              className={`cam ${this.state.cam ? "" : "off"}`}
-              onClick={() => this.setState({ cam: !this.state.cam })} />
-            <div
-              className={`mic ${this.state.mic ? "" : "off"}`}
-              onClick={() => this.setState({ mic: !this.state.mic })} />
+          {this.props.control ?
+            <div className="control">
+              <div
+                className={`cam ${this.state.cam ? "" : "off"}`}
+                onClick={() => this.setState({ cam: !this.state.cam })} />
+              <div
+                className={`mic ${this.state.mic ? "" : "off"}`}
+                onClick={() => this.setState({ mic: !this.state.mic })} />
+            </div>
+            : null}
 
-          </div>
           <div className="thumbnail" />
         </Me>
 
