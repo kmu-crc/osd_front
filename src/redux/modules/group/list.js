@@ -73,7 +73,7 @@ export function GroupList(state, action) {
 
 export function GetGroupListRequest(page = 0, sort = null, keyword = null) {
   const url = `${host}/group/topGroupList/${page}/${sort}/${keyword}`
-  console.log("url:", url);
+  // console.log("url:", url);
   return (dispatch) => {
     return fetch(url, {
       headers: { 'Content-Type': 'application/json' },
@@ -87,13 +87,12 @@ export function GetGroupListRequest(page = 0, sort = null, keyword = null) {
         data = []
       }
       if (page === 0) {
-        dispatch(GroupListClear(data))
-        return
+        return dispatch(GroupListClear(data))
       }
-      dispatch(GetGroupList(data))
+      return dispatch(GetGroupList(data))
     }).catch((error) => {
-      dispatch(GroupListFail())
       console.log("err", error)
+      return dispatch(GroupListFail())
     })
   }
 }
@@ -111,10 +110,10 @@ export function GetGroupTotalCountRequest() {
       } else {
         data = data["count(*)"]
       }
-      dispatch(GetGroupTotalCount(data))
+      return dispatch(GetGroupTotalCount(data))
     }).catch((error) => {
-      dispatch(GroupTotalCountFail())
       console.log("err", error)
+      return dispatch(GroupTotalCountFail())
     })
   }
 }

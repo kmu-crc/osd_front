@@ -1307,7 +1307,7 @@ class CreateDesign extends Component {
 
               <ResetButtonWrapper
                 onClick={() => this.setState({ step: 2, type: "normal", is_project: 0, contents: [], steps: [], template: null })}>
-                작업취소하기<i class="undo icon" />
+                작업취소하기<i className="undo icon" />
               </ResetButtonWrapper>
 
               {is_project === 0 ?
