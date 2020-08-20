@@ -668,14 +668,11 @@ class Chat extends React.Component {
         this.setState({ chat: copy });
       });
       this.socket.on('chat', data => {
-        // state method
-        // console.log('on chat');
+        // console.log('on chat', data);
         const copy = [...this.state.chat];
         copy.push(data);
         this.setState({ chat: copy });
         let scrollbar = document.getElementById("scroll");
-        // alert(`${scrollbar.scrollTop}, ${scrollbar.scrollHeight}`);
-        console.log(scrollbar.scrollHeight, scrollbar.scrollTop);
         if (scrollbar.scrollHeight - scrollbar.scrollTop <= 520 || data.user_id === this.props.userInfo.uid) {
           scrollbar.scrollTop = scrollbar.scrollHeight;
         } else {
@@ -701,7 +698,16 @@ class Chat extends React.Component {
             scrollbar.scrollTop = 125;
           }
           this.setState({ page: this.state.page + 1 });
+          if (scrollbar.scrollTop == 0) {
+            try {
+              this.socket.emit('read');
+            } catch (e) {
+              console.error(e);
+            }
+          }
+
         }
+
       });
       this.socket.on('disconnect', () => {
         alert('채팅서버와 연결이 끊겼습니다.');
@@ -742,6 +748,8 @@ class Chat extends React.Component {
   };
   sendMessage() {
     let message = document.getElementById('chat-input');
+    if (message.value.trim() == "") { alert("내용을 입력해주세요"); return; }
+
     try {
       this.socket.emit('chat', {
         message: message.value
@@ -756,10 +764,13 @@ class Chat extends React.Component {
   sendMessageEnter(event) {
     if (window.event.keyCode == 13) {
       let message = document.getElementById('chat-input')
+      if (message.value.trim() == "") return;
       try {
-        this.socket.emit('chat', { message: message.value }, () => {
-          // console.log(`message : ${message.value}`)
-        });
+        this.socket.emit(
+          'chat', { message: message.value },
+          () => {
+            // console.log(`message : ${message.value}`)
+          });
       } catch (e) {
         console.error(e);
       }
