@@ -8,7 +8,7 @@ import { Icon } from "semantic-ui-react";
 import exiticon from "source/exiticon.svg";
 import downicon from "source/saveicon.svg";
 
-const DateBox=styled.div`
+const DateBox = styled.div`
   width:100%;
   display:flex;
   justify-content:center;
@@ -20,7 +20,7 @@ const DateBox=styled.div`
     font-size:13px;
     color:#707070;
   }
-`
+`;
 const Wrapper = styled.div`
 *{
   font-family:Noto Sans CJK KR;
@@ -148,9 +148,10 @@ const ChatBox = styled.div`
     *{
       border:1px solid black;
     }
+    border: 1px solid red;
     padding:15px; 
     height:370px;
-    overflow-y:scroll;
+    overflow-y: scroll;
     .dateBox{
       border:1px solid black;
       width:100%;
@@ -260,7 +261,7 @@ const MyMessage = styled.div`
   .chat-logs {
     padding:15px; 
     height:370px;
-    overflow-y:scroll;
+    overflow-y: scroll;
   }
   .messageWrapper {
     display:flex;
@@ -404,12 +405,12 @@ const YouMessage = styled.div`
 `;
 /// new styled
 const Shape = styled.div`
-  background-image:url(${props=>props.imgURL});
+  background-image:url(${props => props.imgURL});
   background-position: center center;
   background-size: contain;
   background-repeat: no-repeat;
-  width:${props=>props.width==null?"100%":`${props.width}px`};
-  height:${props=>props.height==null?"100%":`${props.height}px`};
+  width:${props => props.width == null ? "100%" : `${props.width}px`};
+  height:${props => props.height == null ? "100%" : `${props.height}px`};
   opacity:1;
 `
 const Chatting = styled.div`
@@ -509,7 +510,7 @@ const Chatting = styled.div`
   .chat-logs {
     padding:15px; 
     min-height:460px;
-    overflow-y:scroll;
+    overflow-y: scroll;
   }
   .chat-logs::-webkit-scrollbar-track {
 	  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -538,10 +539,15 @@ const Chatting = styled.div`
     color: #707070;
     font-weight: 500;
     font-size: 16px;
+    cursor: pointer;
   }
 
+  .ghost-space {
+    height: 40px;
+    // background-color: red;
+  }
   `
-  const ChatArea = styled.textarea`
+const ChatArea = styled.textarea`
     width:384px;
     height:58px;
     border-radius:10px;
@@ -550,31 +556,30 @@ const Chatting = styled.div`
     border:none;
     padding:10px;
   `
-  const YouOverlay = (data) => {
+const YouOverlay = (data) => {
 
-    let updateT = new Date(data.create_time);
-    let updateMin = updateT.getMinutes();
-    let updateHour = updateT.getHours();
-    const ampm = updateHour < 12 ? "오전 " : "오후 ";
-    updateHour = updateHour % 12;
-    const updateMinT = updateMin < 10 ? "0" + updateMin.toString() : updateMin.toString();
-    const updateHourT = updateHour < 10 ? "0" + updateHour.toString() : updateHour.toString();
-  
-    const dateTime = ampm + updateHourT + ":" + updateMinT;
+  let updateT = new Date(data.create_time);
+  let updateMin = updateT.getMinutes();
+  let updateHour = updateT.getHours();
+  const ampm = updateHour < 12 ? "오전 " : "오후 ";
+  updateHour = updateHour % 12;
+  const updateMinT = updateMin < 10 ? "0" + updateMin.toString() : updateMin.toString();
+  const updateHourT = updateHour < 10 ? "0" + updateHour.toString() : updateHour.toString();
 
+  const dateTime = ampm + updateHourT + ":" + updateMinT;
 
-    console.log(dateTime);
-    return (<YouMessage thumbnail={data.thumbnail || who}>
-      <div className="messageWrapper">
-        <div className="messageOverlay">
-          {data.message}</div>
-        <div className="wrapper">
-          <div className="count">{data.count > 0 ? data.count : ""}</div>
-      <div className="time">{dateTime}</div>
-        </div>
+  // console.log(dateTime);
+  return (<YouMessage thumbnail={data.thumbnail || who}>
+    <div className="messageWrapper">
+      <div className="messageOverlay">
+        {data.message}</div>
+      <div className="wrapper">
+        <div className="count">{data.count > 0 ? data.count : ""}</div>
+        <div className="time">{dateTime}</div>
       </div>
-    </YouMessage>)
-  };
+    </div>
+  </YouMessage>)
+};
 const You = (data) => {
   let updateT = new Date(data.create_time);
   let updateMin = updateT.getMinutes();
@@ -585,7 +590,7 @@ const You = (data) => {
   const updateHourT = updateHour < 10 ? "0" + updateHour.toString() : updateHour.toString();
 
   const dateTime = ampm + updateHourT + ":" + updateMinT;
-  console.log(data);
+  // console.log(data);
   return (<YouMessage thumbnail={data.thumbnail || who}>
     <div className="userName">
       {data.memberName || "디자인맴버"}
@@ -624,11 +629,10 @@ class Chat extends React.Component {
       // alert(scroll.scrollTop);
     })
     window.addEventListener('resize', () => {
-      window.self.resizeTo(496,650);
-    },false);
-    window.addEventListener('load', ()=>
-    { 
-      window.resizeTo(496,650);
+      window.self.resizeTo(496, 650);
+    }, false);
+    window.addEventListener('load', () => {
+      window.resizeTo(496, 650);
     }, false);
 
     if (this.props.userInfo == null) {
@@ -650,7 +654,7 @@ class Chat extends React.Component {
         }
       });
       this.socket.on('read', data => {
-        console.log('on read', data);
+        // console.log('on read', data);
         const copy = [...this.state.chat];
         data && data.length > 0 ? data.map(chat => {
           const idx = copy.findIndex(x => x.uid === chat.chat_msg_id);
@@ -661,29 +665,15 @@ class Chat extends React.Component {
           copy && copy.length > 0 && copy.map(chat => {
             chat.count = 0;
           })
-        // console.log(copy);
         this.setState({ chat: copy });
       });
-      //this.socket.on('read', data => {
-      //  console.error('read', data);
-      //  const copy = [...this.state.chat];
-      //  copy.map(chat => {
-      //    if (chat.count > 0 && chat.user_id !== data.user_id) {
-      //      chat.count -= 1;
-      //    }
-      //    return chat;
-      //  });
-      //  this.setState({ chat: copy });
-      //});
       this.socket.on('chat', data => {
-        // state method
-        console.log('on chat');
+        // console.log('on chat', data);
         const copy = [...this.state.chat];
         copy.push(data);
         this.setState({ chat: copy });
         let scrollbar = document.getElementById("scroll");
-        // alert(`${scrollbar.scrollTop}, ${scrollbar.scrollHeight}`);
-        if (scrollbar.scrollHeight - scrollbar.scrollTop < 450 || data.user_id === this.props.userInfo.uid) {
+        if (scrollbar.scrollHeight - scrollbar.scrollTop <= 520 || data.user_id === this.props.userInfo.uid) {
           scrollbar.scrollTop = scrollbar.scrollHeight;
         } else {
           this.setState({ newchat: data });
@@ -708,7 +698,16 @@ class Chat extends React.Component {
             scrollbar.scrollTop = 125;
           }
           this.setState({ page: this.state.page + 1 });
+          if (scrollbar.scrollTop == 0) {
+            try {
+              this.socket.emit('read');
+            } catch (e) {
+              console.error(e);
+            }
+          }
+
         }
+
       });
       this.socket.on('disconnect', () => {
         alert('채팅서버와 연결이 끊겼습니다.');
@@ -741,7 +740,7 @@ class Chat extends React.Component {
   requestChat() {
     try {
       this.socket.emit('load', { page: this.state.page, design_id: this.props.id }, () => {
-        console.log('request');
+        console.log('request ', this.state.page);
       });
     } catch (e) {
       console.error(e);
@@ -749,6 +748,8 @@ class Chat extends React.Component {
   };
   sendMessage() {
     let message = document.getElementById('chat-input');
+    if (message.value.trim() == "") { alert("내용을 입력해주세요"); return; }
+
     try {
       this.socket.emit('chat', {
         message: message.value
@@ -758,19 +759,23 @@ class Chat extends React.Component {
     } catch (e) {
       console.error(e);
     }
-    message.value = '';
+    message.value = null;
   };
-  sendMessageEnter() {
+  sendMessageEnter(event) {
     if (window.event.keyCode == 13) {
       let message = document.getElementById('chat-input')
+      if (message.value.trim() == "") return;
       try {
-        this.socket.emit('chat', { message: message.value }, () => {
-          // console.log(`message : ${message.value}`)
-        });
+        this.socket.emit(
+          'chat', { message: message.value },
+          () => {
+            // console.log(`message : ${message.value}`)
+          });
       } catch (e) {
         console.error(e);
       }
-      message.value = ''
+      message.value = null;
+      event.preventDefault();
     }
   };
   saveChatLog() {
@@ -784,11 +789,18 @@ class Chat extends React.Component {
     window.open('', '_self').close();
   };
   handleScroll(event) {
+    // console.log('scroll');
+
     if (event.target.scrollTop === 0) {
       this.requestChat();
+      return;
     }
     let scrollbar = document.getElementById("scroll");
-    if (scrollbar.scrollHeight - scrollbar.scrollTop <= 370) {
+
+    // console.log(scrollbar.scrollHeight, scrollbar.scrollTop,
+    //   scrollbar.scrollHeight - scrollbar.scrollTop);
+
+    if (scrollbar.scrollHeight - scrollbar.scrollTop <= 460) {
       try {
         this.socket.emit("read");
         this.setState({ newchat: null })
@@ -798,91 +810,90 @@ class Chat extends React.Component {
     };
   }
   render() {
-    let beforeChat=-1;
-    let nowChat=-1;
-    let beforeDate=new Date();
-    let nowDate=new Date();
+    let beforeChat = -1;
+    let nowChat = -1;
+    let beforeDate = new Date();
+    let nowDate = new Date();
     return (
-        <Chatting>
-          <div className="headerBox displayflex Hcentering Vcentering">
-            <div onClick={() => this.closeChat()} className="exitButton displayflex Hcentering Vcentering">
-              <Shape imgURL={exiticon} width={15} height={15}/>
-            </div>
-            <div onClick={() => this.saveChatLog()} className="downloadButton displayflex Hcentering Vend">
-               <Shape imgURL={downicon} width={15} height={15}/>
-            </div>
-            <div>
-              <div className="fontRed">{(this.props.DesignDetail && this.props.DesignDetail.title) || "디자인"}</div>
-            </div>
+      <Chatting>
+        <div className="headerBox displayflex Hcentering Vcentering">
+          <div onClick={() => this.closeChat()} className="exitButton displayflex Hcentering Vcentering">
+            <Shape imgURL={exiticon} width={15} height={15} />
           </div>
-
-          <div className="chat-box-body">
-            <div onScroll={this.handleScroll} id='scroll' className="chat-logs">
-                  {this.state.chat &&
-                    this.state.chat.length > 0 &&
-                    this.state.chat.map((chat, index) => {
-                      beforeChat=nowChat;
-                      nowChat=chat.user_id;
-                      beforeDate=new Date(nowDate);
-                      nowDate=new Date(chat.create_time);
-                      
-                      const year=nowDate.getFullYear();
-                      const month=nowDate.getMonth()+1;
-                      const day=nowDate.getDate();
-
-                      let date=year+"년 "+month+"월 "+day+"일";
-                      
-                      return( 
-                      <React.Fragment>       
-                      {
-                        beforeDate.getDate()!=nowDate.getDate()||
-                        beforeDate.getMonth()!=nowDate.getMonth()||
-                        beforeDate.getDate()!=nowDate.getDate()?
-                        <DateBox>
-                          <div className="date">
-                            {date}
-                          </div>
-                        </DateBox>
-                      :null
-                      }
-
-                      <div key={chat.uid + index}>
-
-                        {this.props.userInfo.uid === chat.user_id
-                          ? Me(chat)
-                          : beforeChat == chat.user_id ? YouOverlay(chat):You(chat)}
-                      </div>
-                      </React.Fragment>
-                      )
-                    })}
-                </div>
-              </div>
-              {this.state.newchat ?
-                <div className="newchat" onClick={() => {
-                  let scroll = document.getElementById("scroll");
-                  scroll.scrollTop = scroll.scrollHeight;
-                  this.setState({ newchat: null });
-                }}>새로운 메시지: {this.state.newchat.message}</div>
-                : null}
-
-          <div className="chatInput">
-            <ChatArea
-              type="text"
-              id="chat-input"
-              placeholder="Send a message..."
-              className='chatdata'
-              autoComplete="off"
-              onKeyDown={this.sendMessageEnter}
-              autoComplete="off"
-            />
-            <button onClick={this.sendMessage} className="chatSubmit" id="chat-submit">
-              <div>보내기</div>
-            </button>
+          <div onClick={() => this.saveChatLog()} className="downloadButton displayflex Hcentering Vend">
+            <Shape imgURL={downicon} width={15} height={15} />
           </div>
+          <div>
+            <div className="fontRed">{(this.props.DesignDetail && this.props.DesignDetail.title) || "디자인"}</div>
+          </div>
+        </div>
 
-        </Chatting>
+        <div className="chat-box-body">
+          <div onScroll={this.handleScroll} id='scroll' className="chat-logs">
+            {this.state.chat &&
+              this.state.chat.length > 0 &&
+              this.state.chat.map((chat, index) => {
+                beforeChat = nowChat;
+                nowChat = chat.user_id;
+                beforeDate = new Date(nowDate);
+                nowDate = new Date(chat.create_time);
 
-    );
+                const year = nowDate.getFullYear();
+                const month = nowDate.getMonth() + 1;
+                const day = nowDate.getDate();
+
+                let date = year + "년 " + month + "월 " + day + "일";
+                // console.log(chat.uid + index);
+                return (
+                  <div key={"uid" + chat.uid.toString() + ",idx:" + index.toString()}>
+
+                    {beforeDate.getDate() != nowDate.getDate() ||
+                      beforeDate.getMonth() != nowDate.getMonth() ||
+                      beforeDate.getDate() != nowDate.getDate() ?
+                      <DateBox>
+                        <div className="date">
+                          {date}
+                        </div>
+                      </DateBox>
+                      : null
+                    }
+
+                    <div>
+
+                      {this.props.userInfo.uid === chat.user_id
+                        ? Me(chat)
+                        : beforeChat == chat.user_id ? YouOverlay(chat) : You(chat)}
+                    </div>
+                  </div>
+                )
+              })}
+            {this.state.chat && this.state.chat.length <= 10 ? <div className="ghost-space">&nbsp;</div> : null}
+          </div>
+        </div>
+        {this.state.newchat ?
+          <div className="newchat" onClick={() => {
+            let scroll = document.getElementById("scroll");
+            scroll.scrollTop = scroll.scrollHeight;
+            this.setState({ newchat: null });
+          }}>새로운 메시지: {this.state.newchat.message.length > 30 ? this.state.newchat.message.slice(0, 30) + "..." : this.state.newchat.message}</div>
+          : null}
+
+        <div className="chatInput">
+          <ChatArea
+            type="text"
+            id="chat-input"
+            placeholder="Send a message..."
+            className='chatdata'
+            autoComplete="off"
+            onKeyDown={this.sendMessageEnter}
+            autoComplete="off"
+          />
+          <button onClick={this.sendMessage} className="chatSubmit" id="chat-submit">
+            <div>보내기</div>
+          </button>
+        </div>
+
+      </Chatting>);
   }
 }
 
