@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import MenuContext from "Global/Context/GlobalContext"
 
-
 import Message from "components/Header/Message"
 import logo from "source/logo.png"
 import AlarmContainer from "containers/Header/AlarmContainer"
@@ -214,7 +213,7 @@ const RightMenu = styled.ul`
     }
 
 `
-
+function isOpen(ws) { return ws.readyState === ws.OPEN }
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -223,9 +222,9 @@ class Header extends Component {
     }
     static contextType = MenuContext
     componentDidMount() {
-        if (this.props.valid) {
+        if (isOpen(Socket) && this.props.valid) {
             try {
-                console.log("SOCKET INIT");
+                // console.log("SOCKET INIT");
                 Socket.emit("INIT", this.props.userInfo.uid)
                 Socket.on("getNoti", alarm => {
                     this.setState({ alarm: alarm })
@@ -257,6 +256,7 @@ class Header extends Component {
     handleResize = () => {
         this.setState({ screenWidth: window.innerWidth })
     };
+    
     render() {
         return (
             <React.Fragment>
@@ -282,23 +282,23 @@ class Header extends Component {
                         <LeftMenu>
                             <li className="logoBox">
                                 <a href="/"><img alt="logo" className="logo" src={logo} /></a></li>
-                            <MenuItem isSelect={window.location.pathname === "/design" 
-                            ||window.location.pathname.search("/design/")>-1?true:false
-                            ||window.location.pathname.search("/designDetail/")>-1?true:false
-                            ||window.location.pathname.search("/createDesign/")>-1?true:false
-                            ||window.location.pathname.search("/modifyDesign/")>-1?true:false}>
+                            <MenuItem isSelect={window.location.pathname === "/design"
+                                || window.location.pathname.search("/design/") > -1 ? true : false
+                                    || window.location.pathname.search("/designDetail/") > -1 ? true : false
+                                        || window.location.pathname.search("/createDesign/") > -1 ? true : false
+                                            || window.location.pathname.search("/modifyDesign/") > -1 ? true : false}>
                                 <a className="link_tag" href="/design">디자인</a></MenuItem>
-                            <MenuItem isSelect={window.location.pathname === '/group' 
-                            || window.location.pathname.search("/group/")>-1?true:false
-                            || (window.location.pathname.search('/groupDetail/') > -1 ? true : false)
-                            ||window.location.pathname.search("/createGroup/")>-1?true:false
-                            ||window.location.pathname.search("/modifyGroup/")>-1?true:false}>
+                            <MenuItem isSelect={window.location.pathname === '/group'
+                                || window.location.pathname.search("/group/") > -1 ? true : false
+                                    || (window.location.pathname.search('/groupDetail/') > -1 ? true : false)
+                                    || window.location.pathname.search("/createGroup/") > -1 ? true : false
+                                        || window.location.pathname.search("/modifyGroup/") > -1 ? true : false}>
                                 <a className="link_tag" href="/group">그룹</a></MenuItem>
-                            <MenuItem isSelect={window.location.pathname === '/designer' 
-                            || window.location.pathname.search("/designer/")>-1?true:false
-                            || (window.location.pathname.search('/designerDetail/') > -1 ? true : false)
-                            ||window.location.pathname.search("/createDesigner/")>-1?true:false
-                            ||window.location.pathname.search("/modifyDesigner/")>-1?true:false}>
+                            <MenuItem isSelect={window.location.pathname === '/designer'
+                                || window.location.pathname.search("/designer/") > -1 ? true : false
+                                    || (window.location.pathname.search('/designerDetail/') > -1 ? true : false)
+                                    || window.location.pathname.search("/createDesigner/") > -1 ? true : false
+                                        || window.location.pathname.search("/modifyDesigner/") > -1 ? true : false}>
                                 <a className="link_tag" href="/designer">디자이너</a></MenuItem>
                         </LeftMenu>
                         {/* window.location.pathname === '/design'==false?1:-1||window.location.pathname.search('/design/') || window.location.pathname.search('/designDetail/') > -1 ? true : false */}

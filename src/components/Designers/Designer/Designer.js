@@ -287,77 +287,77 @@ const DesignerTiny = styled.div`
   }
 `;
 class Designer extends Component {
-    state = { data: this.props.data };
+  state = { data: this.props.data };
 
-    gotoDesignerDetailPage = (where, event) => {
-        const id = event.target.id
-        if (id === "") {
-            window.location.href = geturl() + `/designerDetail/${where}`;
-        }
+  gotoDesignerDetailPage = (where, event) => {
+    const id = event.target.id
+    if (id === "") {
+      window.location.href = geturl() + `/designerDetail/${where}`;
     }
-    render() {
-      console.log(this.state.data);
-        const designer = this.state.data;
-        const tiny = window.innerWidth <= opendesign_css.resolutions.SmallMaxWidth;
-        const img = (designer && designer.imgURL != null) ? designer.imgURL.l_img : noimg;
+  }
+  render() {
+    // console.log(this.state.data);
+    const designer = this.state.data;
+    const tiny = window.innerWidth <= opendesign_css.resolutions.SmallMaxWidth;
+    const img = (designer && designer.imgURL != null) ? designer.imgURL.l_img : noimg;
 
-        return (<React.Fragment>
-            {tiny ?
-                <DesignerTiny img={img} onClick={event => this.gotoDesignerDetailPage(designer.uid, event)}>
-                    <div className="innerbox">
-                        <div className="design-title">
-                            <TextFormat tip width="100%" txt={designer.nick_name} single />
-                        </div>
-                        <div className="user-update-wrapper">
-                            <div style={{ width: "max-content" }}>
-                                {DateFormat(designer.update_time)}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="counter">
-                        <div className="view-count">
-                            <IconView width="22px" height="11px" fill="#FFFFFF" opacity="1" />
-                            {NumberFormat(designer.total_view)}
-                        </div>
-                        <div className="like-count">
-                            <img alt="icon" src={iThumbUpWhite} />
-                            {NumberFormat(designer.total_like)}
-                        </div>
-                        <div className="fork-count">
-                            <img alt="icon" src={iForkedWhite} />
-                            {NumberFormat(designer.total_design || 0 + designer.total_group || 0)}
-                        </div>
-                    </div>
-                </DesignerTiny>
-                :
-                <DesignerComp img={img} onClick={(event) => this.gotoDesignerDetailPage(designer.uid, event)}>
-                    <div className="ImageBox" />
-                    <div className="TextBox">
-                        <div className="userName">
-                            <TextFormat txt={designer.nick_name} width={"max-content"} /></div>
-                        <div className="description">
-                            <TextFormat txt={designer.about_me} backgroundColor="#EFEFEF" width={"max-content"} /></div>
-                        <div className="update">
-                            {DateFormat(designer.update_time)}</div>
-                        <div className="cate">
-                            {designer.level2_name||designer.level1_name || "전체"}</div>
-                        <div className="counter">
-                            <div className="view">
-                                <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
-                                <div className="text">{NumberFormat(designer.total_view == null ? 0 : designer.total_view)}</div>
-                            </div>
-                            <div className="like" >
-                                <div><img alt="icon" src={iThumbUp} /></div>
-                                <div className="text">{NumberFormat(designer.total_like == null ? 0 : designer.total_like)}</div>
-                            </div>
-                            <div className="child">
-                                <div><img alt="icon" src={iForked} /></div>
-                                <div className="text">{NumberFormat(designer.total_group == null || designer.total_design == null ? 0 : designer.total_group + designer.total_design)}</div>
-                            </div>
-                        </div>
-                    </div>
-                </DesignerComp>
-            }</React.Fragment>)
-    }
+    return (<React.Fragment>
+      {tiny ?
+        <DesignerTiny img={img} onClick={event => this.gotoDesignerDetailPage(designer.uid, event)}>
+          <div className="innerbox">
+            <div className="design-title">
+              <TextFormat tip width="100%" txt={designer.nick_name} single />
+            </div>
+            <div className="user-update-wrapper">
+              <div style={{ width: "max-content" }}>
+                {DateFormat(designer.update_time)}
+              </div>
+            </div>
+          </div>
+          <div className="counter">
+            <div className="view-count">
+              <IconView width="22px" height="11px" fill="#FFFFFF" opacity="1" />
+              {NumberFormat(designer.total_view)}
+            </div>
+            <div className="like-count">
+              <img alt="icon" src={iThumbUpWhite} />
+              {NumberFormat(designer.total_like)}
+            </div>
+            <div className="fork-count">
+              <img alt="icon" src={iForkedWhite} />
+              {NumberFormat(designer.total_design || 0 + designer.total_group || 0)}
+            </div>
+          </div>
+        </DesignerTiny>
+        :
+        <DesignerComp img={img} onClick={(event) => this.gotoDesignerDetailPage(designer.uid, event)}>
+          <div className="ImageBox" />
+          <div className="TextBox">
+            <div className="userName">
+              <TextFormat txt={designer.nick_name} width={"max-content"} /></div>
+            <div className="description">
+              <TextFormat txt={designer.about_me} backgroundColor="#EFEFEF" width={"max-content"} /></div>
+            <div className="update">
+              {DateFormat(designer.update_time)}</div>
+            <div className="cate">
+              {designer.level2_name || designer.level1_name || "전체"}</div>
+            <div className="counter">
+              <div className="view">
+                <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
+                <div className="text">{NumberFormat(designer.total_view == null ? 0 : designer.total_view)}</div>
+              </div>
+              <div className="like" >
+                <div><img alt="icon" src={iThumbUp} /></div>
+                <div className="text">{NumberFormat(designer.total_like == null ? 0 : designer.total_like)}</div>
+              </div>
+              <div className="child">
+                <div><img alt="icon" src={iForked} /></div>
+                <div className="text">{NumberFormat(designer.total_group == null || designer.total_design == null ? 0 : designer.total_group + designer.total_design)}</div>
+              </div>
+            </div>
+          </div>
+        </DesignerComp>
+      }</React.Fragment>)
+  }
 }
 export default Designer
