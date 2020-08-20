@@ -1244,7 +1244,7 @@ class DesignInfo extends Component {
                         <i className="video icon"></i>
                     </div>
                     <div className="text">
-                        {"화상회의"}{this.state.liveVC ? "참여" : "개설"}
+                        {"화상회의"}
                     </div>
                 </div>
                 */}
