@@ -218,7 +218,7 @@ class SectionBasic extends Component {
   }
   shouldComponentUpdate(nextProps) {
     if (this.props.MyDetail !== nextProps.MyDetail) {
-      console.log("MYDETAIL", nextProps.MyDetail.nick_name);
+      //console.log("MYDETAIL", nextProps.MyDetail.nick_name);
       this.setState({
         nickname: nextProps.MyDetail.nick_name == null ? "" : nextProps.MyDetail.nick_name,
         introduce: nextProps.MyDetail.about_me == null ? "" : nextProps.MyDetail.about_me,

@@ -288,7 +288,7 @@ class ModifyMyDetail extends Component {
         }
       }
     );
-    console.log("qwer", returnvalue);
+    //console.log("qwer", returnvalue);
     return returnvalue;
   }
 
@@ -376,7 +376,7 @@ class ModifyMyDetail extends Component {
         }
       })
       .catch(e => {
-        console.log("실패", e);
+        //console.log("실패", e);
         alert(e+"다시 시도해주세요");
         this.setState({ loading: false });
       });

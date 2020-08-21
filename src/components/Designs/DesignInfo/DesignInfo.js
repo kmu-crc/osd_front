@@ -828,7 +828,7 @@ class DesignInfo extends Component {
             return this.needLogin();
         }
         if (!this.props.userInfo.is_designer) {
-            console.log("userinfo", this.props.userInfo.is_designer)
+            //console.log("userinfo", this.props.userInfo.is_designer)
             await alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.", "확인")
             return this.props.history.push("/myModify")
         }

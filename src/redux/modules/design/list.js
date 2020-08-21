@@ -119,7 +119,7 @@ export function GetTopDesignListRequest(page) {
             // console.log("design data >>", data)
 
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -127,14 +127,14 @@ export function GetTopDesignListRequest(page) {
             }
             dispatch(GetTopDesignListSuccess(data))
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             dispatch(GetTopDesignListFailure())
         })
     }
 }
 export function GetDesignListRequest(page = 0, sort = null, cate1 = null, cate2 = null, keyword = null) {
     const url = `${host}/design/designList/${page}/${sort}/${cate1}/${cate2}/${keyword}`
-    console.log("url:", url);
+    // console.log("url:", url);
     return (dispatch) => {
         return fetch(url, {
             headers: { "Content-Type": "application/json" }, method: "get"
@@ -147,7 +147,7 @@ export function GetDesignListRequest(page = 0, sort = null, cate1 = null, cate2 
             }
             dispatch(GetDesignList(data))
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             dispatch(DesignListFail())
         })
     }
@@ -172,7 +172,7 @@ export function GetDesignListRequest(page = 0, sort = null, cate1 = null, cate2 
 //             dispatch(GetDesignTotalCount(data))
 //         }).catch((error) => {
 //             dispatch(DesignTotalCountFail())
-//             console.log("err", error);
+//             console.error("err", error);
 //         })
 //     }
 // }
@@ -185,7 +185,7 @@ export function GetDesignListCountRequest(cate1, cate2) {
             return response.json();
         }).then((data) => {
             if (!data) {
-                console.log("no data");
+                //console.log("no data");
                 data = 0;
             } else {
                 data = data["count(*)"];
@@ -193,7 +193,7 @@ export function GetDesignListCountRequest(cate1, cate2) {
             dispatch(GetDesignTotalCount(data));
         }).catch((error) => {
             dispatch(DesignTotalCountFail());
-            console.log("err", error);
+            console.error("err", error);
         })
     }
 };

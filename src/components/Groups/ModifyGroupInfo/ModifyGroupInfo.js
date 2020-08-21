@@ -245,7 +245,7 @@ class CreateGroup extends Component {
   shouldComponentUpdate(nextProps) {
 
     if (this.props.GroupDetail !== nextProps.GroupDetail) {
-      console.log("nextprops", nextProps)
+      //console.log("nextprops", nextProps)
 
       this.setState({
         groupTitle: nextProps.GroupDetail.title,
@@ -257,7 +257,7 @@ class CreateGroup extends Component {
     return true;
   }
   handleInputDesignTitle(title) {
-    console.log("titleinput");
+    //console.log("titleinput");
     this.setState(state => ({ groupTitle: title }))
   }
   handleInputDesignExplain(explain) {

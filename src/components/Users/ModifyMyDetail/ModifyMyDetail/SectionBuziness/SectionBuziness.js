@@ -345,7 +345,7 @@ class SectionBuziness extends Component {
     description[1] = "디자이너 리스트에 올라가게 됩니다."
     description[2] = "추후에 직업에 대한 부가적인 정보를 입력하여 많은 사람들과 소통하게 됩니다."
 
-    console.log("checkbox", this.state.isDesigner);
+    //console.log("checkbox", this.state.isDesigner);
     return (
       <ContentsBox>
 
@@ -371,7 +371,7 @@ class SectionBuziness extends Component {
           </div>
           <div className="wrapper_noflex ">
             {this.state.career.map((item, index) => {
-              console.log("career", item)
+              //console.log("career", item)
               return (
                 <CreateCareer item={item} number={parseInt(item.number, 10) + 1} onChangeCareer={this.onChangeCareer} key={index} />
               );
@@ -442,7 +442,7 @@ class CreateCareer extends Component {
       }
       return zero + n;
     }
-    console.log("careerlog", this.state);
+    //console.log("careerlog", this.state);
     return (
       <React.Fragment>
 

@@ -182,10 +182,10 @@ export class AsyncInputEx extends Component {
     if (JSON.stringify(this.props.list) !== JSON.stringify(nextProps.list)) {
       if (nextProps.list) {
         let newArr = [...nextProps.list];
-        console.log("1", newArr);
+        //console.log("1", newArr);
         if (this.state.value && this.state.value.length > 0)
           newArr = await this.createNewMember(this.state.value, newArr);
-        console.log("2", newArr);
+        //console.log("2", newArr);
         await this.setState({ members: newArr });
       } else {
         await this.setState({ members: [] });
@@ -228,7 +228,7 @@ export class AsyncInputEx extends Component {
   };
 
   addMember = async (data, index) => {
-    console.log("add");
+    //console.log("add");
     let newArr = [...this.state.value];
     let newMembers = [...this.state.members];
     newMembers.splice(index, 1);
@@ -247,7 +247,7 @@ export class AsyncInputEx extends Component {
   };
 
   createNewMember = async (arr, origin) => {
-    console.log("creaeNewMember", arr, origin);
+    //console.log("creaeNewMember", arr, origin);
     if (origin && origin.length > 0) {
       let newArr = [...origin];
       if (arr && arr.length > 0) {
@@ -255,7 +255,7 @@ export class AsyncInputEx extends Component {
           for (let i = 0; i < origin.length; i++) {
             console.log(item.uid, newArr[i].uid);
             if (item.uid === newArr[i].uid) {
-              console.log("index", i);
+              //console.log("index", i);
               await newArr.splice(i, 1);
               i = 0;
               break;

@@ -47,7 +47,7 @@ export class FormFile extends Component {
     FormControl(this.state).then(data => {
       this.returnData();
     }).catch(err => {
-      console.log("formFile", err);
+      //console.log("formFile", err);
     });
   };
 

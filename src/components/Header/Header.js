@@ -230,7 +230,7 @@ class Header extends Component {
                     this.setState({ alarm: alarm })
                 })
                 Socket.on("disconnect", () => {
-                    console.log("disconnected");
+                    //console.log("disconnected");
                 })
             } catch (err) {
                 console.error(err);

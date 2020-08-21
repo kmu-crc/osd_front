@@ -675,7 +675,7 @@ class DesignerPageHeader extends Component {
         const isMyProfile = this.props.userInfo && DesignerDetail && this.props.userInfo.uid === DesignerDetail.uid ? true : false;
         const MypageInfo = this.props.DesignerDetail;
 
-        console.log("DesignerDetail::", this.props);
+        //console.log("DesignerDetail::", this.props);
 
         return (
 

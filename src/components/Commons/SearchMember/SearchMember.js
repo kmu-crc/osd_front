@@ -102,12 +102,12 @@ class SearchMember extends Component {
   }
 
   addMember = async (data) => {
-    console.log("ADDMEMBER:", data)
+    //console.log("ADDMEMBER:", data)
     await this.props.addMemberItem && this.props.addMemberItem(data.uid, data.nick_name);
     await this.props.setMsgID&&this.props.setMsgID(data.group_id==null?-1:data.group_id,data.uid,data.nick_name);
   }
   closeList = () => {
-    console.log("close")
+    //console.log("close")
     this.setState({ open: false });
   }
 

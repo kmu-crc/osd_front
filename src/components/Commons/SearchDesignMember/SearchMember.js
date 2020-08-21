@@ -86,7 +86,7 @@ class SearchMember extends Component {
       this.setState({ open: false });
       return;
     }
-    console.log("search:", value);
+    //console.log("search:", value);
     this.props.SearchMemberRequest(null, { key: value }, this.props.token).then(data => { })
   }
 

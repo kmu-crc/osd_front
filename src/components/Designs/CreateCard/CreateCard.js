@@ -61,7 +61,7 @@ class CreateCard extends Component {
           .then(this.props.GetDesignDetailRequest(this.props.designId, this.props.token));
         this.setState({ active: false });
       })
-      .catch(err => console.log("실패", err));
+      .catch(err => //console.log("실패", err));
   };
 
   handelClose = (e) => {

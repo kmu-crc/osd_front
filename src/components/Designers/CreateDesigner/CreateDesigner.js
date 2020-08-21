@@ -332,7 +332,7 @@ class ModifyMyDetail extends Component {
         }
       }
     );
-    console.log("qwer", returnvalue);
+    //console.log("qwer", returnvalue);
     return returnvalue;
   }
   onSubmit = async e => {
@@ -412,7 +412,7 @@ class ModifyMyDetail extends Component {
         }
       })
       .catch(async e => {
-        console.log("실패", e);
+        //console.log("실패", e);
         await alert("다시 시도해주세요", "확인");
         this.setState({
           loading: false

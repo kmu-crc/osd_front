@@ -108,7 +108,7 @@ checkBrowsers(paths.appPath, isInteractive)
     // Launch WebpackDevServer.
     devServer.listen(port, HOST, err => {
       if (err) {
-        return console.log(err);
+        return console.error(err);
       }
       if (isInteractive) {
         clearConsole();
@@ -139,7 +139,7 @@ checkBrowsers(paths.appPath, isInteractive)
   })
   .catch(err => {
     if (err && err.message) {
-      console.log(err.message);
+      console.error(err.message);
     }
     process.exit(1);
   });

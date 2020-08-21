@@ -210,12 +210,12 @@ export default Video;
 //   // this.video.srcObject = this.props.videoStream
 //   // }
 // }
-// // componentWillReceiveProps(nextProps) {
-// // console.log(nextProps.videoStream)
-// // if (nextProps.videoStream && nextProps.videoStream !== this.props.videoStream) {
-// // this.video.srcObject = nextProps.videoStream
-// // }
-// // }
+//  componentWillReceiveProps(nextProps) {
+//  console.log(nextProps.videoStream)
+//  if (nextProps.videoStream && nextProps.videoStream !== this.props.videoStream) {
+//  this.video.srcObject = nextProps.videoStream
+//  }
+//  }
 
 // mutemic = (e) => {
 //   const stream = this.video.srcObject.getTracks().filter(track => track.kind === 'audio')
@@ -233,7 +233,7 @@ export default Video;
 //   })
 // }
 
-// //screenshare 버튼 클릭시 displaymedia 가져오기
+// screenshare 버튼 클릭시 displaymedia 가져오기
 // screenshare = (e) => {
 //   const stream = this.video.srcObject.getTracks().filter(track => track.kind === 'video')
 //   this.setState(prevState => {
@@ -242,7 +242,7 @@ export default Video;
 //   })
 // }
 
-// //localvideo 버튼 클릭시 usermedia 가져오기
+// localvideo 버튼 클릭시 usermedia 가져오기
 // localvideo = (e) => {
 //   const stream = this.video.srcObject.getTracks().filter(track => track.kind === 'video')
 //   this.setState(prevState => {

@@ -213,7 +213,7 @@ class SignInModal extends Component {
 
         this.props.signinrequest({ email: email, password: password })
             .then(async (res) => {
-                console.log("cap", res)
+                //console.log("cap", res)
                 if (res.type === "opendesign/authentication/AUTH_SIGNIN_SUCCESS") {
                     // alert('로그인에 성공하였습니다.') // SetSession("opendesign_token",res.token)
                     this.props.signin()
@@ -237,7 +237,7 @@ class SignInModal extends Component {
                 }
             }
         );
-        console.log("qwer", returnvalue);
+        //console.log("qwer", returnvalue);
         return !returnvalue;
     }
     findIDPW() {

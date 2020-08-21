@@ -87,7 +87,7 @@ export class CardImageUpdate extends Component {
     console.log(newData.deleteImages);
     newData.deleteImages.value = JSON.stringify(newData.deleteImages.value);
     ValidationGroup(newData, false).then(data => {
-      console.log("성공", data);
+      //console.log("성공", data);
       this.props.request(data, this.props.token, this.props.uid)
         .then(res => {
           this.props.changeActive("INIT");
@@ -96,7 +96,7 @@ export class CardImageUpdate extends Component {
           });
         });
     }).catch(e => {
-      console.log("실패", e);
+      //console.log("실패", e);
     });
   };
 

@@ -159,10 +159,10 @@ export function SignInRequest(data) {
         return res.json()
       })
       .then(function (res) {
-        console.log("res", res)
+        //console.log("res", res)
         if (res.isMember && res.isPassword) {
           SetSession("opendesign_token", res.token)
-          console.log("success", res)
+          //console.log("success", res)
           return dispatch(SignInSuccess(res.token))
         } else {
           if (!res.isMember) {

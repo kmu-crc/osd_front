@@ -39,7 +39,7 @@ class MyDesignList extends Component {
   }
 
   getValue = (data) => {
-    console.log("upstair: ", data)
+    //console.log("upstair: ", data)
     this.setState({ joinList: data });
   }
 
@@ -60,7 +60,7 @@ class MyDesignList extends Component {
     console.log(this.refs.dropdown.state.value)
     console.log(value, { value })
     await this.refs.dropdown.setState({ value })
-    console.log("state", this.state.joinList)
+    //console.log("state", this.state.joinList)
     console.log(this.refs.dropdown.state.value)
   }
   render() {

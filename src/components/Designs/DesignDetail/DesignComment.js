@@ -60,7 +60,7 @@ class DesignComment extends React.Component {
       .then(res => {
         this.getComment();
       })
-      .catch(err => console.log("error", err));
+      .catch(err => //console.log("error", err));
     await this.setState({
       render: false
     });

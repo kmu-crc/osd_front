@@ -489,7 +489,7 @@ class CardSourceDetail extends Component {
 
   render() {
     const { edit, content, loading } = this.state;
-    console.log("content:", this.state.content);
+    //console.log("content:", this.state.content);
     return (<div>
       {loading ? <Loading /> : null}
       {/* <ButtonContainer>
@@ -562,7 +562,7 @@ class CardSourceDetail extends Component {
         (edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
           content && content.length > 0 ? (<Fragment>
             {content.map((item, index) => {
-              console.log("item---", item);
+              //console.log("item---", item);
               return (<ControllerWrap key={item + index}>
 
                 <div className="contentWrap">

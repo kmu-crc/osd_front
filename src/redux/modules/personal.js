@@ -341,12 +341,12 @@ export function GetMyDetailRequest(token) {
             return response.json()
         }).then((data) => {
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             return dispatch(GetMyDetail(data))
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -365,7 +365,7 @@ export function GetMyDesignListRequest(token, page) {
             return response.json()
         }).then((data) => {
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -375,7 +375,7 @@ export function GetMyDesignListRequest(token, page) {
             dispatch(GetMyDesignList(data))
         }).catch((error) => {
             dispatch(MyDesignListFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -391,9 +391,9 @@ export function GetMyGroupListRequest(token, page) {
         }).then(response => {
             return response.json()
         }).then((data) => {
-            console.log("my group list data >>", data)
+            //console.log("my group list data >>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -403,13 +403,13 @@ export function GetMyGroupListRequest(token, page) {
             dispatch(GetMyGroupList(data))
         }).catch((error) => {
             dispatch(MyGroupListFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
 // 내 좋아요 디자인 불러오기
 export function GetMyLikeDesignRequest(token, page) {
-    console.log("designer" + page);
+    //console.log("designer" + page);
     return (dispatch) => {
         return fetch(`${host}/users/myPage/likeDesign/${page}`, {
             headers: {
@@ -422,7 +422,7 @@ export function GetMyLikeDesignRequest(token, page) {
             return response.json()
         }).then((data) => {
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -432,13 +432,13 @@ export function GetMyLikeDesignRequest(token, page) {
             dispatch(GetMyLikeDesign(data))
         }).catch((error) => {
             dispatch(MyLikeDesignFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
 
 export function GetMyLikeGroupRequest(token, page) {
-    console.log("group" + page);
+    //console.log("group" + page);
     return (dispatch) => {
         return fetch(`${host}/users/myPage/likeGroup/${page}`, {
             headers: {
@@ -451,7 +451,7 @@ export function GetMyLikeGroupRequest(token, page) {
         }).then((data) => {
             console.log(data, page);
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -461,14 +461,14 @@ export function GetMyLikeGroupRequest(token, page) {
             dispatch(GetMyLikeGroup(data))
         }).catch((error) => {
             dispatch(MyLikeGroupFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
 
 // 내 좋아요 디자이너 불러오기
 export function GetMyLikeDesignerRequest(token, page) {
-    console.log("designer" + page);
+    //console.log("designer" + page);
     return (dispatch) => {
         return fetch(`${host}/users/myPage/likeDesigner/${page}`, {
             headers: { "Content-Type": "application/json", "x-access-token": token }, method: "get"
@@ -476,7 +476,7 @@ export function GetMyLikeDesignerRequest(token, page) {
             return response.json()
         }).then((data) => {
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -486,7 +486,7 @@ export function GetMyLikeDesignerRequest(token, page) {
             dispatch(GetMyLikeDesigner(data))
         }).catch((error) => {
             dispatch(MyLikeDesignerFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -504,15 +504,15 @@ export function GetMyInvitedListRequest(token) {
         }).then(response => {
             return response.json()
         }).then((data) => {
-            console.log("my invited list data >>", data)
+            //console.log("my invited list data >>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             dispatch(GetMyInvitedListSuccess(data))
         }).catch((error) => {
             dispatch(GetMyInvitedListFailure())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -529,15 +529,15 @@ export function GetMyInvitingListRequest(token) {
         }).then(response => {
             return response.json()
         }).then((data) => {
-            console.log("my inviting list data >>", data)
+            //console.log("my inviting list data >>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             dispatch(GetMyInvitingListSuccess(data))
         }).catch((error) => {
             dispatch(GetMyInvitingListFailure())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -550,28 +550,28 @@ export function InsertUserDetailRequest(data, token) {
                 return res.json()
             })
             .then(function (res) {
-                console.log("insert detail", res)
+                //console.log("insert detail", res)
                 return dispatch(InsertUserDetailSuccess(res))
             }).catch((error) => {
-                console.log("insert detail err", error)
+                //console.log("insert detail err", error)
                 return dispatch(InsertUserDetailFailure())
             })
     }
 }
 export function UpdateUserDetailRequest(data, token) {
-    console.log("UpdateUserDetailRequest", data);
+    //console.log("UpdateUserDetailRequest", data);
     return (dispatch) => {
         dispatch(UpdateUserDetail())
         return fetch(`${host}/users/modifyDetail`, { headers: { "x-access-token": token, "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) }).then(function (res) {
             return res.json()
         }).then(function (res) {
-            console.log("update detail", res)
+            //console.log("update detail", res)
             if (res.success === true) {
                 return dispatch(UpdateUserDetailSuccess())
             }
             return dispatch(UpdateUserDetailFailure())
         }).catch((error) => {
-            console.log("update detail err", error)
+            //console.log("update detail err", error)
             return dispatch(UpdateUserDetailFailure())
         })
     }

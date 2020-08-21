@@ -241,15 +241,15 @@ export function GetDesignDetailStepCardRequest(id, card_id) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("design Detail Card data >>", data)
+            //console.log("design Detail Card data >>", data)
             if (!data || data.length === 0) {
-                console.log("no data")
+                //console.log("no data")
                 return
             } else {
                 return dispatch(GetDesignDetailStepCard(data))
             }
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -272,14 +272,14 @@ export function GetDesignDetailViewRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("design Detail View data >>", data)
+            //console.log("design Detail View data >>", data)
             if (!data || data.length === 0) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             return dispatch(GetDesignDetailView(data))
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -291,13 +291,13 @@ export function UpdateDesignViewRequest(id) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("increase view count >>", data)
+            //console.log("increase view count >>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
             }
             dispatch(UpdateDesignView())
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -309,9 +309,9 @@ export function GetDesignCountRequest(id) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("design count >>", data)
+            //console.log("design count >>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = {
                     like_count: 0, member_count: 0, card_count: 0, view_count: 0
                 }
@@ -340,16 +340,16 @@ export function GetDesignDetailRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("design Detail data >>", data)
+            //console.log("design Detail data >>", data)
             if (!data || (Object.entries(data).length === 0 && data.constructor === Object)) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
                 return dispatch(DesignNotFound())
             }
             dispatch(GetDesignDetail(data));
             return data;
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -361,15 +361,15 @@ export function GetDesignDetailStepRequest(id) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("design Detail Step data >>", data)
+            //console.log("design Detail Step data >>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 return
             } else {
                 dispatch(GetDesignDetailStep(data))
             }
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -385,11 +385,11 @@ export function ChangeToProjectRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("change request >>>", data)
+            //console.log("change request >>>", data)
             dispatch(ChangeToProjectSuccess(data))
             return data
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             ChangeToProjectFailure(error)
         })
     }
@@ -403,14 +403,14 @@ export function UnlikeDesignRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("unlike >>>", data)
+            //console.log("unlike >>>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
             }
             dispatch(UnlikeDesignSuccess(data))
             return data
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             UnlikeDesignFailure(error)
         })
     }
@@ -424,14 +424,14 @@ export function LikeDesignRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("like >>>", data)
+            //console.log("like >>>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
             }
             dispatch(LikeDesignSuccess())
             return data
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             LikeDesignFailure(error)
         })
     }
@@ -445,14 +445,14 @@ export function GetLikeDesignRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("Design like >>", data)
+            //console.log("Design like >>", data)
             if (!data) {
-                console.log("no like info")
+                //console.log("no like info")
                 data = false
             }
             dispatch(GetLikeDesignSuccess(data.like))
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             GetLikeDesignFailure(false)
         })
     }
@@ -466,13 +466,13 @@ export function DesignWaitingToAcceptListRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("list >>>", data.data)
+            //console.log("list >>>", data.data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
             }
             return dispatch(DesignWaitingToAcceptListSuccess(data.data))
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             return dispatch(DesignWaitingToAcceptListFailure(error))
         });
     }
@@ -486,13 +486,13 @@ export function DesignWaitingListRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("list >>>", data.data)
+            //console.log("list >>>", data.data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
             }
             return dispatch(DesignWaitingListSuccess(data.data))
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             return dispatch(DesignWaitingListFailure(error))
         })
     }
@@ -507,13 +507,13 @@ export function JoinDesignRequest(id, data, flag, token) {
         }).then((response) => {
             return response.json();
         }).then((data) => {
-            console.log("가입신청 >>>", data);
+            //console.log("가입신청 >>>", data);
             if (!data) {
-                console.log("no data");
+                //console.log("no data");
             }
             return dispatch(JoinDesignSuccess(data));
         }).catch((error) => {
-            console.log("err", error);
+            console.error("err", error);
             return dispatch(JoinDesignFailure(error));
         });
     }
@@ -526,10 +526,10 @@ export function CreateDesignRequest(data, token) {
                 return res.json();
             })
             .then(function (res) {
-                console.log("insert detail", res.desing_id);
+                //console.log("insert detail", res.desing_id);
                 return dispatch(CreateDesignSuccess(res));
             }).catch((error) => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(CreateDesignFailure(error));
             })
     }
@@ -543,13 +543,13 @@ export function GetoutDesignRequest(id, memberId, token, refuse) {
         }).then((response) => {
             return response.json();
         }).then((data) => {
-            console.log("디자인 탈퇴 >>>", data);
+            //console.log("디자인 탈퇴 >>>", data);
             if (!data) {
-                console.log("no data");
+                //console.log("no data");
             }
             return dispatch(GetoutDesignSuccess(data));
         }).catch((error) => {
-            console.log("err", error);
+            console.error("err", error);
             return dispatch(GetoutDesignFailure(error));
         });
     }
@@ -568,12 +568,12 @@ export function AcceptDesignRequest(id, memberId, token) {
             return response.json();
         }).then((data) => {
             if (!data) {
-                console.log("no data");
+                //console.log("no data");
             }
-            console.log("가입승낙 >>>", data);
+            //console.log("가입승낙 >>>", data);
             return dispatch(AcceptDesignSuccess(data));
         }).catch((error) => {
-            console.log("err", error);
+            console.error("err", error);
             return dispatch(AcceptDesignFailure(error));
         });
     }
@@ -593,7 +593,7 @@ export function ForkDesignRequest(design_id, user_id, token) {
             }
             return dispatch(ForkDesignFailure())
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             return ForkDesignFailure()
         })
     }
@@ -612,7 +612,7 @@ export function ForkDesignListRequest(design_id, token) {
             }
             return dispatch(ForkDesignListFailure())
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             return dispatch(ForkDesignListFailure())
         })
     }
@@ -629,18 +629,18 @@ export function UpdateDesignInfoRequest(data, id, token) {
                 return res.json();
             })
             .then(function (res) {
-                console.log("update design", res);
+                //console.log("update design", res);
                 return dispatch(UpdateDesignInfoSuccess(res));
             })
             .catch(error => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(UpdateDesignInfoFailure(error));
             });
     }
 }
 export function UpdateDesignTime(id, token) {
     const url = `${host}/design/updateDesignTime/${id}`;
-    console.log("update-time:", url);
+    //console.log("update-time:", url);
     return dispatch => {
         dispatch(UpdateDesignInfo());
         return fetch(url, {
@@ -651,11 +651,11 @@ export function UpdateDesignTime(id, token) {
                 return res.json();
             })
             .then(function (res) {
-                console.log("update designTIME", res);
+                //console.log("update designTIME", res);
                 return dispatch(UpdateDesignInfoSuccess(res));
             })
             .catch(err => {
-                console.log("time update err", err);
+                //console.log("time update err", err);
                 return dispatch(UpdateDesignInfoFailure(err));
             });
     }
@@ -669,10 +669,10 @@ export function DeleteDesignRequest(id, token) {
         }).then(res => {
             return res.json();
         }).then(res => {
-            console.log("design deleted", res);
+            //console.log("design deleted", res);
             return dispatch(DeleteDesignSuccess(res));
         }).catch((error) => {
-            console.log(error);
+            console.error(error);
             return dispatch(DeleteDesignFailure(error));
         });
     }
@@ -684,7 +684,10 @@ export function YesIHaveReadNewComment(id, token) {
             headers: { "x-access-token": token }, method: "GET"
         })
             .then(res => res.json())
-            .then(res => { console.log("success confirm design comment", res); resolve(true) })
-            .catch((error) => { console.log(error); reject(error) });
+            .then(res => {
+                //console.log("success confirm design comment", res); 
+                resolve(true)
+            })
+            .catch((error) => { console.error(error); reject(error) });
     })
 }

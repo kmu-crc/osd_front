@@ -67,7 +67,7 @@ export function DesignerList(state, action) {
 
 export function GetDesignerListRequest(page, sort, cate1, cate2, keyword) {
   const sql = `${host}/designer/designerList/${page}/${sort}/${cate1}/${cate2}/${keyword}`
-  console.log("sql:", sql)
+  //console.log("sql:", sql)
   return (dispatch) => {
     return fetch(sql, {
       headers: { "Content-Type": "application/json" },
@@ -75,9 +75,9 @@ export function GetDesignerListRequest(page, sort, cate1, cate2, keyword) {
     }).then((response) => {
       return response.json();
     }).then((data) => {
-      console.log("Designer data >>", data);
+      //console.log("Designer data >>", data);
       if (!data) {
-        console.log("no data");
+        //console.log("no data");
         data = [];
       }
       if (page === 0) {
@@ -86,7 +86,7 @@ export function GetDesignerListRequest(page, sort, cate1, cate2, keyword) {
       dispatch(GetDesignerList(data));
     }).catch((error) => {
       dispatch(DesignerListFail());
-      console.log("err", error);
+      console.error("err", error);
     })
   }
 };
@@ -123,7 +123,7 @@ export function GetDesignerTotalCountRequest(cate1, cate2) {
       return response.json();
     }).then((data) => {
       if (!data) {
-        console.log("no data");
+        //console.log("no data");
         data = 0;
       } else {
         data = data["count(*)"];
@@ -131,7 +131,7 @@ export function GetDesignerTotalCountRequest(cate1, cate2) {
       dispatch(GetDesignerTotalCount(data));
     }).catch((error) => {
       dispatch(DesignerTotalCountFail());
-      console.log("err", error);
+      console.error("err", error);
     })
   }
 };
