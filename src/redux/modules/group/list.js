@@ -91,7 +91,7 @@ export function GetGroupListRequest(page = 0, sort = null, keyword = null) {
       }
       return dispatch(GetGroupList(data))
     }).catch((error) => {
-      console.log("err", error)
+      console.error("err", error)
       return dispatch(GroupListFail())
     })
   }
@@ -105,14 +105,14 @@ export function GetGroupTotalCountRequest() {
       return response.json()
     }).then((data) => {
       if (!data) {
-        console.log("no data")
+        //console.log("no data")
         data = 0
       } else {
         data = data["count(*)"]
       }
       return dispatch(GetGroupTotalCount(data))
     }).catch((error) => {
-      console.log("err", error)
+      console.error("err", error)
       return dispatch(GroupTotalCountFail())
     })
   }
@@ -138,9 +138,9 @@ export function GetGroupTotalCountRequest() {
 //     }).then((response) => {
 //       return response.json()
 //     }).then((data) => {
-//       console.log("group data >>", data)
+//       //console.log("group data >>", data)
 //       if (!data) {
-//         console.log("no data")
+//         //console.log("no data")
 //         data = []
 //       }
 //       if (page === 0) {
@@ -150,7 +150,7 @@ export function GetGroupTotalCountRequest() {
 //       dispatch(GetTopGroupListSuccess(data))
 //     }).catch((error) => {
 //       dispatch(GetTopGroupListFailure())
-//       console.log("err", error)
+//       console.error("err", error)
 //     })
 //   }
 // }

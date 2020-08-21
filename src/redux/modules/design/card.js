@@ -230,7 +230,7 @@ export const GetDesignSourceRequest = id => {
                 return dispatch(GetDesignSourceSuccess(res));
             })
             .catch(error => {
-                console.log("insert issue err", error);
+                //console.log("insert issue err", error);
                 return dispatch(GetDesignSourceFailure(error));
             });
     };
@@ -253,7 +253,7 @@ export const FileUploadRequest = file => {
 export const UpdateCardSourceRequest = (data, card_id, token) => {
     return async dispatch => {
         dispatch(UpdateDesignSource());
-        console.log("request", data);
+        //console.log("request", data);
         return fetch(`${host}/design/designDetail/updateCardAllData_temp/${card_id}`, {
             headers: {
                 "x-access-token": token,
@@ -270,7 +270,7 @@ export const UpdateCardSourceRequest = (data, card_id, token) => {
 export const UpdateDesignSourceRequest = (data, card_id, token) => {
     return dispatch => {
         dispatch(UpdateDesignSource());
-        console.log("request", data);
+        //console.log("request", data);
         return fetch(`${host}/design/designDetail/updateCardSource_temp/${card_id}`, {
             headers: {
                 "x-access-token": token,
@@ -286,7 +286,7 @@ export const UpdateDesignSourceRequest = (data, card_id, token) => {
                 return dispatch(UpdateDesignSourceSuccess(res));
             })
             .catch(error => {
-                console.log("insert issue err", error);
+                //console.log("insert issue err", error);
                 return dispatch(UpdateDesignSourceFailure(error));
             });
     };
@@ -302,7 +302,7 @@ export const DeleteDesignBoardRequest = (id, board_id, token) => {
                 console.log(res);
                 return dispatch(DeleteBoardSuccess(res));
             }).catch((error) => {
-                console.log("DeleteDesignBoardRequest err", error);
+                //console.log("DeleteDesignBoardRequest err", error);
                 return dispatch(DeleteBoardFailure(error));
             })
     }
@@ -318,7 +318,7 @@ export const UpdateDesignBoardRequest = (id, token, data) => {
                 console.log(res);
                 return dispatch(UpdateBoardSuccess(res));
             }).catch((error) => {
-                console.log("UpdateDesignBoardRequest err", error);
+                //console.log("UpdateDesignBoardRequest err", error);
                 return dispatch(UpdateBoardFailure(error));
             });
     };
@@ -342,16 +342,16 @@ export const GetDesignBoardRequest = (id) => {
 export const CreateDesignBoardRequest = (data, design_id, token) => {
     return (dispatch) => {
         dispatch(CreateBoard());
-        console.log("request", data);
+        //console.log("request", data);
         return fetch(`${host}/design/designDetail/${design_id}/createBoard`, { headers: { "x-access-token": token, 'Content-Type': 'application/json' }, method: "POST", body: JSON.stringify(data) })
             .then(function (res) {
                 return res.json();
             })
             .then(function (res) {
-                console.log("insert detail", res.desing_id);
+                //console.log("insert detail", res.desing_id);
                 return dispatch(CreateBoardSuccess(res));
             }).catch((error) => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(CreateBoardFailure(error));
             });
     };
@@ -359,7 +359,7 @@ export const CreateDesignBoardRequest = (data, design_id, token) => {
 export const CreateDesignCardRequest = (data, design_id, board_id, token) => {
     return dispatch => {
         dispatch(CreateCard());
-        console.log("request", data);
+        //console.log("request", data);
         return fetch(
             `${host}/design/designDetail/${design_id}/${board_id}/createCard`,
             {
@@ -375,11 +375,11 @@ export const CreateDesignCardRequest = (data, design_id, board_id, token) => {
                 return res.json();
             })
             .then(function (res) {
-                console.log("insert detail", res);
+                //console.log("insert detail", res);
                 return dispatch(CreateCardSuccess(res));
             })
             .catch(error => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(CreateCardFailure(error));
             });
     };
@@ -405,7 +405,7 @@ export const DeleteDesignCardRequest = (board_id, card_id, token) => {
                 return dispatch(DeleteCardSuccess(res));
             })
             .catch(error => {
-                console.log("DeleteDesignCardRequest err", error);
+                //console.log("DeleteDesignCardRequest err", error);
                 return dispatch(DeleteCardFailure(error));
             });
     };
@@ -425,7 +425,7 @@ export const GetCardDetailRequest = id => {
                 return dispatch(GetCardDetailSuccess(res));
             })
             .catch(error => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(GetCardDetailFailure(error));
             });
     };
@@ -445,7 +445,7 @@ export const GetDesignCardRequest = (id, board_id) => {
                 return dispatch(GetCardSuccess(res, board_id));
             })
             .catch(error => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(GetCardFailure(error));
             });
     };
@@ -467,7 +467,7 @@ export const UpdateCardTitleRequest = (data, token, id) => {
                 return dispatch(UpdateCardTitleSuccess(res));
             })
             .catch(error => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(UpdateCardTitleFailure(error));
             });
     };
@@ -488,7 +488,7 @@ export const UpdateCardContentRequest = (data, token, id) => {
                 return dispatch(UpdateCardContentSuccess(res));
             })
             .catch(error => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(UpdateCardContentFailure(error));
             });
     };
@@ -509,7 +509,7 @@ export const UpdateCardImagesRequest = (data, token, id) => {
                 return dispatch(UpdateCardImagesSuccess(res));
             })
             .catch(error => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(UpdateCardImagesFailure(error));
             });
     };
@@ -530,7 +530,7 @@ export const UpdateCardSourcesRequest = (data, token, id) => {
                 return dispatch(UpdateCardSourcesSuccess(res));
             })
             .catch(error => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(UpdateCardSourcesFailure(error));
             });
     };

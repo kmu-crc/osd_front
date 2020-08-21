@@ -75,7 +75,7 @@ class ModifyDesignMember extends Component {
     }
 
     this.setState({ members: this.state.members.concat(member) });
-    console.log("members[]====", this.state.members);
+    //console.log("members[]====", this.state.members);
   }
   removeMember(index) {
     this.setState({ members: this.state.members.filter((member, memberindex) => { return index !== memberindex }) });
@@ -98,7 +98,7 @@ class ModifyDesignMember extends Component {
 
     this.props.GetoutDesignRequest(this.props.match.params.id, id, this.props.token, flag)
       .then(async(res) => {
-        console.log("res:", res);
+        //console.log("res:", res);
         if (res.data && res.data.success) {
           if (flag === "DesignGetout") {
             // alert("탈퇴 처리되었습니다.");
@@ -135,7 +135,7 @@ class ModifyDesignMember extends Component {
 
   joinMember = async() => {
     const data = this.state.members;
-    console.log("data:", data);
+    //console.log("data:", data);
     if (data.length <= 0 || data == null) {
       await alert("초대할 멤버를 선택해주세요!","확인");
       return;
@@ -143,7 +143,7 @@ class ModifyDesignMember extends Component {
     // return;
     this.props.JoinDesignRequest(this.props.match.params.id, data, 1, this.props.token)
       .then(async(res) => {
-        console.log("joinMember:", res.data);
+        //console.log("joinMember:", res.data);
         if (res.data && res.data.success) {
           await alert("가입 요청을 보냈습니다.","확인");
           this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token);

@@ -465,11 +465,11 @@ export function UpdateDesignInGroupRequest(id, designid) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("result >>", data)
+      // console.log("result >>", data)
       return dispatch(UpdateDesignInGroupSuccess(data))
     }).catch((error) => {
       dispatch(UpdateDesignInGroupFail())
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -481,11 +481,11 @@ export function UpdateGroupInGroupRequest(id, groupid) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("result >>", data)
+      // console.log("result >>", data)
       return dispatch(UpdateGroupInGroupSuccess(data))
     }).catch((error) => {
       dispatch(UpdateGroupInGroupFail())
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -497,11 +497,11 @@ export function DeleteGroupInGroupRequest(id, groupid) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("result >>", data)
+      // console.log("result >>", data)
       return dispatch(DeleteGroupInGroupSuccess(data))
     }).catch((error) => {
       dispatch(DeleteGroupInGroupFail())
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -515,9 +515,9 @@ export function GetMyExistGroupListRequest(token, id) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("GetMyGroupListRequest >>", data)
+      // console.log("GetMyGroupListRequest >>", data)
       if (!data.list) {
-        console.log("no data")
+        // console.log("no data")
         data = []
       }
       data.list = data.list.map(item => {
@@ -526,7 +526,7 @@ export function GetMyExistGroupListRequest(token, id) {
       dispatch(GetMyExistGroupListSuccess(data))
     }).catch((error) => {
       dispatch(GetExistGroupListFailure(error))
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -540,7 +540,7 @@ export function GetMyExistDesignListRequest(token, id) {
       return response.json()
     }).then((data) => {
       if (!data.list) {
-        console.log("no data")
+        // console.log("no data")
         data = []
       }
       data.list = data.list.map(item => {
@@ -549,7 +549,7 @@ export function GetMyExistDesignListRequest(token, id) {
       dispatch(GetMyExistDesignListSuccess(data))
     }).catch((error) => {
       dispatch(GetExistDesignListFailure(error))
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -562,14 +562,14 @@ export function UnlikeGroupRequest(id, token) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("unlike >>>", data)
+      // console.log("unlike >>>", data)
       if (!data) {
-        console.log("no data")
+        // console.log("no data")
       }
       dispatch(UnlikeGroupSuccess(data))
       return data
     }).catch((error) => {
-      console.log("err", error)
+      console.error("err", error)
       UnlikeGroupFailure(error)
     })
   }
@@ -584,12 +584,12 @@ export function LikeGroupRequest(id, token) {
       return response.json()
     }).then((data) => {
       if (!data) {
-        console.log("no data")
+        // console.log("no data")
       }
       dispatch(LikeGroupSuccess())
       return data
     }).catch((error) => {
-      console.log("err", error)
+      console.error("err", error)
       LikeGroupFailure(error)
     })
   }
@@ -610,7 +610,7 @@ export function DeleteGroupRequest(id, token) {
       }
     }).catch((error) => {
       dispatch(DeleteGroupFailure())
-      console.log(error)
+      // console.error(error)
     })
   }
 }
@@ -627,7 +627,7 @@ export function UpdateGroupRequest(id, data, token) {
       return dispatch(UpdateGroupSuccess(res))
     }).catch((error) => {
       dispatch(UpdateGroupFailure())
-      console.log(error)
+      console.error(error)
     })
   }
 }
@@ -645,7 +645,7 @@ export function CreateNewGroupRequest(data, token) {
         return dispatch(CreateNewGroupSuccess(res.id))
       }).catch((error) => {
         dispatch(CreateGroupFailure())
-        console.log(error)
+        console.error(error)
       })
   }
 }
@@ -678,7 +678,7 @@ export function GetGroupInGroupRequest(id, page, sort) {
       return response.json()
     }).then((data) => {
       if (!data) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       if (page === 0) {
@@ -701,9 +701,9 @@ export function GetDesignInGroupRequest(id, page, sort) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("design in group data >>", data)
+      //console.log("design in group data >>", data)
       if (!data) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       if (page === 0) {
@@ -724,14 +724,14 @@ export function GetLikeGroupRequest(id, token) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("group like >>", data)
+      //console.log("group like >>", data)
       if (!data) {
-        console.log("no like info")
+        //console.log("no like info")
         data = false
       }
       dispatch(GetLikeGroupSuccess(data.like))
     }).catch((error) => {
-      console.log("err", error)
+      console.error("err", error)
       GetLikeGroupFailure(false)
     })
   }
@@ -746,7 +746,7 @@ export function GetGroupCountRequest(id) {
     }).then((data) => {
       // console.log("group count >>", data)
       if (!data) {
-        console.log("no data")
+        //console.log("no data")
         data = {
           like: 0,
           design: 0,
@@ -755,7 +755,7 @@ export function GetGroupCountRequest(id) {
       }
       dispatch(GetGroupCount(data))
     }).catch((err) => {
-      console.log("err", err)
+      console.error("err", err)
     })
   }
 }
@@ -768,12 +768,12 @@ export function GetGroupDetailRequest(id) {
       return response.json()
     }).then((data) => {
       if (!data) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       dispatch(GetGroupDetail(data))
     }).catch((error) => {
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -786,9 +786,9 @@ export function JoinGroupRequest(data, token, id) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("waiting group list is >>", data)
+      //console.log("waiting group list is >>", data)
       if (!data) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       dispatch(JoinGroupSuccess(data))
@@ -807,9 +807,9 @@ export function GetMyDesignListRequest(token, id) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("GetMyDesignListRequest >>", data)
+      //console.log("GetMyDesignListRequest >>", data)
       if (!data.list) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       data.list = data.list.map(item => {
@@ -818,7 +818,7 @@ export function GetMyDesignListRequest(token, id) {
       dispatch(GetMyDesignListSuccess(data))
     }).catch((error) => {
       dispatch(GetMyDesignListFailure(error))
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -830,15 +830,15 @@ export function GroupJoinGroupRequest(data, token, id) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("waiting group list is >>", data)
+      //console.log("waiting group list is >>", data)
       if (!data) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       dispatch(GetWaitingGroup(data))
     }).catch((error) => {
       dispatch(GetWaitingDataFail())
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -852,9 +852,9 @@ export function GetMyGroupListRequest(token, id) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("GetMyGroupListRequest >>", data)
+      //console.log("GetMyGroupListRequest >>", data)
       if (!data.list) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       data.list = data.list.map(item => {
@@ -863,7 +863,7 @@ export function GetMyGroupListRequest(token, id) {
       dispatch(GetMyGroupListSuccess(data))
     }).catch((error) => {
       dispatch(GetMyGroupListFailure(error))
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -876,9 +876,9 @@ export function GetWaitingDesignRequest(id, sort) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("waiting design list is >>", data)
+      //console.log("waiting design list is >>", data)
       if (!data) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       return dispatch(GetWaitingDesign(data))
@@ -889,7 +889,7 @@ export function GetWaitingDesignRequest(id, sort) {
 }
 export function GetWaitingGroupRequest(id, sort) {
   const url = `${host}/group/groupDetail/${id}/waitingGroup/${sort}`
-  console.log("url:", url);
+  // console.log("url:", url);
   return (dispatch) => {
     return fetch(url, {
       headers: { "Content-Type": "application/json" },
@@ -897,9 +897,9 @@ export function GetWaitingGroupRequest(id, sort) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("waiting group list is >>", data)
+      //console.log("waiting group list is >>", data)
       if (!data) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       return dispatch(GetWaitingGroup(data))
@@ -916,11 +916,11 @@ export function DeleteDesignInGroupRequest(id, designid) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("result >>", data)
+      //console.log("result >>", data)
       return dispatch(DeleteDesignInGroupSuccess(data))
     }).catch((error) => {
       dispatch(DeleteDesignInGroupFail())
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -928,7 +928,7 @@ export function DeleteDesignInGroupRequest(id, designid) {
 
 export function GetAllNoticeYourGroupRequest(id) {
   const url = `${host}/group/getAllNotiMygroup/${id}`;
-  console.log("URL:", url);
+  // console.log("URL:", url);
 
   return (dispatch) => {
     dispatch(GetGroupNotice());
@@ -949,7 +949,7 @@ export function GetAllNoticeYourGroupRequest(id) {
 }
 export function GetGroupNoticeYouJoinedRequest(id, user_id) {
   const url = `${host}/group/getNotiGroupIJoined/${id}/${user_id}`;
-  console.log("URL:", url);
+  // console.log("URL:", url);
 
   return (dispatch) => {
     return fetch(url, {
@@ -957,7 +957,7 @@ export function GetGroupNoticeYouJoinedRequest(id, user_id) {
       method: "GET"
     }).then(res => res.json())
       .then(data => {
-        console.log("group >>", data)
+        //console.log("group >>", data)
         return dispatch(GetGroupNoticeYouJoined(!data ? [] : data.data))
       })
       .catch(error => {
@@ -981,7 +981,7 @@ export function HasReadNoticeRequest(id, token) {
 export function CreateGroupNoticeRequest(token, obj) {
   return new Promise((resolve, reject) => {
     const url = `${host}/group/createGroupNotice`
-    console.log("URL:", url, obj);
+    // console.log("URL:", url, obj);
     // return;
     return fetch(url, {
       headers: { "x-access-token": token, "Content-Type": "application/json" },
@@ -997,7 +997,7 @@ export function CreateGroupNoticeRequest(token, obj) {
 export function GetLastestGroupNoticeRequest(group_id) {
   return new Promise((resolve, reject) => {
     const url = `${host}/group/lastest-notice/${group_id}`;
-    console.log("URL:", url);
+    // console.log("URL:", url);
     return fetch(url, {
       headers: { "Content-Type": "application/json" },
       method: "GET",
@@ -1010,7 +1010,7 @@ export function GetLastestGroupNoticeRequest(group_id) {
 export function GetTotalCountGroupNoticeRequest(group_id) {
   return new Promise((resolve, reject) => {
     const url = `${host}/group/total-count-notice/${group_id}`;
-    console.log("URL:", url);
+    // console.log("URL:", url);
     return fetch(url, {
       headers: { "Content-Type": "application/json" },
       method: "GET",
@@ -1023,7 +1023,7 @@ export function GetTotalCountGroupNoticeRequest(group_id) {
 export function GetGroupNoticeListRequest(group_id, page) {
   return new Promise((resolve, reject) => {
     const url = `${host}/group/notice-list/${group_id}/${page}`;
-    console.log("URL:", url);
+    // console.log("URL:", url);
     return fetch(url, {
       headers: { "Content-Type": "application/json" },
       method: "GET",

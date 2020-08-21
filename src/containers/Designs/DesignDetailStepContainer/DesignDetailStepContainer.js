@@ -15,7 +15,7 @@ class DesignDetailStepContainer extends Component {
   }
   render() {
     const mobile = window.innerWidth <= opendesigncss.resolutions.SmallMaxWidth;
-    console.log("items ::::", this.props.DesignDetailStep)
+    //console.log("items ::::", this.props.DesignDetailStep)
     return (mobile
       ? <GridEditorMobile {...this.props} />
       : <GridEditor {...this.props} />)

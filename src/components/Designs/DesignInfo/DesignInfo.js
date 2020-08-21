@@ -828,7 +828,7 @@ class DesignInfo extends Component {
             return this.needLogin();
         }
         if (!this.props.userInfo.is_designer) {
-            console.log("userinfo", this.props.userInfo.is_designer)
+            //console.log("userinfo", this.props.userInfo.is_designer)
             await alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.", "확인")
             return this.props.history.push("/myModify")
         }
@@ -905,6 +905,7 @@ class DesignInfo extends Component {
     }
 
     openVideoChat = () => {
+        // alert("!");
         if (this.props.userInfo) {
             const url = geturl() + `/vchat/${this.props.DesignDetail.uid}`
             const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,top=100,left=100,width=1280,height=720,scrollbars=no`;
@@ -1233,21 +1234,22 @@ class DesignInfo extends Component {
             </MainBox>
 
             <ChatWrapper>
-                {/*
                 <div
                     className="notice"
                     title="디자인 멤버들과 화상회의를 시작합니다."
-                    onClick={()=>this.openVideoChat}>
+                    onClick={() => this.openVideoChat()}>
 
                     {this.state.liveVC ? <span>ON</span> : null}
+
                     <div className="video-chat-icon">
                         <i className="video icon"></i>
                     </div>
+
                     <div className="text">
                         {"화상회의"}
                     </div>
                 </div>
-                */}
+
                 <div
                     className="notice"
                     title="디자인 멤버들과 채팅을 시작합니다."

@@ -497,34 +497,52 @@ const NormalIcon = styled.div`
     opacity: ${props => props.opacity};
 `;
 const NoticeModal = styled(Modal)`
-    padding: 60px;
-    max-width: 800px;
-    width: 400px;
+    padding-top: 57px;
+    padding-left: 63px;
+    padding-right: 63px;
+    width: 936px;
+    height: 506px;
+
     .close-box {
-        cursor:pointer;
-        position: absolute;
-        right: 10px;
-        top: 10px;
+      cursor:pointer;
+      position: absolute;
+      right: 18px;
+      top: 18px;
+      width: 14px;
+      height: 14px;
     }
+
     .header-txt {
-        display: flex;
-        margin-bottom:20px;
-        .left {
-            margin-left: auto;
-            margin-right: 25px;
-        }
-        .new-notice {
-            font-size: 0.9rem;
-            background-color: #F00;
-            border-radius: 10px;
-            cursor: pointer; 
-            color: white;
-            font-weight: 500;
-            padding: 5px 10px;
-         }
+      display: flex;
+      margin-bottom: 18px;
+
+      h2 {
+        font-size: 20px;
+        width: 37px;
+        height: 29px;
+        text-align: left;
+        font: normal normal medium 20px/35px Noto Sans CJK KR;
+        letter-spacing: 0px;
+        color: #707070;
+        opacity: 1;
+      }
+
+      .left {
+        margin-left: auto;
+        margin-right: 25px;
+      }
+      .new-notice {
+        font-size: 0.9rem;
+        background-color: #F00;
+        border-radius: 10px;
+        cursor: pointer; 
+        color: white;
+        font-weight: 500;
+        padding: 5px 10px;
+      }
     }
     .body-container {
-        width: 100%;
+        width: 810px;
         .bold {
             font-weight: 500;
         }
@@ -545,6 +563,7 @@ const NoticeModal = styled(Modal)`
           }
         .title-container {
             display: flex;
+
             margin-bottom: 35px;
         }
     }
@@ -602,6 +621,7 @@ class GroupInfoComponent extends Component {
             // new-notice
             "notice-title": "",
             "notice-content": "",
+            reloadnoticecontainer: 0,
         };
         this.needLogin = this.needLogin.bind(this);
         this.like = this.like.bind(this);
@@ -693,6 +713,7 @@ class GroupInfoComponent extends Component {
             this.props.token &&
             CreateGroupNoticeRequest(this.props.token, obj)
                 .then(() => {
+                    this.setState({ reloadnoticecontainer: (this.state.reloadnoticecontainer + 1) % 100 })
                     alert("공지사항 작성을 완료하였습니다.");
                 })
                 .catch(() => {
@@ -711,7 +732,7 @@ class GroupInfoComponent extends Component {
     }
 
     render() {
-        console.log("=============GROUPINFO==========", this.props);
+        // console.log("=============GROUPINFO==========", this.props);
         const { like, GroupDetail, userInfo } = this.props;
         const group_user_id = GroupDetail && GroupDetail.user_id;
         const user_id = userInfo && userInfo.uid;
@@ -719,7 +740,6 @@ class GroupInfoComponent extends Component {
         const { w, manager } = this.state;
         const lastest = this.state.notice;
         const noticeCount = this.state.noticeCount;
-        console.log("::GROUPINFO::\n", this.props,);
 
         return (<React.Fragment>
 
@@ -740,7 +760,7 @@ class GroupInfoComponent extends Component {
                     onClose={() => this.setState({ noticeDialog: false })}>
 
                     <div className="close-box" onClick={() => this.setState({ noticeDialog: false })} >
-                        <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
+                        <Cross angle={45} color={"#707070"} weight={2} width={14} height={14} />
                     </div>
 
                     <div className="header-txt">
@@ -757,7 +777,7 @@ class GroupInfoComponent extends Component {
                     <div className="body-container">
                         <GroupNoticeListContainer id={this.props.id} open={(detail) => {
                             this.setState({ noticeDetail: true, notice: detail })
-                        }} />
+                        }} reload={this.state.reloadnoticecontainer} />
                     </div>
                 </NoticeModal>
                 : null}
@@ -786,7 +806,7 @@ class GroupInfoComponent extends Component {
                     <div className="close-box" onClick={() => this.setState({ newNoticeDialog: false })} >
                         <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
                     </div>
-                    <div className="header-txt"><h2>공지사항 등록하기</h2></div>
+                    <div className="header-txt"><p style={{ fontSize: "24px", fontWeight: "500", color: "#707070", fontFamily: "Noto Sans KR", }}>공지사항 등록하기</p></div>
                     <Modal.Content>
                         {/* <div className="header-txt"> */}
                         {/* <h4>새로운 공지사항을 등록합니다.</h4> */}

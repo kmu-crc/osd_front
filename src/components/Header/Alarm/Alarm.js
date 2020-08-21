@@ -135,7 +135,7 @@ class Alarm extends Component {
         } else if (item.type === "GROUP") {
             link = `/groupDetail/${item.content_id}`
         }
-        console.log("link", link);
+        //console.log("link", link);
         return link
     }
     getMessageText = item => {

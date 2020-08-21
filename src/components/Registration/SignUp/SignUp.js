@@ -360,7 +360,7 @@ class SignUpModal extends Component {
                 }
             }
         );
-        console.log("qwer", returnvalue);
+        //console.log("qwer", returnvalue);
         return returnvalue;
     }
 
@@ -375,7 +375,7 @@ class SignUpModal extends Component {
                 }
             }
         );
-        console.log("qwer", returnvalue);
+        //console.log("qwer", returnvalue);
         return returnvalue;
     }
     onBack() {
@@ -417,7 +417,7 @@ class SignUpModal extends Component {
         }
 
         await this.setState({ loading: true });
-        console.log("signupformdata", formData);
+        //console.log("signupformdata", formData);
         this.props.SignUpRequest(formData)
             .then(async res => {
                 console.log(res);
@@ -430,7 +430,7 @@ class SignUpModal extends Component {
                         window.location.href = href + 'insertUserDetail'
                     }, 2000);
                 } else {
-                    console.log("this!");
+                    //console.log("this!");
                     await alert("다시 시도해주세요","확인");
                     this.setState({
                         loading: false
@@ -438,7 +438,7 @@ class SignUpModal extends Component {
                 }
             })
             .catch(e => {
-                console.log("실패", e);
+                //console.log("실패", e);
                 alert("다시 시도해주세요");
                 this.setState({
                     loading: false

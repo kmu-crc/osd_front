@@ -855,7 +855,7 @@ class CreateDesign extends Component {
     if (data.target) {
       obj[data.target.name] = data;
       await this.setState(obj);
-      console.log("thumbnail:", this.state);
+      //console.log("thumbnail:", this.state);
     }
     this.checkFinishBasic();
   };

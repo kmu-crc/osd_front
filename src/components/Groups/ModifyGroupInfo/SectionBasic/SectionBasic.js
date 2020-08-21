@@ -271,7 +271,7 @@ class GroupBasicInfo extends Component {
             let imgurl = reader.readAsDataURL(file)
             this.setState({ groupThumbnailURL: imgurl });
             this.props.onChangeThumbnail(imgurl);
-            console.log("file===", imgurl);
+            //console.log("file===", imgurl);
 
         }
 
@@ -283,7 +283,7 @@ class GroupBasicInfo extends Component {
 
     }
     render() {
-        console.log("THUMBNAIL", this.props);
+        //console.log("THUMBNAIL", this.props);
         //const thumbnaileURL = this.props.DesignDetail.img && this.props.designThumbnail;
         return (
             <ContentsBox>

@@ -179,9 +179,9 @@ export function GetLikeInDesignerRequest(id, page, sort) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("designer's like list data >>", data)
+            //console.log("designer's like list data >>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -191,7 +191,7 @@ export function GetLikeInDesignerRequest(id, page, sort) {
             dispatch(GetLikeInDesigner(data))
         }).catch((error) => {
             dispatch(LikeInDesignerFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -204,9 +204,9 @@ export function GetDesignInDesignerRequest(id, page) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("designer's design list data >>", data)
+            //console.log("designer's design list data >>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -216,7 +216,7 @@ export function GetDesignInDesignerRequest(id, page) {
             dispatch(GetDesignInDesigner(data))
         }).catch((error) => {
             dispatch(DesignInDesignerFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -231,7 +231,7 @@ export function GetRelatedGroupInDesignerRequest(id, page, sort) {
         }).then((data) => {
             console.log(data);
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -241,7 +241,7 @@ export function GetRelatedGroupInDesignerRequest(id, page, sort) {
             dispatch(GetRelatedGroupInDesigner(data))
         }).catch((error) => {
             dispatch(GetRelatedGroupInDesignerFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -256,7 +256,7 @@ export function GetGroupInDesignerRequest(id, page, sort) {
         }).then((data) => {
             console.log(data);
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -266,7 +266,7 @@ export function GetGroupInDesignerRequest(id, page, sort) {
             dispatch(GetGroupInDesigner(data))
         }).catch((error) => {
             dispatch(GetGroupInDesignerFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -282,7 +282,7 @@ export function GetLikeGroupInDesignerRequest(id, page, sort) {
             if (!data) {
                 console.log(`${host}/designer/designerDetail/` + id + "/likeGroup/" + page + "1111");
 
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -294,7 +294,7 @@ export function GetLikeGroupInDesignerRequest(id, page, sort) {
             dispatch(GetLikeGroupInDesigner(data))
         }).catch((error) => {
             dispatch(GetLikeGroupInDesignerFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -308,7 +308,7 @@ export function GetLikeDesignerInDesignerRequest(id, page, sort) {
             return response.json()
         }).then((data) => {
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -318,7 +318,7 @@ export function GetLikeDesignerInDesignerRequest(id, page, sort) {
             dispatch(GetLikeDesignerInDesigner(data))
         }).catch((error) => {
             dispatch(GetLikeDesignerInDesignerFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -326,7 +326,7 @@ export function GetLikeDesignerInDesignerRequest(id, page, sort) {
 // 디자이너의 디자인 리스트 가져오기
 export function GetMyDesignInDesignerRequest(id, page, sort) {
     const url = `${host}/designer/designerDetail/${id}/allDesignDesigner/${page}/${sort}`;
-    console.log("sql:", url);
+    //console.log("sql:", url);
     return (dispatch) => {
         return fetch(url, {
             headers: { "Content-Type": "application/json" },
@@ -334,9 +334,9 @@ export function GetMyDesignInDesignerRequest(id, page, sort) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("designer's design list data >>", data)
+            //console.log("designer's design list data >>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -346,7 +346,7 @@ export function GetMyDesignInDesignerRequest(id, page, sort) {
             dispatch(GetMyDesignInDesigner(data))
         }).catch((error) => {
             dispatch(MyDesignInDesignerFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -360,14 +360,14 @@ export function GetLikeDesignerRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("Designer like >>", data)
+            //console.log("Designer like >>", data)
             if (!data) {
-                console.log("no like info")
+                //console.log("no like info")
                 data = false
             }
             dispatch(GetLikeDesignerSuccess(data.like))
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             GetLikeDesignerFailure(false)
         })
     }
@@ -382,14 +382,14 @@ export function LikeDesignerRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("like >>>", data);
+            //console.log("like >>>", data);
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
             }
             dispatch(LikeDesignerSuccess())
             return data
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             LikeDesignerFailure(error)
         })
     }
@@ -404,14 +404,14 @@ export function UnlikeDesignerRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("unlike >>>", data)
+            //console.log("unlike >>>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
             }
             dispatch(UnlikeDesignerSuccess(data))
             return data
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             UnlikeDesignerFailure(error)
         })
     }
@@ -424,14 +424,14 @@ export function GetDesignerDetailRequest(id) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("designer Detail data >>", data)
+            //console.log("designer Detail data >>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             dispatch(GetDesignerDetail(data))
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -444,12 +444,12 @@ export function GetDesignerCountRequest(id) {
             return response.json()
         }).then((data) => {
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = { total_like: 0, total_group: 0, total_design: 0, total_favorite: 0, total_view: 0 };
             }
             dispatch(GetDesignerCount(data))
         }).catch((err) => {
-            console.log("err", err)
+            console.error("err", err)
         })
     }
 }

@@ -285,7 +285,7 @@ class TextController extends Component {
       });
       this.returnData();
     } else {
-      console.log("noSelection");
+      //console.log("noSelection");
     }
     this.setState({
       openSize: false
@@ -353,7 +353,7 @@ class TextController extends Component {
       // await this.onCursorOut();
       this.returnData();
     } else {
-      console.log("noSelection");
+      //console.log("noSelection");
     }
     this.setState({
       openColor: false

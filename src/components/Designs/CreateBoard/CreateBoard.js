@@ -69,7 +69,7 @@ class CreateBoard extends Component {
           .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
         this.setState({ active: false });
       })
-      .catch(err => console.log(err, "실패"));
+      .catch(err => console.error(err, "실패"));
   };
   handelClose = (e) => {
     if (e.type === "blur" && !this.form.contains(

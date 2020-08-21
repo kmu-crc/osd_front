@@ -32,7 +32,7 @@ class WaitingGroupContainer extends Component {
             .then(() => { this.handleReload(); })
         }
       }).catch(err => {
-        console.log(err);
+        console.error(err);
       });
   }
   setAccept = (id) => {
@@ -44,7 +44,7 @@ class WaitingGroupContainer extends Component {
             .then(() => { this.handleReload(); })
         }
       }).then((data) => { console.log(data) }).catch(err => {
-        console.log(err);
+        console.error(err);
       });
   }
 

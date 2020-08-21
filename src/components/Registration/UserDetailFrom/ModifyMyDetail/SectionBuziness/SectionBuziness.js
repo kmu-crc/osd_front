@@ -229,7 +229,7 @@ class SectionBuziness extends Component {
         careerRow.pop();
         const careerList = careerRow.map((item, index) => {
           const piece = item.split(",");
-          console.log("piece:::", piece[0], piece[1], piece[2], piece[3]);
+          //console.log("piece:::", piece[0], piece[1], piece[2], piece[3]);
           return (
             { number: piece[0], task: piece[1], explain: piece[2], during: piece[3] }
           );
@@ -317,7 +317,7 @@ class SectionBuziness extends Component {
     description[1] = "디자이너 리스트에 올라가게 됩니다."
     description[2] = "추후에 직업에 대한 부가적인 정보를 입력하여 많은 사람들과 소통하게 됩니다."
 
-    console.log("checkbox", this.state.isDesigner);
+    //console.log("checkbox", this.state.isDesigner);
     return (
       <React.Fragment>
         let description = [];
@@ -346,7 +346,7 @@ class SectionBuziness extends Component {
               </div>
                <div className="wrapper_noflex ">
                 {this.state.career.map((item, index) => {
-                  console.log("career", item)
+                  //console.log("career", item)
                   return (
                     <CreateCareer item={item} number={(item.number) + 1} onChangeCareer={this.onChangeCareer} key={index} />
                   );

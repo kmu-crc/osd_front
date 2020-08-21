@@ -51,7 +51,7 @@ class DesignCardModify extends Component {
     return new Promise((resolve, reject) => {
       ValidationGroup(this.state, true)
         .then(async res => {
-          console.log("????????????????", res);
+          //console.log("????????????????", res);
           if (res.files) {
             let thumbObj = {
               img: null,
@@ -68,8 +68,8 @@ class DesignCardModify extends Component {
             delete res.files;
           }
           res.data = data;
-          console.log("RES: ", res);
-          console.log("props.design_id", this.props.detail.design_id);
+          //console.log("RES: ", res);
+          //console.log("props.design_id", this.props.detail.design_id);
           this.props.UpdateCardSourceRequest(res, id, token)
             .then(this.props.UpdateDesignTime(this.props.detail.design_id, token))
             .then(this.props.GetDesignDetailRequest(this.props.detail.design_id, token))

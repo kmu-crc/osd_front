@@ -62,7 +62,7 @@ Validates.MinLength2 = value => {
     if(value.length >= 1) {
       data = undefined;
     } else {
-      console.log("??");
+      //console.log("??");
       data = "1자 이상 입력해 주세요.";
     }
     resolve(data);

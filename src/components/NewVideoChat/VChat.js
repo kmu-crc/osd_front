@@ -133,7 +133,7 @@ const constraint = {
   basic: {
     audio: false,
     video: true,
-    options: { mirror: true, }
+    options: { mirror: false, }
   }
 };
 const SOCKETSERVER = `${host}/webrtcPeer`;

@@ -25,7 +25,7 @@ const checkValidate = async (value, validates) => {
       if (!next) break;
       if (!Validates[vali]) {
         // Validates에 전달받은 이름의 검증 로직이 없으면 잘못전달되었다고 콘솔에 띄운다.
-        console.log("잘못된 값입니다.");
+        //console.log("잘못된 값입니다.");
       } else {
         await Validates[vali](value).then(whatIsStatus);
       }
@@ -471,7 +471,7 @@ export class FormMultiSelect extends Component {
     console.log(value);
     await this.setState({ value });
     checkValidate(value, this.props.validates).then(data => {
-      console.log("222", value);
+      //console.log("222", value);
       if (this.props.getValue) this.props.getValue(value);
       this.setState(data);
     })

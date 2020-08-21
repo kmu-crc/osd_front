@@ -184,7 +184,7 @@ class MessageDetail extends Component {
   }
 
   getLoadData = async () => {
-    console.log("testlog:getloaddata");
+    //console.log("testlog:getloaddata");
 
     if (!this.props.GetMyMsgDetailRequest) return;
     await this.setState({ loading: true }, () => {
@@ -197,7 +197,7 @@ class MessageDetail extends Component {
           });
           this.state.page === 1 && this.ScrollDown();
         }).catch((err) => {
-          console.log(err);
+          console.error(err);
           this.setState({ loading: false, hasMore: false });
         });
     });

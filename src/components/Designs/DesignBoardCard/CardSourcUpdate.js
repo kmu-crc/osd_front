@@ -100,7 +100,7 @@ export class CardSourcUpdate extends Component {
   onSubmit = async e => {
     e.preventDefault();
     ValidationGroup(this.state, false).then(data => {
-      console.log("성공", data);
+      //console.log("성공", data);
       this.props.request(data, this.props.token, this.props.uid)
       .then(res => {
         if (res.success) {
@@ -111,7 +111,7 @@ export class CardSourcUpdate extends Component {
         }
       });
     }).catch(e => {
-      console.log("실패", e);
+      //console.log("실패", e);
     });
   };
 

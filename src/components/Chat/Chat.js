@@ -681,7 +681,7 @@ class Chat extends React.Component {
       });
       this.socket.on('load', data => {
         if (data && data.length > 0) {
-          console.log("on load", data);
+          //console.log("on load", data);
           const copy = [];
           data.reverse();
           data.map(chat => {
