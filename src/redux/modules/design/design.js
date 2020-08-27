@@ -340,7 +340,7 @@ export function GetDesignDetailRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("design Detail data >>", data)
+            // console.log("design Detail data >>", data)
             if (!data || (Object.entries(data).length === 0 && data.constructor === Object)) {
                 console.log("no data")
                 data = []
