@@ -8,7 +8,8 @@ const initialState = {
   status: {
     DesignerList: [],
     DesignerListAdded: [],
-    Count: 0
+    Count: 0,
+    searchCount:0
   }
 };
 
@@ -39,15 +40,27 @@ export function DesignerList(state, action) {
         }
       });
     case types.GET_DESIGNER_TOTAL_COUNT:
+        return update(state, {
+          status: {
+            Count: { $set: action.Count }
+          }
+        });
+    case types.GET_DESIGNER_TOTAL_COUNT_FAIL:
+        return update(state, {
+          status: {
+            Count: { $set: action.Count }
+          }
+        });
+    case types.GET_DESIGNER_SEARCH_COUNT:
       return update(state, {
         status: {
-          Count: { $set: action.Count }
+          searchCount: { $set: action.Count }
         }
       });
-    case types.GET_DESIGNER_TOTAL_COUNT_FAIL:
+    case types.GET_DESIGNER_SEARCH_COUNT_FAIL:
       return update(state, {
         status: {
-          Count: { $set: action.Count }
+          searchCount: { $set: action.Count }
         }
       });
     default:

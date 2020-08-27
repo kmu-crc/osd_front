@@ -505,7 +505,7 @@ class ModifyMaker extends Component {
 
                 <div className="wrapper flex">
                   <div className="label">위치</div>
-                  <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} />
+                  {/* <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} /> */}
                   <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)} selection options={LocationList} placeholder="시/도"
                     onChange={this.onChangeLocation} />
                 </div>

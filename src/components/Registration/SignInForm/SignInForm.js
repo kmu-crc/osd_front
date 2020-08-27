@@ -236,7 +236,7 @@ class SignInForm extends Component {
               <div className="row spaceBetween">
                 <CustomButton onClick={this.onClickSignUp} width={251} height={43}
                   bgColor={"white"} borderRadius={21} borderColor={"red"} fontColor={"red"}>회원가입</CustomButton>
-                <div className="label red_text ">아이디/비밀번호 찾기</div>
+                <div className="label red_text " onClick={()=>{window.location.href="/resetPW"}}>비밀번호 찾기</div>
               </div>
             </div>
 

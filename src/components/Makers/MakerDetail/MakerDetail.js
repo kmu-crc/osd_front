@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import TextFormat from "modules/TextFormat";
 import HaveInItemContainer from "containers/Products/HaveInItemContainer/HaveInItemContainer";
+import HaveInGalleryContainer from "containers/Gallery/HaveInGalleryContainer/HaveInGalleryContainer";
 import MakerRequestBoardContainer from "containers/Maker/MakerRequestBoardContainer";
 import MakerReviewContainer from "containers/Maker/MakerReviewContainer";
 import ReviewDetailModal from "components/Commons/ReviewDetailModal";
@@ -170,8 +171,6 @@ const Introduction = styled.div`
       background:linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255,01.0));
     }
   }
-  
-
   // &:hover{
   //   .gradient_box{
   //     display:none;
@@ -271,7 +270,7 @@ const ItemInfo = styled.div`
   border-radius: 20px;
   opacity: 1;
   font-family: Noto Sans KR;
-  padding: 30px;
+  padding: 30px 60px 30px 60px;
 
   .title {
     font-size: 19px;
@@ -292,11 +291,23 @@ const ItemInfo = styled.div`
     line-weight: 27px;
     text-align: left;
     // overflow: auto;
-    overflow:hidden;
+    overflow:scroll-y;
   }
   .wrapItem{
     max-width:100%;
     max-height:390px;
+    margin-top:30px;
+    width:100%;
+    height:max-content;
+    overflow:hidden;
+    overflow:auto;
+    overflow-y:overlay;
+    display:flex;
+  }
+
+  .wrapGallery{
+    max-width:100%;
+    max-height:300px;
     margin-top:30px;
     width:100%;
     height:max-content;
@@ -652,9 +663,10 @@ class MakerDetail extends Component {
       this.setState(nextProps.MakerViewDetail);
     }
     if (this.props.like !== nextProps.like) {
-      this.setState({ like: nextProps.like });
+      this.setState({ isLike: nextProps.like });
     }
   }
+
   onClickRequest(event) {
     window.location.href = "/requestToMaker/" + this.props.id;
   }
@@ -688,7 +700,7 @@ class MakerDetail extends Component {
       .catch(err => alert("에러발생" + err));
   }
   render() {
-    console.log(this.props);
+    console.log(this.props,this.state);
 
     const { likeCount, itemCount } = this.props.MakerViewDetail;
     console.log("detail:", this.props);
@@ -723,7 +735,7 @@ class MakerDetail extends Component {
               </TextWrapper>
 
               <LikeWrapper>
-                {this.state.like === false ?
+                {this.state.isLike === false ?
                   <div onClick={this.onClickisLike} className="unlike">♡</div>
                   :
                   <div onClick={this.onClickisLike} className="like">♥</div>
@@ -830,6 +842,15 @@ class MakerDetail extends Component {
               }
             </div>
           </ItemInfo>
+
+          {/* 갤러리 */}
+
+          <ItemInfo width={1523} height={491} mTop={60}>
+          <div className="title">갤러리</div>
+          <div className="wrapGallery">
+            {<HaveInGalleryContainer id={this.props.id} isModify={false} />}
+          </div>
+        </ItemInfo>
 
           <div style={{ marginTop: "61px", display: "flex", flexDirection: "row" }}>
             <MakerBoard>

@@ -116,7 +116,6 @@ class Item extends Component {
     // () => item.uid ? item.private ? alert("비공개!") : null : alert("이 아이템의 상세내용을 가져올 수 없습니다.")
   }
   render() {
-    console.log(this.props);
     const item = this.props.data || empty;
     const date = new Date(item.create_time).getFullYear() + '/' + new Date(item.create_time).getMonth() + '/' + new Date(item.create_time).getDate();
     const img = item ? item.thumbnail : noimg;

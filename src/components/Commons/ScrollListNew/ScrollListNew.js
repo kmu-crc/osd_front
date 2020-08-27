@@ -18,16 +18,16 @@ const ListContainer = styled.div`
     justify-content: space-around;
     margin: 10px;
     padding: 10px;
-    background: #F7F7F7;
-    border: 1px solid #EFEFEF;
+    // background: #F7F7F7;
+    // border: 1px solid #EFEFEF;
   }
   .designer {
     flex: 0 1 237px;
     justify-content: space-around;
     margin: 10px;
     padding: 10px;
-    background: #707070;
-    border: 1px solid #FAFAFA;
+    // background: #707070;
+    // border: 1px solid #FAFAFA;
   }
 `;
 

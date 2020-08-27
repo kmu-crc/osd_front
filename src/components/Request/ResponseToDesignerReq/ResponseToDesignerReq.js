@@ -311,7 +311,7 @@ class ResponseToDesignerReq extends Component {
 
               <div className="wrapper flex centering">
                 <div className="label">디자인 소유권</div>
-                <div className="textBox">{detail.ownership <= 0 ? "불가능" : "가능"}</div>
+                <div className="textBox">{detail.ownership <= 0 ? "의뢰자" : "디자이너"}</div>
               </div>
 
               {/* <div className="wrapper flex centering">

@@ -175,6 +175,7 @@ class Header extends Component {
     this.submitEnter = this.submitEnter.bind(this);
     this.saveKeyword = this.saveKeyword.bind(this);
     this.onClickMessageIcon = this.onClickMessageIcon.bind(this);
+    this.onClickSearch=this.onClickSearch.bind(this);
   }
   componentDidMount() {
     this.getNews();
@@ -187,6 +188,46 @@ class Header extends Component {
     }
     return true;
   }
+  searchlist=()=>{
+    
+  }
+  onClickSearch=async(event)=>{
+    const location = window.location.pathname;
+
+    const designerActive = (location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1) && (location.indexOf(`/request`) === -1)
+    const makerActive = (location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) && (location.indexOf(`/request`) === -1)
+    const itemActive = (location.indexOf("/product") !== -1 || (location.indexOf("/createproduct") !== -1)|| (location.indexOf("/productModify") !== -1)|| location.indexOf("/productDetail") !== -1) && (location.indexOf(`/request`) === -1)
+    let searchtype = designerActive ? "designer" : makerActive ? "maker" : itemActive ? "item" : null;
+    console.log(this.state.keyword);
+    let countItem =-1;
+    let countMaker=-1;
+    let countDesigner=-1;
+    await this.props.GetItemSearchCountRequest(this.props.sort, this.props.cate1, this.props.cate2, this.state.keyword)
+    .then((data)=>{console.log(data);countItem=data.searchCount==null?-1:data.searchCount;});
+    await this.props.GetMakerSearchCountRequest(this.props.sort, this.props.cate1, this.props.cate2, this.state.keyword)
+    .then((data)=>{console.log(data);countMaker=data.searchCount==null?-1:data.searchCount;});
+    await this.props.GetDesignerSearchCountRequest(this.props.sort, this.props.cate1, this.props.cate2, this.state.keyword)
+    .then((data)=>{console.log(data);countDesigner=data.searchCount==null?-1:data.searchCount;});
+    if(makerActive){
+      searchtype=countMaker>0?"maker":
+      countDesigner>0?"designer":
+      countItem>0?"item":
+      null;
+    }else if(itemActive){
+      searchtype=countItem>0?"item":
+      countDesigner>0?"designer":
+      countMaker>0?"maker":
+      null;
+    }else{
+        searchtype=countDesigner>0?"designer":
+        countMaker>0?"maker":
+        countItem>0?"item":
+        null;
+    }
+    console.log(searchtype);
+
+    window.location.href = `/search/${searchtype}/null/${this.state.keyword}`;
+  }
   getNews = () => {
     const url = `${host}/common/notice`;
     return fetch(url, {
@@ -198,7 +239,7 @@ class Header extends Component {
   };
   submitEnter = e => {
     if (e.keyCode === 13) {
-      const dom = document.getElementById("searchLink");
+      const dom = document.getElementById("searchbox");
       dom && dom.click();
     }
   };
@@ -292,13 +333,26 @@ class Header extends Component {
       } */}
 
       {/*  */}
-      {location.indexOf("/search") !== -1 ? null :
+      {/* {window.location.href.search('/search') > -1 ? null :
+        <li className="searchItem">
+              <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={1} />
+        </li>} */}
+      {/* {location.indexOf("/search") !== -1 ? null :
         <HeaderItem className="left search">
           <div className="search-icon-wrapper">
             <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
             <Link to={`/search/${searchtype}/null/${this.state.keyword}`} id="searchLink">
               <img alt="icon" src={Zoom} className="search-icon" />
             </Link>
+          </div>
+        </HeaderItem>} */}
+        {location.indexOf("/search") !== -1 ? null :
+        <HeaderItem className="left search">
+          <div className="search-icon-wrapper">
+            <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
+            {/* <Link to={`/search/${searchtype}/null/${this.state.keyword}`} id="searchLink"> */}
+              <img alt="icon" src={Zoom} id="searchbox" className="search-icon" onClick={this.onClickSearch}/>
+            {/* </Link> */}
           </div>
         </HeaderItem>}
       {/*  */}

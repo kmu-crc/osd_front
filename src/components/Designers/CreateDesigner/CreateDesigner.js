@@ -352,18 +352,18 @@ class CreateDesigner extends Component {
           });
         }
       })
-      .then(
-        this.props.CreateDesignRequest(this.props.keep.item, this.props.token)
-          .then(result => {
-            if (result.success) {
-              alert("아이템이 등록되었습니다.");
-              console.log("result", result);
-              window.location.href = `/mypage`;
-            } else {
-              alert("아이템 등록에 실패했습니다.");
-            }
-          })
-      )
+      // .then(
+      //   this.props.CreateDesignRequest(this.props.keep.item, this.props.token)
+      //     .then(result => {
+      //       if (result.success) {
+      //         alert("아이템이 등록되었습니다.");
+      //         console.log("result", result);
+      //         window.location.href = `/mypage`;
+      //       } else {
+      //         alert("아이템 등록에 실패했습니다.");
+      //       }
+      //     })
+      // )
       .catch(e => {
         console.log("실패", e);
         alert("다시 시도해주세요");
@@ -432,7 +432,7 @@ class CreateDesigner extends Component {
 
               <div className="wrapper flex">
                 <div className="label">위치</div>
-                <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} />
+                {/* <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} /> */}
                 <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
                   selection options={LocationList} placeholder="시/도"
                   onChange={this.onChangeLocation} />
@@ -479,19 +479,17 @@ class CreateDesigner extends Component {
             </ExperienceBox>
           </div>
           <div className="contentsBox">
-            <Link to={{
+            {/* <Link to={{
               pathname: `/createProduct/redirected`,
               state: { keep: this.state }
             }}>
               <RedButton value={"아이템 등록"} isConfirm={false} />
-            </Link>
+            </Link> */}
             {/* </div>
           <div className="contentsBox"> */}
-            {this.state.getready ?
+            {/* {this.state.getready ? */}
               <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true} />
-              :
-              <GrayButton value={"등록"} onClick={() => alert("아이템을 등록해야 진행할 수 있습니다.")} isConfirm={false}></GrayButton>
-            }
+            {/*}  : <GrayButton value={"등록"} onClick={() => alert("아이템을 등록해야 진행할 수 있습니다.")} isConfirm={false}></GrayButton>}*/}
             <GrayButton value={"취소"} onClick={() => { window.location.href = "/mypage" }} isConfirm={false}></GrayButton>
           </div>
         </MainBox>

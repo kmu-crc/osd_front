@@ -11,7 +11,9 @@ export const GetDesignerListRequest = (page, sort, cate1, cate2, keyword) => {
       method: "GET"
     })
       .then(response => response.json())
-      .then((data) => dispatch(page === 0 ? DesignerListClear(data || []) : GetDesignerList(data || [])))
+      .then((data) => {
+        return data&&dispatch(page === 0 ? DesignerListClear(data || []) : GetDesignerList(data || []))
+      })
       .catch((error) => {
         dispatch(DesignerListFail());
         console.log("err", error);
@@ -21,6 +23,23 @@ export const GetDesignerListRequest = (page, sort, cate1, cate2, keyword) => {
 const GetDesignerList = (data) => ({ type: types.GET_DESIGNER_LIST, DesignerList: data });
 const DesignerListClear = (data) => ({ type: types.DESIGNER_LIST_CLEAR, DesignerList: data, DesignerListAdded: [] });
 const DesignerListFail = () => ({ type: types.DESIGNER_LIST_FAIL, DesignerList: [], DesignerListAdded: [] });
+
+
+
+export function GetDesignerSearchCountRequest(sort, cate1, cate2, keyword) {
+  return (dispatch) => {
+    const url =  `${host}/designer/getDesignerCount/${sort}/${cate1}/${cate2}/${keyword}`;
+    return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
+      .then(res => res.json())
+      .then(data => {
+        return data&&dispatch(GetDesignerSearchCount(data ? data["count"] : 0))
+      })
+      .catch(err => dispatch(GetDesignerSearchCountFail()))
+  }
+};
+const GetDesignerSearchCount = (data) => ({ type: types.GET_DESIGNER_SEARCH_COUNT, searchCount: data });
+const GetDesignerSearchCountFail = () => ({ type: types.GET_DESIGNER_SEARCH_COUNT_FAIL, searchCount: 0 });
+
 
 
 export function GetDesignerTotalCountRequest(cate1, cate2) {

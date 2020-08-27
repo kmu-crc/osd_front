@@ -15,7 +15,7 @@ class ScrollTopExpertContainer extends Component {
     return (
       this.props.status === "INIT"
         ? <Loading />
-        : <ScrollList ListComponent={Expert} dataList={this.props.dataList} />
+        : <ScrollList ListComponent={Expert} dataList={this.props.dataList.concat(this.props.dataList)} />
     );
   }
 }

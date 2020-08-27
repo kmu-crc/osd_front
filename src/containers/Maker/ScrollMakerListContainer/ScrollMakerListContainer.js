@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetMakerListRequest } from "actions/Maker";
-import ScrollList from "components/Commons/ScrollList";
+import ScrollList from "components/Commons/ScrollListNew";
 import Expert from "components/Experts/Expert";
 
 class ScrollMakerListContainer extends Component {

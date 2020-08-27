@@ -38,7 +38,8 @@ import ModifyrequestMakerPage from "pages/ModifyRequestToMakerPage";
 import ResponseToDesignerReqPage from "pages/ResponseToDesignerReqPage";
 import ResponseToMakerReqPage from "pages/ResponseToMakerReqPage";
 import { GalleryDetailPage } from "pages/GalleryPage/GalleryDetailPage";
-
+import FooterPrivacy from "components/Commons/FooterPrivacy"
+import FooterPara from "components/Commons/FooterTerm"
 // TEMPLATE //
 import ClientTemplate from 'templates/ClientTemplate';
 
@@ -53,7 +54,11 @@ class App extends Component {
           <Switch>
             {/* MAIN */}
             <Route exact path="/" component={MainPage} />
+            {/* FOOTER */}
+            <Route path="/footerPrivacy" component={FooterPrivacy} />
+            <Route path="/footerPara" component={FooterPara} />
             {/* DESIGNER */}
+
             <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
             <Route path="/designerModify" component={ModifyDesignerPage} />
@@ -111,6 +116,7 @@ class App extends Component {
             <Route path="/point" component={RequiresAuth(PointPage)} />
             {/* NOT FOUND */}
             <Route component={() => <div style={{ width: "100%", fontSize: "36px" }}>페이지를 찾을 수 없습니다.</div>} />
+
           </Switch>
         </ClientTemplate>
       </BrowserRouter>);

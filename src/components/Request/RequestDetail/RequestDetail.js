@@ -263,15 +263,17 @@ class Detail extends Component {
                       <div className="textBox" dangerouslySetInnerHTML={{ __html: `${Detail.content || ""}` }} />
                     </div>
 
-                    {Detail && Detail.file_url ?
+                    
                       <div className="wrapper flex centering">
                         <div className="label">첨부 파일</div>
+                        {Detail && Detail.file_url ?
                         <a href={Detail.file_url} download={Detail.filename} className="iconWrap">
                           <FileIcon type={"application"} extension={"pdf"} />
                           {Detail.filename}
                         </a>
+                        : "첨부 파일 없음"}
+
                       </div>
-                      : null}
 
 
                     <div className="wrapper flex centering">
@@ -368,7 +370,16 @@ class Detail extends Component {
                       <div className="label">의뢰 내용</div>
                       <div className="textBox" dangerouslySetInnerHTML={{ __html: `${Detail && Detail.request && Detail.request.content}` }} />
                     </div>
+                    <div className="wrapper flex centering">
+                        <div className="label">첨부 파일</div>
+                        {Detail && Detail.file_url ?
+                        <a href={Detail.file_url} download={Detail.filename} className="iconWrap">
+                          <FileIcon type={"application"} extension={"pdf"} />
+                          {Detail.filename}
+                        </a>
+                        : "첨부 파일 없음"}
 
+                    </div>
                     <div className="wrapper flex centering">
                       <div className="label">디자이너 위치</div>
                       <div className="textBox">{Detail && Detail.request && LocationList[Detail.request.location].text}</div>

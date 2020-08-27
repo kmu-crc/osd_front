@@ -8,7 +8,9 @@ const initialState = {
   status: {
     List: [],
     ListAdded: [],
-    Count: 0
+    Count: 0,
+    searchCount:0
+
   }
 };
 
@@ -27,6 +29,10 @@ export const MakerList = (state, action) => {
       return update(state, { status: { Count: { $set: action.Count } } });
     case types.GET_MAKER_TOTAL_COUNT_FAIL:
       return update(state, { status: { Count: { $set: action.Count } } });
+    case types.GET_MAKER_SEARCH_COUNT:
+        return update(state, { status: { searchCount: { $set: action.Count } } });
+    case types.GET_MAKER_SEARCH_COUNT_FAIL:
+        return update(state, { status: { searchCount: { $set: action.Count } } });
     default:
       return state;
   }

@@ -325,7 +325,8 @@ class ModifyGroup extends Component {
         if (result === "UPDATE_GROUP_SUCCESS") {
           console.log(this.props.id);
           this.props.GetHaveInGalleryRequest(this.props.userInfo.uid, 0);
-          alert("정보가 수정되었습니다.");
+          // alert("정보가 수정되었습니다.");
+          this.props.handleShowModal(false);
         } else {
           alert("다시 시도해주세요");
         }

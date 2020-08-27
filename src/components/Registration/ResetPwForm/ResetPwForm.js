@@ -13,17 +13,66 @@ const Bg = styled.div`
 `;
 
 const ResetFormCard = styled.div`
-  width: 60%;
-  min-width: ${PxtoRem(300)};
-  height: ${PxtoRem(200)};
-  background-color: white;
-  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: ${PxtoRem(20)} ${PxtoRem(40)};
-`;
+*{
+  font-family:Noto Sans KR,Medium;
+  color:#707070;
+}
+width:933px;
+height:309px;
+padding:28px;
+display:flex;
+justify-content:center;
+align-items:center;
+
+  .contentsBox{
+    width:498px;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+
+    .titleBox{
+      
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      .title{
+        font-size:20px;
+        font-weight:700;
+      }
+      .explain{
+        width:100%;
+        font-weight:300;
+        margin-top:20px;
+        margin-bottom: 10px;
+      }
+    }
+    .row{
+      *{
+        font-size:16px;
+      }
+      display:flex;
+      height:43px;
+      margin-bottom:19px;
+      .label{
+        min-width:104px;
+        font-weight:500;
+        display:flex;
+        align-items:center;
+      }
+      .red_text{
+        color:red;
+        cursor:pointer;
+      }
+    }
+    .spaceBetween{
+      justify-content:flex-end;
+    }
+  }
+  
+
+  `;
 
 const ResetForm = styled.form`
   input{
@@ -36,7 +85,36 @@ const ResetForm = styled.form`
     clear: both;
   }
 `
+const InputTextBox = styled.input.attrs({ type: 'text' })`
+  border:none;
+  width:100%;
+  height:100%;
+  padding-left:20px;
+  background-color:#E9E9E9;
+  border-radius:21px;
+  display:flex;
+  justify-content:center;
+  outline:none;
+  
+  color:#060000;
+`
+const CustomButton = styled.div`
+  width:${props => props.width}px;
+  height:${props => props.height}px;
+  border:1px solid ${props => props.borderColor};
+  border-radius:${props => props.borderRadius}px;
+  background-color:${props => props.bgColor};
+  color:${props => props.fontColor};
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  opacity:1;
+  cursor:pointer;
+  &:hover{
+    opacity:0.7;
+  }
 
+  `
 const SubmitBtn = styled(Button)`
   width: ${PxtoRem(90)};
   margin-left: ${PxtoRem(10)};
@@ -54,7 +132,9 @@ class ResetPwForm extends Component {
         this.setState({ loading: false });
         this.props.history.push('./signin');
         console.log("this loading state success >> ", this.state.loading);
-        alert(nextProps.message);
+        alert("임시비밀번호가 발급되었습니다. 로그인페이지로 이동합니다.");
+        window.location.href="/signin";
+      
       } else if (nextProps.status === "FAILURE") {
         this.setState({ loading: false });
         console.log("this loading state failure >> ", this.state.loading);
@@ -77,8 +157,11 @@ class ResetPwForm extends Component {
     e.preventDefault();
     ValidationGroup(this.state, true)
       .then(data => {
+        
         this.props.FindPwRequest(data);
         this.setState({ loading: true });
+
+
       })
       .catch(e => {
         console.log("실패", e);
@@ -86,24 +169,36 @@ class ResetPwForm extends Component {
   };
   render() {
     return (
-      <Bg>
+      // <Bg>
         <ResetFormCard>
-          <h2>비밀번호 찾기</h2>
-          <p>비밀번호를 찾고자 하는 아이디를 입력해 주세요.</p>
+        <form onSubmit={this.onSubmit}>
+
+           <div className="contentsBox">
+              <div className="titleBox">
+              <div className="title">비밀번호 찾기</div>
+              <div className="explain">비밀번호를 찾고자 하는 아이디를 입력해 주세요.</div>
+          </div>
           <ResetForm onSubmit={this.onSubmit}>
             {this.state.loading === true ? <ResetPwModal /> : null}
-            <FormInput
-              name="email"
-              validates={["Required", "IsEmail"]}
-              placeholder="email을 입력해주세요."
-              getValue={this.onChangeValue}
-            />
-            <SubmitBtn>
-              전송
-            </SubmitBtn>
+            <div className="row">
+            <div className="label" value={this.state.password}><div>e-mail</div></div>
+            <InputTextBox
+                  name="email"
+                  placeholder="e-mail을 입력해주세요.(ex: abc@opendesign.com)"
+                  value={this.state.email}
+                  onChange={this.onChangeValue} />
+            </div>
+            <div className="row spaceBetween">
+            <CustomButton onClick={this.onSubmit} width={251} height={43}
+                  bgColor={"red"} borderRadius={21} borderColor={"red"} fontColor={"white"}>전송</CustomButton>
+            </div>
           </ResetForm>
+        </div>
+
+        </form>
         </ResetFormCard>
-      </Bg>
+
+      // </Bg>
     );
   }
 }

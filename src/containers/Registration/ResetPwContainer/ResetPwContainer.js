@@ -4,9 +4,12 @@ import { connect } from "react-redux";
 import ResetPwForm from "components/Registration/ResetPwForm";
 import { FindPwRequest } from "actions/Registration";
 
+
 class ResetPwContainer extends Component {
   render() {
-    return <ResetPwForm {...this.props} />;
+    return (
+          <ResetPwForm {...this.props} />
+    )
   }
 }
 

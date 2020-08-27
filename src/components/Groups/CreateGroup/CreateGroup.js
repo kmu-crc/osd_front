@@ -271,7 +271,9 @@ class CreateGroup extends Component {
         console.log(res);
         if (result === "CREATE_NEW_GROUP_SUCCESS") {
           this.props.GetHaveInGalleryRequest(this.props.id,0);
-          alert("정보가 수정되었습니다.");
+          // alert("정보가 수정되었습니다.");
+          this.props.handleShowModal(false);
+
         } else {
           alert("다시 시도해주세요!");
         }

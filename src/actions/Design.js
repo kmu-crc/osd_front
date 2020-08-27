@@ -10,10 +10,11 @@ export const GetDesignListRequest = (page, sort, cate1, cate2, keyword) => {
       method: "get"
     })
       .then(res => res.json())
-      .then(data =>
-        dispatch((page === 0)
-          ? DesignListClear(data ? data : [])
-          : GetDesignList(data ? data : [])))
+      .then(data =>{
+        return data && dispatch((page === 0)
+        ? DesignListClear(data ? data : [])
+        : GetDesignList(data ? data : []))
+      })
       .catch(error => dispatch(DesignListFail()));
   }
 };
@@ -40,6 +41,23 @@ export function DesignListFail() {
     DesignListAdded: []
   }
 }
+
+
+export function GetItemSearchCountRequest(sort, cate1, cate2, keyword) {
+  return (dispatch) => {
+    const url =  `${host}/item/getItemCount/${sort}/${cate1}/${cate2}/${keyword}`;
+    return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        return data&&dispatch(GetItemSearchCount(data ? data["count"] : 0))
+      })
+      .catch(err => dispatch(GetItemSearchCountFail()))
+  }
+};
+const GetItemSearchCount = (data) => ({ type: types.GET_DESIGN_SEARCH_COUNT, searchCount: data });
+const GetItemSearchCountFail = () => ({ type: types.GET_DESIGN_SEARCH_COUNT_FAIL, searchCount: 0 });
+
 
 export function GetDesignTotalCountRequest(cate1, cate2) {
   return (dispatch) => {

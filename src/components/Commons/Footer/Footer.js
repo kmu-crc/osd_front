@@ -50,13 +50,13 @@ class Footer extends Component {
       <Foot>
         <div className="row">
            <div onClick={this.goNewWorld}>
-                <TextFormat txt="Copyright @ 2020 Open Design Market Inc." />
+                <TextFormat txt="Copyright @ 2020 Open Design Inc." />
               </div>
           <div>
             <ul className="list">
               <Link to="/">사이트 소개</Link>
-              <Link to="/">이용약관</Link>
-              <Link to="/">개인정보보호정책</Link>
+              <Link to="/footerPara">이용약관</Link>
+              <Link to="/footerPrivacy">개인정보보호정책</Link>
             </ul>
           </div>
         </div>

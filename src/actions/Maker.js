@@ -10,10 +10,11 @@ export const GetMakerListRequest = (page, sort, cate1, cate2, keyword) => {
       method: "GET"
     })
       .then(res => res.json())
-      .then(data =>
-        dispatch(page === 0
+      .then(data =>{
+          return data&&dispatch(page === 0
           ? MakerListClear(data ? data : [])
-          : GetMakerList(data ? data : [])))
+          : GetMakerList(data ? data : []))
+      })
       .catch(error => dispatch(MakerListFail()));
   }
 };
@@ -21,6 +22,20 @@ const GetMakerList = (data) => ({ type: types.GET_MAKER_LIST, List: data });
 const MakerListClear = (data) => ({ type: types.MAKER_LIST_CLEAR, List: data, ListAdded: [] });
 const MakerListFail = () => ({ type: types.MAKER_LIST_FAIL, List: [], ListAdded: [] });
 
+
+export function GetMakerSearchCountRequest(sort, cate1, cate2, keyword) {
+  return (dispatch) => {
+    const url =  `${host}/maker/getMakerCount/${sort}/${cate1}/${cate2}/${keyword}`;
+    return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
+      .then(res => res.json())
+      .then(data => {
+        return data&&dispatch(GetMakerSearchCount(data ? data["count"] : 0))
+      })
+      .catch(err => dispatch(GetMakerSearchCountFail()))
+  }
+};
+const GetMakerSearchCount = (data) => ({ type: types.GET_MAKER_SEARCH_COUNT, searchCount: data });
+const GetMakerSearchCountFail = () => ({ type: types.GET_MAKER_SEARCH_COUNT_FAIL, searchCount: 0 });
 
 export function GetMakerTotalCountRequest(cate1, cate2) {
   return (dispatch) => {
@@ -33,6 +48,8 @@ export function GetMakerTotalCountRequest(cate1, cate2) {
 };
 const GetMakerTotalCount = (data) => ({ type: types.GET_MAKER_TOTAL_COUNT, Count: data });
 const MakerTotalCountFail = () => ({ type: types.GET_MAKER_TOTAL_COUNT_FAIL, Count: 0 });
+
+
 export const GetMakerDetailRequest = (id) => {
   return (dispatch) => {
     const url = `${host}/maker/detail/${id}`;

@@ -28,7 +28,7 @@ class Sorting extends Component {
       <Container>
         <div key={"update"} onClick={(e) => this.props.handleClick(e, { value: "update" })} className={`element ${placeholder === "update" ? "active" : ""}`}>최신순</div>
         <div key={"create"} onClick={(e) => this.props.handleClick(e, { value: "create" })} className={`element ${placeholder === "create" ? "active" : ""}`}>등록순</div>
-        {/* <div key={"like"} onClick={(e) => this.props.handleClick(e, { value: "like" })} className={`element ${placeholder === "like" ? "active" : ""}`}>인기순</div> */}
+        <div key={"like"} onClick={(e) => this.props.handleClick(e, { value: "like" })} className={`element ${placeholder === "like" ? "active" : ""}`}>인기순</div>
       </Container>
     );
   }

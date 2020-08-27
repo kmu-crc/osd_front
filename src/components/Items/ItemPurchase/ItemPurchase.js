@@ -7,6 +7,8 @@ import who from "source/thumbnail.png";
 import CardSourceDetailContainer from "containers/Items/CardSourceDetailContainer";
 import ItemStepContainer from "containers/Items/ItemStepContainer";
 import { Rating } from 'semantic-ui-react'
+import { FileUploadRequest } from "actions/Uploads";
+import FileIcon from "components/Commons/FileIcon";
 
 const MessageBox = styled.div`
   padding:10px;
@@ -35,12 +37,11 @@ const InputText = styled.input.attrs({ type: "text" })`
   border-radius:20px;
   font-family:Noto Sans KR;
   font-size:20px;
-  background-color:#E9E9E9;
+  background-color:#efefef;
   margin-right:21px;
   outline:none;
   border:0px;
   padding: 0.67857143em 1em;
-
 `;
 const MessageWrapper = styled.div`
     width:100%;
@@ -441,6 +442,19 @@ const Content = styled.div`
     // scroll-y:hidden;
   }
 `;
+const Label = styled.label`
+    min-width:35px;
+    min-height:35px;
+    border:1px solid #dddddd;
+    font-weight:500;
+    color:#707070;
+    text-align:center;
+    margin:5px;
+    border-radius:20px;
+    &:hover{
+        cursor:pointer;
+    }
+`
 const ExpandingButton = styled.div`
     width:${props => props.width}px;
     height:30px;
@@ -506,6 +520,8 @@ class ItemPurchase extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      file:null,
+      file_url:null,
       isShowmember: false,
       isLike: this.props.like == null ? false : this.props.like,
       expandingContent: false, expandingReview: false, expandingBoard: false,
@@ -522,6 +538,9 @@ class ItemPurchase extends Component {
     this.purchaseThisItem = this.purchaseThisItem.bind(this);
     this.writeMessage = this.writeMessage.bind(this);
     this.onChangeMessage = this.onChangeMessage.bind(this);
+    this.onFileChange = this.onFileChange.bind(this);
+    this.onCancelFile = this.onCancelFile.bind(this);
+    this.onSendFile = this.onSendFile.bind(this);
   };
   componentWillUpdate(nextProps) {
     if (this.props.like !== nextProps.like) {
@@ -530,6 +549,35 @@ class ItemPurchase extends Component {
       })
     }
   };
+  onCancelFile(event){
+    this.setState({message:"",file:null,filename:null,file_url:null});
+    document.getElementById("advicebox").disabled=false;
+  }
+  
+  onSendFile = async event => {
+    const s3path = await FileUploadRequest(this.state.file);
+    const data = {
+      payment_id:this.props.payment,
+      from_id:this.props.userInfo.uid,
+      message:"",
+      filename:this.state.filename,
+      file_url:s3path.path
+    }
+    await this.props.CreatePaymentMessageRequest(data,this.props.id,this.props.token);
+    await this.props.GetPaymentMessageRequest(this.props.payment,0);
+    this.setState({message:"",file:null,filename:null,file_url:null});
+    document.getElementById("advicebox").disabled=false;
+  }
+  onFileChange = async event => {
+    this.setState({file:event.currentTarget.files});
+    
+    this.setState({
+      // file_url: s3path.path,
+      message: event.currentTarget.files[0].name,
+      filename:event.currentTarget.files[0].name
+    });
+    document.getElementById("advicebox").disabled=true;
+  }
   onClickLike(event) {
     const isLike = !this.state.isLike;
     this.setState({
@@ -577,9 +625,12 @@ class ItemPurchase extends Component {
       payment_id:this.props.payment,
       from_id:this.props.userInfo.uid,
       message:this.state.message,
+      filename:null,
+      file_url:null
     }
-    await this.props.CreatePaymentMessageRequest(data,this.props.id,this.props.token)
-    await this.props.GetPaymentMessageRequest(this.props.payment,0)
+    await this.props.CreatePaymentMessageRequest(data,this.props.id,this.props.token);
+    await this.props.GetPaymentMessageRequest(this.props.payment,0);
+    await this.setState({message:""});
   }
 
   render() {
@@ -750,16 +801,50 @@ class ItemPurchase extends Component {
                 {
                   this.props.paymentMessageList&&
                   this.props.paymentMessageList.map((item,index)=>{
-                    return <MessageWrapper isMy={item.from_id==this.props.userInfo.uid}> 
-                      <div className="msg_bubble">{item.message}</div>      
-                      <div className="msg_time">{item.create_time}</div>    
+                    return( 
+                    <MessageWrapper isMy={item.from_id==this.props.userInfo.uid}> 
+                    {
+                      item.filename==null?
+                      <React.Fragment>
+                          <div className="msg_bubble">{item.message}</div>      
+                          <div className="msg_time">{item.create_time}</div>    
+                      </React.Fragment>
+                      :
+                      <React.Fragment>
+                        <a href={item.file_url} download={item.filename} className="iconWrap">
+                          <FileIcon type={"application"} extension={item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)}/>
+                          {item.filename}
+                        </a>
+                      </React.Fragment>
+                    }
+                      
                     </MessageWrapper>
+                    )
                   })
                 }
               </MessageBox>
               <div style={{display:"flex"}}>
+              <Label htmlFor="file">
+                +</Label>
+                <input
+                      hidden
+                      type="file"
+                      id="file"
+                      name="source"
+                      ref={ref => (this.input = ref)}
+                      onChange={this.onFileChange}
+                      // accept=".pdf" 
+                      />
               <InputText id="advicebox" value={this.state.message} onChange={this.onChangeMessage}/>
-              <CustomButton width="100" height="30px" backgroundColor="#707070" fontSize="12" padding="5" onClick={this.writeMessage}>보내기</CustomButton>
+              {
+                this.state.file==null?
+                <CustomButton id="sendmessage" width="100" height="30px" backgroundColor="#707070" fontSize="12" padding="5" onClick={this.writeMessage}>보내기</CustomButton>
+                :
+                <React.Fragment>
+                  <CustomButton id="cancelbtn" width="100" height="30px" backgroundColor="#707070" fontSize="12" padding="5" onClick={this.onCancelFile}>취소</CustomButton>
+                  <CustomButton id="sendfile" width="100" height="30px" backgroundColor="#707070" fontSize="12" padding="5" onClick={this.onSendFile}>전송</CustomButton>
+                </React.Fragment>
+              }
               </div>
             </React.Fragment>
             :null}
