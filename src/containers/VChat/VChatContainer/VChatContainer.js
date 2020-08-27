@@ -4,7 +4,8 @@ import { withRouter } from "react-router-dom";
 // import VChat from "components/VideoConference"
 import { GetDesignDetailRequest } from "redux/modules/design";
 import host from "config";
-import NewVChat from "components/NewVideoChat";
+// import NewVChat from "components/NewVideoChat";
+import NewVChat from "components/NewVideoChat2";
 
 class VChatContainer extends Component {
     constructor(props) {
