@@ -66,7 +66,7 @@ export class OverlapField extends Component {
         for (let vali of this.props.validates) {
           if (!next) break;
           if (!Validates[vali]) {
-            console.log("잘못된 값입니다.");
+            //console.log("잘못된 값입니다.");
           } else {
             Validates[vali](value).then(whatIsStatus)
           }

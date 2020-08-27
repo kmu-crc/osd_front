@@ -216,7 +216,7 @@ class SectionBasic extends Component {
 
   shouldComponentUpdate(nextProps) {
     if (this.props.MyDetail !== nextProps.MyDetail) {
-      console.log("MYDETAIL", nextProps.MyDetail.nick_name);
+      //console.log("MYDETAIL", nextProps.MyDetail.nick_name);
       this.setState({
         nickname: nextProps.MyDetail.nick_name == null ? "" : nextProps.MyDetail.nick_name,
         introduce: nextProps.MyDetail.about_me == null ? "" : nextProps.MyDetail.about_me,
@@ -236,7 +236,7 @@ class SectionBasic extends Component {
     reader.onloadend = () => {
       this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
       this.props.updateThumbnail(reader.result, file.name);
-      console.log("?", reader.result);
+      //console.log("?", reader.result);
     }
     if (event.target.files[0]) {
       reader.readAsDataURL(file);

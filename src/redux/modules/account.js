@@ -138,7 +138,7 @@ export function SignUpRequest(data) {
                 }
                 return dispatch(SignUpSuccess())
             }).catch((error) => {
-                console.log("ERROR:"+error);
+                //console.log("ERROR:"+error);
                 return dispatch(SignUpFailure())
             })
     }
@@ -153,7 +153,7 @@ export function SignInRequest(data) {
         dispatch(SignIn())
         return fetch(`${host}/users/signIn`, { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
             .then(function (res) {
-                console.log("res", res)
+                //console.log("res", res)
                 return res.json()
             })
             .then(function (res) {

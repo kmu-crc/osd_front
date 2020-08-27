@@ -155,14 +155,14 @@ export function SendMessageRequest(token, data, id) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("message sending >>", data)
+            //console.log("message sending >>", data)
             if (!data) {
-                console.log("no detail message")
+                //console.log("no detail message")
                 data = []
             }
             return dispatch(SendMessageSuccess(data))
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             return dispatch(SendMessageFailure())
         })
     }
@@ -182,7 +182,7 @@ export function GetMyMsgListRequest(token) {
             return dispatch(GetMyMsgListSuccess(data || []))
         }).catch((error) => {
             dispatch(GetMyMsgListFailure())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -213,15 +213,15 @@ export function GetMyMsgDetailRequest(token, id,page) {
         }).then((response) => {
             return response.json();
         }).then((data) => {
-            console.log("message detail data >>", data);
+            //console.log("message detail data >>", data);
             if (!data) {
-                console.log("no detail message");
+                //console.log("no detail message");
                 data = [];
             }
             return dispatch(GetMyMsgDetailSuccess(data));
         }).catch((error) => {
             dispatch(GetMyMsgDetailFailure());
-            console.log("err", error);
+            console.error("err", error);
         });
     }
 };

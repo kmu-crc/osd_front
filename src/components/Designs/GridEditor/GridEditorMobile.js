@@ -215,12 +215,12 @@ class GridEditorMobile extends Component {
         if (!this.moreRef.current.contains(event.target)) {
             this.setState({ more: false });
             document.removeEventListener("mousedown", this.checkClickOutSideMoreButton);
-            console.log("event removed");
+            //console.log("event removed");
         }
     }
     openMoreMenu = _ => {
         document.addEventListener("mousedown", this.checkClickOutSideMoreButton);
-        console.log("event added");
+        //console.log("event added");
         this.setState({ more: true });
     }
 

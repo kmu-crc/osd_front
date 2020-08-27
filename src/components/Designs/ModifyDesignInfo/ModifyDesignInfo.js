@@ -120,7 +120,7 @@ class ModifyDesignInfo extends Component {
     e.preventDefault();
     // this.state.member.value = JSON.stringify(this.state.member.value);
     ValidationGroup(this.state, false).then(data => {
-      console.log("성공", data);
+      //console.log("성공", data);
       this.props.setLoader();
       this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid,
         this.props.token)
@@ -134,7 +134,7 @@ class ModifyDesignInfo extends Component {
           }
         })
     }).catch(e => {
-      console.log("실패", e);
+      //console.log("실패", e);
       // this.state.member.value = JSON.parse(this.state.member.value);
     });
   };

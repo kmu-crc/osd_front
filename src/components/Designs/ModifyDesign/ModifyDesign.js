@@ -656,7 +656,7 @@ class ModifyDesign extends Component {
   }
   shouldComponentUpdate(nextProps) {
     if (this.props.DesignDetail !== nextProps.DesignDetail) {
-      console.log("img", nextProps.DesignDetail.img);
+      //console.log("img", nextProps.DesignDetail.img);
       this.setState({
         thumbnail: nextProps.DesignDetail.img == null ? noimg : nextProps.DesignDetail.img.m_img,
         title: nextProps.DesignDetail.title,
@@ -694,7 +694,7 @@ class ModifyDesign extends Component {
     if (data.target) {
       obj[data.target.name] = data;
       await this.setState(obj);
-      console.log("thumbnail:", this.state);
+      //console.log("thumbnail:", this.state);
     }
     this.checkFinishBasic();
   };
@@ -864,7 +864,7 @@ class ModifyDesign extends Component {
     }
     const { step, loading, deleteModal } = this.state; // const { DesignDetail } = this.props;
     const thumbnailURL = this.state.thumbnail; //DesignDetail && DesignDetail.img == null ? noimg : DesignDetail.img.m_img;//this.state.thumbnail;
-    console.log("modify:", this.props)
+    //console.log("modify:", this.props)
     let boardWidth = 125;
     if (step === 3) boardWidth = 0;
     return (

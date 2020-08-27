@@ -81,7 +81,7 @@ export default function Category(state, action) {
 
 
 export function GetCategoryAllRequest() {
-  console.log("GetAllCate")
+  //console.log("GetAllCate")
   return (dispatch) => {
     dispatch(GetCategoryAll())
     return fetch(`${host}/categorys/getCategoryAll`, { method: "GET" })
@@ -104,10 +104,10 @@ export function GetCategoryAllRequest() {
           return (arr)
         })
         // category2.unshift([{ text: "전체", value: 0 }])
-        console.log("cate1:", category1, "cate2:", category2)
+        //console.log("cate1:", category1, "cate2:", category2)
         return dispatch(GetCategoryAllSuccess(category1, category2))
       }).catch((error) => {
-        console.log(error)
+        console.error(error)
         return dispatch(GetCategoryAllFailure())
       })
   }
@@ -122,7 +122,7 @@ export function GetCategoryLevel1Request() {
         return res.json()
       })
       .then(function (res) {
-        console.log("cateogry1", res)
+        //console.log("cateogry1", res)
         let category = res.category.map(data => {
           return { text: data.name, value: data.uid }
         })

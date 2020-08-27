@@ -36,7 +36,7 @@ class EditDesignListContainer extends Component {
             .then(() => { this.handleReload(); })
         }
       }).catch(err => {
-        console.log(err);
+        console.error(err);
       });
   }
 

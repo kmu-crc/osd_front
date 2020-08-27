@@ -133,7 +133,7 @@ export class Controller extends Component {
     // if (e && this.props.onBlur)
     // await this.props.onBlur();
     // };
-    console.log("updated:(changed):", this.props.item.content, this.state.content);
+    //console.log("updated:(changed):", this.props.item.content, this.state.content);
   };
 
   async deleteItem() {

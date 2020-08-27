@@ -46,7 +46,7 @@ class BoardUpdate extends Component {
           })
         this.setState({ active: false });
       })
-      .catch(err => console.log("실패", err));
+      .catch(err => //console.log("실패", err));
   };
 
   onChangeValue = async data => {
@@ -59,7 +59,7 @@ class BoardUpdate extends Component {
   };
 
   handelClose = e => {
-    console.log("blur");
+    //console.log("blur");
     if (e.type === "blur" && !this.form.contains(e.relatedTarget)) {
       this.props.ModifyComplete();
     }

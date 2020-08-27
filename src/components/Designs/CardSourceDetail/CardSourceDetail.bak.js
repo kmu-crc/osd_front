@@ -175,7 +175,7 @@ class CardSourceDetail extends Component {
   }
 
   onChangValue = async data => {
-    console.log("debug>onChangeValue", data);
+    //console.log("debug>onChangeValue", data);
     let copyContent = [...this.state.content];
     delete data.initClick;
     delete data.target;

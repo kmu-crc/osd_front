@@ -54,11 +54,11 @@ class ResetPwForm extends Component {
       if (nextProps.status === "SUCCESS") {
         this.setState({ loading: false });
         this.props.history.push('./signin');
-        console.log("this loading state success >> ", this.state.loading);
+        //console.log("this loading state success >> ", this.state.loading);
         await alert(nextProps.message, "확인");
       } else if (nextProps.status === "FAILURE") {
         this.setState({ loading: false });
-        console.log("this loading state failure >> ", this.state.loading);
+        //console.log("this loading state failure >> ", this.state.loading);
         await alert(nextProps.message, "확인");
       }
     }
@@ -80,10 +80,10 @@ class ResetPwForm extends Component {
       .then(data => {
         this.props.FindPwRequest(data);
         this.setState({ loading: true });
-        console.log("this loading state onsubmit >> ", this.state.loading);
+        //console.log("this loading state onsubmit >> ", this.state.loading);
       })
       .catch(e => {
-        console.log("실패", e);
+        //console.log("실패", e);
       });
   };
   render() {

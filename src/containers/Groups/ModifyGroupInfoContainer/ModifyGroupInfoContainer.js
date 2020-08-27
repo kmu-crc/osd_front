@@ -9,7 +9,7 @@ class ModifyGroupInfoContainer extends Component {
     isAuthor: false
   }
   componentDidMount() {
-    console.log("권한:", this.props)
+    //console.log("권한:", this.props)
     this.props.GetGroupDetailRequest(this.props.id)
       .then(async () => {
         if (this.props.userInfo.uid !== this.props.GroupDetail.user_id) {
@@ -20,7 +20,7 @@ class ModifyGroupInfoContainer extends Component {
   }
 
   render() {
-    console.log("ModifyGroupInfo", this.props)
+    //console.log("ModifyGroupInfo", this.props)
     return (
       <div>
 

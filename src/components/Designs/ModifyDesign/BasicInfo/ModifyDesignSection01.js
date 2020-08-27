@@ -54,7 +54,7 @@ class ModifyDesignSection01 extends Component
 
     render()
     {
-        console.log("THUMBNAIL",this.props);
+        //console.log("THUMBNAIL",this.props);
         const thumbnaileURL = this.props.DesignDetail.img && this.props.designThumbnail;
         return(
             <section style={BasicSecBox} >

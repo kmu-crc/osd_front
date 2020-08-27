@@ -147,7 +147,7 @@ export function DesignComment(state, action) {
 export const CreateDesignCommentRequest = (data, design_id, token) => {
     return dispatch => {
         dispatch(CreateDesignComment());
-        console.log("request", data);
+        //console.log("request", data);
         return fetch(
             `${host}/design/designDetail/${design_id}/createDetailComment`,
             {
@@ -166,7 +166,7 @@ export const CreateDesignCommentRequest = (data, design_id, token) => {
                 return dispatch(CreateDesignCommentSuccess(res));
             })
             .catch(error => {
-                console.log("insert issue err", error);
+                //console.log("insert issue err", error);
                 return dispatch(CreateDesignCommentFailure(error));
             });
     };
@@ -195,7 +195,7 @@ export const DeleteDesignCommentRequest = (
                 return dispatch(DeleteDesignCommentSuccess(res));
             })
             .catch(error => {
-                console.log("insert issue err", error);
+                //console.log("insert issue err", error);
                 return dispatch(DeleteDesignCommentFailure(error));
             });
     };
@@ -216,11 +216,11 @@ export const GetCardCommentRequest = (design_id, card_id) => {
                 return res.json();
             })
             .then(res => {
-                console.log("card-data:", res);
+                //console.log("card-data:", res);
                 return dispatch(GetCardCommentSuccess(res.data));
             })
             .catch(error => {
-                console.log("get card comment err", error);
+                //console.log("get card comment err", error);
                 return dispatch(GetCardCommentFailure(error));
             });
     };
@@ -228,7 +228,7 @@ export const GetCardCommentRequest = (design_id, card_id) => {
 export const CreateCardCommentRequest = (data, design_id, card_id, token) => {
     return dispatch => {
         dispatch(CreateCardComment());
-        console.log("request", data);
+        //console.log("request", data);
         return fetch(
             `${host}/design/designDetail/${design_id}/createCardComment/${card_id}`,
             {
@@ -247,7 +247,7 @@ export const CreateCardCommentRequest = (data, design_id, card_id, token) => {
                 return dispatch(CreateCardCommentSuccess(res));
             })
             .catch(error => {
-                console.log("insert issue err", error);
+                //console.log("insert issue err", error);
                 return dispatch(CreateCardCommentFailure(error));
             });
     };
@@ -277,7 +277,7 @@ export const DeleteCardCommentRequest = (
                 return dispatch(DeleteCardCommentSuccess(res));
             })
             .catch(error => {
-                console.log("insert issue err", error);
+                //console.log("insert issue err", error);
                 return dispatch(DeleteCardCommentFailure(error));
             });
     };
@@ -301,7 +301,7 @@ export const GetDesignCommentRequest = (design_id) => {
                 return dispatch(GetDesignCommentSuccess(res.data));
             })
             .catch(error => {
-                console.log("get card comment err", error);
+                //console.log("get card comment err", error);
                 return dispatch(GetDesignCommentFailure(error));
             });
     };
@@ -317,7 +317,7 @@ export const GetCountDesignCommentRequest = (design_id) => {
             .then(res => res.json())
             .then(res => dispatch(GetCountDesignCommentSuccess(res.data)))
             .catch(error => {
-                console.log("get count of design comment err", error);
+                //console.log("get count of design comment err", error);
                 return dispatch(GetCountDesignCommentFailure(error));
             });
     };

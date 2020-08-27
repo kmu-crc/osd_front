@@ -332,7 +332,7 @@ class SectionBuziness extends Component {
           </div>
           <div className="wrapper_noflex ">
             {this.state.career.map((item, index) => {
-              console.log("career", item)
+              //console.log("career", item)
               return (
                 <CreateCareer item={item} number={parseInt(item.number, 10) + 1} onChangeCareer={this.onChangeCareer} key={index} />
               );
@@ -423,7 +423,7 @@ class CreateCareer extends Component {
       }
       return zero + n;
     }
-    console.log("careerlog", this.state);
+    //console.log("careerlog", this.state);
     return (
       <React.Fragment>
 

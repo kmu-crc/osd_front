@@ -164,7 +164,7 @@ class SortableDesignCards extends Component {
     render() {
         const { items } = this.state;
         const { editor, design_id, openCard, createCard, boardId, userInfo } = this.props;
-        console.log("!!!!", userInfo);
+        //console.log("!!!!", userInfo);
         return (<Container
             axis="y"
             pressThreshold={5}

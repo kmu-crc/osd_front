@@ -140,7 +140,7 @@ class ScrollList extends Component {
         .then(() => {
           this.setState({ hasMore: this.checkHasMore(dataList), loading: false });
         }).catch((err) => {
-          console.log(err);
+          console.error(err);
           this.setState({ loading: false, hasMore: false });
         });
     });

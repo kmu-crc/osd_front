@@ -12,7 +12,7 @@ class UpdateUserInfoContainer extends Component {
     this.props.GetMyDetailRequest(this.props.token);
   }
   render() {
-    console.log("this.props:upaderUserIfno", this.props)
+    //console.log("this.props:upaderUserIfno", this.props)
     return (
       <UserDetailForm {...this.props} />
     );

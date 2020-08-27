@@ -322,7 +322,7 @@ class ModifyMyDetail extends Component {
           await alert("정보가 수정되었습니다.","확인");
           window.location.href = "/";
         } else {
-          console.log("form-data", formData, "token:", this.props.token);
+          //console.log("form-data", formData, "token:", this.props.token);
           await alert("다시 시도해주세요","확인");
           this.setState({
             loading: false
@@ -330,7 +330,7 @@ class ModifyMyDetail extends Component {
         }
       })
       .catch(e => {
-        console.log("실패", e);
+        //console.log("실패", e);
         alert("다시 시도해주세요");
         this.setState({
           loading: false

@@ -31,7 +31,7 @@ class MyExistGroup extends Component {
           }
         })
         .catch(err => {
-          console.log(err);
+          console.error(err);
         });
       });
       this.props.handleCloseModal();

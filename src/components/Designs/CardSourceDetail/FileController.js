@@ -54,11 +54,11 @@ class FileController extends Component {
   };
 
   async componentDidMount() {
-    console.log("componentDidMount");
+    //console.log("componentDidMount");
     if (this.props.item) {
       await this.setInit({ ...this.props.item });
       if (this.props.item.initClick) {
-        console.log("1");
+        //console.log("1");
         this.state.target.click();
       }
     }
@@ -89,7 +89,7 @@ class FileController extends Component {
       if (this.state.target) {
         setTimeout(() => {
           if (nextProps.item.initClick) {
-            console.log("2", nextProps.item);
+            //console.log("2", nextProps.item);
             this.state.target.click();
           }
         }, 100);
@@ -99,7 +99,7 @@ class FileController extends Component {
   }
 
   setInit = async item => {
-    console.log("item2", item);
+    //console.log("item2", item);
     await this.setState({
       ...item,
       target: this.input
@@ -135,7 +135,7 @@ class FileController extends Component {
   };
 
   onChangeValue = async (e) => {
-    console.log("onChangeValue", this.input.files);
+    //console.log("onChangeValue", this.input.files);
     const event = { ...e };
     let data = this.input.files;
     if (data[0]) {
@@ -190,7 +190,7 @@ class FileController extends Component {
           this.returnData();
         })
         .catch(err => {
-          console.log("formFile", err);
+          //console.log("formFile", err);
           alert(err.message);
         });
     }

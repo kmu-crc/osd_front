@@ -107,7 +107,7 @@ class SignUpForm extends Component {
         }
       })
     }).catch(e => {
-      console.log("실패", e);
+      //console.log("실패", e);
     })
   }
   openTermModal = () => { this.setState({ openTerm: true }) }

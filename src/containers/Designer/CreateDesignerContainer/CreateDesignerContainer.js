@@ -13,7 +13,7 @@ class CreateDesignerContainer extends Component {
     this.props.GetMyDetailRequest(this.props.token);
   }
   render() {
-    console.log("designer", this.props);
+    //console.log("designer", this.props);
     return (<ClientTemplate>
       <CreateDesigner {...this.props} />
     </ClientTemplate>
