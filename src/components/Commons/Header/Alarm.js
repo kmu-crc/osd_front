@@ -138,13 +138,22 @@ export default class Alarm extends Component {
   };
   getMessageText = item => {
     let msg = ""
-    console.log(item);
+    console.log(item.detail);
     const from = item.detail && item.detail.fromName && item.detail.fromName.nick_name ? TextSlicer(item.detail.fromName.nick_name, 5) : "유저";
     const name = item.detail && item.detail.itemName && item.detail.itemName.title ? TextSlicer(item.detail.itemName.title, 6) : "이름없음";
     // const to = item.detail && item.detail.toName && item.detail.toName.nick_name ? TextSlicer(item.detail.toName.nick_name, 5) : "유저"
     switch (item.type) {
       case "ITEM_PURCHASED_TO_EXPERT": msg = `${from}님이 아이템을 구매하였습니다.`; break;
       case "ITEM_PURCHASED_TO_USER": msg = `아이템'${name}'을 구매하였습니다`; break;
+      case "ITEN_REQUEST_TO_DESIGNER": msg = `${from}님이 디자인을 의뢰하였습니다`; break;
+      case "ITEN_REQUEST_TO_MAKER": msg = `${from}님이 제작을 의뢰하였습니다`; break;
+      case "ITEN_RESPONSE_TO_DESIGNER": msg = `${from}님이 디자인 의뢰에 응답하였습니다`; break;
+      case "ITEN_RESPONSE_TO_MAKER": msg = `${from}님이 제작 의뢰에 응답하였습니다`; break;
+      case "ITEM_QUESTION_TO_OWNER": msg = `${from}님이 '${name}'을 문의하였습니다`; break;
+      case "ITEM_REVIEW_TO_OWNER": msg = `${from}님이 '${name}'에 리뷰를 작성하였습니다`; break;
+      case "ITEM_LIKE_TO_DESIGNER": msg = `${from}님이 디자이너님을 좋아합니다`; break;
+      case "ITEM_LIKE_TO_MAKER": msg = `${from}님이 메이커님을 좋아합니다`; break;
+      case "ITEM_LIKE_TO_OWNER": msg = `${from}님이 ${name}을 좋아합니다`; break;
       default:
         msg = `정의되지 않은 알림입니다.`;
     }

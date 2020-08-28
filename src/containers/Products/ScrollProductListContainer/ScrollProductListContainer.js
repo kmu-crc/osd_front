@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignListRequest } from "actions/Design";
-import ScrollList from "components/Commons/ScrollListNew";
+import ScrollList from "components/Commons/ScrollList";
 import Item from "components/Items/Item";
 // import Design from "components/Designs/Design";
 

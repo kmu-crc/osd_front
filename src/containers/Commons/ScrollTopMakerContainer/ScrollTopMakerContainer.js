@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetTopDesignListRequest } from "actions/Commons/TopList";
-import ScrollListNew from "components/Commons/ScrollListNew";
+import ScrollListNew from "components/Commons/ScrollList";
 import Maker from "components/Makers/Maker";
 import Loading from "components/Commons/Loading";
 

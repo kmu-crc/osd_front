@@ -29,6 +29,14 @@ const ListContainer = styled.div`
     // background: #707070;
     // border: 1px solid #FAFAFA;
   }
+  .maker {
+    flex: 0 1 237px;
+    justify-content: space-around;
+    margin: 10px;
+    padding: 10px;
+    // background: #707070;
+    // border: 1px solid #FAFAFA;
+  }
 `;
 
 class ScrollListNew extends Component {
@@ -36,13 +44,20 @@ class ScrollListNew extends Component {
     super(props);
     this.state = { hasMore: true, loading: false, page: 0, gap: 150, cols: 0 };
     this.getLoadData = this.getLoadData.bind(this);
+    this.handleScroll=this.handleScroll.bind(this);
   }
   componentDidMount(){
-    window.addEventListener("scroll",this.handleScroll, false);
+    window.addEventListener("scroll", this.handleScroll, false);
   }
+  handleScroll = (e) =>  {
+    console.log(e.target.clientHeight);
+    const reach = e.target.scrollTop + e.target.clientHeight > e.target.scrollHeight - this.state.gap;
+    // console.log("reach",e.target.scrollTop , e.target.clientHeight, e.target.scrollHeight , this.state.gap);
+    reach && this.state.hasMore && this.state.loading === false && this.getLoadData(this.state.page);
+}
   getLoadData = page => {
     this.props.getListRequest(page)
-      .then(this.setState({ hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true, loading: true }))
+      .then(this.setState({ hasMore: this.props.dataList === null || this.props.dataList.length === 0 ? false : true, loading: true,page:page }))
       .catch((err) => {
         this.setState({ hasMore: false });
       });
@@ -53,10 +68,10 @@ class ScrollListNew extends Component {
     return (
       <ScrollContainer>
         {this.props.dataListAdded.length > 0 ?
-          <ListContainer>
+          <ListContainer onScroll = {this.handleScroll}>
             {this.props.dataListAdded.map(content => (
               <div key={content.uid} className={`${type}`}>
-                <ListComponent data={content} rerender={this.props.rerender} />
+                <ListComponent type={type} data={content} rerender={this.props.rerender} />
               </div>
             ))}
           </ListContainer>
