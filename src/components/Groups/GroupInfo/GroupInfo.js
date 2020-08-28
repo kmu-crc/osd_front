@@ -422,7 +422,7 @@ const ThreeSideBox = styled.div`
 `;
 const MobileSeeMore = styled.div`
     margin-top:15px;
-    display:${props => props.isShow == false ? "none" : "flex"};
+    display:${props => props.isShow === false ? "none" : "flex"};
     flex-direction:column;
     width:100%;
     .explain-box{
@@ -699,11 +699,11 @@ class GroupInfoComponent extends Component {
         }
     }
     requestNewNotice() {
-        if (this.state["notice-title"] == "") {
+        if (this.state["notice-title"] === "") {
             alert("공지사항의 제목을 입력해주세요.");
             return;
         }
-        if (this.state["notice-content"] == "") {
+        if (this.state["notice-content"] === "") {
             alert("공지사항의 내용을 입력해주세요.");
             return;
         }
@@ -794,7 +794,7 @@ class GroupInfoComponent extends Component {
                         </div>
                         <div className="body-container">
                             <hr />
-                            <div dangerouslySetInnerHTML={{ __html: this.state.notice.content }}>{}</div>
+                            <div dangerouslySetInnerHTML={{ __html: this.state.notice.content }}></div>
                         </div>
                     </Modal.Content>
                 </NoticeModal>
@@ -1020,7 +1020,7 @@ class GroupInfoComponent extends Component {
                         </div>
                     </MobileSeeMore>
                     <div className="seemore cursor_pointer" onClick={() => { this.setState({ isSeeMore: !this.state.isSeeMore }) }}>
-                        <div className="txt">{this.state.isSeeMore == false ? "▼ 더보기" : "▲ 접기"}</div>
+                        <div className="txt">{this.state.isSeeMore === false ? "▼ 더보기" : "▲ 접기"}</div>
                         {/* <div className="txt">더보기</div> */}
                     </div>
                 </div>

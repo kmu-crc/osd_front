@@ -10,8 +10,8 @@ import {
   GetWaitingDesignRequest,
   GetWaitingGroupRequest,
 
-  // group-notice w/o redux 
-  GetLastestGroupNoticeRequest,
+  //  // group-notice w/o redux 
+  // GetLastestGroupNoticeRequest,
 
 } from "redux/modules/group";
 import GroupDetail from "components/Groups/GroupDetail";

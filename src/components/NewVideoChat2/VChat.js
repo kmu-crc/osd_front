@@ -13,14 +13,13 @@ import icon_cam_off from 'source/video-chat-icon-camera-off.svg'
 import icon_mic_on from 'source/video-chat-icon-mic-on.svg'
 import icon_mic_off from 'source/video-chat-icon-mic-off.svg'
 // 
-function isOpen(ws) { return ws.readyState === ws.OPEN }
+// function isOpen(ws) { return ws.readyState === ws.OPEN }
 
 // styled components
 const VideoChatContainer = styled.div`
-  // *{border: 1px solid red}
   background-color: black;
-  width: 100%;//${props => props.w}px;
-  height: 100%;//${props => props.h}px;
+  width: ${props => props.w}px;
+  height: ${props => props.h}px;
 `
 const ButtonBarContainer = styled.div`
   z-index: 300;
@@ -73,6 +72,7 @@ const BigVideoScreen = styled.div`
   video {
     width: 100%;
     height: 100%;
+    object-fit: cover;
   }
   .txt {
     margin: auto;
@@ -130,7 +130,16 @@ const VideosContainer = styled.div`
   }
 `
 // constants
-const constraint = { basic: { audio: false, video: true, options: { mirror: false, } } }
+const constraint = {
+  basic: {
+    audio: true, video: {
+      width: { ideal: 1280 },
+      height: { ideal: 1024 },
+      facingMode: "environment"
+    }, options: { mirror: false, }
+  },
+  share: { audio: false, video: true, options: { mirror: false } }
+}
 // 
 const Me = styled.div`
   width: 259px;
@@ -138,10 +147,12 @@ const Me = styled.div`
   position: relative;
   display: flex;
   border: 1px solid #707070;
+  background-color: black;
+
   video {
-    width: 259px;
+    width: 257px;
     margin: 0;
-    padding: 0;
+    padding: 1;
     object-fit: cover;
   }
 
@@ -198,6 +209,7 @@ const Me = styled.div`
     background-color: #EFEFEF;
     background-image: url(${props => props.thumbnail || who});
     background-size: cover;
+    background
   }
 `
 const MeMini = styled.div`
@@ -208,7 +220,7 @@ const MeMini = styled.div`
   right: 10px;
   bottom: 10px;
   video {
-    width: 100%;
+    width: 120px;
     margin: 0;
     padding: 0;
     object-fit: cover;
@@ -223,10 +235,15 @@ class MyVideo extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      // screen: 'camera', // "camera", "share", "nick-name"
       mic: false, cam: true, // option(it's me only)
     }
     this.video = React.createRef()
+  }
+  init = () => {
+    const stream = this.video.srcObject.getTracks().filter(track => track.kind === 'audio')
+    if (stream) {
+      stream[0].enabled = false
+    }
   }
   componentDidMount() {
     if (this.props.stream) {
@@ -240,10 +257,26 @@ class MyVideo extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.stream != prevProps.stream) {
       this.video.srcObject = this.props.stream
+      this.init()
       if (this.props.stream.active == false) {
         this.props.close && this.props.close()
       }
     }
+  }
+  mutemic = () => {
+    const stream = this.video.srcObject.getTracks().filter(track => track.kind === 'audio')
+    if (stream) {
+      stream[0].enabled = !this.state.mic
+    }
+    this.setState({ mic: !this.state.mic })
+  }
+  mutecamera = () => {
+    const stream = this.video.srcObject.getTracks().filter(track => track.kind === 'video')
+    if (stream) {
+      stream[0].enabled = !this.state.cam
+    }
+    this.setState({ cam: !this.state.cam })
+    this.props.mutecam && this.props.mutecam()
   }
 
   render() {
@@ -251,43 +284,48 @@ class MyVideo extends Component {
       {this.props.screen === "camera"
         ?
         <Me thumbnail={this.props.thumbnail}>
+          {/* {this.state.cam ? */}
           <video
+            hidden={this.state.cam === false}
             onClick={() => this.props.onClick && this.props.onClick()}
             id={this.props.uid}
-            // muted={this.props.muted}
             autoPlay
             ref={(ref) => { this.video = ref }}
           />
+          {this.state.cam === false && <div className="txt">{this.props.nick_name}</div>}
 
           {this.props.control ?
             <div className="control">
               <div
                 className={`cam ${this.state.cam ? "" : "off"}`}
-                onClick={() => this.setState({ cam: !this.state.cam })} />
+                onClick={() => {
+                  this.mutecamera()
+                }} />
               <div
                 className={`mic ${this.state.mic ? "" : "off"}`}
-                onClick={() => this.setState({ mic: !this.state.mic })} />
+                onClick={() => {
+                  this.mutemic()
+                }} />
             </div>
             : null}
 
           <div className="thumbnail" />
 
         </Me>
-        :
-        this.props.screen === "share"
-          ?
-          <MeMini>
-            <video
-              onClick={() => this.props.onClick && this.props.onClick()}
-              autoPlay
-              id={this.props.uid}
-              ref={(ref) => { this.video = ref }}
-              className="mini" />
-          </MeMini>
-          :
-          <Me>
-            <div className="txt">{this.props.nick_name}</div>
-          </Me>}
+        : null}
+
+      {this.props.screen === "share"
+        ?
+        <MeMini>
+          <video
+            onClick={() => this.props.onClick && this.props.onClick()}
+            autoPlay
+            id={this.props.uid}
+            ref={(ref) => { this.video = ref }}
+            className="mini" />
+        </MeMini>
+        : null}
+
     </VideoContainer>)
   }
 }
@@ -296,12 +334,12 @@ const NotMe = styled.div`
   width: 120px;
   height: 67px;
   background-color: black;
-  border: 2px solid #707070;
+  border: ${props => props.online ? "2px solid green" : "2px solid #707070"};
   position: relative;
   display: flex;
 
   .camera {
-    width: 120px;
+    width: 116px;
     margin: 0;
     padding: 0;
     object-fit: cover;
@@ -336,7 +374,7 @@ const NotMe = styled.div`
     border-radius: 100%;
     border: 1px solid #EFEFEF;
     background-position: center center;
-    background-image: url(${props => props.thumbnail || who});
+    background-image: url(${ props => props.thumbnail || who});
     background-color: #EFEFEF;
     background-size: cover;
   }
@@ -345,9 +383,6 @@ const NotMe = styled.div`
 class OthersVideo extends Component {
   constructor(props) {
     super(props)
-    // this.state = {
-    // screen: 'camera', // "camera", "share", "nick-name"
-    // }
     this.video = React.createRef()
     this.videoShare = React.createRef()
   }
@@ -363,31 +398,39 @@ class OthersVideo extends Component {
     }
   }
   componentDidUpdate(prevProps) {
-    if (this.video && (this.props.stream != prevProps.stream)) {
+    if (this.video && (this.props.stream !== prevProps.stream)) {
       this.video.srcObject = this.props.stream
     }
-    if (this.videoShare && this.props.share_active && (this.props.share != prevProps.share)) {
+    if (this.videoShare && (this.props.share !== prevProps.share)) {
       this.videoShare.srcObject = this.props.share
     }
   }
 
   render() {
+    console.log("peer:", this.props)
     const css = this.props.selected ? "selected" : ""
 
     return (<VideoContainer>
-      <NotMe thumbnail={this.props.thumbnail} className={css}>
+      <NotMe thumbnail={this.props.thumbnail} className={css} online={this.props.stream}>
         <div className="thumbnail" />
-        {this.props.stream
-          ?
+        {this.props.stream ?
+          // this.props.stream.getTracks(t => t.kind === "video")[0].enabled ?
           <video
+            hidden={this.props.mute}
             className="camera"
             onClick={() => this.props.onClickVideo && this.props.onClickVideo()}
-            // muted={this.props.muted}
             autoPlay
             ref={(ref) => { this.video = ref }}
           /> : null}
-        {this.props.share_active
-          ?
+
+        {
+          (this.props.stream && this.props.mute) ||
+            (this.props.stream == null && this.props.share == false) ?
+            <div className="txt">
+              {this.props.nick_name &&
+                this.props.nick_name.slice(0, 13)}</div> : null}
+
+        {this.props.share ?
           <video
             className="share"
             onClick={() => this.props.onClickShare && this.props.onClickShare()}
@@ -395,14 +438,8 @@ class OthersVideo extends Component {
             ref={(ref) => { this.videoShare = ref }}
           /> : null}
 
-        {!this.props.stream && !this.props.share
-          ?
-          <div className="txt">
-            {this.props.nick_name &&
-              this.props.nick_name.slice(0, 13)}</div>
-          : null}
       </NotMe>
-    </VideoContainer>)
+    </VideoContainer >)
   }
 }
 // 
@@ -415,24 +452,22 @@ class VChat extends Component {
       localStream: null, // 로컬 카메라
       localShare: null, // 로컬 공유영상
       // ...
-      selected: "me",
+      selected: this.props.userInfo.uid,
       screen: "nick_name",
       // 
+      share: [],
+      mute: [],
       peers: [],
       connected: 1,
     }
-    this.peer = new Peer()
     // camera
     this.myPeer = new Peer(this.props.userInfo.uid)
-    // this.peers = []
     this.socket = null
     // share
     this.myPeer2 = new Peer('share-' + this.props.userInfo.uid)
     this.socket2 = null
-    // this.peers2 = []
     // functions
     this.resize_window = this.resize_window.bind(this)
-    this.socket_connection_setting = this.socket_connection_setting.bind(this)
     this.set_member_default = this.set_member_default.bind(this)
     this.switchVideo = this.switchVideo.bind(this)
     this.videoselected = this.videoselected.bind(this)
@@ -444,9 +479,6 @@ class VChat extends Component {
     }
     // console.log('resized')
     window.resizeTo(1290, 768)
-  }
-  socket_connection_setting() {
-
   }
   switchVideo(video) {
     this.setState({
@@ -470,12 +502,12 @@ class VChat extends Component {
         user_id: mem.user_id, nick_name: mem.nick_name,
         thumbnail: mem.thumbnail.s_img,
         stream: null, share: null,
-        share_active: false,
       }))
 
     await this.setState({ peers: peers })
   }
   componentDidMount() {
+    console.log(this.props);
     window.addEventListener('resize', (event) => this.resize_window(event))
     this.resize_window(null)
     this.set_member_default()
@@ -488,7 +520,7 @@ class VChat extends Component {
       this.socket2 = io.connect(host + '/webRTC-share')
 
       if (this.socket == null)
-        throw "failed connect to socket-server"
+        throw Error("failed connect to socket-server")
 
     } catch (e) {
       alert('소켓서버연결에 실패하였습니다.\n 창이 닫힙니다.\ndetail:' + e)
@@ -518,7 +550,7 @@ class VChat extends Component {
       call.on('stream', userVideoStream => {
         // console.log('user-connected: call: ', call)
         const peers = [...this.state.peers]
-        peers.map(peer => {
+        peers.forEach(peer => {
           if (peer.user_id == userId) {
             peer.stream = userVideoStream
           }
@@ -535,10 +567,12 @@ class VChat extends Component {
         peers[idx].stream = null
       }
       this.setState({ peers: peers })
-      // idx = this.peers.findIndex(user => user.peer === userId)
-      if (idx > -1) {
-        // this.peers[idx].close()
-        // this.peers.splice(idx, 1)
+      if (this.state.selected == userId) {
+        this.setState({
+          selectedVideo: this.state.localStream,
+          selected: "me"
+        })
+        this.videoselected(this.state.localStream)
       }
     })
     this.myPeer.on('open', id => {
@@ -549,11 +583,10 @@ class VChat extends Component {
       const stream = this.state.localStream;
       if (stream == null)
         return;
-      // console.log('call: ', call)
       call.answer(stream)
       call.on('stream', userVideoStream => {
         const peers = [...this.state.peers]
-        peers.map(peer => {
+        peers.forEach(peer => {
           if (peer.user_id == call.peer) {
             peer.stream = userVideoStream
           }
@@ -561,14 +594,16 @@ class VChat extends Component {
         this.setState({ peers: peers })
       })
     })
-
+    this.socket.on("mute", mute => {
+      this.setState({ mute: mute })
+    })
 
     //                     // 
     // SCREEN SHARE STREAM // 
     //                     //
     this.sharebtn &&
       this.sharebtn.addEventListener('click', () => {
-        navigator.mediaDevices.getDisplayMedia(constraint.basic)
+        navigator.mediaDevices.getDisplayMedia(constraint.share)
           .then(stream => {
             window.localStream = stream
             this.setState({
@@ -581,24 +616,18 @@ class VChat extends Component {
             console.error('getUserMedia Error: ', e)
           })
       })
+    this.socket2.on("share-list", share => {
+      this.setState({ share: share });
+    })
     this.socket2.on("exit-share", userId => {
-      const peers = [...this.state.peers]
-      peers.map(peer => {
-        if (peer.user_id == userId.replace('share-', '')) {
-          peer.share_active = false
-          peer.share = this.state.localStream
-        }
-      })
-      this.setState({ peers: peers })
     })
     this.socket2.on('update-share', userId => {
       const stream = this.state.localShare || this.state.localStream
       const call = this.myPeer2.call(userId, stream)
       call.on('stream', userVideoStream => {
         const peers = [...this.state.peers]
-        peers.map(peer => {
+        peers.forEach(peer => {
           if (peer.user_id == userId.replace('share-', '')) {
-            peer.share_active = true
             peer.share = userVideoStream
           }
         })
@@ -607,13 +636,12 @@ class VChat extends Component {
     })
     this.socket2.on('user-connected', userId => {
       const stream = this.state.localShare || this.state.localStream
-      console.log(stream)
+      // console.log(stream)
       const call = this.myPeer2.call(userId, stream)
       call.on('stream', userVideoStream => {
         const peers = [...this.state.peers]
-        peers.map(peer => {
+        peers.forEach(peer => {
           if (peer.user_id == userId.replace('share-', '')) {
-            peer.share_active = false
             peer.share = userVideoStream
           }
         })
@@ -633,19 +661,20 @@ class VChat extends Component {
     })
     this.myPeer2.on('call', call => {
       const stream = this.state.localShare || this.state.localStream
-      console.log(stream)
       call.answer(stream)
       call.on('stream', userVideoStream => {
         const peers = [...this.state.peers]
-        peers.map(peer => {
+        peers.forEach(peer => {
           if (peer.user_id == call.peer.replace('share-', '')) {
-            peer.share_active = true
             peer.share = userVideoStream
           }
         })
         this.setState({ peers: peers })
       })
     })
+  }
+  muteVideo = () => {
+    this.socket.emit("mute", this.props.design.uid, this.props.userInfo.uid)
   }
 
   componentWillUnmount() {
@@ -664,17 +693,14 @@ class VChat extends Component {
   }
 
   render() {
-    // console.log("check: ",
-    //   this.state,
-    //   this.myPeer, this.peers, this.socket,
-    //   this.myPeer2, this.socket2, this.peers2);
+    const connected = this.state.peers && this.state.peers.length > 0 && this.state.peers.filter(peer => peer.stream != null)
 
     return (<VideoChatContainer w={window.innerWidth} h={window.innerHeight}>
       {/* top */}
       <ButtonBarContainer>
         <div className='btn chat' onClick={() => {
-          const url = geturl() + `/chat/${this.props.design.uid}`
-          const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`
+          const url = geturl() + `/ chat / ${this.props.design.uid} `
+          const options = `toolbar = no, status = no, menubar = no, resizable = no, location = no, top = 100, left = 100, width = 496, height = 600, scrollbars = no`
           window.open(url, "chat", options)
         }}>
           <span className='txt'>채팅</span>
@@ -696,7 +722,6 @@ class VChat extends Component {
       {/* middle*/}
       <BigVideoScreen>
         <video
-          id={"big-screen"}
           autoPlay
           ref={(ref) => this.video = ref}
         />
@@ -713,13 +738,14 @@ class VChat extends Component {
               })
               this.videoselected(this.state.localStream)
             }}
+            mutecam={this.muteVideo}
             id={this.props.userInfo.uid}
             autoPlay
             control={true}
             screen={"camera"}
             stream={this.state.localStream}
             thumbnail={this.props.userInfo.thumbnail.s_img}
-            nick_name={this.props.userInfo.nick_name || "안녕 나는 김철수"} />
+            nick_name={this.props.userInfo.nickName || "안녕 나는 김철수"} />
           {this.state.localShare ?
             <MyVideo
               onClick={() => {
@@ -738,14 +764,14 @@ class VChat extends Component {
               control={false}
               screen={"share"}
               stream={this.state.localShare}
-              nick_name={this.props.userInfo.nick_name || "안녕 나는 김철수"} />
+              nick_name={this.props.userInfo.nickName || "안녕 나는 김철수"} />
             : null}
         </div>
 
         <div className="others">
           <div className="member-count">
             참여자&nbsp;
-            {this.state.connected}
+            {(connected && connected.length + 1) || "-"}
             /
             {(this.props.design
               && this.props.design.member
@@ -755,33 +781,32 @@ class VChat extends Component {
           <ScrollContainer vertical={false} className="inner scroll-container">
             {this.state.peers &&
               this.state.peers.length > 0 &&
-              this.state.peers.map((peer, idx) =>
-                <div
+              this.state.peers.map((peer, idx) => {
+                return (<div
                   className="peer"
                   key={idx + peer.nick_name}
-                  onClick={() => this.setState({ selected: idx })}>
+                >
 
                   <OthersVideo
                     onClickVideo={() => {
                       this.setState({
                         selectedVideo: peer.stream,
-                        selected: peer.nick_name
+                        selected: peer.user_id
                       })
                       this.videoselected(peer.stream)
                     }}
                     onClickShare={() => {
                       this.setState({
                         selectedVideo: peer.share,
-                        selected: peer.nick_name
+                        selected: peer.user_id
                       })
                       this.videoselected(peer.share)
                     }}
                     {...peer}
                     itsMe={false}
-                    // screen={"camera"}
-                    share_active={peer.share_active}
-                    share={peer.share}
+                    share={this.state.share.findIndex(ele => ele.room === this.props.design.uid && ele.user === 'share-' + peer.user_id) > -1 && peer.share}
                     stream={peer.stream}
+                    mute={this.state.mute.findIndex(ele => ele.room === this.props.design.uid && ele.user === peer.user_id) > -1}
                     close={() => {
                       const peers = [...this.state.peers]
                       let idx = peers.findIndex(_peer => _peer.user_id === peer.user_id)
@@ -790,8 +815,9 @@ class VChat extends Component {
                       }
                       this.setState({ peers: peers })
                     }}
-                    selected={idx === this.state.selected} />
-                </div>
+                    selected={peer.user_id == this.state.selected} />
+                </div>)
+              }
               )}
           </ScrollContainer>
         </div>

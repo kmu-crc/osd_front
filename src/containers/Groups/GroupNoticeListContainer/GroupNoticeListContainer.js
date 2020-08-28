@@ -160,7 +160,7 @@ class GroupListContainer extends Component {
     this.getList();
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.reload != this.props.reload) {
+    if (prevProps.reload !== this.props.reload) {
       this.getList();
     }
   }
@@ -174,9 +174,9 @@ class GroupListContainer extends Component {
   }
 
   render() {
-    const { list, count, page } = this.state;
+    const { list, count, /*page*/ } = this.state;
     const per = 5;
-    const totalPage = parseInt(count / per, 10) + 1;
+    // const totalPage = parseInt(count / per, 10) + 1;
     // console.log(totalPage);
     return (
       <Container>
@@ -395,14 +395,14 @@ class PaginationOpenDesign extends Component {
 
       <div className="arrows">
         {/* > */}
-        {this.state.groups - 1 != this.state.group
+        {this.state.groups - 1 !== this.state.group
           ? <div onClick={this.nextGroup} className="r"></div>
           : <div className="r blank"></div>}
 
         {/* >> */}
-        {this.state.groups - 1 != this.state.group ?
+        {this.state.groups - 1 !== this.state.group ?
           <div onClick={this.gotoFinalGroup} className="rr"></div>
-          : <div className=""></div>}
+          : <div className="rr blank"></div>}
       </div>
 
     </PaginationContainer >);

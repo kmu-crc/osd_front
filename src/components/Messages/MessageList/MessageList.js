@@ -148,7 +148,7 @@ const RoomListBox = styled.div`
     }
     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
     and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
-      height:${props => props.isSelectMsg == true ? "60px" : "100%"};
+      height:${props => props.isSelectMsg === true ? "60px" : "100%"};
       overflow:hidden;
   }
 `;
@@ -228,7 +228,7 @@ const ChatBox = styled.div`
     }
     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
       and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
-        display:${props => props.isSelectMsg == true ? "flex" : "none"}
+        display:${props => props.isSelectMsg === true ? "flex" : "none"}
         .content{
           padding: 0px 5%;
         }
@@ -259,7 +259,7 @@ const PlusIcon = styled.div`
   }
   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
   and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
-    display:${props => props.isSelectMsg == true ? "none" : "flex"}
+    display:${props => props.isSelectMsg === true ? "none" : "flex"}
   }
 `;
 const SendButton = styled.div`
@@ -557,7 +557,7 @@ class Messages extends React.Component {
     const innerHtmlValue = document.getElementById("sendMsgBox").innerHTML;
     console.log(innerHtmlValue);
 
-    if (innerHtmlValue == "") {
+    if (innerHtmlValue === "") {
       await alert("텍스트를 입력해주세요.", "확인");
       return;
     }
@@ -635,7 +635,7 @@ class Messages extends React.Component {
           </div>
           <div className="mainContent flexBox justifyContent">
             <div className="wrapper border_radius">
-              <RoomListBox isSelectMsg={this.state.msgId == -1 ? false : true}>
+              <RoomListBox isSelectMsg={this.state.msgId === -1 ? false : true}>
                 <div className="header">
                   <div className="header-item fixed">
                     <div className="fitBox font_big font_bold">받은 메시지함</div>
