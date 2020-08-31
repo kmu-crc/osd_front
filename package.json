@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "core-js": "^3.6.5",
     "quill-react": "^1.0.0-alpha.2",
     "react": "^16.13.1",
     "react-addons-update": "^15.6.2",
@@ -43,7 +44,7 @@
   },
   "browserslist": {
     "production": [
-     ">0.2%",
+      ">0.2%",
       "not dead",
       "not op_mini all"
     ],
