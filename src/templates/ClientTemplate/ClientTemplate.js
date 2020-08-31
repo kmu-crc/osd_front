@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import HeaderContainer from "containers/Commons/HeaderContainer";
-// import Footer from "components/Commons/Footer";
 import styled from "styled-components";
 import Notice from "components/Commons/Header/Notice";
 import Footer from "components/Commons/Footer/Footer"
@@ -23,6 +22,10 @@ const Container = styled.div`
     margin-left: auto;
     margin-right: auto;
   }
+  .children-wrapper {
+    width: 1790px;
+    position: relative;
+  }
 `
 class ClientTemplate extends Component {
   render() {
@@ -31,7 +34,7 @@ class ClientTemplate extends Component {
         <Notice />
         <Container>
           <HeaderContainer active={this.props.isActive} />
-          <div style={{ width: "1790px", position: "relative", background: "red" }}>
+          <div className="children-wrapper">
             {this.props.children}
             {/* <Footer /> */}
           </div>
