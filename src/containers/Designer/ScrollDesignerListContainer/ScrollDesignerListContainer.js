@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignerListRequest } from "actions/Designer";
-import ScrollList from "components/Commons/ScrollListNew";
+import ScrollList from "components/Commons/ScrollList";
 import Expert from "components/Experts/Expert";
 
 class ScrollDesignerListContainer extends Component {

@@ -102,8 +102,6 @@ class Expert extends Component {
   }
 
   onClickItem(event){
-    // console.log(this.props.data.type||this.props.type);
-    // return
     const type = this.props.data.type||this.props.type;
     type=="designer"?
     window.location.href="/designerDetail/"+this.props.data.user_id
