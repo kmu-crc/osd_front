@@ -25,24 +25,18 @@ const Container = styled.div`
   }
 `
 class ClientTemplate extends Component {
-  onClose = e => {
-    if (this.props.isActive !== "INIT") {
-      this.props.SetActive("INIT");
-    }
-  }
-
   render() {
     return (
       <div>
         <Notice />
         <Container>
           <HeaderContainer active={this.props.isActive} />
-          <div style={{ width: "1790px", position: "relative", }} onClick={this.onClose}>
+          <div style={{ width: "1790px", position: "relative", background: "red" }}>
             {this.props.children}
             {/* <Footer /> */}
           </div>
         </Container>
-          <Footer/>
+        <Footer />
       </div>
     );
   }
