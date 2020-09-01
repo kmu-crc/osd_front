@@ -11,6 +11,10 @@ import LinkController from "./LinkController";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
+
+
 function IsJsonString(str) {
   try {
     var json = JSON.parse(str);
@@ -136,12 +140,21 @@ const LinkPreview = styled.div`
 `;
 const ViewContent = styled.div`
   position: relative;
-  .imgContent{
-    img{
-      max-width: 100%;
+  .imgContent {
+    img {
+      // max-width: 100%;
+      width: 450px;
     }
     text-align: center;
     margin-bottom: 2rem;
+    p {
+      // text-align: right;
+      font-size: 0.75rem;
+      line-height: 0.9rem;
+      font-family: Noto Sans KR;
+      font-weight: 500;
+      color: #707070;
+    }
   }
   .LinkFileName {
     line-height: 70px;
@@ -506,7 +519,10 @@ class CardSourceDetail extends Component {
             <div key={index + item}>
               {(item.type === "FILE" && item.data_type === "image") ?
                 <div className="imgContent" >
-                  <img src={item.content} alt="이미지" download={item.file_name} />
+                  <Zoom>
+                    <img width="450" src={item.content} alt="이미지" download={item.file_name} />
+                  </Zoom>
+                  <p>이미지를 클릭하시면 크게 보실 수 있습니다.</p>
                 </div>
 
                 : (item.type === "FILE" && item.data_type === "video") ?
