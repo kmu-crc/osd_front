@@ -116,23 +116,22 @@ const DelBtn = styled.button`
 `;
 const LinkPreview = styled.div`
   text-align: center;
-
   .title {
-    font-size: .9rem;
+    font-size: 0.9rem;
     color: #707070;
   }
   .url {
-    font-size: 2rem;
-    line-height: 2.1rem;
-    padding: .5rem; 
+    font-size: 0.9rem;
+    line-height: 0.9rem;
+    padding: .5rem;
     color: #0645AD;
   }
   .description {
-    font-size: .9rem;
-    line-height: .9rem;
+    font-size: 1.5rem;
+    line-height: 2.5rem;
     font-weight: 300;
     color: #FF0000;
-    padding: .5rem; 
+    padding: 0.5rem; 
   }
 `;
 const ViewContent = styled.div`
@@ -533,26 +532,25 @@ class CardSourceDetail extends Component {
                       : (item.type === "LINK") ?
                         <div className="linkWrap">
                           <LinkPreview>
-                            <div className="url">
-                              <a target="_blank" href={`${
-                                IsJsonString(item.content)
-                                  ? JSON.parse(item.content).hasOwnProperty('url')
-                                    ? JSON.parse(item.content).url : "invalid" : "invalid"}`}>
-                                {
-                                  IsJsonString(item.content)
-                                    ? JSON.parse(item.content).hasOwnProperty('url')
-                                      ? JSON.parse(item.content).url : "invalid" : "invalid"}
-                              </a>
-                            </div>
                             <div className="description">{
                               IsJsonString(item.content)
                                 ? JSON.parse(item.content).hasOwnProperty('description')
                                   ? "*" + JSON.parse(item.content).description : "" : ""}
                             </div>
+                            <div className="url">
+                              <a target="_blank" href={`${
+                                IsJsonString(item.content)
+                                  ? JSON.parse(item.content).hasOwnProperty('url')
+                                    ? JSON.parse(item.content).url : "invalid" : "invalid"}`}>
+                                ({IsJsonString(item.content)
+                                  ? JSON.parse(item.content).hasOwnProperty('url')
+                                    ? JSON.parse(item.content).url : "invalid" : "invalid"})
+                              </a>
+                            </div>
                           </LinkPreview>
                         </div>
 
-                        : <div>올바른형식의 아이템이 아닙니다.</div>}
+                        : <div>올바른 형식의 아이템이 아닙니다.</div>}
             </div>
           )}
         </ViewContent>}

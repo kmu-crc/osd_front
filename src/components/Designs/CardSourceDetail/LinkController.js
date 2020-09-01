@@ -7,21 +7,21 @@ const LinkPreview = styled.div`
   text-align: center;
 
   .title {
-    font-size: .9rem;
+    font-size: 0.9rem;
     color: #707070;
   }
   .url {
-    font-size: 2rem;
-    line-height: 2.1rem;
+    font-size: 0.9rem;
+    line-height: 0.9rem;
     padding: .5rem;
     color: #0645AD;
   }
   .description {
-    font-size: .9rem;
-    line-height: .9rem;
+    font-size: 1.5rem;
+    line-height: 2.5rem;
     font-weight: 300;
     color: #FF0000;
-    padding: .5rem; 
+    padding: 0.5rem; 
   }
 `;
 const LinkElement = styled.div`
@@ -126,8 +126,8 @@ class LinkController extends Component {
 
       <LinkPreview>
         <div className="title">미리보기</div>
-        <div className="url">{url}</div>
         <div className="description">*{description}</div>
+        <div className="url">{url}</div>
       </LinkPreview>
 
       <LinkElement>
