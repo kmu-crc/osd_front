@@ -407,7 +407,7 @@ class OthersVideo extends Component {
   }
 
   render() {
-    console.log("peer:", this.props)
+    // console.log("peer:", this.props)
     const css = this.props.selected ? "selected" : ""
 
     return (<VideoContainer>
@@ -699,7 +699,7 @@ class VChat extends Component {
       {/* top */}
       <ButtonBarContainer>
         <div className='btn chat' onClick={() => {
-          const url = geturl() + `/ chat / ${this.props.design.uid} `
+          const url = geturl() + `/chat/${this.props.design.uid} `
           const options = `toolbar = no, status = no, menubar = no, resizable = no, location = no, top = 100, left = 100, width = 496, height = 600, scrollbars = no`
           window.open(url, "chat", options)
         }}>
