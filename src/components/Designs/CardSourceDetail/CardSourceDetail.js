@@ -142,8 +142,8 @@ const ViewContent = styled.div`
   position: relative;
   .imgContent {
     img {
-      // max-width: 100%;
-      width: 450px;
+      max-width: 100%;
+      // width: 450px;
     }
     text-align: center;
     margin-bottom: 2rem;
@@ -519,10 +519,10 @@ class CardSourceDetail extends Component {
             <div key={index + item}>
               {(item.type === "FILE" && item.data_type === "image") ?
                 <div className="imgContent" >
-                  <Zoom>
-                    <img width="450" src={item.content} alt="이미지" download={item.file_name} />
-                  </Zoom>
-                  <p>이미지를 클릭하시면 크게 보실 수 있습니다.</p>
+                  {/* <Zoom> */}
+                    <img src={item.content} alt="이미지" download={item.file_name} />
+                  {/* </Zoom> */}
+                  {/* <p>이미지를 클릭하시면 크게 보실 수 있습니다.</p> */}
                 </div>
 
                 : (item.type === "FILE" && item.data_type === "video") ?
