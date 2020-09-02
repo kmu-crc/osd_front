@@ -500,7 +500,7 @@ class VChat extends Component {
       .filter(mem => this.props.userInfo.uid != mem.user_id)
       .map(mem => ({
         user_id: mem.user_id, nick_name: mem.nick_name,
-        thumbnail: mem.thumbnail.s_img,
+        thumbnail: (mem && mem.thumbnail && mem.thumbnail.s_img) || who,
         stream: null, share: null,
       }))
 
@@ -744,7 +744,7 @@ class VChat extends Component {
             control={true}
             screen={"camera"}
             stream={this.state.localStream}
-            thumbnail={this.props.userInfo.thumbnail.s_img}
+            thumbnail={(this.props.userInfo && this.props.userInfo.thumbnail && this.props.userInfo.thumbnail.s_img) || who}
             nick_name={this.props.userInfo.nickName || "안녕 나는 김철수"} />
           {this.state.localShare ?
             <MyVideo
