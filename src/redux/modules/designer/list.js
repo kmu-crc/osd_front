@@ -66,7 +66,7 @@ export function DesignerList(state, action) {
 
 
 export function GetDesignerListRequest(page, sort, cate1, cate2, keyword) {
-  const sql = `${host}/designer/designerList/${page}/${sort}/${cate1}/${cate2}/${keyword}`
+  const sql = `${host}/designer/designerList/${page}/${sort}/${cate1 || "null"}/${cate2 || "null"}/${keyword}`
   //console.log("sql:", sql)
   return (dispatch) => {
     return fetch(sql, {
