@@ -11,18 +11,19 @@ const FormBox = styled.div`
 `
 const FormStyle = styled.input.attrs({ type: "date" })`
     width: max-content;
+    height:52px;
     margin: 0;
-    -webkit-appearance: none;
     padding: 0.67857143em 1em;
-    height:43px;
-    border-radius:20px;
-    font-family:Noto Sans KR;
-    font-size:20px;
+    margin-right:5px;
+    font-size:17px;
+    text-align:center;
+    font-family:Noto Sans CJK KR, Regular;
     background-color:#E9E9E9;
     outline:none;
     border:0px;
-    margin-right:5px;
+    border-radius:26px;
     transition: color 0.1s ease, border-color 0.1s ease;
+    -webkit-appearance: none;
 
     &::placeholder {
         color: ${StyleGuide.color.geyScale.scale5};
@@ -44,17 +45,18 @@ const FormStyle = styled.input.attrs({ type: "date" })`
 `;
 const FormText = styled.input.attrs({ type: "number" })`
     width: ${props => props.width}px;
+    height:52px;
     margin: 0;
-    -webkit-appearance: none;
+    margin-right:5px;
     padding: 0.67857143em 1em;
-    height:43px;
-    border-radius:20px;
+    border:0px;
+    border-radius:26px;
+    text-align:center;
     font-family:Noto Sans KR;
-    font-size:20px;
+    font-size:17px;
     background-color:#E9E9E9;
     outline:none;
-    border:0px;
-    margin-right:5px;
+    -webkit-appearance: none;
     transition: color 0.1s ease, border-color 0.1s ease;
 
     &::placeholder {
@@ -218,6 +220,7 @@ export class InputCalendar extends Component {
     render() {
         return (
             <React.Fragment>
+                <div style={{display:"flex",alignItems:"center",fontSize:"17px"}}>
                 <FormBox>
                     <FormStyle
                         id="startDate"
@@ -226,6 +229,7 @@ export class InputCalendar extends Component {
                         onChange={this.onChangeStartDate}
                     />
                 </FormBox>
+                &nbsp;~ &nbsp;
                 <FormBox>
                     <FormStyle
                         id="endDate"
@@ -241,6 +245,7 @@ export class InputCalendar extends Component {
                     onChange={this.onChangeDayDate}
                     onClick={this.onClickDayDate}
                 />일
+                </div>
             </React.Fragment>
         );
     }

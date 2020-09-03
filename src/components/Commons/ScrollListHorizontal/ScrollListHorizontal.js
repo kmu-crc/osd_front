@@ -191,14 +191,14 @@ class ScrollListHorizontal extends Component {
         },
       },
     ]}
-    dots={true}
+    // dots={true}
     showSides={true}
     sidesOpacity={.5}
     sideSize={.1}
-    slidesToScroll={1}
+    slidesToScroll={6}
     slidesToShow={6}
     scrollOnDevice={true}
-    cycleInterval={3000}
+    cycleInterval={5000}
   >
         {/* {List.length > 6 ? <div className="arrow left" onClick={() => this.scrollHorizon(-1 * this.state.scrollOffset)}>
           <Icon name="caret left" size="big" /></div> : null}

@@ -24,19 +24,11 @@ const LocationList = [
   { value: 14, text: "제주도" },
   { value: 15, text: "제한없음" },
 ];
-
 const Wrapper = styled(ContentBox)`
   width: 100%;
   margin-top: 60px;
   margin-bottom: 100px;
   z-index: 3;
-  // width:100%;
-  // background-color: white;
-  // z-index: 3;
-  // border: 1px solid white;
-  // border-radius: 50px;
-  // box-shadow: 5px 5px 10px #00000029;
-  // transform: translate(0px, -100px);
 `;
 const MainBox = styled.div`
   width:100%;
@@ -46,78 +38,88 @@ const MainBox = styled.div`
     font-family:Noto Sans KR, Medium;
     font-size:20px;
     font-weight:500;
-    // margin-left:ㅇpx;
-
   }
   .contentsBox{
     position: relative;
     width:100%;
     display:flex;
-    // padding-left:130px;
-    padding-top:36px;
+    padding:36px 130px 36px 136px;
   }
 
 `;
-// const MainBox = styled.div`
-//   width: 100%;
-//   margin-left: auto;
-//   margin-right: auto;
-//   margin-top: 30px;
 
-//   .title{
-//     width: max-content;
-//     height: 29px;
-//     margin-left: 60px;
-//     margin-top: 50px;
-//     font-family: Noto Sans KR, Medium;
-//     font-size: 29px;
-//     font-weight: 500;
-//   }
-//   .contentsBox{
-//     position: relative;
-//     width:100%;
-//     display:flex;
-//     // padding-left:130px;
-//     padding-top:36px;
-//   }
 
-// `
+
 const FormBox = styled.div`
-  *{
-    font-family:Noto Sans KR;
-    font-weight:500;
-    font-size:20px;
-    // border:1px solid black;
-  }
-  width:939px;
+  width:${props=>props.isHalf==true?"50%":"100%"};
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
-  padding-left:59px;
-  padding-right:59px;
-  padding-top:49px;
-  margin-right:10px;
+  padding:${props=>props.isHalf==true?"72px 50px 72px 50px":"72px 113px 72px 113px"};
+  margin-right:${props=>props.isHalf==true?"44px":"10px"};
 
   .wrapper{
     width:100%;
-    margin-bottom:70px;
+    margin-bottom:50px;
   }
   .margin_zero{
     margin:0px;
+  }
+  .add_margin_bottom{
+    margin-bottom:100px;
   }
   .flex{
     display:flex;
   }
   .centering{
-    align-items:center;
+    // align-items:center;
+  }
+  .color_red{
+    color:red;
   }
   .innerWraper{
     width:100%;
     margin-bottom:26px;
     display:flex;
   }
+  .addfilebox{
+    height:40px;
+    margin-right:8px;
+    .addfile{
+      width:20px;
+      height:20px;
+      border-left:1px dashed red;
+      border-bottom:1px dashed red;
+    }
+    .black_addfile{
+      width:20px;
+      height:20px;
+      border-left:1px dashed black;
+      border-bottom:1px dashed black;
+    }
+  }
+  .file_label_box{
+    height:40px;
+    display:flex;
+    align-items:center;
+  }
+ 
+  .file_label{
+    font-size:17px;
+    color:red;
+  }
+  ._black_{
+    font-size:17px;
+    color:black;
+  }
+
   .label{
     min-width:157px;
     height:max-content;
+    font-size:20px;
+    font-family:Noto Sans CJK KR, Regular;
+    color:#707070;
+    margin-right:60px;
+    border-right:2px solid #707070;
   }
   .label_centering{
     text-align:center;
@@ -128,41 +130,45 @@ const FormBox = styled.div`
     color:#707070;
   }
   .textBox{
-    font-weight:200;
+    font-family:Noto Sans CJK KR, Regular;
+    font-size:17px;
+    line-height:17px;
   }
 
 `;
 const TagList = styled.div`
-    width: 100%;
-    display: flex;
-    // padding: 10px;
-    flex-wrap: wrap;
+  width: 100%;
+  display: flex;
+  // padding: 10px;
+  flex-wrap: wrap;
 `;
 const TagPiece = styled.div`
-    width: max-content;
-    min-width: 30px;
-    background-color: #EFEFEF;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    color: #707070;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 15px;
+    width:max-content;
+    min-width:30px;
+    max-height:30px;
+    border:1px solid #707070;
+    border-radius:15px;
+    padding: 8px 10px 5px 10px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items:center;
+    font-size:15px;
+    font-family:Noto Sans CJK KR, Regular;
+    margin-right:8px;
     .close {
+        color:#707070;
         margin-left: 10px;
         width: max-content;
         height: max-content;
         padding: 0px 2px;
+        cursor:pointer;
     }
 `;
 const ButtonWrapper = styled.div`
   display: flex;
   margin-top: 30px;
-  // margin-left: 50px;
   margin-bottom: 40px;
+  justify-content:center;
 `;
 
 class Detail extends Component {
@@ -230,7 +236,7 @@ class Detail extends Component {
           Detail.sort_in_group === 0 ?
             <Wrapper>
               <MainBox>
-                <div className="title">{TypeText} 의뢰</div>
+                <div className="title">{TypeText} 의뢰 상세</div>
                 <div className="contentsBox">
                   <FormBox>
 
@@ -246,33 +252,41 @@ class Detail extends Component {
 
                     <div className="wrapper flex centering">
                       <div className="label">카테고리</div>
-                      <div className="textBox">{category_level1 ? category_level1 + (category_level2 ? " > " : "") : null}{category_level2}</div>
+                      <div className="textBox">{category_level1 ? category_level1 + (category_level2 ? `>` : "") : null}{category_level2}</div>
                     </div>
 
-                    <div className="wrapper flex centering">
+                    <div className="wrapper flex centering add_margin_bottom">
                       <div className="label">태그</div>
                       <TagList>
-                        {Detail && Detail.tag && Detail.tag.split(",").map((item, index) =>
-                          <TagPiece key={index}><div>{item}</div></TagPiece>)}
+                        {Detail && Detail.tag && Detail.tag.split(",").map((item, index) =>{
+                          if(item=="")return null;
+                          return(
+                              <TagPiece key={index}><div>{item}</div></TagPiece>
+                          );})}
                       </TagList>
                     </div>
 
 
-                    <div className="wrapper flex centering">
+                    <div className="wrapper flex centering ">
                       <div className="label">의뢰 내용</div>
                       <div className="textBox" dangerouslySetInnerHTML={{ __html: `${Detail.content || ""}` }} />
                     </div>
 
                     
-                      <div className="wrapper flex centering">
-                        <div className="label">첨부 파일</div>
+                      <div className="wrapper flex centering add_margin_bottom">
+                        <div className="label"/>
+                        <div className="addfilebox"><div className="addfile"/></div>
+                        
+                        <div className="file_label_box">
+                        <div className="file_label">
                         {Detail && Detail.file_url ?
-                        <a href={Detail.file_url} download={Detail.filename} className="iconWrap">
-                          <FileIcon type={"application"} extension={"pdf"} />
-                          {Detail.filename}
-                        </a>
-                        : "첨부 파일 없음"}
-
+                              <a href={Detail.file_url} download={Detail.filename} className="iconWrap">
+                                <FileIcon type={"application"} extension={"pdf"} />
+                                {Detail.filename}
+                              </a>
+                              : "첨부 파일 없음"}
+                        </div>
+                        </div>
                       </div>
 
 
@@ -324,20 +338,24 @@ class Detail extends Component {
               </MainBox>
               {!MyDetail ?
                 <ButtonWrapper>
-                  <Link to={{ pathname: `/responseTo${Detail.type}Req/${Detail.uid}`, state: { detail: Detail, expert: MyDetail } }}>
+                  {(this.props.userInfo && Detail && Detail.client_id === this.props.userInfo.uid) ? 
+                  null:<Link to={{ pathname: `/responseTo${Detail.type}Req/${Detail.uid}`, state: { detail: Detail, expert: MyDetail } }}>
                     <RedButton value={"의뢰응답"} isConfirm={false} onClickButton={null}></RedButton>
                   </Link>
-                  {(this.props.userInfo && Detail && Detail.client_id === this.props.userInfo.uid) ? <RedButton onClick={this.onClickResponse} value={"의뢰수정"} isConfirm={false}></RedButton> : null}
+                   }
+                  {(this.props.userInfo && Detail && Detail.client_id === this.props.userInfo.uid) ? 
+                  <RedButton reverse={true} onClick={this.onClickResponse} value={"의뢰수정"} isConfirm={false}></RedButton> 
+                  : null}
                 </ButtonWrapper>
                 : null}
             </Wrapper>
             :
             <Wrapper>
               <MainBox>
-                <div className="title">의뢰 응답</div>
+                <div className="title">{TypeText} 의뢰 응답</div>
 
                 <div className="contentsBox">
-                  <FormBox>
+                  <FormBox isHalf={true}>
                     <div className="wrapper flex centering">
                       <div className="label">제목</div>
                       <div className="textBox">{Detail.title}</div>
@@ -348,13 +366,34 @@ class Detail extends Component {
                       <div className="textBox">{category_level1 ? category_level1 + " > " : "-"}{category_level2}</div>
                     </div>
 
-                    <div className="wrapper flex centering">
+                    <div className="wrapper flex centering add_margin_bottom">
                       <div className="label">태그</div>
                       <TagList>
                         {Detail && Detail.request && Detail.request.tag && Detail.request.tag.split(",").map((item, index) =>
                           <TagPiece key={index}><div>{item}</div></TagPiece>)}
                       </TagList>
                     </div>
+
+                    <div className="wrapper flex centering">
+                      <div className="label">의뢰 내용</div>
+                      <div className="textBox" dangerouslySetInnerHTML={{ __html: `${Detail && Detail.request && Detail.request.content}` }} />
+                    </div>
+                    <div className="wrapper flex centering add_margin_bottom">
+                        <div className="label"/>
+                        <div className="addfilebox"><div className="black_addfile"/></div>
+                        
+                        <div className="file_label_box">
+                        <div className="_black_">
+                        {Detail && Detail.file_url ?
+                              <a href={Detail.file_url} download={Detail.filename} className="iconWrap">
+                                <FileIcon type={"application"} extension={"pdf"} />
+                                {Detail.filename}
+                              </a>
+                              : "첨부 파일 없음"}
+                        </div>
+                        </div>
+                      </div>
+
 
                     <div className="wrapper flex centering">
                       <div className="label">희망비용</div>
@@ -367,20 +406,6 @@ class Detail extends Component {
                     </div>
 
                     <div className="wrapper flex centering">
-                      <div className="label">의뢰 내용</div>
-                      <div className="textBox" dangerouslySetInnerHTML={{ __html: `${Detail && Detail.request && Detail.request.content}` }} />
-                    </div>
-                    <div className="wrapper flex centering">
-                        <div className="label">첨부 파일</div>
-                        {Detail && Detail.file_url ?
-                        <a href={Detail.file_url} download={Detail.filename} className="iconWrap">
-                          <FileIcon type={"application"} extension={"pdf"} />
-                          {Detail.filename}
-                        </a>
-                        : "첨부 파일 없음"}
-
-                    </div>
-                    <div className="wrapper flex centering">
                       <div className="label">디자이너 위치</div>
                       <div className="textBox">{Detail && Detail.request && LocationList[Detail.request.location].text}</div>
                     </div>
@@ -389,26 +414,15 @@ class Detail extends Component {
                       <div className="label">소유권</div>
                       <div className="textBox">{Detail && Detail.request && Detail.request.ownership <= 0 ? "의뢰자" : "디자이너"}</div>
                     </div>
-
-                    {/* <div className="wrapper flex centering">
-                      <div className="label">오프라인 상담</div>
-                      <div className="textBox">{Detail && Detail.request && Detail.request.offline <= 0 ? "불가능" : "가능"}</div>
-                    </div> */}
-
                   </FormBox>
 
-                  <FormBox>
-                    {/* <div className="wrapper flex">
-                  <div className="label">제목</div>
-                  <div className="textBox">{Detail.title}</div>
-                </div> */}
-
-                    <div className="wrapper flex">
+                  <FormBox isHalf={true}>
+                    <div className="wrapper flex add_margin_bottom">
                       <div className="label">응답자</div>
                       <div className="textBox">{Detail.nick_name}</div>
                     </div>
 
-                    <div className="wrapper flex">
+                    <div className="wrapper flex add_margin_bottom">
                       <div className="label">설명</div>
                       <div className="textBox" dangerouslySetInnerHTML={{ __html: `${Detail.content || ""}` }}></div>
                     </div>
@@ -432,14 +446,7 @@ class Detail extends Component {
                 </div>
               </MainBox>
               <ButtonWrapper>
-                {/* <RedButton onClick={() => window.history.back()} inactive={true}> */}
-                {/* <div>뒤로가기</div> */}
-                {/* </RedButton> */}
-                {/* <Link to={{ pathname: `/payment/${Detail.uid}`, state: { item: { ...Detail, request_title: Detail && Detail.request && Detail.request.title, request_id: Detail && Detail.request && Detail.request.uid }, custom: true } }} > */}{/* <RedButton ><div>구매하기</div></RedButton> */}{/* </Link> */}
                 <RedButton value={"아이템 구입"} onClick={this.props.purchase} isConfirm={true} />
-                {/* {isPurchased ? <RedButton onClick={this.props.confirm}>
-                  <div>구매확인</div>
-                </RedButton> : null} */}
               </ButtonWrapper>
             </Wrapper>}
       </React.Fragment>

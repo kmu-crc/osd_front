@@ -90,7 +90,7 @@ class App extends Component {
             <Route path="/requestToMaker/:id" component={RequiresAuth(requestMakerPage)} />
             <Route path="/ModifyrequestToDesigner/:id" component={RequiresAuth(ModifyrequestDesignerPage)} />
             <Route path="/ModifyrequestToMaker/:id" component={RequiresAuth(ModifyrequestMakerPage)} />
-            <Route path="/responseToDesignerReq/:id" component={RequiresAuth(ResponseToDesignerReqPage)} />
+            <Route path="/responseToDesignerReq/:pid" component={RequiresAuth(ResponseToDesignerReqPage)} />
             <Route path="/responseToMakerReq/:id" component={RequiresAuth(ResponseToMakerReqPage)} />
             {/* GALLERY */}
             <Route path="/createGallery" component={RequiresAuth(CreateGalleryPage)} />

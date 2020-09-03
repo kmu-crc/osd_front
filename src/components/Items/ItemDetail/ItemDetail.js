@@ -32,7 +32,7 @@ const Wrapper = styled.div`
 const ItemImages = styled.div`
   width: 600px;
   height: 600px;
-  margin-left: 25px; 
+  // margin-left: 25px; 
   .main-image {
     border: 1px solid #EFEFEF;
     overflow-x: auto;
@@ -60,7 +60,7 @@ const ItemInfo = styled.div`
   // border:1px solid black;
   position: relative;
   margin-left: 50px;
-  width: 900px;
+  width: 948px;
   height: 600px;
   font-family: Noto Sans KR;
   background: #FFFFFF;
@@ -70,8 +70,8 @@ const ItemInfo = styled.div`
   padding:35px;
   // *{ border: 1px solid red; };
   .title {
-    font-size: 34px;
-    line-height: 50px;
+    font-size: 23px;
+    // line-height: 50px;
     text-align: left;
     color: #000000;
   }
@@ -79,8 +79,8 @@ const ItemInfo = styled.div`
     margin-top: 19px;
     position:relative;
     .who {
-      width: 49px;
-      height: 50px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       background-size: cover;
       background-position: center center;
@@ -89,7 +89,7 @@ const ItemInfo = styled.div`
     }
     .nick{
       cursor:pointer;
-      font-size: 20px;
+      font-size: 17px;
       font-weight: 300;
       line-height: 29px;
       color: #060000;
@@ -275,7 +275,7 @@ const Board = styled.div`
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
   opacity: 1;
-  padding: 45px 25px 20px 30px; // 90px 51px 45px 60px;
+  padding: 30px 50px 20px 50px;
   font-family: Noto Sans KR;
   color: #000000;
   font-weight: 300;
@@ -335,7 +335,7 @@ const Content = styled.div`
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
   opacity: 1;
-  padding: 45px 25px 20px 30px;
+  padding: 30px 0px 20px 50px;
   font-family: Noto Sans KR;
   color: #000000;
   font-weight: 300;
@@ -345,7 +345,7 @@ const Content = styled.div`
   position:relative;
   .title {
     font-weight: 500;
-    margin-bottom: 25px;
+    margin-bottom: 12px;
   }
   .element {
     margin-top: 22px;
@@ -616,7 +616,7 @@ class ItemDetail extends Component {
                         })
                       }
                     </div>
-                    <div className="gradient_box" ><div>▾</div></div>
+                    <div className="gradient_box" ></div>
                   </div>
                 </Introduction>
 
@@ -693,7 +693,7 @@ class ItemDetail extends Component {
           <div style={{ marginTop: "35px" }}>
             <Board style={{ marginTop: "15px", overflow: "hidden" }} height={expandingReview ? "100%" : "315px"}>
               <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", display: "flex" }}>
-                <div style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: "#FFFFFF" }}>리뷰</div>
+                <div style={{ borderRadius: "0px 10px 0px 0px", width: "120px", background: "#FFFFFF" }}>리뷰</div>
               </div>
 
               <ItemReviewContainer
@@ -726,7 +726,7 @@ class ItemDetail extends Component {
             <Board style={{ marginTop: "15px", overflow: "hidden" }} height={expandingBoard ? "100%" : "250px"}>
               <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", display: "flex" }}>
                 <div
-                  style={{ borderRadius: "0px 10px 0px 0px", padding: "10px 5px", textAlign: "center", width: "120px", background: "#FFFFFF" }}>게시판</div>
+                  style={{ borderRadius: "0px 10px 0px 0px", width: "120px", background: "#FFFFFF" }}>게시판</div>
               </div>
               <ItemQuestionContainer user_id={item.user_id} isExpanding={(result) => { this.setState({ isexpandingBoard: result }) }} />
               {!this.state.isexpandingBoard && <CoverGrident isGradient={!expandingBoard} />}

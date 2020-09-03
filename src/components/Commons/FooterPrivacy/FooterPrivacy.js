@@ -2,49 +2,54 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Header, Grid } from "semantic-ui-react";
 
-const FromFieldCard = styled.div`  
-  border:3px solid #EFEFEF;  
-  margin-left:0.7rem;
-  margin-top: 2rem;
-  margin-bottom: 5rem;
-  width: 100%;
-  background-color: white;
-  box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
-  padding: 40px;
-  & .para {
-    font-size: 1rem;
-    color: #4D5256;
-  }
+const FromFieldCard = styled.div`
+  width:100%;
+  margin-left:180px;
+  margin-top:88px;
 `;
 
-const FormHeader = styled(Header) `
-  position: relative;
-  padding-right: 2.5rem !important;
-  &::after{
-    position: absolute;
-    display: block;
-    right: 2rem;
-    content: "";
-    height: 20px;
-    border-right: 3px solid #191919;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-`;
+const TabBox=styled.div`
+.pointer{cursor:pointer;}
 
+  width:100%;
+  height:29px;
+  font-size:20px;
+  display:flex;
+  align-items:center;
+  margin-bottom:66px;
+  .text_grey{
+    color:#707070;
+  }
+  .text_black{
+    color:#000000;
+  }
+  .vrLine{
+    height:100%;
+    border:1px solid #d6d6d6;
+    margin-left:20px;
+    margin-right:20px;
+  }
+`
+const ContentBox=styled.div`
+  margin-bottom:100px;
+  .font_small{font-size:15px;}
+  .font_bold{font-family:Noto Sans CJK KR,Medium;}
+  .font_right{font-family:Noto Sans CJK KR, Regular;}
+
+`
 class FooterPrivacy extends Component {
   render() {
     return(
       <div style={{width:"83%"}}>
         <FromFieldCard>
-          <Grid>
-            <Grid.Column width={4}>
-              <FormHeader as="h2">개인정보 보호정책</FormHeader>
-            </Grid.Column>
-            <Grid.Column width={12}>
-              <div className="para">
-                <h3>개인정보처리방침</h3>
-
+              <TabBox>
+                <div className="text_grey pointer" onClick={()=>window.location.href="/footerPrivacy"}>이용약관</div>
+                <div className="vrLine"/>
+                <div className="text_black pointer" onClick={()=>window.location.href="/footerPara"}>개인정보 보호정책</div>
+              </TabBox>
+              <ContentBox>
+              <div>
+                <div className="font_small font_bold">개인정보처리방침</div>
                 <h4>[차례]</h4>
                 <h4>제1조 총칙<br/>
                 제2조 개인정보의 수집방법 및 항목<br/>
@@ -58,7 +63,7 @@ class FooterPrivacy extends Component {
                 제10조 개인정보관리책임자<br/>
                 제11조 고지의 의무</h4>
 
-                <br></br><h4>[현행] 2017년 1월 2일 시행안</h4><br></br>
+                <br></br><div className="font_small font_right">[현행] 2017년 1월 2일 시행안</div><br></br>
 
                 <h4>제1조 (총칙)</h4>
                 (주)오픈디자인 (이하 "회사")는 회원의 개인정보보호를 소중하게 생각하고, 회원의 개인정보를 보호하기 위하여 항상 최선을 다해 노력하고 있습니다.
@@ -154,8 +159,7 @@ class FooterPrivacy extends Component {
                 <br/>가. 공고일자 : 2017년 01월 02일<br></br>
                 <br/>나. 시행일자 : 2017년 01월 02일
               </div>
-            </Grid.Column>
-          </Grid>
+              </ContentBox>
         </FromFieldCard>
       </div>
     );
