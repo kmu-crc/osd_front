@@ -438,11 +438,11 @@ class Messages extends React.Component {
       memberSearch: false,
     };
     // this.handleChangeMsgValue = this.handleChangeMsgValue.bind(this);
+    // this.initMsgValue = this.initMsgValue.bind(this);
     this.handleClickSend = this.handleClickSend.bind(this);
     this.handleSelectMsgSummary = this.handleSelectMsgSummary.bind(this);
     this.handleOpenMember = this.handleOpenMember.bind(this);
     this.handleClickSearchMemberItem = this.handleClickSearchMemberItem.bind(this);
-    // this.initMsgValue = this.initMsgValue.bind(this);
     this.handleCloseMember = this.handleCloseMember.bind(this);
     this.handleResize = this.handleResize.bind(this);
     this.getValue = this.getValue.bind(this);

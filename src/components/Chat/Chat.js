@@ -319,7 +319,7 @@ const Me = (data) => {
           <div className="count">{data.count > 0 ? data.count : ""}</div>
           <div className="time">{dateTime}</div>
         </div>
-        <div className="message">
+        <div className="message" style={{ whiteSpace: "pre-wrap" }}>
           {data.message}</div>
       </div>
     </MyMessage>);
@@ -762,12 +762,18 @@ class Chat extends React.Component {
     message.value = null;
   };
   sendMessageEnter(event) {
-    if (window.event.keyCode == 13) {
+    if (event.keyCode == 13 && !event.shiftKey) {
       let message = document.getElementById('chat-input')
       if (message.value.trim() == "") return;
+      // console.log("message:", message.value)
+      var str = document.getElementById("chat-input").value;
+      str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+      document.getElementById("chat-input").value = str;
+      console.log(document.getElementById("chat-input").value, str)
       try {
         this.socket.emit(
-          'chat', { message: message.value },
+          'chat', { message: str },
+          // 'chat', { message: message.value },
           () => {
             // console.log(`message : ${message.value}`)
           });
@@ -833,6 +839,7 @@ class Chat extends React.Component {
             {this.state.chat &&
               this.state.chat.length > 0 &&
               this.state.chat.map((chat, index) => {
+
                 beforeChat = nowChat;
                 nowChat = chat.user_id;
                 beforeDate = new Date(nowDate);
@@ -843,7 +850,11 @@ class Chat extends React.Component {
                 const day = nowDate.getDate();
 
                 let date = year + "년 " + month + "월 " + day + "일";
-                // console.log(chat.uid + index);
+
+                // <br/> to new-line
+                // console.log("1:message:", chat.message)
+                chat.message = chat.message.replaceAll("<br/>", "\r\n");
+                // console.log("2:message:", chat.message)
                 return (
                   <div key={"uid" + chat.uid.toString() + ",idx:" + index.toString()}>
 
@@ -882,7 +893,7 @@ class Chat extends React.Component {
           <ChatArea
             type="text"
             id="chat-input"
-            placeholder="Send a message..."
+            placeholder="문자를 입력하세요.(줄바꿈: 쉬프트+엔터)"
             className='chatdata'
             autoComplete="off"
             onKeyDown={this.sendMessageEnter}
