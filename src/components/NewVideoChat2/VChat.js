@@ -290,6 +290,7 @@ class MyVideo extends Component {
             onClick={() => this.props.onClick && this.props.onClick()}
             id={this.props.uid}
             autoPlay
+            muted
             ref={(ref) => { this.video = ref }}
           />
           {this.state.cam === false && <div className="txt">{this.props.nick_name}</div>}
@@ -694,7 +695,7 @@ class VChat extends Component {
 
   render() {
     const connected = this.state.peers && this.state.peers.length > 0 && this.state.peers.filter(peer => peer.stream != null)
-
+    console.log("selected:", this.state.selected, this.state.selectedVideo)
     return (<VideoChatContainer w={window.innerWidth} h={window.innerHeight}>
       {/* top */}
       <ButtonBarContainer>
@@ -722,6 +723,7 @@ class VChat extends Component {
       {/* middle*/}
       <BigVideoScreen>
         <video
+          muted
           autoPlay
           ref={(ref) => this.video = ref}
         />

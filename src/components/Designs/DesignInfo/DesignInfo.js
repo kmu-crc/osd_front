@@ -905,36 +905,37 @@ class DesignInfo extends Component {
     }
 
     openVideoChat = () => {
-        // alert("!");
-        if (this.props.userInfo) {
-            const url = geturl() + `/vchat/${this.props.DesignDetail.uid}`
-            const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,top=100,left=100,width=1280,height=720,scrollbars=no`;
-            this.vchatwindow = window.open(url, "vchat", options);
-            try {
-                // if (this.state.liveVC === false) {
-                if (this.props.userInfo.uid === this.props.DesignDetail.user_id) {
-                    Socket.emit('invited-member-to-vchat', { user_id: this.props.userInfo.uid, design_id: this.props.DesignDetail.uid })
-                }
-            } catch (e) {
-                console.error(e);
+        if (this.props.userInfo == null) {
+            this.needLogin();
+            return;
+        }
+        const url = geturl() + `/vchat/${this.props.DesignDetail.uid}`
+        const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,top=100,left=100,width=1280,height=720,scrollbars=no`;
+        this.vchatwindow = window.open(url, "vchat", options);
+        try {
+            if (this.state.liveVC === false) {
+                // if (this.props.userInfo.uid === this.props.DesignDetail.user_id) {
+                Socket.emit('invited-member-to-vchat', { user_id: this.props.userInfo.uid, design_id: this.props.DesignDetail.uid })
+                // }
             }
+        } catch (e) {
+            console.error(e);
         }
     }
 
     openChat = () => {
-        if (this.props.userInfo) {
-            const url = geturl() + `/chat/${this.props.DesignDetail.uid}`;
-            const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
-            this.chatwindow = window.open(url, "chat", options);
-            // console.log(this.chatwindow.closed);
-            // this.chatwindow.addEventListener('close', () => {
-            //     alert("chat closed :)");
-            //     console.log(this.chatwindow.closed);
-            // })
-        }
-        else {
+        if (!this.props.userInfo) {
             this.needLogin();
+            return;
         }
+        const url = geturl() + `/chat/${this.props.DesignDetail.uid}`;
+        const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
+        this.chatwindow = window.open(url, "chat", options);
+        // console.log(this.chatwindow.closed);
+        // this.chatwindow.addEventListener('close', () => {
+        //     alert("chat closed :)");
+        //     console.log(this.chatwindow.closed);
+        // })
     }
 
 
@@ -1237,7 +1238,7 @@ class DesignInfo extends Component {
                 <div
                     className="notice"
                     title="디자인 멤버들과 화상회의를 시작합니다."
-                    onClick={() => this.openVideoChat()}>
+                    onClick={this.openVideoChat}>
 
                     {this.state.liveVC ? <span>ON</span> : null}
 

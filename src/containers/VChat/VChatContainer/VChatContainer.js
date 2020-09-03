@@ -42,14 +42,16 @@ class VChatContainer extends Component {
                         const found = data.member.filter(mem => mem.user_id === this.props.userInfo.uid)
                         if (found.length === 0) {
                             alert("회원이 아닙니다.");
-                            window.history.back();
+                            window.open('', '_self').close()
+                            // window.history.back();
                         }
                         this.setState({ design: data });
                         this.setState({ valid: true });
                         console.log('validated');
                     } else {
                         alert("디자인정보가 잘못되었습니다.");
-                        window.history.back();
+                        window.open('', '_self').close()
+                        // window.history.back();
                     }
                     // console.log('design-detail', data);
                 })
