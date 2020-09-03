@@ -27,7 +27,6 @@ class MainMyDesignContainer extends Component {
       this.props.token, page);
 
   render() {
-
     return (
       <React.Fragment>
         {this.props.MyMainDesignAdded &&

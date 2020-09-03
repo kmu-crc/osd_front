@@ -776,13 +776,16 @@ class DesignInfo extends Component {
                     design: this.props.id, user: this.props.userInfo.uid
                 });
                 Socket.on('vchat-on-air', data => {
-                    console.log('check VC on air', data);
-                    this.setState({ liveVC: data });
+                    console.log('check VC on air', data)
+                    this.setState({ liveVC: data })
                     Socket.on('check-new-message-count', data => {
-                        console.log('check new msg cnt', data);
-                        this.setState({ msg_cnt: data });
-                    });
-                });
+                        console.log('check new msg cnt', data)
+                        this.setState({ msg_cnt: data })
+                    })
+                })
+                Socket.on('vchat-was-finished', () => {
+                    this.setState({ liveVC: false })
+                })
             } catch (err) {
                 console.error(err);
             }
@@ -904,11 +907,23 @@ class DesignInfo extends Component {
         this.setState({ comment: false });
     }
 
-    openVideoChat = () => {
-        if (this.props.userInfo == null) {
+    checkMember = () => {
+        if (!this.props.userInfo) {
             this.needLogin();
-            return;
+            return false
         }
+        if (this.props.DesignDetail && this.props.DesignDetail.member) {
+            const found = this.props.DesignDetail.member.filter(mem => mem.user_id === this.props.userInfo.uid)
+            if (found.length === 0) {
+                alert("이 디자인의 맴버가 아닙니다.")
+                return false
+            }
+        }
+        return true
+    }
+    openVideoChat = () => {
+        if (this.checkMember() === false) return
+
         const url = geturl() + `/vchat/${this.props.DesignDetail.uid}`
         const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,top=100,left=100,width=1280,height=720,scrollbars=no`;
         this.vchatwindow = window.open(url, "vchat", options);
@@ -924,10 +939,9 @@ class DesignInfo extends Component {
     }
 
     openChat = () => {
-        if (!this.props.userInfo) {
-            this.needLogin();
-            return;
-        }
+
+        if (this.checkMember() === false) return
+
         const url = geturl() + `/chat/${this.props.DesignDetail.uid}`;
         const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
         this.chatwindow = window.open(url, "chat", options);
