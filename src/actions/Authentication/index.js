@@ -41,6 +41,48 @@ export function CkeckTokenFailure() {
   }
 };
 
+
+export function CheckPayUserRequest(uid) {
+  return (dispatch) => {
+    dispatch(CheckPayUser());
+    return fetch(`${host}/users/checkPayUser/${uid}`, { method: "GET" })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        if (res.success) {
+          return dispatch(CheckPayUserSuccess(res.checkPayUser));
+        } else {
+          return dispatch(CheckPayUserFailure(res.error));
+        }
+      })
+      .catch(err => dispatch(CheckPayUserFailure()));
+  };
+};
+
+export function CheckPayUser() {
+  return {
+    type: types.AUTH_CHECK_PAYUSER
+  }
+};
+
+export function CheckPayUserSuccess(data) {
+  return {
+    type: types.AUTH_CHECK_PAYUSER_SUCCESS,
+    checkPayUser: data
+  }
+};
+
+
+export function CheckPayUserFailure(err) {
+  return {
+    type: types.AUTH_CHECK_PAYUSER_FAILURE,
+    checkPayUser: false,
+    error: err
+  }
+};
+
+
+
 export function CheckEmailRequest(email) {
   return (dispatch) => {
     dispatch(CheckEmail());
