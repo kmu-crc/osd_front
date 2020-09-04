@@ -776,7 +776,6 @@ class DesignInfo extends Component {
                     design: this.props.id, user: this.props.userInfo.uid
                 });
                 Socket.on('vchat-on-air', data => {
-                    console.log('check VC on air', data)
                     this.setState({ liveVC: data })
                     Socket.on('check-new-message-count', data => {
                         console.log('check new msg cnt', data)
