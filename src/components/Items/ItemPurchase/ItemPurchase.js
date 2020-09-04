@@ -3,6 +3,11 @@ import styled from 'styled-components';
 import noimg from "source/noimg.png";
 import Cross from "components/Commons/Cross"
 
+import addfile from "source/addfile.svg";
+import addimage from "source/addimg.svg";
+import docu from "source/doc.svg";
+import download from "source/down.svg";
+
 import who from "source/thumbnail.png";
 import CardSourceDetailContainer from "containers/Items/CardSourceDetailContainer";
 import ItemStepContainer from "containers/Items/ItemStepContainer";
@@ -13,18 +18,41 @@ import FileIcon from "components/Commons/FileIcon";
 const MessageBox = styled.div`
   padding:10px;
 `
+
+const FileImage=styled.div`
+width:344px;
+height:344px;
+max-height:min-content;
+background-image:url(${props=>props.imgURL});
+background-repeat: no-repeat;
+background-size: contain;
+`
+const CustomIcon =styled.div`
+width:${props => props.width}px;
+height:${props => props.height}px;
+background-image:url(${props=>props.imgURL});
+background-repeat: no-repeat;
+background-size: contain;
+padding:${props => props.padding}px;
+margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
+margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
+display:${props=>props.isNon==true?"none":"block"}
+`
 const CustomButton = styled.div`
-    width:${props => props.width}px;
-    height:${props => props.height}px;
-    border:1px solid #dddddd;
+    min-width:${props => props.width}px;
+    min-height:${props => props.height}px;
+    border:1px solid ${props => props.borderColor==null?"#d6d6d6":props.borderColor};
     background-color:${props => props.backgroundColor};
-    font-size:${props => props.fontSize}pt;
-    font-weight:500;
-    color:white;
-    text-align:center;
-    padding:${props => props.padding}px;
-    margin-top:-1px;
-    border-radius:20px;
+    // background-image:url(${props=>props.imgURL})
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:${props=>props.marginBottom==null?"0":props.marginBottom}px;
+    .text_{
+      font-size:${props => props.fontSize}pt;
+      font-weight:500;
+      color:${props => props.fontColor==null?"white":props.fontColor};
+    }
     &:hover{
         // background-color:${props => props.onMouseColor};
         cursor:pointer;
@@ -33,8 +61,8 @@ const CustomButton = styled.div`
 
 const InputText = styled.input.attrs({ type: "text" })`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:43px;
-  border-radius:20px;
+  height:100px;
+  border-radius:10px;
   font-family:Noto Sans KR;
   font-size:20px;
   background-color:#efefef;
@@ -49,21 +77,38 @@ const MessageWrapper = styled.div`
     justify-content:${props=>props.isMy?"flex-start":"flex-start"};
     align-items:flex-end;
     flex-direction:${props=>props.isMy?"row-reverse":"row"};
-    margin-bottom:10px;
+    margin-bottom:16px;
   .msg_bubble{
     max-width:400px;
-    background-color:${props=>props.isMy?"#EAA18A":"#EFEFEF"};
-    padding:10px;
+    background-color:${props=>props.isMy?"#d6d6d6":"#EFEFEF"};
+    padding:13px;
     display:flex;
     justify-content:center;
     align-items:flex-end;
-    border-radius:10px;
+    border-radius:30px;
+    font-size:17px;
+  }
+  .file_bubble{
+    max-width:400px;
+    background-color:${props=>props.isMy?"#d6d6d6":"#EFEFEF"};
+    padding:13px;
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    border-radius:5px;
+    font-size:17px;
   }
   .msg_time{
     width:max-content;
-    height:min-content;
+    height:25px;
     font-size:10px;
-    margin:5px;
+    margin-left:12px;
+    margin-right:12px;
+  }
+  .timeWrapper{
+    display:flex;
+    flex-direction:column;
+    align-items:${props=>props.isMy?"flex-end":"flex-start"};
   }
 `
 const Wrapper = styled.div`
@@ -80,7 +125,7 @@ const Wrapper = styled.div`
 const ItemImages = styled.div`
   width: 600px;
   height: 600px;
-  margin-left: 25px; 
+  // margin-left: 25px; 
   .main-image {
     border: 1px solid #EFEFEF;
     overflow-x: auto;
@@ -105,21 +150,18 @@ const ItemImages = styled.div`
   }
 `;
 const ItemInfo = styled.div`
-  // border:1px solid black;
   position: relative;
   margin-left: 50px;
-  width: 900px;
+  width: 948px;
   height: 600px;
   font-family: Noto Sans KR;
   background: #FFFFFF;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px; 
-  // padding: 20px 35px 10px 15px;
   padding:35px;
-  // *{ border: 1px solid red; };
   .title {
-    font-size: 34px;
-    line-height: 50px;
+    font-size: 23px;
+    // line-height: 50px;
     text-align: left;
     color: #000000;
   }
@@ -127,8 +169,8 @@ const ItemInfo = styled.div`
     margin-top: 19px;
     position:relative;
     .who {
-      width: 49px;
-      height: 50px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       background-size: cover;
       background-position: center center;
@@ -137,7 +179,7 @@ const ItemInfo = styled.div`
     }
     .nick{
       cursor:pointer;
-      font-size: 20px;
+      font-size: 17px;
       font-weight: 300;
       line-height: 29px;
       color: #060000;
@@ -231,9 +273,9 @@ const ItemInfo = styled.div`
     }
   }
 `;
-const Introduction = styled.div`
+const Introduction = styled.div`                 
   position: relative;
-  height: 100%;
+  height: 460px;
   opacity: 1;
   font-family: Noto Sans KR;
   .wrapItem{
@@ -243,12 +285,15 @@ const Introduction = styled.div`
     .flex{
       display:flex;
     }
+ 
     .title {
       margin-top: 10px;
       font-size: 19px;
       font-weight: 500;
       line-height: 28px;
       text-align: left;
+    }
+    .itemDescription{
     }
     .text {
       width: 100%;
@@ -383,7 +428,7 @@ const Content = styled.div`
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
   opacity: 1;
-  padding: 45px 25px 20px 30px;
+  padding: 30px 50px 20px 50px;
   font-family: Noto Sans KR;
   color: #000000;
   font-weight: 300;
@@ -391,9 +436,43 @@ const Content = styled.div`
   line-height: 28px;
   text-align: left;
   position:relative;
+  .iconWrapper{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    margin-right:30px;
+  }
+  .font_small{
+    height:20px;
+    font-size:7px;
+    color:#707070;
+  }
+  .who {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center center;
+    background-image: url(${props => props.face});
+    margin-right: 12px;
+  }
+  .flex{
+    display:flex;
+  }
+  .nick{
+    cursor:pointer;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 29px;
+    color: #060000;
+  }
   .title {
     font-weight: 500;
     margin-bottom: 25px;
+  }
+  .margin_bottom_s{
+    margin-bottom:15px;
   }
   .element {
     margin-top: 22px;
@@ -440,6 +519,12 @@ const Content = styled.div`
     // border:1px solid black;
     // overflow:scroll;
     // scroll-y:hidden;
+  }
+  .hrLine{
+    width:100%;
+    border-top:2px solid #d6d6d6;
+    margin-top:12px;
+    margin-bottom:12px;
   }
 `;
 const Label = styled.label`
@@ -636,6 +721,7 @@ class ItemPurchase extends Component {
   render() {
     console.log(this.props);
     const item = this.props.item;
+    const week=["일","월","화","수","목","금","토"];
     const { expandingContent, expandingReview, expandingBoard } = this.state;
     const { score } = this.props.item;
     let tag = this.props.ItemDetail.tag + "";
@@ -725,30 +811,7 @@ class ItemPurchase extends Component {
                     <div id="itemDescription" className="text"
                       dangerouslySetInnerHTML={{ __html: `${item.description || ""}` }}
                     />
-                    {/* <div className="title">유형</div>
-                    <div className="text flex">
-                      {item.type === 0 ? "디자인" : null}
-                      {item.type === 1 ? "프로젝트" : null}
-                      {item.type === 2 ? "기술자문/상담" : null}
-                      {item.type === 3 ? "경험" : null}
-                      {item.type === 4 ? "정보/데이터" : null}
-                      {item.type === 5 ? "아이디어/노하우" : null}
-                      {item.type === 6 ? "지적재산권" : null}
-                      {item.type === 7 ? "제작품" : null}
-                    </div>
-                    <div className="title">태그</div>
-                    <div className="text flex">
-                      {
-                        tag.indexOf(",") == -1 ? null : tag.split(",").map((item, index) => {
-                          return (
-                            <TagPiece key={index}>
-                              {item}
-                            </TagPiece>
-                          );
-                        })
-                      }
-                    </div> */}
-                    <div className="gradient_box" ><div>▾</div></div>
+                    <div className="gradient_box" ></div>
                   </div>
                 </Introduction>
               </div>
@@ -759,9 +822,11 @@ class ItemPurchase extends Component {
           {/* item-contents */}
           <div style={{ marginTop: "35px" }}>
           <Content
+            face={this.props.userInfo.thumbnail.s_img}
             id="contents_rgn"
             style={{ marginTop: "15px", overflow: "hidden" }}
             width={1600}>
+            
 {/** -------------------- CLOSE CONTENT ----------------------- */}
             {item&&(item.type==0||item.type==3||item.type==4||item.type==5||item.type==6)?
             <React.Fragment>
@@ -796,25 +861,64 @@ class ItemPurchase extends Component {
 {/** -------------------- ADVICE ----------------------- */}
             {item&&(item.type==2)?
             <React.Fragment>
-              <div className="title">자문/상담</div>
+
+              <div className="title margin_bottom_s">자문/상담</div>
+              <div className="flex">
+              <div className="who" />
+              <div className="nick" onClick={() => this.setState({ isShowmember: !this.state.isShowmember })}>{this.props.userInfo.nickName}</div>
+              </div>
+              <div className="hrLine"/>
               <MessageBox>
                 {
                   this.props.paymentMessageList&&
                   this.props.paymentMessageList.map((item,index)=>{
+                    const createtime = new Date(item.create_time);
+                    const msgTime = createtime.getFullYear()+"."
+                    +(createtime.getMonth()+1)+"."
+                    +createtime.getDate()
+                    +"("+week[createtime.getDay()]+")"
+                    +(createtime.getHours()<=12&&createtime.getHours()>=6?"오전":"오후")
+                    +(createtime.getHours()<=9?'0'+createtime.getHours():createtime.getHours())
+                    +":"+(createtime.getMinutes()<=9?'0'+createtime.getMinutes():createtime.getMinutes())
                     return( 
                     <MessageWrapper isMy={item.from_id==this.props.userInfo.uid}> 
+                    {
+                      console.log(
+                        String(item.filename).substring(String(item.filename).lastIndexOf('.'),String(item.filename).length))
+                    }
                     {
                       item.filename==null?
                       <React.Fragment>
                           <div className="msg_bubble">{item.message}</div>      
-                          <div className="msg_time">{item.create_time}</div>    
+                          <div className="msg_time">{msgTime}</div>    
+                      </React.Fragment>
+                      :
+                      item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)==".jpg"||
+                      item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)==".JPG"||
+                      item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)==".png"||
+                      item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)==".PNG"?
+                      <React.Fragment>
+                        <div className="file_bubble">
+                            {/* <FileImage imgURL={item.file_url}/> */}
+                            <img width={334} src={item.file_url}/>
+                        </div>
+                        <div className="timeWrapper">
+                          <a href={item.file_url} download={item.filename} className="iconWrap">
+                            <CustomIcon width={21} height={21} imgURL={download}/>
+                          </a>
+                          <div className="msg_time">{msgTime}</div>
+                        </div>    
                       </React.Fragment>
                       :
                       <React.Fragment>
                         <a href={item.file_url} download={item.filename} className="iconWrap">
-                          <FileIcon type={"application"} extension={item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)}/>
-                          {item.filename}
+                          {/* <FileIcon type={"application"} extension={item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)}/> */}
+                          <div className="file_bubble">
+                            <CustomIcon width={19} height={19} imgURL={docu}/>{item.filename}
+                            <CustomIcon isNon={item.from_id==this.props.userInfo.uid} width={19} height={19} imgURL={download}/>
+                          </div>
                         </a>
+                        <div className="msg_time">{msgTime}</div>    
                       </React.Fragment>
                     }
                       
@@ -823,26 +927,55 @@ class ItemPurchase extends Component {
                   })
                 }
               </MessageBox>
-              <div style={{display:"flex"}}>
-              <Label htmlFor="file">
-                +</Label>
-                <input
+              <div className="hrLine"/>
+              <div className="flex margin_bottom_s">
+
+              <label htmlFor="addimg">
+              <input
                       hidden
                       type="file"
-                      id="file"
+                      id="addimg"
+                      name="source"
+                      ref={ref => (this.input = ref)}
+                      onChange={this.onFileChange}
+                      accept="image/*" 
+                      />
+              <div className="iconWrapper"> 
+                  <CustomIcon width={24} height={30} imgURL={addimage}/>
+                  <div className="font_small">이미지</div>
+              </div>
+              </label>
+              <label htmlFor="addfile">
+              <input
+                      hidden
+                      type="file"
+                      id="addfile"
                       name="source"
                       ref={ref => (this.input = ref)}
                       onChange={this.onFileChange}
                       // accept=".pdf" 
                       />
+              <div className="iconWrapper"> 
+                  <CustomIcon width={24} height={30} imgURL={addfile}/>
+                  <div className="font_small">파일</div>
+                </div>
+              </label>
+              </div>
+              <div style={{display:"flex"}}>
+                
+              {/* <Label htmlFor="file">
+                +</Label> */}
+
               <InputText id="advicebox" value={this.state.message} onChange={this.onChangeMessage}/>
               {
                 this.state.file==null?
-                <CustomButton id="sendmessage" width="100" height="30px" backgroundColor="#707070" fontSize="12" padding="5" onClick={this.writeMessage}>보내기</CustomButton>
+                <CustomButton id="sendmessage" width="100" height="100" backgroundColor="white" fontColor="#707070" fontSize="12" onClick={this.writeMessage}><div className="text_">보내기</div></CustomButton>
                 :
                 <React.Fragment>
-                  <CustomButton id="cancelbtn" width="100" height="30px" backgroundColor="#707070" fontSize="12" padding="5" onClick={this.onCancelFile}>취소</CustomButton>
-                  <CustomButton id="sendfile" width="100" height="30px" backgroundColor="#707070" fontSize="12" padding="5" onClick={this.onSendFile}>전송</CustomButton>
+                  <div>
+                  <CustomButton id="cancelbtn" width="100" height="45" backgroundColor="white" fontColor="#707070" marginBottom="10" fontSize="12" onClick={this.onCancelFile}>취소</CustomButton>
+                  <CustomButton id="sendfile" width="100" height="45" backgroundColor="white" fontColor="#707070" fontSize="12" onClick={this.onSendFile}>전송</CustomButton>
+                  </div>
                 </React.Fragment>
               }
               </div>

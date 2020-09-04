@@ -1,4 +1,5 @@
 export * from "./InputTag";
+export * from "./InputTagNew";
 export * from "./ThumbnailList";
 export * from "./RadioType";
 export * from "./AddController";
@@ -9,3 +10,5 @@ export * from "./TextControllerClassic";
 export * from "./InputPrice";
 export * from "./InputContent";
 export * from "./InputCalendar";
+export * from "./InputPriceNew";
+export * from "./InputFile";

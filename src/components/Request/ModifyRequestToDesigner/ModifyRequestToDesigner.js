@@ -2,11 +2,23 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
-import { InputTag } from "components/Commons/InputItem/InputTag"
-import { InputPrice } from "components/Commons/InputItem/InputPrice";
-import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
+import { InputTagNew,InputFile,InputPriceNew,InputCalendar } from "components/Commons/InputItem"
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
+import { FileUploadRequest } from "actions/Uploads";
+import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
+import category_icon from "source/category_icon.svg";
 
+const CustomIcon=styled.div`
+  width:${props => props.width}px;
+  height:${props => props.height}px;
+  background-image:url(${props=>props.imgURL});
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding:${props => props.padding}px;
+  margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
+  margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
+  display:${props=>props.isNon==true?"none":"block"}
+`
 const LocationList = [
   { value: 0, text: "서울특별시" },
   { value: 1, text: "부산광역시" },
@@ -27,20 +39,17 @@ const LocationList = [
 ];
 
 const Wrapper = styled(ContentBox)`
-    width:100%;
-    margin-top:60px;
-    margin-bottom: 100px;
-    z-index:3;
-    // *{
-    //   border:1px solid black;
-    // }
+  width: 100%;
+  margin-top: 60px;
+  margin-bottom: 100px;
+  z-index: 3;
 `;
 const MainBox = styled.div`
   width:100%;
   .title{
     width:170px;
     height:29px;
-    font-family:Noto Sans KR, Medium;
+    font-family:Noto Sans CJK KR, Medium;
     font-size:20px;
     font-weight:500;
     margin-left:130px;
@@ -50,19 +59,23 @@ const MainBox = styled.div`
     position: relative;
     width:100%;
     display:flex;
-    padding-left:130px;
-    padding-top:36px;
+    padding:36px 130px 36px 136px;
+  }
+  .centering_{
+    width:100%;
+    display:flex;
+    padding:36px 130px 36px 136px;
+    justify-content:center;
   }
 
-`
+`;
 
 const FormBox = styled.div`
-  *{
-    font-family:Noto Sans KR;
-    font-weight:500;
-    font-size:20px;
-  }
-  width:939px;
+
+  font-family:Noto Sans KR;
+  font-weight:500;
+  font-size:20px;
+  width:100%;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
   padding-left:59px;
@@ -88,8 +101,14 @@ const FormBox = styled.div`
     display:flex;
   }
   .label{
+    font-family:Noto Sans CJK KR, Regular;
+    font-size:20px;
     min-width:157px;
     height:29px;
+  }
+  .text_small{
+    font-family:Noto Sans CJK KR, Regular;
+    font-size:17px;
   }
   .label_centering{
     text-align:center;
@@ -99,12 +118,21 @@ const FormBox = styled.div`
     height:30px;
     color:#707070;
   }
-
-`
+  .faded-text {
+    border-radius: 15px;
+    background-color: #EAEAEA;
+    padding: 15px 15px;
+  }
+  .information {
+    color: red;
+    font-size: 16px;
+    margin-left: 10px;
+  }
+`;
 const InputText = styled.input.attrs({ type: "text" })`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:43px;
-  border-radius:20px;
+  height:52px;
+  border-radius:26px;
   font-family:Noto Sans KR;
   font-size:20px;
   background-color:#E9E9E9;
@@ -113,7 +141,7 @@ const InputText = styled.input.attrs({ type: "text" })`
   border:0px;
   padding: 0.67857143em 1em;
 
-`
+`;
 const InputTextarea = styled.textarea`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
@@ -126,26 +154,22 @@ const InputTextarea = styled.textarea`
   readonly;
   padding: 0.67857143em 1em;
 
-`
-//const Margin = styled.div`
-//  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-//  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
-//`
-
+`;
 const DropBox = styled(Dropdown)`
-    min-width:200px !important;
+    min-width:254px !important;
+    min-height:52px !important;
     background-color:#E9E9E9 !important;
     margin-right:10px;
 
-    border-radius:20px !important;
-`
+    border-radius:26px !important;
+`;
 const HRLine = styled.div`
     width:93%;
     height:3px;
     background-color:#E9E9E9;
     margin-top:35px;
     margin-bottom:35px;
-`
+`;
 class ModifyRequestToDesigner extends Component {
   constructor(props) {
     super(props);
@@ -170,6 +194,7 @@ class ModifyRequestToDesigner extends Component {
     this.handleAddTag = this.handleAddTag.bind(this);
     this.onClickDelete = this.onClickDelete.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onFileChange=this.onFileChange.bind(this);
   }
   componentDidMount() {
     // modify :*** 데이터베이스 호출 시 주석해제 *****
@@ -191,6 +216,8 @@ class ModifyRequestToDesigner extends Component {
       this.setState({
         category_level1: nextProps.Detail.category_level1,
         category_level2: nextProps.Detail.category_level1,
+        expert_id: nextProps.Detail.expert_id || null,
+        personal: nextProps.Detail.personal || null,
         title: nextProps.Detail.title,
         tag: nextProps.Detail.tag.split(","),
         price: nextProps.Detail.price,
@@ -199,6 +226,8 @@ class ModifyRequestToDesigner extends Component {
         ownership: parseInt(nextProps.Detail.ownership, 10),
         startDate: nextProps.Detail.start_date,
         endDate: nextProps.Detail.end_date,
+        file_url:nextProps.Detail.file_url,
+        filename:nextProps.Detail.filename,
 
       })
     }
@@ -255,10 +284,10 @@ class ModifyRequestToDesigner extends Component {
       location: event.target.value,
     })
   }
-  onChangeContent(event) {
-    this.setState({
-      content: event.target.value,
-    })
+  async onChangeContent(data) {
+    await this.setState({
+      content: data.content
+    });
   }
   onChangeOwnership(event, { value }) {
     this.setState({
@@ -276,19 +305,11 @@ class ModifyRequestToDesigner extends Component {
     })
   }
   onSubmit() {
-
-    // let tagList = "";
-    // this.state.tag.map((item, index) => { // 태그,태그,태그 ...
-    //   return (
-    //     tagList += item + ","
-    //   );
-    // });
-
     const data = {
       type: "designer",
       status: "request",
-      // expert_id: this.props.id || null,
-      // personal: this.props.id || null,
+      expert_id: this.state.expert_id || null,
+      personal: this.state.personal || null,
       title: this.state.title,
       category_level1: this.state.category_level1,
       category_level2: this.state.category_level2,
@@ -300,19 +321,28 @@ class ModifyRequestToDesigner extends Component {
       offline_consultation: this.state.offline,
       start_date: this.state.startDate,
       end_date: this.state.endDate,
+
+      file_url: this.state.file_url,
+      filename: this.state.filename,
     }
-    // 페이지이동
+    console.log(data);
     // window.location.href = "/request/designer";
     this.props.UpdateRequestRequest(this.props.id, data, this.props.token)
       .then(res => {
         if (res.success) {
           if (res.id)
-            window.location.href = `/designerDetail/${res.id}`;
+            window.location.href = `/requestDetail/${res.id}`;
           else
             window.location.href = "/request/designer";
         }
       })
       .catch(err => alert("의뢰 수정 중 에러가 발생했습니다.\n" + err));
+  }
+  async onFileChange(file){
+    this.setState({
+      file_url: file.file_url,
+      filename: file.filename,
+    });
   }
 
   render() {
@@ -346,18 +376,30 @@ class ModifyRequestToDesigner extends Component {
                 <div className="wrapper flex centering">
                   <div className="label">태그</div>
                   <div>
-                    <InputTag taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
+                    <InputTagNew taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
                   </div>
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">의뢰 내용</div>
-                  <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} />
+                  {/* <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} /> */}
+                  <TextControllerClassic
+                    item={{ content: this.state.content, height: 500 }}
+                    name={"comment"}
+                    getValue={this.onChangeContent}
+                    width="820"
+                    editheight="770"
+                  />
+                </div>
+
+                <div className="wrapper flex centering">
+                  <div className="label">파일 등록</div>
+                  <InputFile width={533} getValue={this.onFileChange} file={{file_url:this.props.Detail.file_url,filename:this.props.Detail.filename}}/>
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label ">희망 비용</div>
-                  < InputPrice name="price" getValue={this.getPriceValue} price={parseInt(this.state.price, 10)} />
+                  < InputPriceNew name="price" getValue={this.getPriceValue} price={parseInt(this.state.price, 10)} />
                 </div>
 
                 <div className="wrapper flex centering">
@@ -391,7 +433,7 @@ class ModifyRequestToDesigner extends Component {
 
               </FormBox>
             </div>
-            <div className="contentsBox">
+            <div className="centering_">
               <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true} />
               <GrayButton value={"취소"} onClick={() => { window.history.back() }} isConfirm={true} />
               <GrayButton value={"삭제"} onClick={this.onClickDelete} isConfirm={true} />
