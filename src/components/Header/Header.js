@@ -225,7 +225,8 @@ class Header extends Component {
         if (isOpen(Socket) && this.props.valid) {
             try {
                 // console.log("SOCKET INIT");
-                Socket.emit("INIT", this.props.userInfo.uid)
+                if (isOpen(Socket))
+                    Socket.emit("INIT", this.props.userInfo.uid)
                 Socket.on("getNoti", alarm => {
                     this.setState({ alarm: alarm })
                 })
@@ -256,7 +257,7 @@ class Header extends Component {
     handleResize = () => {
         this.setState({ screenWidth: window.innerWidth })
     };
-    
+
     render() {
         return (
             <React.Fragment>

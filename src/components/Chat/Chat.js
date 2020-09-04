@@ -606,6 +606,7 @@ const You = (data) => {
     </div>
   </YouMessage>)
 };
+function isOpen(ws) { return ws.readyState === ws.OPEN }
 class Chat extends React.Component {
   constructor(props) {
     super(props);
@@ -700,7 +701,8 @@ class Chat extends React.Component {
           this.setState({ page: this.state.page + 1 });
           if (scrollbar.scrollTop == 0) {
             try {
-              this.socket.emit('read');
+              if (isOpen(this.socket))
+                this.socket.emit('read');
             } catch (e) {
               console.error(e);
             }
@@ -739,9 +741,10 @@ class Chat extends React.Component {
 
   requestChat() {
     try {
-      this.socket.emit('load', { page: this.state.page, design_id: this.props.id }, () => {
-        console.log('request ', this.state.page);
-      });
+      if (isOpen(this.socket))
+        this.socket.emit('load', { page: this.state.page, design_id: this.props.id }, () => {
+          console.log('request ', this.state.page);
+        });
     } catch (e) {
       console.error(e);
     }
@@ -751,11 +754,12 @@ class Chat extends React.Component {
     if (message.value.trim() == "") { alert("내용을 입력해주세요"); return; }
 
     try {
-      this.socket.emit('chat', {
-        message: message.value
-      }, () => {
-        // console.log(`message : ${message.value}`);
-      })
+      if (isOpen(this.socket))
+        this.socket.emit('chat', {
+          message: message.value
+        }, () => {
+          // console.log(`message : ${message.value}`);
+        })
     } catch (e) {
       console.error(e);
     }
@@ -771,12 +775,13 @@ class Chat extends React.Component {
       document.getElementById("chat-input").value = str;
       console.log(document.getElementById("chat-input").value, str)
       try {
-        this.socket.emit(
-          'chat', { message: str },
-          // 'chat', { message: message.value },
-          () => {
-            // console.log(`message : ${message.value}`)
-          });
+        if (isOpen(this.socket))
+          this.socket.emit(
+            'chat', { message: str },
+            // 'chat', { message: message.value },
+            () => {
+              // console.log(`message : ${message.value}`)
+            });
       } catch (e) {
         console.error(e);
       }
@@ -786,7 +791,8 @@ class Chat extends React.Component {
   };
   saveChatLog() {
     try {
-      this.socket.emit('save-chat', { design_id: this.props.DesignDetail.uid });
+      if (isOpen(this.socket))
+        this.socket.emit('save-chat', { design_id: this.props.DesignDetail.uid });
     } catch (e) {
       console.error(e);
     }
@@ -808,7 +814,8 @@ class Chat extends React.Component {
 
     if (scrollbar.scrollHeight - scrollbar.scrollTop <= 460) {
       try {
-        this.socket.emit("read");
+        if (isOpen(this.socket))
+          this.socket.emit("read");
         this.setState({ newchat: null })
       } catch (e) {
         console.error(e);

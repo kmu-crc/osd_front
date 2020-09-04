@@ -485,6 +485,7 @@ class OthersVideo extends Component {
   }
 }
 // 
+function isOpen(ws) { return ws.readyState === ws.OPEN }
 class VChat extends Component {
   constructor(props) {
     super(props)
@@ -620,7 +621,8 @@ class VChat extends Component {
       }
     })
     this.myPeer.on('open', id => {
-      this.socket.emit('join-room', this.props.design.uid, id)
+      if (isOpen(this.socket))
+        this.socket.emit('join-room', this.props.design.uid, id)
       // console.log('open', id)
     })
     this.myPeer.on('call', call => {
@@ -718,7 +720,8 @@ class VChat extends Component {
     })
   }
   muteVideo = () => {
-    this.socket.emit("mute", this.props.design.uid, this.props.userInfo.uid)
+    if (isOpen(this.socket))
+      this.socket.emit("mute", this.props.design.uid, this.props.userInfo.uid)
   }
   clickedVideo = (obj) => {
     this.setState({
