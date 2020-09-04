@@ -161,7 +161,7 @@ class RequestToMaker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category_level1: -1, category_level2: -1,
+      category_level1: null, category_level2: null,
       title: "", tag: [], price: 0, content: "", location: 15, offline: 0, amount: 0, resale: 0,
       ownership: 1, startDate: null, endDate: null, dayDate: null,
     }
