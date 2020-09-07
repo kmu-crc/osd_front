@@ -11,14 +11,13 @@ const StyleButton = styled.div`
   display:flex;
   justify-content:center;
   align-items:center;
-  background-color:gray;
   cursor:pointer;
   margin-right:30px;
+  border:1px solid black;
   .text{
-    color:white;
-    font-family:Noto Sans KR;
-    font-size:30px;
-    font-weight:500;
+    color:black;
+    font-family:Noto Sans CJK KR, Regular;
+    font-size:25px;
   }
   &:hover{
       opacity:90%;

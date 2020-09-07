@@ -54,8 +54,8 @@ const CategoryItem = styled.div`
 `
 const TitleForm = styled.input`
   padding: 10px;
-  width: 100%;
-  height: 30px;
+  width: 87%;
+  height: 45px;
   border-radius: 20px;
   background-color:#EFEFEF;
   outline: none;
@@ -74,29 +74,35 @@ const CommentForm = styled.textarea`
 
 `;
 const WriteNormalArticleModal = styled(Modal)`
+  width:988px;
+  height:541px;
   min-width:300px;
   min-height:200px;
-  max-width:790px;
+  // max-width:790px;
   width:45%;
   height:max-height;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   margin-bottom:10px;
   border-radius:15px !important;
-  padding:20px;
+  padding:25px 25px 50px 60px;
   .close-box{
     width: 100%;
-    height:10%;
+    height:max-content;
     display:flex;
     justify-content:flex-end;
+    margin-bottom:10px;
+  
   }
   .title_label{
-    min-width:100px;
+    font-size:20px;
+    font-weight:500;
+    min-width:65px;
     height:max-content;
   }
   .form{
       width:100%;
-      height:10%;
-      padding:10px;
+      height:max-content;
+      margin-bottom:30px;
       display:flex;
   }
   .align_item_center{
@@ -104,6 +110,23 @@ const WriteNormalArticleModal = styled(Modal)`
   }
   .form_height{
     height:max-content;
+  }
+  .redButtonBox{
+    width:95%;
+    display:flex;
+    justify-content:center;
+  }
+  .redButton{
+    background-color:red;
+    width:121px;
+    height:45px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    .btnText{
+      font-size:20px;
+      color:white;
+    }
   }
   .contents{
       display:flex;
@@ -113,6 +136,7 @@ const WriteNormalArticleModal = styled(Modal)`
       .score{
 
       }
+
       .buttonBox{
           .button{
               width:100px;
@@ -351,7 +375,7 @@ class RequestList extends Component {
           {write ?
             <WriteNormalArticleModal open={write} onClose={() => this.setState({ write: false, title: "", comment: "" })}>
               <div className="close-box" onClick={() => this.setState({ write: false, title: "", comment: "" })}>
-                <Cross style={{cursor:"pointer"}} angle={45} color={"#000000"} weight={3} width={20} height={20} />
+                <Cross style={{cursor:"pointer"}} angle={45} color={"#000000"} weight={3} width={15} height={15} />
               </div>
               <div className="form align_item_center">
                 <div className="title_label">제목</div>
@@ -367,6 +391,8 @@ class RequestList extends Component {
                   item={{content:this.state.content}}
                   name={"comment"}
                   getValue={this.onChangValue}
+                  width="750"
+                  editheight="240"
                   // initClick={this.state.click}
                   // deleteItem={this.deleteItem}
                 />
@@ -376,12 +402,10 @@ class RequestList extends Component {
                   name="comment"
                 /> */}
                 </div>
-              <div className="contents">
-                <div className="buttonBox">
-                  <div className="button" onClick={this.createNoneRequest} >
-                    <div className="text" >작성</div>
+              <div className="form redButtonBox">
+                  <div className="redButton" onClick={this.createNoneRequest} >
+                    <div className="btnText" >작성</div>
                   </div>
-                </div>
               </div>
             </WriteNormalArticleModal>
             :

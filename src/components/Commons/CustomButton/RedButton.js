@@ -10,14 +10,14 @@ const StyleButton = styled.div`
   display:flex;
   justify-content:center;
   align-items:center;
-  background-color:red;
+  background-color:${props=>props.reverse==null?"red":"white"};
+  border:${props=>props.reverse==null?null:"1px solid red"};
   cursor:pointer;
   margin-right:30px;
   .text{
-    color:white;
-    font-family:Noto Sans KR;
-    font-size:30px;
-    font-weight:500;
+    color:${props=>props.reverse==null?"white":"red"};;
+    font-family:Noto Sans CJK KR, Regular;
+    font-size:25px;
   }
   &:hover{
       opacity:90%;
@@ -49,7 +49,7 @@ export class RedButton extends Component {
     render() {
         return (
             <React.Fragment>
-                <StyleButton onClick={this.onClickButton}>
+                <StyleButton reverse={this.props.reverse} onClick={this.onClickButton}>
                     <div className="text">{this.props.value}</div>
                 </StyleButton>
             </React.Fragment>

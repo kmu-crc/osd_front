@@ -16,7 +16,8 @@ const initialState = {
   },
   checkStatus: {
     checkEmail: false,
-    checkNickNAme: false
+    checkNickNAme: false,
+    checkPayUser:false,
   }
 };
 
@@ -72,6 +73,32 @@ export default function Authentication(state, action) {
           checkEmail: { $set: action.checkEmail }
         }
       });
+
+      case types.AUTH_CHECK_PAYUSER:
+        return update(state, {
+          check: {
+            status: { $set: "WAITING" }
+          }
+        });
+      case types.AUTH_CHECK_PAYUSER_SUCCESS:
+        return update(state, {
+          check: {
+            status: { $set: "SUCCESS" }
+          },
+          checkStatus: {
+            checkPayUser: { $set: action.checkPayUser }
+          }
+        });
+      case types.AUTH_CHECK_PAYUSER_FAILURE:
+        return update(state, {
+          check: {
+            status: { $set: "FAILURE" }
+          },
+          checkStatus: {
+            checkPayUser: { $set: action.checkPayUser }
+          }
+        });
+
       case types.AUTH_CHECK_NICKNAME:
       return update(state, {
         check: {

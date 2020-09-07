@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import ContentBox from "components/Commons/ContentBox";
 // import { Dropdown } from "semantic-ui-react"
 import Loading from "components/Commons/Loading";
-import { InputPrice } from "components/Commons/InputItem/InputPrice";
+import { InputPriceNew } from "components/Commons/InputItem/InputPriceNew";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
 import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
-
+import FileIcon from "components/Commons/FileIcon";
 const LocationList = [
   { value: 0, text: "서울특별시" },
   { value: 1, text: "부산광역시" },
@@ -47,47 +47,96 @@ const MainBox = styled.div`
     position: relative;
     width:100%;
     display:flex;
-    // padding-left:130px;
     padding-top:36px;
+    .box_{
+      width:50%;
+    }
+    .box_centering{
+      width:50%;
+      display:flex;
+      justify-content:center;
+    }
   }
 
 `;
 
 const FormBox = styled.div`
-  *{
-    font-family:Noto Sans KR;
-    font-weight:500;
-    font-size:20px;
-    // border:1px solid black;
-  }
-  width:939px;
+  width:${props=>props.isHalf==true?"50%":"100%"};
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
-  padding-left:59px;
-  padding-right:59px;
-  padding-top:49px;
-  margin-right:10px;
+  padding:${props=>props.isHalf==true?"72px 50px 72px 50px":"72px 113px 72px 113px"};
+  margin-right:${props=>props.isHalf==true?"44px":"10px"};
+
   .wrapper{
     width:100%;
-    margin-bottom:70px;
+    margin-bottom:50px;
   }
   .margin_zero{
     margin:0px;
+  }
+  .add_margin_bottom{
+    margin-bottom:100px;
   }
   .flex{
     display:flex;
   }
   .centering{
-    align-items:center;
+    // align-items:center;
+  }
+  .color_red{
+    color:red;
   }
   .innerWraper{
     width:100%;
     margin-bottom:26px;
     display:flex;
   }
+  .addfilebox{
+    height:40px;
+    margin-right:8px;
+    .addfile{
+      width:20px;
+      height:20px;
+      border-left:1px dashed red;
+      border-bottom:1px dashed red;
+    }
+    .black_addfile{
+      width:20px;
+      height:20px;
+      border-left:1px dashed black;
+      border-bottom:1px dashed black;
+    }
+  }
+  .file_label_box{
+    height:40px;
+    display:flex;
+    align-items:center;
+  }
+ 
+  .file_label{
+    font-size:17px;
+    color:red;
+  }
+  ._black_{
+    font-size:17px;
+    color:black;
+  }
+  .label2{
+    min-width:157px;
+    height:29px;
+    font-size:20px;
+    font-family:Noto Sans CJK KR, Regular;
+    // color:#707070;
+    margin-right:60px;
+  }
   .label{
     min-width:157px;
     height:max-content;
+    font-size:20px;
+    font-family:Noto Sans CJK KR, Regular;
+    color:#707070;
+    margin-right:60px;
+    border-right:2px solid #707070;
   }
   .label_centering{
     text-align:center;
@@ -98,23 +147,13 @@ const FormBox = styled.div`
     color:#707070;
   }
   .textBox{
-    font-weight:200;
+    font-family:Noto Sans CJK KR, Regular;
+    font-size:17px;
+    line-height:17px;
   }
 
 `;
-const InputText = styled.input`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:43px;
-  border-radius:20px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  background-color:#E9E9E9;
-  margin-right:21px;
-  outline:none;
-  border:0px;
-  padding: 0.67857143em 1em;
 
-`;
 const InputTextarea = styled.textarea`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
@@ -129,29 +168,44 @@ const InputTextarea = styled.textarea`
 
 `;
 const TagList = styled.div`
-    width: 100%;
-    display: flex;
-    padding: 10px;
-    flex-wrap: wrap;
+  width: 100%;
+  display: flex;
+  // padding: 10px;
+  flex-wrap: wrap;
+`;
+const InputText = styled.input.attrs({ type: "text" })`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:52px;
+  border-radius:26px;
+  font-family:Noto Sans KR;
+  font-size:20px;
+  background-color:#E9E9E9;
+  margin-right:21px;
+  outline:none;
+  border:0px;
+  padding: 0.67857143em 1em;
+
 `;
 const TagPiece = styled.div`
-    width: max-content;
-    min-width: 30px;
-    background-color: #EFEFEF;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    color: #707070;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px
-    border-radius: 15px;
+    width:max-content;
+    min-width:30px;
+    max-height:30px;
+    border:1px solid #707070;
+    border-radius:15px;
+    padding: 8px 10px 5px 10px;
     display: flex;
     justify-content: space-between;
+    align-items:center;
+    font-size:15px;
+    font-family:Noto Sans CJK KR, Regular;
+    margin-right:8px;
     .close {
+        color:#707070;
         margin-left: 10px;
         width: max-content;
         height: max-content;
         padding: 0px 2px;
+        cursor:pointer;
     }
 `;
 
@@ -253,7 +307,7 @@ class ResponseToMakerReq extends Component {
           <MainBox>
             <div className="title">제작 의뢰 응답</div>
             <div className="contentsBox">
-              <FormBox>
+              <FormBox isHalf={true}>
 
                 <div className="wrapper flex centering" >
                   <div className="label">의뢰자</div>
@@ -270,7 +324,7 @@ class ResponseToMakerReq extends Component {
                   <div className="textBox">{category_level1 ? category_level1 + " > " : ""}{category_level2}</div>
                 </div>
 
-                <div className="wrapper flex centering">
+                <div className="wrapper flex centering add_margin_bottom">
                   <div className="label">태그</div>
                   <TagList>
                     {detail && detail.tag && detail.tag.split(",").map((item, index) =>
@@ -281,7 +335,29 @@ class ResponseToMakerReq extends Component {
                   </TagList>
                 </div>
 
+
                 <div className="wrapper flex centering">
+                <div className="label">의뢰 내용</div>
+                <div className="textBox" dangerouslySetInnerHTML={{ __html: `${detail.content || ""}` }} />
+              </div>
+
+              <div className="wrapper flex centering add_margin_bottom">
+                        <div className="label"/>
+                        <div className="addfilebox"><div className="addfile"/></div>
+                        
+                        <div className="file_label_box">
+                        <div className="file_label">
+                        {detail && detail.file_url ?
+                              <a href={detail.file_url} download={detail.filename} className="iconWrap">
+                                <FileIcon type={"application"} extension={"pdf"} />
+                                {detail.filename}
+                              </a>
+                              : "첨부 파일 없음"}
+                        </div>
+                        </div>
+              </div>
+
+              <div className="wrapper flex centering">
                   <div className="label">희망비용</div>
                   <div className="textBox">{detail.price}</div>
                 </div>
@@ -289,11 +365,6 @@ class ResponseToMakerReq extends Component {
                 <div className="wrapper flex centering">
                   <div className="label">기간</div>
                   <div className="textBox">~{detail.term}</div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">의뢰 내용</div>
-                  <div className="textBox">{detail.content}</div>
                 </div>
 
                 <div className="wrapper flex centering">
@@ -317,7 +388,7 @@ class ResponseToMakerReq extends Component {
                 </div> */}
 
               </FormBox>
-              <FormBox>
+              <FormBox isHalf={true}>
 
                 {/* <div className="wrapper flex">
                 <div className="label">제목</div>
@@ -325,35 +396,35 @@ class ResponseToMakerReq extends Component {
               </div> */}
 
                 <div className="wrapper flex centering" >
-                  <div className="label">응답자</div>
+                  <div className="label2">응답자</div>
                   <div>{(this.props.userInfo && this.props.userInfo.nickName) || null}</div>
                 </div>
 
                 <div className="wrapper flex">
-                  <div className="label">응답 내용</div>
+                  <div className="label2">응답 내용</div>
                   {/* <InputTextarea onChange={this.onChangeResponseContent} value={this.state.res_content} width={483} height={483} /> */}
                   <TextControllerClassic
-                  item={{content:this.state.content,height:700}}
+                  item={{content:this.state.content,height:430}}
                   name={"comment"}
                   getValue={this.onChangeResponseContent}
-                  // initClick={this.state.click}
-                  // deleteItem={this.deleteItem}
+                  width="480"
+                  editheight="430"
                 />
                 </div>
 
                 <div className="wrapper flex centering">
-                  <div className="label">수량</div>
+                  <div className="label2">수량</div>
                   <InputText type="number" onChange={this.onChangeReponseAmount} value={this.state.res_amount} width={100} />
                 </div>
 
                 <div className="wrapper flex">
-                  <div className="label">희망비용</div>
-                  <InputPrice name="price" getValue={this.getPriceValue} />
+                  <div className="label2">희망비용</div>
+                  <InputPriceNew name="price" getValue={this.getPriceValue} />
                 </div>
 
 
                 <div className="wrapper flex centering">
-                  <div className="label ">기간</div>
+                  <div className="label2 ">기간</div>
                   <InputCalendar startDate={this.state.startDate} endDate={this.state.endDate} name="calendar" 
                  getStartDateValue={this.getStartDateValue} getEndDateValue={this.getEndDateValue}  getDayDateValue={this.getDayDateValue}/>
                 </div>
@@ -361,8 +432,10 @@ class ResponseToMakerReq extends Component {
               </FormBox>
             </div>
             <div className="contentsBox">
+            <div className="box_"/>
+            <div className="box_centering">
               <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton value={"취소"} onClick={() => { window.history.back() }} isConfirm={true} />
+              <GrayButton value={"취소"} onClick={() => { window.history.back() }} isConfirm={true} /></div>
             </div>
           </MainBox>
         </Wrapper>

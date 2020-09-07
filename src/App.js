@@ -16,6 +16,7 @@ import ModifyItemPage from "pages/ModifyItemPage";
 import SignUpPage from "pages/SignUpPage";
 import SignInPage from "pages/SignInPage";
 import RequiresAuth from "containers/Commons/RequiresAuth";
+import RequiresPayUser from "containers/Commons/RequiresPayUser";
 import MainPage from "pages/MainPage";
 import FooterPage from "pages/FooterPage";
 import MyDetailPage from "pages/MyDetailPage";
@@ -71,27 +72,27 @@ class App extends Component {
             <Route path="/createMaker" component={RequiresAuth(CreateMakerPage)} />
             <Route path="/modifyMaker/:id" component={ModifyMakerPage} />
             {/* ITEM */}
-            <Route path="/createProduct" component={CreateProductPage} />
-            <Route path="/createProduct/redirected" component={CreateProductPage} />
+            <Route path="/createProduct" component={RequiresPayUser(CreateProductPage)} />
+            <Route path="/createProduct/redirected" component={RequiresPayUser(CreateProductPage)} />
             {/* <Route path="/createProduct" component={RequiresAuth(CreateProductPage)} /> */}
-            <Route path="/productModify/:id" component={RequiresAuth(ModifyItemPage)} />
+            <Route path="/productModify/:id" component={RequiresAuth(RequiresPayUser(ModifyItemPage))} />
             <Route path="/productDetail/:id" component={ProductDetailPage} />
             <Route path="/product/:sorting?/:cate1?/:cate2?" component={ProductListPage} />
             {/*PURCHASE*/}
             <Route path="/productPurchase/:id/:payment" component={ProductPurchasePage} />
 
             {/* REQUEST */}
-            <Route path="/createRequest" component={RequiresAuth(CreateRequestPage)} />
+            <Route path="/createRequest" component={RequiresAuth(RequiresPayUser(CreateRequestPage))} />
             <Route path="/requestDetail/:id" component={RequestDetailPage} />
             {/* <Route path="/requestDesigner/:sorting?/:cate1?/:cate2?" component={RequestListPage} />  */}
             {/* <Route path="/requestMaker/:sorting?/:cate1?/:cate2?" component={RequestListPage} /> */}
             <Route path="/request/:type/:page?/:cate1?/:cate2?/:sort?/:keyword?" component={RequestListPage} />
-            <Route path="/requestToDesigner/:id" component={RequiresAuth(requestDesignerPage)} />
-            <Route path="/requestToMaker/:id" component={RequiresAuth(requestMakerPage)} />
-            <Route path="/ModifyrequestToDesigner/:id" component={RequiresAuth(ModifyrequestDesignerPage)} />
-            <Route path="/ModifyrequestToMaker/:id" component={RequiresAuth(ModifyrequestMakerPage)} />
-            <Route path="/responseToDesignerReq/:id" component={RequiresAuth(ResponseToDesignerReqPage)} />
-            <Route path="/responseToMakerReq/:id" component={RequiresAuth(ResponseToMakerReqPage)} />
+            <Route path="/requestToDesigner/:id" component={RequiresAuth(RequiresPayUser(requestDesignerPage))} />
+            <Route path="/requestToMaker/:id" component={RequiresAuth(RequiresPayUser(requestMakerPage))} />
+            <Route path="/ModifyrequestToDesigner/:id" component={RequiresAuth(RequiresPayUser(ModifyrequestDesignerPage))} />
+            <Route path="/ModifyrequestToMaker/:id" component={RequiresAuth(RequiresPayUser(ModifyrequestMakerPage))} />
+            <Route path="/responseToDesignerReq/:pid" component={RequiresAuth(RequiresPayUser(ResponseToDesignerReqPage))} />
+            <Route path="/responseToMakerReq/:id" component={RequiresAuth(RequiresPayUser(ResponseToMakerReqPage))} />
             {/* GALLERY */}
             <Route path="/createGallery" component={RequiresAuth(CreateGalleryPage)} />
             <Route path="/modifyGallery/:id" component={RequiresAuth(ModifyGalleryPage)} />

@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
-import { InputTag } from "components/Commons/InputItem/InputTag"
-import { InputPrice } from "components/Commons/InputItem/InputPrice";
-import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
+import { InputTagNew,InputPriceNew,InputCalendar,InputFile } from "components/Commons/InputItem"
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
 import { FileUploadRequest } from "actions/Uploads";
+import category_icon from "source/category_icon.svg";
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -28,38 +27,54 @@ const LocationList = [
   { value: 15, text: "제한없음" },
 ];
 
+const CustomIcon=styled.div`
+  width:${props => props.width}px;
+  height:${props => props.height}px;
+  background-image:url(${props=>props.imgURL});
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding:${props => props.padding}px;
+  margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
+  margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
+  display:${props=>props.isNon==true?"none":"block"}
+`
 const Wrapper = styled(ContentBox)`
-    width: 100%;
-    margin-top: 60px;
-    margin-bottom: 100px;
-    z-index: 3;
+  width: 100%;
+  margin-top: 60px;
+  margin-bottom: 100px;
+  z-index: 3;
 `;
 const MainBox = styled.div`
-  width: 100%;
-  .title {
-    width: 170px;
-    height: 29px;
-    font-family: Noto Sans KR, Medium;
-    font-size: 20px;
-    font-weight: 500;
-    margin-left: 130px;
+  width:100%;
+  .title{
+    width:170px;
+    height:29px;
+    font-family:Noto Sans CJK KR, Medium;
+    font-size:20px;
+    font-weight:500;
+    margin-left:130px;
 
   }
   .contentsBox{
     position: relative;
-    width: 100%;
-    display: flex;
-    padding-left: 130px;
-    padding-top: 36px;
+    width:100%;
+    display:flex;
+    padding:36px 130px 36px 136px;
   }
+  .centering_{
+    width:100%;
+    display:flex;
+    padding:36px 130px 36px 136px;
+    justify-content:center;
+  }
+
 `;
 const FormBox = styled.div`
-  *{
-    font-family:Noto Sans KR;
-    font-weight:500;
-    font-size:20px;
-  }
-  width:939px;
+
+  font-family:Noto Sans KR;
+  font-weight:500;
+  font-size:20px;
+  width:100%;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
   padding-left:59px;
@@ -85,8 +100,14 @@ const FormBox = styled.div`
     display:flex;
   }
   .label{
+    font-family:Noto Sans CJK KR, Regular;
+    font-size:20px;
     min-width:157px;
     height:29px;
+  }
+  .text_small{
+    font-family:Noto Sans CJK KR, Regular;
+    font-size:17px;
   }
   .label_centering{
     text-align:center;
@@ -96,12 +117,21 @@ const FormBox = styled.div`
     height:30px;
     color:#707070;
   }
-
+  .faded-text {
+    border-radius: 15px;
+    background-color: #EAEAEA;
+    padding: 15px 15px;
+  }
+  .information {
+    color: red;
+    font-size: 16px;
+    margin-left: 10px;
+  }
 `;
 const InputText = styled.input.attrs({ type: "text" })`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:43px;
-  border-radius:20px;
+  height:52px;
+  border-radius:26px;
   font-family:Noto Sans KR;
   font-size:20px;
   background-color:#E9E9E9;
@@ -111,29 +141,13 @@ const InputText = styled.input.attrs({ type: "text" })`
   padding: 0.67857143em 1em;
 
 `;
-const InputTextarea = styled.textarea`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
-  border-radius:20px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  background-color:#E9E9E9;
-  outline:none;
-  border:0px;
-  readonly;
-  padding: 0.67857143em 1em;
-
-`;
-//const Margin = styled.div`
-//  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-//  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
-//`;
 const DropBox = styled(Dropdown)`
-    min-width:200px !important;
+    min-width:254px !important;
+    min-height:52px !important;
     background-color:#E9E9E9 !important;
     margin-right:10px;
 
-    border-radius:20px !important;
+    border-radius:26px !important;
 `;
 const HRLine = styled.div`
     width:93%;
@@ -147,7 +161,7 @@ class RequestToMaker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category_level1: -1, category_level2: -1,
+      category_level1: null, category_level2: null,
       title: "", tag: [], price: 0, content: "", location: 15, offline: 0, amount: 0, resale: 0,
       ownership: 1, startDate: null, endDate: null, dayDate: null,
     }
@@ -168,6 +182,7 @@ class RequestToMaker extends Component {
     this.getStartDateValue = this.getStartDateValue.bind(this);
     this.getEndDateValue = this.getEndDateValue.bind(this);
     this.getDayDateValue = this.getDayDateValue.bind(this);
+    this.onFileChange=this.onFileChange.bind(this);
   }
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: { value }.value });
@@ -237,14 +252,13 @@ class RequestToMaker extends Component {
   async getPriceValue(value) {
     await this.setState({ price: value });
   }
-  onFileChange = async event => {
-    const file = event.currentTarget.files;
-    const s3path = await FileUploadRequest(file);
-
+  async onFileChange(file){
+    // const file = event.currentTarget.files;
     this.setState({
-      file_url: s3path.path,
-      filename: file[0].name
+      file_url: file.file_url,
+      filename: file.filename,
     });
+    await console.log(file);
   }
 
   onSubmit() {
@@ -306,14 +320,25 @@ class RequestToMaker extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">카테고리</div>
-                  <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
-                  <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
+                  <DropBox id="category_level1"
+                    value={this.state.category_level1}
+                    selection
+                    options={category1}
+                    placeholder="대분류"
+                    onChange={this.onClickCategorylevel1} />
+                    <CustomIcon width="25" height="25" imgURL={category_icon} marginRight="21" marginLeft="21"/>
+                  <DropBox id="category_level2"
+                    value={this.state.category_level2}
+                    selection
+                    options={category2}
+                    placeholder="소분류"
+                    onChange={this.onClickCategorylevel2} />
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">태그</div>
                   <div>
-                    <InputTag getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
+                    <InputTagNew getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
                   </div>
                 </div>
 
@@ -324,14 +349,15 @@ class RequestToMaker extends Component {
                     item={{ content: this.state.content, height: 500 }}
                     name={"comment"}
                     getValue={this.onChangeContent}
-                  // initClick={this.state.click}
-                  // deleteItem={this.deleteItem}
+                    width="820"
+                    editheight="770"
                   />
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">파일 등록</div>
-                  <div className="faded-text" >
+                  <InputFile width={533} getValue={this.onFileChange}/>
+                  {/* <div className="faded-text" >
                     <input
                       type="file"
                       name="source"
@@ -341,12 +367,12 @@ class RequestToMaker extends Component {
                   </div>
                   <div className="information">
                     * pdf파일만 등록이 가능합니다.
-                      </div>
+                      </div> */}
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label ">희망 비용</div>
-                  <InputPrice name="price" getValue={this.getPriceValue} />
+                  <InputPriceNew name="price" getValue={this.getPriceValue} />
                 </div>
 
                 <div className="wrapper flex centering">
@@ -383,9 +409,9 @@ class RequestToMaker extends Component {
 
               </FormBox>
             </div>
-            <div className="contentsBox">
-              <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton value={"취소"} onClick={() => { window.history.back() }} isConfirm={true} />
+            <div className="centering_">
+              <RedButton value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
             </div>
           </MainBox>
         </Wrapper>
