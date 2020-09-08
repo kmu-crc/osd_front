@@ -8,32 +8,36 @@ import 'react-quill/dist/quill.bubble.css';
 
 const EditorWrapper = styled.div`
     margin-bottom: 5px;
-    .ck.ck-editor{
-        width:${props => props.width == null ? "100%" : props.width + "px"};
+    // .ck.ck-editor{
+    //     width:${props => props.width == null ? "100%" : props.width + "px"};
         
-    }
+    // }
     .copyright {
         width: max-content;
         margin-left: auto;
         font-size: 0.8rem;
     }
-    .ck-editor__editable {
-        height:${props => props.editheight == null ? "100%" : props.editheight + "px"};
-    }
-    .ck-editor__editable_inline {
+    // .ck-editor__editable {
+    //     height:${props => props.editheight == null ? "100%" : props.editheight + "px"};
+    // }
+    // .ck-editor__editable_inline {
 
-        min-width:400px;
-        min-height: ${props => props.height || 70}px;
-    }
+    //     min-width:400px;
+    //     min-height: ${props => props.height || 70}px;
+    // }
     .editor {
-        min-width:400px;
-        min-height: ${props => props.height || 70}px;
-    }
+        width:${props => props.width == null ? "100%" : props.width + "px"};
+        height:${props => props.editheight == null ? "100%" : props.editheight + "px"};
+        // min-width:400px;
+        // min-height: ${props => props.height || 70}px;
+    }xxx
 `;
 export class TextControllerClassic extends Component {
     render() {
         const { item } = this.props;
-        return (<EditorWrapper width={this.props.width} editheight={this.props.editheight} height={item.height}>
+        return (
+            <React.Fragment>
+        <EditorWrapper width={this.props.width} editheight={this.props.editheight} height={item.height}>
             {/*<CKEditor
 
                 id="classicEditor_"
@@ -76,7 +80,10 @@ export class TextControllerClassic extends Component {
                     'color', 'background'
                 ]}
             />
-            <p className="copyright">(quill에디터: https://quilljs.com)</p>
-        </EditorWrapper>);
+           <div className="copyright">(quill에디터: https://quilljs.com)</div>
+        </EditorWrapper>
+         
+         </React.Fragment>
+        );
     }
 }
