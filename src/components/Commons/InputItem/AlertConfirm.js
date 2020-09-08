@@ -62,7 +62,6 @@ export const options = (message, func, event) => {
             message: message,
             childrenElement: () => <div />,
             customUI: ({ message, onClose }) => {
-                console.log(this.props);
                 return (
                     <ModalBox open={true}>
                         <div className="messageBox">
@@ -93,7 +92,6 @@ export const optionsAlter = (message) => {
             message: message,
             childrenElement: () => <div />,
             customUI: ({ message, onClose }) => {
-                console.log(this.props);
                 return (
                     <ModalBox className='custom-ui'>
                         <div className="messageBox">
