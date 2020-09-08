@@ -67,7 +67,7 @@ class MyDesignList extends Component {
           <label><input style={{ verticalAlign: "middle" }} type="checkbox" onChange={this.selectAll} value={this.state.joinList} />모두선택 </label>
         </Field>
         <Btn type="submit">가입 신청</Btn>
-        <Btn type="button" onClick={this.props.handleCloseModal}>취소</Btn>
+        <Btn type="button" onClick={this.props.handleCloseModal}>취소하기</Btn>
       </ValidateForm>
     );
   }

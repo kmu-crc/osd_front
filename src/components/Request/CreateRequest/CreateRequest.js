@@ -197,7 +197,7 @@ class CreateRequest extends Component {
                 </div>
 
               </FormBox>
-              <RedButton left={1164} bottom={0}><div>등록</div></RedButton>
+              <RedButton left={1164} bottom={0}><div>등록하기</div></RedButton>
             </div>
           </MainBox>
         </Wrapper>

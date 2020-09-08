@@ -42,7 +42,7 @@ class MyGroupList extends Component {
       <ValidateForm onSubmit={this.handleSubmit}>
         <FormField name="join_group" label="내 그룹 리스트" options={this.props.groupList} RenderComponent={FormMultiSelect} getValue={this.getValue}/>
         <Btn type="submit">가입 신청</Btn>
-        <Btn type="button" onClick={this.props.handleCloseModal}>취소</Btn>
+        <Btn type="button" onClick={this.props.handleCloseModal}>취소하긴</Btn>
       </ValidateForm>
     );
   }

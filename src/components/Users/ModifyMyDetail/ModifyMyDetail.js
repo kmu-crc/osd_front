@@ -307,8 +307,8 @@ class ModifyMyDetail extends Component {
 
           <div className="contentsBox">
             {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>적용</div></RedButton> */}
-            <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true} />
-            <GrayButton value={"취소"} onClick={this.onClickCancel} isConfirm={true} />
+            <RedButton value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
+            <GrayButton value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
           </div>
         </MainBox>
       </Wrapper>

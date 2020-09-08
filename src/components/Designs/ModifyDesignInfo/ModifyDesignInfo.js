@@ -477,7 +477,7 @@ class ModifyDesignInfo extends Component {
       
 
         </FromFieldCard>
-        <Button type="submit">등록</Button>
+        <Button type="submit">등록하기</Button>
       {/* </form> */}
       </React.Fragment>
     );

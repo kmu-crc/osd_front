@@ -109,7 +109,7 @@ export class CardImageUpdate extends Component {
             <DeleteItems ViewImg={ViewImg} name="deleteImages" placeholder="파일을 선택해주세요." getValue={this.onChangeValue} />
             <form onSubmit={this.onSubmit}>
               <MultiUpload name="design_file" placeholder="파일을 선택해주세요." getValue={this.onChangeValue} validates={["MaxFileSize(100000)"]} />
-              <Button type="submit">저장</Button>
+              <Button type="submit">저장하기</Button>
               <Button type="button" onClick={this.onClose}>닫기</Button>
             </form>
           </div>
@@ -117,7 +117,7 @@ export class CardImageUpdate extends Component {
             <div>
               <TitleWrap>
                 <h3>컨텐츠 등록</h3>
-                {this.props.isTeam > 0 && (<EditBtn onClick={this.onActive}><Icon name="edit" />수정</EditBtn>)}
+                {this.props.isTeam > 0 && (<EditBtn onClick={this.onActive}><Icon name="edit" />수정하기</EditBtn>)}
               </TitleWrap>
               {this.props.images && this.props.images.length > 0 ? (
                 this.props.images.map(img => { return (<ModalImg key={`img${img.uid}`} src={img.link} alt={img.name} />); })) : (

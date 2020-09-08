@@ -263,7 +263,7 @@ class Comment extends Component {
                                 <div className="create-time">({DateFormat(item.create_time)})</div>
                                 <div className="button-wrapper">
                                     {!reply && <div onClick={() => this.reply(item.uid)} className="reply">답글달기</div>}
-                                    {my && my.uid === item.user_id && <div onClick={() => this.removeComment(item.uid)} className="del">삭제</div>}
+                                    {my && my.uid === item.user_id && <div onClick={() => this.removeComment(item.uid)} className="del">삭제하기</div>}
                                 </div>
                             </div>
                             <div className="comment">{item.comment}</div>
@@ -283,7 +283,7 @@ class Comment extends Component {
                                 <div className="comment">{repli.comment}</div>
                             </div>
                             <div className="button-wrapper">
-                                {my && my.uid === repli.user_id && <div onClick={() => this.removeReply(repli.uid)} className="del">삭제</div>}
+                                {my && my.uid === repli.user_id && <div onClick={() => this.removeReply(repli.uid)} className="del">삭제하기</div>}
                             </div>
                         </CommentInner>)
                     })}
@@ -297,8 +297,8 @@ class Comment extends Component {
                                 <textarea value={this_reply || ""} onChange={this.onChangeValue} name="this_reply" />
                             </div>
                             <div className="another-wrapper">
-                                <div className="submit" onClick={() => this.requestReply(item.uid)}>게시</div>
-                                <div className="cancel" onClick={this.undoReply}>취소</div>
+                                <div className="submit" onClick={() => this.requestReply(item.uid)}>게시하기</div>
+                                <div className="cancel" onClick={this.undoReply}>취소하기</div>
                             </div>
                         </CommentInputTextContainer>}
                 </Comments>)
@@ -311,8 +311,8 @@ class Comment extends Component {
                     <textarea value={this_comment || ""} onChange={this.onChangeValue} name="this_comment" />
                 </div>
                 <div className="another-wrapper">
-                    <div className="submit" onClick={this.requestComment}>게시</div>
-                    <div className="cancel" onClick={this.undoComment}>취소</div>
+                    <div className="submit" onClick={this.requestComment}>게시하기</div>
+                    <div className="cancel" onClick={this.undoComment}>취소하기</div>
                 </div>
             </CommentInputTextContainer>
         </CommentBox >)

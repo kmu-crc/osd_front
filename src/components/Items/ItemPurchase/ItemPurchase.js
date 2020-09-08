@@ -973,8 +973,8 @@ class ItemPurchase extends Component {
                 :
                 <React.Fragment>
                   <div>
-                  <CustomButton id="cancelbtn" width="100" height="45" backgroundColor="white" fontColor="#707070" marginBottom="10" fontSize="12" onClick={this.onCancelFile}>취소</CustomButton>
-                  <CustomButton id="sendfile" width="100" height="45" backgroundColor="white" fontColor="#707070" fontSize="12" onClick={this.onSendFile}>전송</CustomButton>
+                  <CustomButton id="cancelbtn" width="100" height="45" backgroundColor="white" fontColor="#707070" marginBottom="10" fontSize="12" onClick={this.onCancelFile}>취소하기</CustomButton>
+                  <CustomButton id="sendfile" width="100" height="45" backgroundColor="white" fontColor="#707070" fontSize="12" onClick={this.onSendFile}>전송하기</CustomButton>
                   </div>
                 </React.Fragment>
               }

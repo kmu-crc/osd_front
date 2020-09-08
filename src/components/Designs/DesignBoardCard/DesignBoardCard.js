@@ -325,7 +325,7 @@ class DesignBoardCard extends Component {
                         size="small"
                         onClick={this.onChangeEditMode}
                       >
-                        수정
+                        수정하기
                       </Button>
                       <Button
                         type="button"
@@ -333,7 +333,7 @@ class DesignBoardCard extends Component {
                         size="small"
                         onClick={this.onDelete}
                       >
-                        삭제
+                        삭제하기
                       </Button>
                     </div>
                   ) : null}

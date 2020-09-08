@@ -170,8 +170,8 @@ class EditStepModal extends Component {
                     </div>
                 </InputWrapper>
                 <div className="edit-step-name-button-container">
-                    <div className="edit-step-name-button-submit" onClick={this.onSubmit} >수정</div>
-                    <div className="edit-step-name-button-cancel" onClick={(event) => this.removeStep(event, this.props.steps, this.state.where)} >삭제</div>
+                    <div className="edit-step-name-button-submit" onClick={this.onSubmit} >수정하기</div>
+                    <div className="edit-step-name-button-cancel" onClick={(event) => this.removeStep(event, this.props.steps, this.state.where)} >삭제하기</div>
                 </div>
             </StepDialog>
         )

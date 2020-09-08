@@ -365,7 +365,7 @@ class CreateGroup extends Component {
             </FormBox>
             </div>
             <div className="contentBox">
-            <RedButton onClick={this.onSubmit} ><div>등록</div></RedButton>
+            <RedButton onClick={this.onSubmit} ><div>등록하기</div></RedButton>
             </div>
         </MainBox>
       </React.Fragment>

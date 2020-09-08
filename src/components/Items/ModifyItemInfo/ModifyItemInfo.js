@@ -695,7 +695,7 @@ class ModifyItemInfo extends Component {
       {/* 버튼 */}
       {itemType > -1 && tab === "basic" ?
         (<div className="buttonBox" style={{ width: "max-content", marginLeft: "auto", marginRight: "85px" }}>
-          <RedButton onClick={this.onSubmit}>수정</RedButton>
+          <RedButton onClick={this.onSubmit}>수정하기</RedButton>
           {/* <RedButton gray onClick={() => {
             if (window.confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
               window.history.back();

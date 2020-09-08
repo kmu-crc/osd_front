@@ -232,7 +232,7 @@ class GroupDetailNew extends Component {
         <SideMenu>
           <li>
             <Link to={`/groupDetail/${this.props.id}/modify`}>
-              <button>수정</button>
+              <button>수정하기</button>
             </Link>
           </li>
           <li>

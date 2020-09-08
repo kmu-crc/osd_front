@@ -197,7 +197,7 @@ export class CardSourcUpdate extends Component {
               <h3>소스</h3>
               {this.props.isTeam > 0 && (
                 <EditBtn onClick={this.onActive}>
-                  <Icon name="edit" />수정
+                  <Icon name="edit" />수정하기
                 </EditBtn>
               )}
             </TitleWrap>

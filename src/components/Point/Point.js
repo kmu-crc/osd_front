@@ -185,10 +185,27 @@ const PaymentBox=styled.div`
     border-right:1px solid #707070;
     font-size:20px;
   }
+  .margin_top{
+    margin-top:107px;
+  }
   .inputprice{
     width:100%;
     display:flex;
     margin-bottom:100px;
+  }
+  .align_right{
+    justify-content:flex-end;
+    .button_red{
+      width:290px;
+      height:70px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      color:white;
+      font-size:25px;
+      background-color:red;
+      cursor:pointer;
+    }
   }
   .addPrice{
     width:100%;
@@ -341,17 +358,30 @@ async getPriceValue(value) {
       <PointContainer>
         <div className="title"> 내 포인트 관리</div>
         <div className="tabBox">
-{this.state.tab==1?
-          <React.Fragment>
-          <div onClick={()=>this.setState({tab:0})} className="text_grey margin_left margin_right">현금 충전</div>
-          <div className="text_light_grey margin_right">|</div>
-          <div onClick={()=>this.setState({tab:1})} className="text_black">충전 내역</div>
-          </React.Fragment>
-          :
+{this.state.tab==0?
           <React.Fragment>
           <div onClick={()=>this.setState({tab:0})} className="text_black margin_left margin_right">현금 충전</div>
           <div className="text_light_grey margin_right">|</div>
-          <div onClick={()=>this.setState({tab:1})} className="text_grey">충전 내역</div>
+          <div onClick={()=>this.setState({tab:1})} className="text_grey margin_right">현금 전환</div>
+          <div className="text_light_grey margin_right">|</div>
+          <div onClick={()=>this.setState({tab:2})} className="text_grey">충전 내역</div>
+          </React.Fragment>
+          :
+this.state.tab==1?
+          <React.Fragment>
+          <div onClick={()=>this.setState({tab:0})} className="text_grey margin_left margin_right">현금 충전</div>
+          <div className="text_light_grey margin_right">|</div>
+          <div onClick={()=>this.setState({tab:1})} className="text_black margin_right">현금 전환</div>
+          <div className="text_light_grey margin_right">|</div>
+          <div onClick={()=>this.setState({tab:2})} className="text_grey">충전 내역</div>
+          </React.Fragment>
+          :
+          <React.Fragment>
+          <div onClick={()=>this.setState({tab:0})} className="text_grey margin_left margin_right">현금 충전</div>
+          <div className="text_light_grey margin_right">|</div>
+          <div onClick={()=>this.setState({tab:1})} className="text_grey margin_right">현금 전환</div>
+          <div className="text_light_grey margin_right">|</div>
+          <div onClick={()=>this.setState({tab:2})} className="text_black">충전 내역</div>
           </React.Fragment>
 }
           </div>
@@ -379,6 +409,22 @@ async getPriceValue(value) {
     </PaymentBox>
   </React.Fragment>
   :
+this.state.tab==1?
+<React.Fragment>
+<PaymentBox>
+    <div className="hrLine"/>
+      <div className="mypoint">보유 포인트 : {Won(Point || 0)}</div>
+      <div className="inputprice margin_top">
+        <div className="input_title">전환 금액</div><div className="input_flag"/>
+        <div><InputPriceNew name="price" getValue={this.getPriceValue} /></div>
+      </div>
+    <div className="hrLine"/>
+    <div className="addPrice align_right">
+          <div onClick={() => this.PointToMoney("CLICK")} className="button_red">전환하기</div>
+    </div>
+    </PaymentBox>
+</React.Fragment>
+:
     <PointListBox>
       <div className="content_box">
         <div className="titleBox">

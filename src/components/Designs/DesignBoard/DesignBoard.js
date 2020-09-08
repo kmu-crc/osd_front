@@ -344,9 +344,9 @@ class DesignBoard extends Component {
               </div><br />
               <div align="right" style={{ right: "0px", paddingBottom: "5px", paddingRight: "5px" }}>
                 <button style={{ fontSize: "9pt", backgroundColor: "#E72327", borderColor: "#E72327", padding: "0.5em 1.7em", marginTop: "6px", color: "#FFF", border: "0px", borderRadius: "5px 5px 5px 5px", lineHeight: "25px", marginLeft: "3px", width: "65px" }}
-                  onClick={this.requestReSortCardList}>완료</button>
+                  onClick={this.requestReSortCardList}>완료하기</button>
                 <button style={{ fontSize: "9pt", backgroundColor: "#FFF", borderColor: "#E72327", padding: "0.5em 1.7em", marginTop: "6px", color: "#666", borderStyle: "solid", borderWidth: "1px", borderRadius: "5px 5px 5px 5px", lineHeight: "25px", marginLeft: "3px", width: "65px" }}
-                  onClick={this.closeSortableModal}> 취소</button>
+                  onClick={this.closeSortableModal}> 취소하기</button>
               </div>
             </Modal.Content>
           </CustomModal>
