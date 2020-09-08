@@ -9,7 +9,7 @@ import 'react-quill/dist/quill.bubble.css';
 const EditorWrapper = styled.div`
     margin-bottom: 5px;
     .ck.ck-editor{
-        width:${props=>props.width==null?"100%":props.width+"px"};
+        width:${props => props.width == null ? "100%" : props.width + "px"};
         
     }
     .copyright {
@@ -18,7 +18,7 @@ const EditorWrapper = styled.div`
         font-size: 0.8rem;
     }
     .ck-editor__editable {
-        height:${props=>props.editheight==null?"100%":props.editheight+"px"};
+        height:${props => props.editheight == null ? "100%" : props.editheight + "px"};
     }
     .ck-editor__editable_inline {
 
@@ -34,7 +34,7 @@ export class TextControllerClassic extends Component {
     render() {
         const { item } = this.props;
         return (<EditorWrapper width={this.props.width} editheight={this.props.editheight} height={item.height}>
-            <CKEditor
+            {/*<CKEditor
 
                 id="classicEditor_"
                 editor={ClassicEditor}
