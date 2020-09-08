@@ -160,19 +160,19 @@ const CreateNormalArticleButton = styled.div`
     height:30px;
     margin-bottom:10px;
     display:flex;
+    justify-content:flex-end;
     .button{
         width:max-content;
-        height:100%;
+        height:max-content;
         display:flex;
-        padding:15px;
         justify-content:center;
         align-items:center;
-        border-radius:5px;
-        background-color:#707070;
+        background-color:red;
         cursor:pointer;
+        padding:12px 39px 12px 39px;
     }
     .font{
-        font-size:15px;
+        font-size:20px;
         color:white;
     }
 `;
@@ -192,6 +192,7 @@ const Container = styled.div`
 `;
 const ListElement = styled.div`
   width: 100%;
+  height:55px;
   margin: 0 auto 0.9rem;
   font-size: 13px;
   border-radius: 3px 3px 3px 3px;
@@ -205,26 +206,26 @@ const ListElement = styled.div`
   display: flex;
   fiex-direction: row;
   .title{
-    min-width:67%;
+    min-width:77%;
     display:flex;
     align-items:center;
-    padding:5px;
-    // padding-left:15px;
+    font-size:15px;
+    padding-left:65px;
   }
   .writer{
     min-width:10%;
     display:flex;
+    justify-content:center;
     align-items:center;
-    padding:5px;
-    overflow:hidden;
-    // padding-left:15px;
+    font-size:15px;
   }
   .date{
-    min-width:20%;
+    min-width:10%;
+    display:flex; 
+    justify-content:center;
     align-items:center;
-    padding:5px;
-    // padding-left:15px;
-  }
+    font-size:15px;
+    }
 `;
 
 class RequestList extends Component {
@@ -404,7 +405,7 @@ class RequestList extends Component {
                 </div>
               <div className="form redButtonBox">
                   <div className="redButton" onClick={this.createNoneRequest} >
-                    <div className="btnText" >작성</div>
+                    <div className="btnText" >작성하기</div>
                   </div>
               </div>
             </WriteNormalArticleModal>

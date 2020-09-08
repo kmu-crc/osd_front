@@ -206,9 +206,9 @@ class ModifyGroupInfo extends Component {
               </Grid.Column> */}
             </Grid>
           </FromFieldCard>
-          <Button className="submitBtn" type="submit">수정</Button>
+          <Button className="submitBtn" type="submit">수정하기</Button>
           <Link to={`/groupDetail/${this.props.id}`}>
-            <Button type="button">취소</Button>
+            <Button type="button">취소하기</Button>
           </Link>
         </form>
         {this.state.loading && <Loading/>}

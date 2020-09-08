@@ -300,8 +300,8 @@ export class FormTextAreaRed extends Component {
         status={this.state.status} name={name} {...newProps} value={this.state.value} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue}/>
         {this.state.status == null ? <span>{this.state.message}</span> : null}
         <div style={{position:"absolute",display:"inline-block"}}>
-          <button style={{backgroundColor: "#E72327",borderColor: "#E72327",padding: "0.5em 1.7em", marginTop: "6px", color:"#FFF",border:"0px",borderRadius:"5px 5px 5px 5px",lineHeight:"25px",marginLeft:"3px",width:"80px"}} type="submit">게시</button>
-          <button style={{backgroundColor: "#FFF",borderColor: "#E72327",padding: "0.5em 1.7em", marginTop: "6px", color:"#666",borderStyle:"solid",borderWidth:"1px",borderRadius:"5px 5px 5px 5px",lineHeight:"25px",marginLeft:"3px",width:"80px"}} onClick={this.Reset} type="reset">취소</button>
+          <button style={{backgroundColor: "#E72327",borderColor: "#E72327",padding: "0.5em 1.7em", marginTop: "6px", color:"#FFF",border:"0px",borderRadius:"5px 5px 5px 5px",lineHeight:"25px",marginLeft:"3px",width:"80px"}} type="submit">게시하기</button>
+          <button style={{backgroundColor: "#FFF",borderColor: "#E72327",padding: "0.5em 1.7em", marginTop: "6px", color:"#666",borderStyle:"solid",borderWidth:"1px",borderRadius:"5px 5px 5px 5px",lineHeight:"25px",marginLeft:"3px",width:"80px"}} onClick={this.Reset} type="reset">취소하기</button>
         </div>
       </div>
     );

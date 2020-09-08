@@ -876,7 +876,7 @@ class MakerDetail extends Component {
                   <div className="contents">
                     <div className="buttonBox">
                       <div className="button" onClick={this.createNoneRequest} >
-                        <div className="text" >작성</div>
+                        <div className="text" >작성하기</div>
                       </div>
                     </div>
                   </div>

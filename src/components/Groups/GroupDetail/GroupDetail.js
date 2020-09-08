@@ -234,8 +234,8 @@ class GroupDetail extends Component {
       return(
         <ValidateForm onSubmit={this.onSubmitForm}>
           <FormInput name="title" className="issueInput" validates={["required"]}/>
-          <Button type="submit" size="small">추가</Button>
-          <Button onClick={this.setEditIssue} size="small">취소</Button>
+          <Button type="submit" size="small">추가하기</Button>
+          <Button onClick={this.setEditIssue} size="small">취소하기</Button>
         </ValidateForm>
       );
     }
@@ -250,7 +250,7 @@ class GroupDetail extends Component {
                 <div className="btnContainer">
                   <Link to={`/groupDetail/${this.props.id}/modify`}>
                     <Button className="edit">
-                      수정
+                      수정하기
                     </Button>
                   </Link>
                   <Button className="edit" color={this.state.editMode? "Solid" : null} onClick={this.setEditMode}>

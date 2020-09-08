@@ -424,8 +424,8 @@ class ResponseToDesignerReq extends Component {
           <div className="contentsBox">
             <div className="box_"/>
             <div className="box_centering">
-              <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton value={"취소"} onClick={() => { window.history.back() }} isConfirm={true} />
+              <RedButton value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
             </div>
           </div>
         </MainBox>

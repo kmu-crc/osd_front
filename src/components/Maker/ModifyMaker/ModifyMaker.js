@@ -576,8 +576,8 @@ class ModifyMaker extends Component {
               </SubBox>
             </div>
             <div className="contentsBox">
-              <GrayButton value={"취소"} onClick={this.onClickCancel} isConfirm={true} />
-              <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
+              <RedButton value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
             </div>
           </MainBox>}
       </React.Fragment>

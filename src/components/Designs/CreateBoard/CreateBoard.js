@@ -97,9 +97,9 @@ class CreateBoard extends Component {
             </FInput>
 
             <ButtonWrap>
-              <Button color="Primary" type="submit" size="small">생성</Button>
+              <Button color="Primary" type="submit" size="small">생성하기</Button>
               <Button color="Primary" type="button" size="small" onClick={this.handelClose}>
-                취소
+                취소하기
               </Button>
             </ButtonWrap>
           </form>

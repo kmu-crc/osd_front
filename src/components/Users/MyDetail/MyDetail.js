@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import noimg from "source/noimg.png";
 import designimg from "source/design.jpg";
-import toolbox from "source/toolbox.png";
-import verify from "source/verify.png";
+import adddesigner from "source/adddesigner.svg";
+import addmaker from "source/addmaker.svg";
+import confirmMe from "source/confirmMe.svg";
+
 import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer/LikeInDesignerContainer";
 import LikeInMakerContainer from "containers/Maker/LikeInMakerContainer/LikeInMakerContainer";
 import LikeInItemContainer from "containers/Products/LikeInItemContainer/LikeInItemContainer";
@@ -62,75 +64,77 @@ const ProfileBox = styled.div`
     align-items: center;
   }
 `;
-const InformationBox = styled.div`
-    *{}
-    .fontBig{font-size:20px;}
+const InformationBox = styled.div` 
+    .fontDefault{font-size:20px;}
+    .fontBig{font-size:17px;}
     .fontStyleNormal{font-family:Noto Sans KR; font-weight:500;}
+    .alignCenter{text-align:center;}
     .red{color:red;}
     .design-clipart {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
+      width: 129px;
+      height: 102px;
       margin-left: auto;
       margin-right: auto;
-      background-color: gray;
-      background-image: url(${designimg});
-      background-size: cover;
+      background-image: url(${adddesigner});
+      background-size: contain;
       background-position: center center;
+      background-repeat:no-repeat;
+      margin-bottom:41px;
+
     }
     .toolbox-clipart {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
+      width: 73px;
+      height: 104px;
       margin-left: auto;
       margin-right: auto;
-      background-color: gray;
-      background-image: url(${toolbox});
-      background-size: cover;
+      background-image: url(${addmaker});
+      background-size: contain;
       background-position: center center;
+          background-repeat:no-repeat;
+          margin-bottom:41px;
     }
     .verify-clipart {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
+      width: 84px;
+      height: 99px;
       margin-left: auto;
       margin-right: auto;
-      // background-color: gray;
-      background-image: url(${verify});
-      background-size: cover;
+      background-image: url(${confirmMe});
+      background-size: contain;
       background-position: center center;
+      background-repeat:no-repeat;
+      margin-bottom:41px;
     }
-    width: 1388px;
+    width: 1389px;
     height: 372px;
     border-radius:20px;
-    background: #E9E9E9 0% 0% no-repeat padding-box;
+    box-shadow: 5px 5px 10px #00000029;
     margin-left:117px;
     display:flex;
-    padding-left:50px; 
+    justify-content:space-around;
+    align-items:center;
+    padding:58px 0px 58px 0px;
+
     .grayBox{
-      width:411px;
-      height:328px;
-      background: #FFFFFF;
-      border-radius: 20px;
-      opacity: 0.7;
-      margin-top:24px;
-      margin-right:28px;
+      border-right:1px solid #d6d6d6;
+      width:33%;
+      height:max-content;
       display:flex;
+      align-items:center;
       justify-content:center;
       .wrap{
         width:max-content;
-        height:100%t;
         display:flex;
         justify-content:space-between;
         flex-direction:column;
-        padding-top:47px;
-        padding-bottom:54px;
       }
       .title{
         width:251px;
-        height:max-content;
+        height:50px;
         text-align:center;
-        line-height:29px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        margin-bottom:31px;
       }
 
     }
@@ -369,23 +373,23 @@ class MyDetail extends Component {
             <InformationBox>
               <div className="grayBox">
                 <div className="wrap">
-                  <div className="title fontBig fontStyleNormal red">다양한 아이디어를<br />판매하세요!</div>
+                  <div className="title fontBig fontStyleNormal"><div>다양한 아이디어를 s판매하세요!</div></div>
                   <div className="design-clipart">&nbsp;</div>
-                  <RoundButton onClick={this.onClickCreateDesigner} width={251} height={43} borderColor={"red"}><div className="fontBig fontStyleNormal red">디자이너 등록 / 관리</div></RoundButton>
+                  <div onClick={this.onClickCreateDesigner} ><div className="fontDefault alignCenter fontStyleNormal">디자이너 등록 / 관리 ></div></div>
                 </div>
               </div>
               <div className="grayBox">
                 <div className="wrap">
-                  <div className="title fontBig fontStyleNormal red">제작 기술을 공유하고 <br />장소를 쉐어해보세요!</div>
+                  <div className="title fontBig fontStyleNormal"><div>제작 기술을 공유하고 <br />장소를 쉐어해보세요!</div></div>
                   <div className="toolbox-clipart">&nbsp;</div>
-                  <RoundButton onClick={this.onClickCreateMaker} width={251} height={43} borderColor={"red"}><div className="fontBig fontStyleNormal red">메이커 등록 / 관리</div></RoundButton>
+                  <div onClick={this.onClickCreateMaker}><div className="fontDefault alignCenter fontStyleNormal">메이커 등록 / 관리 ></div></div>
                 </div>
               </div>
               <div className="grayBox">
                 <div className="wrap">
-                  <div className="title fontBig fontStyleNormal red">본인인증을 통해 더욱 다양한 <br /> 혜택을 누려보세요!</div>
+                  <div className="title fontBig fontStyleNormal"><div>본인인증을 통해 더욱 다양한 <br /> 혜택을 누려보세요!</div></div>
                   <div className="verify-clipart"></div>
-                  <RoundButton width={251} height={43} borderColor={"red"}><div className="fontBig fontStyleNormal red">본인 인증</div></RoundButton>
+                  <div><div className="fontDefault alignCenter fontStyleNormal">본인 인증 ></div></div>
                 </div>
               </div>
             </InformationBox>

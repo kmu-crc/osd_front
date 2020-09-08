@@ -8,6 +8,19 @@ import profile from "source/thumbnail.png";
 // import NumberFormat from "modules/NumberFormat";
 import DateFormat from "modules/DateFormat";
 import { Icon } from "semantic-ui-react";
+import reicon from "source/re_.svg";
+
+const CustomIcon =styled.div`
+width:${props => props.width}px;
+height:${props => props.height}px;
+background-image:url(${props=>props.imgURL});
+background-repeat: no-repeat;
+background-size: contain;
+padding:${props => props.padding}px;
+margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
+margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
+display:${props=>props.isNon==true?"none":"block"}
+`
 
 // CSS STYLING
 const ListElement = styled.div`
@@ -41,13 +54,13 @@ const ListElement = styled.div`
     justify-content:center;
     align-itmes:center;
     &.request {
-      background: hotpink;
+      background: red;
       color: white;
     }
     &.response {
       // margin-left: 5px;
-      background: blue;
-      color: white;
+      border:1px solid #363636;
+      color: #363636;
     }
     &.completed {
       background: gray;
@@ -55,21 +68,23 @@ const ListElement = styled.div`
     }
   }
   .title_{
-    min-width:67%;
+    min-width:77%;
     display:flex;
     align-items:center;
     padding:5px;
+    padding-left:27px;
   }
   .writer{
     min-width:10%;
     display:flex;
+    justify-content:center;
     align-items:center;
-    padding:5px;
     overflow:hidden;
   }
   .date{
-    min-width:20%;
+    min-width:10%;
     display:flex;
+    justify-content:center;
     align-items:center;
     padding:5px;
     overflow:hidden;
@@ -105,7 +120,9 @@ class DesignerBoardElement extends Component {
                 ? <div className="status-box request">{item.type === 'maker' ? '제작' : '디자인'} 의뢰</div>
                 : item.status === "response" ?
                   <React.Fragment>
-                  <Icon size="big" name="replyd"/><div className="status-box response">{item.type === 'maker' ? '제작' : '디자인'} 응답</div> 
+                  <CustomIcon width={25} height={25} imgURL={reicon}/>
+                  <div className="status-box response">
+                    {item.type === 'maker' ? '제작' : '디자인'} 응답</div> 
                   </React.Fragment>: ""}
             {item.title || "글 제목"}
           </div>

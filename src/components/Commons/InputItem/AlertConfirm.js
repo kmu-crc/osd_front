@@ -71,11 +71,11 @@ export const options = (message, func, event) => {
                             </div>
                         </div>
                         <div className="buttonBox">
-                            <Button color="gray" onClick={() => { onClose() }}><div className="text">취소</div></Button>
+                            <Button color="gray" onClick={() => { onClose() }}><div className="text">취소하기</div></Button>
                             <Button color="red" onClick={async () => {
                                 await func(event);
                                 await onClose();
-                            }}><div className="text">확인</div></Button>
+                            }}><div className="text">확인하기</div></Button>
                         </div>
                     </ModalBox>
                 )
