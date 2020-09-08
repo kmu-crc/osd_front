@@ -417,8 +417,8 @@ class ModifyGroup extends Component {
             </FormBox>
           </div>
           <div className="contentBox">
-            <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true} />
-            <GrayButton value={"삭제"} onClick={this.onDelete} isConfirm={true} />
+            <RedButton value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
+            <GrayButton value={"삭제하기"} onClick={this.onDelete} isConfirm={true} />
           </div>
         </MainBox>
       </React.Fragment>

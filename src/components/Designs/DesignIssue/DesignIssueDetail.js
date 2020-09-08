@@ -178,9 +178,9 @@ class DesignIssueDetail extends Component {
           {user && user.uid === data.user_id &&
             <BtnWrapper>
               <Link to={`/designDetail/${this.props.match.params.id}/issue/${this.props.match.params.issue_id}/modify`}>
-                <Button size="small">수정</Button>
+                <Button size="small">수정하기</Button>
               </Link>
-              <Button size="small" onClick={this.deleteIssue}>삭제</Button>
+              <Button size="small" onClick={this.deleteIssue}>삭제하기</Button>
             </BtnWrapper>
           }
         </Grid.Row>

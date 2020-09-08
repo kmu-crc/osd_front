@@ -240,8 +240,8 @@ class CardSourceDetail extends Component {
             </Button>
             {
               this.props.isCancel ? (
-                <Button type="button" onClick={this.props.onCancel}>취소</Button>) : (
-                  <Button type="button" onClick={this.props.closeEdit}>취소</Button>)
+                <Button type="button" onClick={this.props.onCancel}>취소하기</Button>) : (
+                  <Button type="button" onClick={this.props.closeEdit}>취소하기</Button>)
             }
           </form>
         ) : content.length > 0 ? (

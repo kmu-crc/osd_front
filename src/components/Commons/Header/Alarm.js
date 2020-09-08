@@ -5,6 +5,7 @@ import StyleGuide from "StyleGuide";
 import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";
 import TextSlicer from "modules/TextSlicer"
+import noimg from "source/noimg.png";
 
 // const Btn = styled.button`
 //   padding: 0.75em 1.5em;
@@ -21,16 +22,42 @@ import TextSlicer from "modules/TextSlicer"
 //     border: 1px solid ${StyleGuide.color.geyScale.scale7};
 //   }
 // `;
+
+const CustomIcon =styled.div`
+border:1px solid #efefef;
+min-width:${props => props.width}px;
+max-width:${props => props.width}px;
+min-height:${props => props.height}px;
+max-height:${props => props.height}px;
+background-image:url(${props=>props.imgURL});
+background-repeat: no-repeat;
+background-size: cover;
+padding:${props => props.padding}px;
+margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
+margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
+display:${props=>props.isNon==true?"none":"block"}
+`
+const ResponseMsg =styled.div`
+min-width:${props => props.width}px;
+max-width:${props => props.width}px;
+min-height:${props => props.height}px;
+max-height:${props => props.height}px;
+margin-top:2px;
+margin-right:13px;
+display:flex;
+justify-content:flex-end;
+align-items:flex-end;
+`
 const AlarmDropDown = styled.ul`
   position: absolute;
   min-height: max-content;
-  max-height: 300px;
+  max-height: 350px;
   border-radius:5px;
   width: 320px;
   overflow-y: scroll;
   overflow-x: hidden;
   top: 90px;
-  right: 60px;
+  right: 255px;
   background-color: white;
   padding:10px;
   // transform: translateX(-50%);
@@ -38,15 +65,31 @@ const AlarmDropDown = styled.ul`
   box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
   border:1px solid #EFEFEF;
   z-index: 999;
+
 `;
+const AllAlarmRead=styled.li`
+    border-bottom: 1px solid #efefef;
+    text-align: left;
+    position: relative;
+    padding:12px 5px 12px 5px;
+    display: flex;
+    height:max-content;
+    .allread{
+      width:100%;
+      display:flex;
+      justify-content:flex-end;
+      .text{
+        font-size:13px;
+      }
+    }
+`
 const AlarmItem = styled.li`
-  border-bottom: 1px solid #222;
+  border-bottom: 1px solid #efefef;
   text-align: left;
   position: relative;
-  box-sizing: border-box;
-  // padding: 2px 2px 1px 2px;
-  padding:10px;
+  padding:12px 5px 12px 5px;
   display: flex;
+  height:100px;
   .time {
     position: absolute;
     top: 10px;
@@ -80,16 +123,22 @@ const AlarmItem = styled.li`
   }
 `;
 const RedCircle = styled.div`
-  position: absolute;
-  font-size: 8px;
-  margin-left: 20px;
-  line-height: 12px;
-  text-align: center;
+  // line-height: 12px;
+  // text-align: center;
   color: #FFF;
-  width: 15px;
-  height: 15px;
+  font-size: 6px;
+  min-width: 18px;
+  max-width: 18px;
+  min-height: 18px;
+  max-height:18px;
   background: #F00;
-  border-radius: 50%;
+  border-radius: 55%;
+  padding:3px 1px;
+  displat:flex;
+  justify-content:center;
+  align-items:center;
+  margin-left:20px;
+  position:absolute;
 `;
 
 export default class Alarm extends Component {
@@ -185,11 +234,12 @@ export default class Alarm extends Component {
     return (
       <button type="button" style={{ background: "none", border: "none", outline:"none"}} onClick={this.openAlarmHandler} onBlur={this.onAlarmHandler} ref={ref => (this.alarm = ref)} >
         {/* {this.props.children} */}
-        <Icon className="grey alarm" size="large" />
         {unread > 0 ?
           <RedCircle>
             <div style={{ width: "4", height: "12px" }}>{NumberFormat(unread)}</div>
           </RedCircle> : null}
+        <Icon className="grey alarm" size="large" />
+
         {this.state.active && (
           <AlarmDropDown>
             {alarms == null || alarms.length === 0 ? (
@@ -201,37 +251,63 @@ export default class Alarm extends Component {
             ) : (
                 <div>
                   {unread > 0 &&
-                    <AlarmItem style={{ display: "flex", flexDirection: "row", justifyContent: "left" }} onClick={this.allAlarmConfirm}>
-                      <div style={{ width: "2%", backgroundColor: "red" }}>&nbsp;</div>
-                      <div><Icon name="check square" /></div>
-                      <div><h4>모두읽음처리</h4></div>
-                    </AlarmItem>
+                    <AllAlarmRead style={{ display: "flex", flexDirection: "row", justifyContent: "left" }} onClick={this.allAlarmConfirm}>
+                      {/* <div style={{ width: "2%", backgroundColor: "red" }}>&nbsp;</div>
+                      <div><Icon name="check square" /></div> */}
+                      <div className="allread"><div className="text">모두읽음처리</div></div>
+                    </AllAlarmRead>
                   }
                   {converted && converted.length > 0 && converted.map((item, index) => {
                     const alarmtype = this.showButton(item)
+                    const alarmItem = JSON.parse(item.content);
+                    let imgURL = noimg;
+                    switch (item.type) {
+                      case "ITEM_PURCHASED_TO_EXPERT": 
+                      case "ITEM_QUESTION_TO_OWNER": 
+                      case "ITEM_PURCHASED_TO_USER":
+                      case "ITEM_LIKE_TO_OWNER": 
+                        imgURL=alarmItem==null?noimg:alarmItem.itemThumbnail==null?noimg:alarmItem.itemThumbnail.m_img; 
+                        break;
+                      case "ITEN_RESPONSE_TO_DESIGNER":
+                      case "ITEN_RESPONSE_TO_MAKER": 
+                        imgURL=alarmItem==null?noimg:alarmItem.toThumbnail==null?noimg:alarmItem.toThumbnail.m_img; 
+                        break;
+                      case "ITEN_REQUEST_TO_DESIGNER": 
+                      case "ITEN_REQUEST_TO_MAKER": 
+                      case "ITEM_REVIEW_TO_OWNER": 
+                      case "ITEM_LIKE_TO_DESIGNER": 
+                      case "ITEM_LIKE_TO_MAKER":
+                        imgURL=alarmItem==null?noimg:alarmItem.fromThumbnail==null?noimg:alarmItem.fromThumbnail.m_img; 
+                        break;
+                      default:
+                        imgURL = noimg;
+                    }
                     return (
                       <AlarmItem key={index} className={item.confirm ? "confirm" : "unconfirm"} onClick={() => alarmtype ? null : this.alarmConfirm(item.uid)}>
-                        <div style={item.confirm ? { width: "1%", backgroundColor: "#EAA" } : { backgroundColor: "red" }}>&nbsp;</div>
+                        <div style={item.confirm ? { width: "1%", height:"12px", backgroundColor: "#EAA" } : { width: "1%", height:"12px", backgroundColor: "red" }}>&nbsp;</div>
                         <div style={{ paddingLeft: "3px" }} >
                           <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "left" }}>
-                            {/* <div> */}
-                            {/* {item.kinds === "LIKE" ? <Icon name="heart" size="small" /> : <Icon name="bell outline" />} */}
-                            {/* </div> */}
                             <div>
-                              {/* <h5>{TextSlicer(item.title, 28)}</h5> */}
                             </div>
                           </div>
-                          <div style={{ height: "45px", display: "flex" }}>
-                            {/* <div style={{ */}
-                            {/* width: "45px", borderRadius: "15%", borderRight: "0.5px solid gray", borderBottom: "0.5px solid black", */}
-                            {/* backgroundPosition: "center", backgroundSize: "center", backgroundImage: `url(${item.thumbnail})` */}
-                            {/* }}>&nbsp;</div> */}
-                            <div style={{ verticalAlign: "middle", paddingLeft: "3px" }}>
+                          <div style={{height: "100%", display: "flex" }}>
+                            <div style={{ verticalAlign: "middle", paddingLeft: "3px", display:"flex", flexDirection:"column",alignItems:"space-between",justifyContent:"space-between" }}>
                               <div style={{ width: "100%", fontSize: "9pt" }}>{this.getMessageText(item)}</div>
-                              <div style={{ display: "flex" }}>
+                              <div style={{display: "flex" }}>
                                 <div style={{ fontSize: "9pt", color: "#960A0E" }}>{DateFormat(item.create_time)}</div>
                               </div>
                             </div>
+                            {/* { item.type=="ITEN_REQUEST_TO_DESIGNER"||
+                            item.type=="ITEN_REQUEST_TO_MAKER"?
+                            <React.Fragment>
+                              <ResponseMsg width={72} height={72}>
+                                <div onClick={()=>{window.location.href=item.type==ITEN_REQUEST_TO_DESIGNER?"":"";}} style={{fontSize:"13px",color:"red"}}>의뢰 응답</div>
+                              </ResponseMsg>
+                            </React.Fragment>
+                            : */}
+                              <CustomIcon imgURL={imgURL} width={72} height={72}/>
+                            {/* } */}
+                            
                           </div>
                         </div>
                       </AlarmItem>

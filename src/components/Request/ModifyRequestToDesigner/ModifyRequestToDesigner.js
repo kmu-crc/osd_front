@@ -434,9 +434,9 @@ class ModifyRequestToDesigner extends Component {
               </FormBox>
             </div>
             <div className="centering_">
-              <RedButton value={"적용"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton value={"취소"} onClick={() => { window.history.back() }} isConfirm={true} />
-              <GrayButton value={"삭제"} onClick={this.onClickDelete} isConfirm={true} />
+              <RedButton value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
+              <GrayButton value={"삭제하기"} onClick={this.onClickDelete} isConfirm={true} />
             </div>
           </MainBox>
         </Wrapper>

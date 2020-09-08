@@ -60,7 +60,7 @@ class ModifyIssue extends Component {
                           validates={["required"]} RenderComponent={FormInput} />
                 <FormField name="content" label="내용" value={this.props.IssueDetail.content}
                           validates={["required"]} RenderComponent={FormTextArea} />
-                <Button type="submit" onClick={this.props.handleClick}>등록</Button>
+                <Button type="submit" onClick={this.props.handleClick}>등록하기</Button>
               </Grid.Column>
             </Grid.Row>
           </Grid>

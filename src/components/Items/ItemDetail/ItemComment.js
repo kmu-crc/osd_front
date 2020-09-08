@@ -178,7 +178,7 @@ class DesignComment extends React.Component {
                       </div>
                     </div>
                     <div style={{ zIndex: "100", width: "35px", display: "inline-block" }}>&nbsp;
-                    {this.props.userInfo && this.props.userInfo.uid === comm.user_id && <a onClick={() => this.onDeleteComment(comm)} style={{ verticalAlign: "bottom" }}>삭제</a>}
+                    {this.props.userInfo && this.props.userInfo.uid === comm.user_id && <a onClick={() => this.onDeleteComment(comm)} style={{ verticalAlign: "bottom" }}>삭제하기</a>}
                     </div>
                     <div style={{ position: "relative" }}>
                       <div style={{ left: "50px", position: "absolute", display: "inline-block" }}>
@@ -213,7 +213,7 @@ class DesignComment extends React.Component {
                               </div>
                             </div>
                             <div style={{ zIndex: "100", width: "35px", display: "inline-block" }}>&nbsp;
-                    {this.props.userInfo && this.props.userInfo.uid === reply.user_id && <a onClick={() => this.deleteComment(reply.uid)} style={{ verticalAlign: "bottom" }}>삭제</a>}
+                    {this.props.userInfo && this.props.userInfo.uid === reply.user_id && <a onClick={() => this.deleteComment(reply.uid)} style={{ verticalAlign: "bottom" }}>삭제하기</a>}
                             </div>
                             <div style={{ position: "relative" }}>
                               <div style={{ left: "50px", position: "absolute", display: "inline-block" }}>

@@ -767,13 +767,13 @@ class CreateProductForm extends Component {
             }}>
               <RedButton value={"디자인 등록 계속"} isConfirm={false} />
             </Link>
-            : <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true} />
+            : <RedButton value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
           }
-          <GrayButton value={"취소"} onClick={() => {
+          <GrayButton value={"취소하기"} onClick={() => {
             if (window.confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
               window.history.back();
             }
-          }}>취소</GrayButton>
+          }}>취소하기</GrayButton>
         </div>
       ) : null}
     </MainBox>);
@@ -880,7 +880,7 @@ class ItemTypeForm extends Component {
               });
               this.returnState();
             }}>
-            작업취소하기<i className="undo icon" />
+            작업 취소<i className="undo icon" />
           </ResetButtonWrapper>
           {this.state.type === "blog" ?
             // <div className="contentWrap">

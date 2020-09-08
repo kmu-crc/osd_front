@@ -488,9 +488,9 @@ class CreateDesigner extends Component {
             {/* </div>
           <div className="contentsBox"> */}
             {/* {this.state.getready ? */}
-              <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true} />
+              <RedButton value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
             {/*}  : <GrayButton value={"등록"} onClick={() => alert("아이템을 등록해야 진행할 수 있습니다.")} isConfirm={false}></GrayButton>}*/}
-            <GrayButton value={"취소"} onClick={() => { window.location.href = "/mypage" }} isConfirm={false}></GrayButton>
+            <GrayButton value={"취소하기"} onClick={() => { window.location.href = "/mypage" }} isConfirm={false}></GrayButton>
           </div>
         </MainBox>
       </React.Fragment>

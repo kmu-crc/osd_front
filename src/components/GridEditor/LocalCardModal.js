@@ -561,8 +561,8 @@ export class LocalCardModal extends Component {
                                 <div className="header-edit-button">
                                     {this.props.edit ?
                                         <React.Fragment>
-                                            <button className="edit-btn" onClick={() => this.setState({ edit: !this.state.edit, title: card.title, content: card.content })} >수정</button>
-                                            <button className="cancel-btn" onClick={(event) => this.removeCard(event)} >삭제</button>
+                                            <button className="edit-btn" onClick={() => this.setState({ edit: !this.state.edit, title: card.title, content: card.content })} >수정하기</button>
+                                            <button className="cancel-btn" onClick={(event) => this.removeCard(event)} >삭제하기</button>
                                         </React.Fragment> : undefined}
                                 </div>
                             </div>
@@ -606,9 +606,9 @@ export class LocalCardModal extends Component {
                     <ButtonContainer >
                         <EditorBottonWrapper>
                             <button onClick={this.onSave} className="submit" type="button">
-                                <i className="icon outline save" />저장</button>
+                                <i className="icon outline save" />저장하기</button>
                             <button onClick={this.onCancel} className="cancel" type="button">
-                                <i className="icon trash" />취소</button>
+                                <i className="icon trash" />취소하기</button>
                         </EditorBottonWrapper>
                     </ButtonContainer>
                 </div>

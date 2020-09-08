@@ -530,8 +530,8 @@ class CreateMaker extends Component {
             </ExperienceBox>
           </div>
           <div className="contentsBox">
-            <RedButton value={"등록"} onClick={this.onSubmit} isConfirm={true} />
-            <GrayButton value={"취소"} onClick={() => { window.location.href = "/mypage" }} isConfirm={false}></GrayButton>
+            <RedButton value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
+            <GrayButton value={"취소하기"} onClick={() => { window.location.href = "/mypage" }} isConfirm={false}></GrayButton>
           </div>
         </MainBox>
       </React.Fragment>

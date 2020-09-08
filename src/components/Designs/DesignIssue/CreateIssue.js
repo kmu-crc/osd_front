@@ -56,7 +56,7 @@ class CreateIssue extends Component {
             <Grid.Column width={12}>
               <FormField name="title" label="이슈 제목" type="text" placeholder="제목을 입력해주세요." validates={["required"]} RenderComponent={FormInput} />
               <FormField name="content" label="내용" placeholder="내용을 입력해주세요." validates={["required"]} RenderComponent={FormTextArea} />
-              <Button type="submit" onClick={this.props.handleClick}>등록</Button>
+              <Button type="submit" onClick={this.props.handleClick}>등록하기</Button>
             </Grid.Column>
           </Grid.Row></Grid>
         </FromFieldCard>
