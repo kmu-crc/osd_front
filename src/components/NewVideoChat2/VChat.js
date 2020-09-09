@@ -61,18 +61,18 @@ const ButtonBarContainer = styled.div`
     width: max-content;
   }
 `
-const BigVideoScreen = styled.div`
+const ScreenContainer = styled.div`
   z-index: 200;
   background-color: black;
   color: white;
   text-algin: center;
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 82%; //100%;
   video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
   .txt {
     margin: auto;
@@ -83,13 +83,12 @@ const VideosContainer = styled.div`
   display: flex;
   flex-direction: row;
   position: fixed;
-  bottom: 16px;
-  left: 15px;
+  bottom: 10px;
+  left: 5px;
   width: 1249px; //100%
   background-color: transparent;
 
   .me {
-
     .share {
       width: 120px;
       height: 93px;
@@ -120,10 +119,11 @@ const VideosContainer = styled.div`
       position: absolute;
       display: flex;
       flex-direction: row;
-      height: 77px;
       bottom: 0px;
       .peer {
-        transform: translate(0, 10px);
+        border: 1px solid white;
+        // width: 175px;
+        // height: 105px;
         margin-right: 14px;
       }
     }
@@ -142,15 +142,19 @@ const constraint = {
 }
 // 
 const Me = styled.div`
-  width: 259px;
-  height: 146px;
+  // width: 259px;
+  // height: 146px;
+  width: 198px;
+  height: 110px;
   position: relative;
   display: flex;
   border: 1px solid #707070;
   background-color: black;
 
   video {
-    width: 257px;
+    // width: 99%;
+    // width: 257px;
+    width: 192px;
     margin: 0;
     padding: 1;
     object-fit: cover;
@@ -216,9 +220,9 @@ const MeMini = styled.div`
   z-index: 400;
   width: 120px;
   height: 60;
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
+  // position: absolute;
+  // right: 10px;
+  // bottom: 10px;
   video {
     width: 120px;
     margin: 0;
@@ -241,7 +245,7 @@ class MyVideo extends Component {
   }
   init = () => {
     const stream = this.video.srcObject.getTracks().filter(track => track.kind === 'audio')
-    if (stream) {
+    if (stream[0]) {
       stream[0].enabled = false
     }
   }
@@ -332,25 +336,28 @@ class MyVideo extends Component {
 }
 // 
 const NotMe = styled.div`
-  width: 120px;
-  height: 67px;
-  background-color: black;
+  // width: 120px;
+  // height: 67px;
+  // background-color: black;
   border: ${props => props.online ? "2px solid green" : "2px solid #707070"};
   position: relative;
   display: flex;
+  flex-direction: column;
 
   .camera {
+    border: 1px solid green;
     width: 116px;
     margin: 0;
     padding: 0;
-    object-fit: cover;
+    // object-fit: cover;
   }
   .share{
+    border: 1px solid yellow;
     width: 60px;
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    object-fit: cover;
+    // position: absolute;
+    // right: 10px;
+    // bottom: 10px;
+    // object-fit: cover;
   }
   &.selected {
     border: 2px solid #FF0000;
@@ -381,6 +388,31 @@ const NotMe = styled.div`
   }
 `
 // MEMBER VIDEO LIST component class
+const Others = styled.div`
+  position: relative;
+  width: 100px;
+  height: 100px;
+  .thumbnail {
+    border: 1px solid red;
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    background-image: url(${props => props.thumbnail});
+    background-size: cover;
+    background-position: center center;
+    background-color: white;
+
+  }
+  .share {
+    border: 1px solid green;
+
+  }
+  .camera {
+    border: 1px solid blue;
+
+  }
+`
 class OthersVideo extends Component {
   constructor(props) {
     super(props)
@@ -408,28 +440,18 @@ class OthersVideo extends Component {
   }
 
   render() {
-    // console.log("peer:", this.props)
-    const css = this.props.selected ? "selected" : ""
+    // const css = this.props.selected ? "selected" : ""
 
     return (<VideoContainer>
-      <NotMe thumbnail={this.props.thumbnail} className={css} online={this.props.stream}>
-        <div className="thumbnail" />
-        {this.props.stream ?
-          // this.props.stream.getTracks(t => t.kind === "video")[0].enabled ?
-          <video
-            hidden={this.props.mute}
-            className="camera"
-            onClick={() => this.props.onClickVideo && this.props.onClickVideo()}
-            autoPlay
-            ref={(ref) => { this.video = ref }}
-          /> : null}
+      <Others thumbnail={this.props.thumbnail}>
 
-        {
-          (this.props.stream && this.props.mute) ||
-            (this.props.stream == null && this.props.share == false) ?
-            <div className="txt">
-              {this.props.nick_name &&
-                this.props.nick_name.slice(0, 13)}</div> : null}
+        <div className="thumbnail"></div>
+
+        <div className="share">share</div>
+        <div className="camera">camera</div>
+      </Others>
+      {/* <NotMe thumbnail={this.props.thumbnail} className={css} online={this.props.stream}>
+        <div className="thumbnail" />
 
         {this.props.share ?
           <video
@@ -437,13 +459,33 @@ class OthersVideo extends Component {
             onClick={() => this.props.onClickShare && this.props.onClickShare()}
             autoPlay
             ref={(ref) => { this.videoShare = ref }}
-          /> : null}
+          />
+          : null}
 
-      </NotMe>
+        {this.props.stream ?
+          <video
+            hidden={this.props.mute}
+            className="camera"
+            onClick={() => this.props.onClickVideo && this.props.onClickVideo()}
+            autoPlay
+            ref={(ref) => { this.video = ref }}
+          />
+          : null}
+
+        {(this.props.stream && this.props.mute) || (this.props.stream == null && this.props.share == false) ?
+          <div className="txt">
+            {this.props.nick_name &&
+              this.props.nick_name.slice(0, 13)}</div>
+          : null}
+
+
+
+      </NotMe> */}
     </VideoContainer >)
   }
 }
 // 
+function isOpen(ws) { return ws.readyState === ws.OPEN }
 class VChat extends Component {
   constructor(props) {
     super(props)
@@ -460,6 +502,8 @@ class VChat extends Component {
       mute: [],
       peers: [],
       connected: 1,
+      //
+      refresh: 1,
     }
     // camera
     this.myPeer = new Peer(this.props.userInfo.uid)
@@ -577,7 +621,8 @@ class VChat extends Component {
       }
     })
     this.myPeer.on('open', id => {
-      this.socket.emit('join-room', this.props.design.uid, id)
+      if (isOpen(this.socket))
+        this.socket.emit('join-room', this.props.design.uid, id)
       // console.log('open', id)
     })
     this.myPeer.on('call', call => {
@@ -675,9 +720,16 @@ class VChat extends Component {
     })
   }
   muteVideo = () => {
-    this.socket.emit("mute", this.props.design.uid, this.props.userInfo.uid)
+    if (isOpen(this.socket))
+      this.socket.emit("mute", this.props.design.uid, this.props.userInfo.uid)
   }
-
+  clickedVideo = (obj) => {
+    this.setState({
+      selectedVideo: obj.stream,
+      selected: obj.user_id
+    })
+    this.videoselected(obj.stream)
+  }
   componentWillUnmount() {
     this.socket &&
       this.socket.close()
@@ -694,139 +746,131 @@ class VChat extends Component {
   }
 
   render() {
-    const connected = this.state.peers && this.state.peers.length > 0 && this.state.peers.filter(peer => peer.stream != null)
-    console.log("selected:", this.state.selected, this.state.selectedVideo)
-    return (<VideoChatContainer w={window.innerWidth} h={window.innerHeight}>
-      {/* top */}
-      <ButtonBarContainer>
-        <div className='btn chat' onClick={() => {
-          const url = geturl() + `/chat/${this.props.design.uid} `
-          const options = `toolbar = no, status = no, menubar = no, resizable = no, location = no, top = 100, left = 100, width = 496, height = 600, scrollbars = no`
-          window.open(url, "chat", options)
-        }}>
-          <span className='txt'>채팅</span>
-        </div>
-        <div
-          ref={(ref) => this.sharebtn = ref}
-          className='btn share'
-        >
-          <span className='txt'>화면공유</span>
-        </div>
-        <div className='btn exit' onClick={() => {
-          window.open('', '_self').close()
-        }}>
-          <span className='txt'>나가기</span>
-        </div>
+    // const connected = this.state.peers && this.state.peers.length > 0 && this.state.peers.filter(peer => peer.stream != null)
+    const nickName = this.props.userInfo.nickName || "디자인 맴버"
 
-      </ButtonBarContainer>
+    return (
+      this.state.refresh &&
+      <VideoChatContainer w={window.innerWidth} h={window.innerHeight}>
 
-      {/* middle*/}
-      <BigVideoScreen>
-        <video
-          muted
-          autoPlay
-          ref={(ref) => this.video = ref}
-        />
-      </BigVideoScreen>
+        {/* top */}
+        <ButtonBarContainer>
+          <div className='btn chat' onClick={() => {
+            const url = geturl() + `/chat/${this.props.design.uid} `
+            const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`
+            window.open(url, "chat", options)
+          }}>
+            <span className='txt'>채팅</span>
+          </div>
+          <div
+            ref={(ref) => this.sharebtn = ref}
+            className='btn share'
+          >
+            <span className='txt'>화면공유</span>
+          </div>
+          <div className='btn exit' onClick={() => {
+            window.open('', '_self').close()
+          }}>
+            <span className='txt'>나가기</span>
+          </div>
 
-      {/* bottom*/}
-      <VideosContainer>
-        <div className="me">
-          <MyVideo
-            onClick={() => {
-              this.setState({
-                selectedVideo: this.state.localStream,
-                selected: "me"
-              })
-              this.videoselected(this.state.localStream)
-            }}
-            mutecam={this.muteVideo}
-            id={this.props.userInfo.uid}
+        </ButtonBarContainer>
+
+
+
+        {/* middle*/}
+        <ScreenContainer>
+          {/* contain={this.state.selectedVideo.get}> */}
+          <video
+            muted
             autoPlay
-            control={true}
-            screen={"camera"}
-            stream={this.state.localStream}
-            thumbnail={(this.props.userInfo && this.props.userInfo.thumbnail && this.props.userInfo.thumbnail.s_img) || who}
-            nick_name={this.props.userInfo.nickName || "안녕 나는 김철수"} />
-          {this.state.localShare ?
+            ref={(ref) => this.video = ref}
+          />
+        </ScreenContainer>
+
+
+
+
+        {/* bottom*/}
+        <VideosContainer>
+          <div className="me">
+            {this.state.localShare ?
+              <MyVideo
+                onClick={() => this.clickedVideo({ stream: this.state.localShare, user_id: "me" })}
+                close={() => {
+                  this.setState({ localShare: null, refresh: this.state.refresh++ % 100 });
+                  this.socket2.emit("exit-share", this.props.design.uid, 'share-' + this.props.userInfo.uid);
+                }}
+                id={this.props.userInfo.uid}
+                autoPlay
+                control={false}
+                screen={"share"}
+                stream={this.state.localShare}
+                nick_name={nickName} />
+              : null}
+
             <MyVideo
-              onClick={() => {
-                this.setState({
-                  selectedVideo: this.state.localShare,
-                  selected: "me"
-                })
-                this.videoselected(this.state.localShare)
-              }}
-              close={() => {
-                this.setState({ localShare: null });
-                this.socket2.emit("exit-share", this.props.design.uid, 'share-' + this.props.userInfo.uid);
-              }}
+              onClick={() => this.clickedVideo({ stream: this.state.localStream, user_id: "me" })}
+              mutecam={this.muteVideo}
               id={this.props.userInfo.uid}
               autoPlay
-              control={false}
-              screen={"share"}
-              stream={this.state.localShare}
-              nick_name={this.props.userInfo.nickName || "안녕 나는 김철수"} />
-            : null}
-        </div>
+              control={true}
+              screen={"camera"}
+              stream={this.state.localStream}
+              thumbnail={(this.props.userInfo && this.props.userInfo.thumbnail && this.props.userInfo.thumbnail.s_img) || who}
+              nick_name={nickName} />
 
-        <div className="others">
-          <div className="member-count">
-            참여자&nbsp;
+          </div>
+
+          <div className="others">
+            {/* <div className="member-count">
+              참여자&nbsp;
             {(connected && connected.length + 1) || "-"}
             /
             {(this.props.design
-              && this.props.design.member
-              && this.props.design.member.length) || "-"}
+                && this.props.design.member
+                && this.props.design.member.length) || "-"}
+            </div> */}
+
+            <ScrollContainer vertical={false} className="inner scroll-container">
+
+              {this.state.peers &&
+                this.state.peers.length > 0 &&
+
+                this.state.peers.map((peer, idx) => {
+
+                  return (<div className="peer" key={idx + peer.nick_name}>
+
+                    <OthersVideo
+                      onClickVideo={() => this.clickedVideo(peer)}
+                      onClickShare={() => this.clickedVideo(peer)}
+
+                      {...peer}
+                      itsMe={false}
+                      share={this.state.share.findIndex(ele => ele.room === this.props.design.uid && ele.user === 'share-' + peer.user_id) > -1 && peer.share}
+                      stream={peer.stream}
+                      mute={this.state.mute.findIndex(ele => ele.room === this.props.design.uid && ele.user === peer.user_id) > -1}
+                      close={() => {
+                        const peers = [...this.state.peers]
+                        let idx = peers.findIndex(_peer => _peer.user_id === peer.user_id)
+                        if (idx > -1) {
+                          peers[idx].share = null
+                        }
+                        this.setState({ peers: peers })
+                      }}
+                      selected={peer.user_id == this.state.selected} />
+                  </div>)
+                }
+                )}
+            </ScrollContainer>
           </div>
-
-          <ScrollContainer vertical={false} className="inner scroll-container">
-            {this.state.peers &&
-              this.state.peers.length > 0 &&
-              this.state.peers.map((peer, idx) => {
-                return (<div
-                  className="peer"
-                  key={idx + peer.nick_name}
-                >
-
-                  <OthersVideo
-                    onClickVideo={() => {
-                      this.setState({
-                        selectedVideo: peer.stream,
-                        selected: peer.user_id
-                      })
-                      this.videoselected(peer.stream)
-                    }}
-                    onClickShare={() => {
-                      this.setState({
-                        selectedVideo: peer.share,
-                        selected: peer.user_id
-                      })
-                      this.videoselected(peer.share)
-                    }}
-                    {...peer}
-                    itsMe={false}
-                    share={this.state.share.findIndex(ele => ele.room === this.props.design.uid && ele.user === 'share-' + peer.user_id) > -1 && peer.share}
-                    stream={peer.stream}
-                    mute={this.state.mute.findIndex(ele => ele.room === this.props.design.uid && ele.user === peer.user_id) > -1}
-                    close={() => {
-                      const peers = [...this.state.peers]
-                      let idx = peers.findIndex(_peer => _peer.user_id === peer.user_id)
-                      if (idx > -1) {
-                        peers[idx].share = null
-                      }
-                      this.setState({ peers: peers })
-                    }}
-                    selected={peer.user_id == this.state.selected} />
-                </div>)
-              }
-              )}
-          </ScrollContainer>
-        </div>
-      </VideosContainer>
+        </VideosContainer>
 
 
-    </VideoChatContainer >)
+
+
+
+      </VideoChatContainer >)
   }
 }
 

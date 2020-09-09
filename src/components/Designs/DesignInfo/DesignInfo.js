@@ -706,7 +706,7 @@ const ChatWrapper = styled.div`
     }
 `;
 
-
+function isOpen(ws) { return ws.readyState === ws.OPEN }
 class DesignInfo extends Component {
 
     constructor(props) {
@@ -772,11 +772,11 @@ class DesignInfo extends Component {
         window.addEventListener("resize", this.handleResize);
         if (this.props.valid) {
             try {
-                Socket.emit('design-init-for-vchat', {
-                    design: this.props.id, user: this.props.userInfo.uid
-                });
+                if (isOpen(Socket))
+                    Socket.emit('design-init-for-vchat', {
+                        design: this.props.id, user: this.props.userInfo.uid
+                    });
                 Socket.on('vchat-on-air', data => {
-                    console.log('check VC on air', data)
                     this.setState({ liveVC: data })
                     Socket.on('check-new-message-count', data => {
                         console.log('check new msg cnt', data)
@@ -930,7 +930,8 @@ class DesignInfo extends Component {
         try {
             if (this.state.liveVC === false) {
                 // if (this.props.userInfo.uid === this.props.DesignDetail.user_id) {
-                Socket.emit('invited-member-to-vchat', { user_id: this.props.userInfo.uid, design_id: this.props.DesignDetail.uid })
+                if (isOpen(Socket))
+                    Socket.emit('invited-member-to-vchat', { user_id: this.props.userInfo.uid, design_id: this.props.DesignDetail.uid })
                 // }
             }
         } catch (e) {

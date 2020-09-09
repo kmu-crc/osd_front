@@ -10,6 +10,7 @@ class DesignDetail extends Component {
     super(props);
     this.state = { isMyDesign: false, editor: false };
   }
+
   componentDidMount() {
     this.props.GetDesignDetailRequest(this.props.id, this.props.token)
       .then(async () => {
@@ -30,11 +31,13 @@ class DesignDetail extends Component {
       this.props.GetLikeDesignRequest(this.props.id, this.props.token);
     } // 로그인 한 경우 좋아요 했는지 여부 가져오기
   }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.DesignDetail !== nextProps.DesignDetail) {
       return true;
     }
   }
+
   checkEditorPermission() {
     return (
       this.props.userInfo &&
@@ -42,19 +45,22 @@ class DesignDetail extends Component {
         this.props.DesignDetail.member &&
         this.props.DesignDetail.member.find(peer => { return peer.user_id === this.props.userInfo.uid }) ? true : false);
   }
+
   render() {
-    console.log(this.props, "designdetail");
-    // console.log("userinfo", this.props, this.state)
+
     const DesignDetail = this.props.DesignDetail;
+
     return (<React.Fragment>
-      {DesignDetail && DesignDetail.uid ? <React.Fragment>
-        {/* design info */}
-        <DesignInfo {...this.props} {...this.state} />
-        {/* design detail */}
-        {DesignDetail && DesignDetail.is_project === 1
-          ? (<DesignDetailStepContainer design={DesignDetail} {...this.state} />)
-          : (<DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />)}
-      </React.Fragment> : <Loading />}
+      {DesignDetail && DesignDetail.uid
+        ? <React.Fragment>
+          {/* design info */}
+          <DesignInfo {...this.props} {...this.state} />
+          {/* design detail */}
+          {DesignDetail && DesignDetail.is_project === 1
+            ? (<DesignDetailStepContainer design={DesignDetail} {...this.state} />)
+            : (<DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />)}
+        </React.Fragment>
+        : <Loading />}
     </React.Fragment>)
   }
 }
