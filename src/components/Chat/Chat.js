@@ -279,6 +279,7 @@ const MyMessage = styled.div`
       background-color: #707070;
       color: white;
       text-align: left;
+      white-space: pre-wrap;
     }
     .wrapper{
       width:min-content;
@@ -319,7 +320,7 @@ const Me = (data) => {
           <div className="count">{data.count > 0 ? data.count : ""}</div>
           <div className="time">{dateTime}</div>
         </div>
-        <div className="message" style={{ whiteSpace: "pre-wrap" }}>
+        <div className="message" >
           {data.message}</div>
       </div>
     </MyMessage>);
@@ -366,6 +367,7 @@ const YouMessage = styled.div`
       background-color: white;
       color: #707070;
       text-align: left;
+      white-space: pre-wrap;
     }
     .messageOverlay {
       margin-left:40px;
@@ -380,6 +382,7 @@ const YouMessage = styled.div`
       background-color: white;
       color: #707070;
       text-align: left;
+      white-space: pre-wrap;
     }
     .wrapper{
       width:min-content;
@@ -571,7 +574,7 @@ const YouOverlay = (data) => {
   // console.log(dateTime);
   return (<YouMessage thumbnail={data.thumbnail || who}>
     <div className="messageWrapper">
-      <div className="messageOverlay">
+      <div className="messageOverlay" >
         {data.message}</div>
       <div className="wrapper">
         <div className="count">{data.count > 0 ? data.count : ""}</div>
@@ -597,7 +600,7 @@ const You = (data) => {
     </div>
     <div className="messageWrapper">
       <div className="thumbnail" ></div>
-      <div className="message">
+      <div className="message" >
         {data.message}</div>
       <div className="wrapper">
         <div className="count">{data.count > 0 ? data.count : ""}</div>
@@ -814,8 +817,9 @@ class Chat extends React.Component {
 
     if (scrollbar.scrollHeight - scrollbar.scrollTop <= 460) {
       try {
-        if (isOpen(this.socket))
+        if (isOpen(this.socket)) {
           this.socket.emit("read");
+        }
         this.setState({ newchat: null })
       } catch (e) {
         console.error(e);
