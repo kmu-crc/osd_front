@@ -624,7 +624,9 @@ class DesignerDetail extends Component {
       category_level1: 0, category_level2: 0, location: null,
       explain: "", tag: [],
       career: [{ number: 0, task: "", explain: "", during: "" }],
-      reviewdetail: false, detail: null
+      reviewdetail: false, detail: null,
+      create_time:"",
+      update_time:"",
     };
     this.onClickRequest = this.onClickRequest.bind(this);
     this.onClickisLike = this.onClickisLike.bind(this);
@@ -667,6 +669,8 @@ class DesignerDetail extends Component {
         tag: tag,
         career: careerList,
         score: nextProps.DesignerViewDetail.score,
+        create_time:nextProps.DesignerViewDetail.create_time,
+        update_time:nextProps.DesignerViewDetail.update_time,
       })
     };
 
@@ -768,7 +772,13 @@ class DesignerDetail extends Component {
         {/* Introduction */}
         <Introduction>
           <div className="wrapItem">
-            <div className="title"><TextFormat txt={this.state.nick_name} chars={32} /></div>
+            <div className="title">
+              <TextFormat txt={this.state.nick_name} chars={32} />
+              <span className="text">
+                {new Date(this.state.create_time).getFullYear()+"년"
+                +(new Date(this.state.create_time).getMonth()+1)+"월"
+                +(new Date(this.state.create_time).getDate())+"일 등록"}</span>
+            </div>
             <div className="text">{this.state.explain || "'디자이너 소개'를 가져오고 있습니다."}</div>
             <div className="title">위치</div>
             <div className="text">{Location}</div>

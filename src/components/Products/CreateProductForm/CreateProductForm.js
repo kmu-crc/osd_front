@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import { Dropdown } from "semantic-ui-react";
 import CheckBox2 from "components/Commons/CheckBox";
 import { LocalGridEditor } from "components/GridEditor/LocalGridEditor";
-import { AddController, InputContent, Controller, InputTag, /*ThumbnailList,*/ RadioType } from "components/Commons/InputItem";
+import { AddController, InputContent, Controller, InputTagNew, /*ThumbnailList,*/ RadioType } from "components/Commons/InputItem";
 import SearchDesignMemberContainer from "containers/Commons/SearchMemberContainer";
-import { InputPrice } from "components/Commons/InputItem/InputPrice";
+import { InputPriceNew } from "components/Commons/InputItem/InputPriceNew";
 import Loading from "components/Commons/Loading";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import templateImgDesign from "source/template-image-design.png";
@@ -503,8 +503,8 @@ const DescirptionText = styled.div`
 `;
 const InputText = styled.input`
   width: ${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height: 43px;
-  border-radius: 20px;
+  height: 52px;
+  border-radius: 26px;
   font-family: Noto Sans KR;
   font-size: 20px;
   background-color: #E9E9E9;
@@ -717,7 +717,7 @@ class CreateProductForm extends Component {
             <div className="wrapper flex">
               <div className="label">태그</div>
               <div>
-                <InputTag width={370} getValue={this.onHandleReturnedTags} />
+                <InputTagNew width={370} getValue={this.onHandleReturnedTags} />
               </div>
             </div>
 
@@ -983,7 +983,7 @@ class ItemDesign extends Component {
         <Field title="설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
         <Field title="구입 비용">
-          <InputPrice name="price" getValue={this.getPriceValue} />
+          <InputPriceNew name="price" getValue={this.getPriceValue} />
           {/* <InputText onChange={this.onHandleChange} name="price" width={370} /> */}
         </Field>
       </React.Fragment>)
@@ -1051,7 +1051,7 @@ class ItemProject extends Component {
         <Field title="공개">
           <RadioType return={this.onHandleReturn} default={this.state["public"]} name="public" Options={["예", "아니오"]} /></Field>
         <Field title="구입 비용">
-          <InputPrice name="price" getValue={this.getPriceValue} />
+          <InputPriceNew name="price" getValue={this.getPriceValue} />
         </Field>
       </React.Fragment>)
   }
@@ -1093,7 +1093,7 @@ class ItemConsulting extends Component {
         <Field title="내용 공개 여부">
           <RadioType return={this.onHandleReturn} default={this.state["public"]} name="public" Options={["예", "아니오"]} /></Field>
         <Field title="자문/상담 비용">
-          <InputPrice placeholder="시간당" name="price" getValue={this.getPriceValue} />
+          <InputPriceNew placeholder="시간당" name="price" getValue={this.getPriceValue} />
         </Field>
       </React.Fragment>)
   }
@@ -1124,7 +1124,7 @@ class ItemExperience extends Component {
         <Field title="설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
         <Field title="구입 비용">
-          <InputPrice name="price" getValue={this.getPriceValue} />
+          <InputPriceNew name="price" getValue={this.getPriceValue} />
         </Field>
       </React.Fragment>)
   }
@@ -1156,7 +1156,7 @@ class ItemInfoData extends Component {
         <Field title="설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
         <Field title="구입 비용">
-          <InputPrice name="price" getValue={this.getPriceValue} />
+          <InputPriceNew name="price" getValue={this.getPriceValue} />
           {/* <InputText onChange={this.onHandleChange} name="price" width={370} /> */}
         </Field>
       </React.Fragment>)
@@ -1188,7 +1188,7 @@ class ItemIdea extends Component {
         <Field title="설명">
           <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
         <Field title="구입 비용">
-          <InputPrice name="price" getValue={this.getPriceValue} />
+          <InputPriceNew name="price" getValue={this.getPriceValue} />
         </Field>
       </React.Fragment>)
   }
@@ -1262,7 +1262,7 @@ class ItemPatent extends Component {
           <RadioType return={this.onHandleReturn} default={this.state["selling-type"]} name="selling-type" Options={["양도", "독점 사용권", "일반 사용권"]} /></Field>
 
         <Field title="구입 비용">
-          <InputPrice name="price" getValue={this.getPriceValue} />
+          <InputPriceNew name="price" getValue={this.getPriceValue} />
         </Field>
 
       </React.Fragment >)
@@ -1304,7 +1304,7 @@ class ItemProduct extends Component {
             <Context >(이미지 최대 10장 업로드 가능)</Context></div></Field> */}
 
         <Field title="구입 비용">
-          <InputPrice name="price" getValue={this.getPriceValue} />
+          <InputPriceNew name="price" getValue={this.getPriceValue} />
         </Field>
 
       </React.Fragment>)

@@ -70,6 +70,8 @@ const InformationBox = styled.div`
     .fontStyleNormal{font-family:Noto Sans KR; font-weight:500;}
     .alignCenter{text-align:center;}
     .red{color:red;}
+    .cursorPointer{cursor:pointer;}
+
     .design-clipart {
       width: 129px;
       height: 102px;
@@ -375,21 +377,21 @@ class MyDetail extends Component {
                 <div className="wrap">
                   <div className="title fontBig fontStyleNormal"><div>다양한 아이디어를 s판매하세요!</div></div>
                   <div className="design-clipart">&nbsp;</div>
-                  <div onClick={this.onClickCreateDesigner} ><div className="fontDefault alignCenter fontStyleNormal">디자이너 등록 / 관리 ></div></div>
+                  <div onClick={this.onClickCreateDesigner} ><div className="fontDefault alignCenter cursorPointer fontStyleNormal">디자이너 등록 / 관리 ></div></div>
                 </div>
               </div>
               <div className="grayBox">
                 <div className="wrap">
                   <div className="title fontBig fontStyleNormal"><div>제작 기술을 공유하고 <br />장소를 쉐어해보세요!</div></div>
                   <div className="toolbox-clipart">&nbsp;</div>
-                  <div onClick={this.onClickCreateMaker}><div className="fontDefault alignCenter fontStyleNormal">메이커 등록 / 관리 ></div></div>
+                  <div onClick={this.onClickCreateMaker}><div className="fontDefault alignCenter cursorPointer fontStyleNormal">메이커 등록 / 관리 ></div></div>
                 </div>
               </div>
               <div className="grayBox">
                 <div className="wrap">
                   <div className="title fontBig fontStyleNormal"><div>본인인증을 통해 더욱 다양한 <br /> 혜택을 누려보세요!</div></div>
                   <div className="verify-clipart"></div>
-                  <div><div className="fontDefault alignCenter fontStyleNormal">본인 인증 ></div></div>
+                  <div><div className="fontDefault alignCenter cursorPointer fontStyleNormal">본인 인증 ></div></div>
                 </div>
               </div>
             </InformationBox>

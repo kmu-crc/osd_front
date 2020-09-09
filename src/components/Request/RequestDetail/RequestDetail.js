@@ -338,14 +338,16 @@ class Detail extends Component {
               </MainBox>
               {!MyDetail ?
                 <ButtonWrapper>
-                  {(this.props.userInfo && Detail && Detail.client_id === this.props.userInfo.uid) ? 
-                  null:<Link to={{ pathname: `/responseTo${Detail.type}Req/${Detail.uid}`, state: { detail: Detail, expert: MyDetail } }}>
+                  {(this.props.userInfo && Detail && Detail.client_id == this.props.userInfo.uid) ? 
+                  <RedButton reverse={true} onClick={this.onClickResponse} value={"의뢰수정"} isConfirm={false}></RedButton> 
+                  :
+                  this.props.userInfo&& Detail && (Detail.expert_id == null ||  Detail.expert_id == this.props.userInfo.uid)?
+                  <Link to={{ pathname: `/responseTo${Detail.type}Req/${Detail.uid}`, state: { detail: Detail, expert: MyDetail } }}>
                     <RedButton value={"의뢰응답"} isConfirm={false} onClickButton={null}></RedButton>
                   </Link>
+                  :
+                  null
                    }
-                  {(this.props.userInfo && Detail && Detail.client_id === this.props.userInfo.uid) ? 
-                  <RedButton reverse={true} onClick={this.onClickResponse} value={"의뢰수정"} isConfirm={false}></RedButton> 
-                  : null}
                 </ButtonWrapper>
                 : null}
             </Wrapper>
