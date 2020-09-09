@@ -336,8 +336,9 @@ class RequestList extends Component {
                 category1={category1}
                 category2={category2}
                 which="게시판" /></div>
-            <div className="sort">
-              <Sorting handleClick={this.sortChange} placeholder={sort} /></div>
+            {/* <div className="sort">
+              <Sorting handleClick={this.sortChange} placeholder={sort} />
+            </div> */}
 
             {/* <div className="request" style={{ marginLeft: "auto" }}> */}
             {/* {type !== "normal" && type !== "item" ?

@@ -464,6 +464,7 @@ this.state.tab==1?
                   lastItem={null}
                   siblingRange={1}
                   totalPages={lastPage}
+                  secondary
                   onPageChange={(event, { activePage }) => {
                     this.goPage(activePage-1);
                   }}

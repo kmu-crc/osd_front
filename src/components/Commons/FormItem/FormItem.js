@@ -135,7 +135,9 @@ export class FormInput extends Component {
     delete newProps.onChange;
     return (
       <div>
-        <input status={this.state.status} {...newProps} type={type} name={name} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
+        <input
+        style={{outline:"none",backgroundColor:"#e9e9e9",border:"none",borderRadius:"26px",height:"52px",width:"450px",paddingLeft:"20px"}}
+        status={this.state.status} {...newProps} type={type} name={name} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>
     );

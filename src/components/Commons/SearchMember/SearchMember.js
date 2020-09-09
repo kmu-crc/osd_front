@@ -27,6 +27,9 @@ const MemberWrap = styled.div`
 
 const SearchWrap = styled.div`
   position: relative;
+  .form_item{
+    outline:none;
+  }
 `
 
 const MemberList = styled.ul`
@@ -114,7 +117,7 @@ class SearchMember extends Component {
   render() {
     return (
       <SearchWrap>
-        <FormInput type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue} />
+        <FormInput className="form_item" type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue} />
         <MemberList style={this.state.open ? { display: "block" } : { display: "none" }}>
           {this.props.members && this.props.members.map((item, index) => {
             return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item)}>{item.email}</MemberListItem>);

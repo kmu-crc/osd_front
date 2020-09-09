@@ -43,8 +43,8 @@ class FooterPrivacy extends Component {
       <div style={{width:"83%"}}>
         <FromFieldCard>
               <TabBox>
-                <div className="text_grey pointer" onClick={()=>window.location.href="/footerPrivacy"}>이용약관</div>
-                <div className="vrLine"/>
+                {/* <div className="text_grey pointer" onClick={()=>window.location.href="/footerPrivacy"}>이용약관</div>
+                <div className="vrLine"/> */}
                 <div className="text_black pointer" onClick={()=>window.location.href="/footerPara"}>개인정보 보호정책</div>
               </TabBox>
               <ContentBox>

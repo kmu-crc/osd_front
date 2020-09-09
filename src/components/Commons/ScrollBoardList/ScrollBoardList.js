@@ -70,6 +70,8 @@ class ScrollBoardList extends Component {
                   lastItem={null}
                   siblingRange={1}
                   totalPages={lastPage+1}
+                  // pointing
+                  secondary
                   onPageChange={(event, { activePage }) => {
                     this.goPage(activePage-1);
                   }}
