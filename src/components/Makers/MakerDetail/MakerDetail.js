@@ -618,27 +618,26 @@ const WriteReview = styled.div`
   }
 `;
 const CreateReview = styled.div`
-    width:100%;
-    height:30px;
-    margin-bottom:10px;
+width:100%;
+height:30px;
+margin-bottom:10px;
+display:flex;
+justify-content:flex-end;
+.button{
+    width:max-content;
+    height:max-content;
     display:flex;
-    .button{
-        width:max-content;
-        height:100%;
-        display:flex;
-        padding:15px;
-        justify-content:center;
-        align-items:center;
-        border-radius:5px;
-        background-color:#707070;
-        cursor:pointer;
-    }
-    .font{
-        font-size:15px;
-        color:white;
-    }
+    justify-content:center;
+    align-items:center;
+    background-color:red;
+    cursor:pointer;
+    padding:12px 39px 12px 39px;
+}
+.font{
+    font-size:20px;
+    color:white;
+}
 `;
-
 
 class MakerDetail extends Component {
   constructor(props) {
