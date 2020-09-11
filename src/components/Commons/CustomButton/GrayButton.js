@@ -3,6 +3,8 @@ import styled from "styled-components";
 // import StyleGuide from "StyleGuide";
 // import { Button, Confirm } from 'semantic-ui-react'
 import { confirmAlert } from "react-confirm-alert";
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 import { options } from "components/Commons/InputItem/AlertConfirm"
 
 const StyleButton = styled.div`
@@ -29,12 +31,17 @@ export class GrayButton extends Component {
         super(props);
         this.onClickButton = this.onClickButton.bind(this);
     }
-    onClickButton(event) {
+    onClickButton= async event=> {
         if (this.props.isConfirm === false) {
             this.props.onClick(event);
         }
         else {
-            confirmAlert(options(this.props.value + "하시겠습니까?", this.props.onClick, event));
+            
+            if (await confirm(this.props.text==null?this.props.value + "하시겠습니까?":this.props.text, "예", "아니오") === false) {
+                return;
+            }else{
+                this.props.onClick(event);
+            }
         }
     }
     render() {

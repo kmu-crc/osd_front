@@ -175,7 +175,7 @@ class ScrollListHorizontal extends Component {
       <SlideWrap id="content">
         <Carousel
         autoCycle={true}
-    breakpoints={[
+        breakpoints={[
       {
         breakpoint: 500,
         settings: {
@@ -198,7 +198,7 @@ class ScrollListHorizontal extends Component {
     slidesToScroll={6}
     slidesToShow={6}
     scrollOnDevice={true}
-    cycleInterval={5000}
+    cycleInterval={6000}
   >
         {/* {List.length > 6 ? <div className="arrow left" onClick={() => this.scrollHorizon(-1 * this.state.scrollOffset)}>
           <Icon name="caret left" size="big" /></div> : null}

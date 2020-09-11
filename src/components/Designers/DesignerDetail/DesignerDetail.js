@@ -645,7 +645,7 @@ class DesignerDetail extends Component {
       this.props.DesignerViewDetail.score !== nextProps.DesignerViewDetail.score ||
       this.props.like !== nextProps.like) {
 
-      const careerRow = nextProps.DesignerViewDetail.experience==""?null:nextProps.DesignerViewDetail.experience.split("/");
+      const careerRow = nextProps.DesignerViewDetail.experience==""||nextProps.DesignerViewDetail.experience==null?null:nextProps.DesignerViewDetail.experience.split("/");
       careerRow.pop();
       const careerList = careerRow.map((item, index) => {
         const piece = item.split(",");

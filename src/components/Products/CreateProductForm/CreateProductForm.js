@@ -400,6 +400,14 @@ const MainBox = styled.div`
     padding-top: 36px;
     padding-left: 30px;
   }
+  .centering{
+    padding-right:30px;
+    justify-content:center; 
+  }
+  .directionColumn{
+    align-items:center;
+    flex-direction:column;
+  }
   .font_red {
     width: 7px;
     height: 7px;
@@ -456,6 +464,7 @@ const FormBox = styled.div`
     font-weight: 500;
     font-size: 20px;
   }
+  
   width:${props => props.width || 939}px;
   height:${props => props.height || "max-content"};
   box-shadow: ${props => props.boxShadow == null ? "" : "5px 5px 10px #00000029"};
@@ -463,7 +472,6 @@ const FormBox = styled.div`
   padding: 20px;
   margin-top: ${props => props.marginTop || 0}px;
   margin-bottom: ${props => props.marginBottom || 0}px;
-  
   
   .contentWrap{
     border-radius: 20px;
@@ -688,7 +696,7 @@ class CreateProductForm extends Component {
       <div className="title">아이템 등록</div>
 
       {/* 공통/기본입력사항 */}
-      <div className="contentsBox">
+      <div className="contentsBox centering">
         <ThumbnailBox>
           <div className="label">썸네일 이미지 등록<Mandatory /></div>
           <Margin height={50} />
@@ -732,7 +740,7 @@ class CreateProductForm extends Component {
       </div>
 
       {/* 아이템 상세정보 입력 폼 */}
-      <div className="contentsBox">
+      <div className="contentsBox centering">
         {itemType > -1 ?
           <ItemTypeForm
             returnState={obj => this.setState({ additional: obj.additional, content: obj.content, steps: obj.steps, type: obj.type })}
@@ -746,7 +754,7 @@ class CreateProductForm extends Component {
 
       {/* 버튼 */}
       {itemType > -1 ? (
-        <div className="contentsBox">
+        <div className="contentsBox centering">
           {this.props.keep ?
             <Link to={{
               pathname: `/createdesigner/redirected`, state: {
@@ -852,6 +860,7 @@ class ItemTypeForm extends Component {
 
     return (
       <MainBox>
+        <div className="contentsBox centering directionColumn">
         <FormBox boxShadow={true} width={1570}>
           <div className="contentWrap">
             {itemType === 0 ? <ItemDesign return={this.onHandleAdditional} /> : null}
@@ -894,7 +903,7 @@ class ItemTypeForm extends Component {
             :
             // {/* 로컬 그리드 에디터 - */}
             <React.Fragment>
-              <div className="contentsBox">
+              <div className="contentsBox centering">
                 <DesignTemplateSelector>
                   <div className="title">
                     템플릿을 선택하시면 보다 편하게 작업을 시작하실 수 있습니다!
@@ -924,7 +933,7 @@ class ItemTypeForm extends Component {
                     editor={true} />
                 */}
               </div>
-              <div className="contentsBox">
+              <div className="contentsBox centering">
                 <EditorWrapper>
                   <div className="editor">
                     <TemplateGridEditor
@@ -944,7 +953,7 @@ class ItemTypeForm extends Component {
             </React.Fragment>}
 
         </FormBox>
-
+        </div>
       </MainBox >);
   }
 };

@@ -176,9 +176,11 @@ class Header extends Component {
     this.saveKeyword = this.saveKeyword.bind(this);
     this.onClickMessageIcon = this.onClickMessageIcon.bind(this);
     this.onClickSearch=this.onClickSearch.bind(this);
+    this.onClickEvent = this.onClickEvent.bind(this);
   }
   componentDidMount() {
     this.getNews();
+    window.addEventListener("click", this.onClickEvent, true);
   }
   componentWillUpdate(nextProps) {
     if (this.props != nextProps) {
@@ -187,6 +189,9 @@ class Header extends Component {
       }
     }
     return true;
+  }
+  onClickEvent(event){
+    if(event.target.id != "popmenu")this.setState({active:false});
   }
   searchlist=()=>{
     
@@ -350,9 +355,9 @@ class Header extends Component {
         <HeaderItem className="left search">
           <div className="search-icon-wrapper">
             <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
-            {/* <Link to={`/search/${searchtype}/null/${this.state.keyword}`} id="searchLink"> */}
+            <Link to={`/search/${searchtype}/null/${this.state.keyword}`} id="searchLink">
               <img alt="icon" src={Zoom} id="searchbox" className="search-icon" onClick={this.onClickSearch}/>
-            {/* </Link> */}
+            </Link>
           </div>
         </HeaderItem>}
       {/*  */}
@@ -370,14 +375,14 @@ class Header extends Component {
             </div>
 
             <div onClick={async () => await this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
-              <div style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
-              <div style={{ width: "max-content", height: "35px", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={6} /></div>
+              <div  style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+              <div  style={{ width: "max-content", height: "35px", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={6} /></div>
               {this.state.active ?
-                <UserMenu>
+                <UserMenu id="popmenu">
                   <Link to={`/mypage`}>
-                    <div className="item">내 정보</div>
+                    <div className="item" id="popmenu">내 정보</div>
                   </Link>
-                  <div onClick={this.logout} className="item">로그아웃</div>
+                  <div onClick={this.logout} className="item" id="popmenu">로그아웃</div>
                 </UserMenu>
                 : null}
             </div>

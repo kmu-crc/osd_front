@@ -162,9 +162,14 @@ export default class Alarm extends Component {
   openAlarmHandler = e => {
     this.setState({ active: !this.state.active });
   };
-  alarmConfirm = id => {
+  alarmConfirm = (id,url) => {
     this.props.socket.emit("confirm", { uid: this.props.userInfo.uid, alarmId: id });
-    window.location.reload();
+    console.log(url);
+    if(url == null){
+      window.location.reload();
+    }else{
+      window.location.href=url;
+    }
   };
   allAlarmConfirm = () => {
     alert('모든 알림들을 읽음으로 표시합니다.');
@@ -261,6 +266,25 @@ export default class Alarm extends Component {
                     const alarmtype = this.showButton(item)
                     const alarmItem = JSON.parse(item.content);
                     let imgURL = noimg;
+                    let locationURL = null;
+                    switch(item.type){
+                      case "ITEM_PURCHASED_TO_EXPERT":
+                      case "ITEM_PURCHASED_TO_USER":
+                      case "ITEM_QUESTION_TO_OWNER": 
+                        locationURL = "/productDetail/"+item.detail.itemId;
+                        break;
+                      case "ITEN_RESPONSE_TO_DESIGNER":
+                      case "ITEN_REQUEST_TO_DESIGNER": 
+                        locationURL = "/designerDetail/"+item.to;
+                        break;
+                      case "ITEN_RESPONSE_TO_MAKER": 
+                      case "ITEN_REQUEST_TO_MAKER": 
+                        locationURL = "/makerDetail/"+item.to;
+                        break;
+                      default:
+                        locationURL = null;
+                        break;
+                    }
                     switch (item.type) {
                       case "ITEM_PURCHASED_TO_EXPERT": 
                       case "ITEM_QUESTION_TO_OWNER": 
@@ -283,7 +307,7 @@ export default class Alarm extends Component {
                         imgURL = noimg;
                     }
                     return (
-                      <AlarmItem key={index} className={item.confirm ? "confirm" : "unconfirm"} onClick={() => alarmtype ? null : this.alarmConfirm(item.uid)}>
+                      <AlarmItem key={index} className={item.confirm ? "confirm" : "unconfirm"} onClick={() => alarmtype ? null : this.alarmConfirm(item.uid,locationURL)}>
                         <div style={item.confirm ? { width: "1%", height:"12px", backgroundColor: "#EAA" } : { width: "1%", height:"12px", backgroundColor: "red" }}>&nbsp;</div>
                         <div style={{ paddingLeft: "3px" }} >
                           <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "left" }}>
