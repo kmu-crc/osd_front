@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 import { Icon } from "semantic-ui-react";
 import { Dropdown } from "semantic-ui-react"
-import { InputTag } from "components/Commons/InputItem/InputTag"
+import { InputTagNew } from "components/Commons/InputItem/InputTagNew"
 import noimg from "source/noimg.png";
 import HaveInGalleryContainer from "containers/Gallery/HaveInGalleryContainer/HaveInGalleryContainer";
 import CreateGroupContainer from "containers/Groups/CreateGroupContainer/CreateGroupContainer"
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
+import { alert } from "components/Commons/Alert/Alert";
+import { Confirm } from "components/Commons/Confirm/Confirm";
+
 const LocationList = [
   { value: 0, text: "서울특별시" },
   { value: 1, text: "부산광역시" },
@@ -40,6 +43,10 @@ const MainBox = styled.div`
     display:flex;
     padding-left:130px;
     padding-top:36px;
+  }
+  .centering{
+    padding-right:130px;
+    justify-content:center;
   }
 `
 const ThumbnailBox = styled.div`
@@ -354,7 +361,9 @@ class ModifyDesigner extends Component {
     window.location.href = "/mypage"
   }
   onSubmit = async e => {
+
     e.preventDefault();
+
     let tagList = "";
     this.state.tag.map((item, index) => { // 태그,태그,태그 ...
       return (
@@ -390,28 +399,37 @@ class ModifyDesigner extends Component {
     if (data.files.length <= 0 || data.files[0].value === (this.props.DesignerDetail && this.props.DesignerDetail.image)) {
       delete data.files;
     }
-    // 이미지 변동이 없을경우에 수정
-    // if (data.files.length <= 0 || data.files[0].value === (this.props.MyDetail.profileImg&&this.props.MyDetail.profileImg.m_img)) {
-    //   delete data.files;
-    // }
+
+        // 예외처리
+    if(data.user_id == "" || data.user_id == null){
+          await alert("닉네임을 입력해주세요","확인");
+          return;
+    }else if(data.category_level1<=0||data.category_level1==null){
+          await alert("카테고리를 입력해주세요","확인");
+          return;
+    }
+
+
+
+
     this.props.UpdateDesignerDetailRequest(data, this.props.token)
-      .then(res => {
+      .then(async res => {
         // console.log("res",res);
         const result = res;
         if (result.success) {
-          alert("정보가 수정되었습니다.");
+          await alert("정보가 수정되었습니다."); 
           //this.props.history.push(`/`);
           window.location.href = "/mypage";
         } else {
-          alert("다시 시도해주세요");
+          await alert("다시 시도해주세요");
           this.setState({
             loading: false
           });
         }
       })
-      .catch(e => {
+      .catch(async e => {
         console.log("실패", e);
-        alert("다시 시도해주세요");
+        await alert("다시 시도해주세요");
         this.setState({
           loading: false
         });
@@ -431,7 +449,7 @@ class ModifyDesigner extends Component {
           <div className="title">디자이너 관리</div>
           <div className="contentsBox">
             <ThumbnailBox>
-              <div className="label">썸네일 등록</div>
+              <div className="label">썸네일 등록<sup style={{color:"red"}}>*</sup></div>
               <Margin height={70} />
               <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
               <label htmlFor="file">
@@ -447,7 +465,7 @@ class ModifyDesigner extends Component {
 
 
               <div className="wrapper flex">
-                <div className="label">닉네임</div>
+                <div className="label">닉네임<sup style={{color:"red"}}>*</sup></div>
                 {this.props.userInfo.nickName}
               </div>
 
@@ -457,7 +475,7 @@ class ModifyDesigner extends Component {
               </div>
 
               <div className="wrapper flex">
-                <div className="label">카테고리</div>
+                <div className="label">카테고리<sup style={{color:"red"}}>*</sup></div>
                 <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
                 <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
               </div>
@@ -465,7 +483,7 @@ class ModifyDesigner extends Component {
               <div className="wrapper flex">
                 <div className="label">태그</div>
                 <div>
-                  <InputTag taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
+                  <InputTagNew taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
                 </div>
               </div>
 
@@ -513,10 +531,10 @@ class ModifyDesigner extends Component {
               </div>
             </SubBox>
           </div>
-          <div className="contentsBox">
+          <div className="contentsBox centering">
             {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>적용</div></RedButton> */}
-            <RedButton value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
-            <GrayButton value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
+            <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
+            <RedButton text ={"수정을 적용하시겠습니까?"} value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
           </div>
         </MainBox>
       </React.Fragment>

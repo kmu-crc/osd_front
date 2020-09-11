@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { Icon } from "semantic-ui-react";
 import noimg from "source/noimg.png";
 import { Dropdown } from "semantic-ui-react"
-import { InputTag } from "components/Commons/InputItem/InputTag"
+import { InputTagNew } from "components/Commons/InputItem/InputTagNew"
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
-
+import { alert } from "components/Commons/Alert/Alert";
+import { Confirm } from "components/Commons/Confirm/Confirm";
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -40,7 +41,10 @@ const MainBox = styled.div`
     padding-left:130px;
     padding-top:36px;
   }
-
+  .centering{
+    padding-right:130px;
+    justify-content:center;
+  }
 `
 
 const ThumbnailBox = styled.div`
@@ -316,7 +320,10 @@ class CreateMaker extends Component {
     }
   }
 
-  onSubmit() {
+  onSubmit= async e => {
+
+    e.preventDefault();
+
     let tagList = "";
     this.state.tag.map((item, index) => { // 태그,태그,태그 ...
       return (
@@ -330,19 +337,6 @@ class CreateMaker extends Component {
       );
     });
 
-    // let equipmentList = "";
-    // this.state.tag.map((item, index) => { // 태그,태그,태그 ...
-    //   return (
-    //     equipmentList += item + ","
-    //   );
-    // });
-
-    // let techniqueList = "";
-    // this.state.tag.map((item, index) => { // 태그,태그,태그 ...
-    //   return (
-    //     techniqueList += item + ","
-    //   );
-    // });
     const data = {
       files: [],
       user_id: this.props.userInfo.uid,
@@ -368,27 +362,41 @@ class CreateMaker extends Component {
     // if (data.files.length <= 0 || data.files[0].value === (this.props.MyDetail.profileImg&&this.props.MyDetail.profileImg.m_img)) {
     //   delete data.files;
     // }
+
+        // 예외처리
+    if(data.user_id == "" || data.user_id == null){
+          await alert("닉네임을 입력해주세요","확인");
+          return;
+    }else if(data.category_level1<=0||data.category_level1==null){
+          await alert("카테고리를 입력해주세요","확인");
+          return;
+    }else if(this.state.thumbnail == null || this.state.thumbnail == ""){
+          await alert("썸네일을 등록해주세요","확인");
+          return;
+    }
+
     console.log(this.props.token);
     // return;
     this.props.InsertMakerDetailRequest(data, this.props.token)
-      .then(res => {
+      .then(async res => {
         console.log("res", res.res);
         const result = res.res;
 
         if (res.res.success) {
-          alert("정보가 수정되었습니다.");
+          await alert("정보가 수정되었습니다.");
           // this.props.history.push(`/`);
           // window.location.href = "/designer";
+          window.location.href = `/mypage`;
         } else {
-          alert("다시 시도해주세요");
+          await alert("다시 시도해주세요");
           this.setState({
             loading: false
           });
         }
       })
-      .catch(e => {
+      .catch(async e => {
         console.log("실패", e);
-        alert("다시 시도해주세요");
+        await alert("다시 시도해주세요");
         this.setState({
           loading: false
         });
@@ -416,7 +424,7 @@ class CreateMaker extends Component {
     //     });
     //   });
 
-    window.location.href = "/myPage"
+    // window.location.href = "/myPage"
   }
 
   render() {
@@ -429,7 +437,7 @@ class CreateMaker extends Component {
           <div className="title">메이커 등록</div>
           <div className="contentsBox">
             <ThumbnailBox>
-              <div className="label">썸네일 등록</div>
+              <div className="label">썸네일 등록<sup style={{color:"red"}}>*</sup></div>
               <Margin height={70} />
               <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
               <label htmlFor="file">
@@ -444,7 +452,7 @@ class CreateMaker extends Component {
             <FormBox>
 
               <div className="wrapper flex">
-                <div className="label">닉네임</div>
+                <div className="label">닉네임<sup style={{color:"red"}}>*</sup></div>
                 {this.props.userInfo.nickName}
               </div>
 
@@ -454,7 +462,7 @@ class CreateMaker extends Component {
               </div>
 
               <div className="wrapper flex">
-                <div className="label">카테고리</div>
+                <div className="label">카테고리<sup style={{color:"red"}}>*</sup></div>
                 <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
                 <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
               </div>
@@ -462,7 +470,7 @@ class CreateMaker extends Component {
               <div className="wrapper flex">
                 <div className="label">태그</div>
                 <div>
-                  <InputTag taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
+                  <InputTagNew taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
                 </div>
               </div>
 
@@ -490,14 +498,14 @@ class CreateMaker extends Component {
               <div className="wrapper flex">
                 <div className="label">보유장비</div>
                 <div>
-                  <InputTag taglist={this.state.equipment} getValue={this.handleAddEquipment} placeholder="보유장비를 입력하고 [enter]키를 누르세요" width={483} />
+                  <InputTagNew taglist={this.state.equipment} getValue={this.handleAddEquipment} placeholder="보유장비를 입력하고 [enter]키를 누르세요" width={483} />
                 </div>
               </div>
 
               <div className="wrapper flex">
                 <div className="label">보유기술</div>
                 <div>
-                  <InputTag taglist={this.state.technique} getValue={this.handleAddTechnique} placeholder="보유장비 입력하고 [enter]키를 누르세요" width={483} />
+                  <InputTagNew taglist={this.state.technique} getValue={this.handleAddTechnique} placeholder="보유장비 입력하고 [enter]키를 누르세요" width={483} />
                 </div>
               </div>
 
@@ -529,9 +537,9 @@ class CreateMaker extends Component {
               </div>
             </ExperienceBox>
           </div>
-          <div className="contentsBox">
-            <RedButton value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
-            <GrayButton value={"취소하기"} onClick={() => { window.location.href = "/mypage" }} isConfirm={false}></GrayButton>
+          <div className="contentsBox centering">
+            <RedButton text={"등록을 완료하시겠습니까?"} value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
+            <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.location.href = "/mypage" }} isConfirm={false}></GrayButton>
           </div>
         </MainBox>
       </React.Fragment>

@@ -46,13 +46,14 @@ const TagPiece = styled.div`
     max-height:30px;
     border:1px solid #707070;
     border-radius:15px;
-    padding: 8px 10px 5px 10px;
+    padding: 8px 10px 8px 10px;
     display: flex;
     justify-content: space-between;
     align-items:center;
     font-size:15px;
     font-family:Noto Sans CJK KR, Regular;
     margin-right:8px;
+    margin-bottom:8px;
     .close {
         color:#707070;
         margin-left: 10px;
