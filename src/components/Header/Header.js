@@ -217,17 +217,33 @@ function isOpen(ws) { return ws.readyState === ws.OPEN }
 class Header extends Component {
     constructor(props) {
         super(props);
-        this.state = { notice: {}, alarm: {}, selectCate: -1, screenWidth: window.innerWidth };
+        this.state = {
+            play: false,
+            notice: {}, alarm: {},
+            selectCate: -1,
+            screenWidth: window.innerWidth
+        };
         this.gotoCreateDesignPage = this.gotoCreateDesignPage.bind(this);
+
+        this.audio = new Audio("https://s3.ap-northeast-2.amazonaws.com/osd.uploads.com/tmps/26ab6f21076cabe1be4ceee12c4dca2c%2B1599462820483")
     }
     static contextType = MenuContext
     componentDidMount() {
+
+        this.audio.addEventListener('ended', () => this.setState({ play: false }));
         if (isOpen(Socket) && this.props.valid) {
             try {
                 // console.log("SOCKET INIT");
                 Socket.emit("INIT", this.props.userInfo.uid)
                 Socket.on("getNoti", alarm => {
                     this.setState({ alarm: alarm })
+                    console.log(alarm)
+                    if (alarm.count) {
+                        this.audio.play()
+                        setTimeout(() => {
+                            this.audio.pause();
+                        }, 3000)
+                    }
                 })
                 Socket.on("disconnect", () => {
                     //console.log("disconnected");
@@ -249,6 +265,8 @@ class Header extends Component {
     }
     componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize, false);
+        this.audio.removeEventListener('ended', () => this.setState({ play: false }));
+
     };
     gotoCreateDesignPage() {
         window.location.href = "/createDesign"
@@ -256,7 +274,7 @@ class Header extends Component {
     handleResize = () => {
         this.setState({ screenWidth: window.innerWidth })
     };
-    
+
     render() {
         return (
             <React.Fragment>
