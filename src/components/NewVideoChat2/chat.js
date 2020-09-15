@@ -17,7 +17,7 @@ const ChatBox = styled.div`
     }
   }
 `
-
+function isOpen(ws) { return ws.readyState === ws.OPEN }
 class Chat extends Component {
   constructor(props) {
     super(props)
@@ -32,23 +32,24 @@ class Chat extends Component {
   sendMessageEnter() {
     if (window.event.keyCode == 13) {
       var message = document.getElementById('message')
-      this.socket.emit('chat', {
-        message: message.value
-      }, () => {
-        console.log(`message : ${message.value}`)
-      })
+      if (isOpen(this.socket))
+        this.socket.emit('chat', {
+          message: message.value
+        }, () => {
+          console.log(`message : ${message.value}`)
+        })
       message.value = ''
     }
   }
 
   sendMessage() {
     var message = document.getElementById('message')
-
-    this.socket.emit('chat', {
-      message: message.value
-    }, () => {
-      console.log(`message : ${message.value}`)
-    })
+    if (isOpen(this.socket))
+      this.socket.emit('chat', {
+        message: message.value
+      }, () => {
+        console.log(`message : ${message.value}`)
+      })
 
     message.value = ''
 
@@ -56,7 +57,8 @@ class Chat extends Component {
   // server.js와의 통신을 통해 메세지를 보내는 주된 함수
 
   chattingLog() {
-    this.socket.emit('log')
+    if (isOpen(this.socket))
+      this.socket.emit('log')
   }
   downloadTextFile(text, name) {
     const a = document.createElement('a')

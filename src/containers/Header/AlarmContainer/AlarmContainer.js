@@ -5,10 +5,12 @@ import { GetWaitingGroupRequest, GetWaitingDesignRequest, UpdateDesignInGroupReq
 import Alarm from "components/Header/Alarm"
 import Socket from "modules/Socket"
 
+function isOpen(ws) { return ws.readyState === ws.OPEN }
 class AlarmContainer extends Component {
     handleAlarmConfirm = (userID, alarmID) => {
         try {
-            Socket.emit("confirm", { user_id: userID, alarmId: alarmID });
+            if (isOpen(Socket))
+                Socket.emit("confirm", { user_id: userID, alarmId: alarmID });
         }
         catch (err) {
             console.error(err);
@@ -16,7 +18,8 @@ class AlarmContainer extends Component {
     }
     handleAllAlarmConfirm = () => {
         try {
-            Socket.emit("allConfirm", { user_id: this.props.userInfo.uid })
+            if (isOpen(Socket))
+                Socket.emit("allConfirm", { user_id: this.props.userInfo.uid })
         }
         catch (err) {
             console.error(err);

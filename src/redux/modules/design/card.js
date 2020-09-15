@@ -323,21 +323,15 @@ export const UpdateDesignBoardRequest = (id, token, data) => {
             });
     };
 }
-export const GetDesignBoardRequest = (id) => {
+export const GetDesignBoardRequest = (id) => (dispatch) => {
+    dispatch(GetBoard())
     const url = `${host}/design/designDetail/${id}/getBoardList`
-    console.log(url);
-    return (dispatch) => {
-        dispatch(GetBoard());
-        return fetch(url, { headers: { 'Content-Type': 'application/json' }, method: "GET" })
-            .then(function (res) {
-                return res.json();
-            })
-            .then(function (res) {
-                return dispatch(GetBoardSuccess(res));
-            }).catch((error) => {
-                return dispatch(GetBoardFailure(error));
-            });
-    };
+    return fetch(url, {
+        headers: { 'Content-Type': 'application/json' },
+        method: "GET"
+    })
+        .then(res => res.json())
+        .then(res => dispatch(GetBoardSuccess(res)))
 }
 export const CreateDesignBoardRequest = (data, design_id, token) => {
     return (dispatch) => {
