@@ -8,7 +8,8 @@ import { Rating } from 'semantic-ui-react'
 import TextFormat from 'modules/TextFormat';
 import noimg from "source/noimg.png";
 import customimg from "source/toolbox.png";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const Wrapper = styled.div`
   *{
     cursor:pointer;
@@ -107,7 +108,7 @@ class Item extends Component {
     if (item.uid) {
       const yours = item.members && item.members.filter(mem => mem.user_id === this.props.userInfo && this.props.userInfo.uid);
       if (item.private && !yours) {
-        alert("비공개!");
+        // alert("비공개!");
         return;
       } else {
         window.location.href = `/productDetail/${item.uid}`;

@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { Button, Icon } from "semantic-ui-react";
 import { MultiUpload } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const CardSource = styled.div`
   margin-bottom: 2rem;
   & a {
@@ -117,12 +118,12 @@ export class CardSourcUpdate extends Component {
     ValidationGroup(this.state, false).then(data => {
       console.log("성공", data);
       this.props.request(data, this.props.token, this.props.uid)
-      .then(res => {
+      .then(async res => {
         if (res.success) {
           this.props.changeActive("INIT");
           this.setState({ deleteSources: [], sources: [] });
         } else {
-          alert("다시 시도해주세요");
+          await alert("다시 시도해주세요");
         }
       });
     }).catch(e => {

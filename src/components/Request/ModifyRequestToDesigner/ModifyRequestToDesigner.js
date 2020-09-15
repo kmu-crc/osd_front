@@ -7,7 +7,8 @@ import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { FileUploadRequest } from "actions/Uploads";
 import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
 import category_icon from "source/category_icon.svg";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const CustomIcon=styled.div`
   width:${props => props.width}px;
   height:${props => props.height}px;
@@ -266,7 +267,7 @@ class ModifyRequestToDesigner extends Component {
           window.location.href = `/request/designer`;
         }
       })
-      .catch(err => alert("의뢰 중 에러가 발생했습니다.\n" + err));
+      .catch(async err => await alert("의뢰 중 에러가 발생했습니다.\n" + err));
   }
   async getStartDateValue(value) {
     await console.log("startDate", value);
@@ -336,7 +337,7 @@ class ModifyRequestToDesigner extends Component {
             window.location.href = "/request/designer";
         }
       })
-      .catch(err => alert("의뢰 수정 중 에러가 발생했습니다.\n" + err));
+      .catch(async err => await alert("의뢰 수정 중 에러가 발생했습니다.\n" + err));
   }
   async onFileChange(file){
     this.setState({
@@ -434,9 +435,9 @@ class ModifyRequestToDesigner extends Component {
               </FormBox>
             </div>
             <div className="centering_">
-              <RedButton value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
-              <GrayButton value={"삭제하기"} onClick={this.onClickDelete} isConfirm={true} />
+              <RedButton text="의뢰 수정을 적용합니다." okText="확인" cancelText="취소" value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
+              <GrayButton text={"삭제하시겠습니까?"} value={"삭제하기"} onClick={this.onClickDelete} isConfirm={true} />
             </div>
           </MainBox>
         </Wrapper>

@@ -4,7 +4,8 @@ import ContentBox from "components/Commons/ContentBox";
 import noimg from "source/noimg.png";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import Loading from "components/Commons/Loading";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const Wrapper = styled(ContentBox)`
   width:100%;
   margin-top:60px;
@@ -185,7 +186,7 @@ class ModifyMyDetail extends Component {
     e.preventDefault();
 
     if (this.state.password !== this.state.passwordCheck) {
-      alert("패스워드와 패스워드 확인이 일치하지 않습니다!");
+      await alert("패스워드와 패스워드 확인이 일치하지 않습니다!");
       return;
     }
     let data = null
@@ -204,24 +205,24 @@ class ModifyMyDetail extends Component {
       data.files.push(file);
     }
     if (data == null) {
-      alert("변경된사항이 없습니다.");
+      await alert("변경된사항이 없습니다.");
       this.setState({
         loading: false
       });
       return;
     }
     this.props.ModifyUserDetailRequest(this.props.MyDetail.uid, data, this.props.token)
-      .then(res => {
+      .then(async res => {
         if (res.res.success) {
-          alert("정보가 수정되었습니다.");
+          await alert("정보가 수정되었습니다.");
           window.location.href = `/myPage`;
         } else {
-          alert("다시 시도해주세요");
+          await alert("다시 시도해주세요");
         }
       })
-      .catch(e => {
+      .catch(async e => {
         console.log("실패", e);
-        alert("다시 시도해주세요");
+        await alert("다시 시도해주세요");
       });
     this.setState({
       loading: false
@@ -230,11 +231,11 @@ class ModifyMyDetail extends Component {
   onChangeValue(event) {
     this.setState({ [event.target.id]: event.target.value })
   };
-  onChangePhone(event) {
+  async onChangePhone(event) {
     const index = event.target.value.length > 1 ? event.target.value.length - 1 : 0
     "0123456789".includes(event.target.value[index]) ?
       this.onChangeValue(event) :
-      alert("숫자만 입력가능합니다.")
+      await alert("숫자만 입력가능합니다.")
   }
 
   render() {
@@ -307,8 +308,8 @@ class ModifyMyDetail extends Component {
 
           <div className="contentsBox">
             {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>적용</div></RedButton> */}
-            <RedButton value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
-            <GrayButton value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
+            <RedButton text="내 정보를 수정합니다." okText="확인" cancelText="취소" value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
+            <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
           </div>
         </MainBox>
       </Wrapper>

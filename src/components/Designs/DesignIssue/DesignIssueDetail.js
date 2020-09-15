@@ -9,7 +9,8 @@ import { Link } from "react-router-dom";
 import FormDataToJson from "modules/FormDataToJson";
 import eximg from "source/topDesign.png";
 import StyleGuide from "StyleGuide";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 // css styling
 
 const IssueWrapper = styled(Grid)`
@@ -84,9 +85,9 @@ class DesignIssueDetail extends Component {
     render: true
   }
 
-  deleteIssue = () => {
-    const confirm = window.confirm("이 이슈를 삭제하시겠습니까?");
-    if (confirm) {
+  deleteIssue = async() => {
+    // const confirm = window.confirm("이 이슈를 삭제하시겠습니까?");
+    if (await confirm("이 이슈를 삭제하시겠습니까?")) {
       this.props.DeleteDesignIssueRequest(this.props.match.params.id, this.props.match.params.issue_id, this.props.token)
       .then(data => {
         this.props.history.push(`/designDetail/${this.props.match.params.id}/issue`);
@@ -113,7 +114,7 @@ class DesignIssueDetail extends Component {
 
   onSubmitForm = async (data) => {
     if (!this.props.token) {
-      alert("로그인을 해주세요.");
+      await alert("로그인을 해주세요.");
       return;
     }
     this.props.CreateIssueCommentRequest(FormDataToJson(data), this.props.match.params.id, this.props.match.params.issue_id, this.props.token)

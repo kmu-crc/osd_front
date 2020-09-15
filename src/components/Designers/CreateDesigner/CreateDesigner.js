@@ -7,7 +7,6 @@ import { InputTagNew } from "components/Commons/InputItem/InputTagNew";
 import noimg from "source/noimg.png";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { alert } from "components/Commons/Alert/Alert";
-import { Confirm } from "components/Commons/Confirm/Confirm";
 
 
 const LocationList = [
@@ -503,7 +502,7 @@ class CreateDesigner extends Component {
             {/* </div>
           <div className="contentsBox"> */}
             {/* {this.state.getready ? */}
-              <RedButton text={"등록을 완료하시겠습니까?"} value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
+            <RedButton text={"디자이너를 등록합니다."} okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
             {/*}  : <GrayButton value={"등록"} onClick={() => alert("아이템을 등록해야 진행할 수 있습니다.")} isConfirm={false}></GrayButton>}*/}
             <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.location.href = "/mypage" }} isConfirm={false}></GrayButton>
           </div>

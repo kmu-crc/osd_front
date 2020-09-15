@@ -4,7 +4,8 @@ import { Button, Icon } from "semantic-ui-react";
 import { MultiUpload, DeleteItems } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
 import Loading from "components/Commons/Loading";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const CardImage = styled.div`
   margin-bottom: 2rem;
 `;
@@ -53,7 +54,7 @@ export class CardImageUpdate extends Component {
         // this.setState({ deleteImages: [], images: [] });
         this.props.GetDesignDetailViewRequest(this.props.match.params.id);
       } else if (nextProps.status === "FAILUR") {
-        alert("업데이트에 실패하였습니다.");
+        // alert("업데이트에 실패하였습니다.");
       }
     }
     return true;

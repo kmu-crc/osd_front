@@ -6,7 +6,8 @@ import { FormControl, ValidationGroup } from "modules/FormControl";
 import noimg from "source/noimg.png";
 import newimg from "source/new-img.png";
 import CreateOption from "components/Products/CreateProductForm/CreateOption/CreateOption";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const TxtSz = { s: 12, m: 16, M: 20, l: 24, b: 28 };
 const MAX_PRODUCT_IMAGE_COUNT = 5;
 
@@ -287,11 +288,11 @@ class ModifyProductInfo extends Component {
       console.log("성공", data);
       this.props.setLoader();
       this.props.CreateDesignRequest(data, this.props.token)
-        .then(res => {
+        .then(async res => {
           if (res.success) {
             this.props.history.push(`/designDetail/${res.design_id}`);
           } else {
-            alert("다시 시도해주세요");
+            await alert("다시 시도해주세요");
             this.state.member.value = JSON.parse(this.state.member.value);
             this.props.setLoader();
           }

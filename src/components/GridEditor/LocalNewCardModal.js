@@ -7,7 +7,8 @@ import Loading from "components/Commons/Loading";
 import Cross from "components/Commons/Cross";
 import { InputContent, /*AddController, Controller */ } from "components/Commons/InputItem";
 // import CardSourceDetail from 'components/Designs/CardSourceDetail';
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const NewCardDialogWrapper = styled(Modal)`
     margin-top: 50px !important;
     margin-bottom: 50px !important;
@@ -393,9 +394,9 @@ export class LocalNewCardModal extends Component {
         this.saveTemporary = this.saveTemporary.bind(this);
         this.submit = this.submit.bind(this);
     };
-    handleCancel(obj) {
+    async handleCancel(obj) {
         if (obj.length > 0 || this.state.title !== "" || this.state.content !== "") {
-            if (!window.confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
+            if (!await confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
                 return;
             }
         }
@@ -429,7 +430,7 @@ export class LocalNewCardModal extends Component {
     };
     async submit() {
         if (!this.state.title || this.state.title === "") {
-            alert("컨텐츠의 제목을 입력하세요.");
+            await alert("컨텐츠의 제목을 입력하세요.");
             await this.setState({ loading: false });
             return;
         }
@@ -458,9 +459,9 @@ export class LocalNewCardModal extends Component {
     async onSave() {
         await this.submit();
     };
-    onCancel() {
-        const confirm = window.confirm("모든 내용이 저장되지 않고 닫힙니다. 그래도 계속 진행하시겠습니까?");
-        if (confirm) {
+    async onCancel() {
+        // const confirm = window.confirm("모든 내용이 저장되지 않고 닫힙니다. 그래도 계속 진행하시겠습니까?");
+        if (await confirm("모든 내용이 저장되지 않고 닫힙니다. 그래도 계속 진행하시겠습니까?")) {
             this.setState({
                 loading: false, scroll: false, edit: false, hook: false,
                 title: "", content: "",

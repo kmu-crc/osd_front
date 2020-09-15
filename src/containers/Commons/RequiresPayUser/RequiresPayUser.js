@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { CheckPayUserRequest } from "actions/Authentication";
 import { SetSession, GetSession } from "modules/Sessions";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 export default function RequiresPayUser(Component) {
   class AuthenticatedComponent extends React.Component {
     componentWillMount() {
@@ -36,9 +37,9 @@ export default function RequiresPayUser(Component) {
       // });
     }
 
-    _checkAndRedirect() {
+    async _checkAndRedirect() {
       if (!this.props.checkPayUser) {
-        alert("유료회원 결제 후 이용이 가능합니다.");
+        await alert("유료회원 결제 후 이용이 가능합니다.");
         this.props.history.push("/myPage");
       }
     }

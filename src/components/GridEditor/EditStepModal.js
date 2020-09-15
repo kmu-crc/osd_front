@@ -4,7 +4,8 @@ import Cross from "components/Commons/Cross"
 import { Modal } from 'semantic-ui-react'
 // import {confirmAlert} from "react-confirm-alert";
 // import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const InputWrapper = styled.div`
     display: flex;
     flex-direction: row;
@@ -121,13 +122,13 @@ class EditStepModal extends Component {
         const target = event.target
         this.setState({ [target.name]: target.value })
     }
-    onSubmit = () => {
+    onSubmit = async() => {
         if (!this.state.title) {
             this.props.close();
             return;
         }
         if (this.state.title === this.props.title) {
-            alert("제목이 변경되지 않았습니다.");
+            await alert("제목이 변경되지 않았습니다.");
             return;
         }
         this.props.EditStep({ uid: this.state.uid, title: this.state.title, where: this.state.where });
@@ -135,15 +136,15 @@ class EditStepModal extends Component {
     onClose = () => {
         this.props.close()
     }
-    removeStep = (event, steps, where) => {
+    removeStep = async (event, steps, where) => {
         event.stopPropagation();
         const step = steps.find(step => step.uid === parseInt(where, 10));
         if (step && step.cards && step.cards.length > 0) {
-            alert("카드가 존재하는 단계는 삭제할 수 없습니다.");
+            await alert("카드가 존재하는 단계는 삭제할 수 없습니다.");
             return;
         }
-        const confirm = window.confirm("단계를 삭제하시겠습니까?");
-        if (confirm) {
+        // const confirm = window.confirm("단계를 삭제하시겠습니까?");
+        if (await confirm("단계를 삭제하시겠습니까?")) {
             this.props.RemoveStep(step.uid)
         }
         // confirmAlert(options("단계를 삭제하시겠습니까?",()=>{this.props.RemoveStep(step.uid)},event));

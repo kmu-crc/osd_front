@@ -25,7 +25,8 @@ import Loading from "components/Commons/Loading";
 
 import {confirmAlert} from "react-confirm-alert";
 import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const ContentBorder = styled.div`
    height: 29px;
    font-family: Noto Sans KR;
@@ -371,9 +372,9 @@ class CardModal extends Component {
         const { card } = this.props;
         this.setState({ thumbnail: card.thumbnail, title: card.title, description: card.description });
     };
-    componentDidUpdate(prevProps) {
+    async componentDidUpdate(prevProps) {
         if (prevProps.card !== this.props.card) {
-            alert("card");
+            await alert("card");
             return true;
         }
     };
@@ -415,14 +416,14 @@ class CardModal extends Component {
                 // return;
                 await this.props.UpdateCardSourceRequest(pack, this.props.card.uid, this.props.token)
                     .then(this.props.GetItemStepsRequest(this.props.itemId, this.props.token))
-                    .catch(err => alert(err + '와 같은 이유로 카드수정에 실패하셨습니다. 관리자에게 문의해주시기 바랍니다.'));
+                    .catch(async err => await alert(err + '와 같은 이유로 카드수정에 실패하셨습니다. 관리자에게 문의해주시기 바랍니다.'));
                 this.onClose();
-            }).catch(err => alert(err + '와 같은 이유로 카드수정에 실패하셨습니다. 관리자에게 문의해주시기 바랍니다.'));
+            }).catch(async err => await alert(err + '와 같은 이유로 카드수정에 실패하셨습니다. 관리자에게 문의해주시기 바랍니다.'));
         this.setState({ edit: !this.state.edit })
     };
-    onCloseEditMode = () => {
+    onCloseEditMode = async() => {
         if ((this.state.title !== this.props.card.title) || (this.state.content !== this.props.card.content)) {
-            if (!window.confirm("변경된 내용이 저장되지 않습니다. 계속하시겠습니까?")) {
+            if (!await confirm("변경된 내용이 저장되지 않습니다. 계속하시겠습니까?")) {
                 return;
             }
         }
@@ -431,10 +432,10 @@ class CardModal extends Component {
     onChangeEditMode = () => {
         this.setState({ edit: this.state.edit })
     };
-    removeCard = e => {
+    removeCard = async e => {
         e.stopPropagation();
-        const confirm = window.confirm("컨텐츠를 삭제하시겠습니까?");
-        if (confirm) {
+        // const confirm = window.confirm("컨텐츠를 삭제하시겠습니까?");
+        if (await confirm("컨텐츠를 삭제하시겠습니까?")) {
             this.props.DeleteItemCardRequest(this.props.itemId, this.props.card.uid, this.props.token)
                 .then(res => {
                     if (res.success) {
@@ -443,7 +444,7 @@ class CardModal extends Component {
                         this.onClose();
                     }
                 })
-                .catch(err => alert(err))
+                .catch(async err => await alert(err))
         }
     };
     onClose = async (event) => {
@@ -453,7 +454,7 @@ class CardModal extends Component {
         //     this.props.close();
         // }
         // ,event));
-        if (this.state.edit && !window.confirm("수정된 사항이 저장되지 않습니다, 계속 하시겠습니까?")) {
+        if (this.state.edit && !await confirm("수정된 사항이 저장되지 않습니다, 계속 하시겠습니까?")) {
             return;
         }
         await this.setState({ sroll: false, edit: false, title: "", content: "" });

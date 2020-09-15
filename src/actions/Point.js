@@ -38,10 +38,10 @@ const PointUp = () => ({ type: types.REQUEST_POINT_UP });
 
 
 
-export const GetHistoryRequest = (id, token) => {
+export const GetHistoryRequest = (id,page, token) => {
   return dispatch => {
     dispatch(HistoryRequest());
-    const url = `${host}/point/get-history/${id}`;
+    const url = `${host}/point/get-history/${id}/${page}`;
     return fetch(url, {
       headers: { "Content-Type": "application/json", "x-access-token": token },
       method: "GET",

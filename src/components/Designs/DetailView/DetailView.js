@@ -6,7 +6,8 @@ import FormDataToJson from "modules/FormDataToJson";
 import StyleGuide from "StyleGuide";
 import Loading from "components/Commons/Loading";
 import CardSourceContainer from "containers/Designs/CardSourceContainer";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 // css styling
 
 const ViewWrapper = styled(Grid)`
@@ -75,11 +76,11 @@ class DetailView extends Component {
     this.props.DesignDetailViewResetRequest();
   }
 
-  onActiveStep = () => {//현재사용x
-    const confirm = window.confirm(
-      "프로젝트 형식으로 변경하시겠습니까? 템플릿 변경 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인은 저장됩니다)"
-    );
-    if (confirm) {
+  onActiveStep = async() => {//현재사용x
+    // const confirm = window.confirm(
+    //   "프로젝트 형식으로 변경하시겠습니까? 템플릿 변경 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인은 저장됩니다)"
+    // );
+    if (await confirm("프로젝트 형식으로 변경하시겠습니까? 템플릿 변경 후에는 이전으로 돌아갈 수 없습니다. (현재 등록된 디자인은 저장됩니다)")) {
       this.props
         .ChangeToProjectRequest(this.props.id, this.props.token)
         .then(data => {
@@ -94,11 +95,11 @@ class DetailView extends Component {
 
   onSubmitCmtForm = async data => {
     if (!this.props.token) {
-      alert("로그인을 해주세요.");
+      await alert("로그인을 해주세요.");
       return;
     }
     if (FormDataToJson(data) && FormDataToJson(data).content === "") {
-      alert("내용을 입력해 주세요.");
+      await alert("내용을 입력해 주세요.");
       return;
     }
     this.props
@@ -124,8 +125,8 @@ class DetailView extends Component {
   onPreviewMode = () => {
     this.setState({ edit: !this.state.edit })
   }
-  onCancel = () => {
-    window.confirm('변경하신 데이터가 저장되지 않습니다, 그래도 취소하시겠습니까?') && window.location.reload()
+  onCancel = async() => {
+    await confirm('변경하신 데이터가 저장되지 않습니다, 그래도 취소하시겠습니까?') && window.location.reload()
   }
   render() {
     const view = this.props.DesignDetailView;

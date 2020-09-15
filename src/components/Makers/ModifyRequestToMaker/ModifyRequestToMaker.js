@@ -236,7 +236,7 @@ class ModifyRequestToMaker extends Component {
           window.location.href = `/request/maker`;
         }
       })
-      .catch(err => alert("의뢰 중 에러가 발생했습니다.\n" + err));
+      .catch(err => console.log("의뢰 중 에러가 발생했습니다.\n" + err));
   }
   onClickItemType(event, { value }) {
     this.setState({ itemType: { value }.value });
@@ -330,7 +330,7 @@ class ModifyRequestToMaker extends Component {
             window.location.href = "/request/maker";
         }
       })
-      .catch(err => alert("의뢰 수정 중 에러가 발생했습니다.\n" + err));
+      .catch(err => console.log("의뢰 수정 중 에러가 발생했습니다.\n" + err));
   }
   async onFileChange(file){
     this.setState({
@@ -426,9 +426,9 @@ class ModifyRequestToMaker extends Component {
               </FormBox>
             </div>
             <div className="centering_">
-              <RedButton value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
-              <GrayButton value={"삭제하기"} onClick={this.onClickDelete} isConfirm={true} />
+              <RedButton  text={"수정을 적용합니다."} okText="적용" cancelText="취소" value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
+              <GrayButton text={"삭제하시겠습니까?"} okText="삭제" cancelText="취소" value={"삭제하기"} onClick={this.onClickDelete} isConfirm={true} />
             </div>
           </MainBox>
       </React.Fragment>

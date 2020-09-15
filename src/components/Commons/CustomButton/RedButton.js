@@ -38,7 +38,7 @@ export class RedButton extends Component {
         else {
             // await confirmAlert(options(this.props.value + "하시겠습니까?", this.props.onClick, event));
 
-            if (await confirm(this.props.text==null?this.props.value + "하시겠습니까?":this.props.text, "예", "아니오") === false) {
+            if (await confirm(this.props.text==null?this.props.value + "하시겠습니까?":this.props.text, this.props.okText==null?"예":this.props.okText,this.props.cancelText==null? "아니오":this.props.cancelText) === false) {
                 return;
             }else{
                 this.props.onClick(event);

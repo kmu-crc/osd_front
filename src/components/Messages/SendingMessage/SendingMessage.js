@@ -6,7 +6,8 @@ import ValidateForm from "components/Commons/ValidateForm";
 import { FormField } from "components/Commons/FormField";
 import { FormTextArea } from "components/Commons/FormItem";
 import FormDataToJson from "modules/FormDataToJson";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 // css styling
 
 class SendingMessage extends Component {
@@ -16,7 +17,7 @@ class SendingMessage extends Component {
 
   onSubmitForm = async (data) => {
     if (this.props.toUser === null) {
-      alert("받는 사람을 지정해주세요.");
+      await alert("받는 사람을 지정해주세요.");
       return;
     }
     this.props.SendMessageRequest(this.props.token, FormDataToJson(data), this.props.toUser)

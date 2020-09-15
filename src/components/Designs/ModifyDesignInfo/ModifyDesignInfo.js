@@ -12,6 +12,8 @@ import {FormControl, ValidationGroup } from "modules/FormControl";
 import StyleGuide from "StyleGuide";
 
 import CreateOption from "components/Designs/CreateDesignForm/CreateOption/CreateOption";
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 
 const patent_option = [
   {text:"양도",value:0},
@@ -333,11 +335,11 @@ class ModifyDesignInfo extends Component {
       console.log("성공", data);
       this.props.setLoader();
       this.props.CreateDesignRequest(data, this.props.token)
-      .then(res => {
+      .then(async res => {
         if (res.success) {
           this.props.history.push(`/designDetail/${res.design_id}`);
         } else {
-          alert("다시 시도해주세요");
+          await alert("다시 시도해주세요");
           this.state.member.value = JSON.parse(this.state.member.value);
           this.props.setLoader();
         }

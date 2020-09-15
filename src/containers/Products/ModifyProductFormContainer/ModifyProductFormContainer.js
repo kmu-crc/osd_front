@@ -4,17 +4,18 @@ import { withRouter } from "react-router-dom";
 import { UpdateItemRequest, GetItemDetailRequest } from "actions/Item";
 import { SearchMemberRequest } from "actions/Commons/Search";
 import ModifyProductForm from "components/Products/ModifyProductForm";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 class ModifyProudctFormContainer extends Component {
   state = {
     valid: false
   }
   componentDidMount() {
     this.props.GetItemDetailRequest(this.props.id, this.props.token)
-      .then(() => {
+      .then(async() => {
         if (this.props.userInfo.uid !== this.props.ItemDetail.user_id
           && (this.props.userInfo.isDesigner === 1 || this.props.userInfo.isMaker === 1)) {
-          alert("이 아이템에 대한 수정권한이 없습니다.\n이전페이지로 돌아갑니다.");
+          await alert("이 아이템에 대한 수정권한이 없습니다.\n이전페이지로 돌아갑니다.");
           this.props.history.go(-1);
         } else {
           this.setState({ valid: true });

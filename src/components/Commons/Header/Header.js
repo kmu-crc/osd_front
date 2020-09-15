@@ -8,6 +8,8 @@ import TextFormat from "modules/TextFormat";
 import { SetSession } from "modules/Sessions";
 import { Icon } from "semantic-ui-react";
 import AlarmContainer from "containers/Commons/AlarmContainer";
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 
 const LogoWrapper = styled.div`
   margin: 0;
@@ -240,7 +242,7 @@ class Header extends Component {
       method: "GET"
     }).then(res => res.json())
       .then(data => this.setState({ news: data }))
-      .catch(err => alert(`공지사항을 가져올 수 없습니다.\n${err}`));
+      .catch(async err => await alert(`공지사항을 가져올 수 없습니다.\n${err}`));
   };
   submitEnter = e => {
     if (e.keyCode === 13) {
@@ -248,12 +250,12 @@ class Header extends Component {
       dom && dom.click();
     }
   };
-  saveKeyword = e => {
+  saveKeyword = async e => {
     const target = e.target;
     const word = target.value;
     let regExp = /^[a-zA-Zㄱ-힣0-9]*$/i;
     if (!word.match(regExp)) {
-      alert("특수문자는 사용할 수 없습니다.");
+      await alert("특수문자는 사용할 수 없습니다.");
       target.value = this.state.keyword;
     } else {
       this.setState({ keyword: word });

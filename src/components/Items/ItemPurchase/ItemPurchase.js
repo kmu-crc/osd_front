@@ -14,7 +14,8 @@ import ItemStepContainer from "containers/Items/ItemStepContainer";
 import { Rating } from 'semantic-ui-react'
 import { FileUploadRequest } from "actions/Uploads";
 import FileIcon from "components/Commons/FileIcon";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const MessageBox = styled.div`
   padding:10px;
 `
@@ -673,8 +674,8 @@ class ItemPurchase extends Component {
       :
       this.props.LikeProductRequest(this.props.id, this.props.token)
   };
-  buyThisItem(event) {
-    if (!window.confirm(`${this.props.item.price / 1000}천원이 결제됩니다.`)) {
+  async buyThisItem(event) {
+    if (!await confirm(`${this.props.item.price / 1000}천원이 결제됩니다.`)) {
       event.preventDefault();
     } else {
       this.props.item.price > this.props.Point ? this.gotoChargePoint() : this.purchaseThisItem()
@@ -682,18 +683,18 @@ class ItemPurchase extends Component {
 
 
   }
-  modifyThisItem() {
-    if (window.confirm("아이템을 수정하시겠습니까?")) {
+  async modifyThisItem() {
+    // if (await confirm("아이템을 수정하시겠습니까?")) {
       window.location.href = `/productModify/${this.props.ItemDetail["item-id"]}`;
-    }
+    // }
   }
 
-  selectMethod(index) {
+  async selectMethod(index) {
     if (index !== 0)
-      alert("준비중입니다. 충전 후 결제해주세요.");
+      await alert("준비중입니다. 충전 후 결제해주세요.");
   }
-  gotoChargePoint() {
-    if (window.confirm("충전 금액이 부족합니다. 충전하러 이동하시겠습니까?")) {
+  async gotoChargePoint() {
+    if (await confirm("충전 금액이 부족합니다. 충전하러 이동하시겠습니까?")) {
       window.location.href = `/point`;
     }
   }
@@ -973,8 +974,8 @@ class ItemPurchase extends Component {
                 :
                 <React.Fragment>
                   <div>
-                  <CustomButton id="cancelbtn" width="100" height="45" backgroundColor="white" fontColor="#707070" marginBottom="10" fontSize="12" onClick={this.onCancelFile}>취소하기</CustomButton>
-                  <CustomButton id="sendfile" width="100" height="45" backgroundColor="white" fontColor="#707070" fontSize="12" onClick={this.onSendFile}>전송하기</CustomButton>
+                  <CustomButton id="sendfile" width="100" height="45" backgroundColor="white" fontColor="#707070" marginBottom="10"  fontSize="12" onClick={this.onSendFile}>전송하기</CustomButton>
+                  <CustomButton id="cancelbtn" width="100" height="45" backgroundColor="white" fontColor="#707070" fontSize="12" onClick={this.onCancelFile}>취소하기</CustomButton>
                   </div>
                 </React.Fragment>
               }

@@ -14,6 +14,8 @@ import { FormThumbnailEx } from "components/Commons/FormItems";
 import CardSourceDetail from "components/Items/ItemDetail/CardSourceDetail";
 import Loading from "components/Commons/Loading";
 import Cross from "components/Commons/Cross";
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 
 const NewCardDialogWrapper = styled(Modal)`
     margin-top: 50px !important;
@@ -305,9 +307,9 @@ class NewCardModal extends Component {
         loading: false, scroll: false, edit: false, title: "", description: "", hook: false,
         content: [],
     };
-    handleCancel = (obj) => {
+    handleCancel = async(obj) => {
         if (obj.length > 0 || this.state.title !== "" || this.state.content !== "") {
-            if (!window.confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
+            if (!await confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
                 return;
             }
         }
@@ -342,7 +344,7 @@ class NewCardModal extends Component {
     };
     submit = async () => {
         if (!this.state.title || this.state.title === "") {
-            alert("컨텐츠의 제목을 입력하세요.");
+            await alert("컨텐츠의 제목을 입력하세요.");
             return;
         }
         // new card
@@ -354,7 +356,7 @@ class NewCardModal extends Component {
                 // let thumbnail = files ? { img: files && files[0].value, file_name: files && files[0].name } : null;
 
                 await this.props.CreateItemCardRequest({ title: this.state.title, order: this.props.row.order }, this.props.itemId, this.props.row.id, this.props.token)
-                    .then(res => {
+                    .then(async res => {
                         console.log(res);
                         if (res.success) {
                             const card_id = res.card;
@@ -371,12 +373,12 @@ class NewCardModal extends Component {
                                     await this.props.GetItemStepsRequest(this.props.itemId, this.props.token);
                                     this.onClose();
                                 })
-                                .catch(err => alert(err + '와 같은 이유로 작업을 완료할 수 없습니다.'));
+                                .catch(async err => await alert(err + '와 같은 이유로 작업을 완료할 수 없습니다.'));
                         } else {
-                            alert("새로운 카드를 추가하는데 실패했습니다. 잠시후 다시 시도해주세요.");
+                            await alert("새로운 카드를 추가하는데 실패했습니다. 잠시후 다시 시도해주세요.");
                         }
                     })
-                    .catch(err => alert(err));
+                    .catch(async err => await alert(err));
             });
     };
     handleCapture = (data) => {

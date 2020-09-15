@@ -538,7 +538,7 @@ class CreateMaker extends Component {
             </ExperienceBox>
           </div>
           <div className="contentsBox centering">
-            <RedButton text={"등록을 완료하시겠습니까?"} value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
+            <RedButton text={"메이커를 등록합니다."} okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
             <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.location.href = "/mypage" }} isConfirm={false}></GrayButton>
           </div>
         </MainBox>

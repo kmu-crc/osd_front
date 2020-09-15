@@ -5,7 +5,8 @@ import styled from 'styled-components';
 import { Dropdown } from "semantic-ui-react"
 // import { InputTag } from "components/Commons/InputItem/InputTag";
 import noimg from "source/noimg.png";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const MainBox = styled.div`
   width:100%;
   padding:30px;
@@ -265,7 +266,7 @@ class CreateGroup extends Component {
       await data.files.push(file);
     }
     this.props.CreateNewGroupRequest(data, this.props.token)
-      .then(res => {
+      .then(async res => {
         console.log("res", res.res);
         const result = res.type;
         console.log(res);
@@ -275,12 +276,12 @@ class CreateGroup extends Component {
           this.props.handleShowModal(false);
 
         } else {
-          alert("다시 시도해주세요!");
+          await alert("다시 시도해주세요!");
         }
       })
-      .catch(e => {
+      .catch(async e => {
         console.log("실패", e);
-        alert("다시 시도해주세요");
+        await alert("다시 시도해주세요");
         this.setState({
           loading: false
         });

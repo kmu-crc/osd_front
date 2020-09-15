@@ -7,7 +7,8 @@ import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
 import { FileUploadRequest } from "actions/Uploads";
 import category_icon from "source/category_icon.svg";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const CustomIcon=styled.div`
   width:${props => props.width}px;
   height:${props => props.height}px;
@@ -313,7 +314,7 @@ class RequestToDesigner extends Component {
             window.location.href = "/request/designer";
         }
       })
-      .catch(err => alert("의뢰 중 에러가 발생했습니다.\n" + err));
+      .catch(async err => await alert("의뢰 중 에러가 발생했습니다.\n" + err));
   }
 
   render() {
@@ -433,8 +434,8 @@ class RequestToDesigner extends Component {
               </FormBox>
             </div>
             <div className="centering_">
-              <RedButton value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
+              <RedButton text="의뢰를 등록합니다." okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
             </div>
           </MainBox>
         </Wrapper>

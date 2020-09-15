@@ -13,7 +13,8 @@ import { GetItemDetailRequest } from "actions/Item";
 import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 import { GetMyPointRequest, } from "actions/Point";
 import { GetPaymentMessageRequest, CreatePaymentMessageRequest, /*DeleteItemQuestionRequest*/ } from "actions/Item";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 class ProductPurchaseContainer extends Component {
   constructor(props) {
     super(props);
@@ -36,27 +37,27 @@ class ProductPurchaseContainer extends Component {
       { payment_title: item.title, payment_price: item.price },
       item["item-id"],
       this.props.token)
-      .then(res => {
+      .then(async res => {
         if (res && res.data && res.data.success) {
           if (this.props.custom) {
-            alert("구입이 완료되었습니다. [내 정보] > [의뢰상품]에서 확인하실 수 있습니다.");
+            await alert("구입이 완료되었습니다. [내 정보] > [의뢰상품]에서 확인하실 수 있습니다.");
             window.location.href = `/myPage/`;
           } else {
             // alert("구입이 완료되었습니다. 해당 상품의 리뷰를 작성해주세요.");
             // window.location.href = `/productDetail/${item["item-id"]}`;
-            alert("구입이 완료되었습니다. [내 정보] > [구입 아이템]에서 확인하실 수 있습니다.");
+            await alert("구입이 완료되었습니다. [내 정보] > [구입 아이템]에서 확인하실 수 있습니다.");
             window.location.href = `/myPage/`;
 
           }
         }
       })
   };
-  BadAccess() {
-    alert("잘못된 접근입니다.");
+  async BadAccess() {
+    await alert("잘못된 접근입니다.");
     window.location.href = `/product`;
   }
-  ThisIsPrivateItem() {
-    alert("비공개 아이템입니다.");
+  async ThisIsPrivateItem() {
+    await alert("비공개 아이템입니다.");
     window.location.href = `/product`;
   }
 

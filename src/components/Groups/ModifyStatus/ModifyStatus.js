@@ -5,7 +5,8 @@ import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import MyExistDesignListContainer from "containers/Groups/MyExistDesignListContainer";
 import MyExistGroupListContainer from "containers/Groups/MyExistGroupListContainer";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const ModalContent = styled.div`
   padding: 30px;
   & .icon.close {
@@ -52,9 +53,9 @@ class ModifyStatus extends Component {
     active: "design"
   };
 
-  handleModal = () => {
+  handleModal = async() => {
     if (!this.props.token) {
-      alert("로그인을 해주세요.");
+      await alert("로그인을 해주세요.");
       return;
     } else {
       this.setState({ open: true });

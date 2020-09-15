@@ -15,7 +15,8 @@ import templateImgEngineering from "source/template-image-engineering.png";
 import templateImgEmpty from "source/template-image-empty.png";
 import { StepCard, CreateStep, CreateCard, } from "components/GridEditor";
 import arrow from "source/arrow.svg";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const fashion = [
   { order: 0, title: "Ideation" },
   { order: 1, title: "Purpose" },
@@ -623,17 +624,17 @@ class CreateProductForm extends Component {
     data.additional.description = data.additional.description.replace(/(?:\r\n|\r|\n)/g,'<br />');
 
     this.props.CreateDesignRequest(data, this.props.token)
-      .then(result => {
+      .then(async result => {
         this.setState({ loading: false });
         if (result.success) {
-          alert("아이템이 등록 되었습니다. 아이템상세페이지로 이동합니다.");
+          // await alert("아이템이 등록 되었습니다. 아이템상세페이지로 이동합니다.");
           window.location.href = `/productDetail/${result.id}`
         } else {
-          alert("아이템이 등록에 실패하였습니다.");
+          await alert("아이템이 등록에 실패하였습니다.");
         }
       })
-      .catch(error => {
-        alert("오류내용:" + error.message);
+      .catch(async error => {
+        await alert("오류내용:" + error.message);
       });
   };
 
@@ -775,10 +776,10 @@ class CreateProductForm extends Component {
             }}>
               <RedButton value={"디자인 등록 계속"} isConfirm={false} />
             </Link>
-            : <RedButton value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
+            : <RedButton text="아이템을 등록합니다." okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
           }
-          <GrayButton value={"취소하기"} onClick={() => {
-            if (window.confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
+          <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={async() => {
+            if (await confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
               window.history.back();
             }
           }}>취소하기</GrayButton>

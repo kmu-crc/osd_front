@@ -291,7 +291,7 @@ class RequestToMaker extends Component {
             window.location.href = `/request/maker`;
         }
       })
-      .catch(err => alert("의뢰 중 에러가 발생했습니다.\n" + err));
+      .catch(err => console.log("의뢰 중 에러가 발생했습니다.\n" + err));
   }
 
 
@@ -410,8 +410,8 @@ class RequestToMaker extends Component {
               </FormBox>
             </div>
             <div className="centering_">
-              <RedButton value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
+              <RedButton  text={"의뢰를 등록합니다."} okText="등록" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
             </div>
           </MainBox>
         </Wrapper>

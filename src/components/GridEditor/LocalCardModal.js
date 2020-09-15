@@ -11,7 +11,8 @@ import Loading from "components/Commons/Loading";
 import { InputContent } from "components/Commons/InputItem";
 // import {confirmAlert} from "react-confirm-alert";
 // import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const ContentBorder = styled.div`
     height: 29px;
     font-family: Noto Sans KR;
@@ -448,9 +449,9 @@ export class LocalCardModal extends Component {
         this.saveTemporary = this.saveTemporary.bind(this);
         this.submit = this.submit.bind(this);
     };
-    handleCancel(obj) {
+    async handleCancel(obj) {
         if (obj.length > 0 || this.state.title !== "" || this.state.content !== "") {
-            if (!window.confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
+            if (!await confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
                 return;
             }
         }
@@ -486,7 +487,7 @@ export class LocalCardModal extends Component {
     };
     async submit() {
         if (!this.state.title || this.state.title === "") {
-            alert("컨텐츠의 제목을 입력하세요.");
+            await alert("컨텐츠의 제목을 입력하세요.");
             await this.setState({ loading: false });
             return;
         }
@@ -515,7 +516,7 @@ export class LocalCardModal extends Component {
     async onSave() {
         await this.submit();
     };
-    onCancel(event) {
+    async onCancel(event) {
         // confirmAlert(options("모든 내용이 저장되지 않고 닫힙니다. 그래도 계속 진행하시겠습니까?"
         // ,()=>{
         //         this.setState({
@@ -527,8 +528,8 @@ export class LocalCardModal extends Component {
         //     })
         // }
         // ,event));
-        const confirm = window.confirm("모든 내용이 저장되지 않고 닫힙니다. 그래도 계속 진행하시겠습니까?");
-        if (confirm) {
+        // const confirm = window.confirm("모든 내용이 저장되지 않고 닫힙니다. 그래도 계속 진행하시겠습니까?");
+        if (await confirm("모든 내용이 저장되지 않고 닫힙니다. 그래도 계속 진행하시겠습니까?")) {
             this.setState({
                 loading: false, scroll: false, edit: false, hook: false,
                 title: "", content: "",

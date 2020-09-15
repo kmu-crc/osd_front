@@ -4,28 +4,32 @@ import styled from 'styled-components';
 import Star from "components/Commons/Star";
 import noimg from "source/noimg.png";
 import { Rating } from 'semantic-ui-react'
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const Reviews = styled.div`
-//   width: 468px;
-//   height: 1478px;
+    
   background: #FFFFFF;
-//   box-shadow: 5px 5px 10px #00000029;
-//   border-radius: 20px;
   opacity: 1;
   padding: 10px;
-  .title {
-    font-weight: 500;
-    font-size:15px;
-    margin-right:20px;
-  }
-  .line{
+  .header{
       display:flex;
-    //   border:1px solid red;
-    //   justify-content:center;
-      padding:10px;
+      align-items:center;
+    .title{
+        font-size:20px;
+        font-family:Noto Sans KR, Medium;
+        margin-right:29px;
+    }  
+    .score{
+        font-size:15px;
+        font-family:Noto Sans KR, Light;
+        font-weight:200;
+    }
   }
-  .score{
-      display:flex;
+  .hrLine{
+      width:100%;
+      height:2px;
+      background-color:#d6d6d6;
+      margin-top:26px;
   }
 `;
 const ReviewForm = styled.textarea`
@@ -113,6 +117,12 @@ const Page = styled.div`
 //`;
 
 const ReviewPiece = styled.div`
+    border:1px solid black;
+    *{
+        border:1px solid black;
+    }
+    width:45%;
+    height:80px;
     display:flex;
     border:1px solid #E9E9E9;
     background-color:#E6E6E6;
@@ -228,9 +238,9 @@ class ItemReview extends Component {
             // ing: false
         });
     };
-    checkPermission() {
+    async checkPermission() {
         if (this.props.userInfo == null) {
-            alert("로그인 해주세요.");
+            await alert("로그인 해주세요.");
             return false;
         }
         return true
@@ -258,20 +268,20 @@ class ItemReview extends Component {
         this.reset();
         this.props.refresh && this.props.refresh();
     };
-    removeComment(commentId) {
-        if (window.confirm("선택하신 댓글을 삭제하시겠습니까?") === false) {
+    async removeComment(commentId) {
+        if (await confirm("선택하신 댓글을 삭제하시겠습니까?") === false) {
             return;
         }
         const comm = this.props.comments.find(comm => { return (comm.uid === commentId) });
         if (comm.replies && comm.replies.length > 0) {
-            alert("답변이 있는 댓글은 삭제할 수 없습니다.");
+            await alert("답변이 있는 댓글은 삭제할 수 없습니다.");
         }
         else {
             this.props.removeComment(commentId);
         }
     };
-    removeReply(commentId) {
-        if (window.confirm("선택하신 댓글을 삭제하시겠습니까?") === false) {
+    async removeReply(commentId) {
+        if (await confirm("선택하신 댓글을 삭제하시겠습니까?") === false) {
             return;
         }
         this.props.removeComment(commentId);
@@ -291,7 +301,7 @@ class ItemReview extends Component {
         const master = user_id === (userInfo && userInfo.uid);
         const avgScore = this.props.score;
         const TotalScore = ()=>{
-            return <Rating name="score" icon='star' size="large" defaultRating={parseInt(this.state.totalscore,10)} maxRating={5} disabled />
+            return <Rating name="score" icon='star' size="tiny" defaultRating={parseInt(this.state.totalscore,10)} maxRating={5} disabled />
         }
         const Review = (props) => {
             console.log(props.score)
@@ -326,13 +336,17 @@ class ItemReview extends Component {
         console.log(parseInt(score,10)||0,total);
         return (<React.Fragment>
             <Reviews>
-                <div className="line" style={{ width: "max-content", marginLeft: "auto", marginRight: "15px" }}>
+                <div className="header">
+                    <div className="title">리뷰</div>
+                    <div className="score">총점(리뷰수):<TotalScore/>({total})</div>
+                </div>
+                <div className="hrLine"/>
+                {/* <div className="line" style={{ width: "max-content", marginLeft: "auto", marginRight: "15px" }}>
                     <div className="title">총점(리뷰수): </div>
                     <div className="score">
-                        {/* {Star(score)}({total}) */}
                         <TotalScore/>({total})
                     </div>
-                </div>
+                </div> */}
                 {!master ?
                     payment && payment.length > 0 ?
                         payment.map((pay, index) => {

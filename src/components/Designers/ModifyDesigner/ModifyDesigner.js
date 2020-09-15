@@ -533,8 +533,8 @@ class ModifyDesigner extends Component {
           </div>
           <div className="contentsBox centering">
             {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>적용</div></RedButton> */}
+            <RedButton text ={"수정을 적용합니다."} okText="적용" cancelText="취소" value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
             <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
-            <RedButton text ={"수정을 적용하시겠습니까?"} value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
           </div>
         </MainBox>
       </React.Fragment>

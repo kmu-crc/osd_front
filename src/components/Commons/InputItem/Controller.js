@@ -6,6 +6,8 @@ import { EmbController } from "components/Commons/InputItem/EmbController";
 // import {confirmAlert} from "react-confirm-alert";
 // import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 // css styling
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const ControllerWrap = styled.div`
   position: relative;
   &:hover {
@@ -137,7 +139,7 @@ export class Controller extends Component {
   };
   async privateItem(event) {
     if (this.props.privateItem) {
-      if (window.confirm("선택하신 항목을 비공개로 설정하시겠습니까?")) {
+      if (await confirm("선택하신 항목을 비공개로 설정하시겠습니까?")) {
         this.props.privateItem(this.props.item);
       }
       // confirmAlert(options("선택하신 항목을 비공개로 설정하시겠습니까?",()=>{this.props.privateItem(this.props.item);},event));
@@ -145,7 +147,7 @@ export class Controller extends Component {
   }
   async deleteItem(event) {
     if (this.props.deleteItem) {
-      if (window.confirm("선택된 항목을 정말 삭제하시겠습니까?")) {
+      if (await confirm("선택된 항목을 정말 삭제하시겠습니까?")) {
         this.props.deleteItem(this.props.item.order)
       }
       // confirmAlert(options("선택된 항목을 정말 삭제하시겠습니까?",()=>{this.props.deleteItem(this.props.item.order);},event));

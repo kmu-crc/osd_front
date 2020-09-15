@@ -6,7 +6,8 @@ import { Dropdown } from "semantic-ui-react"
 // import { InputTag } from "components/Commons/InputItem/InputTag";
 import noimg from "source/noimg.png";
 import { RedButton, GrayButton } from "components/Commons/CustomButton";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const MainBox = styled.div`
   width:100%;
   padding:30px;
@@ -279,17 +280,17 @@ class ModifyGroup extends Component {
   }
   onDelete = async e => {
     this.props.DeleteGroupRequest(this.props.id, this.props.token)
-      .then(res => {
+      .then(async res => {
         const result = res.type;
         if (result === "DETELE_GROUP_SUCCESS") {
           console.log(this.props.id);
           this.props.GetHaveInGalleryRequest(this.props.userInfo.uid, 0);
         } else {
-          alert("다시 시도해주세요");
+          await alert("다시 시도해주세요");
         }
       })
-      .catch(e => {
-        alert("다시 시도해주세요");
+      .catch(async e => {
+        await alert("다시 시도해주세요");
         this.setState({
           loading: false
         });
@@ -318,7 +319,7 @@ class ModifyGroup extends Component {
       delete data.files;
     }
     this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
-      .then(res => {
+      .then(async res => {
         // console.log("res", res.res);
         const result = res.type;
         // console.log(res);
@@ -328,12 +329,12 @@ class ModifyGroup extends Component {
           // alert("정보가 수정되었습니다.");
           this.props.handleShowModal(false);
         } else {
-          alert("다시 시도해주세요");
+          await alert("다시 시도해주세요");
         }
       })
-      .catch(e => {
+      .catch(async e => {
         // console.log("실패", e);
-        alert("다시 시도해주세요");
+        await alert("다시 시도해주세요");
         this.setState({
           loading: false
         });
@@ -417,8 +418,8 @@ class ModifyGroup extends Component {
             </FormBox>
           </div>
           <div className="contentBox">
-            <RedButton value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
-            <GrayButton value={"삭제하기"} onClick={this.onDelete} isConfirm={true} />
+            <RedButton value={"적용하기"} text={"수정을 적용합니다."} okText="적용" cancelText="취소" onClick={this.onSubmit} isConfirm={true} />
+            <GrayButton text={"취소하시겠습니까?"} value={"삭제하기"} onClick={this.onDelete} isConfirm={true} />
           </div>
         </MainBox>
       </React.Fragment>

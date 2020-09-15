@@ -8,7 +8,8 @@ import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown"
 import ScrollItemListContainer from "containers/Products/ScrollProductListContainer";
 import ScrollMakerListContainer from "containers/Maker/ScrollMakerListContainer";
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 // css styling
 
 const Wrapper = styled.div`
@@ -128,12 +129,12 @@ class SearchList extends Component {
     await this.setState({ rendering: true });
   }
 
-  getSearchValue = (e) => {
+  getSearchValue = async(e) => {
     const target = e.target;
     const value = target.value;
     let regExp = /^[a-zA-Zㄱ-힣0-9]*$/i;
     if (!value.match(regExp)) {
-      alert("특수문자는 사용할 수 없습니다.");
+      await alert("특수문자는 사용할 수 없습니다.");
       target.value = "";
       return;
     } else {
@@ -149,9 +150,9 @@ class SearchList extends Component {
     }
   }
 
-  onSearchSubmit = (data) => {
-    if (this.state.keyword === null || this.state.keyword === "") {
-      alert("키워드를 입력해주세요");
+  onSearchSubmit = async(data) => {
+    if (this.state.keyword == null || this.state.keyword == "") {
+      await alert("키워드를 입력해주세요");
     } else {
       this.props.history.replace(`/search/${this.props.type}/${this.props.sort}/${this.state.keyword}`);
       this.changeState();

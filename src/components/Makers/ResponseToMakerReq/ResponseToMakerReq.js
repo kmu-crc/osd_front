@@ -8,6 +8,9 @@ import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
 import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
 import FileIcon from "components/Commons/FileIcon";
+import category_icon from "source/category_icon.svg";
+
+
 const LocationList = [
   { value: 0, text: "서울특별시" },
   { value: 1, text: "부산광역시" },
@@ -26,6 +29,17 @@ const LocationList = [
   { value: 14, text: "제주도" },
   { value: 15, text: "제한없음" },
 ];
+const CustomIcon=styled.div`
+  width:${props => props.width}px;
+  height:${props => props.height}px;
+  background-image:url(${props=>props.imgURL});
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding:${props => props.padding}px;
+  margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
+  margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
+  display:${props=>props.isNon==true?"none":"block"}
+`
 const Wrapper = styled(ContentBox)`
     width:100%;
     margin-top:60px;
@@ -150,6 +164,7 @@ const FormBox = styled.div`
     font-family:Noto Sans CJK KR, Regular;
     font-size:17px;
     line-height:17px;
+    display:flex;
   }
 
 `;
@@ -273,7 +288,7 @@ class ResponseToMakerReq extends Component {
             window.location.href = "/request/maker";
         }
       })
-      .catch(err => alert("에러가 발생했습니다." + err));
+      .catch(err => console.log("에러가 발생했습니다." + err));
   }
   async getEndDateValue(value) {
     await console.log("endDate", value);
@@ -321,7 +336,12 @@ class ResponseToMakerReq extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">카테고리</div>
-                  <div className="textBox">{category_level1 ? category_level1 + " > " : ""}{category_level2}</div>
+                  <div className="textBox">
+                        {/* {category_level1 ? category_level1 + (category_level2 ? `>` : "") : null}{category_level2} */}
+                        {category_level1}
+                        {category_level2?<CustomIcon width="15" height="15" marginRight="31" marginLeft="31" imgURL={category_icon}/>:null}
+                        {category_level2?category_level2:null}
+                  </div>
                 </div>
 
                 <div className="wrapper flex centering add_margin_bottom">
@@ -434,8 +454,8 @@ class ResponseToMakerReq extends Component {
             <div className="contentsBox">
             <div className="box_"/>
             <div className="box_centering">
-              <RedButton value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} /></div>
+              <RedButton text={"의뢰를 등록합니다."} okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} /></div>
             </div>
           </MainBox>
         </Wrapper>

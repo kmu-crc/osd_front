@@ -271,9 +271,9 @@ class ModifyMaker extends Component {
     this.handleShowModal = this.handleShowModal.bind(this);
     this.onClickCancel = this.onClickCancel.bind(this);
   }
-  componentDidMount() {
+  async componentDidMount() {
     if (this.props.userInfo == null) {
-      alert("로그인해주세요.");
+      await alert("로그인해주세요.");
       window.location.href = '/signin'
     }
   }
@@ -596,8 +596,8 @@ class ModifyMaker extends Component {
               </SubBox>
             </div>
             <div className="contentsBox centering">
+              <RedButton text={"수정을 적용합니다."} okText="적용" cancelText="취소" value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
               <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
-              <RedButton text={"수정을 적용하시겠습니까?"} value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
             </div>
           </MainBox>}
       </React.Fragment>

@@ -107,7 +107,7 @@ class Sales extends Component {
     if (item.uid) {
       const yours = item.members && item.members.filter(mem => mem.user_id === this.props.userInfo && this.props.userInfo.uid);
       if (item.private && !yours) {
-        alert("비공개!");
+        // alert("비공개!");
         return;
       } else {
         window.location.href = `/productPurchase/${item.uid}/${item.payment_id}`;
