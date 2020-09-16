@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { CheckTokenRequest } from "actions/Authentication";
 import { SetSession, GetSession } from "modules/Sessions";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 export default function RequiresAuth(Component) {
   class AuthenticatedComponent extends React.Component {
     componentWillMount() {
@@ -24,9 +25,9 @@ export default function RequiresAuth(Component) {
       });
     }
 
-    _checkAndRedirect() {
+    async _checkAndRedirect() {
       if (!this.props.valid) {
-        alert("로그인 후 이용이 가능합니다.");
+        await alert("로그인 후 이용이 가능합니다.");
         this.props.history.push("/signin");
       }
     }

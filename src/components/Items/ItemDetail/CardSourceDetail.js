@@ -4,7 +4,8 @@ import styled from "styled-components";
 import FileIcon from "components/Commons/FileIcon";
 import Loading from "components/Commons/Loading";
 import { AddController, Controller } from "components/Commons/InputItem";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 
 const ContentForm = async (data, oldData) => {
   let formData = {
@@ -248,12 +249,12 @@ class CardSourceDetail extends Component {
     //BLOG-TYPE
     else {
       if (formData && (formData.newContent.length === 0 && formData.updateContent.length === 0 && formData.deleteContent.length === 0)) {
-        alert("변경된 사항이 없습니다.");
+        await alert("변경된 사항이 없습니다.");
       } else {
         this.props.upDateRequest(formData, this.props.cardId, this.props.token)
-          .then(res => {
+          .then(async res => {
             if (res.data.success) {
-              alert("아이템 컨텐츠를 수정하였습니다.");
+              await alert("아이템 컨텐츠를 수정하였습니다.");
               window.location.href = `/productDetail/${this.props.ItemDetail["item-id"]}`
             }
           })

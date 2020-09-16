@@ -13,6 +13,8 @@ import PxtoRem from "modules/PxtoRem";
 import DateFormat from "modules/DateFormat";
 import TextFormat from "modules/TextFormat";
 import { GetCountMyDesignAndGroupInGroupRequest } from "actions/Group"
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 // css styling
 
 const Wrapper = styled.div`
@@ -157,9 +159,9 @@ class GroupDetailNew extends Component {
       })
   }
 
-  updateLike = () => {
+  updateLike = async() => {
     if (!this.props.token) {
-      alert("로그인을 해주세요.");
+      await alert("로그인을 해주세요.");
       return;
     }
     if (this.props.like === true) {
@@ -207,9 +209,9 @@ class GroupDetailNew extends Component {
     }
   };
 
-  deleteGroup = () => {
-    const confirm = window.confirm("그룹을 삭제하시겠습니까?");
-    if (confirm) {
+  deleteGroup = async() => {
+    // const confirm = window.
+    if (await confirm("그룹을 삭제하시겠습니까?")) {
       this.props.DeleteGroupRequest(this.props.id, this.props.token)
         .then(data => {
           this.props.history.push("/group");

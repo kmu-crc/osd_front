@@ -12,7 +12,7 @@ class ItemContentContainer extends Component {
     render() {
         console.log(this.props.content, "~");
         // return (<InputContent content={this.props.ItemContent} />)
-        return (<CardSourceDetail {...this.props} upDateRequest={() => alert("updated")} />);
+        return (<CardSourceDetail {...this.props} upDateRequest={() => console.log("updated")} />);
     }
 }
 

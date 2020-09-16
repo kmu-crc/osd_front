@@ -4,7 +4,8 @@ import RequestDetail from "components/Request/RequestDetail";
 import { GetRequestDetailRequest } from "actions/Request";
 import { GetThisPurchasedRequest, UpdatePaymentRequest, CreateItemPaymentRequest } from "actions/Payment";
 import bg from "source/design_bg.jpg";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 class RequestDetailContainer extends Component {
   constructor(props) {
     super(props);
@@ -43,9 +44,9 @@ class RequestDetailContainer extends Component {
       },
       "custom",
       this.props.token)
-      .then(res => {
+      .then(async res => {
         if (res.data.success) {
-          alert("구입하였습니다. [구입확인]버튼을 눌러야 거래가 완료됩니다.");
+          await alert("구입하였습니다. [구입확인]버튼을 눌러야 거래가 완료됩니다.");
           window.location.href = `/myPage/`;
         }
       })

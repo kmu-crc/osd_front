@@ -5,7 +5,8 @@ import Button from "components/Commons/Button";
 import { FormInput, FormSelect, FormCheckBox, FormThumbnail } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import Loading from "components/Commons/Loading";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const Label = styled.div`
   margin: 0 0 0.8rem 0;
   display: block;
@@ -42,11 +43,11 @@ class UserDetailFrom extends Component {
         loading: true
       });
       this.props.InsertUserDetailRequest(data, this.props.token)
-      .then(data => {
+      .then(async data => {
         if (data.res && data.res.success) {
           this.props.history.push(`/`);
         } else {
-          alert("다시 시도해주세요");
+          await alert("다시 시도해주세요");
           this.setState({
             loading: false
           });

@@ -6,7 +6,8 @@ import StyleGuide from "StyleGuide";
 import UserImg from "source/thumbnail.png";
 import PxtoRem from "modules/PxtoRem";
 import { AsyncInput } from "components/Commons/FormItems";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const ModalContent = styled(Modal.Content)`
   & .ui.grid {
     margin: 0;
@@ -148,44 +149,44 @@ class ModifyDesignMember extends Component {
     this.props.SearchMemberRequest(this.props.match.params.id, {key: data}, this.props.token);
   }
 
-  getoutMember = (flag, id) => {
+  getoutMember = async(flag, id) => {
     if (this.props.DesignDetail.user_id === id) {
-      alert("팀장은 탈퇴할 수 없습니다.");
+      await alert("팀장은 탈퇴할 수 없습니다.");
       return;
     }
     const msg = flag === "DesignGetout" ? "이 회원을 탈퇴 처리 하시겠습니까?":"가입을 거절하시겠습니까?";
-    const confirm = window.confirm(msg);
-    if(!confirm) return;
+    // const confirm = window.confirm(msg);
+    if(await confirm(msg)==false) return;
     
     this.props.GetoutDesignRequest(this.props.match.params.id, id, this.props.token, flag)
-      .then(res => {
+      .then(async res => {
         if (res.data && res.data.success) {
           if (flag === "DesignGetout") {
-            alert("탈퇴 처리되었습니다.");
+            await alert("탈퇴 처리되었습니다.");
             this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token)
             .then(this.props.GetDesignCountRequest(this.props.match.params.id));
           } else if(flag==="DesignRefuse"){
-            alert("가입 요청을 거절하였습니다.");
+            await alert("가입 요청을 거절하였습니다.");
             this.props.DesignWaitingListRequest(this.props.match.params.id, this.props.token);
           }
         } else {
-          alert("다시 시도해주세요.");
+          await alert("다시 시도해주세요.");
         }
       });
   }
 
-  acceptMember = (id) => {
-    const confirm = window.confirm("가입을 승인하시겠습니까?");
-    if (confirm) {
+  acceptMember = async(id) => {
+    // const confirm = window.confirm("가입을 승인하시겠습니까?");
+    if (await confirm("가입을 승인하시겠습니까?")) {
       this.props.AcceptDesignRequest(this.props.match.params.id, id, this.props.token)
-      .then(res => {
+      .then(async res => {
         if (res.data && res.data.success) {
-          alert("승인되었습니다.");
+          await alert("승인되었습니다.");
           this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token)
           .then(this.props.GetDesignCountRequest(this.props.match.params.id))
           .then(this.props.DesignWaitingListRequest(this.props.match.params.id, this.props.token));
         } else {
-          alert("다시 시도해주세요.");
+          await alert("다시 시도해주세요.");
         }
       });
     } else {
@@ -193,15 +194,15 @@ class ModifyDesignMember extends Component {
     }
   }
 
-  joinMember = () => {
+  joinMember = async () => {
     const data = this.state.member.value;
     this.props.JoinDesignRequest(this.props.match.params.id, data, 1, this.props.token)
-    .then(res => {
+    .then(async res => {
       if (res.data && res.data.success) {
-        alert("가입 요청을 보냈습니다.");
+        await alert("가입 요청을 보냈습니다.");
         this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token);
       } else {
-        alert("다시 시도해주세요.");
+        await alert("다시 시도해주세요.");
       }
     });
   }

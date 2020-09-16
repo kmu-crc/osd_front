@@ -15,7 +15,8 @@ import DateFormat from "modules/DateFormat";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import TextFormat from "modules/TextFormat";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 // css styling
 
 const Wrapper = styled(Grid)`
@@ -174,9 +175,9 @@ class GroupDetail extends Component {
     });
   }
 
-  updateLike = () => {
+  updateLike = async() => {
     if (!this.props.token) {
-      alert("로그인을 해주세요.");
+      await alert("로그인을 해주세요.");
       return;
     }
     if (this.props.like === true) {

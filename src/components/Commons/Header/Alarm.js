@@ -6,6 +6,7 @@ import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";
 import TextSlicer from "modules/TextSlicer"
 import noimg from "source/noimg.png";
+import { alert } from "components/Commons/Alert/Alert";
 
 // const Btn = styled.button`
 //   padding: 0.75em 1.5em;
@@ -171,8 +172,8 @@ export default class Alarm extends Component {
       window.location.href=url;
     }
   };
-  allAlarmConfirm = () => {
-    alert('모든 알림들을 읽음으로 표시합니다.');
+  allAlarmConfirm = async() => {
+    await alert('모든 알림들을 읽음으로 표시합니다.');
     this.props.socket.emit("allConfirm", { user_id: this.props.userInfo.uid });
     window.location.reload();
   };

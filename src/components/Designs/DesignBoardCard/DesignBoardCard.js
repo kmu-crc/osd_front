@@ -13,7 +13,8 @@ import CardSourceModifyContainer from "containers/Designs/CardSourceModifyContai
 import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";
 import TextFormat from "modules/TextFormat";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const BoardCard = styled.li`
   background-color: white;
   border-radius: 3px;
@@ -127,7 +128,7 @@ class DesignBoardCard extends Component {
     return true;
   }
 
-  onClose = () => {
+  onClose = async() => {
   //   confirmAlert(options("수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?"
   //   ,()=>{
   // this.setState({
@@ -139,14 +140,14 @@ class DesignBoardCard extends Component {
   //     this.props.GetDesignBoardRequest(this.props.match.params.id);
   //   }
   //   ,event));
-    let confirm = true;
-    if (this.state.modify && this.state.edit) {
-      confirm = window.confirm(
-        "수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?"
-      );
-    }
+    // let confirm = true;
+    // if (this.state.modify && this.state.edit) {
+    //   confirm = window.confirm(
+    //     "수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?"
+    //   );
+    // }
     // confirm = window.confirm("수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?");
-    if (confirm) {
+    if (await confirm("수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?")) {
       this.setState({
         open: false,
         active: "INIT",
@@ -183,10 +184,10 @@ class DesignBoardCard extends Component {
     // console.log(data);
   };
 
-  onDelete = e => {
+  onDelete = async e => {
     e.stopPropagation();
-    const confirm = window.confirm("컨텐츠를 삭제하시겠습니까?");
-    if (confirm) {
+    // const confirm = window.confirm("컨텐츠를 삭제하시겠습니까?");
+    if (await confirm("컨텐츠를 삭제하시겠습니까?")) {
       this.props
         .DeleteDesignCardRequest(
           this.props.boardId,
@@ -204,11 +205,11 @@ class DesignBoardCard extends Component {
 
   onSubmitCmtForm = async data => {
     if (!this.props.token) {
-      alert("로그인을 해주세요.");
+      await alert("로그인을 해주세요.");
       return;
     }
     if (FormDataToJson(data) && FormDataToJson(data).comment === "") {
-      alert("내용을 입력해 주세요.");
+      await alert("내용을 입력해 주세요.");
       return;
     }
     this.props

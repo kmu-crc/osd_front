@@ -5,6 +5,8 @@ import { FormInput } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
 import Button from "components/Commons/Button";
 import ResetPwModal from "./ResetPwModal";
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 
 const Bg = styled.div`
   width: 100vw;
@@ -126,19 +128,19 @@ class ResetPwForm extends Component {
     loading: false
   };
 
-  shouldComponentUpdate(nextProps) {
+  async shouldComponentUpdate(nextProps) {
     if (JSON.stringify(this.props.status) !== JSON.stringify(nextProps.status)) {
       if (nextProps.status === "SUCCESS") {
         this.setState({ loading: false });
         this.props.history.push('./signin');
         console.log("this loading state success >> ", this.state.loading);
-        alert("임시비밀번호가 발급되었습니다. 로그인페이지로 이동합니다.");
+        await alert("임시비밀번호가 발급되었습니다. 로그인페이지로 이동합니다.");
         window.location.href="/signin";
       
       } else if (nextProps.status === "FAILURE") {
         this.setState({ loading: false });
         console.log("this loading state failure >> ", this.state.loading);
-        alert(nextProps.message);
+        await alert(nextProps.message);
       }
     }
     return true;

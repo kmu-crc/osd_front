@@ -6,11 +6,13 @@ import CheckBox2 from "components/Commons/CheckBox";
 // import { LocalGridEditor } from "components/GridEditor/LocalGridEditor";
 import { AddController, /*InputContent,*/ Controller, InputTag, RadioType } from "components/Commons/InputItem";
 import SearchDesignMemberContainer from "containers/Commons/SearchMemberContainer";
-import { InputPrice } from "components/Commons/InputItem/InputPrice";
+import { InputPriceNew } from "components/Commons/InputItem/InputPriceNew";
+import { InputTagNew } from "components/Commons/InputItem/InputTagNew";
 import Loading from "components/Commons/Loading";
 import CardSourceDetailContainer from "containers/Items/CardSourceDetailContainer";
 import ItemStepContainer from "containers/Items/ItemStepContainer";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const ItemType = [
   { text: "디자인", value: 0 },
   { text: "프로젝트", value: 1 },
@@ -38,8 +40,10 @@ const MainBox = styled.div`
     padding-top:36px;
   }
   .buttonBox{
-    width:100%;
+    // border:1px solid black;
+    min-width:100%;
     display:flex;
+    justify-content:center;
     padding-left:130px;
     padding-top:36px;
     margin-bottom:70px;
@@ -264,7 +268,7 @@ class ModifyItemInfo extends Component {
 
       //ui 
       // tab: "basic",
-      tab: "contents",
+      tab: "basic",
       alone: false,
     };
     this.onClickItemType = this.onClickItemType.bind(this);
@@ -329,16 +333,16 @@ class ModifyItemInfo extends Component {
     };
     data.additional.description = data.additional.description.replace(/(?:\r\n|\r|\n)/g,'<br />');
        this.props.UpdateItemRequest(data, this.props.ItemDetail["item-id"], this.props.token)
-         .then(result => {
+         .then(async result => {
            if (result.res.success) {
-             alert("아이템이 수정 되었습니다. 아이템상세페이지로 이동합니다.");
+             await alert("아이템이 수정 되었습니다. 아이템상세페이지로 이동합니다.");
              window.location.href = `/productDetail/${this.props.id}`
            } else {
-             alert("아이템 수정을 실패하였습니다.");
+             await alert("아이템 수정을 실패하였습니다.");
            }
          })
-         .catch(error => {
-           alert("오류내용:" + error.message);
+         .catch(async error => {
+           await alert("오류내용:" + error.message);
          });
     this.setState({ loading: false });
   };
@@ -389,12 +393,12 @@ class ModifyItemInfo extends Component {
   async deleteThisItem() {
     this.setState({ loading: true });
     this.props.DeleteItemRequest &&
-      window.confirm("이 아이템을 삭제하시겠습니까?") &&
+      await confirm("이 아이템을 삭제하시겠습니까?") &&
       await this.props.DeleteItemRequest(this.props.ItemDetail["item-id"], this.props.token)
         .then(data => {
           // console.log(data);
           if (data.res.success) {
-            alert("아이템 삭제성공");
+            // alert("아이템 삭제성공");
             window.location.href = `/product`;
           }
         })
@@ -487,7 +491,7 @@ class ModifyItemInfo extends Component {
               <div className="wrapper flex">
                 <div className="label">태그</div>
                 <div>
-                  <InputTag width={370} taglist={this.state.tag} getValue={this.onHandleReturnedTags} />
+                  <InputTagNew width={370} taglist={this.state.tag} getValue={this.onHandleReturnedTags} />
                 </div>
               </div>
 
@@ -528,7 +532,7 @@ class ModifyItemInfo extends Component {
                       ></InputTextarea>
                     </Field>
                     <Field title="구입 비용">
-                      <InputPrice
+                      <InputPriceNew
                         getValue={this.getPriceValue}
                         name="price"
                         price={this.state.additional.price}
@@ -570,7 +574,7 @@ class ModifyItemInfo extends Component {
                         Options={["예", "아니오"]} />
                     </Field>
                     <Field title="구입 비용">
-                      <InputPrice
+                      <InputPriceNew
                         getValue={this.getPriceValue}
                         name="price"
                         price={this.state.additional.price}
@@ -589,7 +593,7 @@ class ModifyItemInfo extends Component {
                     <Field title="내용 공개 여부">
                       <RadioType checked={1} return={this.onHandleReturn} value={this.state.public} name="public" Options={["예", "아니오"]} /></Field>
                     <Field title="자문/상담 비용">
-                      <InputPrice placeholder="시간당" name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
+                      <InputPriceNew placeholder="시간당" name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                     </Field>
                   </React.Fragment>) : null}
 
@@ -599,7 +603,7 @@ class ModifyItemInfo extends Component {
                     <Field title="설명">
                       <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi,'\n')} name="description" width={483} height={99} ></InputTextarea></Field>
                     <Field title="구입 비용">
-                      <InputPrice name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
+                      <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                     </Field>
                   </React.Fragment>) : null}
 
@@ -609,7 +613,7 @@ class ModifyItemInfo extends Component {
                     <Field title="설명">
                       <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi,'\n')} name="description" width={483} height={99} ></InputTextarea></Field>
                     <Field title="구입 비용">
-                      <InputPrice name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
+                      <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                       {/* <InputText onChange={this.onHandleChange} name="price" width={370} /> */}
                     </Field>
                   </React.Fragment>) : null}
@@ -620,7 +624,7 @@ class ModifyItemInfo extends Component {
                     <Field title="설명">
                       <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi,'\n')} name="description" width={483} height={99} ></InputTextarea></Field>
                     <Field title="구입 비용">
-                      <InputPrice name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
+                      <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                     </Field>
                   </React.Fragment>) : null}
 
@@ -641,7 +645,7 @@ class ModifyItemInfo extends Component {
                     <Field title="판매 방식 선택">
                       <RadioType return={this.onHandleReturn} name="selling-type" Options={["양도", "독점 사용권", "일반 사용권"]} /></Field>Î
                     <Field title="구입 비용">
-                      <InputPrice name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
+                      <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                     </Field>
                   </React.Fragment >) : null}
 
@@ -656,7 +660,7 @@ class ModifyItemInfo extends Component {
                           <ThumbnailList return={this.onHandleImageList} width={650} />
                           <Context >(이미지 최대 10장 업로드 가능)</Context></div></Field> */}
                     <Field title="구입 비용">
-                      <InputPrice name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
+                      <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                     </Field>
                   </React.Fragment>)
                   : null}

@@ -429,7 +429,7 @@ class ProductDetail extends Component {
     this.setState({ select_image: index });
   }
   onChangeProductCount(event) {
-    alert(event.target.value);
+    // alert(event.target.value);
     this.setState({ productCount: event.target.value });
   }
   render() {

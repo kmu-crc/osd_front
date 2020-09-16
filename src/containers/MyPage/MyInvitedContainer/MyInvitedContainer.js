@@ -6,7 +6,8 @@ import Button from "components/Commons/Button";
 import eximg from "source/myPage.jpeg";
 import { AcceptDesignRequest, GetoutDesignRequest } from "actions/Designs/JoinDesign";
 import { GetMyInvitedListRequest } from "actions/Users/MyDetail";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 // css styling
 const List = styled.li`
   height: 80px;
@@ -84,17 +85,17 @@ class MyInvitedContainer extends Component {
     this.props.GetMyInvitedListRequest(this.props.token);
   }
 
-  getoutMember = (e, id) => {
+  getoutMember = async(e, id) => {
     e.stopPropagation();
-    const confirm = window.confirm("가입을 거절하시겠습니까?");
-    if (confirm) {
+    // const confirm = window.;
+    if (await confirm("가입을 거절하시겠습니까?")) {
       this.props.GetoutDesignRequest(id, this.props.userInfo.uid, this.props.token, "DesignInviteReject")
-      .then(res => {
+      .then(async res => {
         if (res.data && res.data.success) {
-          alert("가입 요청을 거절하였습니다.");
+          await alert("가입 요청을 거절하였습니다.");
           this.props.GetMyInvitedListRequest(this.props.token);
         } else {
-          alert("다시 시도해주세요.");
+          await alert("다시 시도해주세요.");
         }
       });
     } else {
@@ -102,17 +103,17 @@ class MyInvitedContainer extends Component {
     }
   }
 
-  acceptMember = (e, id) => {
+  acceptMember = async(e, id) => {
     e.stopPropagation();
-    const confirm = window.confirm("가입을 승인하시겠습니까?");
-    if (confirm) {
+    // const confirm = window.confirm("가입을 승인하시겠습니까?");
+    if (await confirm("가입을 승인하시겠습니까?")) {
       this.props.AcceptDesignRequest(id, this.props.userInfo.uid, this.props.token)
-      .then(res => {
+      .then(async res => {
         if (res.data && res.data.success) {
-          alert("승인되었습니다.");
+          await alert("승인되었습니다.");
           this.props.GetMyInvitedListRequest(this.props.token);
         } else {
-          alert("다시 시도해주세요.");
+          await alert("다시 시도해주세요.");
         }
       });
     } else {

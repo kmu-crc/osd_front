@@ -5,6 +5,8 @@ import noimg from "source/noimg.png";
 import ContentBox from "components/Commons/ContentBox";
 // import mainSlide from "source/mainSlide.jpg";
 import NumberFormat from "modules/NumberFormat";
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 // import {confirmAlert} from "react-confirm-alert";
 // import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 
@@ -266,12 +268,12 @@ class Payment extends Component {
         this.gotoChargePoint = this.gotoChargePoint.bind(this);
         this.purchaseThisItem = this.purchaseThisItem.bind(this);
     }
-    selectMethod(index) {
+    async selectMethod(index) {
         if (index !== 0)
-            alert("준비중입니다. 현금 충전 후 결제해주세요.");
+            await alert("준비중입니다. 현금 충전 후 결제해주세요.");
     }
-    gotoChargePoint() {
-        if (window.confirm("충전 금액이 부족합니다. 충전하러 이동하시겠습니까?")) {
+    async gotoChargePoint() {
+        if (await confirm("충전 금액이 부족합니다. 충전하러 이동하시겠습니까?")) {
             window.location.href = `/point`;
         }
     }

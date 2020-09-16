@@ -693,12 +693,12 @@ class MakerDetail extends Component {
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
         if (res.success) {
-          alert("글이 등록되었습니다.");
+          // alert("글이 등록되었습니다.");
           this.props.GetMakerRequestListRequest(this.props.id, 0);
         }
         this.setState({ write: false, title: "", comment: "" });
       })
-      .catch(err => alert("에러발생" + err));
+      .catch(err => console.log("에러발생" + err));
   }
   render() {
     console.log(this.props,this.state);

@@ -90,9 +90,15 @@ const TextWrapper = styled.div`
     line-height: 22px;
     color: #FF0000;
   }
+  .create_time{
+    font-size:15px;
+    font-weight:200;
+    font-family:Noto Sans CJK KR,Light;
+    margin-top:4px;
+  }
 `;
 const Counter = styled.div`
-  margin-top: 76px;
+  margin-top: 44px;
   display: flex;
   flex-direction: row;
   width: max-content;
@@ -701,12 +707,12 @@ class DesignerDetail extends Component {
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
         if (res.success) {
-          alert("글이 등록되었습니다.");
+          // alert("글이 등록되었습니다.");
           this.props.GetDesignerRequestListRequest(this.props.id, 0);
         }
         this.setState({ write: false, title: "", comment: "" });
       })
-      .catch(err => alert("에러발생" + err));
+      .catch(err => console.log("에러발생" + err));
   }
   render() {
 
@@ -749,6 +755,10 @@ class DesignerDetail extends Component {
           {/* Text */}
           <TextWrapper>
             <div className="nick"><TextFormat txt={this.state.nick_name} chars={32} /></div>
+            <div className="create_time">
+                {new Date(this.state.create_time).getFullYear()+"년"
+                +(new Date(this.state.create_time).getMonth()+1)+"월"
+                +(new Date(this.state.create_time).getDate())+"일 등록"}</div>
             <div className="category"><TextFormat txt={categoryName || "전체"} chars={32} /></div>
           </TextWrapper>
           <LikeWrapper>
@@ -774,10 +784,10 @@ class DesignerDetail extends Component {
           <div className="wrapItem">
             <div className="title">
               <TextFormat txt={this.state.nick_name} chars={32} />
-              <span className="text">
+              {/* <span className="text">
                 {new Date(this.state.create_time).getFullYear()+"년"
                 +(new Date(this.state.create_time).getMonth()+1)+"월"
-                +(new Date(this.state.create_time).getDate())+"일 등록"}</span>
+                +(new Date(this.state.create_time).getDate())+"일 등록"}</span> */}
             </div>
             <div className="text">{this.state.explain || "'디자이너 소개'를 가져오고 있습니다."}</div>
             <div className="title">위치</div>

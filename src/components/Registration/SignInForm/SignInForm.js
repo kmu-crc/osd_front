@@ -5,7 +5,8 @@ import styled from "styled-components";
 // import { FormInput } from "components/Commons/FormItems";
 // import { FormControl, ValidationGroup } from "modules/FormControl";
 import cookie from 'react-cookies';
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const MainBox = styled.div`
   *{
     font-family:Noto Sans KR,Medium;
@@ -161,12 +162,12 @@ class SignInForm extends Component {
 
     e.preventDefault();
     const senddata = { email: this.state.email, password: this.state.password };
-    this.props.SignInRequest(senddata).then(data => {
+    this.props.SignInRequest(senddata).then(async data => {
       console.log(data);
       if (data.type === "AUTH_SIGNIN_IS_NOT_MEMBER") {
-        alert("opendesign회원이 아닙니다.");
+        await alert("opendesign회원이 아닙니다.");
       } else if (data.type === "AUTH_SIGNIN_IS_NOT_PASSWORD") {
-        alert("비밀번호가 일치하지 않습니다.");
+        await alert("비밀번호가 일치하지 않습니다.");
       } else {
         window.history.go(-1)
         // window.location.reload();

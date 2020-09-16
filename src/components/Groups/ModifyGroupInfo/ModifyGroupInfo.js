@@ -7,7 +7,8 @@ import { FormInput, FormThumbnail,FormDropBox } from "components/Commons/FormIte
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import StyleGuide from "StyleGuide";
 import Loading from "components/Commons/Loading";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 // css styling
 const category = [
   {text:"지적재산권",value:0},
@@ -107,12 +108,12 @@ class ModifyGroupInfo extends Component {
         loading: true
       });
       this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
-      .then(res => {
+      .then(async res => {
         if (res.data && res.data.success === true) {
-          alert("정보가 수정되었습니다.");
+          await alert("정보가 수정되었습니다.");
           this.props.history.push(`/groupDetail/${this.props.id}`);
         } else {
-          alert("다시 시도해주세요");
+          await alert("다시 시도해주세요");
           this.setState({
             loading: false
           });

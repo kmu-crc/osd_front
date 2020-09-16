@@ -9,7 +9,8 @@ import { ReactHeight } from 'react-height';
 import arrow from "source/arrow.svg";
 import SortableDesignSteps from "./SortableDesignSteps";
 import osdcss from "StyleGuide";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const WhitePane = styled.div`
     position: absolute;
     z-index: 830;
@@ -150,7 +151,7 @@ class GridEditor extends Component {
             })
             .catch((err) => {
                 console.error(err);
-                alert("Failed to delete the STEP");
+                // alert("Failed to delete the STEP");
             });
     };
     async EditStep(data) {
@@ -168,7 +169,7 @@ class GridEditor extends Component {
                 console.log(res);
                 this.props.GetItemStepsRequest(this.props.item["item-id"], this.props.token);
             })
-            .catch((err) => { alert("Failed to create new STEP"); console.error(err) });
+            .catch(async(err) => { await alert("Failed to create new STEP"); console.error(err) });
         this.CloseNewStep();
     }
     ScrollLeft() {

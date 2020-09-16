@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { GetMyPointRequest, } from "actions/Point";
 import { CreateItemPaymentRequest } from "actions/Payment";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 class PaymentContainer extends Component {
   constructor(props) {
     super(props);
@@ -21,15 +22,15 @@ class PaymentContainer extends Component {
       { payment_title: item.title, payment_price: item.price },
       item["item-id"] || "custom",
       this.props.token)
-      .then(res => {
+      .then(async res => {
         if (res.data.success) {
           if (this.props.custom) {
-            alert("구입이 완료되었습니다. [내 정보] > [의뢰상품]에서 확인하실 수 있습니다.");
+            await alert("구입이 완료되었습니다. [내 정보] > [의뢰상품]에서 확인하실 수 있습니다.");
             window.location.href = `/myPage/`;
           } else {
             // alert("구입이 완료되었습니다. 해당 상품의 리뷰를 작성해주세요.");
             // window.location.href = `/productDetail/${this.props.item["item-id"]}`;
-            alert("구입이 완료되었습니다. [내 정보] > [구입 아이템]에서 확인하실 수 있습니다.");
+            await alert("구입이 완료되었습니다. [내 정보] > [구입 아이템]에서 확인하실 수 있습니다.");
             window.location.href = `/myPage/`;
 
           }

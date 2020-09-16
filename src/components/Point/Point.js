@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import DateFormat from "modules/DateFormat";
 import { Pagination } from 'semantic-ui-react'
 import { InputPriceNew } from "components/Commons/InputItem"
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const Wrapper = styled.div`
   width: 100%;
   .title{
@@ -14,15 +15,15 @@ const Wrapper = styled.div`
   }
   .tabBox{
     width:100%;
-    margin-bottom:40px;
+    margin-bottom:30px;
     font-size:20px;
     font-family:Noto Sans CJK KR, Medium;
     display:flex;
-    .text_grey{color:#d6d6d6;}
-    .text_black{color:black;}
+    .text_grey{color:#d6d6d6;cursor:pointer;}
+    .text_black{color:black;cursor:pointer;}
     .text_light_grey{color:#efefef;}
-    .margin_left{margin-left:79px;}
-    .margin_right{margin-right:19px;}
+    .margin_left{margin-left:40px;}
+    .margin_right{margin-right:20px;}
   }
 `;
 const PointContainer = styled.div`
@@ -161,7 +162,7 @@ const PaymentBox=styled.div`
     width:100%;
     border:1px solid #efefef;
     margin-top:30px;
-    margin-bottom:37px;
+    margin-bottom:24px;
   }
   .mypoint{
     width:100%;
@@ -169,6 +170,7 @@ const PaymentBox=styled.div`
     font-family:Noto Sans CJK KR, Regular;
     font-size:17px;
     color:red;
+    margin-bottom:75px;
   }
   .input_title{
     font-family:Noto Sans CJK KR, Medium;
@@ -180,7 +182,7 @@ const PaymentBox=styled.div`
     width:1px;
     height:20px;
     margin-right:47px;
-    margin-left:47px;
+    // margin-left:47px;
     margin-top:15px;
     border-right:1px solid #707070;
     font-size:20px;
@@ -191,7 +193,7 @@ const PaymentBox=styled.div`
   .inputprice{
     width:100%;
     display:flex;
-    margin-bottom:100px;
+    margin-bottom:132px;
   }
   .align_right{
     justify-content:flex-end;
@@ -229,22 +231,30 @@ const PointListBox=styled.div`
   .content_box{
     width:100%;
     height:525px;
-    box-shadow: 5px 5px 10px #00000029;
-    border-radius: 20px;
-    padding:44px 55px 44px 55px;
+    // box-shadow: 5px 5px 10px #00000029;
+    // border-radius: 20px;
+    // padding:44px 55px 44px 55px;
     .titleBox{
-      width:100%;
       display:flex;
-      margin-bottom:7px;
-      .title{
+      align-items:center;
+      justify-content:center;
+      height:64px;
+      width:100%;
+      // margin-bottom:7px;
+      ._title{
+        width:100%;
+        height:max-content;
         font-family:Noto Sans CJK KR, Medium;
         font-size:17px;
         text-align:center;
+        font-weight:500;
       }
     }
     .history_box{
       width:100%;
       display:flex;
+      align-items:center;
+      height:64px;
       .history{
         width:100%;
         font-family:Noto Sans CJK KR, Regular;
@@ -254,14 +264,19 @@ const PointListBox=styled.div`
     }
     .hrLine{
       width:100%;
-      border:1px solid #efefef;
-      margin-top:19px;
-      margin-bottom:19px;
+      height:2px;
+      background-color:#afafaf;
+    }
+    .hrLineBottom{
+      width:100%;
+      height:2px;
+      background-color:#efefef;
     }
   }
   .pagenation{
     width:100%;
     display:flex;
+    margin-top:46px;
     justify-content:center;
   }
 `
@@ -286,8 +301,13 @@ class Point extends Component {
     this.onClickedPlusPointToMoney = this.onClickedPlusPointToMoney.bind(this);
     this.onClickedMinusPointToMoney = this.onClickedMinusPointToMoney.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
+    this.getLoadData=this.getLoadData.bind(this);
   }
 
+getLoadData=async()=>{
+  console.log(this.state.page);
+  this.props.GetHistoryRequest(this.props.userInfo.uid,this.state.page, this.props.token);
+}
 goNext = async () => {
   await this.setState({ page: this.state.page + 1 });
   this.getLoadData();
@@ -298,6 +318,7 @@ goPrev = async () => {
 }
 goPage = async (pagenum) => {
   await this.setState({ page:pagenum });
+  this.getLoadData();
 };
 async getPriceValue(value) {
   await this.setState({ point: value });
@@ -310,20 +331,20 @@ async getPriceValue(value) {
     this.props.PointUpRequest(
       { id: this.props.userInfo.uid, token: this.props.token },
       { point: 1000, type: type }
-    ).then(() => {
+    ).then(async() => {
       this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token);
-      this.props.GetHistoryRequest(this.props.userInfo.uid, this.props.token);
-      alert("현금 전환이 완료되었습니다.");
+      this.props.GetHistoryRequest(this.props.userInfo.uid,0, this.props.token);
+      await alert("현금 전환이 완료되었습니다.");
     })
   };
-  PointToMoney(type) {
+  async PointToMoney(type) {
     console.log(this.props.Point,this.state.point);
     if (this.props.Point < parseInt(this.state.point,10)*1000) {
-      alert("금액이 부족합니다.");
+     await alert("금액이 부족합니다.");
       return;
     }
     if (this.state.point === 0) {
-      alert("현금으로 전환하고자 하는 금액이 0원입니다. 전환하고자하는 금액을 지정해주세요.");
+      await alert("현금으로 전환하고자 하는 금액이 0원입니다. 전환하고자하는 금액을 지정해주세요.");
       return;
     }
     this.props.PointUpRequest(
@@ -331,7 +352,7 @@ async getPriceValue(value) {
       { point: this.state.point * -1 * 1000, type: type }
     ).then(() => {
       this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token);
-      this.props.GetHistoryRequest(this.props.userInfo.uid, this.props.token);
+      this.props.GetHistoryRequest(this.props.userInfo.uid,0, this.props.token);
     }).then(() => {
       // alert("현금 전환이 완료되었습니다!");
       this.setState({ point: 0 });
@@ -342,9 +363,9 @@ async getPriceValue(value) {
       point: event.target.value,
     });
   }
-  onClickedPlusPointToMoney() {
+  async onClickedPlusPointToMoney() {
     const { Point } = this.props;
-    Point >= 1000 * (this.state.point + 1) ? this.setState({ point: this.state.point + 1 }) : alert("현금화하실 포인트가 없습니다.");
+    Point >= 1000 * (this.state.point + 1) ? this.setState({ point: this.state.point + 1 }) : await alert("현금화하실 포인트가 없습니다.");
   }
   onClickedMinusPointToMoney() {
     this.state.point > 0 ? this.setState({ point: this.state.point - 1 }) : this.setState({ point: 0 })
@@ -360,27 +381,27 @@ async getPriceValue(value) {
         <div className="tabBox">
 {this.state.tab==0?
           <React.Fragment>
-          <div onClick={()=>this.setState({tab:0})} className="text_black margin_left margin_right">현금 충전</div>
-          <div className="text_light_grey margin_right">|</div>
+          <div onClick={()=>this.setState({tab:0})} className="text_black margin_left margin_right">포인트 충전</div>
+          <div className="text_light_grey margin_right"/>
           <div onClick={()=>this.setState({tab:1})} className="text_grey margin_right">현금 전환</div>
-          <div className="text_light_grey margin_right">|</div>
+          <div className="text_light_grey margin_right"/>
           <div onClick={()=>this.setState({tab:2})} className="text_grey">충전 내역</div>
           </React.Fragment>
           :
 this.state.tab==1?
           <React.Fragment>
-          <div onClick={()=>this.setState({tab:0})} className="text_grey margin_left margin_right">현금 충전</div>
-          <div className="text_light_grey margin_right">|</div>
+          <div onClick={()=>this.setState({tab:0})} className="text_grey margin_left margin_right">포인트 충전</div>
+          <div className="text_light_grey margin_right"/>
           <div onClick={()=>this.setState({tab:1})} className="text_black margin_right">현금 전환</div>
-          <div className="text_light_grey margin_right">|</div>
+          <div className="text_light_grey margin_right"/>
           <div onClick={()=>this.setState({tab:2})} className="text_grey">충전 내역</div>
           </React.Fragment>
           :
           <React.Fragment>
-          <div onClick={()=>this.setState({tab:0})} className="text_grey margin_left margin_right">현금 충전</div>
-          <div className="text_light_grey margin_right">|</div>
+          <div onClick={()=>this.setState({tab:0})} className="text_grey margin_left margin_right">포인트 충전</div>
+          <div className="text_light_grey margin_right"/>
           <div onClick={()=>this.setState({tab:1})} className="text_grey margin_right">현금 전환</div>
-          <div className="text_light_grey margin_right">|</div>
+          <div className="text_light_grey margin_right"/>
           <div onClick={()=>this.setState({tab:2})} className="text_black">충전 내역</div>
           </React.Fragment>
 }
@@ -405,7 +426,9 @@ this.state.tab==1?
         <div></div>
       </div>
     <div className="hrLine"/>
-    <div  onClick={() => this.PointUp("CLICK")} className="continue">결제 진행하기 ></div>
+    <div className="addPrice align_right">
+          <div onClick={() => this.PointUp("CLICK")} className="button_red">결제하기</div>
+    </div>
     </PaymentBox>
   </React.Fragment>
   :
@@ -428,9 +451,9 @@ this.state.tab==1?
     <PointListBox>
       <div className="content_box">
         <div className="titleBox">
-            <div className="title">날짜</div>
-            <div className="title">결제 금액</div>
-            <div className="title">결제 수단</div>
+            <div className="_title">날짜</div>
+            <div className="_title">결제 금액</div>
+            <div className="_title">결제 수단</div>
         </div>
         <div className="hrLine"/>
         {HistoryCount ? (
@@ -438,17 +461,18 @@ this.state.tab==1?
               pagecount++;
               console.log(HistoryCount);
               return(
-              5*page+1<=pagecount&&pagecount<=5*page+5?
+              // 5*page+1<=pagecount&&pagecount<=5*page+5?
               <React.Fragment>
               <div className="history_box" key={histo.uid + "history"}>
+                <div className="history">{
+                new Date(histo.create_time).getFullYear()+"."
+                +((new Date(histo.create_time).getMonth()+1)<10?'0'+(new Date(histo.create_time).getMonth()+1):(new Date(histo.create_time).getMonth()+1))+"."
+                +(new Date(histo.create_time).getDate()<10?'0'+new Date(histo.create_time).getDate():new Date(histo.create_time).getDate())}</div>
                 <div className="history">{histo.point_variation}</div>
-                <div className="history">{DateFormat(histo.create_time)}</div>
                 <div className="history">{histo.charge_type}</div>
               </div>
-              <div className="hrLine"/>
+              <div className="hrLineBottom"/>
               </React.Fragment>
-              :
-              null
               )
             }
             )) : (<div>포인트 충전 내역 없음</div>)}
@@ -463,7 +487,8 @@ this.state.tab==1?
                   firstItem={null}
                   lastItem={null}
                   siblingRange={1}
-                  totalPages={lastPage}
+                  totalPages={lastPage+1}
+                  // pointing
                   secondary
                   onPageChange={(event, { activePage }) => {
                     this.goPage(activePage-1);

@@ -19,6 +19,19 @@ import MyUploadMakerReqBoardContainer from "components/Request/MyUploadMakerReqB
 import ModifyMyDetailContainer from "containers/MyPage/ModifyMyDetailContainer/ModifyMyDetailContainer";
 import MyPointStatusContainer from "containers/Point/PointContainer";
 
+import category_icon from "source/category_icon.svg";
+
+const CustomIcon=styled.div`
+  width:${props => props.width}px;
+  height:${props => props.height}px;
+  background-image:url(${props=>props.imgURL});
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding:${props => props.padding}px;
+  display:${props=>props.isNon==true?"none":"block"}
+  margin-left:10px;
+  `
+
 const MainBox = styled.div`
   width: 1790px;
   height: 1959px;
@@ -71,6 +84,8 @@ const InformationBox = styled.div`
     .alignCenter{text-align:center;}
     .red{color:red;}
     .cursorPointer{cursor:pointer;}
+    .displayFlex{display:flex;align-items:center;justify-content:center;}
+    .marginRight{margin-right:10px;}
 
     .design-clipart {
       width: 129px;
@@ -116,8 +131,10 @@ const InformationBox = styled.div`
     align-items:center;
     padding:58px 0px 58px 0px;
 
-    .grayBox{
+    .borderRight{
       border-right:1px solid #d6d6d6;
+    }
+    .grayBox{
       width:33%;
       height:max-content;
       display:flex;
@@ -373,25 +390,34 @@ class MyDetail extends Component {
               </div>
             </ProfileBox>
             <InformationBox>
-              <div className="grayBox">
+              <div className="grayBox borderRight">
                 <div className="wrap">
                   <div className="title fontBig fontStyleNormal"><div>다양한 아이디어를 s판매하세요!</div></div>
                   <div className="design-clipart">&nbsp;</div>
-                  <div onClick={this.onClickCreateDesigner} ><div className="fontDefault alignCenter cursorPointer fontStyleNormal">디자이너 등록 / 관리 ></div></div>
+                  <div onClick={this.onClickCreateDesigner} ><div className="fontDefault alignCenter cursorPointer fontStyleNormal displayFlex">
+                    <div className="marginRight">디자이너 등록 / 관리</div>
+                  <CustomIcon width="15" height="15" imgURL={category_icon}/>
+                  </div></div>
                 </div>
               </div>
-              <div className="grayBox">
+              <div className="grayBox borderRight">
                 <div className="wrap">
                   <div className="title fontBig fontStyleNormal"><div>제작 기술을 공유하고 <br />장소를 쉐어해보세요!</div></div>
                   <div className="toolbox-clipart">&nbsp;</div>
-                  <div onClick={this.onClickCreateMaker}><div className="fontDefault alignCenter cursorPointer fontStyleNormal">메이커 등록 / 관리 ></div></div>
+                  <div onClick={this.onClickCreateMaker}><div className="fontDefault alignCenter cursorPointer fontStyleNormal displayFlex">
+                    <div className="marginRight">메이커 등록 / 관리</div>                    
+                    <CustomIcon width="15" height="15" imgURL={category_icon}/>
+                  </div></div>
                 </div>
               </div>
               <div className="grayBox">
                 <div className="wrap">
                   <div className="title fontBig fontStyleNormal"><div>본인인증을 통해 더욱 다양한 <br /> 혜택을 누려보세요!</div></div>
                   <div className="verify-clipart"></div>
-                  <div><div className="fontDefault alignCenter cursorPointer fontStyleNormal">본인 인증 ></div></div>
+                  <div><div className="fontDefault alignCenter cursorPointer fontStyleNormal displayFlex">
+                    <div className="marginRight">본인 인증</div>
+                    <CustomIcon width="15" height="15" imgURL={category_icon}/>
+                  </div></div>
                 </div>
               </div>
             </InformationBox>

@@ -5,6 +5,7 @@ import ContentBox from "components/Commons/ContentBox";
 import Loading from "components/Commons/Loading";
 import { RedButton, } from "components/Commons/CustomButton"
 import FileIcon from "components/Commons/FileIcon";
+import category_icon from "source/category_icon.svg";
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -30,6 +31,17 @@ const Wrapper = styled(ContentBox)`
   margin-bottom: 100px;
   z-index: 3;
 `;
+const CustomIcon=styled.div`
+  width:${props => props.width}px;
+  height:${props => props.height}px;
+  background-image:url(${props=>props.imgURL});
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding:${props => props.padding}px;
+  margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
+  margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
+  display:${props=>props.isNon==true?"none":"block"}
+`
 const MainBox = styled.div`
   width:100%;
   .title{
@@ -38,6 +50,7 @@ const MainBox = styled.div`
     font-family:Noto Sans KR, Medium;
     font-size:20px;
     font-weight:500;
+    margin-left:136px;
   }
   .contentsBox{
     position: relative;
@@ -133,6 +146,7 @@ const FormBox = styled.div`
     font-family:Noto Sans CJK KR, Regular;
     font-size:17px;
     line-height:17px;
+    display:flex;
   }
 
 `;
@@ -252,7 +266,12 @@ class Detail extends Component {
 
                     <div className="wrapper flex centering">
                       <div className="label">카테고리</div>
-                      <div className="textBox">{category_level1 ? category_level1 + (category_level2 ? `>` : "") : null}{category_level2}</div>
+                      <div className="textBox">
+                        {/* {category_level1 ? category_level1 + (category_level2 ? `>` : "") : null}{category_level2} */}
+                        {category_level1}
+                        {category_level2?<CustomIcon width="15" height="15" marginRight="31" marginLeft="31" imgURL={category_icon}/>:null}
+                        {category_level2?category_level2:null}
+                      </div>
                     </div>
 
                     <div className="wrapper flex centering add_margin_bottom">
@@ -281,7 +300,7 @@ class Detail extends Component {
                         <div className="file_label">
                         {Detail && Detail.file_url ?
                               <a href={Detail.file_url} download={Detail.filename} className="iconWrap">
-                                <FileIcon type={"application"} extension={"pdf"} />
+                                {/* <FileIcon type={"application"} extension={"pdf"} /> */}
                                 {Detail.filename}
                               </a>
                               : "첨부 파일 없음"}
@@ -388,7 +407,7 @@ class Detail extends Component {
                         <div className="_black_">
                         {Detail && Detail.file_url ?
                               <a href={Detail.file_url} download={Detail.filename} className="iconWrap">
-                                <FileIcon type={"application"} extension={"pdf"} />
+                                {/* <FileIcon type={"application"} extension={"pdf"} /> */}
                                 {Detail.filename}
                               </a>
                               : "첨부 파일 없음"}
@@ -448,7 +467,7 @@ class Detail extends Component {
                 </div>
               </MainBox>
               <ButtonWrapper>
-                <RedButton value={"아이템 구입"} onClick={this.props.purchase} isConfirm={true} />
+                {this.props.Detail&&this.props.Detail.request&&this.props.userInfo&&this.props.Detail.request.client_id == this.props.userInfo.uid ?<RedButton value={"아이템 구입"} onClick={this.props.purchase} isConfirm={false} />:null}
               </ButtonWrapper>
             </Wrapper>}
       </React.Fragment>

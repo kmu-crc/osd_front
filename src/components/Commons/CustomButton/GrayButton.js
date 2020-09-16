@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import styled from "styled-components";
 // import StyleGuide from "StyleGuide";
 // import { Button, Confirm } from 'semantic-ui-react'
-import { confirmAlert } from "react-confirm-alert";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
-import { options } from "components/Commons/InputItem/AlertConfirm"
 
 const StyleButton = styled.div`
   width:290px;
@@ -37,7 +35,7 @@ export class GrayButton extends Component {
         }
         else {
             
-            if (await confirm(this.props.text==null?this.props.value + "하시겠습니까?":this.props.text, "예", "아니오") === false) {
+            if (await confirm(this.props.text==null?this.props.value + "하시겠습니까?":this.props.text, this.props.okText==null?"예":this.props.okText,this.props.cancelText==null? "아니오":this.props.cancelText) === false) {
                 return;
             }else{
                 this.props.onClick(event);

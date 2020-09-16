@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { GetMyRequestItemRequest, UpdatePaymentRequest } from "actions/Payment";
 import Request from "components/Request/Request";
 import ScrollList from "components/Commons/ScrollList";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 class MyRequestItemContainer extends Component {
   componentWillMount() {
     this.props.GetMyRequestItemRequest(this.props.token, 0);
@@ -12,9 +13,9 @@ class MyRequestItemContainer extends Component {
     this.props.GetMyRequestItemRequest(this.props.token, page);
   confirm = (id) => {
     this.props.UpdatePaymentRequest(id, this.props.token)
-      .then(res => {
+      .then(async res => {
         if (res.success) {
-          alert("구입이 완료되었습니다.");
+          await alert("구입이 완료되었습니다.");
           window.location.reload();
         }
       })

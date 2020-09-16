@@ -178,7 +178,7 @@ export class FileController extends Component {
         })
         .catch(err => {
           console.log("formFile", err);
-          alert(err.message);
+          // alert(err.message);
         });
     }
   };

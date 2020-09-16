@@ -17,7 +17,8 @@ import { Rating } from 'semantic-ui-react'
 // import {options} from "components/Commons/InputItem/AlertConfirm"
 // import NumberFormat from "modules/NumberFormat";
 import { Link } from "react-router-dom";
-
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
 const Wrapper = styled.div`
   // * { border: 1px solid red; };
   margin-top: 50px;
@@ -267,6 +268,28 @@ const CoverGrident = styled.div`
   top:0;
   background:${props => props.isGradient ? "linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255,1.0))" : null};
 `
+const Review = styled.div`
+width: 1600px;
+padding:26px 42px 26px 42px;
+box-shadow: 5px 5px 10px #00000029;
+background: #FFFFFF;
+border-radius: 20px;
+.hrLine{
+  width:100%;
+  height:2px;
+  background-color:#d6d6d6;
+  margin-top:26px;
+}
+.header{
+  display:flex;
+  .title{
+    font-family:Noto Sans CJK KR, Medium;
+    font-size:20px;
+    margin-right:29px;
+  }
+  
+}
+`
 const Board = styled.div`
   // *{border: 1px solid red;}
   width: 1600px;
@@ -490,8 +513,8 @@ class ItemDetail extends Component {
       :
       this.props.LikeProductRequest(this.props.id, this.props.token)
   };
-  buyThisItem(event) {
-    if (!window.confirm(`${this.props.item.price / 1000}천원이 결제됩니다.`)) {
+  async buyThisItem(event) {
+    if (!await confirm(`${this.props.item.price / 1000}천원이 결제됩니다.`)) {
       event.preventDefault();
     } else {
       this.props.item.price > this.props.Point ? this.gotoChargePoint() : this.purchaseThisItem()
@@ -499,18 +522,18 @@ class ItemDetail extends Component {
 
 
   }
-  modifyThisItem() {
-    if (window.confirm("아이템을 수정하시겠습니까?")) {
+  async modifyThisItem() {
+    // if (await confirm("아이템을 수정하시겠습니까?")) {
       window.location.href = `/productModify/${this.props.ItemDetail["item-id"]}`;
-    }
+    // }
   }
 
-  selectMethod(index) {
+  async selectMethod(index) {
     if (index !== 0)
-      alert("준비중입니다. 충전 후 결제해주세요.");
+      await alert("준비중입니다. 충전 후 결제해주세요.");
   }
-  gotoChargePoint() {
-    if (window.confirm("충전 금액이 부족합니다. 충전하러 이동하시겠습니까?")) {
+  async gotoChargePoint() {
+    if (await confirm("충전 금액이 부족합니다. 충전하러 이동하시겠습니까?")) {
       window.location.href = `/point`;
     }
   }
@@ -523,7 +546,7 @@ class ItemDetail extends Component {
     const { expandingContent, expandingReview, expandingBoard } = this.state;
     const { score } = this.props.item;
     let tag = this.props.ItemDetail.tag + "";
-
+    console.log(this.props);
 
     const isWrapperContent = window.document.getElementById("detail_board") &&
       window.document.getElementById("detail_board").scrollHeight > window.document.getElementById("detail_board").clientHeight;
@@ -657,9 +680,9 @@ class ItemDetail extends Component {
                       :
 
                       <div className="button first">
-                      <Link onClick={(e)=>{
+                      <Link onClick={async(e)=>{
                         return this.props.isbuy>0?
-                          window.confirm("이미 구매하신 이력이 존재합니다. 계속 진행하겠습니까?")?null:e.preventDefault()
+                          await confirm("이미 구매하신 이력이 존재합니다. 계속 진행하겠습니까?")?null:e.preventDefault()
                           :null
                       }} to={{
                         pathname: `/payment`, state: {
@@ -676,7 +699,8 @@ class ItemDetail extends Component {
                         </Link>
                       </div>
                     }
-                    {this.state.isLike === false ?
+                    {this.props.ItemDetail&&this.props.userInfo&&
+                    this.props.ItemDetail.user_id==this.props.userInfo.uid?null:this.state.isLike === false ?
                       <div className="button second" onClick={this.onClickLike}>
                         <div className="text">관심항목추가</div></div>
                       :
@@ -691,8 +715,17 @@ class ItemDetail extends Component {
 
           {/* review and board */}
           <div style={{ marginTop: "35px" }}>
-            <Board style={{ marginTop: "15px", overflow: "hidden" }} height={expandingReview ? "100%" : "315px"}>
-              <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", display: "flex" }}>
+            <Review>
+              {/* <ItemReviewContainer
+                user_id={item.user_id}
+                handler={detail => this.setState({ reviewdetail: true, detail: detail })}
+                isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} />
+                 {this.state.reviewdetail ?
+                <ReviewDetailModal
+                  open={this.state.reviewdetail}
+                  close={() => this.setState({ reviewdetail: false })}
+                  detail={this.state.detail} /> : null} */}
+              {/* <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", display: "flex" }}>
                 <div style={{ borderRadius: "0px 10px 0px 0px", width: "120px", background: "#FFFFFF" }}>리뷰</div>
               </div>
 
@@ -706,8 +739,8 @@ class ItemDetail extends Component {
                   open={this.state.reviewdetail}
                   close={() => this.setState({ reviewdetail: false })}
                   detail={this.state.detail} /> : null}
-              {this.state.isexpandingReview && <CoverGrident isGradient={!expandingReview} />}
-            </Board>
+              {this.state.isexpandingReview && <CoverGrident isGradient={!expandingReview} />} */}
+            </Review>
 
             {
               this.state.isexpandingReview &&

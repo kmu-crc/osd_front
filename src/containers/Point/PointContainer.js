@@ -12,7 +12,7 @@ class PointContainer extends Component {
   componentDidMount() {
     if (this.props.userInfo != null) {
       this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token);
-      this.props.GetHistoryRequest(this.props.userInfo.uid, this.props.token);
+      this.props.GetHistoryRequest(this.props.userInfo.uid,0, this.props.token);
     }
   }
   handleGetMyPointRequest(){
@@ -35,7 +35,7 @@ const mapStateToProps = (state) => ({
 })
 const mapDispatchToProps = (dispatch) => ({
   GetMyPointRequest: (id, token) => dispatch(GetMyPointRequest(id, token)),
-  GetHistoryRequest: (id, token) => dispatch(GetHistoryRequest(id, token)),
+  GetHistoryRequest: (id, page, token) => dispatch(GetHistoryRequest(id, page, token)),
   PointUpRequest: (info, data) => dispatch(PointUpRequest(info, data)),
 })
 
