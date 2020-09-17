@@ -1250,21 +1250,19 @@ class DesignInfo extends Component {
             </MainBox>
 
             <ChatWrapper>
-                <div
+                {/*<div
                     className="notice"
                     title="디자인 멤버들과 화상회의를 시작합니다."
                     onClick={this.openVideoChat}>
-
                     {this.state.liveVC ? <span>ON</span> : null}
-
                     <div className="video-chat-icon">
                         <i className="video icon"></i>
                     </div>
-
                     <div className="text">
                         {"화상회의"}
                     </div>
                 </div>
+                */}
 
                 <div
                     className="notice"
