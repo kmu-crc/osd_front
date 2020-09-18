@@ -33,6 +33,13 @@ const EditorWrapper = styled.div`
     }xxx
 `;
 export class TextControllerClassic extends Component {
+    constructor(props){
+        super(props);
+        this.onChangeText = this.onChangeText.bind(this);
+    }
+    onChangeText(content){
+        this.props.getValue({content:content});
+    }
     render() {
         const { item } = this.props;
         return (
@@ -52,13 +59,12 @@ export class TextControllerClassic extends Component {
                 onFocus={(event, editor) => { console.log('Focus.', editor); }} />
             <p className="copyright">(editor: CKEditor 5 classic)</p> */}
             <Editor
+                value={this.props.item.content}
                 className="editor"
-                onChange={(content, delta, source, editor) => {
-                    // console.log(editor.getHTML()); // HTML/rich text
-                    // console.log(editor.getText()); // plain text
-                    // console.log(editor.getLength()); // number of characters
-                    this.props.getValue({ content: editor.getHTML() })
-                }}
+                onChange={this.onChangeText}
+                // onChange={(content, delta, source, editor) => {
+                //     this.props.getValue({ content: editor.getHTML() })
+                // }}
                 theme="snow"
                 modules={{
                     toolbar: [

@@ -8,7 +8,28 @@ import { Rating } from 'semantic-ui-react'
 
 const TextArea = styled.textarea`
     width:100%;
-    height:100%;
+    height:384px;
+    padding:20px;
+    font-family:Noto Sans CJK KR, Regular;
+    font-size:20px;
+    font-weight:300;
+    margin-left:20px;
+    border:1px solid #efefef;
+    border-radius:10px;
+    outline:none;
+`
+const ReviewButton=styled.div`
+  width:110px;
+  height:43px;
+  border:1px solid red;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  .text{
+      font-size:20px;
+      color:red;
+  }
 `
 const WriteDialog=styled(Modal)`
     width: 850px;
@@ -25,7 +46,12 @@ const WriteDialog=styled(Modal)`
     ::-webkit-scrollbar-thumb {
         background: rgba(112, 112, 112, 0.45) !important;
     } 
-
+    .buttonbox{
+        margin-top:26px;
+        width:100%;
+        display:flex;
+        justify-content:center;
+    }
      .close-box {
         width: 100%;
         cursor: pointer;
@@ -76,16 +102,25 @@ const WriteDialog=styled(Modal)`
             min-height:384px;
             max-width:378px;
             max-height:384px;
+            border:1px solid #d6d6d6;
+            background-color: #e6e6e6;
             background-image: url(${props => props.img});
             background-size:cover;
             border-radius:5px;
-            margin-right:20px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            .picText{
+                color:white;
+            }
         }
         .comment{
             width:100%;
             font-family:Noto Sans CJK KR, Regular;
             font-size:20px;
-            font-weight:300;            
+            font-weight:300;
+            margin-left:20px;
+            
         }
     }
     
@@ -161,64 +196,87 @@ const Dialog = styled(Modal)`
             background-image: url(${props => props.img});
             background-size:cover;
             border-radius:5px;
-            margin-right:20px;
-            border:1px solid #efefef;
         }
         .comment{
             width:100%;
             font-family:Noto Sans CJK KR, Regular;
             font-size:20px;
-            font-weight:300;            
+            font-weight:300;
+            margin-left:20px;
+            
         }
     }
     
     }
 `;
 
-class ReviewDetailModal extends Component {
+class WriteReviewModal extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            thumbnail_url:"",
+            thumbnail_name:"",
+            comment:"",
+            score:0,
+        }
+        this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
+        this.handleOnChangeComment = this.handleOnChangeComment.bind(this);
+        this.handleOnChangeScore = this.handleOnChangeScore.bind(this);
+    }
+    handleOnChangeComment(event){
+        this.setState({comment:event.target.value});
+    }
+    handleOnChangeScore(e, { rating, maxRating }) {
+        this.setState({ score: rating });
+    }
+    handleOnChangeThumbnail(event) {
+        event.preventDefault();
+        const reader = new FileReader();
+        const file = event.target.files[0];
+        reader.onloadend = () => {
+          this.setState({ thumbnail_url: reader.result, thumbnail_name: file.name })
+        }
+        if (event.target.files[0]) {
+          reader.readAsDataURL(file);
+        }
+    };
     render() {
-        const { detail } = this.props;
-        console.log(detail);
+        console.log(this.props);
         const RenderStar = () => {
             return <Rating size="tiny" name="score" icon='star' defaultRating={parseInt(5, 10)} maxRating={5} disabled />
           }
         return (
             <React.Fragment>
-                    <Dialog open={this.props.open} onClose={this.props.close} img={detail&&detail.thumbnail_url || noimg}>
+                    <WriteDialog open={this.props.open} onClose={this.props.close} img={this.state.thumbnail_url}>
                     <div className="close-box" onClick={this.props.close}>
                         <Cross angle={45} color={"#707070"} weight={1} width={15} height={15} />
                     </div>
                     <div className="_wrapper">
                     <div className="starscore">
-                    <RenderStar />
+                        <Rating name="score" icon='star' onRate={this.handleOnChangeScore} value={this.state.score || 0} maxRating={5} />
                     </div>
                     <div className="basicInfo">
                         <div className="left">
-                            <div className="nickName">{detail&&detail.nick_name}</div>
-                            <div>|</div>
-                            <div className="productName">{detail&&detail.title}</div>
-                        </div>
-                        <div className="right">
-                            <div className="create_time">
-                                {
-                                    new Date(detail&&detail.create_time).getFullYear()+"."
-                                    +((new Date(detail&&detail.create_time).getMonth()+1)<10?'0'+(new Date(detail&&detail.create_time).getMonth()+1):(new Date(detail&&detail.create_time).getMonth()+1))+"."
-                                    +(new Date(detail&&detail.create_time).getDate()<10?'0'+new Date(detail&&detail.create_time).getDate():new Date(detail&&detail.create_time).getDate())
-                                }
-                            </div>
+                            {/* <div className="nickName">{detail.nick_name}</div> */}
+                            {/* <div>|</div> */}
+                            {/* <div className="productName">{detail.title}</div> */}
                         </div>
                     </div>
                     <div className="review-content">
-                        {detail&&detail.thumbnail_url==null?null:<div className="pic"/>}
-                        <div className="comment">
-                            {detail&&detail.comment}
-                        </div>
+                        <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/*" />
+                        <label htmlFor="file">
+                            <div className="pic"><div className="picText">{this.state.thumbnail_url==null?"":"클릭하여 이미지를 첨부하세요"}</div></div>
+                        </label>
+                        <TextArea onChange={this.handleOnChangeComment}/>
                     </div>
                     </div>
-                </Dialog>
+                    <div className="buttonbox">
+                        <ReviewButton onClick={()=>{this.props.requestReview(this.props.payment_id,this.state.comment,this.state.score,this.state.thumbnail_url,this.state.thumbnail_name)}}><div className="text">리뷰 쓰기</div></ReviewButton>
+                    </div>
+                </WriteDialog>
             </React.Fragment>
         )
     }
 }
 
-export default ReviewDetailModal;
+export default WriteReviewModal;

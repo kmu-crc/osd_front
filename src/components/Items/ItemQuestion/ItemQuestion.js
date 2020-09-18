@@ -3,9 +3,59 @@ import styled from 'styled-components';
 import DateFormat from "modules/DateFormat";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import reply from "source/reply_.svg";
+
+const HRLine = styled.div`
+    width:100%;
+    height:${props=>props.height}px;
+    background-color:#d6d6d6;
+    margin-top:${props=>props.marginTop}px;
+`
+const Icon = styled.div`
+        width:25px;
+        height:22px;
+        background-image: url(${reply});
+        margin-left:117px;
+        margin-right:12px;
+`
+const ReplyBox= styled.div`
+*{
+    font-size:17px;
+}
+    width:100%;
+    height:61px;
+    // border-bottom:1px solid #efefef;
+    display:flex;
+    align-items:center;
+    cursor:pointer;
+    .number{
+        text-align:center;
+        min-width:96px;
+        margin-right:20px;
+    }
+    .comment{
+        display:flex;
+        width:100%;
+        margin-right:35px;
+        .commentText{
+            margin-top:5px;
+        }
+    }
+    .nickname{
+        min-width:100px;
+        margin-right:35px;
+        text-align:right;
+    }
+    .createtime{
+        min-width:100px;
+        margin-right:35px;
+        margin-left:35px;
+    }
+
+`
 const Page = styled.div`
     width: max-content;
-    margin-top: 87px;
+    margin-top: 35px;
     margin-left: auto;
     margin-right: auto;
     font-size: 20px;
@@ -33,24 +83,41 @@ const ReplyForm = styled.textarea`
         height:80px;
         outline:none;
         resize:none;
-        border-radius:20px;
-        background-color:#E6E6E6;
+        border-radius:10px;
+        background-color:#efefef;
         border:none;
         padding:20px;
+        font-size:17px;
 `
-const Button = styled.div`
+const AnswerBox = styled.div`
     display:flex;
-    min-width:150px;
+    margin-bottom:25px;
+    padding-left:110px;
+    padding-right:50px;
+`
+const AnswerForm = styled.textarea`
+        width:100%;
+        height:63px;
+        outline:none;
+        resize:none;
+        border-radius:10px;
+        background-color:#efefef;
+        border:none;
+        padding:20px;
+        font-size:17px;
+`
+const QuestionButton = styled.div`
+    display:flex;
+    min-width:109px;
     justify-content:center;
     align-items:center;
-    border:3px solid #707070;
-    border-radius:20px;
-    margin-left:20px;
+    border:1px solid red;
+    margin-left:13px;
     cursor:pointer;
-    .text{
+    color:red;
+    .quest{
         font-weight:500;
         font-size:20px
-        color:white;
     }
     
 `
@@ -64,16 +131,17 @@ const ReplyPrefix = styled.div`
     color: white;
 `;
 const ReplyButton = styled.div`
-    width:100%;
+    width:max-content;
     height:100%;
+    border:1px solid red;
     border-radius:20px;
-    background:#ff0000;
-    margin-right:20px;
+    margin-right:12px;
+    padding:4px 11px;
     display:flex;
     justify-content:center;
     align-items:center;
     .text{
-        color:white;
+        color:red;
     }
 `
 class ItemQuestion extends Component {
@@ -172,22 +240,38 @@ class ItemQuestion extends Component {
         const { question, userInfo, total, user_id } = this.props;
         const { reply, this_reply, this_comment, page } = this.state;
         const master = user_id === (userInfo && userInfo.uid);
+        let countNum = 0;//question&&question.length>0?question.length:0;
+        question && question .length > 0 && question.forEach(element=> {
+            if(element.sort_in_group==0)countNum++;
+        });
+
         const Question = (props) => {
             // console.log(props);
             return (
-                <div className="line element-reply">
+                <React.Fragment>
+                    <HRLine height={1}/>
+                
+                <ReplyBox>
+                    {props.is_question==true?<div className="number">{props.numbering}</div>:null}
+
                     {!props.itsmine && props.sort_in_group === 0 && master ?
                         <div onClick={() => this.reply(props.uid)}><ReplyButton><div className="text">답변</div></ReplyButton></div> : null}
                     {/* {props.itsmine && !master ?<div >[삭제하기]</div> : null} */}
-                    <div className="line">
-                        {props.is_question ? "" : <ReplyPrefix>판매자 답변</ReplyPrefix>}
-                        {props.comment}</div>
-                    <div style={{ width: "max-content", marginLeft: "auto" }}>{props.nick_name}</div>
-                    <div style={{ width: "max-content", marginLeft: "75px" }}>{DateFormat(props.create_time)}</div>
-                </div>
+                    <div className="comment">
+                        {props.is_question ? "" : <Icon/>}
+                        <div className="commentText">{props.comment}</div></div>
+                    <div className="nickname">{props.nick_name}</div>
+                    <div className="createtime">
+                            {
+                                new Date(props.create_time).getFullYear()+"."
+                                +((new Date(props.create_time).getMonth()+1)<10?'0'+(new Date(props.create_time).getMonth()+1):(new Date(props.create_time).getMonth()+1))+"."
+                                +(new Date(props.create_time).getDate()<10?'0'+new Date(props.create_time).getDate():new Date(props.create_time).getDate())
+                            }
+                    </div>
+                </ReplyBox>
+                </React.Fragment>
             )
         }
-
         return (<React.Fragment>
             {master ?
                 null
@@ -199,32 +283,38 @@ class ItemQuestion extends Component {
                             name="this_comment"
                             onKeyDown={this.handleKeyDown} />
                     {/* </div> */}
-                    <Button onClick={this.requestQuestion} >
-                        <div className="text" >문의</div></Button>
+                    <QuestionButton onClick={this.requestQuestion} >
+                        <div className="quest" >문의</div></QuestionButton>
                 </div>}
+            <HRLine height={2} marginTop={25}/>
             <div>
                 {question && question.length > 0 ?
-                    question.map((item, index) =>
+                    question.map((item, index) =>{
+                        // reply?countNum:countNum--;
+                        countNum=reply&&item.uid == this.state.targetId?countNum:countNum--;
+                        return(
                         <div key={index}>
                             <Question
+                                numbering={countNum--}
                                 {...item}
                                 key={index}
                                 itsmine={item.user_id === (userInfo && userInfo.uid)}
                                 is_question={item.sort_in_group === 0}
                             />
                             {reply && item.uid === this.state.targetId ?
-                                <div className="line" style={{ marginTop: "34px", }}>
+                                <AnswerBox>
                                     {/* <div className="input-wrapper"> */}
-                                        <ReplyForm
+                                        <AnswerForm
                                             value={this_reply || ""}
                                             onChange={this.onChangeValue}
                                             name="this_reply"
                                             onKeyDown={this.handleKeyDown} />
                                     {/* </div> */}
-                                    <Button onClick={() => this.requestAnswer(item)} >
-                                        <div className="text" >답변</div></Button>
-                                </div> : null}
-                        </div>) : null}
+                                    <QuestionButton onClick={() => this.requestAnswer(item)} >
+                                        <div className="text" >답변</div></QuestionButton>
+                                </AnswerBox> : null}
+                            </div>)}) : null}
+                            <HRLine height={1} marginTop={0}/>
             </div>
             <Page>
                 {total

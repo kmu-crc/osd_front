@@ -6,30 +6,58 @@ import noimg from "source/noimg.png";
 import { Rating } from 'semantic-ui-react'
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import ReviewDetailModal from "components/Commons/ReviewDetailModal";
+import WriteReviewModal from "components/Commons/WriteReviewModal"
+
 const Reviews = styled.div`
-    
   background: #FFFFFF;
   opacity: 1;
   padding: 10px;
   .header{
       display:flex;
       align-items:center;
-    .title{
-        font-size:20px;
-        font-family:Noto Sans KR, Medium;
-        margin-right:29px;
-    }  
-    .score{
-        font-size:15px;
-        font-family:Noto Sans KR, Light;
-        font-weight:200;
+      justify-content:space-between;
+    .wrapper{
+        display:flex;
+        .title{
+            font-size:20px;
+            font-family:Noto Sans KR, Medium;
+            margin-right:29px;
+        }  
+        .score{
+            font-size:15px;
+            font-family:Noto Sans KR, Light;
+            font-weight:200;
+        }    
+    }
+    .button{
+
     }
   }
   .hrLine{
       width:100%;
       height:2px;
       background-color:#d6d6d6;
-      margin-top:26px;
+      margin-top:19px;
+      margin-bottom:17px;
+  }
+  .reviewContent{
+    display:flex;
+    flex-wrap:wrap;
+    .piece{
+        width:46%;
+    }
+    .marginInfo{
+        margin-right:98px;
+        margin-bottom:30px;
+    }
+    .blank{
+        width:100%;
+        height:90px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
   }
 `;
 const ReviewForm = styled.textarea`
@@ -40,6 +68,19 @@ const ReviewForm = styled.textarea`
   border:1px solid #E6E6E6;
   outline:none;
   border-radius:10px;
+`
+const ReviewButton=styled.div`
+  width:110px;
+  height:43px;
+  border:1px solid red;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  .text{
+      font-size:20px;
+      color:red;
+  }
 `
 //const ScoreForm = styled.input.attrs({ type: "number" })`
 //        min-width:50px;
@@ -87,7 +128,7 @@ const WriteReview = styled.div`
 `
 const Page = styled.div`
     width: max-content;
-    margin-top: 87px;
+    margin-top: 45px;
     margin-left: auto;
     margin-right: auto;
     font-size: 20px;
@@ -117,21 +158,23 @@ const Page = styled.div`
 //`;
 
 const ReviewPiece = styled.div`
-    border:1px solid black;
-    *{
-        border:1px solid black;
-    }
-    width:45%;
-    height:80px;
+    // border:1px solid black;
+    // *{
+    //     border:1px solid black;
+    // }
+    // height:80px;
+    // background-color:#E6E6E6;
+    // border:1px solid #E9E9E9;
+    // padding:10px;
+    cursor:pointer;
+    width:100%;
     display:flex;
-    border:1px solid #E9E9E9;
-    background-color:#E6E6E6;
     border-radius:20px;
-    padding:10px;
-    margin-bottom:10px;
     .pics{
-        width: 100px;
-        height: 100px;
+        min-width: 80px;
+        min-height: 80px;
+        max-width: 80px;
+        max-height: 80px;
         border: 1px solid #E6E6E6;
         margin-right: 20px;
         background-color: white;
@@ -139,19 +182,34 @@ const ReviewPiece = styled.div`
         background-size: cover;
         background-repeat: none;
     }
-    .contents{
-        .rate{
-            font-size:15px;
-            margin-bottom:5px;
-        }
-        .comment{
-            font-size:17px;
-            margin-bottom:5px;
-        }
-        .nickname{
-            font-size:12px;
-        }
+    .comment{
+        height:100%;
+        display:flex;
+        align-items:center;
+    }
+    ._contents{
+        width:100%;
+        display:flex;
+        flex-direction:column;
+        .header{
+            display:flex;
+            justify-content:space-between;
+            .leftbox{
+                display:flex;
+                .nickname{
+                    font-family:Noto Sans CJK KR, Regular;
+                    font-size:15px;
+                }
+                .score{
+                    margin-left:15px;
+                }
 
+            }
+            .createTime{
+                font-family:Noto Sans CJK KR, Regular;
+                font-size:15px;
+            }
+        }
     }
 `
 const CreateReview = styled.div`
@@ -194,6 +252,9 @@ class ItemReview extends Component {
             score: 0,
             totalscore:0,
             // ing: false
+            reviewDetail:false,
+            writeReview:false,
+            detail:null,
         };
         this.onChangeValue = this.onChangeValue.bind(this);
         this.reset = this.reset.bind(this);
@@ -259,11 +320,11 @@ class ItemReview extends Component {
         this.props.request({ comment: this.state.this_reply, group_id: origin.group_id, sort_in_group: origin.sort_in_group });
         this.reset();
     };
-    requestReview(id) {
+    requestReview(id,comment,score,thumbnail_url,thumbnail_name) {
         if (this.checkPermission() === false)
             return;
-        if (this.state.this_comment.length > 0)
-            this.props.request({ score: this.state.score > 5 ? 5 : this.state.score, comment: this.state.this_comment, payment_id: id });
+        if (comment.length > 0)
+            this.props.request({ score:score, comment: comment, payment_id: id, thumbnail_url:thumbnail_url,thumbnail_name:thumbnail_name });
         console.log("change review writing");
         this.reset();
         this.props.refresh && this.props.refresh();
@@ -295,16 +356,17 @@ class ItemReview extends Component {
     };
 
     render() {
-        console.log(this.state);
+        console.log(this.props);
         const { review, payment, userInfo, total, score, user_id } = this.props;
         const { reply, this_reply, this_comment, page } = this.state;
         const master = user_id === (userInfo && userInfo.uid);
         const avgScore = this.props.score;
+        let reviewCount=0;
         const TotalScore = ()=>{
             return <Rating name="score" icon='star' size="tiny" defaultRating={parseInt(this.state.totalscore,10)} maxRating={5} disabled />
         }
         const Review = (props) => {
-            console.log(props.score)
+            console.log(props)
             return (
                 // <div className="line element-reply">
                 //     {!props.itsmine && props.sort_in_group && master ?
@@ -317,37 +379,69 @@ class ItemReview extends Component {
                 //     <div style={{ width: "max-content", marginLeft: "15px" }}>{props.sort_in_group === 0 ? Star(props.score) : null}</div>
                 //     <div style={{ width: "max-content", marginLeft: "75px" }}>{DateFormat(props.create_time)}</div>
                 // </div>
-                <ReviewPiece onClick={() => this.props.handler(props)} img={props.m_img || noimg}>
-                    <div className="pics" />
-                    <div>
-                        <div className="nickname">{props.nick_name}</div>
-                        <div className="score">
-                            <Rating name="score" icon='star' defaultRating={parseInt(props.score,10)||0} maxRating={5} disabled />
-
-                            {/* {Star(props.score)} */}
+                <ReviewPiece onClick={() => {this.setState({detail:props,reviewDetail:true})}} img={props.thumbnail_url || noimg}>
+                    {props.thumbnail_url==null?null:<div className="pics" />}
+                    <div className="_contents">
+                        <div className="header">
+                            <div className="leftbox">
+                                <div className="nickname">{props.nick_name}</div>
+                                <div className="score">
+                                    <Rating name="score" icon='star' defaultRating={parseInt(props.score,10)||0} maxRating={5} disabled />
+                                </div>
+                            </div>
+                        <div className="createTime">
+                            {
+                                    new Date(props.create_time).getFullYear()+"."
+                                +((new Date(props.create_time).getMonth()+1)<10?'0'+(new Date(props.create_time).getMonth()+1):(new Date(props.create_time).getMonth()+1))+"."
+                                +(new Date(props.create_time).getDate()<10?'0'+new Date(props.create_time).getDate():new Date(props.create_time).getDate())
+                            }
+                        </div>
                         </div>
                         <div className="comment">
-                            {props.comment && props.comment.slice(0, 64)}
-                            {props.comment && props.comment.length > 64 ? "..." : ""}</div>
+                            {props.comment && props.comment.slice(0, 100)}
+                            {props.comment && props.comment.length > 100 ? "..." : ""}</div>
                     </div>
                 </ReviewPiece>
             )
         }
         console.log(parseInt(score,10)||0,total);
         return (<React.Fragment>
+            <ReviewDetailModal 
+                open={this.state.reviewDetail}
+                close={() => this.setState({ reviewDetail: false })}
+                detail={this.state.detail}
+            />
+            <WriteReviewModal 
+                open={this.state.writeReview}
+                close={() => this.setState({ writeReview: false })}
+                modify={this.state.detail}
+                requestReview = {(uid,comment,score,thumbnail_url,thumbnail_name) => this.requestReview(uid,comment,score,thumbnail_url,thumbnail_name)}
+                payment_id={payment&&payment.length>0&&payment[0].uid}
+            />
+            {/* <WriteReviewModal open={this.state.writeReview} close={() => this.setState({ writeReview: false })}/> */}
             <Reviews>
                 <div className="header">
-                    <div className="title">리뷰</div>
-                    <div className="score">총점(리뷰수):<TotalScore/>({total})</div>
+                    <div className="wrapper">
+                        <div className="title">리뷰</div>
+                        <div className="score">총점(리뷰수):<TotalScore/>({total})</div>
+                    </div>
+                    <div className="button">
+                        {
+                            !master ?
+                            payment && payment.length > 0 ?
+                            <ReviewButton onClick={()=>{this.setState({writeReview:true})}}>
+                                <div className="text">리뷰 쓰기</div>
+                            </ReviewButton> 
+                            :
+                            null
+                            :
+                            null
+                        }
+                    </div>
                 </div>
                 <div className="hrLine"/>
-                {/* <div className="line" style={{ width: "max-content", marginLeft: "auto", marginRight: "15px" }}>
-                    <div className="title">총점(리뷰수): </div>
-                    <div className="score">
-                        <TotalScore/>({total})
-                    </div>
-                </div> */}
-                {!master ?
+
+                {/* {!master ?
                     payment && payment.length > 0 ?
                         payment.map((pay, index) => {
                             console.log(pay);
@@ -365,11 +459,6 @@ class ItemReview extends Component {
                                         <div className="contents">
                                             <div className="score">
                                                 <Rating name="score" icon='star' onRate={this.handleRate} value={this.state.score || 0} maxRating={5} />
-                                                {/* <ScoreForm
-                                                    style={{ width: "25px" }}
-                                                    value={this.state.score || 0}
-                                                    onChange={this.onChangeValue}
-                                                    name="score" /> */}
                                             </div>
                                             <div className="buttonBox">
                                                 <div className="button" onClick={() => this.requestReview(pay.uid)} >
@@ -384,13 +473,16 @@ class ItemReview extends Component {
                                 }
                             </div>
                         }) : null
-                    : null}
+                    : null} */}
 
 
-                <div>
+                <div className="reviewContent">
                     {review && review.length > 0 ?
-                        review.map((item, index) =>
-                            <div key={index}>
+                        review.map((item, index) =>{
+                            reviewCount++;
+                            const styleinfo = reviewCount%2==1?"piece marginInfo":"piece";
+                            return(
+                            <div  className={styleinfo} key={index}>
                                 <Review
                                     {...item}
                                     key={index}
@@ -409,14 +501,17 @@ class ItemReview extends Component {
                                         <div className="button" onClick={() => this.requestAnswer(item)} >
                                             <div className="text" >답변</div></div>
                                     </div> : null}
-                            </div>) : null}
+                                </div>)}) : <div className="blank">작성된 리뷰가 없습니다.</div>}
                 </div>
+                {total>0?
                 <Page>
                     {total
                         ? Array(parseInt((total / 10) + 1, 10)).fill().map((_, i) =>
                             <div key={i} onClick={() => this.getData(i)} className={page === i ? "this number" : "another number"}> {i + 1}</div>)
                         : (<React.Fragment>&nbsp;</React.Fragment>)}
-                </Page>
+                </Page>    
+                :null
+                }
             </Reviews>
         </React.Fragment >)
     }

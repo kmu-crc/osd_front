@@ -308,8 +308,8 @@ class CardSourceDetail extends Component {
   onChangValue = async data => {
     console.log(data, "1");
     let copyContent = [...this.state.content];
-    delete data.initClick;
-    delete data.target;
+     delete data.initClick;
+     delete data.target;
     await copyContent.splice(data.order, 1, data);
 
     copyContent = await Promise.all(

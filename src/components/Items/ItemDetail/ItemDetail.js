@@ -10,7 +10,9 @@ import ItemStepContainer from "containers/Items/ItemStepContainer";
 import ItemQuestionContainer from "containers/Items/ItemQuestionContainer";
 import ItemReviewContainer from "containers/Items/ItemReviewContainer";
 import PointFormat from "modules/PointFormat";
-import ReviewDetailModal from "components/Commons/ReviewDetailModal";
+// import ReviewDetailModal from "components/Commons/ReviewDetailModal";
+// import WriteReviewModal from "components/Commons/WriteReviewModal"
+
 import ConnectedMemberContainer from "containers/Items/ConnectedMemberContainer";
 import { Rating } from 'semantic-ui-react'
 // import {confirmAlert} from "react-confirm-alert";
@@ -269,10 +271,11 @@ const CoverGrident = styled.div`
   background:${props => props.isGradient ? "linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255,1.0))" : null};
 `
 const Review = styled.div`
+height:max-content;
 width: 1600px;
 padding:26px 42px 26px 42px;
 box-shadow: 5px 5px 10px #00000029;
-background: #FFFFFF;
+background: #ffffff;
 border-radius: 20px;
 .hrLine{
   width:100%;
@@ -289,6 +292,22 @@ border-radius: 20px;
   }
   
 }
+`
+const QuestionBoard=styled.div`
+// *{border: 1px solid red;}
+  width: 1600px;
+  // height: ${props => props.height};
+  background: #FFFFFF;
+  box-shadow: 5px 5px 10px #00000029;
+  border-radius: 20px;
+  padding: 30px 50px 20px 50px;
+  font-family: Noto Sans KR;
+  position:relative;
+  .title{
+    font-family:Noto Sans CJK KR, Medium;
+    font-size:20px;
+    margin-right:29px;
+  }
 `
 const Board = styled.div`
   // *{border: 1px solid red;}
@@ -487,7 +506,7 @@ class ItemDetail extends Component {
       expandingContent: false, expandingReview: false, expandingBoard: false,
       isexpandingContent: false, isexpandingReview: false, isexpandingBoard: false,
       //for review detail
-      reviewdetail: false, detail: null
+      reviewdetail: false, detail: null, reviewWrite:false, writeReviewID:null,
     }
     this.onClickLike = this.onClickLike.bind(this);
     this.buyThisItem = this.buyThisItem.bind(this);
@@ -716,14 +735,33 @@ class ItemDetail extends Component {
           {/* review and board */}
           <div style={{ marginTop: "35px" }}>
             <Review>
-              {/* <ItemReviewContainer
+              <ItemReviewContainer
                 user_id={item.user_id}
+                detail={this.state.detail}
                 handler={detail => this.setState({ reviewdetail: true, detail: detail })}
+                // writeHandler={(uid) => {alert(">?");this.setState({ reviewwrite: true,writeReviewID:uid })} }
                 isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} />
-                 {this.state.reviewdetail ?
+                 {/* {this.state.reviewdetail ?
                 <ReviewDetailModal
                   open={this.state.reviewdetail}
                   close={() => this.setState({ reviewdetail: false })}
+                  detail={this.state.detail} /> : null}
+                  {
+                    this.state.reviewWrite?
+                    <WriteReviewModal 
+                      open={this.state.reviewWrite}
+                      close={()=>this.setState({reviewWrite:false})}
+                      detail={this.state.detail}
+                    />
+                    :
+                    null
+                  } */}
+                 {/* {this.state.reviewwrite ?
+                <ReviewDetailModal
+                  isWrite={true}
+                  writeID={this.state.writeReviewID}
+                  open={this.state.reviewwrite}
+                  close={() => this.setState({ reviewwrite: false })}
                   detail={this.state.detail} /> : null} */}
               {/* <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", display: "flex" }}>
                 <div style={{ borderRadius: "0px 10px 0px 0px", width: "120px", background: "#FFFFFF" }}>리뷰</div>
@@ -756,15 +794,12 @@ class ItemDetail extends Component {
           </div>
 
           <div style={{ marginTop: "35px" }}>
-            <Board style={{ marginTop: "15px", overflow: "hidden" }} height={expandingBoard ? "100%" : "250px"}>
-              <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", display: "flex" }}>
-                <div
-                  style={{ borderRadius: "0px 10px 0px 0px", width: "120px", background: "#FFFFFF" }}>게시판</div>
-              </div>
+            <QuestionBoard style={{ marginTop: "15px", overflow: "hidden" }} height={expandingBoard ? "100%" : "250px"}>
+                <div className="title">게시판</div>
               <ItemQuestionContainer user_id={item.user_id} isExpanding={(result) => { this.setState({ isexpandingBoard: result }) }} />
-              {!this.state.isexpandingBoard && <CoverGrident isGradient={!expandingBoard} />}
-            </Board>
-            {!this.state.isexpandingBoard &&
+              {/* {!this.state.isexpandingBoard && <CoverGrident isGradient={!expandingBoard} />} */}
+            </QuestionBoard>
+            {/* {!this.state.isexpandingBoard &&
 
               <ExpandingButton width={1600}>
                 <div onClick={() => this.setState({ expandingBoard: !expandingBoard })} className="button">
@@ -773,7 +808,7 @@ class ItemDetail extends Component {
                   </div>
                 </div>
               </ExpandingButton>
-            }
+            } */}
 
           </div>
 

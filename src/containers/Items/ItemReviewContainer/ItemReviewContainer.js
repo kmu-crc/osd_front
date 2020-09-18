@@ -43,6 +43,7 @@ class ItemReviewContainer extends Component {
         return (<ItemReview
             refresh={this.refresh}
             handler={this.props.handler}
+            // writeHandler={this.props.writeHandler}
             id={this.props.match.params.id}
             getData={this.getData}
             request={this.requestReview}
