@@ -111,7 +111,7 @@ class App extends Component {
             {/* <Route path="/myPage" component={MyDetailPage} /> */}
             {/* <Route path="/payment/:id/:amount/:option" component={PaymentPage} /> */}
             {/* <Route path="/payment/:id/:title/:amount/:option/:thumbnail" component={PaymentPage} /> */}
-            <Route path="/payment" component={PaymentPage} />
+            <Route path="/payment" component={RequiresAuth(PaymentPage)} />
             <Route path="/cart" component={CartPage} />
             {/* POINT */}
             <Route path="/point" component={RequiresAuth(PointPage)} />

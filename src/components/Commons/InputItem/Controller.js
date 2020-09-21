@@ -113,10 +113,10 @@ export class Controller extends Component {
     this.moveUpItem = this.moveUpItem.bind(this);
     this.privateItem = this.privateItem.bind(this);
   }
-  async shouldComponentUpdate(nextProps) {
-    if (nextProps.content !== this.props.content)
-      return true;
-  }
+  // async shouldComponentUpdate(nextProps) {
+  //   if (nextProps.content !== this.props.content)
+  //     return true;
+  // }
   async componentDidMount() {
     if (this.props.type)
       await this.setState({ type: this.props.type, order: this.props.order });
@@ -125,17 +125,15 @@ export class Controller extends Component {
     await this.setState({ click: true });
   };
   async onChangeValue(data) {
-    let newObj = { ...this.props.item };
-    newObj.content = data.content;
-    await this.setState({ ...newObj });
-    // this.returnDate();
-    // returnDate = async e => {
+    // let newObj={...this.props.item };
+    // newObj.content = data.content;
+    // await this.setState({ ...newObj });
+    // await this.setState({content:data.content});
+    // await console.log(this.state);
+    
     if (this.props.getValue)
-      await this.props.getValue(this.state);
-    // if (e && this.props.onBlur)
-    // await this.props.onBlur();
-    // };
-    // console.log("updated:(changed):", this.props.item.content, this.state.content);
+      // await this.props.getValue(this.state);
+      await this.props.getValue({...this.props.item,content:data.content})
   };
   async privateItem(event) {
     if (this.props.privateItem) {
@@ -173,7 +171,7 @@ export class Controller extends Component {
           {item.type === "FILE" ? (
             <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} setController={this.setController} />
           ) : item.type === "TEXT" ? (
-            <TextControllerClassic item={item} private={item.private} name={name} initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} />
+            <TextControllerClassic item={item} initClick={this.state.click} private={item.private} name={name}  getValue={this.onChangeValue} deleteItem={this.deleteItem} />
           ) : item.type === "EMBED" ? (<EmbController />) : null}
         </div>
         {item.private === 1

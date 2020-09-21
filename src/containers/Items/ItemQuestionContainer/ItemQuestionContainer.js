@@ -12,7 +12,7 @@ const BlankBox = styled.div`
     justify-content:center;
     .text{
         font-weight:500;
-        color:#707070;
+        // color:#707070;
         font-size:20px;
     }
 `
