@@ -5,7 +5,29 @@ import Cross from "components/Commons/Cross";
 import noimg from "source/noimg.png";
 import Star from "components/Commons/Star";
 import { Rating } from 'semantic-ui-react'
+import { FileUploadRequest } from "actions/Uploads";
 
+const AddPic = styled.div`
+    min-width:${props=>props.width}px;
+    min-height:${props=>props.height}px;
+    max-width:${props=>props.width}px;
+    max-height:${props=>props.height}px;
+
+    margin-right:${props=>props.marginRight==null?0:props.marginRight}px;
+
+    border:1px solid #d6d6d6;
+    background-color: #e6e6e6;
+    background-image: url(${props => props.img});
+    background-size:cover;
+    border-radius:5px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    .text{
+        font-size:15px;
+        color:white;
+    }
+`
 const TextArea = styled.textarea`
     width:100%;
     height:384px;
@@ -97,11 +119,27 @@ const WriteDialog=styled(Modal)`
         width:100%;
         display:flex;
         margin-top:19px;
-        .pic{
+        .pic_list{
             min-width:378px;
             min-height:384px;
             max-width:378px;
             max-height:384px;
+            display:flex;
+            align-items:center;
+            flex-direction:column;
+            .mini_pic_list{
+                width:100%;
+                height:90px;
+                margin-top:10px;
+                display:flex;
+                // justify-content:center;
+            }
+        }
+        .pic{
+            min-width:378px;
+            min-height:284px;
+            max-width:378px;
+            max-height:284px;
             border:1px solid #d6d6d6;
             background-color: #e6e6e6;
             background-image: url(${props => props.img});
@@ -188,11 +226,22 @@ const Dialog = styled(Modal)`
         width:100%;
         display:flex;
         margin-top:19px;
+        .pic_list{
+            width:100px;
+            height:100px;
+            // min-width:378px;
+            // min-height:384px;
+            // max-width:378px;
+            // max-height:384px;
+            // display:flex;
+            // flex-direction:column;
+            // justify-content:center;
+        }
         .pic{
-            min-width:378px;
-            min-height:384px;
-            max-width:378px;
-            max-height:384px;
+            min-width:278px;
+            min-height:284px;
+            max-width:278px;
+            max-height:284px;
             background-image: url(${props => props.img});
             background-size:cover;
             border-radius:5px;
@@ -214,14 +263,18 @@ class WriteReviewModal extends Component {
     constructor(props){
         super(props);
         this.state = {
-            thumbnail_url:"",
-            thumbnail_name:"",
+            // thumbnail_url:"",
+            // thumbnail_name:"",
+            thumbnail:[],
+            files:[],
             comment:"",
             score:0,
+            result:[],
         }
         this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
         this.handleOnChangeComment = this.handleOnChangeComment.bind(this);
         this.handleOnChangeScore = this.handleOnChangeScore.bind(this);
+        this.onClickWriteReview = this.onClickWriteReview.bind(this);
     }
     handleOnChangeComment(event){
         this.setState({comment:event.target.value});
@@ -229,25 +282,79 @@ class WriteReviewModal extends Component {
     handleOnChangeScore(e, { rating, maxRating }) {
         this.setState({ score: rating });
     }
-    handleOnChangeThumbnail(event) {
+    handleOnChangeThumbnail(event,index) {
         event.preventDefault();
         const reader = new FileReader();
         const file = event.target.files[0];
         reader.onloadend = () => {
-          this.setState({ thumbnail_url: reader.result, thumbnail_name: file.name })
+        const thumbnail_url=reader.result;
+         if(this.state.thumbnail&&this.state.thumbnail.length<=0){
+             this.setState({thumbnail:this.state.thumbnail.concat(thumbnail_url),files:this.state.files.concat(file)});
+         }else{
+             console.log(index);
+            let thumbnail_list = this.state.thumbnail;
+            let file_list = this.state.files;
+            thumbnail_list.splice(index,1,thumbnail_url);
+            file_list.splice(index,1,file);
+            this.setState({thumbnail:thumbnail_list,files:file_list});
+         }
         }
         if (event.target.files[0]) {
           reader.readAsDataURL(file);
         }
     };
+    async onClickWriteReview(event){
+
+        // let list = [];
+        const list = await Promise.all(this.state.thumbnail.map(async(item,index)=>{
+            if(item.indexOf("https://s3")==-1){
+                    const file = this.state.files[index];
+                    const s3path = await FileUploadRequest([file]);
+                    return s3path.path;
+            }else{
+                    return item;
+            }
+        }));
+        this.props.requestReview(this.props.payment_id,this.state.comment,this.state.score,list.join());
+        // if(this.state.thumbnail&&this.state.thumbnail.length>0){
+        //     new Promise((resolve)=>{this.state.thumbnail.forEach(async(item,index)=>{
+        //         const file = this.state.files[index];
+        //         // if(item.indexOf("https://s3")==-1){
+        //             const s3path = await FileUploadRequest([file]);
+        //             await list.push(s3path.path);
+        //             console.log("######"+index);
+        //             // await this.setState({result:this.state.result.concat(s3path.path)});
+        //         // }else{
+        //             // await list.push(item);
+        //             // console.log("@@@@@"+index);
+        //             // await this.setState({result:this.state.result.concat(item)});
+        //         // }
+        //     }
+        //     )
+        //     resolve(true);
+        // }).then(()=>console.log(list));  
+        // }
+        // await this.state.thumbnail&&this.state.thumbnail.length>0&&
+        //     this.state.thumbnail.forEach(async(item,index)=>{
+        //         const file = this.state.files[index];
+        //         if(item.indexOf("https://s3.")==-1){
+        //             const s3path = await FileUploadRequest([file]);
+        //             await list.concat(s3path.path);
+        //         }else{
+        //             await list.concat(item);
+        //         }
+        //     })
+        // this.props.requestReview(this.props.payment_id,this.state.comment,this.state.score,list.join());
+    }
     render() {
-        console.log(this.props);
+        console.log(this.state);
         const RenderStar = () => {
             return <Rating size="tiny" name="score" icon='star' defaultRating={parseInt(5, 10)} maxRating={5} disabled />
           }
+        let imgCount=0;
         return (
             <React.Fragment>
-                    <WriteDialog open={this.props.open} onClose={this.props.close} img={this.state.thumbnail_url}>
+                    <WriteDialog open={this.props.open} onClose={this.props.close}>
                     <div className="close-box" onClick={this.props.close}>
                         <Cross angle={45} color={"#707070"} weight={1} width={15} height={15} />
                     </div>
@@ -263,15 +370,56 @@ class WriteReviewModal extends Component {
                         </div>
                     </div>
                     <div className="review-content">
-                        <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/*" />
+                        <div className="pic_list">
+                        <input hidden onChange={(event)=>this.handleOnChangeThumbnail(event,0)} id="file" type="file" accept="image/*" />
                         <label htmlFor="file">
-                            <div className="pic"><div className="picText">{this.state.thumbnail_url==null?"":"클릭하여 이미지를 첨부하세요"}</div></div>
+                            <AddPic width={378} height={284} img={this.state.thumbnail.length>0?this.state.thumbnail[0]:null}>
+                                <div className="text">{this.state.thumbnail.length>0?"이미지 첨부":null}</div>
+                            </AddPic>
                         </label>
+                        <div className="mini_pic_list">
+                                {
+                                this.state.thumbnail&&
+                                this.state.thumbnail.length>0?
+                                this.state.thumbnail.map((item,index)=>{
+                                    return(
+                                        <div key={index}>
+                                            <input hidden onChange={(event)=>this.handleOnChangeThumbnail(event,index)} id={`file${index}`}type="file" accept="image/*" />
+                                            <label onClick={()=>{console.log(imgCount)}} htmlFor={`file${index}`}>
+                                                <AddPic width={90} height={90} marginRight={5} img={item}/>
+                                            </label>
+                                        </div>
+                                    );
+                                })
+                                :   
+                                null                         
+                            }
+                            {
+                                this.state.thumbnail&&
+                                this.state.thumbnail.length>=4?
+                                null
+                                :
+                                <React.Fragment>
+                                <input hidden 
+                                    onChange={(event)=>this.handleOnChangeThumbnail(event,this.state.thumbnail&&this.state.thumbnail.length<0?0:this.state.thumbnail.length)} 
+                                    id={`addfile`}type="file" accept="image/*" />
+                                <label htmlFor={`addfile`}>
+                                <AddPic width={90} height={90} marginRight={5}>
+                                    <div className="text">+</div>
+                                </AddPic>
+                                </label>
+                                </React.Fragment>
+                            }
+
+                        </div>
+
+                        </div>
                         <TextArea onChange={this.handleOnChangeComment}/>
                     </div>
                     </div>
                     <div className="buttonbox">
-                        <ReviewButton onClick={()=>{this.props.requestReview(this.props.payment_id,this.state.comment,this.state.score,this.state.thumbnail_url,this.state.thumbnail_name)}}><div className="text">리뷰 쓰기</div></ReviewButton>
+                        <ReviewButton onClick={this.onClickWriteReview}><div className="text">리뷰 쓰기</div></ReviewButton>
+                        {/* ;this.props.requestReview(this.props.payment_id,this.state.comment,this.state.score,this.state.thumbnail.join())} */}
                     </div>
                 </WriteDialog>
             </React.Fragment>

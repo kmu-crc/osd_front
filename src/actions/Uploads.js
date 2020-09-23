@@ -1,6 +1,7 @@
 import host from "config"
 
 export const FileUploadRequest = file => {
+    console.log(file[0]);
     return new Promise(async (resolve, reject) => {
         const formData = new FormData();
         await formData.append('source', file[0]);

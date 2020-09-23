@@ -433,6 +433,7 @@ const GetItemReviewFailure = error => ({
 });
 // review or answer
 export const CreateItemReviewRequest = (data, id, token) => {
+  console.log(data,id);
   return dispatch => {
     dispatch(CreateItemReview());
     const url = `${host}/item/detail/${id}/create-review`;

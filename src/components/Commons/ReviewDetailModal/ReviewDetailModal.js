@@ -5,7 +5,47 @@ import Cross from "components/Commons/Cross";
 import noimg from "source/noimg.png";
 import Star from "components/Commons/Star";
 import { Rating } from 'semantic-ui-react'
+import arrow from "source/rightarrow.svg";
 
+const AddPic = styled.div`
+    min-width:${props=>props.width}px;
+    min-height:${props=>props.height}px;
+    max-width:${props=>props.width}px;
+    max-height:${props=>props.height}px;
+
+    margin-right:${props=>props.marginRight==null?0:props.marginRight}px;
+
+    border:1px solid #d6d6d6;
+    background-color: #e6e6e6;
+    background-image: url(${props => props.img});
+    background-size:cover;
+    border-radius:5px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    .text{
+        font-size:15px;
+        color:white;
+    }
+`
+const CustomButton = styled.div`
+    min-width:${props=>props.width}px;
+    min-height:${props=>props.height}px;
+    max-width:${props=>props.width}px;
+    max-height:${props=>props.height}px;
+    background-image: url(${props => props.img});
+    background-size:cover;
+    border-radius:5px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+    transform:rotate(${props=>props.rotate==null?0:props.rotate}deg);
+    .text{
+        font-size:15px;
+        color:white;
+    }
+`
 const TextArea = styled.textarea`
     width:100%;
     height:100%;
@@ -81,6 +121,14 @@ const WriteDialog=styled(Modal)`
             border-radius:5px;
             margin-right:20px;
         }
+        .pic_list{
+            border:1px solid black;
+            width:100%;
+            min-height:384px;
+            max-height:384px;
+            overflow-y:hidden;
+            display:flex;
+        }
         .comment{
             width:100%;
             font-family:Noto Sans CJK KR, Regular;
@@ -149,10 +197,27 @@ const Dialog = styled(Modal)`
         }
 
     }
+    .flex_column{
+        flex-direction:column;
+    }
     .review-content{
+
         width:100%;
         display:flex;
+        flew-wrap:wrap;
         margin-top:19px;
+        position:relative;
+        .pic_list{
+            width:100%;
+            min-height:384px;
+            max-height:384px;
+            overflow:hidden;
+            display:flex;
+            scroll-behavior:smooth;
+            .btn{
+                display:none;
+            }   
+        }
         .pic{
             min-width:378px;
             min-height:384px;
@@ -168,10 +233,21 @@ const Dialog = styled(Modal)`
             width:100%;
             font-family:Noto Sans CJK KR, Regular;
             font-size:20px;
-            font-weight:300;            
+            font-weight:300;   
+            margin-top:16px;         
         }
     }
     
+    }
+
+    &:hover{
+        .review-content{
+            .pic_list{
+                .btn{
+                    display:block;
+                }
+            }
+        }
     }
 `;
 
@@ -179,6 +255,8 @@ class ReviewDetailModal extends Component {
     render() {
         const { detail } = this.props;
         console.log(detail);
+        const thumbnail_list = detail&&detail.thumbnail&&detail.thumbnail.length>0?
+        detail.thumbnail.split(","):[];
         const RenderStar = () => {
             return <Rating size="tiny" name="score" icon='star' defaultRating={parseInt(5, 10)} maxRating={5} disabled />
           }
@@ -208,8 +286,16 @@ class ReviewDetailModal extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="review-content">
-                        {detail&&detail.thumbnail_url==null?null:<div className="pic"/>}
+                    <div className={`review-content ${thumbnail_list.length>1?"flex_column":null}`}>
+                        {thumbnail_list.length>0?<div id="pic_list" className="pic_list">
+                            {
+                                thumbnail_list.map((item,index)=>{
+                                    return(<AddPic width={378} height={384} img={item} marginRight={34}/>);
+                                })
+                            }
+                            {thumbnail_list.length>=3?<span className="btn"><CustomButton rotate={180}  onClick={()=>{document.getElementById("pic_list").scrollBy(document.getElementById("pic_list").scrollLeft-800,0)}} img={arrow} width={29} height={59} style={{position:"absolute",left:"0px",top:"160px"}}/></span>:null}
+                            {thumbnail_list.length>=3?<span className="btn"><CustomButton  onClick={()=>{document.getElementById("pic_list").scrollBy(document.getElementById("pic_list").scrollLeft+400,0)}} img={arrow} width={29} height={59} style={{position:"absolute",right:"0px",top:"160px"}}/></span>:null}
+                        </div>:thumbnail_list.length==0?null:<AddPic  width={378} height={384} img={thumbnail_list[0]}/>}
                         <div className="comment">
                             {detail&&detail.comment}
                         </div>

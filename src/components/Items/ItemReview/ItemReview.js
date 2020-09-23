@@ -320,11 +320,12 @@ class ItemReview extends Component {
         this.props.request({ comment: this.state.this_reply, group_id: origin.group_id, sort_in_group: origin.sort_in_group });
         this.reset();
     };
-    requestReview(id,comment,score,thumbnail_url,thumbnail_name) {
+    requestReview(id,comment,score,thumbnail) {
+        console.log(id,comment,score,thumbnail);
         if (this.checkPermission() === false)
             return;
         if (comment.length > 0)
-            this.props.request({ score:score, comment: comment, payment_id: id, thumbnail_url:thumbnail_url,thumbnail_name:thumbnail_name });
+            this.props.request({ score:score, comment: comment, payment_id: id, thumbnail:thumbnail});
         console.log("change review writing");
         this.reset();
         this.props.refresh && this.props.refresh();
@@ -393,7 +394,7 @@ class ItemReview extends Component {
                             {
                                     new Date(props.create_time).getFullYear()+"."
                                 +((new Date(props.create_time).getMonth()+1)<10?'0'+(new Date(props.create_time).getMonth()+1):(new Date(props.create_time).getMonth()+1))+"."
-                                +(new Date(props.create_time).getDate()<10?'0'+new Date(props.create_time).getDate():new Date(props.create_time).getDate())
+                                +(new Date(props.create_tㅔime).getDate()<10?'0'+new Date(props.create_time).getDate():new Date(props.create_time).getDate())
                             }
                         </div>
                         </div>
@@ -415,7 +416,7 @@ class ItemReview extends Component {
                 open={this.state.writeReview}
                 close={() => this.setState({ writeReview: false })}
                 modify={this.state.detail}
-                requestReview = {(uid,comment,score,thumbnail_url,thumbnail_name) => this.requestReview(uid,comment,score,thumbnail_url,thumbnail_name)}
+                requestReview = {(uid,comment,score,thumbnail_list) => this.requestReview(uid,comment,score,thumbnail_list)}
                 payment_id={payment&&payment.length>0&&payment[0].uid}
             />
             {/* <WriteReviewModal open={this.state.writeReview} close={() => this.setState({ writeReview: false })}/> */}
