@@ -656,6 +656,8 @@ class ItemPurchase extends Component {
   }
   onFileChange = async event => {
     this.setState({file:event.currentTarget.files});
+    // console.log(event.currentTarget.files);
+    // return;
     
     this.setState({
       // file_url: s3path.path,

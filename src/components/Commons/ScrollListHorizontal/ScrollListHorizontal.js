@@ -194,7 +194,7 @@ class ScrollListHorizontal extends Component {
     // dots={true}
     showSides={true}
     sidesOpacity={.5}
-    sideSize={.1}
+    sideSize={.2}
     slidesToScroll={6}
     slidesToShow={6}
     scrollOnDevice={true}
