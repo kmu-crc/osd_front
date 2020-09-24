@@ -246,16 +246,17 @@ const CardDialog = styled(Modal)`
             // padding-right:52px;
             margin-top: 30px;
             margin-bottom:30px;
+
             .contents {
-                width:100%;
+                width: 100%;
                 min-height:max-content;
                 font-size: 20px;
                 color: #707070;
                 font-weight: 300;
                 font-family: Noto Sans KR;
-                line-height: 29px;   
+                line-height: 29px;
+                word-wrap: break-word;
             }
-            
         }
         .card-header-third {
             margin-top:15px;
@@ -631,7 +632,7 @@ class CardModal extends Component {
                                             </div>
                                             <div>
                                                 {this.state.private ? "비공개" : "공개"}
-                                                </div>
+                                            </div>
                                         </div>
                                         : null}
 

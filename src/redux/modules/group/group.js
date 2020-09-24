@@ -981,8 +981,6 @@ export function HasReadNoticeRequest(id, token) {
 export function CreateGroupNoticeRequest(token, obj) {
   return new Promise((resolve, reject) => {
     const url = `${host}/group/createGroupNotice`
-    // console.log("URL:", url, obj);
-    // return;
     return fetch(url, {
       headers: { "x-access-token": token, "Content-Type": "application/json" },
       method: "POST",
@@ -993,43 +991,39 @@ export function CreateGroupNoticeRequest(token, obj) {
       .catch(error => reject(error));
   });
 }
-
 export function GetLastestGroupNoticeRequest(group_id) {
   return new Promise((resolve, reject) => {
     const url = `${host}/group/lastest-notice/${group_id}`;
-    // console.log("URL:", url);
     return fetch(url, {
       headers: { "Content-Type": "application/json" },
       method: "GET",
     })
       .then(res => res.json())
       .then(data => resolve(data))
-      .then(error => reject(error));
+      .catch(error => reject(error));
   });
 };
 export function GetTotalCountGroupNoticeRequest(group_id) {
   return new Promise((resolve, reject) => {
     const url = `${host}/group/total-count-notice/${group_id}`;
-    // console.log("URL:", url);
     return fetch(url, {
       headers: { "Content-Type": "application/json" },
       method: "GET",
     })
       .then(res => res.json())
       .then(data => resolve(data))
-      .then(error => reject(error));
+      .catch(error => reject(error));
   });
 };
 export function GetGroupNoticeListRequest(group_id, page) {
   return new Promise((resolve, reject) => {
     const url = `${host}/group/notice-list/${group_id}/${page}`;
-    // console.log("URL:", url);
     return fetch(url, {
       headers: { "Content-Type": "application/json" },
       method: "GET",
     })
       .then(res => res.json())
       .then(data => resolve(data))
-      .then(error => reject(error));
+      .catch(error => reject(error));
   });
 };
