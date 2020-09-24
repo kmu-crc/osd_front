@@ -520,7 +520,7 @@ class CardSourceDetail extends Component {
               {(item.type === "FILE" && item.data_type === "image") ?
                 <div className="imgContent" >
                   {/* <Zoom> */}
-                    <img src={item.content} alt="이미지" download={item.file_name} />
+                  <img src={item.content} alt="이미지" download={item.file_name} />
                   {/* </Zoom> */}
                   {/* <p>이미지를 클릭하시면 크게 보실 수 있습니다.</p> */}
                 </div>
@@ -554,8 +554,7 @@ class CardSourceDetail extends Component {
                                   ? "*" + JSON.parse(item.content).description : "" : ""}
                             </div>
                             <div className="url">
-                              <a target="_blank" href={`${
-                                IsJsonString(item.content)
+                              <a target="_blank" href={`${IsJsonString(item.content)
                                   ? JSON.parse(item.content).hasOwnProperty('url')
                                     ? JSON.parse(item.content).url : "invalid" : "invalid"}`}>
                                 ({IsJsonString(item.content)
@@ -598,7 +597,7 @@ class CardSourceDetail extends Component {
                   <i className="trash alternate icon large" />
                 </DelBtn>
 
-                {content.length - 1 >= item.order && item.order !== 0 ?
+                {/* {content.length - 1 >= item.order && item.order !== 0 ?
                   <UpBtn
                     type="button"
                     className="editBtn"
@@ -612,7 +611,7 @@ class CardSourceDetail extends Component {
                     className="editBtn"
                     onClick={() => this.moveItem(item.order, item.order + 1)}>
                     <i className="angle down alternate icon large" />
-                  </DownBtn> : null}
+                  </DownBtn> : null} */}
               </ControllerWrap>)
             })}
             <AddContent getValue={this.onAddValue} order={content.length} />
