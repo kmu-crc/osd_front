@@ -292,16 +292,48 @@ class CardSourceDetail extends Component {
     this.onChangeValue = this.onChangeValue.bind(this);
     this.onChangeFile = this.onChangeFile.bind(this);
     this.moveItem = this.moveItem.bind(this);
-    // this.verifyContentOrder = this.verifyContentOrder.bind(this);
+    this.verifyorder = this.verifyorder.bind(this);
 
   }
   componentDidMount() {
     if (this.props.uid !== "new") {
       this.props.GetDesignSourceRequest(this.props.uid)
         .then(async () => {
-          await this.setState({ content: this.props.content || [], origin: this.props.origin || [] });
+          console.log("componentdidmount", this.props.content);
+          if (await this.verifyorder(this.props.content)) { }
+          else {
+            await this.setState({ content: this.props.content || [], origin: this.props.origin || [] });
+          }
         })
     }
+  }
+  async verifyorder(content) {
+    console.log("verify:", content);
+    // check order
+    let formData = { updateContent: [], newContent: [], deleteContent: [] }
+    if (content && content.length > 0) {
+      content.forEach((item, index) => {
+        if (item.order !== index) {
+          item.order = index;
+          formData.updateContent.push(item);
+        }
+      });
+    }
+
+    if (formData.updateContent.length) {
+      await this.props.upDateRequest(formData, this.props.uid, this.props.token)
+        // .then(this.props.UpdateDesignTime(this.props.design_id, this.props.token))
+        .then(() => {
+          this.props.GetDesignSourceRequest(this.props.uid)
+            .then(async () => {
+              await this.setState({ content: this.props.content, origin: this.props.origin });
+            })
+        })
+      await this.props.GetDesignDetailRequest(this.props.design_id, this.props.token);
+      await this.props.GetCardDetailRequest(this.props.uid)
+      return true;
+    }
+    return false;
   }
   // componentDidUpdate(prevProps) {
   //   if (prevProps !== this.props) {
@@ -555,8 +587,8 @@ class CardSourceDetail extends Component {
                             </div>
                             <div className="url">
                               <a target="_blank" href={`${IsJsonString(item.content)
-                                  ? JSON.parse(item.content).hasOwnProperty('url')
-                                    ? JSON.parse(item.content).url : "invalid" : "invalid"}`}>
+                                ? JSON.parse(item.content).hasOwnProperty('url')
+                                  ? JSON.parse(item.content).url : "invalid" : "invalid"}`}>
                                 ({IsJsonString(item.content)
                                   ? JSON.parse(item.content).hasOwnProperty('url')
                                     ? JSON.parse(item.content).url : "invalid" : "invalid"})
@@ -597,7 +629,7 @@ class CardSourceDetail extends Component {
                   <i className="trash alternate icon large" />
                 </DelBtn>
 
-                {/* {content.length - 1 >= item.order && item.order !== 0 ?
+                {content.length - 1 >= item.order && item.order !== 0 ?
                   <UpBtn
                     type="button"
                     className="editBtn"
@@ -611,7 +643,7 @@ class CardSourceDetail extends Component {
                     className="editBtn"
                     onClick={() => this.moveItem(item.order, item.order + 1)}>
                     <i className="angle down alternate icon large" />
-                  </DownBtn> : null} */}
+                  </DownBtn> : null}
               </ControllerWrap>)
             })}
             <AddContent getValue={this.onAddValue} order={content.length} />
