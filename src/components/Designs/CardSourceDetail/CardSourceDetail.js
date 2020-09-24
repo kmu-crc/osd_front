@@ -423,65 +423,61 @@ class CardSourceDetail extends Component {
       }
       return ele;
     })
-    this.setState({ content: copy });
+    await this.setState({ content: copy });
+    // console.log(this.state.content, copy);
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
     return;
   }
   async onSubmit(event) {
+
     let newContent = [...this.state.content];
     let oldContent = [...this.state.origin];
+
     if (newContent === oldContent) {
       await alert("변경된 내용이 없습니다.", "확인");
       return;
     }
-    if (event != null) event.preventDefault();
+    if (event != null) {
+      event.preventDefault();
+    }
 
     let formData = { updateContent: [], newContent: [], deleteContent: [] }
+
     // get updatecontent
     //order
-    for (var i = 0; i < newContent.length; i++) {
-      if (newContent[i].order !== i) {
-        newContent[i].order = i;
+    newContent.forEach(item => {
+      const found = oldContent.find(old => old.uid === item.uid && (old.order !== item.order || old.content !== item.content));
+      if (found != null) {
+        formData.updateContent.push(item);
       }
-    }
-    for (i = 0; i < oldContent.length; i++) {
-      if (oldContent[i].order !== i) {
-        formData.updateContent.push(oldContent[i]);
-      }
-    }
-    //content
-    newContent.map(newItem => {
-      if (newItem.uid != null) {
-        let found = oldContent.filter(oldItem =>
-          (oldItem.uid === newItem.uid &&
-            oldItem.content !== newItem.content))
-        if (found.length > 0) {
-          formData.updateContent.push(newItem);
-        }
-      }
-      return newItem;
-    })
+    });
 
     // get newcontent
-    newContent.map(item => {
+    newContent.forEach(item => {
       if (item.uid == null) {
         delete item.initClick;
         if (item.type === "TEXT") {
-          item = { type: item.type, content: item.content, order: item.order, extension: item.extension, data_type: item.data_type, file_name: null };
+          item = {
+            type: item.type,
+            content: item.content,
+            order: item.order,
+            extension: item.extension,
+            data_type: item.data_type,
+            file_name: null
+          };
         }
         formData.newContent.push(item);
       }
-      return item;
+      // return item;
     })
 
     // get deletecontent
-    oldContent.map(oldItem => {
-      let found = newContent.filter(newItem => newItem.uid === oldItem.uid);
-      if (found.length === 0) {
-        formData.deleteContent.push(oldItem);
+    oldContent.map(item => {
+      const found = newContent.find(_item => _item.uid === item.uid);
+      if (found == null) {
+        formData.deleteContent.push(item);
       }
-      return oldItem;
-    });
+    })
 
     // edit
     await this.setState({ loading: true });
@@ -603,52 +599,53 @@ class CardSourceDetail extends Component {
         </ViewContent>}
 
       {/* edit mode */}
-      {
-        (edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
-          content && content.length > 0 ? (<Fragment>
-            {content.map((item, index) => {
-              //console.log("item---", item);
-              return (<ControllerWrap key={item + index}>
+      {(edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
 
-                <div className="contentWrap">
-                  {(item.type === "FILE")
-                    ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />
-                    : null}
-                  {(item.type === "TEXT")
-                    ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                    : null}
-                  {(item.type === "LINK")
-                    ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                    : null}
-                </div>
+        content && content.length > 0 ? (<Fragment>
 
-                <DelBtn
+          {content.map((item, index) => {
+
+            return (<ControllerWrap key={item + index}>
+
+              <div className="contentWrap">
+                {(item.type === "FILE")
+                  ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />
+                  : null}
+                {(item.type === "TEXT")
+                  ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                  : null}
+                {(item.type === "LINK")
+                  ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                  : null}
+              </div>
+
+              <DelBtn
+                type="button"
+                className="editBtn"
+                onClick={() => this.onDelete(item.order)}>
+                <i className="trash alternate icon large" />
+              </DelBtn>
+
+              {content.length - 1 >= item.order && item.order !== 0 ?
+                <UpBtn
                   type="button"
                   className="editBtn"
-                  onClick={() => this.onDelete(item.order)}>
-                  <i className="trash alternate icon large" />
-                </DelBtn>
+                  onClick={() => this.moveItem(item.order, item.order - 1)}>
+                  <i className="angle up alternate icon large" />
+                </UpBtn> : null}
 
-                {content.length - 1 >= item.order && item.order !== 0 ?
-                  <UpBtn
-                    type="button"
-                    className="editBtn"
-                    onClick={() => this.moveItem(item.order, item.order - 1)}>
-                    <i className="angle up alternate icon large" />
-                  </UpBtn> : null}
-
-                {content.length - 1 !== item.order && item.order >= 0 ?
-                  <DownBtn
-                    type="button"
-                    className="editBtn"
-                    onClick={() => this.moveItem(item.order, item.order + 1)}>
-                    <i className="angle down alternate icon large" />
-                  </DownBtn> : null}
-              </ControllerWrap>)
-            })}
-            <AddContent getValue={this.onAddValue} order={content.length} />
-          </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
-        ) : null
+              {content.length - 1 !== item.order && item.order >= 0 ?
+                <DownBtn
+                  type="button"
+                  className="editBtn"
+                  onClick={() => this.moveItem(item.order, item.order + 1)}>
+                  <i className="angle down alternate icon large" />
+                </DownBtn> : null}
+            </ControllerWrap>)
+          })}
+          <AddContent getValue={this.onAddValue} order={content.length} />
+        </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
+      ) : null
       }
 
       <ButtonContainer>
