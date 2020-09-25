@@ -14,6 +14,7 @@ import { alert } from "components/Commons/Alert/Alert";
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 
+const cloneObj = obj => JSON.parse(JSON.stringify(obj));
 
 function IsJsonString(str) {
   try {
@@ -415,7 +416,13 @@ class CardSourceDetail extends Component {
     if (!this.state.content) {
       return;
     }
-    const copy = [...this.state.content];
+    const copy = cloneObj(this.state.content);// [...this.state.content];
+    // copy[0].test = "!!!";
+    // this.state.content[0].test = "???";
+    // console.log(copy[0], this.state.content[0]);
+    // var T = copy[A];
+    // copy[A] = copy[B];
+    // copy[B] = T;
     [copy[A], copy[B]] = [copy[B], copy[A]];
     copy.map((ele, index) => {
       if (ele.order !== index) {
@@ -424,7 +431,7 @@ class CardSourceDetail extends Component {
       return ele;
     })
     await this.setState({ content: copy });
-    // console.log(this.state.content, copy);
+    // // console.log(this.state.content, copy);
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
     return;
   }
@@ -432,7 +439,8 @@ class CardSourceDetail extends Component {
 
     let newContent = [...this.state.content];
     let oldContent = [...this.state.origin];
-
+    // console.log(oldContent);
+    // return;
     if (newContent === oldContent) {
       await alert("변경된 내용이 없습니다.", "확인");
       return;
@@ -446,12 +454,12 @@ class CardSourceDetail extends Component {
     // get updatecontent
     //order
     newContent.forEach(item => {
-      const found = oldContent.find(old => old.uid === item.uid && (old.order !== item.order || old.content !== item.content));
-      if (found != null) {
-        formData.updateContent.push(item);
-      }
+      oldContent.forEach(old => {
+        if (old.uid === item.uid && (old.order !== item.order || old.content !== item.content)) {
+          formData.updateContent.push(item);
+        }
+      })
     });
-
     // get newcontent
     newContent.forEach(item => {
       if (item.uid == null) {
