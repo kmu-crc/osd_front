@@ -197,7 +197,7 @@ const CardDialog = styled(Modal)`
                 line-height: 29px;
             }
             .header-edit-button {
-                font-family: Noto Sans KR;
+               font-family: Noto Sans KR;
                 font-size: 17px;
                 color: #707070;
                 font-weight: 900;
@@ -234,7 +234,7 @@ const CardDialog = styled(Modal)`
                     text-align: left;
                     cursor: pointer;
                 }
-            }
+            } 
         }
         .card-header-second {
             width: 100%;

@@ -17,15 +17,15 @@ const Wrapper = styled.div`
       cursor: pointer;
   }
   .new-notice {
-     margin-left: 15px;
-     font-size: 0.9rem;
-     height: 20px;
-     background-color: #F00;
-     border-radius: 10px;
-     cursor: pointer; 
-     color: white;
-     font-weight: 500;
-     padding: 0px 5px;
+    margin-left: 15px;
+    font-size: 0.9rem;
+    background-color: #F00;
+    border-radius: 10px;
+    cursor: pointer; 
+    color: white;
+    font-weight: 500;
+    padding: 2px 2px;
+    line-height: 1rem;
   }
 `;
 const NoticeModal = styled(Modal)`
@@ -33,7 +33,7 @@ const NoticeModal = styled(Modal)`
     padding-left: 63px;
     padding-right: 63px;
     width: 936px;
-    height: 506px;
+    min-height: 506px;
 
     .close-box {
       cursor:pointer;
@@ -71,6 +71,7 @@ const NoticeModal = styled(Modal)`
         color: white;
         font-weight: 500;
         padding: 5px 10px;
+
       }
     }
     .body-container {
@@ -99,6 +100,47 @@ const NoticeModal = styled(Modal)`
             margin-bottom: 35px;
         }
     }
+    .header-edit-button {
+      margin-left: auto;
+      margin-right: 10px;
+      width: max-content;
+      font-family: Noto Sans KR;
+      font-size: 17px;
+      color: #707070;
+      font-weight: 900;
+      line-height: 29px;
+      .edit-btn {
+        border: none;
+        background: none;
+        width: max-content;
+        height: 40px;
+        line-height: 40px;
+        color: #FF0000;
+        padding-bottom: 1.5px;
+        border-bottom: 1.5px solid #FF0000;
+        font-size: 20px;
+        font-weight: 500;
+        font-family: Noto Sans KR;
+        text-align: left;
+        cursor: pointer;
+      }
+      .cancel-btn {
+        margin-left: 25px;
+        border: none;
+        background: none;
+        width: max-content;
+        height: 40px;
+        line-height: 40px;
+        color: #707070;
+        padding-bottom: 1.5px;
+        border-bottom: 1.5px solid #707070;
+        font-size: 20px;
+        font-weight: 500;
+        font-family: Noto Sans KR;
+        text-align: left;
+        cursor: pointer;
+      }
+   } 
     .button-container {
         display: flex;
         text-align: center;
@@ -141,6 +183,7 @@ class GroupNotice extends Component {
       noticeDialog: false,
       noticeDetail: false,
       newNoticeDialog: false,
+      editNoticeDialog: false,
 
       //
       notice: this.props.lastest,
@@ -149,13 +192,73 @@ class GroupNotice extends Component {
       "notice-content": "",
       reloadnoticecontainer: 0,
 
+      // mode
+      edit: "view", //"edit"
+
     }
     this.requestNewNotice = this.requestNewNotice.bind(this);
+    this.requestEditNotice = this.requestEditNotice.bind(this);
+    this.requestDelNotice = this.requestDelNotice.bind(this);
     this.onChangeNoticeContent = this.onChangeNoticeContent.bind(this);
-
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.lastest != prevProps.lastest) {
+      this.setState({ notice: this.props.lastest });
+    }
   }
   onChangeNoticeContent(data) {
     this.setState({ "notice-content": data.content });
+  }
+  requestDelNotice(notice_id) {
+    this.props.DeleteGroupNoticeRequest &&
+      this.props.token &&
+      this.props.DeleteGroupNoticeRequest(this.props.token, { notice_id: notice_id })
+        .then((data) => {
+          this.setState({ reloadnoticecontainer: (this.state.reloadnoticecontainer + 1) % 100 });
+          this.props.init && this.props.init();
+          // alert("공지사항이 삭제되었습니다.");
+        })
+        .catch(() => {
+          alert("삭제하지 못하였습니다.");
+        });
+    this.setState({
+      editNoticeDialog: false,
+      noticeDialog: true,
+      noticeDetail: false,
+      newNoticeDialog: false,
+      editNoticeDialog: false,
+    });
+  }
+  requestEditNotice() {
+    if (
+      this.state.notice.title === this.state["notice-title"] &&
+      this.state.notice.content === this.state["notice-content"]
+    ) {
+      alert("변경된 사항이 없습니다.");
+      return;
+    }
+    const obj = { notice_id: this.state.notice.uid, title: this.state["notice-title"], content: this.state["notice-content"] };
+    this.props.UpdateGroupNoticeRequest &&
+      this.props.token &&
+      this.props.UpdateGroupNoticeRequest(this.props.token, obj)
+        .then(() => {
+          this.setState({ reloadnoticecontainer: (this.state.reloadnoticecontainer + 1) % 100 });
+          this.props.init && this.props.init();
+          // alert("공지사항 수정을 완료하였습니다.");
+        })
+        .catch(() => {
+          alert("작성을 실패하였습니다.");
+        });
+
+    this.setState({
+      noticeDialog: false,
+      noticeDetail: false,
+      newNoticeDialog: false,
+      editNoticeDialog: false,
+      notice: null,
+      "notice-title": "",
+      "notice-content": ""
+    });
   }
   requestNewNotice() {
     if (this.state["notice-title"] === "") {
@@ -174,7 +277,7 @@ class GroupNotice extends Component {
         .then(() => {
           this.setState({ reloadnoticecontainer: (this.state.reloadnoticecontainer + 1) % 100 });
           this.props.init && this.props.init();
-          alert("공지사항 작성을 완료하였습니다.");
+          // alert("공지사항 작성을 완료하였습니다.");
         })
         .catch(() => {
           alert("작성을 실패하였습니다.");
@@ -190,134 +293,198 @@ class GroupNotice extends Component {
   render() {
     const { lastest, count, GroupDetail, userInfo } = this.props;
     const user_id = userInfo && userInfo.uid;
-    console.log('groupnotice.js:,', this.props);
-    return (
-      <React.Fragment>
-        {/*  */}
-        {this.state.noticeDialog
-          ? <NoticeModal
-            open={this.state.noticeDialog}
-            onClose={() => this.setState({ noticeDialog: false })}>
 
-            <div className="close-box" onClick={() => this.setState({ noticeDialog: false })} >
-              <Cross angle={45} color={"#707070"} weight={2} width={14} height={14} />
+    return (<React.Fragment>
+
+      {/*  */}
+      {this.state.noticeDialog
+        ? <NoticeModal
+          open={this.state.noticeDialog}
+          onClose={() => this.setState({ noticeDialog: false })}>
+
+          <div className="close-box" onClick={() => this.setState({ noticeDialog: false })} >
+            <Cross angle={45} color={"#707070"} weight={2} width={14} height={14} />
+          </div>
+
+          <div className="header-txt">
+            <h2>전체</h2>
+            <div className="left">
+              {user_id === this.props.GroupDetail.user_id ?
+                <div
+                  className="new-notice"
+                  onClick={() => { this.setState({ newNoticeDialog: true }) }}>
+                  새 공지사항 등록하기</div> : null}
             </div>
+          </div>
 
-            <div className="header-txt">
-              <h2>전체</h2>
-              <div className="left">
-                {user_id === this.props.GroupDetail.user_id ?
-                  <div
-                    className="new-notice"
-                    onClick={() => { this.setState({ newNoticeDialog: true }) }}>
-                    새 공지사항 등록하기</div> : null}
-              </div>
+          <div className="body-container">
+            <GroupNoticeListContainer id={this.props.id} open={(detail) => {
+              this.setState({ noticeDetail: true, notice: detail })
+            }} reload={this.state.reloadnoticecontainer} />
+          </div>
+        </NoticeModal>
+        : null}
+
+      {/*  */}
+      {this.state.noticeDetail
+        ? <NoticeModal open={this.state.noticeDetail} onClose={() => this.setState({ noticeDetail: false })}>
+          <div className="close-box" onClick={() => this.setState({ noticeDetail: false })} >
+            <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
+          </div>
+
+          {this.props.userInfo && (this.props.userInfo.uid === this.props.GroupDetail.user_id)
+            ? <div className="header-edit-button">
+              <React.Fragment>
+                <button
+                  className="edit-btn"
+                  onClick={() =>
+                    this.setState({
+                      editNoticeDialog: !this.state.editNoticeDialog,
+                      "notice-title": this.state.notice.title,
+                      "notice-content": this.state.notice.content,
+                      // title: .title,
+                      // content: .content
+                    })}>수정</button>
+
+                <button className="cancel-btn"
+                  onClick={() =>
+                    // alert(this.state.notice.uid)}
+                    this.requestDelNotice(this.state.notice.uid)}
+                >삭제</button>
+              </React.Fragment>
             </div>
-
+            : null}
+          <Modal.Content>
+            <div>
+              <h2>{this.state.notice.title}</h2>
+            </div>
             <div className="body-container">
-              <GroupNoticeListContainer id={this.props.id} open={(detail) => {
-                this.setState({ noticeDetail: true, notice: detail })
-              }} reload={this.state.reloadnoticecontainer} />
+              <hr />
+              <div dangerouslySetInnerHTML={{ __html: this.state.notice.content }}></div>
             </div>
-          </NoticeModal>
-          : null}
+          </Modal.Content>
+        </NoticeModal>
+        : null}
 
-        {/*  */}
-        {this.state.noticeDetail
-          ? <NoticeModal open={this.state.noticeDetail} onClose={() => this.setState({ noticeDetail: false })}>
-            <div className="close-box" onClick={() => this.setState({ noticeDetail: false })} >
-              <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
-            </div>
-            <div className="header-edit-button">
-              {this.props.edit ?
-                <React.Fragment>
-                  {/* <button className="edit-btn" onClick={() => this.setState({ edit: !this.state.edit, title: card.title, content: card.content })} >수정</button> */}
-                  {/* <button className="cancel-btn" onClick={(event) => this.removeCard(event)} >삭제</button> */}
-                </React.Fragment> : null}
-            </div>
-            <Modal.Content>
-              <div>
-                <h2>{this.state.notice.title}</h2>
-              </div>
-              <div className="body-container">
-                <hr />
-                <div dangerouslySetInnerHTML={{ __html: this.state.notice.content }}></div>
-              </div>
-            </Modal.Content>
-          </NoticeModal>
-          : null}
-
-        {this.state.newNoticeDialog
-          ? <NoticeModal
-            open={this.state.newNoticeDialog} onClose={() => this.setState({ newNoticeDialog: false })}>
-            <div className="close-box" onClick={() => this.setState({ newNoticeDialog: false })} >
-              <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
-            </div>
-            <div className="header-txt"><p style={{ fontSize: "24px", fontWeight: "500", color: "#707070", fontFamily: "Noto Sans KR", }}>공지사항 등록하기</p></div>
-            <Modal.Content>
-              {/* <div className="header-txt"> */}
-              {/* <h4>새로운 공지사항을 등록합니다.</h4> */}
-              {/* </div> */}
-              <div className="body-container">
-                <div className="title-container">
-                  <div>
-                    <h3 style={{ color: "#707070" }}>제목</h3>
-                  </div>
-                  <input
-                    type="text" className="inputText"
-                    value={this.state["notice-title"]}
-                    onChange={event =>
-                      this.setState({ "notice-title": event.target.value })} />
-                </div>
+      {this.state.newNoticeDialog
+        ? <NoticeModal
+          open={this.state.newNoticeDialog} onClose={() => this.setState({ newNoticeDialog: false })}>
+          <div className="close-box" onClick={() => this.setState({ newNoticeDialog: false })} >
+            <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
+          </div>
+          <div className="header-txt"><p style={{ fontSize: "24px", fontWeight: "500", color: "#707070", fontFamily: "Noto Sans KR", }}>공지사항 등록하기</p></div>
+          <Modal.Content>
+            {/* <div className="header-txt"> */}
+            {/* <h4>새로운 공지사항을 등록합니다.</h4> */}
+            {/* </div> */}
+            <div className="body-container">
+              <div className="title-container">
                 <div>
-                  <TextController
-                    item={{ content: "" }}
-                    getValue={(data) =>
-                      this.onChangeNoticeContent(data)} />
+                  <h3 style={{ color: "#707070" }}>제목</h3>
                 </div>
+                <input
+                  type="text" className="inputText"
+                  value={this.state["notice-title"]}
+                  onChange={event =>
+                    this.setState({ "notice-title": event.target.value })} />
               </div>
-              <div className="button-container">
-                <div onClick={() => this.requestNewNotice()}
-                  className="submit">
-                  등록</div>
-                <div onClick={() => this.setState({ newNoticeDialog: false, "notice-title": "", "notice-content:": "" })}
-                  className="cancel">
-                  취소</div>
+              <div>
+                <TextController
+                  item={{ content: "" }}
+                  getValue={(data) =>
+                    this.onChangeNoticeContent(data)} />
               </div>
-            </Modal.Content>
-          </NoticeModal>
-          : null}
+            </div>
+            <div className="button-container">
+              <div onClick={() => this.requestNewNotice()}
+                className="submit">
+                등록</div>
+              <div onClick={() => this.setState({ newNoticeDialog: false, "notice-title": "", "notice-content:": "" })}
+                className="cancel">
+                취소</div>
+            </div>
+          </Modal.Content>
+        </NoticeModal>
+        : null}
 
+      {this.state.editNoticeDialog
+        ?
+        <NoticeModal
+          open={this.state.editNoticeDialog}
+          onClose={() => this.setState({ newNoticeDialog: false })}>
 
-        <Wrapper>
+          <div className="close-box" onClick={() => this.setState({ newNoticeDialog: false })} >
+            <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
+          </div>
 
-          {lastest ?
-            <React.Fragment>
-              <div
-                style={{ display: "flex", cursor: "pointer" }}
-                onClick={() => this.setState({ noticeDetail: true })}>
+          <div className="header-txt">
+            <p style={{ fontSize: "24px", fontWeight: "500", color: "#707070", fontFamily: "Noto Sans KR", }}>공지사항 수정하기</p>
+          </div>
+
+          <Modal.Content>
+            {/* <div className="header-txt"> */}
+            {/* <h4>새로운 공지사항을 등록합니다.</h4> */}
+            {/* </div> */}
+            <div className="body-container">
+              <div className="title-container">
+                <div>
+                  <h3 style={{ color: "#707070" }}>제목</h3>
+                </div>
+                <input
+                  type="text" className="inputText"
+                  value={this.state["notice-title"]}
+                  onChange={event =>
+                    this.setState({ "notice-title": event.target.value })} />
+              </div>
+              <div>
+                <TextController
+                  item={{ content: this.state["notice-content"] }}
+                  getValue={(data) =>
+                    this.onChangeNoticeContent(data)} />
+              </div>
+            </div>
+            <div className="button-container">
+              <div onClick={() => this.requestEditNotice()}
+                className="submit">
+                수정</div>
+              <div onClick={() => this.setState({ editNoticeDialog: false, "notice-title": "", "notice-content:": "" })}
+                className="cancel">
+                취소</div>
+            </div>
+          </Modal.Content>
+        </NoticeModal>
+        : null}
+
+      <Wrapper>
+
+        {lastest ?
+          <React.Fragment>
+            <div onClick={() => this.setState({ noticeDetail: true })}>
+              <div style={{ display: "flex", cursor: "pointer" }}>
                 <i className="icon announcement" style={{ fontSize: "20px" }}></i>
                 {/* <p style={{ fontWeight: "900" }}>[공지]</p> */}
                 <p style={{ marginLeft: "10px" }}>{lastest.title}</p>
               </div>
+            </div>
 
-              {count > 1
-                ? <div onClick={() => this.setState({ noticeDialog: true })}
-                  className="more">[더보기]</div>
-                : null}
+            {count > 1
+              ? <div onClick={() => this.setState({ noticeDialog: true })}
+                className="more"><p>[더보기]</p></div>
+              : null}
 
-            </React.Fragment>
-            : null}
+          </React.Fragment>
+          : null}
 
-          {user_id === GroupDetail.user_id ?
-            <div
-              className="notice-box new-notice"
-              onClick={() => { this.setState({ newNoticeDialog: true }) }}>
-              새 공지사항 등록하기</div> : null}
+        {user_id === GroupDetail.user_id ?
+          <div
+            className="new-notice"
+            onClick={() => { this.setState({ newNoticeDialog: true }) }}>
+            <p style={{ color: "white" }}>새 공지사항 등록하기</p>
+          </div> : null}
 
 
-        </Wrapper>
-      </React.Fragment>
+      </Wrapper>
+    </React.Fragment>
     )
   }
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   GetLastestGroupNoticeRequest, GetTotalCountGroupNoticeRequest,
-  CreateGroupNoticeRequest,
+  CreateGroupNoticeRequest, UpdateGroupNoticeRequest, DeleteGroupNoticeRequest
 } from "redux/modules/group";
 import GroupNotice from "components/Groups/GroupNotice"
 
@@ -40,7 +40,13 @@ class GroupNoticeContainer extends Component {
   render() {
     return (
       <React.Fragment>
-        <GroupNotice {...this.props} {...this.state} init={this.init} CreateGroupNoticeRequest={CreateGroupNoticeRequest} />
+        <GroupNotice
+          {...this.props} {...this.state}
+          init={this.init}
+          CreateGroupNoticeRequest={CreateGroupNoticeRequest}
+          UpdateGroupNoticeRequest={UpdateGroupNoticeRequest}
+          DeleteGroupNoticeRequest={DeleteGroupNoticeRequest}
+        />
       </React.Fragment>
     )
   }
