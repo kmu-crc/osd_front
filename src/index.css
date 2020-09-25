@@ -25,7 +25,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, monospace, 
   "Courier New", Consolas;
 }
-
+a{
+  color: inherit;
+}
 
 .partial-scroll-on{
   -webkit-transition: all 0.5s;

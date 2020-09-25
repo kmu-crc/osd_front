@@ -925,7 +925,7 @@ export function DeleteDesignInGroupRequest(id, designid) {
   }
 }
 
-
+// predicated
 export function GetAllNoticeYourGroupRequest(id) {
   const url = `${host}/group/getAllNotiMygroup/${id}`;
   // console.log("URL:", url);
@@ -976,8 +976,32 @@ export function HasReadNoticeRequest(id, token) {
   })
 }
 
-
-
+// group-notice
+export function DeleteGroupNoticeRequest(token, obj) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/deleteGroupNotice/${obj.notice_id}`
+    return fetch(url, {
+      headers: { "x-access-token": token },
+      method: "DELETE",
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(error => reject(error));
+  });
+}
+export function UpdateGroupNoticeRequest(token, obj) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/updateGroupNotice`
+    return fetch(url, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(obj)
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(error => reject(error));
+  });
+}
 export function CreateGroupNoticeRequest(token, obj) {
   return new Promise((resolve, reject) => {
     const url = `${host}/group/createGroupNotice`
