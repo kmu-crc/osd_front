@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import profile from "source/thumbnail.png";
+import DateFormat from "modules/DateFormat";
+import reicon from "source/re_.svg";
 // import { Icon } from "semantic-ui-react";
 // import StyleGuide from "StyleGuide";
 // import TextFormat from "modules/TextFormat";
 // import NumberFormat from "modules/NumberFormat";
-import DateFormat from "modules/DateFormat";
-import { Icon } from "semantic-ui-react";
-import reicon from "source/re_.svg";
+// import { Icon } from "semantic-ui-react";
 
 const CustomIcon =styled.div`
 width:${props => props.width}px;
@@ -146,7 +146,7 @@ class DesignerBoardElement extends Component {
           </div>
           } */}
           {
-            item.status=="response"?
+            item.status==="response"?
             <div className="writer">
               <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
               <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>

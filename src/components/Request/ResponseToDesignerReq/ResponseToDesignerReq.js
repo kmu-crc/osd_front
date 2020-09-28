@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 import ContentBox from "components/Commons/ContentBox";
-// import { Dropdown } from "semantic-ui-react"
 import Loading from "components/Commons/Loading";
 import { InputPriceNew } from "components/Commons/InputItem/InputPriceNew";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
@@ -10,7 +9,8 @@ import { TextControllerClassic } from "components/Commons/InputItem/TextControll
 import FileIcon from "components/Commons/FileIcon";
 import category_icon from "source/category_icon.svg";
 import { alert } from "components/Commons/Alert/Alert";
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { Dropdown } from "semantic-ui-react"
+// import { confirm } from "components/Commons/Confirm/Confirm";
 const LocationList = [
   { value: 0, text: "서울특별시" },
   { value: 1, text: "부산광역시" },
@@ -39,7 +39,7 @@ const CustomIcon=styled.div`
   padding:${props => props.padding}px;
   margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
   margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
-  display:${props=>props.isNon==true?"none":"block"}
+  display:${props=>props.isNon===true?"none":"block"}
 `
 const Wrapper = styled(ContentBox)`
     width:100%;
@@ -76,11 +76,11 @@ const MainBox = styled.div`
 `;
 
 const FormBox = styled.div`
-  width:${props=>props.isHalf==true?"50%":"100%"};
+  width:${props=>props.isHalf===true?"50%":"100%"};
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
-  padding:${props=>props.isHalf==true?"72px 50px 72px 50px":"72px 113px 72px 113px"};
-  margin-right:${props=>props.isHalf==true?"44px":"10px"};
+  padding:${props=>props.isHalf===true?"72px 50px 72px 50px":"72px 113px 72px 113px"};
+  margin-right:${props=>props.isHalf===true?"44px":"10px"};
 
   .wrapper{
     width:100%;
@@ -170,19 +170,6 @@ const FormBox = styled.div`
 
 `;
 
-const InputTextarea = styled.textarea`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
-  border-radius:20px;
-  font-family:Noto Sans KR;
-  font-size:20px;
-  background-color:#E9E9E9;
-  outline:none;
-  border:0px;
-  readonly;
-  padding: 0.67857143em 1em;
-
-`;
 const TagList = styled.div`
   width: 100%;
   display: flex;
@@ -391,7 +378,7 @@ class ResponseToDesignerReq extends Component {
 
               <div className="wrapper flex centering">
                 <div className="label">디자인 소유권</div>
-                <div className="textBox">{detail.ownership <= 0 ? "의뢰자" : "디자이너"}</div>
+                <div className="textBox">{detail.ownership <= 0 ? "구매자" : "디자이너"}</div>
               </div>
 
               {/* <div className="wrapper flex centering">

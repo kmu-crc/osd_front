@@ -142,11 +142,14 @@ const FormBox = styled.div`
     height:30px;
     color:#707070;
   }
+  .flex_{
+    display:flex;
+  }
   .textBox{
     font-family:Noto Sans CJK KR, Regular;
     font-size:17px;
     line-height:17px;
-    display:flex;
+    // display:flex;
   }
 
 `;
@@ -240,6 +243,8 @@ class Detail extends Component {
                   <div className="wrapper flex centering">
                     <div className="label">내용</div>
                     <div className="textBox" dangerouslySetInnerHTML={{ __html: `${Detail.content || ""}` }}></div>
+                  
+                    
                   </div>
                 </FormBox>
               </div>
@@ -266,7 +271,7 @@ class Detail extends Component {
 
                     <div className="wrapper flex centering">
                       <div className="label">카테고리</div>
-                      <div className="textBox">
+                      <div className="textBox flex_">
                         {/* {category_level1 ? category_level1 + (category_level2 ? `>` : "") : null}{category_level2} */}
                         {category_level1}
                         {category_level2?<CustomIcon width="15" height="15" marginRight="31" marginLeft="31" imgURL={category_icon}/>:null}
@@ -384,7 +389,7 @@ class Detail extends Component {
 
                     <div className="wrapper flex centering">
                       <div className="label">카테고리</div>
-                      <div className="textBox">{category_level1 ? category_level1 + " > " : "-"}{category_level2}</div>
+                      <div className="textBox flex_">{category_level1 ? category_level1 + " > " : "-"}{category_level2}</div>
                     </div>
 
                     <div className="wrapper flex centering add_margin_bottom">

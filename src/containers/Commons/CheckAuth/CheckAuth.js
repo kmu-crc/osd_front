@@ -12,7 +12,7 @@ export default function CheckAuth(Components) {
     state = {
       valid: false
     }
-    componentWillMount() {
+    componentDidMount() {
       this.checkAuth();
     }
     componentDidUpdate(nextProps) {

@@ -11,22 +11,13 @@ import download from "source/down.svg";
 import who from "source/thumbnail.png";
 import CardSourceDetailContainer from "containers/Items/CardSourceDetailContainer";
 import ItemStepContainer from "containers/Items/ItemStepContainer";
-import { Rating } from 'semantic-ui-react'
+// import { Rating } from 'semantic-ui-react'
 import { FileUploadRequest } from "actions/Uploads";
-import FileIcon from "components/Commons/FileIcon";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+// import FileIcon from "components/Commons/FileIcon";
 const MessageBox = styled.div`
   padding:10px;
-`
-
-const FileImage=styled.div`
-width:344px;
-height:344px;
-max-height:min-content;
-background-image:url(${props=>props.imgURL});
-background-repeat: no-repeat;
-background-size: contain;
 `
 const CustomIcon =styled.div`
 width:${props => props.width}px;
@@ -37,7 +28,7 @@ background-size: contain;
 padding:${props => props.padding}px;
 margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
 margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
-display:${props=>props.isNon==true?"none":"block"}
+display:${props=>props.isNon===true?"none":"block"}
 `
 const CustomButton = styled.div`
     min-width:${props => props.width}px;
@@ -330,98 +321,99 @@ const Introduction = styled.div`
     }
   }
 `;
-const TagPiece = styled.div`
-    width: max-content;
-    min-width: 30px;
-    background-color: #EFEFEF;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    color: #707070;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    .close {
-        margin-left: 10px;
-        width: max-content;
-        height: max-content;
-        padding: 0px 2px;
-    }
-`;
+// const TagPiece = styled.div`
+//     width: max-content;
+//     min-width: 30px;
+//     background-color: #EFEFEF;
+//     margin-right: 5px;
+//     margin-bottom: 5px;
+//     color: #707070;
+//     padding: 5px;
+//     padding-left: 10px;
+//     padding-right: 10px
+//     border-radius: 15px;
+//     display: flex;
+//     justify-content: space-between;
+//     .close {
+//         margin-left: 10px;
+//         width: max-content;
+//         height: max-content;
+//         padding: 0px 2px;
+//     }
+// `;
 
-const CoverGrident = styled.div`
-  display:${props => props.isGradient ? "block" : "none"};
-  width:100%;
-  height:100%;
-  position:absolute;
-  z-index:900;
-  left:0;
-  top:0;
-  background:${props => props.isGradient ? "linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255,1.0))" : null};
-`
-const Board = styled.div`
-  // *{border: 1px solid red;}
-  width: 1600px;
-  height: ${props => props.height};
-  background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px;
-  opacity: 1;
-  padding: 45px 25px 20px 30px; // 90px 51px 45px 60px;
-  font-family: Noto Sans KR;
-  color: #000000;
-  font-weight: 300;
-  font-size: 19px;
-  line-height: 28px;
-  text-align: left;
-  position:relative;
-  .title {
-    font-weight: 500;
-  }
-  .element {
-    margin-top: 22px;
-  }
-  .element-reply {
-    margin-top: 14px;
-    padding:10px;
+// const CoverGrident = styled.div`
+//   display:${props => props.isGradient ? "block" : "none"};
+//   width:100%;
+//   height:100%;
+//   position:absolute;
+//   z-index:900;
+//   left:0;
+//   top:0;
+//   background:${props => props.isGradient ? "linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255,1.0))" : null};
+// `
+
+// const Board = styled.div`
+//   // *{border: 1px solid red;}
+//   width: 1600px;
+//   height: ${props => props.height};
+//   background: #FFFFFF;
+//   box-shadow: 5px 5px 10px #00000029;
+//   border-radius: 20px;
+//   opacity: 1;
+//   padding: 45px 25px 20px 30px; // 90px 51px 45px 60px;
+//   font-family: Noto Sans KR;
+//   color: #000000;
+//   font-weight: 300;
+//   font-size: 19px;
+//   line-height: 28px;
+//   text-align: left;
+//   position:relative;
+//   .title {
+//     font-weight: 500;
+//   }
+//   .element {
+//     margin-top: 22px;
+//   }
+//   .element-reply {
+//     margin-top: 14px;
+//     padding:10px;
   
-  .first {
-    margin-top: 50px; 
-  }
-  .input-wrapper {
-     width: 735px;
-     height: 88px;
-     border-radius: 21px;
-     background: #E9E9E9;
-     padding: 15px;
-     textarea {
-      width: 705px;
-      height: 58px;
-      border: none;
-      background: none;
-      resize: none;
-    }
-  }
-  .button {
-    width: 205px;
-    height: 88px;
-    margin-left: 39px;
-    border: 3px solid #E9E9E9;
-    cursor: default;
-    .text {
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 32px;
-      width: max-content;
-      font-weight: 500;
-      font-size: 17px;
-      line-height: 25px;
-      text-align: left;
-    }
-  }
-`;
+//   .first {
+//     margin-top: 50px; 
+//   }
+//   .input-wrapper {
+//      width: 735px;
+//      height: 88px;
+//      border-radius: 21px;
+//      background: #E9E9E9;
+//      padding: 15px;
+//      textarea {
+//       width: 705px;
+//       height: 58px;
+//       border: none;
+//       background: none;
+//       resize: none;
+//     }
+//   }
+//   .button {
+//     width: 205px;
+//     height: 88px;
+//     margin-left: 39px;
+//     border: 3px solid #E9E9E9;
+//     cursor: default;
+//     .text {
+//       margin-left: auto;
+//       margin-right: auto;
+//       margin-top: 32px;
+//       width: max-content;
+//       font-weight: 500;
+//       font-size: 17px;
+//       line-height: 25px;
+//       text-align: left;
+//     }
+//   }
+// `;
 const Content = styled.div`
   width: ${props => props.width || 1094}px;
   height: ${props => props.height};
@@ -528,42 +520,42 @@ const Content = styled.div`
     margin-bottom:12px;
   }
 `;
-const Label = styled.label`
-    min-width:35px;
-    min-height:35px;
-    border:1px solid #dddddd;
-    font-weight:500;
-    color:#707070;
-    text-align:center;
-    margin:5px;
-    border-radius:20px;
-    &:hover{
-        cursor:pointer;
-    }
-`
-const ExpandingButton = styled.div`
-    width:${props => props.width}px;
-    height:30px;
-    margin-top:10px;
-    // margin-bottom:10px;
-    display:flex;
-    justify-content:center;
-    .button{
-        width:100%;
-        height:100%;
-        // width:80%;
-        // height:100%;
-        display:flex;
-        justify-content:center;
-        align-items:cfius:20px;
-        // background-color:#707070;
-        cursor:pointer;
-    }
-    .font{
-        font-size:15px;
-        color:gray;
-    }
-`;
+// const Label = styled.label`
+//     min-width:35px;
+//     min-height:35px;
+//     border:1px solid #dddddd;
+//     font-weight:500;
+//     color:#707070;
+//     text-align:center;
+//     margin:5px;
+//     border-radius:20px;
+//     &:hover{
+//         cursor:pointer;
+//     }
+// `
+// const ExpandingButton = styled.div`
+//     width:${props => props.width}px;
+//     height:30px;
+//     margin-top:10px;
+//     // margin-bottom:10px;
+//     display:flex;
+//     justify-content:center;
+//     .button{
+//         width:100%;
+//         height:100%;
+//         // width:80%;
+//         // height:100%;
+//         display:flex;
+//         justify-content:center;
+//         align-items:cfius:20px;
+//         // background-color:#707070;
+//         cursor:pointer;
+//     }
+//     .font{
+//         font-size:15px;
+//         color:gray;
+//     }
+// `;
 
 const MemberBox = styled.div`
     width:300px;
@@ -725,13 +717,13 @@ class ItemPurchase extends Component {
     console.log(this.props);
     const item = this.props.item;
     const week=["일","월","화","수","목","금","토"];
-    const { expandingContent, expandingReview, expandingBoard } = this.state;
-    const { score } = this.props.item;
-    let tag = this.props.ItemDetail.tag + "";
+    // const { expandingContent, expandingReview, expandingBoard } = this.state;
+    // const { score } = this.props.item;
+    // let tag = this.props.ItemDetail.tag + "";
 
-    const RenderStar = () => {
-      return <Rating size="massive" name="score" icon='star' defaultRating={parseInt(score, 10)} maxRating={5} disabled />
-    }
+    // const RenderStar = () => {
+    //   return <Rating size="massive" name="score" icon='star' defaultRating={parseInt(score, 10)} maxRating={5} disabled />
+    // }
     const MemberListBox = () => {
       return (
         <MemberBox>
@@ -754,34 +746,34 @@ class ItemPurchase extends Component {
         </MemberBox>
       );
     }
-    const Type_productContent=()=>{
-      return <Content
-      id="contents_rgn"
-      style={{ marginTop: "15px", overflow: "hidden" }}
-      // height={expandingContent ? "100%" : "400px"}
-      width={1600}>
+    // const Type_productContent=()=>{
+    //   return <Content
+    //   id="contents_rgn"
+    //   style={{ marginTop: "15px", overflow: "hidden" }}
+    //   // height={expandingContent ? "100%" : "400px"}
+    //   width={1600}>
 
-    </Content>
-    }
-    const Type_adviceContent=()=>{
-      return <Content
-      id="contents_rgn"
-      style={{ marginTop: "15px", overflow: "hidden" }}
-      // height={expandingContent ? "100%" : "400px"}
-      width={1600}>
+    // </Content>
+    // }
+    // const Type_adviceContent=()=>{
+    //   return <Content
+    //   id="contents_rgn"
+    //   style={{ marginTop: "15px", overflow: "hidden" }}
+    //   // height={expandingContent ? "100%" : "400px"}
+    //   width={1600}>
 
-    </Content>
-    }
+    // </Content>
+    // }
 
-    const Type_closeContent=()=>{
-      return <Content
-      id="contents_rgn"
-      style={{ marginTop: "15px", overflow: "hidden" }}
-      // height={expandingContent ? "100%" : "400px"}
-      width={1600}>
+    // const Type_closeContent=()=>{
+    //   return <Content
+    //   id="contents_rgn"
+    //   style={{ marginTop: "15px", overflow: "hidden" }}
+    //   // height={expandingContent ? "100%" : "400px"}
+    //   width={1600}>
 
-    </Content>
-    }
+    // </Content>
+    // }
     return item ?
       <React.Fragment>
         <Wrapper>
@@ -831,7 +823,7 @@ class ItemPurchase extends Component {
             width={1600}>
             
 {/** -------------------- CLOSE CONTENT ----------------------- */}
-            {item&&(item.type==0||item.type==3||item.type==4||item.type==5||item.type==6)?
+            {item&&(item.type===0||item.type===3||item.type===4||item.type===5||item.type===6)?
             <React.Fragment>
                   <div className="title">아이템 상세내용</div>
                   {item && item.upload_type === "blog"? <div className="detail_board" id="detail_board">
@@ -846,7 +838,7 @@ class ItemPurchase extends Component {
             </React.Fragment>
             :null}
 {/** -------------------- PROJECT ----------------------- */}
-            {item&&(item.type==1)? 
+            {item&&(item.type===1)? 
             <React.Fragment>
               <div className="title">아이템 상세내용</div>
                 {item && item.upload_type === "blog"? 
@@ -862,7 +854,7 @@ class ItemPurchase extends Component {
             </React.Fragment>
             :null}
 {/** -------------------- ADVICE ----------------------- */}
-            {item&&(item.type==2)?
+            {item&&(item.type===2)?
             <React.Fragment>
 
               <div className="title margin_bottom_s">자문/상담</div>
@@ -884,7 +876,7 @@ class ItemPurchase extends Component {
                     +(createtime.getHours()<=9?'0'+createtime.getHours():createtime.getHours())
                     +":"+(createtime.getMinutes()<=9?'0'+createtime.getMinutes():createtime.getMinutes())
                     return( 
-                    <MessageWrapper isMy={item.from_id==this.props.userInfo.uid}> 
+                    <MessageWrapper isMy={item.from_id===this.props.userInfo.uid}> 
                     {
                       console.log(
                         String(item.filename).substring(String(item.filename).lastIndexOf('.'),String(item.filename).length))
@@ -896,10 +888,10 @@ class ItemPurchase extends Component {
                           <div className="msg_time">{msgTime}</div>    
                       </React.Fragment>
                       :
-                      item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)==".jpg"||
-                      item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)==".JPG"||
-                      item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)==".png"||
-                      item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)==".PNG"?
+                      item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)===".jpg"||
+                      item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)===".JPG"||
+                      item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)===".png"||
+                      item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)===".PNG"?
                       <React.Fragment>
                         <div className="file_bubble">
                             {/* <FileImage imgURL={item.file_url}/> */}
@@ -918,7 +910,7 @@ class ItemPurchase extends Component {
                           {/* <FileIcon type={"application"} extension={item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)}/> */}
                           <div className="file_bubble">
                             <CustomIcon width={19} height={19} imgURL={docu}/>{item.filename}
-                            <CustomIcon isNon={item.from_id==this.props.userInfo.uid} width={19} height={19} imgURL={download}/>
+                            <CustomIcon isNon={item.from_id===this.props.userInfo.uid} width={19} height={19} imgURL={download}/>
                           </div>
                         </a>
                         <div className="msg_time">{msgTime}</div>    
@@ -985,7 +977,7 @@ class ItemPurchase extends Component {
             </React.Fragment>
             :null}
 {/** -------------------- PRODUCT CONTENT ----------------------- */}
-            {item&&(item.type==7)?
+            {item&&(item.type===7)?
             <React.Fragment>
                     <div className="title">제작품 문의</div>
             </React.Fragment>

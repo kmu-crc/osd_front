@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-// import { Link } from "react-router-dom";
 import styled from 'styled-components';
-// import { Icon } from "semantic-ui-react";
 import { Dropdown } from "semantic-ui-react"
-// import { InputTag } from "components/Commons/InputItem/InputTag";
 import noimg from "source/noimg.png";
 import { RedButton, GrayButton } from "components/Commons/CustomButton";
 import { alert } from "components/Commons/Alert/Alert";
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { Link } from "react-router-dom";
+// import { Icon } from "semantic-ui-react";
+// import { InputTag } from "components/Commons/InputItem/InputTag";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 const MainBox = styled.div`
   width:100%;
   padding:30px;

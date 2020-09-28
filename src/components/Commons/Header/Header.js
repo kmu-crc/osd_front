@@ -9,7 +9,7 @@ import { SetSession } from "modules/Sessions";
 import { Icon } from "semantic-ui-react";
 import AlarmContainer from "containers/Commons/AlarmContainer";
 import { alert } from "components/Commons/Alert/Alert";
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 
 const LogoWrapper = styled.div`
   margin: 0;
@@ -184,8 +184,8 @@ class Header extends Component {
     this.getNews();
     window.addEventListener("click", this.onClickEvent, true);
   }
-  componentWillUpdate(nextProps) {
-    if (this.props != nextProps) {
+  componentDidUpdate(nextProps) {
+    if (this.props !== nextProps) {
       if (nextProps.signed) {
         window.location.reload();
       }
@@ -193,7 +193,7 @@ class Header extends Component {
     return true;
   }
   onClickEvent(event){
-    if(event.target.id != "popmenu")this.setState({active:false});
+    if(event.target.id !== "popmenu")this.setState({active:false});
   }
   searchlist=()=>{
     
@@ -284,6 +284,8 @@ class Header extends Component {
     const itemActive = (location.indexOf("/product") !== -1 || (location.indexOf("/createproduct") !== -1)|| (location.indexOf("/productModify") !== -1)|| location.indexOf("/productDetail") !== -1) && (location.indexOf(`/request`) === -1)
     const requestActive = (location.indexOf("/request") !== -1)
     const searchtype = designerActive ? "designer" : makerActive ? "maker" : itemActive ? "item" : null;
+
+    const pattern_eng= /[a-zA-Z]/;
 
     // active alarm icon
     return (<HeaderContainer>
@@ -378,7 +380,7 @@ class Header extends Component {
 
             <div onClick={async () => await this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
               <div  style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
-              <div  style={{ width: "max-content", height: "35px", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={6} /></div>
+              <div  style={{ width: "max-content", height: "35px", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={pattern_eng.test(userInfo.nickName)?6:3} /></div>
               {this.state.active ?
                 <UserMenu id="popmenu">
                   <Link to={`/mypage`}>

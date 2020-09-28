@@ -5,8 +5,8 @@ import ScrollList from "components/Commons/ScrollList";
 import Expert from "components/Experts/Expert";
 
 class ScrollDesignerListContainer extends Component {
-  componentWillMount() {
-    this.props.GetDesignerListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
+  async componentDidMount() {
+    await this.props.GetDesignerListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
   }
 
   getList = (page) => {

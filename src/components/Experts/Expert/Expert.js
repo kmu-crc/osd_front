@@ -103,7 +103,7 @@ class Expert extends Component {
 
   onClickItem(event){
     const type = this.props.data.type||this.props.type;
-    type=="designer"?
+    type==="designer"?
     window.location.href="/designerDetail/"+this.props.data.user_id
     :
     window.location.href="/makerDetail/"+this.props.data.user_id;
@@ -111,6 +111,7 @@ class Expert extends Component {
   }
   render() {
     const expert = this.props.data || empty;
+    // console.log(expert);
     return (
       <Wrapper onClick={this.onClickItem}>
         {/* profile */}

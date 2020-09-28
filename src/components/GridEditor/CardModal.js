@@ -14,19 +14,18 @@ import { GetDesignBoardRequest, } from "actions/Designs/DesignBoard";
 import { UpdateDesignTime } from "actions/Designs/UpdateDesign";
 
 import { GetItemStepsRequest, UpdateCardSourceRequest, DeleteItemCardRequest } from "actions/Item";
-
 import CardSourceDetailContainer from 'containers/Items/CardSourceDetailContainer';
-import CardComment from './CardComment';
 
 import { FormThumbnailEx } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
 import TextFormat from 'modules/TextFormat';
 import Loading from "components/Commons/Loading";
-
-import {confirmAlert} from "react-confirm-alert";
-import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+
+// import CardComment from './CardComment';
+// import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
+// import {confirmAlert} from "react-confirm-alert";
 const ContentBorder = styled.div`
    height: 29px;
    font-family: Noto Sans KR;

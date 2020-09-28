@@ -8,7 +8,7 @@ import HaveInGalleryContainer from "containers/Gallery/HaveInGalleryContainer/Ha
 import CreateGroupContainer from "containers/Groups/CreateGroupContainer/CreateGroupContainer"
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { alert } from "components/Commons/Alert/Alert";
-import { Confirm } from "components/Commons/Confirm/Confirm";
+// import { Confirm } from "components/Commons/Confirm/Confirm";
 
 
 const LocationList = [
@@ -439,7 +439,7 @@ class ModifyMaker extends Component {
 
 
     // 예외처리
-    if(data.user_id == "" || data.user_id == null){
+    if(data.user_id === "" || data.user_id == null){
           await alert("닉네임을 입력해주세요","확인");
           return;
     }else if(data.category_level1<=0||data.category_level1==null){

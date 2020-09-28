@@ -6,8 +6,8 @@ import Expert from "components/Experts/Expert";
 import Loading from "components/Commons/Loading";
 
 class ScrollTopExpertContainer extends Component {
-  componentWillMount() {
-    this.props.GetTopExpertListRequest();
+  async componentWillMount() {
+    await this.props.GetTopExpertListRequest();
   }
 
   render() {

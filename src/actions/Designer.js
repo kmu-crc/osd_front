@@ -5,7 +5,7 @@ import host from "config";
 export const GetDesignerListRequest = (page, sort, cate1, cate2, keyword) => {
   return (dispatch) => {
     const url =  `${host}/designer/designerList/${page}/${sort}/${cate1}/${cate2}/${keyword}`
-    console.log(url);
+    // console.log(url);
     return fetch(url, {
       headers: { "Content-Type": "application/json" },
       method: "GET"

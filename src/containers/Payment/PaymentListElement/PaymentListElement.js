@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import profile from "source/thumbnail.png";
+import DateFormat from "modules/DateFormat";
 // import { Icon } from "semantic-ui-react";
 // import StyleGuide from "StyleGuide";
 // import TextFormat from "modules/TextFormat";
 // import NumberFormat from "modules/NumberFormat";
-import DateFormat from "modules/DateFormat";
-import { Icon } from "semantic-ui-react";
+// import { Icon } from "semantic-ui-react";
 
 // CSS STYLING
 const ListElement = styled.div`
@@ -98,7 +98,7 @@ class PaymentListElement extends Component {
             {item.payment_title || "글 제목"}
           </div>
           {
-            item.status=="response"?
+            item.status==="response"?
             <div className="writer">
               <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.s_img} /></div>
               <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>

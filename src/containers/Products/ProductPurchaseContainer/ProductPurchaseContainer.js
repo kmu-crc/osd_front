@@ -14,7 +14,7 @@ import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 import { GetMyPointRequest, } from "actions/Point";
 import { GetPaymentMessageRequest, CreatePaymentMessageRequest, /*DeleteItemQuestionRequest*/ } from "actions/Item";
 import { alert } from "components/Commons/Alert/Alert";
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 class ProductPurchaseContainer extends Component {
   constructor(props) {
     super(props);

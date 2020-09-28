@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Grid } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import TextFormat from "modules/TextFormat"
+// import { Grid } from "semantic-ui-react";
 
 // css styling
 
@@ -66,22 +66,3 @@ class Footer extends Component {
 }
 
 export default Footer;
-
-{/* <Grid padded={true} columns={2}>
-<Grid.Row>
-  <Grid.Column className="copyright">
-    <div onClick={this.goNewWorld}>
-      <TextFormat txt="Copyright @ 2020 Open Design Market Inc." />
-    </div>
-  </Grid.Column>
-  <Grid.Column as="ul" className="list">
-    <Link to="/">사이트 소개</Link>
-    <Link to="/">이용약관</Link>
-    <Link to="/">개인정보보호정책</Link>
-  </Grid.Column>
-</Grid.Row>
-</Grid> */}
-{/* <Link to="/Info/info">사이트 소개</Link> */}
-{/* <Link to="/Term/term">이용약관</Link> */}
-{/* <Link to="/Privacy/privacy">개인정보보호정책</Link> */}
-{/* <Link>Contact Us</Link> */}
