@@ -13,11 +13,11 @@ import { GetItemSearchCountRequest } from "actions/Design";
 import { GetMakerSearchCountRequest } from "actions/Maker";
 import { GetDesignerSearchCountRequest } from "actions/Designer";
 class HeaderContainer extends Component {
-  componentWillMount(){
+  // componentWillMount(){
     // this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword)
     // .then(()=>this.props.GetMakerListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword))
     // .then(()=>this.props.GetDesignerListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword));
-  }
+  // }
   render() {
     return (<Header {...this.props} />);
   }

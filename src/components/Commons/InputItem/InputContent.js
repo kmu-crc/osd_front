@@ -164,33 +164,7 @@ const NewController = styled.li`
   text-align: center;
   cursor: pointer;
 `;
-const Tip = styled.div`
-  .wrapper {
-    z-index: 900;
-    position: absolute;
-    display: flex;
-    visibility: hidden;
-  }
-  .tip-txt {
-    display: none;
-    width: max-content;
-    background-color: #707070;
-    color: #EFEFEF;
-    text-align: center;
-    border-radius: 6px;
-    padding: 10px 5px;
-    margin-top: -5px;
-    font-size: 14px;
-  }
-  :hover {
-    .wrapper {
-        visibility: visible;
-    }
-    .tip-txt {
-        display: block;
-    }
-  }
-`;
+
 class AddContent extends Component {
   constructor(props) {
     super(props);

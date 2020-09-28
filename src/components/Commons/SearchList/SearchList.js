@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-// import { Grid } from "semantic-ui-react";
 import Sorting from "components/Commons/Sorting";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
@@ -9,7 +8,8 @@ import ScrollItemListContainer from "containers/Products/ScrollProductListContai
 import ScrollMakerListContainer from "containers/Maker/ScrollMakerListContainer";
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
 import { alert } from "components/Commons/Alert/Alert";
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { Grid } from "semantic-ui-react";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 // css styling
 
 const Wrapper = styled.div`
@@ -144,14 +144,50 @@ class SearchList extends Component {
     }
   }
 
-  submitEnter = (e) => {
+  submitEnter = async(e) => {
     if (e.keyCode === 13) {
       this.onSearchSubmit(this.state.keyword);
+      const location = window.location.pathname;
+
+      const designerActive = (location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1) && (location.indexOf(`/request`) === -1)
+      const makerActive = (location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) && (location.indexOf(`/request`) === -1)
+      const itemActive = (location.indexOf("/product") !== -1 || (location.indexOf("/createproduct") !== -1)|| (location.indexOf("/productModify") !== -1)|| location.indexOf("/productDetail") !== -1) && (location.indexOf(`/request`) === -1)
+      let searchtype = designerActive ? "designer" : makerActive ? "maker" : itemActive ? "item" : null;
+      console.log(this.state.keyword);
+      let countItem =-1;
+      let countMaker=-1;
+      let countDesigner=-1;
+      await this.props.GetItemSearchCountRequest(this.props.sort, this.props.cate1, this.props.cate2, this.state.keyword)
+      .then((data)=>{console.log(data);countItem=data.searchCount==null?-1:data.searchCount;});
+      await this.props.GetMakerSearchCountRequest(this.props.sort, this.props.cate1, this.props.cate2, this.state.keyword)
+      .then((data)=>{console.log(data);countMaker=data.searchCount==null?-1:data.searchCount;});
+      await this.props.GetDesignerSearchCountRequest(this.props.sort, this.props.cate1, this.props.cate2, this.state.keyword)
+      .then((data)=>{console.log(data);countDesigner=data.searchCount==null?-1:data.searchCount;});
+      if(makerActive){
+        searchtype=countMaker>0?"maker":
+        countDesigner>0?"designer":
+        countItem>0?"item":
+        null;
+      }else if(itemActive){
+        searchtype=countItem>0?"item":
+        countDesigner>0?"designer":
+        countMaker>0?"maker":
+        null;
+      }else{
+          searchtype=countDesigner>0?"designer":
+          countMaker>0?"maker":
+          countItem>0?"item":
+          null;
+      }
+      console.log(searchtype);
+  
+      window.location.href = `/search/${searchtype}/null/${this.state.keyword}`;
+  
     }
   }
 
   onSearchSubmit = async(data) => {
-    if (this.state.keyword == null || this.state.keyword == "") {
+    if (this.state.keyword == null || this.state.keyword === "") {
       await alert("키워드를 입력해주세요");
     } else {
       this.props.history.replace(`/search/${this.props.type}/${this.props.sort}/${this.state.keyword}`);

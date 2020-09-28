@@ -12,6 +12,7 @@ import { Icon } from "semantic-ui-react";
 // import profile from "source/thumbnail.png";
 // import NumberFormat from "modules/NumberFormat";
 // import Item from "components/Items/Item/Item"
+import ArticleModal from "components/Commons/ArticleModal/ArticleModal";
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -410,11 +411,15 @@ const MakerBoard = styled.div`
       padding: 90px 60px 30px 60px;
       margin-bottom:100px;
       .alignRight{
-        text-align:right;
+        display:flex;
+        justify-content:flex-end;
+        .link{
+          width:max-content;
+          cursor:pointer;
+        }
       }
       .redText{
         color:red;
-        cursor:pointer;
         margin:20px;
       }
       .title {
@@ -679,14 +684,16 @@ class MakerDetail extends Component {
 
     this.setState({ isLike: isLike });
   }
-  createNoneRequest = () => {
+  createNoneRequest = (title,content) => {
     const data = {
       type: "maker",
       status: "normal",
       category_level1: this.state.category_level1,
       category_level2: this.state.category_level2,
-      content: this.state.comment,
-      title: this.state.title,
+      // content: this.state.comment,
+      // title: this.state.title,
+      title: title,
+      content: content,
       expert_id: this.props.id || null,
       personal: this.props.id || null,
     };
@@ -863,31 +870,36 @@ class MakerDetail extends Component {
             <MakerBoard>
               <div className="title">메이커 게시판</div>
               <div className="title">
-                <div className="redText alignRight" onClick={this.onClickRequest}>제작 의뢰</div>
+                <div className="redText alignRight"><div className="link" onClick={this.onClickRequest}>제작 의뢰</div></div>
               </div>
               <div className="list">
                 <MakerRequestBoardContainer id={parseInt(this.props.id, 10)} />
               </div>
               {write ?
-                <WriteReview>
-                  <div className="form">
-                    제목:
-                <TitleForm
-                      onChange={event => this.setState({ [event.target.name]: event.target.value })}
-                      value={this.state.title || ""} name="title" />
-                내용:
-                <CommentForm
-                      onChange={event => this.setState({ [event.target.name]: event.target.value })}
-                      value={this.state.comment || ""} name="comment" />
-                  </div>
-                  <div className="contents">
-                    <div className="buttonBox">
-                      <div className="button" onClick={this.createNoneRequest} >
-                        <div className="text" >작성하기</div>
-                      </div>
-                    </div>
-                  </div>
-                </WriteReview>
+                  <ArticleModal
+                  write={this.state.write}
+                  handlerModal = {(write)=>{this.setState({write:write})}}
+                  createNoneRequest={(title,content)=>this.createNoneRequest(title,content)}
+                />
+                // <WriteReview>
+                //   <div className="form">
+                //     제목:
+                // <TitleForm
+                //       onChange={event => this.setState({ [event.target.name]: event.target.value })}
+                //       value={this.state.title || ""} name="title" />
+                // 내용:
+                // <CommentForm
+                //       onChange={event => this.setState({ [event.target.name]: event.target.value })}
+                //       value={this.state.comment || ""} name="comment" />
+                //   </div>
+                //   <div className="contents">
+                //     <div className="buttonBox">
+                //       <div className="button" onClick={this.createNoneRequest} >
+                //         <div className="text" >작성하기</div>
+                //       </div>
+                //     </div>
+                //   </div>
+                // </WriteReview>
                 :
                 <CreateReview onClick={() => this.setState({ write: true })}>
                   <div className="button">

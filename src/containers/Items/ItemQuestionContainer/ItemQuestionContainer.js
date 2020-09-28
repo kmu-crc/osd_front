@@ -29,6 +29,7 @@ class ItemQuestionContainer extends Component {
             this.props.isExpanding(this.props.question.length>1?true:false)
         })
     }
+    
     requestQuestion(data) {
         this.props.CreateItemQuestionRequest(data, this.props.match.params.id, this.props.token)
             .then(res => {

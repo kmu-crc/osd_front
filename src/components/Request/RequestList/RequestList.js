@@ -7,6 +7,7 @@ import Category from "components/Commons/Category";
 import { Modal } from "semantic-ui-react";
 import Cross from "components/Commons/Cross";
 import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
+import ArticleModal from "components/Commons/ArticleModal/ArticleModal";
 
 // CSS STYLING
 const Wrapper = styled.div`
@@ -112,6 +113,7 @@ const WriteNormalArticleModal = styled(Modal)`
     height:max-content;
   }
   .redButtonBox{
+    padding-top:37px;
     width:95%;
     display:flex;
     justify-content:center;
@@ -274,14 +276,16 @@ class RequestList extends Component {
   changeType = (type) => {
     window.location.href = `/request/${type}`;
   };
-  createNoneRequest = () => {
+  createNoneRequest = (title,content) => {
     const data = {
       type: this.props.type,
       status: "normal",
       category_level1: this.state.category_level1,
       category_level2: this.state.category_level2,
-      content: this.state.content,
-      title: this.state.title,
+      // content: this.state.content,
+      // title: this.state.title,
+      title: title,
+      content: content,
       expert_id: this.props.id || null,
       personal: this.props.id || null,
     };
@@ -375,41 +379,46 @@ class RequestList extends Component {
 
         <Content top={25} bottom={75}>
           {write ?
-            <WriteNormalArticleModal open={write} onClose={() => this.setState({ write: false, title: "", comment: "" })}>
-              <div className="close-box" onClick={() => this.setState({ write: false, title: "", comment: "" })}>
-                <Cross style={{cursor:"pointer"}} angle={45} color={"#000000"} weight={3} width={15} height={15} />
-              </div>
-              <div className="form align_item_center">
-                <div className="title_label">제목</div>
-                 <TitleForm
-                  value={this.state.title || ""}
-                  onChange={event => this.setState({ [event.target.name]: event.target.value })}
-                  name="title"
-                />
-                </div>
-                <div className="form form_height">
-                <div className="title_label ">내용</div>
-                <TextControllerClassic
-                  item={{content:this.state.content}}
-                  name={"comment"}
-                  getValue={this.onChangValue}
-                  width="750"
-                  editheight="240"
+                      <ArticleModal
+                      write={this.state.write}
+                      handlerModal = {(write)=>{this.setState({write:write})}}
+                      createNoneRequest={(title,content)=>this.createNoneRequest(title,content)}
+                    />
+            // <WriteNormalArticleModal open={write} onClose={() => this.setState({ write: false, title: "", comment: "" })}>
+            //   <div className="close-box" onClick={() => this.setState({ write: false, title: "", comment: "" })}>
+            //     <Cross style={{cursor:"pointer"}} angle={45} color={"#000000"} weight={3} width={15} height={15} />
+            //   </div>
+            //   <div className="form align_item_center">
+            //     <div className="title_label">제목</div>
+            //      <TitleForm
+            //       value={this.state.title || ""}
+            //       onChange={event => this.setState({ [event.target.name]: event.target.value })}
+            //       name="title"
+            //     />
+            //     </div>
+            //     <div className="form form_height">
+            //     <div className="title_label ">내용</div>
+            //     <TextControllerClassic
+            //       item={{content:this.state.content}}
+            //       name={"comment"}
+            //       getValue={this.onChangValue}
+            //       width="750"
+            //       editheight="240"
                   // initClick={this.state.click}
                   // deleteItem={this.deleteItem}
-                />
-                 {/* <CommentForm
+                // />
+                /* { <CommentForm
                   value={this.state.comment || ""}
                   onChange={event => this.setState({ [event.target.name]: event.target.value })}
                   name="comment"
-                /> */}
-                </div>
-              <div className="form redButtonBox">
-                  <div className="redButton" onClick={this.createNoneRequest} >
-                    <div className="btnText" >작성하기</div>
-                  </div>
-              </div>
-            </WriteNormalArticleModal>
+                /> */
+            //     }</div>
+            //   <div className="form redButtonBox">
+            //       <div className="redButton" onClick={this.createNoneRequest} >
+            //         <div className="btnText" >작성하기</div>
+            //       </div>
+            //   </div>
+            // </WriteNormalArticleModal>
             :
             <CreateNormalArticleButton onClick={() => {
               this.setState({ write: true,content:"" })}}>

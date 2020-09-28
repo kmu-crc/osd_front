@@ -36,19 +36,19 @@ background-size: cover;
 padding:${props => props.padding}px;
 margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
 margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
-display:${props=>props.isNon==true?"none":"block"}
+display:${props=>props.isNon===true?"none":"block"}
 `
-const ResponseMsg =styled.div`
-min-width:${props => props.width}px;
-max-width:${props => props.width}px;
-min-height:${props => props.height}px;
-max-height:${props => props.height}px;
-margin-top:2px;
-margin-right:13px;
-display:flex;
-justify-content:flex-end;
-align-items:flex-end;
-`
+// const ResponseMsg =styled.div`
+// min-width:${props => props.width}px;
+// max-width:${props => props.width}px;
+// min-height:${props => props.height}px;
+// max-height:${props => props.height}px;
+// margin-top:2px;
+// margin-right:13px;
+// display:flex;
+// justify-content:flex-end;
+// align-items:flex-end;
+// `
 const AlarmDropDown = styled.ul`
   position: absolute;
   min-height: max-content;

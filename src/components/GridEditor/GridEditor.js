@@ -10,7 +10,7 @@ import arrow from "source/arrow.svg";
 import SortableDesignSteps from "./SortableDesignSteps";
 import osdcss from "StyleGuide";
 import { alert } from "components/Commons/Alert/Alert";
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 const WhitePane = styled.div`
     position: absolute;
     z-index: 830;

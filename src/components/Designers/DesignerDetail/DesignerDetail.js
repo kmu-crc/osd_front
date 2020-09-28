@@ -8,11 +8,11 @@ import HaveInGalleryContainer from "containers/Gallery/HaveInGalleryContainer/Ha
 import DesignerReviewContainer from "containers/Designer/DesignerReviewContainer";
 import DesignerRequestBoardContainer from "containers/Designer/DesignerRequestBoardContainer";
 import TextFormat from "modules/TextFormat";
-// import NumberFormat from "modules/NumberFormat";
-// import profile from "source/thumbnail.png";
-// import Item from "components/Items/Item/Item"
+import { Modal } from "semantic-ui-react";
+import Cross from "components/Commons/Cross";
+import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
 import ReviewDetailModal from "components/Commons/ReviewDetailModal";
-
+import ArticleModal from "components/Commons/ArticleModal/ArticleModal";
 const LocationList = [
   { value: 0, text: "서울특별시" },
   { value: 1, text: "부산광역시" },
@@ -367,11 +367,15 @@ const DesignerBoard = styled.div`
   padding: 90px 60px 30px 60px;
   margin-bottom:100px;
   .alignRight{
-    text-align:right;
+    display:flex;
+    justify-content:flex-end;
+    .link{
+      width:max-content;
+      cursor:pointer;
+    }
   }
   .redText{
     color:red;
-    cursor:pointer;
     margin:20px;
   }
   .title {
@@ -633,6 +637,7 @@ class DesignerDetail extends Component {
       reviewdetail: false, detail: null,
       create_time:"",
       update_time:"",
+      content:"",
     };
     this.onClickRequest = this.onClickRequest.bind(this);
     this.onClickisLike = this.onClickisLike.bind(this);
@@ -693,14 +698,16 @@ class DesignerDetail extends Component {
 
     this.setState({ isLike: isLike });
   }
-  createNoneRequest = () => {
+  createNoneRequest = (title,content) => {
     const data = {
       type: "designer",
       status: "normal",
       category_level1: this.state.category_level1,
       category_level2: this.state.category_level2,
-      content: this.state.comment,
-      title: this.state.title,
+      // content: this.state.comment,
+      // title: this.state.title,
+      title: title,
+      content: content,
       expert_id: this.props.id || null,
       personal: this.props.id || null,
     };
@@ -879,37 +886,42 @@ class DesignerDetail extends Component {
       <div style={{ marginTop: "61px", display: "flex", flexDirection: "row" }}>
         <DesignerBoard>
           <div className="title">디자이너 게시판</div>
-          <div className="title"><div className="redText alignRight" onClick={this.onClickRequest}>디자인 의뢰</div></div>
+          <div className="title"><div className="redText alignRight" ><div className="link" onClick={this.onClickRequest}>디자인 의뢰</div></div></div>
           <div className="list">
             <DesignerRequestBoardContainer id={parseInt(this.props.id, 10)} />
           </div>
 
           {write ?
-            <WriteReview>
-              <div className="form">
-                제목:
-                <TitleForm
-                  value={this.state.title || ""}
-                  onChange={event => this.setState({ [event.target.name]: event.target.value })}
-                  name="title"
-                />
-                내용:
-                <CommentForm
-                  value={this.state.comment || ""}
-                  onChange={event => this.setState({ [event.target.name]: event.target.value })}
-                  name="comment"
-                />
-              </div>
-              <div className="contents">
-                <div className="buttonBox">
-                  <div className="button" onClick={this.createNoneRequest} >
-                    <div className="text" >작성하기</div>
-                  </div>
-                </div>
-              </div>
-            </WriteReview>
+            <ArticleModal
+              write={this.state.write}
+              handlerModal = {(write)=>{this.setState({write:write})}}
+              createNoneRequest={(title,content)=>this.createNoneRequest(title,content)}
+            />
+            // <WriteReview>
+            //   <div className="form">
+            //     제목:
+            //     <TitleForm
+            //       value={this.state.title || ""}
+            //       onChange={event => this.setState({ [event.target.name]: event.target.value })}
+            //       name="title"
+            //     />
+            //     내용:
+            //     <CommentForm
+            //       value={this.state.comment || ""}
+            //       onChange={event => this.setState({ [event.target.name]: event.target.value })}
+            //       name="comment"
+            //     />
+            //   </div>
+            //   <div className="contents">
+            //     <div className="buttonBox">
+            //       <div className="button" onClick={this.createNoneRequest} >
+            //         <div className="text" >작성하기</div>
+            //       </div>
+            //     </div>
+            //   </div>
+            // </WriteReview>
             :
-            <CreateReview onClick={() => this.setState({ write: true })}>
+            <CreateReview onClick={() => this.setState({ write: true,content:"" })}>
               <div className="button">
                 <div className="font">게시글 작성</div>
               </div>

@@ -184,7 +184,7 @@ export class InputTagNew extends Component {
     render() {
         const TagBox = this.state.tag.map((item, index) => {
             return (
-                item==""?
+                item===""?
                 null:
                 <TagPiece style={{fontWeight:"300"}} key={index}>
                     {item}

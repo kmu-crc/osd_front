@@ -422,7 +422,7 @@ class ModifyRequestToDesigner extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">디자인 소유권</div>
-                  <DropBox id="designerOwnership" selection options={[{ text: "의뢰자", value: 0 }, { text: "디자이너", value: 1 }]}
+                  <DropBox id="designerOwnership" selection options={[{ text: "구매자", value: 0 }, { text: "디자이너", value: 1 }]}
                     onChange={this.onChangeOwnership} value={this.state.ownership} placeholder="선택" />
                 </div>
 

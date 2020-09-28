@@ -42,8 +42,9 @@ const ItemImages = styled.div`
     width: 100%;
     height: 100%; 
     background-image: url(${prop => prop.main});
-    background-size: cover;
+    background-size: contain;
     background-position: center center;
+    background-repeat:no-repeat;
     border-radius: 20px;
   }
   .sub-images {
@@ -699,17 +700,19 @@ class ItemDetail extends Component {
                       :
 
                       <div className="button first">
-                      <Link onClick={async(e)=>{
+                      <Link 
+                        onClick={async(e)=>{
                         return this.props.isbuy>0?
-                          await confirm("이미 구매하신 이력이 존재합니다. 계속 진행하겠습니까?")?null:e.preventDefault()
+                          await confirm("이미 구매하신 이력이 존재합니다. 계속 진행하겠습니까?")?null:window.history.go(-1)
                           :null
-                      }} to={{
-                        pathname: `/payment`, state: {
+                        }} 
+                        to={{
+                          pathname: `/payment`, state: {
                           item:this.props.item,
                           custom:null,
                           options:null
-                        }
-                      }}> 
+                        }}
+                      }> 
                         <div>
                         {/* <div onClick={_ => this.buyThisItem(_, item)} > */}
 
