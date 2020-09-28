@@ -124,7 +124,7 @@ const List = styled.div`
       width: 116px;
       height: 25px;
       text-align: center;
-      font-size: 17px;
+      font-size: 13px;
       line-height: 35px;
       font-family: Noto Sans KR;
       font-weight: 300;

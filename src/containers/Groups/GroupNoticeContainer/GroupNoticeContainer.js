@@ -41,7 +41,8 @@ class GroupNoticeContainer extends Component {
     return (
       <React.Fragment>
         <GroupNotice
-          {...this.props} {...this.state}
+          {...this.props}
+          {...this.state}
           init={this.init}
           CreateGroupNoticeRequest={CreateGroupNoticeRequest}
           UpdateGroupNoticeRequest={UpdateGroupNoticeRequest}
