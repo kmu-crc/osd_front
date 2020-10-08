@@ -27,6 +27,7 @@ const MainBox = styled.div`
     .contentBox{
       width:100%;
       display:flex;
+      justify-content:center;
       padding-top:36px;
     }
 
@@ -80,21 +81,28 @@ const Thumbnail = styled.div`
   display:flex;
   justify-content:center;
   align-items:center;
-  background-image: ${props => `url(${props.imageURL == null ? noimg : props.imageURL})`};
+  background-color:#efefef;
+  background-image: ${props => `url(${props.imageURL == null ? null : props.imageURL})`};
   background-size: cover;
   background-position: center center;
   border-radius:50%;
   margin-left:110px;
+  .label{
+    width:max-content;
+    height:max-content;
+    font-size:20px;
+    color:#707070;
+    font-weight:400;
+  }
 `;
 const FormBox = styled.div`
   *{
-    font-family:Noto Sans KR;
-    font-weight:500;
+
     font-size:20px;
   }
   width:939px;
   box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px;
+  border-radius: 20px;기
   padding-left:59px;
   padding-top:49px;
 
@@ -123,6 +131,8 @@ const FormBox = styled.div`
     display:flex;
   }
   .label{
+    font-family:Noto Sans KR;
+    font-weight:500;
     min-width:157px;
     height:29px;
   }
@@ -147,7 +157,7 @@ const InputText = styled.input.attrs({ type: "text" })`
   outline:none;
   border:0px;
   padding: 0.67857143em 1em;
-
+  font-weight:300;
 `;
 const InputTextarea = styled.textarea`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
@@ -161,7 +171,7 @@ const InputTextarea = styled.textarea`
   readonly;
   resize:none;
   padding: 0.67857143em 1em;
-
+  font-weight:300;
 `;
 const TagPiece = styled.div`
     width: max-content;
@@ -239,9 +249,10 @@ class CreateGroup extends Component {
     event.preventDefault();
     const reader = new FileReader();
     const file = event.target.files[0];
-    reader.onloadend = () => {
-      this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
+    reader.onloadend = async() => {
+      await this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
     }
+    console.log(file.name);
     if (event.target.files[0]) {
       await reader.readAsDataURL(file);
     }
@@ -335,13 +346,18 @@ class CreateGroup extends Component {
             <ThumbnailBox>
               <div className="label">썸네일 등록</div>
               <Margin height={70} />
-              <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
-              <label htmlFor="file">
-                {this.state.thumbnail == null ?
+              <input hidden onChange={this.handleOnChangeThumbnail} id="file_" type="file" />
+              <label htmlFor="file_">
+                <Thumbnail imageURL={this.state.thumbnail} >
+                  <div className="label">
+                 {this.state.thumbnail==null?"첨부":""}
+                 </div>
+                </Thumbnail>
+                {/* {this.state.thumbnail == null ?
                   <div className="thumbnail"><div>첨부</div></div>
                   :
                   <Thumbnail imageURL={this.state.thumbnail} />
-                }
+                } */}
               </label>
             </ThumbnailBox>
 

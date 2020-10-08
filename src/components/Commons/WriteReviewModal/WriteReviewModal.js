@@ -15,47 +15,70 @@ const AddPic = styled.div`
 
     margin-right:${props=>props.marginRight==null?0:props.marginRight}px;
 
-    border:1px solid #d6d6d6;
-    background-color: #e6e6e6;
+    // border:1px solid #d6d6d6;
+    background-color: #efefef;
     background-image: url(${props => props.img});
     background-size:cover;
     border-radius:5px;
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
+    position:relative;
+    .deleteButton{
+        display:none;
+        z-index:999;
+    }
     .text{
-        font-size:15px;
-        color:white;
+        font-size:20px;
+        color:#afafaf;
+    }
+    &:hover{
+        .deleteButton{
+            display:block;
+            width:18px;
+            height:18px;
+            border-radius:11px;
+            color:white;
+            background-color:#afafaf;
+            padding:4px 3px;
+            position:absolute;
+            right:-5px;
+            top:-5px;
+    
+        }
     }
 `
 const TextArea = styled.textarea`
     width:100%;
-    height:384px;
+    height:280px;
     padding:20px;
     font-family:Noto Sans CJK KR, Regular;
-    font-size:20px;
+    font-size:17px;
     font-weight:300;
-    margin-left:20px;
+    color:#afafaf;
     border:1px solid #efefef;
     border-radius:10px;
     outline:none;
+    margin-top:18px;
+    background-color:#efefef;
 `
 const ReviewButton=styled.div`
   width:110px;
   height:43px;
-  border:1px solid red;
+  background-color:red;
   display:flex;
   justify-content:center;
   align-items:center;
   cursor:pointer;
   .text{
       font-size:20px;
-      color:red;
+      color:white;
   }
 `
 const WriteDialog=styled(Modal)`
-    width: 850px;
-    height:max-content;
+    width: 887px;
+    height:707px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 5px 5px 10px #00000029;
     border-radius: 20px;
@@ -82,13 +105,50 @@ const WriteDialog=styled(Modal)`
         position: relative;
     }
     ._wrapper{
-
-        margin-right:26px;
-        margin-left:26px;
-    .starscore{
         width:100%;
-        margin-top:26px;
-        margin-bottom:13px;
+        margin:0px 25px 25px 0px;
+        padding:0px 26px;
+    .header{
+        display:flex;
+        justify-content:center;
+        .headerbox{
+            display:flex;
+            .mainImg{
+                width:97px;
+                height:97px;
+                background-image: url(${props => props.img});
+                background-size:cover;
+                background-color:#EFEFEF;
+                margin-right:20px;
+            }
+            .explainBox{
+                .text{
+                    font-family:Noto Sans CJK KR, Regular;
+                    font-size:15px;
+                    color:#707070;
+                    margin-bottom:6px;
+                    height:22px;
+                    display:flex;
+                    align-items:center;
+                }
+                .boldText{
+                    font-family:Noto
+                    font-size:15px;
+                    color:black;
+                    margin-top:17px;
+                    height:22px;
+                    display:flex;
+                    align-items:center;
+                }
+            }
+        }
+    }
+    .hrLine{
+        height:2px;
+        width:100%;
+        background-color:#d6d6d6;
+        margin-top:16px;
+        margin-bottom:18px;
     }
     .basicInfo{
         width:100%;
@@ -118,22 +178,10 @@ const WriteDialog=styled(Modal)`
     .review-content{
         width:100%;
         display:flex;
-        margin-top:19px;
-        .pic_list{
-            min-width:378px;
-            min-height:384px;
-            max-width:378px;
-            max-height:384px;
+        .mini_pic_list{
+            width:100%;
+            height:max-content;
             display:flex;
-            align-items:center;
-            flex-direction:column;
-            .mini_pic_list{
-                width:100%;
-                height:90px;
-                margin-top:10px;
-                display:flex;
-                // justify-content:center;
-            }
         }
         .pic{
             min-width:378px;
@@ -165,99 +213,6 @@ const WriteDialog=styled(Modal)`
     }
 
 `
-const Dialog = styled(Modal)`
-    width: 850px;
-    height:max-content;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow: 5px 5px 10px #00000029;
-    border-radius: 20px;
-    opacity: 1;
-    padding:24px;
-    ::-webkit-scrollbar {
-        position: absolute;
-        width: 3.9px;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: rgba(112, 112, 112, 0.45) !important;
-    } 
-
-     .close-box {
-        width: 100%;
-        cursor: pointer;
-        display:flex;
-        justify-content:flex-end;
-        position: relative;
-    }
-    ._wrapper{
-
-        margin-right:26px;
-        margin-left:26px;
-    .starscore{
-        width:100%;
-        margin-top:26px;
-        margin-bottom:13px;
-    }
-    .basicInfo{
-        width:100%;
-        display:flex;
-        justify-content:space-between;
-        .left{
-            display:flex;
-            .nickName{
-                font-size:15px;
-                font-family:Noto Sans CJK KR, Regular;
-                margin-right:10px;
-            }
-            .productName{
-                font-size:15px;
-                font-family:Noto Sans CJK KR, Regular;
-                margin-left:10px;
-            }
-        }
-        .right{
-            .create_time{
-                font-size:15px;
-                font-family:Noto Sans CJK KR, Regular;
-            }
-        }
-
-    }
-    .review-content{
-        width:100%;
-        display:flex;
-        margin-top:19px;
-        .pic_list{
-            width:100px;
-            height:100px;
-            // min-width:378px;
-            // min-height:384px;
-            // max-width:378px;
-            // max-height:384px;
-            // display:flex;
-            // flex-direction:column;
-            // justify-content:center;
-        }
-        .pic{
-            min-width:278px;
-            min-height:284px;
-            max-width:278px;
-            max-height:284px;
-            background-image: url(${props => props.img});
-            background-size:cover;
-            border-radius:5px;
-        }
-        .comment{
-            width:100%;
-            font-family:Noto Sans CJK KR, Regular;
-            font-size:20px;
-            font-weight:300;
-            margin-left:20px;
-            
-        }
-    }
-    
-    }
-`;
 
 class WriteReviewModal extends Component {
     constructor(props){
@@ -347,48 +302,54 @@ class WriteReviewModal extends Component {
         // this.props.requestReview(this.props.payment_id,this.state.comment,this.state.score,list.join());
     }
     render() {
-        console.log(this.state);
+        console.log(this.props);
         const RenderStar = () => {
             return <Rating size="tiny" name="score" icon='star' defaultRating={parseInt(5, 10)} maxRating={5} disabled />
           }
         let imgCount=0;
         return (
             <React.Fragment>
-                    <WriteDialog open={this.props.open} onClose={this.props.close}>
+                    <WriteDialog open={this.props.open} onClose={this.props.close} img={this.props.ItemDetail&&this.props.ItemDetail.thumbnail&&this.props.ItemDetail.thumbnail.l_img}>
                     <div className="close-box" onClick={this.props.close}>
                         <Cross angle={45} color={"#707070"} weight={1} width={15} height={15} />
                     </div>
                     <div className="_wrapper">
-                    <div className="starscore">
-                        <Rating name="score" icon='star' onRate={this.handleOnChangeScore} value={this.state.score || 0} maxRating={5} />
-                    </div>
-                    <div className="basicInfo">
-                        <div className="left">
-                            {/* <div className="nickName">{detail.nick_name}</div> */}
-                            {/* <div>|</div> */}
-                            {/* <div className="productName">{detail.title}</div> */}
+                        <div className="header">
+                        <div className="headerbox">
+                            <div className="mainImg"/>
+                            <div className="explainBox">
+                            <div className="text">별점을 선택해주세요</div>
+                            <div style={{height:"26px"}}>
+                                <Rating style={{marginRight:"10px"}} size="huge" name="score" icon='star' onRate={this.handleOnChangeScore} value={this.state.score || 0} maxRating={5} />
+                                ({this.state.score})
+                            </div>
+                            <div className="boldText">{this.props.ItemDetail.title}</div>
+                        </div>
                         </div>
                     </div>
+                    <div className="hrLine"/>
                     <div className="review-content">
-                        <div className="pic_list">
-                        <input hidden onChange={(event)=>this.handleOnChangeThumbnail(event,0)} id="file" type="file" accept="image/*" />
-                        <label htmlFor="file">
-                            <AddPic width={378} height={284} img={this.state.thumbnail.length>0?this.state.thumbnail[0]:null}>
-                                <div className="text">{this.state.thumbnail.length>0?"이미지 첨부":null}</div>
-                            </AddPic>
-                        </label>
                         <div className="mini_pic_list">
                                 {
                                 this.state.thumbnail&&
                                 this.state.thumbnail.length>0?
                                 this.state.thumbnail.map((item,index)=>{
                                     return(
-                                        <div key={index}>
+                                        <React.Fragment>
                                             <input hidden onChange={(event)=>this.handleOnChangeThumbnail(event,index)} id={`file${index}`}type="file" accept="image/*" />
                                             <label onClick={()=>{console.log(imgCount)}} htmlFor={`file${index}`}>
-                                                <AddPic width={90} height={90} marginRight={5} img={item}/>
+                                                <AddPic key={index} width={135} height={135} marginRight={12} img={item}>
+                                                    <div className="deleteButton"
+                                                    onClick={async(e)=>{
+                                                        e.preventDefault();
+                                                        let copy = [...this.state.thumbnail];
+                                                        copy.splice(index, 1);
+                                                        await this.setState({ thumbnail: copy });
+                                                    }}
+                                                    ><Cross angle={45} color={"white"} weight={2} width={10} height={10} /></div>
+                                                </AddPic>
                                             </label>
-                                        </div>
+                                        </React.Fragment>
                                     );
                                 })
                                 :   
@@ -396,7 +357,7 @@ class WriteReviewModal extends Component {
                             }
                             {
                                 this.state.thumbnail&&
-                                this.state.thumbnail.length>=4?
+                                this.state.thumbnail.length>=5?
                                 null
                                 :
                                 <React.Fragment>
@@ -404,8 +365,10 @@ class WriteReviewModal extends Component {
                                     onChange={(event)=>this.handleOnChangeThumbnail(event,this.state.thumbnail&&this.state.thumbnail.length<0?0:this.state.thumbnail.length)} 
                                     id={`addfile`}type="file" accept="image/*" />
                                 <label htmlFor={`addfile`}>
-                                <AddPic width={90} height={90} marginRight={5}>
+                                <AddPic width={135} height={135} marginRight={12}>
+                                    {/* <div className="deleteButton"><Cross angle={45} color={"white"} weight={2} width={10} height={10} /></div> */}
                                     <div className="text">+</div>
+                                    <div>사진 추가하기</div>
                                 </AddPic>
                                 </label>
                                 </React.Fragment>
@@ -414,11 +377,10 @@ class WriteReviewModal extends Component {
                         </div>
 
                         </div>
-                        <TextArea onChange={this.handleOnChangeComment}/>
-                    </div>
+                        <TextArea placeholder="리뷰를 작성해주세요" onChange={this.handleOnChangeComment}/>
                     </div>
                     <div className="buttonbox">
-                        <ReviewButton onClick={this.onClickWriteReview}><div className="text">리뷰 쓰기</div></ReviewButton>
+                        <ReviewButton onClick={this.onClickWriteReview}><div className="text">작성 완료</div></ReviewButton>
                         {/* ;this.props.requestReview(this.props.payment_id,this.state.comment,this.state.score,this.state.thumbnail.join())} */}
                     </div>
                 </WriteDialog>

@@ -536,7 +536,8 @@ export class LocalCardModal extends Component {
                 card_content: {
                     deleteContent: [], newContent: [], updateContent: []
                 }
-            })
+            });
+            this.props.close();
         }
     };
 

@@ -426,7 +426,7 @@ class ModifyRequestToMaker extends Component {
               </FormBox>
             </div>
             <div className="centering_">
-              <RedButton  text={"수정을 적용합니다."} okText="적용" cancelText="취소" value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
+              <RedButton  text={"수정을 적용합니다."} okText="수정" cancelText="취소" value={"수정하기"} onClick={this.onSubmit} isConfirm={true} />
               <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
               <GrayButton text={"삭제하시겠습니까?"} okText="삭제" cancelText="취소" value={"삭제하기"} onClick={this.onClickDelete} isConfirm={true} />
             </div>

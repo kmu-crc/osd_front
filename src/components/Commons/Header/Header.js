@@ -219,17 +219,17 @@ class Header extends Component {
       searchtype=countMaker>0?"maker":
       countDesigner>0?"designer":
       countItem>0?"item":
-      null;
+      "item";
     }else if(itemActive){
       searchtype=countItem>0?"item":
       countDesigner>0?"designer":
       countMaker>0?"maker":
-      null;
+      "item";
     }else{
         searchtype=countDesigner>0?"designer":
         countMaker>0?"maker":
         countItem>0?"item":
-        null;
+        "item";
     }
     console.log(searchtype);
 

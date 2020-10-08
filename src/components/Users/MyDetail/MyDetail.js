@@ -308,7 +308,7 @@ class MyDetail extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { selectMenu: 0 }
+    this.state = { selectMenu: 10 }
     this.onClickMenu = this.onClickMenu.bind(this);
     this.onClickCreateDesigner = this.onClickCreateDesigner.bind(this);
     this.onClickCreateMaker = this.onClickCreateMaker.bind(this);
@@ -391,7 +391,7 @@ class MyDetail extends Component {
             </ProfileBox>
             <InformationBox>
               <div className="grayBox borderRight">
-                <div className="wrap">
+                <div className="wrap cursorPointer">
                   <div className="title fontBig fontStyleNormal"><div>다양한 아이디어를 s판매하세요!</div></div>
                   <div className="design-clipart">&nbsp;</div>
                   <div onClick={this.onClickCreateDesigner} ><div className="fontDefault alignCenter cursorPointer fontStyleNormal displayFlex">
@@ -401,7 +401,7 @@ class MyDetail extends Component {
                 </div>
               </div>
               <div className="grayBox borderRight">
-                <div className="wrap">
+                <div className="wrap cursorPointer">
                   <div className="title fontBig fontStyleNormal"><div>제작 기술을 공유하고 <br />장소를 쉐어해보세요!</div></div>
                   <div className="toolbox-clipart">&nbsp;</div>
                   <div onClick={this.onClickCreateMaker}><div className="fontDefault alignCenter cursorPointer fontStyleNormal displayFlex">
@@ -411,7 +411,7 @@ class MyDetail extends Component {
                 </div>
               </div>
               <div className="grayBox">
-                <div className="wrap">
+                <div className="wrap cursorPointer">
                   <div className="title fontBig fontStyleNormal"><div>본인인증을 통해 더욱 다양한 <br /> 혜택을 누려보세요!</div></div>
                   <div className="verify-clipart"></div>
                   <div><div className="fontDefault alignCenter cursorPointer fontStyleNormal displayFlex">
@@ -442,10 +442,10 @@ class MyDetail extends Component {
               :
               null  
               }
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 8 ? "red" : null} id="request_item">의뢰아이템</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 8 ? "red" : null} id="request_item">의뢰 아이템</MenuButton>
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 7 ? "red" : null} id="upload_item">등록 아이템</MenuButton>
-              <div className="hrLine" />
+              <div className="hrLine" /> 
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 1 ? "red" : null} id="interest_Item">관심 아이템</MenuButton>
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 2 ? "red" : null} id="interest_Designer">관심 디자이너</MenuButton>

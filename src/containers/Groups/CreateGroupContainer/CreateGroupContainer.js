@@ -9,7 +9,7 @@ import styled from 'styled-components';
 // import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 // import mainSlide from "source/mainSlide.jpg";
-import Modal from 'react-awesome-modal';
+import {Modal} from 'semantic-ui-react';
 
 
 //const ImgWrapper = styled.div`
@@ -59,7 +59,7 @@ class CreateGroupContainer extends Component {
     super(props);
     this.state = {open:false}
     this.handleShowModal = this.handleShowModal.bind(this);
-  }
+}
   componentDidMount(){
     this.props.GetAllHaveInItemRequest(this.props.userInfo.uid,this.props.userInfo.token)
   }
@@ -73,10 +73,10 @@ class CreateGroupContainer extends Component {
     this.props.handleShowModal(value);
   }
   render() {
-    console.log(this.props);
-
     return(
-      <Modal onLoad visible={this.props.open} effect="fadeInLeft">
+      // <Modal style={{width:"max-content"}} onLoad open={this.props.open} effect="fadeInLeft">
+      <Modal style={{width:"max-content"}} open={this.props.open}>
+
         <Wrapper>
           <CreateGroup handleShowModal={this.handleShowModal}   {...this.props} />
         </Wrapper>

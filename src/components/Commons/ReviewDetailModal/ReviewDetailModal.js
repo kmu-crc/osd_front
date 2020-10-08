@@ -133,7 +133,8 @@ const WriteDialog=styled(Modal)`
             width:100%;
             font-family:Noto Sans CJK KR, Regular;
             font-size:20px;
-            font-weight:300;            
+            font-weight:300;    
+            line-height:20px;        
         }
     }
     
@@ -234,7 +235,8 @@ const Dialog = styled(Modal)`
             font-family:Noto Sans CJK KR, Regular;
             font-size:20px;
             font-weight:300;   
-            margin-top:16px;         
+            margin-top:16px;     
+            line-height:29px;            
         }
     }
     
@@ -258,7 +260,7 @@ class ReviewDetailModal extends Component {
         const thumbnail_list = detail&&detail.thumbnail&&detail.thumbnail.length>0?
         detail.thumbnail.split(","):[];
         const RenderStar = () => {
-            return <Rating size="tiny" name="score" icon='star' defaultRating={parseInt(5, 10)} maxRating={5} disabled />
+            return <Rating size="tiny" name="score" icon='star' defaultRating={parseInt(this.props&&this.props.detail&&this.props.detail.score, 10)} maxRating={5} disabled />
           }
         return (
             <React.Fragment>
@@ -290,7 +292,7 @@ class ReviewDetailModal extends Component {
                         {thumbnail_list.length>0?<div id="pic_list" className="pic_list">
                             {
                                 thumbnail_list.map((item,index)=>{
-                                    return(<AddPic width={378} height={384} img={item} marginRight={34}/>);
+                                    return(<AddPic key={index} width={378} height={384} img={item} marginRight={34}/>);
                                 })
                             }
                             {thumbnail_list.length>=3?<span className="btn"><CustomButton rotate={180}  onClick={()=>{document.getElementById("pic_list").scrollBy(document.getElementById("pic_list").scrollLeft-800,0)}} img={arrow} width={29} height={59} style={{position:"absolute",left:"0px",top:"160px"}}/></span>:null}

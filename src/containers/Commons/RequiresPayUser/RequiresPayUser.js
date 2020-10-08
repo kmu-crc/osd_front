@@ -38,10 +38,10 @@ export default function RequiresPayUser(Component) {
     }
 
     async _checkAndRedirect() {
-      if (!this.props.checkPayUser) {
-        await alert("유료회원 결제 후 이용이 가능합니다.");
-        this.props.history.push("/myPage");
-      }
+      // if (!this.props.checkPayUser) {
+      //   await alert("유료회원 결제 후 이용이 가능합니다.");
+      //   this.props.history.push("/myPage");
+      // }
     }
 
     render() {

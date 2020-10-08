@@ -71,6 +71,16 @@ const Button = styled.div`
 
 
 class Confirm extends React.Component {
+    constructor(props){
+        super(props);
+        this.handlerClick = this.handlerClick.bind(this);
+    }
+    componentDidMount(){
+        window.addEventListener("click", this.handlerClick, false);
+    }
+    handlerClick(event){
+
+    }
     render() {
         const {
             proceedLabel, cancelLabel, title, confirmation,
@@ -78,7 +88,7 @@ class Confirm extends React.Component {
         } = this.props;
 
         return (
-            <ModalBox
+            <ModalBox id="confirmbox"
                 open={show}
                 onClose={() => proceed(false)}
             >

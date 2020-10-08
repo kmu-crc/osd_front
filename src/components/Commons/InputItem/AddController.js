@@ -90,8 +90,8 @@ export class AddController extends Component {
     return (
       <ControllerWrap>
         <div className="innerBox" >
-          {this.props.onlytext ? null : <NewController onClick={() => this.addContent("FILE")} className="first" width="116px" height="29px">파일 등록</NewController>}
-          {this.props.onlyfile ? null : <NewController onClick={() => this.addContent("TEXT")} width="150px" height="29px">텍스트 입력</NewController>}
+          {this.props.onlytext ? null : <NewController onClick={() => this.addContent("FILE")} className="first" width="max-content" height="29px">파일 등록</NewController>}
+          {this.props.onlyfile ? null : <NewController onClick={() => this.addContent("TEXT")} width="max-content" height="29px">텍스트 입력</NewController>}
         </div>
         {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
       </ControllerWrap>

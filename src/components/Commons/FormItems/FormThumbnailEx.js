@@ -12,7 +12,7 @@ const InputWrap = styled.div`
   @media only screen and (min-width: 0px) and (max-width: 700px) {
     flex-direction: column;
   }
-  label{
+  .label{
     width: 63px;
     height: 25px;
     cursor: pointer;
@@ -30,6 +30,7 @@ const InputWrap = styled.div`
     height: 25px;
   }
   .find{
+    width:max-content;
     font-weight: 500;
     font-size: 17px;
     border-bottom: 1.5px solid #FF0000;
@@ -57,7 +58,7 @@ const ThumbnailImgEx = styled.label`
   background-position: center;
   background-size: cover;
   background-color: #EFEFEF;
-  cursor:arrow;
+  cursor:default;
 `;
 
 export class FormThumbnailEx extends Component {
@@ -120,7 +121,7 @@ export class FormThumbnailEx extends Component {
       <InputWrap>
         <ThumbnailImgEx style={newstyle} />
         <div>
-          <label htmlFor={id ? id : name} >
+          <label className="label" htmlFor={id ? id : name} >
             <div className="wrapper">
               <div className="inside-wrapper">
                 <div className="find">찾아보기</div></div>

@@ -31,7 +31,7 @@ const LocationList = [
 
 const MainBox = styled.div`
   width:100%;
-  .title{
+    .title{
     width:170px;
     height:29px;
     font-family:Noto Sans KR, Medium;
@@ -146,8 +146,7 @@ const SubBox = styled.div`
 `
 const FormBox = styled.div`
   *{
-    font-family:Noto Sans KR;
-    font-weight:500;
+
     font-size:20px;
   }
   width:939px;
@@ -181,6 +180,8 @@ const FormBox = styled.div`
     display:flex;
   }
   .label{
+    font-family:Noto Sans KR;
+    font-weight:500;
     min-width:157px;
     height:29px;
   }
@@ -220,7 +221,7 @@ const InputText = styled.input.attrs({ type: "text" })`
   outline:none;
   border:0px;
   padding: 0.67857143em 1em;
-
+  font-weight:300;
 `
 const InputTextarea = styled.textarea`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
@@ -234,6 +235,8 @@ const InputTextarea = styled.textarea`
   readonly;
   resize:none;
   padding: 0.67857143em 1em;
+  font-weight:300;
+
 
 `
 
@@ -533,7 +536,7 @@ class ModifyDesigner extends Component {
           </div>
           <div className="contentsBox centering">
             {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>적용</div></RedButton> */}
-            <RedButton text ={"수정을 적용합니다."} okText="적용" cancelText="취소" value={"적용하기"} onClick={this.onSubmit} isConfirm={true} />
+            <RedButton text ={"수정을 적용합니다."} okText="수정" cancelText="취소" value={"수정하기"} onClick={this.onSubmit} isConfirm={true} />
             <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
           </div>
         </MainBox>

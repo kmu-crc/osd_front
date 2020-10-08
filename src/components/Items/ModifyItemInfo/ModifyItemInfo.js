@@ -13,6 +13,8 @@ import CardSourceDetailContainer from "containers/Items/CardSourceDetailContaine
 import ItemStepContainer from "containers/Items/ItemStepContainer";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import { RedButton, GrayButton } from "components/Commons/CustomButton"
+
 const ItemType = [
   { text: "디자인", value: 0 },
   { text: "프로젝트", value: 1 },
@@ -27,6 +29,8 @@ const MainBox = styled.div`
   width:100%;
   margin-bottom: ${props => props.marginBottom || 0}px;
   .title{
+    margin-top:50px;
+    margin-bottom:20px;
     width:170px;
     height:29px;
     font-family:Noto Sans KR, Medium;
@@ -55,22 +59,22 @@ const MainBox = styled.div`
     cursor: default;
   }
 `;
-const RedButton = styled.div`
-  width: 290px;
-  height: 70px;
-  font-family: Noto Sans KR;
-  font-size:30px;
-  font-weight: 500;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${props => props.gray ? "gray" : "red"};
-  cursor:pointer;
-  // position: absolute;
-  // left:${props => props.left};
-  // bottom:${props => props.bottom};
-`;
+// const RedButton = styled.div`
+//   width: 290px;
+//   height: 70px;
+//   font-family: Noto Sans KR;
+//   font-size:30px;
+//   font-weight: 500;
+//   color: white;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   background-color: ${props => props.gray ? "gray" : "red"};
+//   cursor:pointer;
+//   // position: absolute;
+//   // left:${props => props.left};
+//   // bottom:${props => props.bottom};
+// `;
 const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
@@ -115,8 +119,6 @@ const Thumbnail = styled.div`
 `;
 const FormBox = styled.div`
   *{
-    font-family: Noto Sans KR;
-    font-weight: 500;
     font-size: 20px;
   }
   width:${props => props.width || 939}px;
@@ -145,6 +147,9 @@ const FormBox = styled.div`
     display:flex;
   }
   .label{
+    font-family: Noto Sans KR;
+    font-weight: 500;
+    font-size: 20px;
     min-width:157px;
     height:29px;
   }
@@ -179,6 +184,8 @@ const InputTextarea = styled.textarea`
   border-radius:20px;
   font-family:Noto Sans KR;
   font-size:20px;
+  font-weight:300;
+  line-height:30px;
   background-color:#E9E9E9;
   outline:none;
   border:0px;
@@ -456,8 +463,9 @@ class ModifyItemInfo extends Component {
       <div className="title">아이템 수정</div>
 
       <NaviMenu>
-        <div className={tab === "basic" ? "active mousePointer" : "mousePointer"} onClick={() => this.setState({ tab: "basic" })}>기본/추가정보변경</div>
-        <div className={tab === "contents" ? "active mousePointer" : "mousePointer"} onClick={() => this.setState({ tab: "contents" })}>컨텐츠변경</div>
+        <div className={tab === "basic" ? "active mousePointer" : "mousePointer"} onClick={() => this.setState({ tab: "basic" })}>기본/추가정보 변경</div>
+        <div className={tab === "contents" ? "active mousePointer" : "mousePointer"} onClick={() => this.setState({ tab: "contents" })}>컨텐츠 변경</div>
+        <div className={tab === "delete" ? "active mousePointer" : "mousePointer"} onClick={this.deleteThisItem}>아이템 삭제</div>
       </NaviMenu>
 
       {/* 공통/기본입력사항 */}
@@ -503,12 +511,12 @@ class ModifyItemInfo extends Component {
                 {/* <DropBox selection value={this.state.itemType} options={ItemType} placeholder="아이템 유형" onChange={this.onClickItemType} /> */}
               </div>
 
-              <div className="wrapper flex">
+              {/* <div className="wrapper flex">
                 <div onClick={this.deleteThisItem}
                   style={{ cursor: "default", width: "max-content", marginLeft: "auto", marginRight: "60px" }}>
                   <div style={{ textAlign: "center", fontSize: "28px", color: "red" }}>아이템삭제</div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </FormBox>
         </div>) : null}
@@ -699,7 +707,9 @@ class ModifyItemInfo extends Component {
       {/* 버튼 */}
       {itemType > -1 && tab === "basic" ?
         (<div className="buttonBox" style={{ width: "max-content", marginLeft: "auto", marginRight: "85px" }}>
-          <RedButton onClick={this.onSubmit}>수정하기</RedButton>
+              <RedButton text={"수정을 적용합니다."} okText="수정" cancelText="취소" value={"수정하기"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={()=>window.history.go(-1).then(()=>window.location.reload())} isConfirm={true} />
+          {/* <RedButton onClick={this.onSubmit}>수정하기</RedButton> */}
           {/* <RedButton gray onClick={() => {
             if (window.confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
               window.history.back();

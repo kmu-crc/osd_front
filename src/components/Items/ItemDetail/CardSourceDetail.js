@@ -352,7 +352,7 @@ class CardSourceDetail extends Component {
                 <EditorBottonWrapper>
                   <button onClick={this.onSubmit} className="submit" type="button">
                     <i className="icon outline save" />저장하기</button>
-                  <button onClick={() => this.setState({ content: this.props.content || "" })} className="cancel" type="button">
+                  <button onClick={() => {this.setState({ content: this.props.content || "" });this.props.handleCancel()}} className="cancel" type="button">
                     <i className="icon trash" />취소하기</button>
                 </EditorBottonWrapper>
               </ButtonContainer>

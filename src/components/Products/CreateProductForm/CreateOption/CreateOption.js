@@ -204,7 +204,7 @@ class CreateOption extends React.Component {
                                     옵션 추가
                                 </div>
                                 <div className="buttonbox add_flex">
-                                    <Button onClick={this.onApplyOptionWindow} width={50} height={30} padding={5} backgroundColor={"#dddddd"}>적용하기</Button>
+                                    <Button onClick={this.onApplyOptionWindow} width={50} height={30} padding={5} backgroundColor={"#dddddd"}>수정하기</Button>
                                     <Button onClick={this.onCloseOptionWindow} width={50} height={30} padding={5} backgroundColor={"#dddddd"}>취소하기</Button>
                                 </div>
                             </div>
