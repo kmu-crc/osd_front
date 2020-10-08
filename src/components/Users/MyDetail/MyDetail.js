@@ -432,31 +432,31 @@ class MyDetail extends Component {
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 9 ? "red" : null} id="modify_myinfo">내 정보 수정</MenuButton>
               <div className="hrLine" />
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 0 ? "red" : null} id="orderlist">구입 아이템</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 0 ? "red" : null} id="orderlist">구입 아이템({MyDetail&&MyDetail.allCount&&MyDetail.allCount.payment_count})</MenuButton>
               <div className="hrLine" />
               {(MyDetail.isDesigner==1||MyDetail.isMaker==1)?
               <React.Fragment>
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 11? "red" : null} id="sell_item">판매 아이템</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 11? "red" : null} id="sell_item">판매 아이템({MyDetail&&MyDetail.allCount&&MyDetail.allCount.saleItem_count})</MenuButton>
               <div className="hrLine" />
               </React.Fragment>
               :
               null  
               }
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 8 ? "red" : null} id="request_item">의뢰 아이템</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 8 ? "red" : null} id="request_item">의뢰 아이템({MyDetail&&MyDetail.allCount&&MyDetail.allCount.itemRequest_count})</MenuButton>
               <div className="hrLine" />
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 7 ? "red" : null} id="upload_item">등록 아이템</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 7 ? "red" : null} id="upload_item">등록 아이템({MyDetail&&MyDetail.allCount&&MyDetail.allCount.registerItem_count})</MenuButton>
               <div className="hrLine" /> 
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 1 ? "red" : null} id="interest_Item">관심 아이템</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 1 ? "red" : null} id="interest_Item">관심 아이템({MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeItem_count})</MenuButton>
               <div className="hrLine" />
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 2 ? "red" : null} id="interest_Designer">관심 디자이너</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 2 ? "red" : null} id="interest_Designer">관심 디자이너({MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeDesigner_count})</MenuButton>
               <div className="hrLine" />
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 3 ? "red" : null} id="interest_Maker">관심 메이커</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 3 ? "red" : null} id="interest_Maker">관심 메이커({MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeMaker_count})</MenuButton>
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 4 ? "red" : null} id="join_project">참여 프로젝트</MenuButton>
               <div className="hrLine" />
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 5 ? "red" : null} id="request_designer">디자인 의뢰</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 5 ? "red" : null} id="request_designer">디자인 의뢰({MyDetail&&MyDetail.allCount&&MyDetail.allCount.requestDesigner_count})</MenuButton>
               <div className="hrLine" />
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 6 ? "red" : null} id="request_maker">제작 의뢰</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 6 ? "red" : null} id="request_maker">제작 의뢰({MyDetail&&MyDetail.allCount&&MyDetail.allCount.requestMaker_count})</MenuButton>
             </MenuBox>
             <BoardBox>
               {selectMenu === 10 ? <MyPointStatusContainer /> : null}
