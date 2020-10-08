@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import GridEditor from "components/GridEditor";
+// import GridEditor from "components/GridEditor";
+import { LocalGridEditor as GridEditor } from "components/GridEditor/LocalGridEditor";
 import { GetItemStepsRequest, CreateItemListRequest, DeleteItemListRequest, UpdateItemListRequest } from "actions/Item";
 // , ,
 // , GetCardDetailRequest, GetDesignCardRequest, GetDesignBoardRequest,

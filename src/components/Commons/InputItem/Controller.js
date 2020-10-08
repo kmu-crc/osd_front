@@ -130,10 +130,10 @@ export class Controller extends Component {
     // await this.setState({ ...newObj });
     // await this.setState({content:data.content});
     // await console.log(this.state);
-    
+
     if (this.props.getValue)
       // await this.props.getValue(this.state);
-      await this.props.getValue({...this.props.item,content:data.content})
+      await this.props.getValue({ ...this.props.item, content: data.content })
   };
   async privateItem(event) {
     if (this.props.privateItem) {
@@ -167,16 +167,16 @@ export class Controller extends Component {
     return (
       <ControllerWrap>
         <div className="contentWrap">
-          {item.private === 1 ? "(비공개 항목으로 설정되어 있습니다.)" : null}
+          {/* {item.private === 1 ? "(비공개 항목으로 설정되어 있습니다.)" : null} */}
           {item.type === "FILE" ? (
             <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} setController={this.setController} />
           ) : item.type === "TEXT" ? (
-            <TextControllerClassic item={item} initClick={this.state.click} private={item.private} name={name}  getValue={this.onChangeValue} deleteItem={this.deleteItem} />
+            <TextControllerClassic item={item} initClick={this.state.click} private={item.private} name={name} getValue={this.onChangeValue} deleteItem={this.deleteItem} />
           ) : item.type === "EMBED" ? (<EmbController />) : null}
         </div>
-        {item.private === 1
-          ? <FuncButton left="90%" type="button" className="editBtn" bgcolor="gray" onClick={this.privateItem}><i className="eye icon large" /></FuncButton>
-          : <FuncButton left="90%" type="button" className="editBtn" bgcolor="blue" onClick={this.privateItem}><i className="eye icon large" /></FuncButton>}
+        {/* {item.private === 1 */}
+        {/* ? <FuncButton left="90%" type="button" className="editBtn" bgcolor="gray" onClick={this.privateItem}><i className="eye icon large" /></FuncButton> */}
+        {/* : <FuncButton left="90%" type="button" className="editBtn" bgcolor="blue" onClick={this.privateItem}><i className="eye icon large" /></FuncButton>} */}
         <FuncButton left="95%" type="button" className="editBtn" onClick={this.deleteItem}><i className="trash alternate icon large" /></FuncButton>
         {/* {maxOrder - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={this.moveUpItem}><i className="angle up alternate icon large" /></UpBtn> : null} */}
         {/* {maxOrder - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={this.moveDownItem}><i className="angle down alternate icon large" /></DownBtn> : null} */}

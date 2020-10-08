@@ -25,11 +25,11 @@ class ItemQuestionContainer extends Component {
     }
     componentDidMount() {
         this.props.GetItemQuestionRequest(this.props.match.params.id, 0)
-        .then(()=>{
-            this.props.isExpanding(this.props.question.length>1?true:false)
-        })
+            .then(() => {
+                this.props.isExpanding(this.props.question.length > 1 ? true : false)
+            })
     }
-    
+
     requestQuestion(data) {
         this.props.CreateItemQuestionRequest(data, this.props.match.params.id, this.props.token)
             .then(res => {
@@ -43,16 +43,16 @@ class ItemQuestionContainer extends Component {
     }
     render() {
         return (
-        <React.Fragment>
-        {/* {this.props.question&&
+            <React.Fragment>
+                {/* {this.props.question&&
         this.props.question.length>0? */}
-        <ItemQuestion id={this.props.match.params.id} getData={this.getData} request={this.requestQuestion} {...this.props} />
-        {/* :
+                <ItemQuestion id={this.props.match.params.id} getData={this.getData} request={this.requestQuestion} {...this.props} />
+                {/* :
         <BlankBox>
         <div className="text">해당 항목 없음</div>
         </BlankBox>
         } */}
-        </React.Fragment>
+            </React.Fragment>
         );
     }
 }

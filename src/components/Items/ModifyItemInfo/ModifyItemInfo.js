@@ -44,21 +44,23 @@ const MainBox = styled.div`
     padding-left:130px;
     padding-top:36px;
   }
-  .buttonBox{
-    // border:1px solid black;
-    min-width:100%;
-    display:flex;
-    justify-content:center;
-    padding-left:130px;
-    padding-top:36px;
-    margin-bottom:70px;
-  }
   .font_red {
     width: 7px;
     height: 7px;
     color: #FF0000;
     cursor: default;
   }
+`;
+const ButtonBox = styled.div`
+  width: max-content;
+  margin-left: auto;
+  margin-right: 85px;
+  min-width:100%;
+  display:flex;
+  justify-content:center;
+  padding-left:130px;
+  padding-top:36px;
+  margin-bottom:70px;
 `;
 // const RedButton = styled.div`
 //   width: 290px;
@@ -91,7 +93,7 @@ const ThumbnailBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  
   .label{
     width:100%;
     height:29px;
@@ -117,6 +119,7 @@ const Thumbnail = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 const FormBox = styled.div`
   *{
@@ -278,6 +281,7 @@ class ModifyItemInfo extends Component {
       // tab: "basic",
       tab: "basic",
       alone: false,
+      ismodified: false,
     };
     this.onClickItemType = this.onClickItemType.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
@@ -292,9 +296,11 @@ class ModifyItemInfo extends Component {
     this.getPriceValue = this.getPriceValue.bind(this);
     this.onHandleAdditionalMember = this.onHandleAdditionalMember.bind(this);
     this.onHandleRadio = this.onHandleRadio.bind(this);
+    this.isModify = this.isModify.bind(this);
+    this.onCancel = this.onCancel.bind(this);
   };
   async componentDidMount() {
-    console.log("++++++++++", this.props.ItemDetail);
+    // console.log("++++++++++", this.props.ItemDetail);
     const { ItemDetail } = this.props;
     let additional = await {
       description: ItemDetail.description,
@@ -317,8 +323,27 @@ class ModifyItemInfo extends Component {
       additional: additional,
     }
     await this.setState(item);
-    console.log(this.state, this.props.ItemDetail);
+    // console.log(this.state, this.props.ItemDetail);
   };
+  async isModify() {
+    // check 
+    if (
+      this.state.title === this.props.ItemDetail.title
+      && this.state.files == null
+      && this.state.tag.join(',') === this.props.ItemDetail.tag
+      && this.state.category_level1 === this.props.ItemDetail.category_level1
+      && this.state.category_level2 === this.props.ItemDetail.category_level2
+      && _.isEqual(this.state.additional, { "contact-type": this.props.ItemDetail["contact-type"], description: this.props.ItemDetail.description, members: this.props.ItemDetail.members, price: this.props.ItemDetail.price, public: this.props.ItemDetail.public, "selling-type": this.props.ItemDetail["selling-type"] })
+      // "\n7", this.state.content, this.props.ItemDetail.content,
+      // "\n8", this.state.step === this.props.ItemDetail.steps,
+      && this.state.type === (this.props.ItemDetail.type === 1 ? "project" : "blog")
+      && this.state.private === this.props.ItemDetail.private
+    ) {
+      // await alert("변경된 사항이 없습니다.");
+      return false;
+    }
+    return true;
+  }
   async onSubmit(event) {
     // event.preventDefault();
 
@@ -338,22 +363,7 @@ class ModifyItemInfo extends Component {
       additional: this.state.additional, content: this.state.content, step: this.state.steps,
       type: this.state.type, private: this.state.private
     };
-    // check 
-    if (
-      this.state.title === this.props.ItemDetail.title
-      && this.state.files == null
-      && this.state.tag.join(',') === this.props.ItemDetail.tag
-      && this.state.category_level1 === this.props.ItemDetail.category_level1
-      && this.state.category_level2 === this.props.ItemDetail.category_level2
-      && _.isEqual(this.state.additional, { "contact-type": this.props.ItemDetail["contact-type"], description: this.props.ItemDetail.description, members: this.props.ItemDetail.members, price: this.props.ItemDetail.price, public: this.props.ItemDetail.public, "selling-type": this.props.ItemDetail["selling-type"] })
-      // "\n7", this.state.content, this.props.ItemDetail.content,
-      // "\n8", this.state.step === this.props.ItemDetail.steps,
-      && this.state.type === (this.props.ItemDetail.type === 1 ? "project" : "blog")
-      && this.state.private === this.props.ItemDetail.private
-    ) {
-      await alert("변경된 사항이 없습니다.");
-      return;
-    }
+
     // return;
     data.additional.description = data.additional.description.replace(/(?:\r\n|\r|\n)/g, '<br />');
     this.props.UpdateItemRequest(data, this.props.ItemDetail["item-id"], this.props.token)
@@ -370,6 +380,16 @@ class ModifyItemInfo extends Component {
       });
     this.setState({ loading: false });
   };
+  async onCancel() {
+    if (this.state.ismodified) {
+      if (await confirm("수정된 내용이 저장되지 않습니다.", "확인", "취소")) {
+        // window.history.go(-1).then(() => window.location.reload())
+      } else {
+        return;
+      }
+    }
+    window.location.href = `/productDetail/${this.props.id}`
+  }
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: value });
   };
@@ -411,7 +431,7 @@ class ModifyItemInfo extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
   onHandleReturnedTags(param) {
-    console.log(param);
+    // console.log(param);
     this.setState({ tag: param });
   };
   async deleteThisItem() {
@@ -428,7 +448,6 @@ class ModifyItemInfo extends Component {
         })
     this.setState({ loading: false });
   };
-
   async onHandleAdditionalText(event) {
     let copy = { ...this.state.additional };
     // console.log(document.getElementById(event.target.id).value.replace(""));
@@ -453,12 +472,22 @@ class ModifyItemInfo extends Component {
     copy[name] = value === "예" ? "yes" : "no";
     await this.setState({ additional: copy });
   }
+  async componentDidUpdate(prevProps, prevState) {
+    if (_.isEqual(prevState, this.state) == false) {
+      const initvalue = {
+        additional: null, alone: false, category1: null, category2: null, category_level1: -1, category_level2: -1, content: [], ismodified: false, itemType: -1, private: 0, steps: [], tab: "basic", tag: [], thumbnail: null, thumbnail_name: null, title: "", type: "blog"
+      };
+      if (_.isEqual(this.state, initvalue) == false) {
+        this.setState({ ismodified: await this.isModify() });
+      }
+    }
+  }
+
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
     const { /* edit, */ itemType, tab } = this.state;
     const Mandatory = () => <span className="font_red" title="필수사항입니다."> * </span>
-
     return (<MainBox>
       {this.state.loading ? <Loading /> : null}
 
@@ -602,7 +631,11 @@ class ModifyItemInfo extends Component {
                     {/* <RadioType checked={1} return={this.onHandleReturn} name="contact-method" Options={typeOnOff} /> */}
                     {/* </Field> */}
                     <Field title="내용 공개 여부">
-                      <RadioType checked={1} return={this.onHandleReturn} value={this.state.public} name="public" Options={["예", "아니오"]} /></Field>
+                      <RadioType
+                        return={this.onHandleRadio}
+                        default={this.state.additional.public === "yes" ? "예" : "아니오"}
+                        name="public"
+                        Options={["예", "아니오"]} /></Field>
                     <Field title="자문/상담 비용">
                       <InputPriceNew placeholder="시간당" name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                     </Field>
@@ -654,7 +687,11 @@ class ModifyItemInfo extends Component {
                         <AddController onlyfile type="INIT" order={0} name="addBasic" getValue={this.onAddValue} />
                       </div></Field>
                     <Field title="판매 방식 선택">
-                      <RadioType return={this.onHandleReturn} name="selling-type" Options={["양도", "독점 사용권", "일반 사용권"]} /></Field>Î
+                      <RadioType
+                        return={this.onHandleReturn}
+                        default={this.state.additional["selling-type"]}
+                        name="selling-type"
+                        Options={["양도", "독점 사용권", "일반 사용권"]} /></Field>
                     <Field title="구입 비용">
                       <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                     </Field>
@@ -709,16 +746,29 @@ class ModifyItemInfo extends Component {
 
       {/* 버튼 */}
       {itemType > -1 && tab === "basic" ?
-        (<div className="buttonBox" style={{ width: "max-content", marginLeft: "auto", marginRight: "85px" }}>
-          <RedButton text={"수정을 적용합니다."} okText="수정" cancelText="취소" value={"수정하기"} onClick={this.onSubmit} isConfirm={true} />
-          <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => window.history.go(-1).then(() => window.location.reload())} isConfirm={true} />
+        (<ButtonBox className="buttonBox" >
+          <RedButton
+            text={"수정된 내용을 저장합니다."}
+            okText="수정"
+            cancelText="취소"
+            value={"수정하기"}
+            onClick={this.onSubmit}
+            disabled={!this.state.ismodified}
+            isConfirm={true} />
+
+          <GrayButton
+            text={"취소하시겠습니까?"}
+            value={"취소하기"}
+            onClick={this.onCancel}
+            isConfirm={false} />
+
           {/* <RedButton onClick={this.onSubmit}>수정하기</RedButton> */}
           {/* <RedButton gray onClick={() => {
             if (window.confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
               window.history.back();
             }
           }}>취소</RedButton> */}
-        </div>) : null}
+        </ButtonBox>) : null}
     </MainBox >);
   };
 };
