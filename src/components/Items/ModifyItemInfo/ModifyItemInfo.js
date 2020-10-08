@@ -14,6 +14,7 @@ import ItemStepContainer from "containers/Items/ItemStepContainer";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
+import _ from 'lodash';
 
 const ItemType = [
   { text: "디자인", value: 0 },
@@ -293,7 +294,7 @@ class ModifyItemInfo extends Component {
     this.onHandleRadio = this.onHandleRadio.bind(this);
   };
   async componentDidMount() {
-    console.log("++++++++++",this.props.ItemDetail);
+    console.log("++++++++++", this.props.ItemDetail);
     const { ItemDetail } = this.props;
     let additional = await {
       description: ItemDetail.description,
@@ -308,7 +309,7 @@ class ModifyItemInfo extends Component {
       title: ItemDetail.title,
       category_level1: ItemDetail.category_level1,
       category_level2: ItemDetail.category_level2,
-      tag: ItemDetail.tag.indexOf(",")==-1?[]:ItemDetail.tag.split(","),
+      tag: ItemDetail.tag.indexOf(",") == -1 ? [] : ItemDetail.tag.split(","),
       itemType: ItemDetail.type,
       thumbnail: ItemDetail.thumbnail.l_img,
       type: ItemDetail.upload_type,
@@ -318,11 +319,10 @@ class ModifyItemInfo extends Component {
     await this.setState(item);
     console.log(this.state, this.props.ItemDetail);
   };
-  onSubmit(event) {
-    // alert("?");
-    // return;
-    event.preventDefault();
-    this.setState({ loading: true });
+  async onSubmit(event) {
+    // event.preventDefault();
+
+    // this.setState({ loading: true });
     const members = this.state.alone ? [] : this.state.additional.members
     let additional = {
       ...this.state.additional,
@@ -333,24 +333,41 @@ class ModifyItemInfo extends Component {
       title: this.state.title,
       files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name }],
       tag: this.state.tag, category1: this.state.category_level1, category2: this.state.category_level2,
-      itemType: this.state.itemType,
+      // itemType: this.state.itemType, //fixed
       // additional
       additional: this.state.additional, content: this.state.content, step: this.state.steps,
       type: this.state.type, private: this.state.private
     };
-    data.additional.description = data.additional.description.replace(/(?:\r\n|\r|\n)/g,'<br />');
-       this.props.UpdateItemRequest(data, this.props.ItemDetail["item-id"], this.props.token)
-         .then(async result => {
-           if (result.res.success) {
-             await alert("아이템이 수정 되었습니다. 아이템상세페이지로 이동합니다.");
-             window.location.href = `/productDetail/${this.props.id}`
-           } else {
-             await alert("아이템 수정을 실패하였습니다.");
-           }
-         })
-         .catch(async error => {
-           await alert("오류내용:" + error.message);
-         });
+    // check 
+    if (
+      this.state.title === this.props.ItemDetail.title
+      && this.state.files == null
+      && this.state.tag.join(',') === this.props.ItemDetail.tag
+      && this.state.category_level1 === this.props.ItemDetail.category_level1
+      && this.state.category_level2 === this.props.ItemDetail.category_level2
+      && _.isEqual(this.state.additional, { "contact-type": this.props.ItemDetail["contact-type"], description: this.props.ItemDetail.description, members: this.props.ItemDetail.members, price: this.props.ItemDetail.price, public: this.props.ItemDetail.public, "selling-type": this.props.ItemDetail["selling-type"] })
+      // "\n7", this.state.content, this.props.ItemDetail.content,
+      // "\n8", this.state.step === this.props.ItemDetail.steps,
+      && this.state.type === (this.props.ItemDetail.type === 1 ? "project" : "blog")
+      && this.state.private === this.props.ItemDetail.private
+    ) {
+      await alert("변경된 사항이 없습니다.");
+      return;
+    }
+    // return;
+    data.additional.description = data.additional.description.replace(/(?:\r\n|\r|\n)/g, '<br />');
+    this.props.UpdateItemRequest(data, this.props.ItemDetail["item-id"], this.props.token)
+      .then(async result => {
+        if (result.res.success) {
+          await alert("아이템이 수정 되었습니다. 아이템상세페이지로 이동합니다.");
+          window.location.href = `/productDetail/${this.props.id}`
+        } else {
+          await alert("아이템 수정을 실패하였습니다.");
+        }
+      })
+      .catch(async error => {
+        await alert("오류내용:" + error.message);
+      });
     this.setState({ loading: false });
   };
   async onClickCategorylevel1(event, { value }) {
@@ -437,25 +454,11 @@ class ModifyItemInfo extends Component {
     await this.setState({ additional: copy });
   }
   render() {
-    // uid: 93
-    // user_id: 1
-    // thumbnail_id: 114
-    // upload_type: "blog"
-    // private: 0
-    // list-id: null
-    // score: null
-    // total: 0
-    // listId: 94
-    // cardId: 83
-    // bought: false
-    // members: [{…}]
-    // success: true
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
     const { /* edit, */ itemType, tab } = this.state;
     const Mandatory = () => <span className="font_red" title="필수사항입니다."> * </span>
-    // console.log(this.state.tag,this.state.tag.indexOf(","));
-    // console.log(this.state.additional&&this.state.additional.description.replace(/<br \/>/gi,'\n'));
+
     return (<MainBox>
       {this.state.loading ? <Loading /> : null}
 
@@ -534,7 +537,7 @@ class ModifyItemInfo extends Component {
                     <Field title="설명">
                       <InputTextarea
                         onChange={this.onHandleAdditionalText}
-                        value={(this.state.additional && this.state.additional.description.replace(/<br \/>/gi,'\n')) || ""}
+                        value={(this.state.additional && this.state.additional.description.replace(/<br \/>/gi, '\n')) || ""}
                         name="description"
                         width={483} height={99}
                       ></InputTextarea>
@@ -554,24 +557,24 @@ class ModifyItemInfo extends Component {
                     <Field title="설명">
                       <InputTextarea
                         onChange={this.onHandleAdditionalText}
-                        value={(this.state.additional && this.state.additional.description.replace(/<br \/>/gi,'\n')) || ""}
+                        value={(this.state.additional && this.state.additional.description.replace(/<br \/>/gi, '\n')) || ""}
                         name="description"
                         width={483} height={99} ></InputTextarea>
                     </Field>
                     <Field title="팀원 초대">
-                      <div style={{display:"flex"}}>
-                      {!this.state.alone ?
-                        <SearchDesignMemberContainer
-                          originalMember={
-                            (this.state.additional && this.state.additional.members.filter(user => user.uid !== this.props.userInfo.uid)) || []}
-                          className="searchRect"
-                          onChangeMembers={this.onHandleAdditionalMember} />
-                        : null}
-                      {/* LEAVE ME ALONE */}
-                      <NoInviteMemberBox>
-                        <CheckBox2 onChange={() => this.setState({ alone: !this.state.alone, members: [] })} checked={this.state.alone} />
-                        <div className="textLabel">멤버를 초대하지 않습니다.</div>
-                      </NoInviteMemberBox>
+                      <div style={{ display: "flex" }}>
+                        {!this.state.alone ?
+                          <SearchDesignMemberContainer
+                            originalMember={
+                              (this.state.additional && this.state.additional.members.filter(user => user.uid !== this.props.userInfo.uid)) || []}
+                            className="searchRect"
+                            onChangeMembers={this.onHandleAdditionalMember} />
+                          : null}
+                        {/* LEAVE ME ALONE */}
+                        <NoInviteMemberBox>
+                          <CheckBox2 onChange={() => this.setState({ alone: !this.state.alone, members: [] })} checked={this.state.alone} />
+                          <div className="textLabel">멤버를 초대하지 않습니다.</div>
+                        </NoInviteMemberBox>
                       </div>
                     </Field>
                     <Field title="공개">
@@ -594,7 +597,7 @@ class ModifyItemInfo extends Component {
                   // <ItemConsulting return={this.onHandleAdditional} /> 
                   (<React.Fragment>
                     <Field title="설명">
-                      <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi,'\n')} name="description" width={483} height={99} ></InputTextarea></Field>
+                      <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" width={483} height={99} ></InputTextarea></Field>
                     {/* <Field title="자문/상담 방법"> 온라인 */}
                     {/* <RadioType checked={1} return={this.onHandleReturn} name="contact-method" Options={typeOnOff} /> */}
                     {/* </Field> */}
@@ -609,7 +612,7 @@ class ModifyItemInfo extends Component {
                   // <ItemExperience return={this.onHandleAdditional} /> 
                   (<React.Fragment>
                     <Field title="설명">
-                      <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi,'\n')} name="description" width={483} height={99} ></InputTextarea></Field>
+                      <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" width={483} height={99} ></InputTextarea></Field>
                     <Field title="구입 비용">
                       <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                     </Field>
@@ -619,7 +622,7 @@ class ModifyItemInfo extends Component {
                   // <ItemInfoData return={this.onHandleAdditional} /> 
                   (<React.Fragment>
                     <Field title="설명">
-                      <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi,'\n')} name="description" width={483} height={99} ></InputTextarea></Field>
+                      <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" width={483} height={99} ></InputTextarea></Field>
                     <Field title="구입 비용">
                       <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                       {/* <InputText onChange={this.onHandleChange} name="price" width={370} /> */}
@@ -630,7 +633,7 @@ class ModifyItemInfo extends Component {
                   // <ItemIdea return={this.onHandleAdditional} /> 
                   (<React.Fragment>
                     <Field title="설명">
-                      <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi,'\n')} name="description" width={483} height={99} ></InputTextarea></Field>
+                      <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" width={483} height={99} ></InputTextarea></Field>
                     <Field title="구입 비용">
                       <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                     </Field>
@@ -640,7 +643,7 @@ class ModifyItemInfo extends Component {
                   // <ItemPatent return={this.onHandleAdditional} /> 
                   (<React.Fragment>
                     <Field title="설명">
-                      <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi,'\n')} name="description" width={483} height={99} ></InputTextarea></Field>
+                      <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" width={483} height={99} ></InputTextarea></Field>
                     <Field title="내용">
                       <div style={{ display: "flex", flexDirection: "column" }}>
                         {this.state.content.length > 0 &&
@@ -662,7 +665,7 @@ class ModifyItemInfo extends Component {
                   (<React.Fragment>
                     <Field title="설명">
                       <InputTextarea id="description" onChange={this.onHandleAdditionalText}
-                      value={this.state.additional.description.replace(/<br \/>/gi,'\n')} name="description" width={483} height={99} ></InputTextarea></Field>
+                        value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" width={483} height={99} ></InputTextarea></Field>
                     {/* <Field title="상세 이미지">
                         <div style={{ display: "flex", flexDirection: "column" }}>
                           <ThumbnailList return={this.onHandleImageList} width={650} />
@@ -707,8 +710,8 @@ class ModifyItemInfo extends Component {
       {/* 버튼 */}
       {itemType > -1 && tab === "basic" ?
         (<div className="buttonBox" style={{ width: "max-content", marginLeft: "auto", marginRight: "85px" }}>
-              <RedButton text={"수정을 적용합니다."} okText="수정" cancelText="취소" value={"수정하기"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={()=>window.history.go(-1).then(()=>window.location.reload())} isConfirm={true} />
+          <RedButton text={"수정을 적용합니다."} okText="수정" cancelText="취소" value={"수정하기"} onClick={this.onSubmit} isConfirm={true} />
+          <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => window.history.go(-1).then(() => window.location.reload())} isConfirm={true} />
           {/* <RedButton onClick={this.onSubmit}>수정하기</RedButton> */}
           {/* <RedButton gray onClick={() => {
             if (window.confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
