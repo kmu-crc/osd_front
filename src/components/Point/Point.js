@@ -334,7 +334,7 @@ async getPriceValue(value) {
     ).then(async() => {
       this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token);
       this.props.GetHistoryRequest(this.props.userInfo.uid,0, this.props.token);
-      await alert("현금 전환이 완료되었습니다.");
+      // await alert("현금 전환이 완료되었습니다.");
     })
   };
   async PointToMoney(type) {

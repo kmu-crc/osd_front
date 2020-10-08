@@ -52,6 +52,7 @@ class ItemReviewContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
+    ItemDetail: state.ItemDetail.status.ItemDetail,
     payment: state.Payment.status.Payment,
     review: state.ItemReview.status.Review,
     total: state.ItemReview.status.Total,

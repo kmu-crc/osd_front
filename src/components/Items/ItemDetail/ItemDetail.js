@@ -742,7 +742,6 @@ class ItemDetail extends Component {
                 user_id={item.user_id}
                 detail={this.state.detail}
                 handler={detail => this.setState({ reviewdetail: true, detail: detail })}
-                // writeHandler={(uid) => {alert(">?");this.setState({ reviewwrite: true,writeReviewID:uid })} }
                 isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} />
                  {/* {this.state.reviewdetail ?
                 <ReviewDetailModal

@@ -17,7 +17,6 @@ import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
 
 // CSS STYLING
 const Container = styled.div`
-height:750px;
 *{
   font-family:Noto Sans KR;
 }
@@ -25,7 +24,9 @@ height:750px;
   display:flex;
   justify-content:center;
   margin-top: 35px;
+  margin-bottom:100px;
   width: 100%;
+  height:750px;
   .line{
     display: flex;
     flex-direction: row;
@@ -87,6 +88,7 @@ const Peers = styled.div`
     overflow: auto;
     }
     .person {
+      max-height:100px;
       margin-bottom:5px;
       background-color:#FBFBFB;
       border:1px solid #E6E6E6;
@@ -112,6 +114,7 @@ const Peers = styled.div`
           font-weight: 500;
         }
         .last-message {
+          height:20px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -196,7 +199,7 @@ const Chatting = styled.div`
       }
       .button-style{
         min-width:60px;
-        min-height:30px;
+        min-height:40px;
         background-color: red;
         width: 35px;
         height: 35px;
@@ -217,6 +220,28 @@ const Chatting = styled.div`
     .chat-list{
       overflow:auto;
     }
+  }
+`;
+const SendMessageTextarea = styled.div`
+  width:95%;
+  height:40px;
+  min-height:40px;
+  font-size:13px;
+  // font-weight:500;
+  // color:#707070;
+  text-align:left;
+  line-height:27px;
+  background-color:#dddddd;
+  resize:none;
+  border:none;글
+  outline:none;
+  padding:5px;
+  overflow:auto;
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    height:100%;
   }
 `;
 //const ProfileDetail = styled.div`
@@ -360,8 +385,9 @@ class MessageList extends Component {
   }
   sendText = async (event) => {
     event.preventDefault();
-    if (this.state.selectId == null || this.state.textmsg == null || this.state.textmsg.trim().length === 0) return;
-    this.props.SendMessageRequest(this.props.token, { message: this.state.textmsg }, this.state.selectId)
+    const innerHtmlValue = document.getElementById("sendMsgBox").innerHTML;
+    if (this.state.selectId == null || innerHtmlValue == null || innerHtmlValue.trim().length === 0) return;
+    this.props.SendMessageRequest(this.props.token, { message: innerHtmlValue }, this.state.selectId)
       .then(async res => {
         if (res.data && res.data.success === true) {
           await this.props.GetMyMsgListRequest(this.props.token);
@@ -415,7 +441,7 @@ class MessageList extends Component {
                       <Face img={peer.s_img} />
                       <div className="middle">
                         <div className="name">{peer.friend_name}</div>
-                        <div className="last-message">{peer.message}</div>
+                        <div className="last-message" dangerouslySetInnerHTML={{__html:peer.message}}></div>
                       </div>
                       <div className="date">
                         <div className="sent-date">{DateFormat(peer.update_time)}</div>
@@ -442,9 +468,11 @@ class MessageList extends Component {
                   {this.state.render && <React.Fragment>
                     <div className="border"></div>
                     <div className="input-wrapper line">
-                      <div className="input-style"><input style={{ border: "none", outline: "none" }} name="textmsg" value={this.state.textmsg} onChange={this.handleChange} /></div>
+                      {/* <div className="input-style"><input style={{ border: "none", outline: "none" }} name="textmsg" value={this.state.textmsg} onChange={this.handleChange} /></div> */}
+                      <SendMessageTextarea contentEditable="true" id="sendMsgBox">
+                      </SendMessageTextarea>
                       <div className="button-style">
-                        <button type="button" onClick={this.sendText}><div style={{ color: "white" }}>전송</div></button></div>
+                        <button type="button" style={{outline:"none",border:"none" }} onClick={this.sendText}><div style={{ color: "white"}}>전송</div></button></div>
                     </div>
                   </React.Fragment>}
                 </div>

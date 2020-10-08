@@ -138,7 +138,7 @@ class ProductFilter extends Component {
                 </ul>
             </div> */}
             <div className="wrapper button-wrapper">
-                <div className="button" onClick={this.onSubmit}>적용하기</div>
+                <div className="button" onClick={this.onSubmit}>수정하기</div>
                 <div className="button" onClick={this.onReset}>모두해제</div>
             </div>
             <div style={{ height: "50px" }}></div>

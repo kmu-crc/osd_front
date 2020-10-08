@@ -200,10 +200,10 @@ export default class Alarm extends Component {
     switch (item.type) {
       case "ITEM_PURCHASED_TO_EXPERT": msg = `${from}님이 아이템을 구매하였습니다.`; break;
       case "ITEM_PURCHASED_TO_USER": msg = `아이템'${name}'을 구매하였습니다`; break;
-      case "ITEN_REQUEST_TO_DESIGNER": msg = `${from}님이 디자인을 의뢰하였습니다`; break;
-      case "ITEN_REQUEST_TO_MAKER": msg = `${from}님이 제작을 의뢰하였습니다`; break;
-      case "ITEN_RESPONSE_TO_DESIGNER": msg = `${from}님이 디자인 의뢰에 응답하였습니다`; break;
-      case "ITEN_RESPONSE_TO_MAKER": msg = `${from}님이 제작 의뢰에 응답하였습니다`; break;
+      case "ITEM_REQUEST_TO_DESIGNER": msg = `${from}님이 디자인을 의뢰하였습니다`; break;
+      case "ITEM_REQUEST_TO_MAKER": msg = `${from}님이 제작을 의뢰하였습니다`; break;
+      case "ITEM_RESPONSE_TO_DESIGNER": msg = `${from}님이 디자인 의뢰에 응답하였습니다`; break;
+      case "ITEM_RESPONSE_TO_MAKER": msg = `${from}님이 제작 의뢰에 응답하였습니다`; break;
       case "ITEM_QUESTION_TO_OWNER": msg = `${from}님이 '${name}'을 문의하였습니다`; break;
       case "ITEM_REVIEW_TO_OWNER": msg = `${from}님이 '${name}'에 리뷰를 작성하였습니다`; break;
       case "ITEM_LIKE_TO_DESIGNER": msg = `${from}님이 디자이너님을 좋아합니다`; break;
@@ -274,12 +274,12 @@ export default class Alarm extends Component {
                       case "ITEM_QUESTION_TO_OWNER": 
                         locationURL = "/productDetail/"+item.detail.itemId;
                         break;
-                      case "ITEN_RESPONSE_TO_DESIGNER":
-                      case "ITEN_REQUEST_TO_DESIGNER": 
+                      case "ITEM_RESPONSE_TO_DESIGNER":
+                      case "ITEM_REQUEST_TO_DESIGNER": 
                         locationURL = "/designerDetail/"+item.to;
                         break;
-                      case "ITEN_RESPONSE_TO_MAKER": 
-                      case "ITEN_REQUEST_TO_MAKER": 
+                      case "ITEM_RESPONSE_TO_MAKER": 
+                      case "ITEM_REQUEST_TO_MAKER": 
                         locationURL = "/makerDetail/"+item.to;
                         break;
                       default:
@@ -293,12 +293,12 @@ export default class Alarm extends Component {
                       case "ITEM_LIKE_TO_OWNER": 
                         imgURL=alarmItem==null?noimg:alarmItem.itemThumbnail==null?noimg:alarmItem.itemThumbnail.m_img; 
                         break;
-                      case "ITEN_RESPONSE_TO_DESIGNER":
-                      case "ITEN_RESPONSE_TO_MAKER": 
+                      case "ITEM_RESPONSE_TO_DESIGNER":
+                      case "ITEM_RESPONSE_TO_MAKER": 
                         imgURL=alarmItem==null?noimg:alarmItem.toThumbnail==null?noimg:alarmItem.toThumbnail.m_img; 
                         break;
-                      case "ITEN_REQUEST_TO_DESIGNER": 
-                      case "ITEN_REQUEST_TO_MAKER": 
+                      case "ITEM_REQUEST_TO_DESIGNER": 
+                      case "ITEM_REQUEST_TO_MAKER": 
                       case "ITEM_REVIEW_TO_OWNER": 
                       case "ITEM_LIKE_TO_DESIGNER": 
                       case "ITEM_LIKE_TO_MAKER":

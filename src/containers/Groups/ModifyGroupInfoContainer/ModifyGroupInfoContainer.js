@@ -10,8 +10,8 @@ import styled from 'styled-components';
 // import StyleGuide from "StyleGuide";
 import ContentBox from "components/Commons/ContentBox";
 // import mainSlide from "source/mainSlide.jpg";
-import Modal from 'react-awesome-modal';
-
+// import Modal from 'react-awesome-modal';
+import {Modal} from 'semantic-ui-react';
 //const ImgWrapper = styled.div`
 //  background-image: url(${mainSlide});
 //  background-position: center;
@@ -81,7 +81,7 @@ class ModifyGroupInfoContainer extends Component {
 
   render() {
     return(
-      <Modal onLoad visible={this.props.open} effect="fadeInLeft">
+      <Modal style={{width:"max-content"}} open={this.props.open}>
         <Wrapper>
           <ModifyGorup  handleShowModal={this.handleShowModal}   {...this.props}  />
         </Wrapper>

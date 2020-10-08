@@ -137,8 +137,7 @@ const ExperienceBox = styled.div`
 `
 const FormBox = styled.div`
   *{
-    font-family:Noto Sans KR;
-    font-weight:500;
+
     font-size:20px;
   }
   width:939px;
@@ -172,6 +171,8 @@ const FormBox = styled.div`
     display:flex;
   }
   .label{
+    font-family:Noto Sans KR;
+    font-weight:500;
     min-width:157px;
     height:29px;
   }
@@ -211,7 +212,7 @@ const InputText = styled.input.attrs({ type: "text" })`
   outline:none;
   border:0px;
   padding: 0.67857143em 1em;
-
+  font-weight:300;
 `;
 const InputTextarea = styled.textarea`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
@@ -225,6 +226,7 @@ const InputTextarea = styled.textarea`
   readonly;
   resize:none;
   padding: 0.67857143em 1em;
+  font-weight:300;
 
 `;
 const Margin = styled.div`

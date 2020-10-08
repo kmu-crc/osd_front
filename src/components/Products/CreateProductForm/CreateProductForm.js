@@ -461,8 +461,7 @@ const Thumbnail = styled.div`
 const FormBox = styled.div`
   *{
     // border: 1px solid blue;
-    font-family: Noto Sans KR;
-    font-weight: 500;
+
     font-size: 20px;
   }
   
@@ -494,6 +493,8 @@ const FormBox = styled.div`
     display:flex;
   }
   .label{
+    font-family: Noto Sans KR;
+    font-weight: 500;
     min-width:157px;
     height:29px;
   }
@@ -521,6 +522,7 @@ const InputText = styled.input`
   outline: none;
   border: 0px;
   padding: 0.67857143em 1em;
+  font-weight:300;
 `;
 const InputTextarea = styled.textarea`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
@@ -534,7 +536,7 @@ const InputTextarea = styled.textarea`
   readonly;
   resize:none;
   padding: 0.67857143em 1em;
-
+  font-weight:300;
 `;
 const DropBox = styled(Dropdown)`
   min-width:200px !important;
@@ -713,7 +715,7 @@ class CreateProductForm extends Component {
         <FormBox height="550px" boxShadow={true}>
           <div className="contentWrap">
             <div className="wrapper flex">
-              <div className="label">아이템명<Mandatory /></div>
+              <div className="label">설명<Mandatory /></div>
               <InputText width={370} name="title" value={this.state.title || ""} onChange={this.onChangeValue} />
             </div>
 

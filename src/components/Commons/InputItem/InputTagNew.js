@@ -14,6 +14,7 @@ const FormStyle = styled.input.attrs({type:"text"})`
     outline:none;
     border:0px;
     transition: color 0.1s ease, border-color 0.1s ease;
+    font-weight:300;
     &::placeholder {
         color: ${StyleGuide.color.geyScale.scale5};
         font-family:Noto Sans CJK KR, Regular;
@@ -46,7 +47,7 @@ const TagPiece = styled.div`
     max-height:30px;
     border:1px solid #707070;
     border-radius:15px;
-    padding: 8px 10px 8px 10px;
+    padding: 11px 10px 8px 10px;
     display: flex;
     justify-content: space-between;
     align-items:center;

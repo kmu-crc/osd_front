@@ -158,14 +158,6 @@ const Page = styled.div`
 //`;
 
 const ReviewPiece = styled.div`
-    // border:1px solid black;
-    // *{
-    //     border:1px solid black;
-    // }
-    // height:80px;
-    // background-color:#E6E6E6;
-    // border:1px solid #E9E9E9;
-    // padding:10px;
     cursor:pointer;
     width:100%;
     display:flex;
@@ -326,6 +318,7 @@ class ItemReview extends Component {
             return;
         if (comment.length > 0)
             this.props.request({ score:score, comment: comment, payment_id: id, thumbnail:thumbnail});
+        this.setState({writeReview:false})
         console.log("change review writing");
         this.reset();
         this.props.refresh && this.props.refresh();
@@ -368,20 +361,10 @@ class ItemReview extends Component {
         }
         const Review = (props) => {
             console.log(props)
+            const thumbnail_list = props.thumbnail!=null?props.thumbnail.split(","):[];
             return (
-                // <div className="line element-reply">
-                //     {!props.itsmine && props.sort_in_group && master ?
-                //         <div onClick={() => this.reply(props.uid)}>[답변하기]</div> : null}
-                //     {/* {props.itsmine && !master ?<div >[삭제하기]</div> : null} */}
-                //     <div className="line">
-                //         {props.is_review ? "" : <ReplyPrefix>판매자 답변</ReplyPrefix>}
-                //         {props.comment}</div>
-                //     <div style={{ width: "max-content", marginLeft: "auto" }}>{props.nick_name}</div>
-                //     <div style={{ width: "max-content", marginLeft: "15px" }}>{props.sort_in_group === 0 ? Star(props.score) : null}</div>
-                //     <div style={{ width: "max-content", marginLeft: "75px" }}>{DateFormat(props.create_time)}</div>
-                // </div>
-                <ReviewPiece onClick={() => {this.setState({detail:props,reviewDetail:true})}} img={props.thumbnail_url || noimg}>
-                    {props.thumbnail_url==null?null:<div className="pics" />}
+                <ReviewPiece onClick={() => {this.setState({detail:props,reviewDetail:true})}} img={thumbnail_list[0] || noimg}>
+                    {thumbnail_list.length<=0?null:<div className="pics" />}
                     <div className="_contents">
                         <div className="header">
                             <div className="leftbox">
@@ -405,7 +388,7 @@ class ItemReview extends Component {
                 </ReviewPiece>
             )
         }
-        console.log(parseInt(score,10)||0,total);
+        console.log(this.props);
         return (<React.Fragment>
             <ReviewDetailModal 
                 open={this.state.reviewDetail}
@@ -418,6 +401,7 @@ class ItemReview extends Component {
                 modify={this.state.detail}
                 requestReview = {(uid,comment,score,thumbnail_list) => this.requestReview(uid,comment,score,thumbnail_list)}
                 payment_id={payment&&payment.length>0&&payment[0].uid}
+                {...this.props}
             />
             {/* <WriteReviewModal open={this.state.writeReview} close={() => this.setState({ writeReview: false })}/> */}
             <Reviews>
@@ -441,40 +425,6 @@ class ItemReview extends Component {
                     </div>
                 </div>
                 <div className="hrLine"/>
-
-                {/* {!master ?
-                    payment && payment.length > 0 ?
-                        payment.map((pay, index) => {
-                            console.log(pay);
-                            return <div key={index} onClick={() => this.setState({ review_selected: index, review_writing: true })}>
-                                {(this.state.review_writing && this.state.review_selected) === index ?
-                                    <WriteReview>
-                                        <div className="form">
-                                            <ReviewForm
-                                                value={this_comment || ""}
-                                                onChange={this.onChangeValue}
-                                                name="this_comment"
-                                                onKeyDown={this.handleKeyDown}
-                                            />
-                                        </div>
-                                        <div className="contents">
-                                            <div className="score">
-                                                <Rating name="score" icon='star' onRate={this.handleRate} value={this.state.score || 0} maxRating={5} />
-                                            </div>
-                                            <div className="buttonBox">
-                                                <div className="button" onClick={() => this.requestReview(pay.uid)} >
-                                                    <div className="text" >리뷰작성</div></div>
-                                            </div>
-                                        </div>
-                                    </WriteReview>
-                                    :
-                                    <CreateReview>
-                                        <div className="button"><div className="font">리뷰 작성</div></div>
-                                    </CreateReview>
-                                }
-                            </div>
-                        }) : null
-                    : null} */}
 
 
                 <div className="reviewContent">
