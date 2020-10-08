@@ -290,6 +290,11 @@ class GroupNotice extends Component {
       "notice-content": ""
     })
   }
+  componentDidUpdate(prevProps) {
+    if (prevProps.lastest !== this.props.lastest) {
+      return true;
+    }
+  }
   render() {
     const { lastest, count, GroupDetail, userInfo } = this.props;
     const user_id = userInfo && userInfo.uid;
@@ -459,7 +464,7 @@ class GroupNotice extends Component {
 
         {lastest ?
           <React.Fragment>
-            <div onClick={() => this.setState({ noticeDetail: true })}>
+            <div onClick={() => this.setState({ noticeDetail: true, notice: lastest })}>
               <div style={{ display: "flex", cursor: "pointer" }}>
                 <i className="icon announcement" style={{ fontSize: "20px" }}></i>
                 {/* <p style={{ fontWeight: "900" }}>[공지]</p> */}
