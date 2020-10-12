@@ -62,14 +62,30 @@ const MainBox = styled.div`
 `;
 
 
-
+const GoList = styled.div`
+  width:100%;
+  padding:0px 130px 0px 136px;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  .wrapper{
+    cursor:pointer;
+    display:flex;
+    .text{
+      font-size:20px;
+      color:#707070;
+    }
+  }
+`
 const FormBox = styled.div`
   width:${props=>props.isHalf==true?"50%":"100%"};
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
   padding:${props=>props.isHalf==true?"72px 50px 72px 50px":"72px 113px 72px 113px"};
-  margin-right:${props=>props.isHalf==true?"44px":"10px"};
-
+  margin-right:${props=>props.isLeft==true?"44px":"0px"};
+  .term{
+    height:44px;
+  }
   .wrapper{
     width:100%;
     margin-bottom:50px;
@@ -249,6 +265,14 @@ class Detail extends Component {
                 </FormBox>
               </div>
             </MainBox>
+            <GoList>
+                  <div className="wrapper" onClick={()=>{
+                    console.log(window.history.back())
+                  }}>
+                    <CustomIcon style={{transform:"rotate(180deg)"}} width="15" height="15" imgURL={category_icon}/>
+                    <div className="text">목록으로</div>
+                  </div>
+              </GoList>
             <div style={{ display: "flex" }}>
             </div>
           </Wrapper> :
@@ -351,15 +375,18 @@ class Detail extends Component {
                       </div>
                     }
 
-
-                    {/* <div className="wrapper flex centering">
-                      <div className="label">오프라인 상담</div>
-                      <div className="textBox">{Detail.offline <= 0 ? "불가능" : "가능"}</div>
-                    </div> */}
-
                   </FormBox>
+                 
                 </div>
               </MainBox>
+              <GoList>
+                  <div className="wrapper" onClick={()=>{
+                    console.log(window.history.back())
+                  }}>
+                    <CustomIcon style={{transform:"rotate(180deg)"}} width="15" height="15" imgURL={category_icon}/>
+                    <div className="text">목록으로</div>
+                  </div>
+              </GoList>
               {!MyDetail ?
                 <ButtonWrapper>
                   {(this.props.userInfo && Detail && Detail.client_id == this.props.userInfo.uid) ? 
@@ -381,7 +408,7 @@ class Detail extends Component {
                 <div className="title">{TypeText} 의뢰 응답</div>
 
                 <div className="contentsBox">
-                  <FormBox isHalf={true}>
+                  <FormBox isHalf={true} isLeft={true}>
                     <div className="wrapper flex centering">
                       <div className="label">제목</div>
                       <div className="textBox">{Detail.title}</div>
@@ -441,7 +468,7 @@ class Detail extends Component {
                       <div className="textBox">{Detail && Detail.request && Detail.request.ownership <= 0 ? "의뢰자" : "디자이너"}</div>
                     </div>
                   </FormBox>
-
+                            
                   <FormBox isHalf={true}>
                     <div className="wrapper flex add_margin_bottom">
                       <div className="label">응답자</div>
@@ -471,6 +498,14 @@ class Detail extends Component {
                   </FormBox>
                 </div>
               </MainBox>
+              <GoList>
+                  <div className="wrapper" onClick={()=>{
+                    console.log(window.history.back())
+                  }}>
+                    <CustomIcon style={{transform:"rotate(180deg)"}} width="15" height="15" imgURL={category_icon}/>
+                    <div className="text">목록으로</div>
+                  </div>
+              </GoList>
               <ButtonWrapper>
                 {this.props.Detail&&this.props.Detail.request&&this.props.userInfo&&this.props.Detail.request.client_id == this.props.userInfo.uid ?<RedButton value={"아이템 구입"} onClick={this.props.purchase} isConfirm={false} />:null}
               </ButtonWrapper>
