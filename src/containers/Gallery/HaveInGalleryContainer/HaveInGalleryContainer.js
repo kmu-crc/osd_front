@@ -20,11 +20,12 @@ class HaveInGalleryContainer extends Component {
   }
 
   render() {
+    // console.log(this.props.handlerIsGalleryModify);
     return (
       <ScrollBox>
         <ScrollList
           cols={6} type="gallery" getListRequest={this.getList} ListComponent={this.props.isModify === true ? ModifyGallery : Gallery}
-          dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />
+          dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} handler={this.props.handlerIsGalleryModify} />
       </ScrollBox>
 
 

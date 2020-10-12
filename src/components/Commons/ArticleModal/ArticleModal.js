@@ -3,6 +3,9 @@ import { Modal } from "semantic-ui-react";
 import Cross from "components/Commons/Cross";
 import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
 import styled from "styled-components";
+import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
+
 const WriteNormalArticleModal = styled(Modal)`
   width:988px;
   height:541px;
@@ -113,14 +116,25 @@ class ArticleModal extends Component {
         }
     }
     render(){
+      const Mandatory = () => <span style={{color:"red"}} title="필수사항입니다.">*</span>
+
         return(
             <React.Fragment>
-                <WriteNormalArticleModal open={this.props.write} onClose={() => {this.setState({ title: "", content: "" });this.props.handlerModal(false)}}>
+                <WriteNormalArticleModal open={this.props.write} onClose={async(e) => {
+                  if(this.state.title!=""||this.state.content!=""){
+                    if(await confirm("내용이 저장되지 않습니다. 그래도 닫으시겠습니까?","예","아니오")){
+                      e.preventDefault();
+                    }else{
+                      return;
+                    }
+                  }
+                  this.setState({ title: "", content: "" });this.props.handlerModal(false)
+                  }}>
                         <div className="close-box" onClick={() => {this.setState({ title: "", content: "" });this.props.handlerModal(false)}}>
                             <Cross style={{cursor:"pointer"}} angle={45} color={"#000000"} weight={3} width={15} height={15} />
                         </div>
                         <div className="form align_item_center">
-                            <div className="title_label">제목</div>
+                            <div className="title_label">제목<Mandatory/></div>
                             <TitleForm
                             value={this.state.title || ""}
                             onChange={event => this.setState({ title: event.target.value })}
@@ -128,7 +142,7 @@ class ArticleModal extends Component {
                             />
                             </div>
                             <div className="form form_height">
-                            <div className="title_label ">내용</div>
+                            <div className="title_label ">내용<Mandatory/></div>
                             <TextControllerClassic
                             item={{content:this.state.content}}
                             name={"content"}
@@ -138,7 +152,15 @@ class ArticleModal extends Component {
                             />
                         </div>
                         <div className="form redButtonBox">
-                            <div className="redButton" onClick={()=>this.props.createNoneRequest(this.state.title,this.state.content)} >
+                            <div className="redButton" onClick={async()=>{
+                              if(this.state.title==""){
+                                await alert("게시글의 제목을 입력해주세요.");
+                                return;
+                              }else if(this.state.content==""){
+                                await alert("게시글의 내용을 입력해주세요");
+                                return;
+                              }
+                              this.props.createNoneRequest(this.state.title,this.state.content)}} >
                                 <div className="btnText" >작성하기</div>
                             </div>
                         </div>
@@ -148,3 +170,4 @@ class ArticleModal extends Component {
     }
 }
 export default ArticleModal;
+                      

@@ -2,7 +2,7 @@ import * as types from "actions/ActionTypes";
 import host from "config";
 
 export const GetExpertDesignerDetailRequest = (id) => {
-    console.log("?");
+    // console.log("?");
     return (dispatch) => {
       const url =  `${host}/expert/designerDetail/${id}`;
       console.log("url",url);

@@ -7,6 +7,7 @@ import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
 import { FileUploadRequest } from "actions/Uploads";
 import category_icon from "source/category_icon.svg";
+import { alert } from "components/Commons/Alert/Alert";
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -261,7 +262,7 @@ class RequestToMaker extends Component {
     await console.log(file);
   }
 
-  onSubmit() {
+  async onSubmit() {
     const data = {
       type: "maker", // designer, maker
       status: "request",
@@ -282,6 +283,10 @@ class RequestToMaker extends Component {
       file_url: this.state.file_url,
       filename: this.state.filename,
     }
+    /////예외처리/////
+    if(this.state.title==""){await alert("의뢰 제목을 입력해주세요");return;}
+    else if(this.state.content==""){await alert("의뢰 내용을 입력해주세요");return;}
+    ///////////////
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
         if (res.success) {
@@ -299,7 +304,7 @@ class RequestToMaker extends Component {
     console.log(this.props);
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
-
+    const Mandatory = () => <span style={{color:"red"}} title="필수사항입니다.">*</span>
     return (
       <React.Fragment>
         <Wrapper>
@@ -314,7 +319,7 @@ class RequestToMaker extends Component {
                 </div>
 
                 <div className="wrapper flex centering">
-                  <div className="label">제목</div>
+                  <div className="label">제목<Mandatory/></div>
                   <InputText onChange={this.onChangeTitle} value={this.state.title} width={483} />
                 </div>
 
@@ -343,7 +348,7 @@ class RequestToMaker extends Component {
                 </div>
 
                 <div className="wrapper flex centering">
-                  <div className="label">의뢰 내용</div>
+                  <div className="label">의뢰 내용<Mandatory/></div>
                   {/* <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} /> */}
                   <TextControllerClassic
                     item={{ content: this.state.content, height: 500 }}

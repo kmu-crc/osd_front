@@ -305,7 +305,7 @@ class ModifyRequestToDesigner extends Component {
       tag: tag.slice(),
     })
   }
-  onSubmit() {
+  async  onSubmit() {
     const data = {
       type: "designer",
       status: "request",
@@ -326,6 +326,10 @@ class ModifyRequestToDesigner extends Component {
       file_url: this.state.file_url,
       filename: this.state.filename,
     }
+    /////예외처리/////
+    if(this.state.title==""){await alert("의뢰 제목을 입력해주세요");return;}
+    else if(this.state.content==""){await alert("의뢰 내용을 입력해주세요");return;}
+    ///////////////
     console.log(data);
     // window.location.href = "/request/designer";
     this.props.UpdateRequestRequest(this.props.id, data, this.props.token)
@@ -349,6 +353,7 @@ class ModifyRequestToDesigner extends Component {
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
+    const Mandatory = () => <span style={{color:"red"}} title="필수사항입니다.">*</span>
     console.log(this.props);
     return (
       <React.Fragment>
@@ -364,7 +369,7 @@ class ModifyRequestToDesigner extends Component {
                 </div>
 
                 <div className="wrapper flex centering">
-                  <div className="label">제목</div>
+                  <div className="label">제목<Mandatory/></div>
                   <InputText onChange={this.onChangeTitle} value={this.state.title} width={483} />
                 </div>
 
@@ -382,7 +387,7 @@ class ModifyRequestToDesigner extends Component {
                 </div>
 
                 <div className="wrapper flex centering">
-                  <div className="label">의뢰 내용</div>
+                  <div className="label">의뢰 내용<Mandatory/></div>
                   {/* <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} /> */}
                   <TextControllerClassic
                     item={{ content: this.state.content, height: 500 }}

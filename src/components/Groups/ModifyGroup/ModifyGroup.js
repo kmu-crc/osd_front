@@ -302,12 +302,35 @@ class ModifyGroup extends Component {
   onSubmit = async e => {
 
     e.preventDefault();
+    if (this.props.galleryDetail.title == this.state.title&&
+      this.props.galleryDetail.description == this.state.explain&&
+      this.props.galleryDetail.thumbnail == this.state.thumbnail
+    ) {
+      if(this.props.galleryDetail.itemList.length==this.state.selectItemList.length){
+        let isModify=false;
+        this.props.galleryDetail.itemList.map((item,index)=>{
+          console.log(item);
+          if(this.state.selectItemList[index].value!=item.value){
+            isModify=true;
+          }
+        })
+          if(isModify==false){
+            await alert("수정된 내용이 없습니다.")
+            return;
+          }
+
+      
+      }
+        
+     
+    }
+
     const data = {
       files: [],
       user_id: this.props.userInfo.uid,
-      title: this.state.title,
+      title:this.state.title,
       description: this.state.explain,
-      itemList: this.state.selectItemList,
+      itemList:this.state.selectItemList,
     }
     let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
     await data.files.push(file);
@@ -330,8 +353,10 @@ class ModifyGroup extends Component {
           this.props.GetHaveInGalleryRequest(this.props.userInfo.uid, 0);
           // alert("정보가 수정되었습니다.");
           this.props.handleShowModal(false);
+          console.log(this.props.handlerIsGalleryModify)
+          this.props.handlerIsGalleryModify();
         } else {
-          await alert("다시 시도해주세요");
+          await alert("다시 시도해주세요!");
         }
       })
       .catch(async e => {
