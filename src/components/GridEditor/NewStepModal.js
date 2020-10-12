@@ -137,7 +137,7 @@ class NewStepModal extends Component {
         } else {
             data.order = 0;
         }
-        this.props.newStep({ where: step.length, title: this.state.title});
+        this.props.newStep({ where: step ? step.length : 0, title: this.state.title });
         this.onClose();
     }
     onClose() {
