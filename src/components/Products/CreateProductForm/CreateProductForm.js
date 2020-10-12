@@ -715,7 +715,7 @@ class CreateProductForm extends Component {
         <FormBox height="550px" boxShadow={true}>
           <div className="contentWrap">
             <div className="wrapper flex">
-              <div className="label">설명<Mandatory /></div>
+              <div className="label">제목<Mandatory /></div>
               <InputText width={370} name="title" value={this.state.title || ""} onChange={this.onChangeValue} />
             </div>
 

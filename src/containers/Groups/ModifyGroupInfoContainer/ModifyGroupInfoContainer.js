@@ -83,7 +83,7 @@ class ModifyGroupInfoContainer extends Component {
     return(
       <Modal style={{width:"max-content"}} open={this.props.open}>
         <Wrapper>
-          <ModifyGorup  handleShowModal={this.handleShowModal}   {...this.props}  />
+          <ModifyGorup  handleShowModal={this.handleShowModal} handlerIsGalleryModify={this.props.handlerIsGalleryModify}   {...this.props}  />
         </Wrapper>
       </Modal>
     );

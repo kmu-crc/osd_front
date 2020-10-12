@@ -263,6 +263,7 @@ class ModifyDesigner extends Component {
       location: "",
       explain: "", tag: [],
       career: [{ number: 0, task: "", explain: "", during: "" }],
+      galleryModify:false,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -275,6 +276,7 @@ class ModifyDesigner extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.handleShowModal = this.handleShowModal.bind(this);
     this.onClickCancel = this.onClickCancel.bind(this);
+    this.handlerIsGalleryModify=this.handlerIsGalleryModify.bind(this);
   }
   componentWillUpdate(nextProps) {
     if (
@@ -292,7 +294,7 @@ class ModifyDesigner extends Component {
       careerRow.pop();
       const careerList = careerRow.map((item, index) => {
         const piece = item.split(",");
-        console.log("piece:::", piece[0], piece[1], piece[2], piece[3]);
+        // console.log("piece:::", piece[0], piece[1], piece[2], piece[3]);
         return (
           { number: piece[0], task: piece[1], explain: piece[2], during: piece[3] }
         );
@@ -314,6 +316,9 @@ class ModifyDesigner extends Component {
       })
     };
     return true;
+  }
+  handlerIsGalleryModify(){
+    this.setState({galleryModify:true});
   }
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: { value }.value });
@@ -364,9 +369,32 @@ class ModifyDesigner extends Component {
     window.location.href = "/mypage"
   }
   onSubmit = async e => {
-
     e.preventDefault();
-
+    let tagString = "";
+    this.state.tag.map((item,index)=>{
+      return(
+        tagString+=item+","
+      )
+    });
+    let careerString = "";
+    this.state.career.map((item,index)=>{
+      return(
+        careerString+=item.number+","+item.task+","+item.explain+","+item.during+"/"
+      );
+    })
+    if(tagString==",")tagString="";
+    if(careerString==",,,/")careerString="";
+    //예외처리
+    if(this.props.DesignerDetail.description == this.state.explain&&
+      this.props.DesignerDetail.category_level1== this.state.category_level1&&
+      this.props.DesignerDetail.category_level2==this.state.category_level2&&
+      this.props.DesignerDetail.location==this.state.location&&
+      tagString==this.props.DesignerDetail.tag&&
+      careerString==this.props.DesignerDetail.experience&&
+      this.state.galleryModify==false){
+        await alert("수정된 내용이 없습니다.");
+        return;
+      }
     let tagList = "";
     this.state.tag.map((item, index) => { // 태그,태그,태그 ...
       return (
@@ -440,14 +468,13 @@ class ModifyDesigner extends Component {
   };
 
   render() {
-    console.log("===========================", this.state);
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
 
     return (
 
       <React.Fragment>
-        {this.state.open && <CreateGroupContainer id={this.props.id} handleShowModal={this.handleShowModal} open={this.state.open} />}
+        {this.state.open && <CreateGroupContainer id={this.props.id} handleIsModify={this.handlerIsGalleryModify} handleShowModal={this.handleShowModal} open={this.state.open} />}
         <MainBox>
           <div className="title">디자이너 관리</div>
           <div className="contentsBox">
@@ -511,7 +538,7 @@ class ModifyDesigner extends Component {
               </div>
               <div className="wrapper_noflex ">
                 {this.state.career.map((item, index) => {
-                  console.log("career", item)
+                  // console.log("career", item)
                   return (
                     <CreateCareer item={item} number={(item.number) + 1} onChangeCareer={this.onChangeCareer} key={index} />
                   );
@@ -530,7 +557,7 @@ class ModifyDesigner extends Component {
                 <div className="title redText" onClick={this.handleShowModal}>갤러리 등록</div>
               </div>
               <div className="contensts">
-                {<HaveInGalleryContainer id={this.props.id} isModify={true} />}
+                {<HaveInGalleryContainer handlerIsGalleryModify={this.handlerIsGalleryModify} id={this.props.id} isModify={true} />}
               </div>
             </SubBox>
           </div>
@@ -598,7 +625,7 @@ class CreateCareer extends Component {
       }
       return zero + n;
     }
-    console.log("careerlog", this.state);
+    // console.log("careerlog", this.state);
     return (
       <React.Fragment>
 

@@ -285,6 +285,7 @@ class CreateGroup extends Component {
           this.props.GetHaveInGalleryRequest(this.props.id,0);
           // alert("정보가 수정되었습니다.");
           this.props.handleShowModal(false);
+          this.props.handleIsModify();
 
         } else {
           await alert("다시 시도해주세요!");

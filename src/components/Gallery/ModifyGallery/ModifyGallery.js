@@ -71,11 +71,11 @@ class ModifyGallery extends Component {
   }
 
   render() {
-
+    // console.log(this.props.handler);
     const item = this.props.data || empty;
     return (
       <React.Fragment>
-        {this.state.open ? <ModifyGroupInfoContainer handleShowModal={this.handleShowModal} id={this.props.data.uid} open={this.state.open} /> : null}
+        {this.state.open ? <ModifyGroupInfoContainer handlerIsGalleryModify={this.props.handler} handleShowModal={this.handleShowModal} id={this.props.data.uid} open={this.state.open} /> : null}
         <Wrapper onClick={this.onClickCard}>
           {/* picture */}
           <ItemPic img={(item && item.thumbnail) || noimg} />

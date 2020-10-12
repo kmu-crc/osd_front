@@ -20,7 +20,7 @@ class ModifyDesignerContainer extends Component {
     //this.props.GetTopItemListRequest(0);
   }
   render() {
-    console.log("ModifyDesignerContainer=====",this.props);
+    // console.log("ModifyDesignerContainer=====",this.props);
     // GetDesignerDetailRequest(this.props.id);
 
     return(

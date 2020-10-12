@@ -258,6 +258,7 @@ class ModifyMaker extends Component {
       location: "",
       explain: "", tag: [], equipment: [], technique: [],
       career: [{ number: 0, task: "", explain: "", during: "" }],
+      galleryModify:false,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -272,6 +273,8 @@ class ModifyMaker extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.handleShowModal = this.handleShowModal.bind(this);
     this.onClickCancel = this.onClickCancel.bind(this);
+    this.handlerIsGalleryModify=this.handlerIsGalleryModify.bind(this);
+
   }
   async componentDidMount() {
     if (this.props.userInfo == null) {
@@ -370,6 +373,9 @@ class ModifyMaker extends Component {
     console.log("handleShowModal=====",value)
     this.setState({ open: value })
   }
+  handlerIsGalleryModify(){
+    this.setState({galleryModify:true});
+  }
   handleOnChangeThumbnail(event) {
     event.preventDefault();
     const reader = new FileReader();
@@ -387,7 +393,46 @@ class ModifyMaker extends Component {
   onSubmit=async e=> {
 
     e.preventDefault();
-
+console.log(this.state.galleryModify)
+    let tagString = "";
+    this.state.tag.map((item,index)=>{
+      return(
+        tagString+=item+","
+      )
+    });
+    let careerString = "";
+    this.state.career.map((item,index)=>{
+      return(
+        careerString+=item.number+","+item.task+","+item.explain+","+item.during+"/"
+      );
+    })
+    let equipmentString = "";
+    this.state.equipment.map((item,index)=>{
+      return(
+        equipmentString+=item+","
+      )
+    });
+    let techniqueString = "";
+    this.state.technique.map((item,index)=>{
+      return(
+        techniqueString+=item+","
+      )
+    });
+    if(tagString==",")tagString="";
+    if(careerString==",,,/")careerString="";
+    //예외처리
+    if(this.props.MakerDetail.description == this.state.explain&&
+      this.props.MakerDetail.category_level1== this.state.category_level1&&
+      this.props.MakerDetail.category_level2==this.state.category_level2&&
+      this.props.MakerDetail.location==this.state.location&&
+      tagString==this.props.MakerDetail.tag&&
+      careerString==this.props.MakerDetail.experience&&
+      equipmentString==this.props.MakerDetail.maker_equipment&&
+      techniqueString==this.props.MakerDetail.maker_technique&&
+      this.state.galleryModify==false){
+        await alert("수정된 내용이 없습니다.");
+        return;
+    }
     let tagList = "";
     this.state.tag.map((item, index) => { // 태그,태그,태그 ...
       return (
@@ -483,7 +528,7 @@ class ModifyMaker extends Component {
     console.log("break:", this.props);
     return (
       <React.Fragment>
-        {this.state.open && <CreateGroupContainer id={this.props.id} handleShowModal={this.handleShowModal} open={this.state.open} />}
+        {this.state.open && <CreateGroupContainer id={this.props.id} handleIsModify={this.handlerIsGalleryModify} handleShowModal={this.handleShowModal} open={this.state.open} />}
         {this.props.userInfo &&
           <MainBox>
             <div className="title">메이커 관리</div>
@@ -594,7 +639,7 @@ class ModifyMaker extends Component {
                   <div className="title redText" onClick={()=>this.handleShowModal(true)}>갤러리 등록</div>
                 </div>
                 <div className="contensts">
-                  {<HaveInGalleryContainer id={this.props.id} isModify={true} />}
+                  {<HaveInGalleryContainer handlerIsGalleryModify={this.handlerIsGalleryModify} id={this.props.id} isModify={true} />}
                 </div>
               </SubBox>
             </div>
