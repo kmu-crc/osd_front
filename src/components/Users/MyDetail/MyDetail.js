@@ -391,7 +391,7 @@ class MyDetail extends Component {
             </ProfileBox>
             <InformationBox>
               <div className="grayBox borderRight">
-                <div className="wrap cursorPointer">
+                <div className="wrap cursorPointer" onClick={this.onClickCreateDesigner} >
                   <div className="title fontBig fontStyleNormal"><div>다양한 아이디어를 s판매하세요!</div></div>
                   <div className="design-clipart">&nbsp;</div>
                   <div onClick={this.onClickCreateDesigner} ><div className="fontDefault alignCenter cursorPointer fontStyleNormal displayFlex">
@@ -401,7 +401,7 @@ class MyDetail extends Component {
                 </div>
               </div>
               <div className="grayBox borderRight">
-                <div className="wrap cursorPointer">
+                <div className="wrap cursorPointer " onClick={this.onClickCreateMaker}>
                   <div className="title fontBig fontStyleNormal"><div>제작 기술을 공유하고 <br />장소를 쉐어해보세요!</div></div>
                   <div className="toolbox-clipart">&nbsp;</div>
                   <div onClick={this.onClickCreateMaker}><div className="fontDefault alignCenter cursorPointer fontStyleNormal displayFlex">
