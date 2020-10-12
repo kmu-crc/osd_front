@@ -13,7 +13,7 @@ import { alert } from "components/Commons/Alert/Alert";
 // css styling
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 107%;
   margin-bottom: 50px;
   & ul {
     margin-top: 30px;

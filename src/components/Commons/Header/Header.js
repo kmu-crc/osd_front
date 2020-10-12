@@ -172,7 +172,7 @@ const LoginBox = styled.div`
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = { logged: false, alarms: {}, active: false };
+    this.state = { logged: false, alarms: {}, active: false, keyword:""};
     this.getNews = this.getNews.bind(this);
     this.submitEnter = this.submitEnter.bind(this);
     this.saveKeyword = this.saveKeyword.bind(this);
