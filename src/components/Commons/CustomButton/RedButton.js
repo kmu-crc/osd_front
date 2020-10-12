@@ -11,12 +11,12 @@ const StyleButton = styled.div`
   display:flex;
   justify-content:center;
   align-items:center;
-  background-color:${props => props.disabled == false ? "red" : "#A0A0A0"};
-  border:${props => props.disabled == false ? "1px solid red" : "1px solid gray"};
+  background-color:${props => props.disabled == false || props.disabled == null ? "red" : "#A0A0A0"};
+  border:${props => props.disabled == false || props.disabled == null ? "1px solid red" : "1px solid gray"};
   cursor:pointer;
   margin-right:30px;
   .text{
-    color:${props => props.disabled == false ? "white" : "white"};
+    color:${props => props.disabled == false || props.disabled == null ? "white" : "white"};
     font-family:Noto Sans CJK KR, Regular;
     font-size:25px;
   }
@@ -47,6 +47,7 @@ export class RedButton extends Component {
     }
 
     render() {
+        console.log("disabled:", this.props.disabled);
         return (
             <React.Fragment>
                 <StyleButton disabled={this.props.disabled} onClick={this.onClickButton}>
