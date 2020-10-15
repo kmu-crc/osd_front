@@ -11,12 +11,12 @@ const StyleButton = styled.div`
   display:flex;
   justify-content:center;
   align-items:center;
-  background-color:${props=>props.reverse==null?"red":"white"};
-  border:${props=>props.reverse==null?null:"1px solid red"};
+  background-color:${props => props.disabled == false || props.disabled == null ? "red" : "#A0A0A0"};
+  border:${props => props.disabled == false || props.disabled == null ? "1px solid red" : "1px solid gray"};
   cursor:pointer;
   margin-right:30px;
   .text{
-    color:${props=>props.reverse==null?"white":"red"};;
+    color:${props => props.disabled == false || props.disabled == null ? "white" : "white"};
     font-family:Noto Sans CJK KR, Regular;
     font-size:25px;
   }
@@ -30,33 +30,27 @@ export class RedButton extends Component {
         super(props);
         this.onClickButton = this.onClickButton.bind(this);
     }
-    onClickButton= async event =>{
-        if(this.props.onClick == null)return;
+    onClickButton = async event => {
+        if (this.props.onClick == null || this.props.disabled) return;
         if (this.props.isConfirm === false) {
             this.props.onClick(event);
         }
         else {
             // await confirmAlert(options(this.props.value + "하시겠습니까?", this.props.onClick, event));
 
-            if (await confirm(this.props.text==null?this.props.value + "하시겠습니까?":this.props.text, this.props.okText==null?"예":this.props.okText,this.props.cancelText==null? "아니오":this.props.cancelText) === false) {
+            if (await confirm(this.props.text == null ? this.props.value + "하시겠습니까?" : this.props.text, this.props.okText == null ? "예" : this.props.okText, this.props.cancelText == null ? "아니오" : this.props.cancelText) === false) {
                 return;
-            }else{
+            } else {
                 this.props.onClick(event);
             }
         }
     }
-    onClickOk(event) {
-        this.props.onClick(event);
-        this.setState({ open: false });
-    }
-    onClickCancel(event) {
-        this.setState({ open: false });
-    }
 
     render() {
+        console.log("disabled:", this.props.disabled);
         return (
             <React.Fragment>
-                <StyleButton reverse={this.props.reverse} onClick={this.onClickButton}>
+                <StyleButton disabled={this.props.disabled} onClick={this.onClickButton}>
                     <div className="text">{this.props.value}</div>
                 </StyleButton>
             </React.Fragment>

@@ -316,6 +316,7 @@ class ModifyProductInfo extends Component {
   };
 
   render() {
+    console.log("modify product info:", this.props, this.state);
     const { imgs } = this.state;
     return (
       <React.Fragment>

@@ -294,7 +294,7 @@ border-radius: 20px;
   
 }
 `
-const QuestionBoard=styled.div`
+const QuestionBoard = styled.div`
 // *{border: 1px solid red;}
   width: 1600px;
   // height: ${props => props.height};
@@ -507,7 +507,7 @@ class ItemDetail extends Component {
       expandingContent: false, expandingReview: false, expandingBoard: false,
       isexpandingContent: false, isexpandingReview: false, isexpandingBoard: false,
       //for review detail
-      reviewdetail: false, detail: null, reviewWrite:false, writeReviewID:null,
+      reviewdetail: false, detail: null, reviewWrite: false, writeReviewID: null,
     }
     this.onClickLike = this.onClickLike.bind(this);
     this.buyThisItem = this.buyThisItem.bind(this);
@@ -544,7 +544,7 @@ class ItemDetail extends Component {
   }
   async modifyThisItem() {
     // if (await confirm("아이템을 수정하시겠습니까?")) {
-      window.location.href = `/productModify/${this.props.ItemDetail["item-id"]}`;
+    window.location.href = `/productModify/${this.props.ItemDetail["item-id"]}`;
     // }
   }
 
@@ -692,42 +692,43 @@ class ItemDetail extends Component {
                 <div className="bottom">
                   <div className="buttons line">
                     {item.user_id === (this.props.userInfo && this.props.userInfo.uid) ?
-                      <div className="button first">
-                        <div onClick={this.modifyThisItem}>
+                      <div onClick={this.modifyThisItem} className="button first">
+                        <div>
                           <div className="text">아이템 수정/삭제</div>
                         </div>
                       </div>
                       :
 
                       <div className="button first">
-                      <Link 
-                        onClick={async(e)=>{
-                        return this.props.isbuy>0?
-                          await confirm("이미 구매하신 이력이 존재합니다. 계속 진행하겠습니까?")?null:window.history.go(-1)
-                          :null
-                        }} 
-                        to={{
-                          pathname: `/payment`, state: {
-                          item:this.props.item,
-                          custom:null,
-                          options:null
-                        }}
-                      }> 
-                        <div>
-                        {/* <div onClick={_ => this.buyThisItem(_, item)} > */}
+                        <Link
+                          onClick={async (e) => {
+                            return this.props.isbuy > 0 ?
+                              await confirm("이미 구매하신 이력이 존재합니다. 계속 진행하겠습니까?") ? null : window.history.go(-1)
+                              : null
+                          }}
+                          to={{
+                            pathname: `/payment`, state: {
+                              item: this.props.item,
+                              custom: null,
+                              options: null
+                            }
+                          }
+                          }>
+                          <div>
+                            {/* <div onClick={_ => this.buyThisItem(_, item)} > */}
 
-                          <div className="text">아이템 구입</div>
-                        </div>
+                            <div className="text">아이템 구입</div>
+                          </div>
                         </Link>
                       </div>
                     }
-                    {this.props.ItemDetail&&this.props.userInfo&&
-                    this.props.ItemDetail.user_id==this.props.userInfo.uid?null:this.state.isLike === false ?
-                      <div className="button second" onClick={this.onClickLike}>
-                        <div className="text">관심항목추가</div></div>
-                      :
-                      <div className="button second active" onClick={this.onClickLike}>
-                        <div className="text">관심항목</div></div>}
+                    {this.props.ItemDetail && this.props.userInfo &&
+                      this.props.ItemDetail.user_id == this.props.userInfo.uid ? null : this.state.isLike === false ?
+                        <div className="button second" onClick={this.onClickLike}>
+                          <div className="text">관심항목추가</div></div>
+                        :
+                        <div className="button second active" onClick={this.onClickLike}>
+                          <div className="text">관심항목</div></div>}
                   </div>
                 </div>
               </div>
@@ -743,7 +744,7 @@ class ItemDetail extends Component {
                 detail={this.state.detail}
                 handler={detail => this.setState({ reviewdetail: true, detail: detail })}
                 isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} />
-                 {/* {this.state.reviewdetail ?
+              {/* {this.state.reviewdetail ?
                 <ReviewDetailModal
                   open={this.state.reviewdetail}
                   close={() => this.setState({ reviewdetail: false })}
@@ -758,7 +759,7 @@ class ItemDetail extends Component {
                     :
                     null
                   } */}
-                 {/* {this.state.reviewwrite ?
+              {/* {this.state.reviewwrite ?
                 <ReviewDetailModal
                   isWrite={true}
                   writeID={this.state.writeReviewID}
@@ -797,7 +798,7 @@ class ItemDetail extends Component {
 
           <div style={{ marginTop: "35px" }}>
             <QuestionBoard style={{ marginTop: "15px", overflow: "hidden" }} height={expandingBoard ? "100%" : "250px"}>
-                <div className="title">게시판</div>
+              <div className="title">게시판</div>
               <ItemQuestionContainer user_id={item.user_id} isExpanding={(result) => { this.setState({ isexpandingBoard: result }) }} />
               {/* {!this.state.isexpandingBoard && <CoverGrident isGradient={!expandingBoard} />} */}
             </QuestionBoard>

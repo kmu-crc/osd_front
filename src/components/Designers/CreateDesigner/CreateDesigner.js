@@ -349,7 +349,7 @@ class CreateDesigner extends Component {
     }else if(data.category_level1<=0||data.category_level1==null){
       await alert("카테고리를 입력해주세요","확인");
       return;
-    }else if(data.files[0]&&(data.files[0].value!=null||data.files[0].name!=null)){
+    }else if(!data.files[0]&&(data.files[0].value==null||data.files[0].name==null)){
       await alert("썸네일을 등록해주세요","확인");
       return;
     }

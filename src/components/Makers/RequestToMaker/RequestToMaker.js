@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
-import { InputTagNew,InputPriceNew,InputCalendar,InputFile } from "components/Commons/InputItem"
+import { InputTagNew, InputPriceNew, InputCalendar, InputFile } from "components/Commons/InputItem"
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
 import { FileUploadRequest } from "actions/Uploads";
@@ -28,16 +28,16 @@ const LocationList = [
   { value: 15, text: "제한없음" },
 ];
 
-const CustomIcon=styled.div`
+const CustomIcon = styled.div`
   width:${props => props.width}px;
   height:${props => props.height}px;
-  background-image:url(${props=>props.imgURL});
+  background-image:url(${props => props.imgURL});
   background-repeat: no-repeat;
   background-size: contain;
   padding:${props => props.padding}px;
-  margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
-  margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
-  display:${props=>props.isNon==true?"none":"block"}
+  margin-right:${props => props.marginRight == null ? "13" : props.marginRight}px;
+  margin-left:${props => props.marginLeft == null ? "13" : props.marginLeft}px;
+  display:${props => props.isNon == true ? "none" : "block"}
 `
 const Wrapper = styled(ContentBox)`
   width: 100%;
@@ -183,7 +183,7 @@ class RequestToMaker extends Component {
     this.getStartDateValue = this.getStartDateValue.bind(this);
     this.getEndDateValue = this.getEndDateValue.bind(this);
     this.getDayDateValue = this.getDayDateValue.bind(this);
-    this.onFileChange=this.onFileChange.bind(this);
+    this.onFileChange = this.onFileChange.bind(this);
   }
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: { value }.value });
@@ -253,7 +253,7 @@ class RequestToMaker extends Component {
   async getPriceValue(value) {
     await this.setState({ price: value });
   }
-  async onFileChange(file){
+  async onFileChange(file) {
     // const file = event.currentTarget.files;
     this.setState({
       file_url: file.file_url,
@@ -284,8 +284,8 @@ class RequestToMaker extends Component {
       filename: this.state.filename,
     }
     /////예외처리/////
-    if(this.state.title==""){await alert("의뢰 제목을 입력해주세요");return;}
-    else if(this.state.content==""){await alert("의뢰 내용을 입력해주세요");return;}
+    if (this.state.title == "") { await alert("의뢰 제목을 입력해주세요"); return; }
+    else if (this.state.content == "") { await alert("의뢰 내용을 입력해주세요"); return; }
     ///////////////
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
@@ -304,7 +304,7 @@ class RequestToMaker extends Component {
     console.log(this.props);
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
-    const Mandatory = () => <span style={{color:"red"}} title="필수사항입니다.">*</span>
+    const Mandatory = () => <span style={{ color: "red" }} title="필수사항입니다.">*</span>
     return (
       <React.Fragment>
         <Wrapper>
@@ -319,7 +319,7 @@ class RequestToMaker extends Component {
                 </div>
 
                 <div className="wrapper flex centering">
-                  <div className="label">제목<Mandatory/></div>
+                  <div className="label">제목<Mandatory /></div>
                   <InputText onChange={this.onChangeTitle} value={this.state.title} width={483} />
                 </div>
 
@@ -331,7 +331,7 @@ class RequestToMaker extends Component {
                     options={category1}
                     placeholder="대분류"
                     onChange={this.onClickCategorylevel1} />
-                    <CustomIcon width="25" height="25" imgURL={category_icon} marginRight="21" marginLeft="21"/>
+                  <CustomIcon width="25" height="25" imgURL={category_icon} marginRight="21" marginLeft="21" />
                   <DropBox id="category_level2"
                     value={this.state.category_level2}
                     selection
@@ -348,7 +348,7 @@ class RequestToMaker extends Component {
                 </div>
 
                 <div className="wrapper flex centering">
-                  <div className="label">의뢰 내용<Mandatory/></div>
+                  <div className="label">의뢰 내용<Mandatory /></div>
                   {/* <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} /> */}
                   <TextControllerClassic
                     item={{ content: this.state.content, height: 500 }}
@@ -361,7 +361,7 @@ class RequestToMaker extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">파일 등록</div>
-                  <InputFile width={533} getValue={this.onFileChange}/>
+                  <InputFile width={533} getValue={this.onFileChange} />
                   {/* <div className="faded-text" >
                     <input
                       type="file"
@@ -415,8 +415,19 @@ class RequestToMaker extends Component {
               </FormBox>
             </div>
             <div className="centering_">
-              <RedButton  text={"의뢰를 등록합니다."} okText="등록" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
+              <RedButton
+                text={"의뢰를 등록합니다."}
+                okText="등록"
+                cancelText="취소"
+                value={"등록하기"}
+                onClick={this.onSubmit}
+                
+                isConfirm={true} />
+              <GrayButton
+                text={"취소하시겠습니까?"}
+                value={"취소하기"}
+                onClick={() => { window.history.back() }}
+                isConfirm={true} />
             </div>
           </MainBox>
         </Wrapper>

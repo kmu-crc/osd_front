@@ -22,7 +22,6 @@ const ContentForm = async (data, oldData) => {
         item.content !== oldItem.content ||
         item.order !== oldItem.order ||
         item.private !== oldItem.private) {
-        console.log("20200312:", item, oldItem);
         await formData.updateContent.push(item);
       }
     } else {
@@ -308,8 +307,8 @@ class CardSourceDetail extends Component {
   onChangValue = async data => {
     console.log(data, "1");
     let copyContent = [...this.state.content];
-     delete data.initClick;
-     delete data.target;
+    delete data.initClick;
+    delete data.target;
     await copyContent.splice(data.order, 1, data);
 
     copyContent = await Promise.all(
@@ -325,6 +324,7 @@ class CardSourceDetail extends Component {
   render() {
     const { loading, content } = this.state;
     console.log(this.props);
+    /* {this.props.ItemDetail.public === "yes" ? "공개" : "비공개"} */
 
     return (
       <React.Fragment>
@@ -352,7 +352,7 @@ class CardSourceDetail extends Component {
                 <EditorBottonWrapper>
                   <button onClick={this.onSubmit} className="submit" type="button">
                     <i className="icon outline save" />저장하기</button>
-                  <button onClick={() => {this.setState({ content: this.props.content || "" });this.props.handleCancel()}} className="cancel" type="button">
+                  <button onClick={() => { this.setState({ content: this.props.content || "" }); this.props.handleCancel() }} className="cancel" type="button">
                     <i className="icon trash" />취소하기</button>
                 </EditorBottonWrapper>
               </ButtonContainer>
@@ -395,7 +395,11 @@ class CardSourceDetail extends Component {
                 )}
               </ViewContent>
             ) : (<Nodata>
-              {/* {this.props.isTeam === 1 ?<Button round={true} color="Primary" size="small" onClick={this.props.openEdit}>업로드</Button>:<div>등록된 컨텐츠가 없습니다.</div>} */}
+              {/*{
+                this.props.isTeam === 1 
+                ? <Button round={true} color="Primary" size="small" onClick={this.props.openEdit}>업로드</Button>
+                : <div>등록된 컨텐츠가 없습니다.</div>
+              }*/}
             </Nodata>) : null}
 
         </CardSrcWrap>

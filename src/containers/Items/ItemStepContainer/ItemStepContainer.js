@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import GridEditor from "components/GridEditor";
+// import { LocalGridEditor as GridEditor } from "components/GridEditor/LocalGridEditor";
 import { GetItemStepsRequest, CreateItemListRequest, DeleteItemListRequest, UpdateItemListRequest } from "actions/Item";
 // , ,
 // , GetCardDetailRequest, GetDesignCardRequest, GetDesignBoardRequest,
@@ -11,7 +12,6 @@ class ItemStepContainer extends Component {
     this.props.GetItemStepsRequest(this.props.ItemDetail["item-id"], this.props.token);
   }
   render() {
-    console.log(this.props.ItemStep);
     return (
       <GridEditor {...this.props} itemId={this.props.ItemDetail["item-id"]} item={this.props.ItemDetail} />
     );
