@@ -258,7 +258,7 @@ class ModifyMaker extends Component {
       location: "",
       explain: "", tag: [], equipment: [], technique: [],
       career: [{ number: 0, task: "", explain: "", during: "" }],
-      galleryModify:false,
+      isModify:false,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -374,7 +374,7 @@ class ModifyMaker extends Component {
     this.setState({ open: value })
   }
   handlerIsGalleryModify(){
-    this.setState({galleryModify:true});
+    this.setState({isModify:true});
   }
   handleOnChangeThumbnail(event) {
     event.preventDefault();
@@ -393,7 +393,7 @@ class ModifyMaker extends Component {
   onSubmit=async e=> {
 
     e.preventDefault();
-console.log(this.state.galleryModify)
+console.log(this.state.isModify)
     let tagString = "";
     this.state.tag.map((item,index)=>{
       return(
@@ -429,7 +429,7 @@ console.log(this.state.galleryModify)
       careerString==this.props.MakerDetail.experience&&
       equipmentString==this.props.MakerDetail.maker_equipment&&
       techniqueString==this.props.MakerDetail.maker_technique&&
-      this.state.galleryModify==false){
+      this.state.isModify==false){
         await alert("수정된 내용이 없습니다.");
         return;
     }
@@ -644,8 +644,8 @@ console.log(this.state.galleryModify)
               </SubBox>
             </div>
             <div className="contentsBox centering">
-              <RedButton text={"수정을 적용합니다."} okText="수정" cancelText="취소" value={"수정하기"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
+              <RedButton text={"수정된 내용을 저장합니다."} okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton text={"수정된 내용이 저장되지 않습니다."} value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
             </div>
           </MainBox>}
       </React.Fragment>
