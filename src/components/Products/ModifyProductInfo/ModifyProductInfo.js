@@ -420,7 +420,7 @@ class ModifyProductInfo extends Component {
             </ProductDelivery>
 
           </FromFieldCard>
-          <Button type="submit">등록하기</Button>
+          <Button type="submit">저장하기</Button>
         </form>
       </React.Fragment>
     );
