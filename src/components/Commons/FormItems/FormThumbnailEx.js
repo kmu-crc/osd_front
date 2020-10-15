@@ -58,7 +58,7 @@ const ThumbnailImgEx = styled.label`
   background-position: center;
   background-size: cover;
   background-color: #EFEFEF;
-  cursor:default;
+  cursor: pointer;
 `;
 
 export class FormThumbnailEx extends Component {

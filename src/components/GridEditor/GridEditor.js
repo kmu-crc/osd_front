@@ -11,7 +11,23 @@ import SortableDesignSteps from "./SortableDesignSteps";
 import osdcss from "StyleGuide";
 import { alert } from "components/Commons/Alert/Alert";
 // import { confirm } from "components/Commons/Confirm/Confirm";
-const WhitePane = styled.div`
+
+const LeftWhitePane = styled.div`
+    position: absolute;
+    z-index: 830;
+    width: ${props => props.width}px;
+    height: ${props => props.height}px;
+    left: ${props => props.left}px;
+    right: ${props => props.right}px;
+    background: #FFFFFF; // transparent linear-gradient(90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%);
+    backgroundRepeat: no-repeat;
+    @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
+    and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
+        background: transparent linear-gradient(-90deg, rgba(255,255,255, 0) 20%,rgba(255,255,255, 1) 70%);
+    }
+
+`;
+const RightWhitePane = styled.div`
     position: absolute;
     z-index: 830;
     width: ${props => props.width}px;
@@ -20,6 +36,11 @@ const WhitePane = styled.div`
     right: ${props => props.right}px;
     background: #FFFFFF; // transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%);
     backgroundRepeat: no-repeat;
+    @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
+    and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
+        background: transparent linear-gradient(90deg, rgba(255,255,255, 0) 20%, rgba(255,255,255, 1) 70%);
+    }
+
 `;
 const Arrow = styled.div`
     width: 17px;
@@ -35,30 +56,41 @@ const Arrow = styled.div`
     background-position: 50%;
     transform: rotate(${props => props.angle});
     opacity: 0.9;
-    cursor:pointer;
+    cursor: pointer;
     :hover{
         opacity: 1;
     }
-    cursor: pointer;
-`;
-const Wrapper = styled.div`
-    position: relative;
+    @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) 
+    and (max-width : ${1024}px) { 
+        top: ${props => props.gap}px;
+    }
+    @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
+    and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
+        top: 110px;
+        // top: ${props => props.gap}px;
+    }
 `;
 const GridEditorWrapper = styled.div`
     display: flex;
-    margin-left: 20px;
+    margin-left:32px;
     margin-bottom: 75px;
-    width: ${window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth}; 
-    
+    width: ${window.innerWidth < osdcss.resolutions.LargeMaxWidth
+        ? window.innerWidth
+        : osdcss.resolutions.LargeMaxWidth}; 
     .Editor{
-        overflow: auto;
-        // height: 700px;
         padding-right: 250px;
-        // overflow: hidden;
+        overflow: hidden;
         white-space: nowrap;
         display: flex;
-        margin-top: 90px;
+        margin-top: 30px;
     }
+    @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
+    and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
+        margin-left:60px;
+    }
+`;
+const Wrapper = styled.div`
+    position: relative;
 `;
 
 
@@ -104,7 +136,11 @@ class GridEditor extends Component {
         }
     }
     handleResize() {
-        this.setState({ w: window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth });
+        this.setState({
+            w: window.innerWidth < osdcss.resolutions.LargeMaxWidth
+                ? window.innerWidth
+                : osdcss.resolutions.LargeMaxWidth
+        });
         if (this.temp) {
             if (this.temp.current.scrollWidth - this.temp.current.scrollLeft < this.state.w) {
                 this.setState({ right: false });
@@ -169,7 +205,7 @@ class GridEditor extends Component {
                 console.log(res);
                 this.props.GetItemStepsRequest(this.props.item["item-id"], this.props.token);
             })
-            .catch(async(err) => { await alert("Failed to create new STEP"); console.error(err) });
+            .catch(async (err) => { await alert("Failed to create new STEP"); console.error(err) });
         this.CloseNewStep();
     }
     ScrollLeft() {
@@ -229,18 +265,18 @@ class GridEditor extends Component {
                 this.props.GetItemStepsRequest(this.props.itemId, this.props.token)
             )
     }
-    shouldComponentUpdate(nextProps) {
-        if (this.props.DesignDetailStep !== nextProps.DesignDetailStep) {
-            if (nextProps.DesignDetailStep.length) {
-                if (nextProps.DesignDetailStep.length * 275 > this.state.w) {
+    componentDidUpdate(props, state) {
+        if (props.ItemStep !== this.props.ItemStep) {
+            if (this.props.ItemStep.length) {
+                if (this.props.ItemStep.length * 275 > this.grid.current.clientWidth) {
                     this.setState({ right: true });
                 }
             }
         }
-        if (nextProps.DesignDetailStepCard && nextProps.DesignDetailStepCard.uid != null && this.props.DesignDetailStepCard !== nextProps.DesignDetailStepCard) {
-            // console.log(nextProps.DesignDetailStepCard.uid, "i got it", nextProps.DesignDetailStepCard, this.props.DesignDetailStepCard, typeof this.props.DesignDetailStepCard);
-            this.setState({ cardDetail: nextProps.DesignDetailStepCard });
-        }
+        // if (nextProps.DesignDetailStepCard && nextProps.DesignDetailStepCard.uid != null && this.props.DesignDetailStepCard !== nextProps.DesignDetailStepCard) {
+        // console.log(nextProps.DesignDetailStepCard.uid, "i got it", nextProps.DesignDetailStepCard, this.props.DesignDetailStepCard, typeof this.props.DesignDetailStepCard);
+        // this.setState({ cardDetail: nextProps.DesignDetailStepCard });
+        // }
         return true;
     }
     async handleReturn(data) {
@@ -262,20 +298,24 @@ class GridEditor extends Component {
             <Wrapper>
                 {itemId ?
                     <React.Fragment>
-                        {left ? <WhitePane width={138} height={h} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
+                        {left ? <LeftWhitePane
+                            width={138} height={h}
+                            background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
                             <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} />
-                        </WhitePane> : null}
+                        </LeftWhitePane> : null}
 
-                        {right ? <WhitePane width={138} height={h} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
+                        {right ? <RightWhitePane
+                            width={138} height={h} right={0}
+                            background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
                             <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} />
-                        </WhitePane> : null}
+                        </RightWhitePane> : null}
 
                         {editor && newcard ?
                             <NewCardModal
-                                isTeam={editor}
                                 // boardId={boardId}
-                                itemId={this.props.itemId}
                                 // order={steps.length}
+                                isTeam={editor}
+                                itemId={this.props.itemId}
                                 open={newcard}
                                 row={row}
                                 return={this.handleReturn}
