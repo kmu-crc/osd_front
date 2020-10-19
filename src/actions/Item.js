@@ -204,6 +204,7 @@ const CreateItemCardFailure = error => ({ type: types.CREATE_CARD_FAILURE, succe
 
 // MODIFY CARD
 export const UpdateCardSourceRequest = (data, card_id, token) => {
+  console.log(data);
   return dispatch => {
     dispatch(UpdateItemSource());
     console.log("request", data);

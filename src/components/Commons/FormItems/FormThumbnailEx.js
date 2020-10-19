@@ -13,9 +13,6 @@ const InputWrap = styled.div`
     flex-direction: column;
   }
   .label{
-    width: 63px;
-    height: 25px;
-    cursor: pointer;
   }
   .wrapper{
     margin-left: 54.5px;
@@ -37,6 +34,7 @@ const InputWrap = styled.div`
     line-height: 25px;
     text-align: left;
     color: #FF0000;
+    cursor:pointer;
   }
   .text{
     width: 341px;
@@ -50,7 +48,7 @@ const InputWrap = styled.div`
   }
 `;
 
-const ThumbnailImgEx = styled.label`
+const ThumbnailImgEx = styled.div`
   display: block;
   width: 200px;
   height: 200px;
@@ -119,16 +117,16 @@ export class FormThumbnailEx extends Component {
     newstyle.backgroundImage = this.state.imageUrl ? `url(${this.state.imageUrl})` : null
     return (
       <InputWrap>
-        <ThumbnailImgEx style={newstyle} />
+      
+      <label htmlFor={id ? id : name} ><ThumbnailImgEx style={newstyle}/></label>
         <div>
-          <label className="label" htmlFor={id ? id : name} >
             <div className="wrapper">
               <div className="inside-wrapper">
-                <div className="find">찾아보기</div></div>
+              <label htmlFor={id ? id : name} ><div className="find">찾아보기</div></label></div>
               <div className="text">프로필 사진은 대표적으로 보이게 되는 사진으로,<br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
             </div>
-          </label>
         </div>
+        
         <FormFile
           name={name}
           id={id ? id : name}

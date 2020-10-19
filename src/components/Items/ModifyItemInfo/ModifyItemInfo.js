@@ -751,16 +751,20 @@ class ModifyItemInfo extends Component {
         (<ButtonBox className="buttonBox" >
           <RedButton
             text={"수정된 내용을 저장합니다."}
-            okText="수정"
+
+            okText="확인"
             cancelText="취소"
-            value={"수정하기"}
+            value={"저장하기"}
+
             onClick={this.onSubmit}
             disabled={!this.state.ismodified}
             isConfirm={true} />
 
           <GrayButton
-            text={"취소하시겠습니까?"}
+            text={"수정된 내용이 저장되지 않습니다."}
             value={"취소하기"}
+            okText="확인"
+            cancelText="취소"
             onClick={this.onCancel}
             isConfirm={false} />
 
