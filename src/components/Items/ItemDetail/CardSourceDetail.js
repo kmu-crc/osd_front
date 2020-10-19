@@ -192,6 +192,7 @@ class CardSourceDetail extends Component {
   };
 
   onAddValue = async data => {
+    console.log("modify1");
     let copyContent = [...this.state.content];
     let copyData = { ...data };
     console.log("on add value:", copyData);
@@ -220,8 +221,15 @@ class CardSourceDetail extends Component {
       })
     );
     await this.setState({ content: newContent });
+    this.props.handlerModifyContent();
+
+  //   let formData = await ContentForm(this.state, this.props.content);
+  //   if (formData && (formData.newContent.length !== 0 && formData.updateContent.length !== 0 && formData.deleteContent.length !== 0)) {
+  //     this.props.isModify(true);
+  // }
   };
   onSubmit = async e => {
+    console.log("modify1");
     e.preventDefault();
     let copyContent = [...this.state.content];
     for (let item of copyContent) {
@@ -243,25 +251,42 @@ class CardSourceDetail extends Component {
 
     // PROJECT-TYPE
     if (this.props.submit) {
-      this.props.submit(formData);
+      if (this.props.isModify==true) {
+        await alert("변경된 사항이 없습니다.");
+        this.setState({loading:false});
+        this.props.handleCloseEdit();
+        return;
+      } else{
+        if(await confirm("수정된 내용을 저장합니다.","확인","취소")){
+          this.props.submit(formData);
+        }
+      }
     }
     //BLOG-TYPE
     else {
-      if (formData && (formData.newContent.length === 0 && formData.updateContent.length === 0 && formData.deleteContent.length === 0)) {
+      if (this.props.isModify==true) {
         await alert("변경된 사항이 없습니다.");
+        this.setState({loading:false});
+        this.props.handleCloseEdit();
+        return;
       } else {
+        if(await confirm("수정된 내용을 저장합니다.","확인","취소")){
         this.props.upDateRequest(formData, this.props.cardId, this.props.token)
           .then(async res => {
             if (res.data.success) {
-              await alert("아이템 컨텐츠를 수정하였습니다.");
+              // await alert("아이템 컨텐츠를 수정하였습니다.");
               window.location.href = `/productDetail/${this.props.ItemDetail["item-id"]}`
             }
           })
+        }
       }
     }
     await this.setState({ loading: false });
   };
+
+
   bindPrivate = contents => {
+    console.log("modify1");
     let binded = [];
     for (let item of contents) {
       if (item.private) {
@@ -279,6 +304,7 @@ class CardSourceDetail extends Component {
     return binded;
   };
   privateItem = async data => {
+    console.log("modify1");
     let copyContent = JSON.parse(JSON.stringify(this.state.content || []));
     for (let item of copyContent) {
       if (item.order === data.order) {
@@ -286,8 +312,10 @@ class CardSourceDetail extends Component {
       }
     }
     await this.setState({ content: copyContent });
+    this.props.handlerModifyContent();
   };
   deleteItem = async index => {
+    console.log("modify1");
     let copyContent = [...this.state.content];
     let copyDelete = [...this.state.deleteContent];
     if (copyContent[index].uid) {
@@ -303,9 +331,10 @@ class CardSourceDetail extends Component {
       })
     );
     await this.setState({ content: copyContent, deleteContent: copyDelete });
+    this.props.handlerModifyContent();
   };
   onChangValue = async data => {
-    console.log(data, "1");
+    console.log(this.props);
     let copyContent = [...this.state.content];
     delete data.initClick;
     delete data.target;
@@ -317,13 +346,13 @@ class CardSourceDetail extends Component {
         return item;
       })
     );
-
     await this.setState({ content: copyContent });
+    this.props.handlerModifyContent();
   };
 
   render() {
     const { loading, content } = this.state;
-    console.log(this.props);
+    // console.log(this.props);
     /* {this.props.ItemDetail.public === "yes" ? "공개" : "비공개"} */
 
     return (

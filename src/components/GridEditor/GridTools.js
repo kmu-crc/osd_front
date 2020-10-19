@@ -3,6 +3,7 @@ import Cross from "components/Commons/Cross";
 import DateFormat from "modules/DateFormat";
 import styled from "styled-components";
 import PxtoRem from "modules/PxtoRem";
+import { Icon } from 'semantic-ui-react'
 
 const CreateCardContainer = styled.div`
     width: 200px;
@@ -198,12 +199,18 @@ export const StepCard = (props) => {
     </StepCardStyle >)
 }
 export const ContentCard = (props) => {
+    console.log(props);
     // const { card, marginTop, marginRight, marginBottom, marginLeft } = props;
     return (props.card
         ? <CardContainer uid={props.uid} id={props.id} onClick={props.onClick} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} thumbnail={props.card.thumbnail}>
             <div className="icon-area">{props.children}</div>
             {props.card.thumbnail ?
                 <React.Fragment>
+                    {props.card.private==true?<div style={{margin:"5px",border:"1px solid red",paddingLeft:"2px",paddingBottom:"2px",
+                                width:"30px",height:"30px",borderRadius:"50%",backgroundColor:"white",display:"flex",position:"absolute",zIndex:"999",
+                                justifyContent:"center",alignItems:"center"}}>
+                        <Icon name="lock" size="small" color="red"/>
+                    </div>:null}
                     {/* <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(180deg, #000000 0%, #020202F7 16%, #FFFFFF26 100%)" }} /> */}
                     <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(-180deg, rgba(32,32,32, 0.5) 0%, rgba(255,255,255, 0) 50%)" }} />
                     <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#FFFFFF", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>

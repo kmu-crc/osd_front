@@ -333,7 +333,6 @@ class ModifyDesigner extends Component {
       career: arr,
     })
   }
-  ㅕㅔㅇ
   onClickAddCareer(event) {
     this.setState({
       career: this.state.career.concat({ number: this.state.career.length, task: "", explain: "", during: "" }),
@@ -540,7 +539,7 @@ class ModifyDesigner extends Component {
                 {this.state.career.map((item, index) => {
                   // console.log("career", item)
                   return (
-                    <CreateCareer item={item} number={(item.number) + 1} onChangeCareer={this.onChangeCareer} key={index} />
+                    <CreateCareer item={item} number={Number(item.number) + 1} onChangeCareer={this.onChangeCareer} key={index} />
                   );
                 })}
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
@@ -562,9 +561,9 @@ class ModifyDesigner extends Component {
             </SubBox>
           </div>
           <div className="contentsBox centering">
-            {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>적용</div></RedButton> */}
-            <RedButton text ={"수정을 적용합니다."} okText="수정" cancelText="취소" value={"수정하기"} onClick={this.onSubmit} isConfirm={true} />
-            <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
+            {/* <RedButton onClick={this.onSubmit} left={223} ㅎottom={0}><div>적용</div></RedButton> */}
+            <RedButton text ={"수정된 내용을 저장합니다."} okText="저장" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={true} />
+            <GrayButton text={"수정된 내용이 저장되지 않습니다."} okText="저장" cancelText="취소" value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
           </div>
         </MainBox>
       </React.Fragment>

@@ -445,9 +445,9 @@ class ModifyGroup extends Component {
             </FormBox>
           </div>
           <div className="contentBox">
-            <RedButton value={"수정하기"} text={"수정을 적용합니다."} okText="수정" cancelText="취소" onClick={this.onSubmit} isConfirm={false} />
-            <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={this.onClickClose} isConfirm={true} />
-            <GrayButton text={"삭제하시겠습니까?"} value={"삭제하기"} onClick={this.onDelete} isConfirm={true} />
+            <RedButton  text={"수정된 내용을 저장합니다."} value={"저장하기"} okText="확인" cancelText="취소" onClick={this.onSubmit} isConfirm={false} />
+            <GrayButton text={"수정된 내용이 저장되지 않습니다."} value={"취소하기"} okText="확인" cancelText="취소"  onClick={this.onClickClose} isConfirm={true} />
+            <GrayButton text={"갤러리를 삭제합니다."} value={"삭제하기"} okText="확인" cancelText="취소"  onClick={this.onDelete} isConfirm={true} />
           </div>
         </MainBox>
       </React.Fragment>

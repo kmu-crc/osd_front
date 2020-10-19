@@ -95,7 +95,7 @@ export class InputContent extends Component {
             key={index}
             item={item}
             deleteItem={this.deleteItem}
-            privateItem={this.privateItem}
+            // privateItem={this.privateItem}
             getValue={this.onChangValue} />)}
 
       <AddContent

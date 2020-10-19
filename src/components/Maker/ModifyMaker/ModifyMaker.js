@@ -622,7 +622,7 @@ console.log(this.state.isModify)
                   {this.state.career.map((item, index) => {
                     console.log("career", item)
                     return (
-                      <CreateCareer item={item} number={(item.number) + 1} onChangeCareer={this.onChangeCareer} key={index} />
+                      <CreateCareer item={item} number={Number(item.number) + 1} onChangeCareer={this.onChangeCareer} key={index} />
                     );
                   })}
                   {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
@@ -644,8 +644,8 @@ console.log(this.state.isModify)
               </SubBox>
             </div>
             <div className="contentsBox centering">
-              <RedButton text={"수정된 내용을 저장합니다."} okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton text={"수정된 내용이 저장되지 않습니다."} value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
+            <RedButton text ={"수정된 내용을 저장합니다."} okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={true} />
+            <GrayButton text={"수정된 내용이 저장되지 않습니다."} okText="확인" cancelText="취소" value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
             </div>
           </MainBox>}
       </React.Fragment>

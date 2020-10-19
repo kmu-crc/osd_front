@@ -2,6 +2,7 @@ import React, { Component, } from 'react';
 import styled from 'styled-components';
 import { CreateCard, StepCard, ContentCard } from "./GridTools";
 import { SortableContainer, SortableElement, arrayMove, SortableHandle } from "react-sortable-hoc";
+import { alert } from "components/Commons/Alert/Alert";
 
 const AsBelowArrow = styled.div`
     margin-left: ${props => props.marginLeft + "px" || "0px"};
@@ -59,12 +60,22 @@ const VerticalDragHandle = SortableHandle(({ is_white }) =>
 const margin = {
     marginTop: "25px", marginRight: "74px", marginBottom: "37px"
 };
-const SortableCard = SortableElement(({ disableReorder, editor, card, openCard, boardId, designId }) => (
-    <ContentCard onClick={() => openCard(card, card.order, boardId)} id="contentcard" uid={card.uid} {...margin} card={card} designId={designId} >
+const SortableCard = SortableElement(({ disableReorder, editor, card, openCard, boardId, designId, userInfo }) => (
+    <ContentCard 
+    // onClick={() => openCard(card, card.order, boardId)}
+    onClick={async() =>
+        (card.private === 1)
+            ? (userInfo && (userInfo.uid === card.user_id || userInfo.uid === 77))
+                ? openCard(card, card.order, boardId)
+                : await alert("이 컨텐츠는 비공개입니다.\n컨텐츠 작성자만 열람할 수 있습니다.")
+            : openCard(card, card.order, boardId)
+        // : openCard(card, card.order, boardId)
+    }
+         id="contentcard" uid={card.uid} {...margin} card={card} designId={designId} >
         {editor && !disableReorder ? <VerticalDragHandle is_white={card.first_img} /> : null}
     </ContentCard>));
 
-const SortableStep = SortableElement(({ disableReorder, reload, index, editStep, step, boardId, editor, designId, openCard, createCard, reorder }) => (
+const SortableStep = SortableElement(({ disableReorder, reload, index, editStep, step, boardId, editor, designId, openCard, createCard, reorder, userInfo }) => (
     <div style={{ position: "relative" }}>
         <DragHandler>
             <div className="wrapper">
@@ -94,7 +105,9 @@ const SortableStep = SortableElement(({ disableReorder, reload, index, editStep,
                         designId={designId}
                         openCard={openCard}
                         reorder={reorder}
-                        disableReorder={disableReorder} />
+                        disableReorder={disableReorder} 
+                        userInfo={userInfo}
+                        />
                 </div>
             </React.Fragment> : null}
 
@@ -144,7 +157,7 @@ class SortableDesignCards extends Component {
 
     render() {
         const { items } = this.state;
-        const { editor, designId, openCard, createCard, boardId } = this.props;
+        const { editor, designId, openCard, createCard, boardId,userInfo } = this.props;
 
         return (<Container
             axis="y"
@@ -165,6 +178,7 @@ class SortableDesignCards extends Component {
                     index={index}
                     card={item}
                     disableReorder={this.props.disableReorder}
+                    userInfo={userInfo}
                 />))}
         </Container>)
     }
@@ -230,6 +244,7 @@ class SortableDesignSteps extends Component {
                         step={item}
                         steporder={index}
                         disableReorder={this.props.disableReorder}
+                        userInfo={this.props.userInfo}
                     />
                 ))}
             </div>

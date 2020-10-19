@@ -290,9 +290,10 @@ class GridEditor extends Component {
         }
     }
     render() {
-        const { editor, ItemStep, itemId } = this.props;
+        const { editor, ItemStep, itemId, userInfo } = this.props;
         const { gap, h, left, right, boardId, card, row, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         const steps = ItemStep;
+        console.log("----=================dfasdfdfd",userInfo);
 
         return (
             <Wrapper>
@@ -366,12 +367,14 @@ class GridEditor extends Component {
                                             items={steps}
                                             cardReorder={this.requestCardReorder}
                                             createCard={this.createNewCard}
-                                            openCard={this.openCard}
+                                            openCard={this.openCard} 
                                             reorder={this.requestReorder}
+                                            userInfo={userInfo}
                                         /> : null}
                                     {editor ?
                                         <div style={{ display: "flex" }}>
                                             <CreateStep
+                                                userInfo={this.props.userInfo}
                                                 onClick={this.OpenNewStep}
                                                 step={"단계"} />
                                             <div style={{ width: "300px" }}>&nbsp;</div>

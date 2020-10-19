@@ -16,7 +16,6 @@ import Loading from "components/Commons/Loading";
 import Cross from "components/Commons/Cross";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
-
 const NewCardDialogWrapper = styled(Modal)`
     margin-top: 50px !important;
     margin-bottom: 50px !important;

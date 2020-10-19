@@ -22,6 +22,7 @@ import TextFormat from 'modules/TextFormat';
 import Loading from "components/Commons/Loading";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import { Icon } from 'semantic-ui-react'
 
 // import CardComment from './CardComment';
 // import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
@@ -221,7 +222,10 @@ const CardDialog = styled(Modal)`
 `
 const EditCardHeaderContainer = styled.div`
    .edit-header-container {
+    //    border:1px solid black;
+       width:100%;
        display: flex;
+       justify-content:space-between;
        margin-top: 15px;
        margin-left: 45px;
        width: max-content;
@@ -364,12 +368,16 @@ const BlankSpace = styled.div`
 class CardModal extends Component {
     constructor(props) {
         super(props);
-        this.state = { sroll: false, edit: false, title: "", description: "", content: [], }
+        this.state = { sroll: false, edit: false, title: "", description: "", content: [], modifyresult:false,private:false }
+        this.handlerModifyContent = this.handlerModifyContent.bind(this);
     };
+    handlerModifyContent(){
+        this.setState({modifyresult:true});
+    }
     componentDidMount() {
 
         const { card } = this.props;
-        this.setState({ thumbnail: card.thumbnail, title: card.title, description: card.description });
+        this.setState({ thumbnail: card.thumbnail, title: card.title, description: card.description,private:card.private==true?true:false });
     };
     async componentDidUpdate(prevProps) {
         if (prevProps.card !== this.props.card) {
@@ -401,6 +409,7 @@ class CardModal extends Component {
                 files = data && data.files;
                 // let thumbnail = { img: files && files[0].value, file_name: files && files[0].name };
                 const pack = {
+                    private: this.state.private,
                     title: this.state.title,
                     // thumbnail: files && thumbnail, 
                     files: files,
@@ -420,13 +429,27 @@ class CardModal extends Component {
             }).catch(async err => await alert(err + '와 같은 이유로 카드수정에 실패하셨습니다. 관리자에게 문의해주시기 바랍니다.'));
         this.setState({ edit: !this.state.edit })
     };
-    onCloseEditMode = async() => {
-        if ((this.state.title !== this.props.card.title) || (this.state.content !== this.props.card.content)) {
-            if (!await confirm("변경된 내용이 저장되지 않습니다. 계속하시겠습니까?")) {
-                return;
-            }
-        }
+    onOnlyCloseEditMode = async()=>{
         this.setState({ edit: false });
+    }
+    onCloseEditMode = async() => {
+        if(this.props.card.title==this.state.title&&
+            this.props.card.description==this.state.description&&
+            this.props.card.thumbnail==this.state.thumbnail&&
+            this.state.modifyresult==false)
+        {
+            this.setState({ edit: false });
+        }else if(await confirm("수정된 사항이 저장되지 않습니다. 계속 하시겠습니까?")) {
+            this.setState({ edit: false });
+        }
+        // console.log(this.props.card)
+        
+        // if ((this.state.title !== this.props.card.title) || (this.state.content !== this.props.card.content)) {
+        //     if (!await confirm("변경된 내용이 저장되지 않습니다. 계속하시겠습니까?")) {
+        //         return;
+        //     }
+        // }
+        
     };
     onChangeEditMode = () => {
         this.setState({ edit: this.state.edit })
@@ -447,13 +470,16 @@ class CardModal extends Component {
         }
     };
     onClose = async (event) => {
-        // confirmAlert(options("모든 내용이 저장되지 않고 닫힙니다. 그래도 계속 진행하시겠습니까?"
-        // ,async()=>{
-        //     await this.setState({ sroll: false, edit: false, title: "", content: "" });
-        //     this.props.close();
-        // }
-        // ,event));
-        if (this.state.edit && !await confirm("수정된 사항이 저장되지 않습니다, 계속 하시겠습니까?")) {
+        // 예외
+        if(this.props.card.title==this.state.title&&
+            this.props.card.description==this.state.description&&
+            this.props.card.thumbnail==this.state.thumbnail&&
+            this.state.modifyresult==false)
+        {
+                await this.setState({ sroll: false, edit: false, title: "", content: "" });
+                this.props.close();
+                return;
+        }else if(this.state.edit && !await confirm("수정된 사항이 저장되지 않습니다. 계속 하시겠습니까?")) {
             return;
         }
         await this.setState({ sroll: false, edit: false, title: "", content: "" });
@@ -482,6 +508,11 @@ class CardModal extends Component {
                                     <EditCardHeaderContainer>
                                         <div className="edit-header-container">
                                             <div className="edit-card-info">컨텐츠 정보수정</div>
+                                            <div onClick={()=>{this.setState({private:!this.state.private})}} style={{cursor:"pointer",margin:"5px",border:`${this.state.private==true?"1px solid red":"1px solid grey"}`,paddingLeft:"2px",paddingBottom:"2px",
+                                                        width:"30px",height:"30px",borderRadius:"50%",backgroundColor:"white",display:"flex",
+                                                        justifyContent:"center",alignItems:"center"}}>
+                                                <Icon name={`${this.state.private==true?"lock":"lock open"}`} color={`${this.state.private==true?"red":"grey"}`}/>
+                                            </div>
                                         </div>
                                         <div className="edit-header-thumbnail">
                                             <div className="thumbnail-txt">이미지</div>
@@ -531,12 +562,20 @@ class CardModal extends Component {
                                     isTeam={this.props.isTeam}
                                     submit={this.handleHeaderSubmit}
                                     handleCancel={this.onCloseEditMode}
+                                    handleCloseEdit = {this.onOnlyCloseEditMode}
                                     edit={this.state.edit}
                                     card={card}
                                     cardId={card.uid}
                                     closeEdit={this.onCloseEditMode}
                                     openEdit={this.onChangeEditMode}
+                                    handlerModifyContent={this.handlerModifyContent}
                                     isCancel
+                                    isModify={
+                                        this.props.card.private==this.state.private&&
+                                        this.props.card.title==this.state.title&&
+                                        this.props.card.description==this.state.description&&
+                                        this.props.card.thumbnail==this.state.thumbnail&&
+                                        this.state.modifyresult==false}
                                 />
                             </div>
                         </div>
