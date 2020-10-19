@@ -67,6 +67,8 @@ const MainBox = styled.div`
     display:flex;
     padding:36px 130px 36px 136px;
     justify-content:center;
+    margin-bottom:30px;
+
   }
 
 `;
@@ -176,18 +178,15 @@ class ModifyRequestToMaker extends Component {
     super(props);
     this.state = {
       title: "", tag: [], price: 0, content: "", location: "", offline: -1, amount: 0, resale: -1, ownership: 1
-      , startDate: null, endDate: null, dayDate: null,
+      , startDate: null, endDate: null, dayDate: null,isModify:false,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
-    this.onClickItemType = this.onClickItemType.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.getTagValue = this.getTagValue.bind(this);
     this.onChangePrice = this.onChangePrice.bind(this);
     this.onChangeContent = this.onChangeContent.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
     this.onChangeResale = this.onChangeResale.bind(this);
-    this.onChangeOffline = this.onChangeOffline.bind(this);
     this.onChangeAmount = this.onChangeAmount.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -198,19 +197,42 @@ class ModifyRequestToMaker extends Component {
     this.getDayDateValue = this.getDayDateValue.bind(this);
     this.onFileChange=this.onFileChange.bind(this);
   }
-
+  checkModify=()=>{
+    if(this.props.Detail.length==0)return;
+    let tagString = "";
+    this.state.tag.map((item,index)=>{
+      return(
+        tagString+=item+","
+      )
+    });
+    if(this.props.Detail.title!=this.state.title||
+      this.props.Detail.category_level1!=this.state.category_level1||
+      this.props.Detail.category_level2!=this.state.category_level2||
+      tagString==this.props.Detail.tag||
+      (this.props.Detail.price==null?0:this.props.Detail.price) != this.state.price||
+      (this.props.Detail.content==null?"":this.props.Detail.content)!=this.state.content||
+      (this.props.Detail.location==null?15:this.props.Detail.location)!=this.state.location||
+      this.props.Detail.start_date!=this.state.startDate||
+      this.props.Detail.end_date!=this.state.endDate||
+      this.props.Detail.file_url!=this.state.file_url||
+      this.props.Detail.filename!=this.state.filename||
+      this.props.Detail.amount!=this.state.amount||
+      this.props.Detail.resale!=this.state.resale
+      ){
+        this.setState({isModify:true});
+      }
+  }
   componentWillUpdate(nextProps) {
     if (nextProps.Detail !== this.props.Detail) {
       console.log(nextProps.Detail.tag);
       this.setState({
         category_level1: nextProps.Detail.category_level1,
-        category_level2: nextProps.Detail.category_level1,
+        category_level2: nextProps.Detail.category_level2,
         title: nextProps.Detail.title,
         tag: nextProps.Detail.tag.split(","),
         price: nextProps.Detail.price,
         content: nextProps.Detail.content,
         location: nextProps.Detail.location,
-        ownership: parseInt(nextProps.Detail.ownership, 10),
         startDate: nextProps.Detail.start_date,
         endDate: nextProps.Detail.end_date,
         amount: nextProps.Detail.amount,
@@ -223,6 +245,7 @@ class ModifyRequestToMaker extends Component {
 
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: { value }.value });
+    await this.checkModify();
   }
   async onClickCategorylevel2(event, { value }) {
     await this.setState({ category_level2: { value }.value });
@@ -230,32 +253,27 @@ class ModifyRequestToMaker extends Component {
   async getPriceValue(value) {
     await this.setState({ price: value });
   }
-  onClickDelete(event) {
-    this.props.DeleteRequestRequest(this.props.id, this.props.token)
+  async onClickDelete(event) {
+    await this.props.DeleteRequestRequest(this.props.id, this.props.token)
       .then(res => {
         if (res.success) {
           window.location.href = `/request/maker`;
         }
       })
       .catch(err => console.log("의뢰 중 에러가 발생했습니다.\n" + err));
+      await this.checkModify();
   }
-  onClickItemType(event, { value }) {
-    this.setState({ itemType: { value }.value });
-  }
-  onChangeTitle(event) {
-    this.setState({
+  async onChangeTitle(event) {
+    await this.setState({
       title: event.target.value,
     })
+    await this.checkModify();
   }
-  getTagValue(data) {
-    this.setState({
-      tag: data.slice(),
-    })
-  }
-  onChangePrice(event) {
-    this.setState({
+  async onChangePrice(event) {
+    await this.setState({
       price: event.target.value,
     })
+    await this.checkModify();
   }
   async getStartDateValue(value) {
     await console.log("startDate", value);
@@ -268,38 +286,48 @@ class ModifyRequestToMaker extends Component {
   async getDayDateValue(value) {
     await this.setState({ dayDate: value })
   }
-  onChangeAmount(event) {
-    this.setState({
+  async onChangeAmount(event) {
+    await this.setState({
       amount: event.target.value,
     })
+    await this.checkModify();
   }
-  onChangeLocation(event) {
-    this.setState({
+  async onChangeLocation(event) {
+    await this.setState({
       location: event.target.value,
     })
+    await this.checkModify();
   }
   async onChangeContent(data) {
     await this.setState({
       content: data.content
     });
+    await this.checkModify();
   }
-  onChangeOffline(event, { value }) {
-    this.setState({
-      offline: { value }.value,
-    })
-  }
-  onChangeResale(event, { value }) {
-    this.setState({
+  async onChangeResale(event, { value }) {
+    await this.setState({
       resale: { value }.value,
-    })
+    });
+    await this.checkModify();
   }
-  handleAddTag(tag) {
-    this.setState({
+  async handleAddTag(tag) {
+    await this.setState({
       tag: tag.slice(),
-    })
+    });
+    await this.checkModify();
+  }
+  async onFileChange(file){
+    this.setState({
+      file_url: file.file_url,
+      filename: file.filename,
+    });
   }
   async onSubmit() {
-
+    if(this.state.isModify==false){
+      await alert("수정된 내용이 없습니다.");
+      window.history.back();
+      return;
+    }
     const data = {
       type: "maker", // designer, maker
       status: "request",
@@ -336,12 +364,7 @@ class ModifyRequestToMaker extends Component {
       })
       .catch(err => console.log("의뢰 수정 중 에러가 발생했습니다.\n" + err));
   }
-  async onFileChange(file){
-    this.setState({
-      file_url: file.file_url,
-      filename: file.filename,
-    });
-  }
+
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
@@ -360,7 +383,7 @@ class ModifyRequestToMaker extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">제목<Mandatory/></div>
-                  <InputText onChange={this.onChangeTitle} value={this.state.title} width={483} />
+                  <InputText onChange={this.onChangeTitle} value={this.state.title||''} width={483} />
                 </div>
 
                 <div className="wrapper flex centering">
@@ -390,7 +413,7 @@ class ModifyRequestToMaker extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">파일 등록</div>
-                  <InputFile width={533} getValue={this.onFileChange} file={{file_url:this.props.Detail.file_url,filename:this.props.Detail.filename}}/>
+                  <InputFile width={533} getValue={this.onFileChange} file={{file_url:this.props.Detail.file_url||'',filename:this.props.Detail.filename||''}}/>
                 </div>
 
                 <div className="wrapper flex centering">
@@ -430,8 +453,8 @@ class ModifyRequestToMaker extends Component {
               </FormBox>
             </div>
             <div className="centering_">
-              <RedButton  text={"수정된 내용을 저장합니다."} okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton text={"수정된 내용이 저장되지 않습니다."} value={"취소하기"} okText="확인" cancelText="취소" onClick={() => { window.history.back() }} isConfirm={true} />
+              <RedButton disabled={!this.state.isModify}  text={"수정된 내용을 저장합니다."} okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={this.state.isModify} />
+              <GrayButton text={"수정된 내용이 저장되지 않습니다."} value={"취소하기"} okText="확인" cancelText="취소" onClick={() => { window.history.back() }} isConfirm={this.state.isModify} />
               <GrayButton text={"의뢰를 삭제합니다."} okText="확인" cancelText="취소" value={"삭제하기"} onClick={this.onClickDelete} isConfirm={true} />
             </div>
           </MainBox>

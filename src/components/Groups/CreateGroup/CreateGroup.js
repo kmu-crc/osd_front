@@ -7,6 +7,8 @@ import { Dropdown } from "semantic-ui-react"
 import noimg from "source/noimg.png";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import { RedButton, GrayButton } from "components/Commons/CustomButton"
+
 const MainBox = styled.div`
   width:100%;
   padding:30px;
@@ -32,19 +34,7 @@ const MainBox = styled.div`
     }
 
 `;
-const RedButton = styled.div`
-  width: 290px;
-  height: 70px;
-  font-family: Noto Sans KR;
-  font-size: 20px;
-  font-weight: 500;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${props => props.gray ? "#EFEFEF" : "red"};
-  cursor: pointer;
-`;
+
 const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
@@ -383,7 +373,8 @@ class CreateGroup extends Component {
             </FormBox>
             </div>
             <div className="contentBox">
-            <RedButton onClick={this.onSubmit} ><div>등록하기</div></RedButton>
+            <RedButton  value={"등록하기"}  onClick={this.onSubmit}/>
+            <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={this.onClickClose} isConfirm={true}></GrayButton>
             </div>
         </MainBox>
       </React.Fragment>

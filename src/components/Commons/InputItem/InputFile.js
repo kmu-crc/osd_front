@@ -90,7 +90,7 @@ export class InputFile extends Component {
     }
     componentDidUpdate(prevProps) {
         if (prevProps.file !== this.props.file) {
-            console.log("==============",this.props.file);
+            // console.log("==============",this.props.file);
             this.setState({
                 file:this.props.file,
                 value:this.props.file.filename,

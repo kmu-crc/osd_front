@@ -258,6 +258,7 @@ class ModifyMaker extends Component {
       location: "",
       explain: "", tag: [], equipment: [], technique: [],
       career: [{ number: 0, task: "", explain: "", during: "" }],
+      galleryModify:false,
       isModify:false,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
@@ -280,6 +281,47 @@ class ModifyMaker extends Component {
     if (this.props.userInfo == null) {
       await alert("로그인해주세요.");
       window.location.href = '/signin'
+    }
+  }
+  checkModify=()=>{
+    let tagString = "";
+    this.state.tag.map((item,index)=>{
+      return(
+        tagString+=item+","
+      )
+    });
+    let careerString = "";
+    this.state.career.map((item,index)=>{
+      return(
+        careerString+=item.number+","+item.task+","+item.explain+","+item.during+"/"
+      );
+    })
+    let equipmentString = "";
+    this.state.equipment.map((item,index)=>{
+      return(
+        equipmentString+=item+","
+      )
+    });
+    let techniqueString = "";
+    this.state.technique.map((item,index)=>{
+      return(
+        techniqueString+=item+","
+      )
+    });
+    if(tagString==",")tagString="";
+    if(careerString==",,,/")careerString="";
+    //예외처리
+    if(this.props.MakerDetail.description == this.state.explain||
+      this.props.MakerDetail.category_level1== this.state.category_level1||
+      this.props.MakerDetail.category_level2==this.state.category_level2||
+      this.props.MakerDetail.location==this.state.location||
+      tagString==this.props.MakerDetail.tag||
+      careerString==this.props.MakerDetail.experience||
+      equipmentString==this.props.MakerDetail.maker_equipment||
+      techniqueString==this.props.MakerDetail.maker_technique||
+      this.state.galleryModify==true){
+        this.setState({isModify:true});
+        return;
     }
   }
   componentWillUpdate(nextProps) {
@@ -331,9 +373,11 @@ class ModifyMaker extends Component {
   }
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: { value }.value });
+    this.checkModify();
   }
   async onClickCategorylevel2(event, { value }) {
     await this.setState({ category_level2: { value }.value });
+    this.checkModify();
   }
   async onChangeCareer(number, task, explain, during) {
     // console.log("arr", arr);
@@ -342,39 +386,47 @@ class ModifyMaker extends Component {
     this.setState({
       career: arr,
     })
+    this.checkModify();
   }
   onClickAddCareer(event) {
     this.setState({
       career: this.state.career.concat({ number: this.state.career.length, task: "", explain: "", during: "" }),
     })
+    this.checkModify();
   }
   onChangeExplain(event) {
     this.setState({ explain: event.target.value })
+    this.checkModify();
   }
   onChangeLocation(event, { value }) {
     this.setState({ location: { value }.value });
+    this.checkModify();
   }
   handleAddTag(tag) {
     this.setState({
       tag: tag.slice(),
     });
+    this.checkModify();
   }
   handleAddEquipment(equipment) {
     this.setState({
       equipment: equipment.slice(),
     })
+    this.checkModify();
   }
   handleAddTechnique(technique) {
     this.setState({
       technique: technique.slice(),
     })
+    this.checkModify();
   }
   handleShowModal(value) {
     console.log("handleShowModal=====",value)
     this.setState({ open: value })
   }
   handlerIsGalleryModify(){
-    this.setState({isModify:true});
+    this.setState({galleryModify:true});
+    this.checkModify();
   }
   handleOnChangeThumbnail(event) {
     event.preventDefault();
@@ -386,6 +438,7 @@ class ModifyMaker extends Component {
     if (event.target.files[0]) {
       reader.readAsDataURL(file);
     }
+    this.checkModify();
   }
   onClickCancel(event) {
     window.location.href = "/mypage"
@@ -393,45 +446,10 @@ class ModifyMaker extends Component {
   onSubmit=async e=> {
 
     e.preventDefault();
-console.log(this.state.isModify)
-    let tagString = "";
-    this.state.tag.map((item,index)=>{
-      return(
-        tagString+=item+","
-      )
-    });
-    let careerString = "";
-    this.state.career.map((item,index)=>{
-      return(
-        careerString+=item.number+","+item.task+","+item.explain+","+item.during+"/"
-      );
-    })
-    let equipmentString = "";
-    this.state.equipment.map((item,index)=>{
-      return(
-        equipmentString+=item+","
-      )
-    });
-    let techniqueString = "";
-    this.state.technique.map((item,index)=>{
-      return(
-        techniqueString+=item+","
-      )
-    });
-    if(tagString==",")tagString="";
-    if(careerString==",,,/")careerString="";
-    //예외처리
-    if(this.props.MakerDetail.description == this.state.explain&&
-      this.props.MakerDetail.category_level1== this.state.category_level1&&
-      this.props.MakerDetail.category_level2==this.state.category_level2&&
-      this.props.MakerDetail.location==this.state.location&&
-      tagString==this.props.MakerDetail.tag&&
-      careerString==this.props.MakerDetail.experience&&
-      equipmentString==this.props.MakerDetail.maker_equipment&&
-      techniqueString==this.props.MakerDetail.maker_technique&&
-      this.state.isModify==false){
-        await alert("수정된 내용이 없습니다.");
-        return;
+    if(this.state.isModify==false){
+      await alert("수정된 내용이 없습니다.");
+      window.location.href="/mypage";
+      return;
     }
     let tagList = "";
     this.state.tag.map((item, index) => { // 태그,태그,태그 ...
@@ -644,8 +662,8 @@ console.log(this.state.isModify)
               </SubBox>
             </div>
             <div className="contentsBox centering">
-            <RedButton text ={"수정된 내용을 저장합니다."} okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={true} />
-            <GrayButton text={"수정된 내용이 저장되지 않습니다."} okText="확인" cancelText="취소" value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
+            <RedButton text ={"수정된 내용을 저장합니다."} okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={this.state.isModify} />
+            <GrayButton text={"수정된 내용이 저장되지 않습니다."} okText="확인" cancelText="취소" value={"취소하기"} onClick={this.onClickCancel} isConfirm={this.state.isModify} />
             </div>
           </MainBox>}
       </React.Fragment>

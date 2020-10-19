@@ -112,7 +112,7 @@ export class InputCalendar extends Component {
             })
         }
         if (prevProps.endDate !== this.props.endDate) {
-            console.log(this.props.startDate, this.props.endDate)
+            // console.log(this.props.startDate, this.props.endDate)
             if (this.props.startDate && this.props.endDate) {
                 const end = this.props.endDate.split("-");
                 const endDay = new Date(end[0], end[1] - 1, end[2]);

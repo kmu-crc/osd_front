@@ -67,6 +67,8 @@ const MainBox = styled.div`
     display:flex;
     padding:36px 130px 36px 136px;
     justify-content:center;
+    margin-bottom:30px;
+
   }
 
 `;
