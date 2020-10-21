@@ -295,26 +295,26 @@ class Header extends Component {
       </HeaderItem>
       {/*  */}
       <HeaderItem>
-        <Link
+        <Link id="designer"
           to={`/designer`}
           className={designerActive ? "active" : ""}>
           디자이너</Link>
       </HeaderItem>
       {/*  */}
       <HeaderItem>
-        <Link to={`/maker`}
+        <Link id="maker" to={`/maker`}
           className={makerActive ? "active" : ""}>
           메이커</Link>
       </HeaderItem>
       {/*  */}
       <HeaderItem>
-        <Link to={`/product`}
+        <Link id="product" to={`/product`}
           className={itemActive ? "active" : ""}>
           아이템</Link>
       </HeaderItem>
       {/*  */}
       <HeaderItem>
-        <Link to={`/request/designer`}
+        <Link id="request" to={`/request/designer`}
           className={requestActive ? "active" : ""}>
           게시판
           </Link>

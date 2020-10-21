@@ -47,7 +47,7 @@ export class RedButton extends Component {
     }
 
     render() {
-        console.log("disabled:", this.props.disabled);
+        // console.log("disabled:", this.props.disabled);
         return (
             <React.Fragment>
                 <StyleButton disabled={this.props.disabled} onClick={this.onClickButton}>

@@ -25,27 +25,29 @@ const MainBox = styled.div`
   .contentsBox{
     width:100%;
     display:flex;
+    justify-content:flex-end;
     padding-left: 10px;
     padding-top: 13px;
+    margin-top:30px;
   }
 `;
 const InputTextBox = styled.input`
   border:none;
   width: ${props => props.width || "100%"};
-  height:100%;
+  height:52px;
   padding-left:20px;
+  padding-top:8px;
+  padding-bottom:10px;
   background-color:#E9E9E9;
-  border-radius:21px;
+  border-radius:26px;
   display:flex;
   justify-content:center;
   outline:none;
-  
   color:#060000;
 `;
 const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
-    font-weight:500;
     font-size:20px;
   }
   width:562px;
@@ -89,7 +91,6 @@ const Thumbnail = styled.div`
 const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
-    font-weight:500;
     font-size:20px;
   }
   width:939px;
@@ -152,6 +153,7 @@ class ModifyMyDetail extends Component {
       phone: "",
       thumbnail: null,
       thumbnail_name: null,
+      isModify:false,
     }
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -167,7 +169,15 @@ class ModifyMyDetail extends Component {
     };
     return true;
   };
-  handleOnChangeThumbnail(event) {
+  checkModify =()=>{
+    if(this.props.nick_name != this.state.nickName||
+      this.state.password!=""||
+      this.props.phone!=this.state.phone||
+      this.props.thumbnail!=this.state.thumbnail){
+        this.setState({isModify:true});
+      }
+  }
+  async handleOnChangeThumbnail(event) {
     event.preventDefault();
     const reader = new FileReader();
     const file = event.target.files[0];
@@ -177,6 +187,7 @@ class ModifyMyDetail extends Component {
     if (event.target.files[0]) {
       reader.readAsDataURL(file);
     }
+    await this.checkModify();
   };
   onClickCancel(event) {
     window.location.href = "/mypage"
@@ -228,14 +239,16 @@ class ModifyMyDetail extends Component {
       loading: false
     });
   };
-  onChangeValue(event) {
-    this.setState({ [event.target.id]: event.target.value })
+  async onChangeValue(event) {
+    await this.setState({ [event.target.id]: event.target.value });
+    await this.checkModify();
   };
   async onChangePhone(event) {
     const index = event.target.value.length > 1 ? event.target.value.length - 1 : 0
     "0123456789".includes(event.target.value[index]) ?
-      this.onChangeValue(event) :
-      await alert("숫자만 입력가능합니다.")
+    this.onChangeValue(event) :
+    await alert("숫자만 입력가능합니다.");
+      
   }
 
   render() {
@@ -308,8 +321,8 @@ class ModifyMyDetail extends Component {
 
           <div className="contentsBox">
             {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>적용</div></RedButton> */}
-            <RedButton text="수정된 내용을 저장합니다." okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={true} />
-            <GrayButton text={"수정된 내용이 저장되지 않습니다."} okText="확인" cancelText="취소" value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
+            <RedButton disabled={!this.state.isModify} text="수정된 내용을 저장합니다." okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={this.state.isModify} />
+            {/* <GrayButton text={"수정된 내용이 저장되지 않습니다."} okText="확인" cancelText="취소" value={"취소하기"} onClick={this.onClickCancel} isConfirm={this.state.isModify} /> */}
           </div>
         </MainBox>
       </Wrapper>

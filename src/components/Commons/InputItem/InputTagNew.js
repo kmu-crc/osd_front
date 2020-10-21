@@ -129,7 +129,7 @@ export class InputTagNew extends Component {
         }
     }
     returnData = async e => {
-        console.log(this.state.tag);
+        // console.log(this.state.tag);
         this.props.getValue && await this.props.getValue(this.state.tag);
     }
     init = async () => {

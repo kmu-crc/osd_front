@@ -9,7 +9,7 @@ class ModifyRequestToDesignerContainer extends Component {
     this.props.GetRequestDetailRequest(this.props.id)
   }
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return (<ModifyRequestToDesigner {...this.props}/>)
   }
 

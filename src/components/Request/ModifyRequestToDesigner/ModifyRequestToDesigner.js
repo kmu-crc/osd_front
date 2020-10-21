@@ -67,6 +67,8 @@ const MainBox = styled.div`
     display:flex;
     padding:36px 130px 36px 136px;
     justify-content:center;
+    margin-bottom:30px;
+    
   }
 
 `;
@@ -177,17 +179,15 @@ class ModifyRequestToDesigner extends Component {
     this.state = {
       category_level1: null, category_level2: null,
       title: "", tag: [], price: 0, content: "", location: 15, ownership: 1, offline: 0, endDate: null, dayDate: null, start_date: null,
+      isModify:false,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
-    this.onClickItemType = this.onClickItemType.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.getTagValue = this.getTagValue.bind(this);
     this.onChangePrice = this.onChangePrice.bind(this);
     this.onChangeContent = this.onChangeContent.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
     this.onChangeOwnership = this.onChangeOwnership.bind(this);
-    this.onChangeOffline = this.onChangeOffline.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
     this.getStartDateValue = this.getStartDateValue.bind(this);
     this.getEndDateValue = this.getEndDateValue.bind(this);
@@ -196,6 +196,31 @@ class ModifyRequestToDesigner extends Component {
     this.onClickDelete = this.onClickDelete.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onFileChange=this.onFileChange.bind(this);
+  }
+  checkModify=()=>{
+    if(this.props.Detail.length==0)return;
+    let tagString = "";
+    this.state.tag.map((item,index)=>{
+      return(
+        tagString+=item+","
+      )
+    });
+
+    if(this.props.Detail.title!=this.state.title||
+      this.props.Detail.category_level1!=this.state.category_level1||
+      this.props.Detail.category_level2!=this.state.category_level2||
+      tagString==this.props.Detail.tag||
+      (this.props.Detail.price==null?0:this.props.Detail.price) != this.state.price||
+      (this.props.Detail.content==null?"":this.props.Detail.content)!=this.state.content||
+      (this.props.Detail.location==null?15:this.props.Detail.location)!=this.state.location||
+      parseInt(this.props.Detail.ownership,10)!=this.state.ownership||
+      this.props.Detail.start_date!=this.state.startDate||
+      this.props.Detail.end_date!=this.state.endDate||
+      this.props.Detail.file_url!=this.state.file_url||
+      this.props.Detail.filename!=this.state.filename
+      ){
+        this.setState({isModify:true});
+      }
   }
   componentDidMount() {
     // modify :*** 데이터베이스 호출 시 주석해제 *****
@@ -211,10 +236,14 @@ class ModifyRequestToDesigner extends Component {
     //   offline:this.props.Detail.offline_consultation,
     // });
   }
-  componentWillUpdate(nextProps) {
+  componentDidUpdate(prevProps){
+    if(prevProps.Detail!=this.props.Detail){
+      this.setState({ownership:this.props.Detail.ownership})
+    }
+  }
+  async componentWillUpdate(nextProps) {
     if (nextProps.Detail !== this.props.Detail) {
-      console.log(nextProps.Detail.tag);
-      this.setState({
+      await this.setState({
         category_level1: nextProps.Detail.category_level1,
         category_level2: nextProps.Detail.category_level1,
         expert_id: nextProps.Detail.expert_id || null,
@@ -224,7 +253,7 @@ class ModifyRequestToDesigner extends Component {
         price: nextProps.Detail.price,
         content: nextProps.Detail.content,
         location: nextProps.Detail.location,
-        ownership: parseInt(nextProps.Detail.ownership, 10),
+        ownership: nextProps.Detail.ownership,
         startDate: nextProps.Detail.start_date,
         endDate: nextProps.Detail.end_date,
         file_url:nextProps.Detail.file_url,
@@ -235,33 +264,30 @@ class ModifyRequestToDesigner extends Component {
   }
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: { value }.value });
+    this.checkModify();
   }
   async onClickCategorylevel2(event, { value }) {
     await this.setState({ category_level2: { value }.value });
+    this.checkModify();
   }
   async getPriceValue(value) {
     await this.setState({ price: value });
+    this.checkModify();
   }
-  onClickItemType(event, { value }) {
-    this.setState({ itemType: { value }.value });
-  }
-  onChangeTitle(event) {
-    this.setState({
+  async onChangeTitle(event) {
+    await this.setState({
       title: event.target.value,
-    })
+    });
+    await this.checkModify();
   }
-  getTagValue(data) {
-    this.setState({
-      tag: data.slice(),
-    })
-  }
-  onChangePrice(event) {
-    this.setState({
+  async onChangePrice(event) {
+    await this.setState({
       price: event.target.value,
-    })
+    });
+    await this.checkModify();
   }
-  onClickDelete(event) {
-    this.props.DeleteRequestRequest(this.props.id, this.props.token)
+  async onClickDelete(event) {
+    await this.props.DeleteRequestRequest(this.props.id, this.props.token)
       .then(res => {
         if (res.success) {
           window.location.href = `/request/designer`;
@@ -270,42 +296,56 @@ class ModifyRequestToDesigner extends Component {
       .catch(async err => await alert("의뢰 중 에러가 발생했습니다.\n" + err));
   }
   async getStartDateValue(value) {
-    await console.log("startDate", value);
+    // await console.log("startDate", value);
     await this.setState({ startDate: value });
+    this.checkModify();
   }
   async getEndDateValue(value) {
-    await console.log("endDate", value);
+    // await console.log("endDate", value);
     await this.setState({ endDate: value });
+    this.checkModify();
   }
   async getDayDateValue(value) {
     await this.setState({ dayDate: value })
+    this.checkModify();
   }
-  onChangeLocation(event) {
-    this.setState({
+  async onChangeLocation(event) {
+    await this.setState({
       location: event.target.value,
     })
+    await this.checkModify();
   }
   async onChangeContent(data) {
     await this.setState({
       content: data.content
     });
+    await this.checkModify();
   }
-  onChangeOwnership(event, { value }) {
-    this.setState({
+  async onChangeOwnership(event, { value }) {
+    await this.setState({
       ownership: { value }.value,
     })
+    await this.checkModify();
   }
-  onChangeOffline(event, { value }) {
-    this.setState({
-      offline: { value }.value,
-    })
-  }
-  handleAddTag(tag) {
-    this.setState({
+  async handleAddTag(tag) {
+    await this.setState({
       tag: tag.slice(),
     })
+    await this.checkModify();
+  }
+  async onFileChange(file){
+    await this.setState({
+      file_url: file.file_url,
+      filename: file.filename,
+    });
+    await this.checkModify();
   }
   async  onSubmit() {
+    if(this.state.isModify==false){
+      await alert("수정된 내용이 없습니다.");
+      window.history.back();
+      return;
+    }
     const data = {
       type: "designer",
       status: "request",
@@ -322,7 +362,6 @@ class ModifyRequestToDesigner extends Component {
       offline_consultation: this.state.offline,
       start_date: this.state.startDate,
       end_date: this.state.endDate,
-
       file_url: this.state.file_url,
       filename: this.state.filename,
     }
@@ -330,7 +369,7 @@ class ModifyRequestToDesigner extends Component {
     if(this.state.title==""){await alert("의뢰 제목을 입력해주세요");return;}
     else if(this.state.content==""){await alert("의뢰 내용을 입력해주세요");return;}
     ///////////////
-    console.log(data);
+    // console.log(data);
     // window.location.href = "/request/designer";
     this.props.UpdateRequestRequest(this.props.id, data, this.props.token)
       .then(res => {
@@ -343,12 +382,7 @@ class ModifyRequestToDesigner extends Component {
       })
       .catch(async err => await alert("의뢰 수정 중 에러가 발생했습니다.\n" + err));
   }
-  async onFileChange(file){
-    this.setState({
-      file_url: file.file_url,
-      filename: file.filename,
-    });
-  }
+
 
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
@@ -370,7 +404,7 @@ class ModifyRequestToDesigner extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">제목<Mandatory/></div>
-                  <InputText onChange={this.onChangeTitle} value={this.state.title} width={483} />
+                  <InputText onChange={this.onChangeTitle} value={this.state.title||''} width={483} />
                 </div>
 
                 <div className="wrapper flex centering">
@@ -400,7 +434,7 @@ class ModifyRequestToDesigner extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label">파일 등록</div>
-                  <InputFile width={533} getValue={this.onFileChange} file={{file_url:this.props.Detail.file_url,filename:this.props.Detail.filename}}/>
+                  <InputFile width={533} getValue={this.onFileChange} file={{file_url:this.props.Detail.file_url||'',filename:this.props.Detail.filename||''}}/>
                 </div>
 
                 <div className="wrapper flex centering">
@@ -428,7 +462,7 @@ class ModifyRequestToDesigner extends Component {
                 <div className="wrapper flex centering">
                   <div className="label">디자인 소유권</div>
                   <DropBox id="designerOwnership" selection options={[{ text: "구매자", value: 0 }, { text: "디자이너", value: 1 }]}
-                    onChange={this.onChangeOwnership} value={this.state.ownership} placeholder="선택" />
+                    onChange={this.onChangeOwnership} value={parseInt(this.state.ownership,10)} placeholder="선택" />
                 </div>
 
                 {/* <div className="wrapper flex centering">
@@ -440,8 +474,8 @@ class ModifyRequestToDesigner extends Component {
               </FormBox>
             </div>
             <div className="centering_">
-              <RedButton text="수정된 내용을 저장합니다." okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton text={"수정된 내용이 저장되지 않습니다."} okText="확인" cancelText="취소" value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
+              <RedButton text="수정된 내용을 저장합니다." disabled={!this.state.isModify} okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton text={"수정된 내용이 저장되지 않습니다."} okText="확인" cancelText="취소" value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={this.state.isModify} />
               <GrayButton text={"의뢰를 삭제합니다."} okText="확인" cancelText="취소" value={"삭제하기"} onClick={this.onClickDelete} isConfirm={true} />
             </div>
           </MainBox>

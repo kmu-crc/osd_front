@@ -127,7 +127,7 @@ const FormBox = styled.div`
   }
 
 `;
-const InputText = styled.input.attrs({ type: "text" })`
+const InputText =  styled.input.attrs({ type: "text" })`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:43px;
   border-radius:20px;
@@ -197,7 +197,7 @@ class ModifyGroup extends Component {
     super(props);
     this.state = {
       selectItemList: [],
-      title: null, thumbnail: null, thumbnail_name: null, explain: "",
+      title: null, thumbnail: null, thumbnail_name: null, explain: "",isModify:false,
     }
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.onChangeExplain = this.onChangeExplain.bind(this);
@@ -260,11 +260,28 @@ class ModifyGroup extends Component {
     //   this.setState({selectItemList:arr});
     // }
   }
+  checkModify=()=>{
+    if (this.props.galleryDetail.title == this.state.title||
+      this.props.galleryDetail.description == this.state.explain||
+      this.props.galleryDetail.thumbnail == this.state.thumbnail
+    ) {
+      this.setState({isModify:true});
+    }
+    else if(this.props.galleryDetail.itemList.length==this.state.selectItemList.length){
+      this.props.galleryDetail.itemList.map((item,index)=>{
+        if(this.state.selectItemList[index].value!=item.value){
+          this.setState({isModify:true});
+        }
+      })
+    }
+  }
   onChangeExplain(event) {
-    this.setState({ explain: event.target.value })
+    this.setState({ explain: event.target.value });
+    this.checkModify();
   }
   onChangeTitle(event) {
-    this.setState({ title: event.target.value })
+    this.setState({ title: event.target.value });
+    this.checkModify();
   }
   async handleOnChangeThumbnail(event) {
     event.preventDefault();
@@ -276,6 +293,7 @@ class ModifyGroup extends Component {
     if (event.target.files[0]) {
       await reader.readAsDataURL(file);
     }
+    this.checkModify();
   }
   onClickClose(event) {
     this.props.handleShowModal(false);
@@ -372,6 +390,7 @@ class ModifyGroup extends Component {
     // console.log({value});
     this.setState({ selectItemList: this.state.selectItemList.concat({ value: this.props.dataList[{ value }.value].uid, number: { value }.value }) });
     // this.setState({selectItemList:this.state.selectItemList.concat({value:{value}.value,text:{value}.text})});
+    this.checkModify();
   }
   onDeleteTag = async (event) => {
     const deleteIdx = event.target.id;
@@ -381,6 +400,7 @@ class ModifyGroup extends Component {
     this.setState({
       selectItemList: list.slice(0, deleteIdx).concat(this.state.selectItemList.slice(parseInt(deleteIdx, 10) + 1, length))
     });
+    this.checkModify();
   }
   render() {
     console.log(this.props);
@@ -429,7 +449,7 @@ class ModifyGroup extends Component {
             <FormBox>
               <div className="wrapper flex">
                 <div className="label">이름</div>
-                <InputText onChange={this.onChangeTitle} value={this.state.title} placeholder="이름을 입력해주세요" width={483} height={99} />
+                <InputText type="text" onChange={this.onChangeTitle} value={this.state.title||''} placeholder="이름을 입력해주세요" width={483} height={99} />
               </div>
               <div className="wrapper flex">
                 <div className="label">설명</div>
@@ -445,7 +465,7 @@ class ModifyGroup extends Component {
             </FormBox>
           </div>
           <div className="contentBox">
-            <RedButton  text={"수정된 내용을 저장합니다."} value={"저장하기"} okText="확인" cancelText="취소" onClick={this.onSubmit} isConfirm={false} />
+            <RedButton  text={"수정된 내용을 저장합니다."} value={"저장하기"} disabled={!this.state.isModify} okText="확인" cancelText="취소" onClick={this.onSubmit} isConfirm={false} />
             <GrayButton text={"수정된 내용이 저장되지 않습니다."} value={"취소하기"} okText="확인" cancelText="취소"  onClick={this.onClickClose} isConfirm={true} />
             <GrayButton text={"갤러리를 삭제합니다."} value={"삭제하기"} okText="확인" cancelText="취소"  onClick={this.onDelete} isConfirm={true} />
           </div>

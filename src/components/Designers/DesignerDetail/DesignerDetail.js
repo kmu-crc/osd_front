@@ -850,13 +850,11 @@ class DesignerDetail extends Component {
           </div>
           {this.state.career.map((item, index) => {
             return (
-              <React.Fragment>
               <div className="row" key={index}>
                 <div className="td">{item.task}</div>
                 <div className="td">{item.during}</div>
                 <div className="td">{item.explain}</div>
               </div>
-              </React.Fragment>
             );
           })}
         </ExpTable>

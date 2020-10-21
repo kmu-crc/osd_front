@@ -263,7 +263,7 @@ class ModifyDesigner extends Component {
       location: "",
       explain: "", tag: [],
       career: [{ number: 0, task: "", explain: "", during: "" }],
-      galleryModify:false,
+      galleryModify:false,isModify:false,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
@@ -277,6 +277,33 @@ class ModifyDesigner extends Component {
     this.handleShowModal = this.handleShowModal.bind(this);
     this.onClickCancel = this.onClickCancel.bind(this);
     this.handlerIsGalleryModify=this.handlerIsGalleryModify.bind(this);
+  }
+  checkModify=()=>{
+    let tagString = "";
+    this.state.tag.map((item,index)=>{
+      return(
+        tagString+=item+","
+      )
+    });
+    let careerString = "";
+    this.state.career.map((item,index)=>{
+      return(
+        careerString+=item.number+","+item.task+","+item.explain+","+item.during+"/"
+      );
+    })
+    if(tagString==",")tagString="";
+    if(careerString==",,,/")careerString="";
+    //예외처리
+    if(this.props.DesignerDetail.description == this.state.explain||
+      this.props.DesignerDetail.category_level1== this.state.category_level1||
+      this.props.DesignerDetail.category_level2==this.state.category_level2||
+      this.props.DesignerDetail.location==this.state.location||
+      tagString==this.props.DesignerDetail.tag||
+      careerString==this.props.DesignerDetail.experience||
+      this.state.galleryModify==true){
+        this.setState({isModify:true});
+        return;
+      }
   }
   componentWillUpdate(nextProps) {
     if (
@@ -319,35 +346,44 @@ class ModifyDesigner extends Component {
   }
   handlerIsGalleryModify(){
     this.setState({galleryModify:true});
+    this.checkModify();
   }
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: { value }.value });
+    this.checkModify();
   }
   async onClickCategorylevel2(event, { value }) {
     await this.setState({ category_level2: { value }.value });
+    this.checkModify();
   }
   async onChangeCareer(number, task, explain, during) {
     let arr = this.state.career.slice();
     await arr.splice(number, 1, { number: number, task: task, explain: explain, during: during });
     this.setState({
       career: arr,
-    })
+    });
+    this.checkModify();
   }
   onClickAddCareer(event) {
     this.setState({
       career: this.state.career.concat({ number: this.state.career.length, task: "", explain: "", during: "" }),
-    })
+    });
+    this.checkModify();
   }
   onChangeExplain(event) {
     this.setState({ explain: event.target.value })
+    console.log("?!!")
+    this.checkModify();
   }
   onChangeLocation(event, { value }) {
     this.setState({ location: { value }.value });
+    this.checkModify();
   }
   handleAddTag(tag) {
     this.setState({
       tag: tag.slice(),
     });
+    this.checkModify();
   }
   handleShowModal(value) {
     this.setState({ open: value })
@@ -363,37 +399,18 @@ class ModifyDesigner extends Component {
     if (event.target.files[0]) {
       reader.readAsDataURL(file);
     }
+    this.checkModify();
   }
   onClickCancel(event) {
     window.location.href = "/mypage"
   }
   onSubmit = async e => {
     e.preventDefault();
-    let tagString = "";
-    this.state.tag.map((item,index)=>{
-      return(
-        tagString+=item+","
-      )
-    });
-    let careerString = "";
-    this.state.career.map((item,index)=>{
-      return(
-        careerString+=item.number+","+item.task+","+item.explain+","+item.during+"/"
-      );
-    })
-    if(tagString==",")tagString="";
-    if(careerString==",,,/")careerString="";
-    //예외처리
-    if(this.props.DesignerDetail.description == this.state.explain&&
-      this.props.DesignerDetail.category_level1== this.state.category_level1&&
-      this.props.DesignerDetail.category_level2==this.state.category_level2&&
-      this.props.DesignerDetail.location==this.state.location&&
-      tagString==this.props.DesignerDetail.tag&&
-      careerString==this.props.DesignerDetail.experience&&
-      this.state.galleryModify==false){
-        await alert("수정된 내용이 없습니다.");
-        return;
-      }
+    if(this.state.isModify==false){
+      await alert("수정된 내용이 없습니다.");
+      window.location.href="/mypage";
+      return;
+    }
     let tagList = "";
     this.state.tag.map((item, index) => { // 태그,태그,태그 ...
       return (
@@ -562,8 +579,8 @@ class ModifyDesigner extends Component {
           </div>
           <div className="contentsBox centering">
             {/* <RedButton onClick={this.onSubmit} left={223} ㅎottom={0}><div>적용</div></RedButton> */}
-            <RedButton text ={"수정된 내용을 저장합니다."} okText="저장" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={true} />
-            <GrayButton text={"수정된 내용이 저장되지 않습니다."} okText="저장" cancelText="취소" value={"취소하기"} onClick={this.onClickCancel} isConfirm={true} />
+            <RedButton text ={"수정된 내용을 저장합니다."} disabled={!this.state.isModify} okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={this.state.isModify} />
+            <GrayButton text={"수정된 내용이 저장되지 않습니다."} okText="확인" cancelText="취소" value={"취소하기"} onClick={this.onClickCancel} isConfirm={this.state.isModify} />
           </div>
         </MainBox>
       </React.Fragment>
@@ -606,6 +623,7 @@ class CreateCareer extends Component {
   onChangeExplain(event) {
     this.setState({ explain: event.target.value, })
     this.props.onChangeCareer(this.props.number - 1, this.state.task, event.target.value, this.state.during);
+
   }
   onChangeDuring(event) {
     this.setState({ during: event.target.value, })

@@ -392,7 +392,7 @@ class MyDetail extends Component {
             <InformationBox>
               <div className="grayBox borderRight">
                 <div className="wrap cursorPointer" onClick={this.onClickCreateDesigner} >
-                  <div className="title fontBig fontStyleNormal"><div>다양한 아이디어를 s판매하세요!</div></div>
+                  <div className="title fontBig fontStyleNormal"><div>다양한 아이디어를 판매하세요!</div></div>
                   <div className="design-clipart">&nbsp;</div>
                   <div onClick={this.onClickCreateDesigner} ><div className="fontDefault alignCenter cursorPointer fontStyleNormal displayFlex">
                     <div className="marginRight">디자이너 등록 / 관리</div>

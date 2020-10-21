@@ -216,11 +216,15 @@ class ItemQuestion extends Component {
     componentDidMount(){
         window.addEventListener("click", this.onClickEvent, false);
     }
+    componentWillUnmount(){
+        window.removeEventListener("click", this.onClickEvent, true);
+    }
     async onClickEvent(event){
+        if(event.target.id=="designer"||event.target.id=="maker"||event.target.id=="request"||event.target.id=="product")return;
         if(event.target.id != "answer"&&event.target.id!="this_reply"){
-            this.setState({reply:false})
+            await this.setState({reply:false});
         }
-      }
+   }
     onChangeValue(event) {
         const name = event.target.name;
         const id = event.target.id;
@@ -255,7 +259,7 @@ class ItemQuestion extends Component {
         this.setState({ reply: true, targetId: itemId });
     };
     undoReply() { this.setState({ reply: false, this_reply: "" }); };
-    undoComment() { this.setState({ this_comment: "" }); };
+    undoComment() { this.setState({ this_comment: "" });};
     requestAnswer(origin) {
 
         if (this.checkPermission() === false)
@@ -294,6 +298,8 @@ class ItemQuestion extends Component {
     getData(page) {
         this.setState({ page: page });
         this.props.getData(page);
+        alert("getDate");
+        
     };
 
     render() {
@@ -316,7 +322,7 @@ class ItemQuestion extends Component {
                     {!props.itsmine && props.sort_in_group === 0 && master ?
                         <div onClick={() => this.reply(props.uid)}><ReplyButton id="answer"><div id="answer" className="text">답변</div></ReplyButton></div> : null}
                     {/* {props.itsmine && !master ?<div >[삭제하기]</div> : null} */}
-                    <div className="comment" onClick={() => {props.openModal(props.comment);this.setState({open_id:this.state.open_id==props.uid?null:props.uid})}}  >
+                    <div className="comment" onClick={() => {props.openModal(props.comment);this.setState({open_id:this.state.open_id==props.uid?null:props.uid});}}  >
                         {props.is_question ? "" : <Icon/>}
                         {/* <div className="commentText">{props.comment}</div></div> */}
                         {
@@ -381,7 +387,7 @@ class ItemQuestion extends Component {
                                 key={index}
                                 itsmine={item.user_id === (userInfo && userInfo.uid)}
                                 is_question={item.sort_in_group === 0}
-                                openModal={(comment)=>this.setState({open:true,modal_comment:comment})}
+                                openModal={(comment)=>{this.setState({open:true,modal_comment:comment});        alert("question");}}
                             />
                             {reply && item.uid === this.state.targetId ?
                                 <AnswerBox id="answer">
