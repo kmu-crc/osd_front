@@ -829,6 +829,7 @@ class ItemContentEditor extends Component {
         <FormBox boxShadow={true} width={1570}>
           {this.state.type === "blog"
             ? <CardSourceDetailContainer
+              mode="blog"
               bought={true}
               isCancel
               cardId={this.props.cardId}
@@ -838,6 +839,7 @@ class ItemContentEditor extends Component {
             ? <ItemStepContainer
               // item={item}
               // id={item["item-id"]}
+              mode="project"
               bought={true}
               editor={this.props.edit}
             /> : null}

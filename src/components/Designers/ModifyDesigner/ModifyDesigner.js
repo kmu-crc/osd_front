@@ -326,7 +326,7 @@ class ModifyDesigner extends Component {
           { number: piece[0], task: piece[1], explain: piece[2], during: piece[3] }
         );
       });
-      const tag = nextProps.DesignerDetail.tag.split(",");
+      const tag = nextProps.DesignerDetail.tag==null?[]:nextProps.DesignerDetail.tag.split(",");;
       tag.pop();
 
 

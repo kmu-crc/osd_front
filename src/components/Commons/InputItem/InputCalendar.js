@@ -238,13 +238,13 @@ export class InputCalendar extends Component {
                         onChange={this.onChangeEndDate}
                     />
                 </FormBox>
-                <FormText
+                {/* <FormText
                     id="dateDate"
                     width={80}
                     value={this.state.dayDate || ""}
                     onChange={this.onChangeDayDate}
                     onClick={this.onClickDayDate}
-                />일
+                />일 */}
                 </div>
             </React.Fragment>
         );

@@ -423,6 +423,7 @@ class NewCardModal extends Component {
                             <div className="title">내용</div>
                             <div className="content" >
                                 <CardSourceDetail
+                                    mode="project"
                                     fromNewCardModal={this.handleCapture}
                                     submit={this.submit}
                                     content={this.state.content || []}

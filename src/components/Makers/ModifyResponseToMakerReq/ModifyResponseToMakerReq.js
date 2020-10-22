@@ -224,7 +224,7 @@ const TagPiece = styled.div`
     }
 `;
 
-class ResponseToMakerReq extends Component {
+class ModifyResponseToMakerReq extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -243,7 +243,16 @@ class ResponseToMakerReq extends Component {
     this.getEndDateValue = this.getEndDateValue.bind(this);
     this.getDayDateValue=this.getDayDateValue.bind(this);
   };
-
+  async componentDidUpdate(prevProps){
+    if(prevProps.detail!=this.props.detail){
+      this.setState({res_content:this.props.detail.content,
+        res_price:this.props.detail.price,
+      startDate:this.props.detail.start_date,
+      endDate:this.props.detail.end_date,
+      res_amount:this.props.detail.amount,})
+    }
+    return;
+  }
   async onChangeResponseContent(data) {
     await this.setState({ content: data.content });
     // this.setState({
@@ -280,7 +289,7 @@ class ResponseToMakerReq extends Component {
       client_id:this.props.detail.client_id,
     }
     // 페이지이동
-    this.props.CreateRequestRequest(data, this.props.token)
+    this.props.UpdateRequestRequest(this.props.id, data, this.props.token)
       .then(res => {
         if (res.success) {
           if (this.props.detail.personal)
@@ -306,13 +315,14 @@ class ResponseToMakerReq extends Component {
   }
   render() {
     const { detail } = this.props;
-    if (!detail) return <Loading />;
-    const category_level1 = this.props.category1 && this.props.category1[detail.category_level1] &&
-      this.props.category1[detail.category_level1].text;
+    const {request} = this.props.detail;
+    console.log(detail);
+    if (!request) return (<Loading />);
+    const category_level1 = this.props.category1 && this.props.category1[request.category_level1] &&
+      this.props.category1[request.category_level1].text;
     let category_level2 = "";
     this.props.category2 && this.props.category2.map((item, index) => {
-      console.log(item.parent, detail.category_level1, item.value, detail.category_level2);
-      if (item.parent === detail.category_level1 && item.value === detail.category_level2) {
+      if (item.parent === request.category_level1 && item.value === request.category_level2) {
         category_level2 = item.text;
       }
       return item;
@@ -327,12 +337,12 @@ class ResponseToMakerReq extends Component {
 
                 <div className="wrapper flex centering" >
                   <div className="label">의뢰자</div>
-                  <div>{(this.props.detail && this.props.detail.nick_name) || null}</div>
+                  <div>{detail.client_name|| null}</div>
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">제목</div>
-                  <div className="textBox">{detail.title}</div>
+                  <div className="textBox">{request.title}</div>
                 </div>
 
                 <div className="wrapper flex centering">
@@ -348,7 +358,7 @@ class ResponseToMakerReq extends Component {
                 <div className="wrapper flex centering add_margin_bottom">
                   <div className="label">태그</div>
                   <TagList>
-                    {detail && detail.tag && detail.tag.split(",").map((item, index) =>
+                    {request && request.tag && request.tag.split(",").map((item, index) =>
                       <TagPiece key={index}>
                         {item}
                       </TagPiece>
@@ -359,7 +369,7 @@ class ResponseToMakerReq extends Component {
 
                 <div className="wrapper flex centering">
                 <div className="label">의뢰 내용</div>
-                <div className="textBox" dangerouslySetInnerHTML={{ __html: `${detail.content || ""}` }} />
+                <div className="textBox" dangerouslySetInnerHTML={{ __html: `${request.content || ""}` }} />
               </div>
 
               <div className="wrapper flex centering add_margin_bottom">
@@ -368,10 +378,10 @@ class ResponseToMakerReq extends Component {
                         
                         <div className="file_label_box">
                         <div className="file_label">
-                        {detail && detail.file_url ?
-                              <a href={detail.file_url} download={detail.filename} className="iconWrap">
+                        {request && request.file_url ?
+                              <a href={request.file_url} download={request.filename} className="iconWrap">
                                 <FileIcon type={"application"} extension={"pdf"} />
-                                {detail.filename}
+                                {request.filename}
                               </a>
                               : "첨부 파일 없음"}
                         </div>
@@ -380,27 +390,27 @@ class ResponseToMakerReq extends Component {
 
               <div className="wrapper flex centering">
                   <div className="label">희망비용</div>
-                  <div className="textBox">{detail.price}</div>
+                  <div className="textBox">{request.price}</div>
                 </div>
 
                 <div className="wrapper flex centering">
-                  <div className="label">기간</div>
-                  <div className="textBox">~{detail.term}</div>
-                </div>
+                <div className="label">기간</div>
+                <div className="textBox">{request.start_date}~{request.end_date}</div>
+              </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">수량</div>
-                  <div className="textBox">{detail.amount}</div>
+                  <div className="textBox">{request.amount}</div>
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">메이커 위치</div>
-                  <div className="textBox">{detail.location && LocationList[parseInt(detail.location, 10)].text}</div>
+                  <div className="textBox">{request.location && LocationList[parseInt(request.location, 10)].text}</div>
                 </div>
 
                 <div className="wrapper flex centering">
                   <div className="label">메이커 재판매</div>
-                  <div className="textBox">{detail.resale <= 0 ? "불가능" : "가능"}</div>
+                  <div className="textBox">{request.resale <= 0 ? "불가능" : "가능"}</div>
                 </div>
 
                 {/* <div className="wrapper flex centering">
@@ -425,7 +435,7 @@ class ResponseToMakerReq extends Component {
                   <div className="label2">응답 내용</div>
                   {/* <InputTextarea onChange={this.onChangeResponseContent} value={this.state.res_content} width={483} height={483} /> */}
                   <TextControllerClassic
-                  item={{content:this.state.content,height:430}}
+                  item={{content:this.state.res_content,height:430}}
                   name={"comment"}
                   getValue={this.onChangeResponseContent}
                   width="480"
@@ -435,12 +445,12 @@ class ResponseToMakerReq extends Component {
 
                 <div className="wrapper flex centering">
                   <div className="label2">수량</div>
-                  <InputText type="number" onChange={this.onChangeReponseAmount} value={this.state.res_amount} width={100} />
+                  <InputText type="number" onChange={this.onChangeReponseAmount} value={this.state.res_amount||''} width={100} />
                 </div>
 
                 <div className="wrapper flex">
                   <div className="label2">희망비용</div>
-                  <InputPriceNew name="price" getValue={this.getPriceValue} />
+                  <InputPriceNew price={this.state.res_price}  name="price" getValue={this.getPriceValue} />
                 </div>
 
 
@@ -455,8 +465,8 @@ class ResponseToMakerReq extends Component {
             <div className="contentsBox">
             <div className="box_"/>
             <div className="box_centering">
-              <RedButton text={"의뢰를 등록합니다."} okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} /></div>
+              <RedButton text ={"수정된 내용을 저장합니다."}  okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
+              <GrayButton text={"수정된 내용이 저장되지 않습니다."} value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} /></div>
             </div>
           </MainBox>
         </Wrapper>
@@ -465,4 +475,4 @@ class ResponseToMakerReq extends Component {
   };
 }
 
-export default ResponseToMakerReq;
+export default ModifyResponseToMakerReq;

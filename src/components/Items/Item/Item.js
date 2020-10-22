@@ -118,7 +118,7 @@ class Item extends Component {
   }
   render() {
     const item = this.props.data || empty;
-    const date = new Date(item.create_time).getFullYear() + '/' + new Date(item.create_time).getMonth() + '/' + new Date(item.create_time).getDate();
+    const date = new Date(item.create_time).getFullYear() + '/' + (parseInt(new Date(item.create_time).getMonth(),10)+1) + '/' + new Date(item.create_time).getDate();
     const img = item ? item.thumbnail : noimg;
     // console.log(this.props);
     const RenderingStar = ()=>{

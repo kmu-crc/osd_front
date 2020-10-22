@@ -744,43 +744,6 @@ class ItemDetail extends Component {
                 detail={this.state.detail}
                 handler={detail => this.setState({ reviewdetail: true, detail: detail })}
                 isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} />
-              {/* {this.state.reviewdetail ?
-                <ReviewDetailModal
-                  open={this.state.reviewdetail}
-                  close={() => this.setState({ reviewdetail: false })}
-                  detail={this.state.detail} /> : null}
-                  {
-                    this.state.reviewWrite?
-                    <WriteReviewModal 
-                      open={this.state.reviewWrite}
-                      close={()=>this.setState({reviewWrite:false})}
-                      detail={this.state.detail}
-                    />
-                    :
-                    null
-                  } */}
-              {/* {this.state.reviewwrite ?
-                <ReviewDetailModal
-                  isWrite={true}
-                  writeID={this.state.writeReviewID}
-                  open={this.state.reviewwrite}
-                  close={() => this.setState({ reviewwrite: false })}
-                  detail={this.state.detail} /> : null} */}
-              {/* <div style={{ fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", display: "flex" }}>
-                <div style={{ borderRadius: "0px 10px 0px 0px", width: "120px", background: "#FFFFFF" }}>리뷰</div>
-              </div>
-
-              <ItemReviewContainer
-                user_id={item.user_id}
-                handler={detail => this.setState({ reviewdetail: true, detail: detail })}
-                isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} />
-
-              {this.state.reviewdetail ?
-                <ReviewDetailModal
-                  open={this.state.reviewdetail}
-                  close={() => this.setState({ reviewdetail: false })}
-                  detail={this.state.detail} /> : null}
-              {this.state.isexpandingReview && <CoverGrident isGradient={!expandingReview} />} */}
             </Review>
 
             {

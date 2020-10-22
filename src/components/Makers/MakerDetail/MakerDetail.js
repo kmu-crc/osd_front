@@ -551,7 +551,6 @@ const TagPiece = styled.div`
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px
-    border-radius: 15px;
     display: flex;
     justify-content: space-between;
     .close {
@@ -667,6 +666,11 @@ class MakerDetail extends Component {
   componentWillUpdate(nextProps) {
     if (this.props.MakerViewDetail !== nextProps.MakerViewDetail) {
       this.setState(nextProps.MakerViewDetail);
+      const technique = nextProps.MakerViewDetail.maker_technique.split(",");
+      technique.pop();
+      const equipment = nextProps.MakerViewDetail.maker_equipment.split(",");
+      equipment.pop();
+      this.setState({technique:technique,equipment:equipment,});
     }
     if (this.props.like !== nextProps.like) {
       this.setState({ isLike: nextProps.like });
@@ -868,9 +872,9 @@ class MakerDetail extends Component {
 
           <div style={{ marginTop: "61px", display: "flex", flexDirection: "row" }}>
             <MakerBoard>
-              <div className="title">메이커 게시판</div>
+              <div className="title" style={{marginBottom:"20px"}}>메이커 게시판</div>
               <div className="title">
-                <div className="redText alignRight"><div className="link" onClick={this.onClickRequest}>제작 의뢰</div></div>
+                {this.props.MakerViewDetail&&this.props.MakerViewDetail.user_id !== this.props.userInfo.uid ? <div className="redText alignRight"><div className="link" onClick={this.onClickRequest}>제작 의뢰</div></div>:null}
               </div>
               <div className="list">
                 <MakerRequestBoardContainer id={parseInt(this.props.id, 10)} />

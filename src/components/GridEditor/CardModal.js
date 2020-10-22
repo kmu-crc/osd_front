@@ -570,6 +570,7 @@ class CardModal extends Component {
                                     openEdit={this.onChangeEditMode}
                                     handlerModifyContent={this.handlerModifyContent}
                                     isCancel
+                                    mode="project"
                                     isModify={
                                         this.props.card.private==this.state.private&&
                                         this.props.card.title==this.state.title&&
