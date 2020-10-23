@@ -333,7 +333,8 @@ class ModifyMaker extends Component {
       this.props.MakerDetail.category_level2 !== nextProps.MakerDetail.category_level2 ||
       this.props.MakerDetail.tag !== nextProps.MakerDetail.tag ||
       this.props.MakerDetail.experience !== nextProps.MakerDetail.experience ||
-      this.props.MakerDetail.score !== nextProps.MakerDetail.score) {
+      this.props.MakerDetail.score !== nextProps.MakerDetail.score||
+      this.props.MakerDetail.maker_equipment!==nextProps.MakerDetail.maker_equipment) {
 
       const careerRow = nextProps.MakerDetail.experience.split("/");
       careerRow.pop();
@@ -345,13 +346,13 @@ class ModifyMaker extends Component {
         );
       });
       console.log(careerList);
-      const tag = nextProps.MakerDetail.tag.split(",");
+      const tag = nextProps.MakerDetail.tag==null?[]:nextProps.MakerDetail.tag.split(",");
       tag.pop();
 
-      const equipment = nextProps.MakerDetail.maker_equipment.split(",");
+      const equipment = nextProps.MakerDetail.maker_equipment==null?[]:nextProps.MakerDetail.maker_equipment.split(",");
       equipment.pop();
 
-      const technique = nextProps.MakerDetail.maker_technique.split(",");
+      const technique = nextProps.MakerDetail.maker_technique==null?[]:nextProps.MakerDetail.maker_technique.split(",");
       technique.pop();
 
       this.setState({

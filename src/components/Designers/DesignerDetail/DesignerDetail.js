@@ -799,8 +799,8 @@ class DesignerDetail extends Component {
             <div className="text">{this.state.explain || "'디자이너 소개'를 가져오고 있습니다."}</div>
             <div className="title">위치</div>
             <div className="text">{Location}</div>
-            <div className="title">카테고리</div>
-            <div className="text">{categoryName || "전체"}</div>
+            {/* <div className="title">카테고리</div>
+            <div className="text">{categoryName || "전체"}</div> */}
             <div className="title">태그</div>
             <div className="text flex">
               {
@@ -884,7 +884,9 @@ class DesignerDetail extends Component {
       <div style={{ marginTop: "61px", display: "flex", flexDirection: "row" }}>
         <DesignerBoard>
           <div className="title">디자이너 게시판</div>
-          <div className="title"><div className="redText alignRight" ><div className="link" onClick={this.onClickRequest}>디자인 의뢰</div></div></div>
+          <div className="title">
+            {this.props.DesignerViewDetail&&this.props.DesignerViewDetail.user_id!==this.props.userInfo.uid?<div className="redText alignRight" ><div className="link" onClick={this.onClickRequest}>디자인 의뢰</div></div>:null}
+          </div>
           <div className="list">
             <DesignerRequestBoardContainer id={parseInt(this.props.id, 10)} />
           </div>

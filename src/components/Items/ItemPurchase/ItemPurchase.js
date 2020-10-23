@@ -854,10 +854,10 @@ class ItemPurchase extends Component {
             </React.Fragment>
             :null}
 {/** -------------------- ADVICE ----------------------- */}
-            {item&&(item.type===2)?
+            {item&&(item.type===2||item.type===7)?
             <React.Fragment>
 
-              <div className="title margin_bottom_s">자문/상담</div>
+              <div className="title margin_bottom_s">{item.type==2?'자문/상담':item.type==7?'제작품 문의':null}</div>
               <div className="flex">
               <div className="who" />
               <div className="nick" onClick={() => this.setState({ isShowmember: !this.state.isShowmember })}>{this.props.userInfo.nickName}</div>
@@ -977,16 +977,41 @@ class ItemPurchase extends Component {
             </React.Fragment>
             :null}
 {/** -------------------- PRODUCT CONTENT ----------------------- */}
-            {item&&(item.type===7)?
+            {/* {item&&(item.type===7)?
             <React.Fragment>
                     <div className="title">제작품 문의</div>
             </React.Fragment>
-            :null}
+            :null} */}
 
             </Content>
           </div>
 {/** ---------------------------------------------------------- */}
-
+          {/* item-contents */}
+            {/* {item.type<Content
+              id="contents_rgn"
+              style={{ marginTop: "15px", overflow: "hidden" }}
+              width={1600}>
+              <div className="title">아이템 상세내용</div>
+              {item && item.upload_type === "blog"
+                ? <div className="detail_board" id="detail_board">
+                  <CardSourceDetailContainer
+                    bought={item.bought}
+                    isCancel
+                    cardId={item.cardId}
+                  />
+                </div>
+                : null}
+              {item && item.upload_type === "project"
+                ?
+                <div className="detail_board" id="detail_board">
+                  <ItemStepContainer
+                    item={item}
+                    id={item["item-id"]}
+                    bought={item.bought}
+                  />
+                </div>
+                : null}
+            </Content>} */}
         </Wrapper>
       </React.Fragment>
       :

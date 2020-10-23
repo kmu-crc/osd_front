@@ -76,7 +76,9 @@ const Peers = styled.div`
       padding:5px;
       margin-top:5px;
       background-color:#E6E6E6;
+      cursor:pointer;
     }
+    
   }
   .list {
     font-family: Noto Sans KR;

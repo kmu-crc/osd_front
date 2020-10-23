@@ -204,12 +204,14 @@ class CardSourceDetail extends Component {
                   return (
                     <div key={index}>
                       <AddController
+                        mode={this.props.mode}
                         type="INIT"
                         order={index}
                         name={`add${index}`}
                         getValue={this.onAddValue}
                       />
                       <Controller
+                        mode={this.props.mode}
                         type={item.type}
                         item={item}
                         order={index}

@@ -14,7 +14,7 @@ class CardSourceDetailContainer extends Component {
   }
   render() {
     return (
-      <CardSourceDetail {...this.props} handlerModifyContent={this.props.handlerModifyContent} upDateRequest={this.props.UpdateItemContentsRequest} />
+      <CardSourceDetail {...this.props} handlerModifyContent={()=>this.props.handlerModifyContent} upDateRequest={this.props.UpdateItemContentsRequest} />
     );
   }
 }

@@ -127,6 +127,9 @@ const HeaderItem = styled.li`
       }
     }
   }
+  .hover{
+    color:#707070;
+  }
   .active {
     color: #F00;
   }

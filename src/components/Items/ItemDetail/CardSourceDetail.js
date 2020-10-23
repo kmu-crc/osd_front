@@ -161,6 +161,9 @@ const EditorBottonWrapper = styled.div`
 `;
 const PrivateContentWrapper = styled.div`
   padding: 25px 10px;
+  margin-right:50px;
+  margin-bottom:20px;
+  margin-top:20px;
   border-radius: 15px;
   line-height: 35px;
   text-align: center;
@@ -364,6 +367,7 @@ class CardSourceDetail extends Component {
             <form onSubmit={this.onSubmit}>
               {content.length > 0 && content.map((item, index) =>
                 <Controller
+                  mode={this.props.mode}
                   name={`content${index}`} type={item.type}
                   order={index} maxOrder={content.length - 1}
                   key={index} item={item}
@@ -373,6 +377,7 @@ class CardSourceDetail extends Component {
                 />)}
 
               <AddController
+                mode={this.props.mode}
                 name="addBasic" type="INIT"
                 order={content.length > 0 ? content.length : 0}
                 getValue={this.onAddValue} />

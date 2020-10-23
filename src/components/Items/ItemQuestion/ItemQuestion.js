@@ -69,6 +69,7 @@ const CommentDetail = styled.div`
     background-color:#EFEFEF;
     padding-top:30px;
     padding-bottom:30px;
+    padding-right:60px;
     color:#707070;
 `
 const Page = styled.div`
@@ -387,7 +388,7 @@ class ItemQuestion extends Component {
                                 key={index}
                                 itsmine={item.user_id === (userInfo && userInfo.uid)}
                                 is_question={item.sort_in_group === 0}
-                                openModal={(comment)=>{this.setState({open:true,modal_comment:comment});        alert("question");}}
+                                openModal={(comment)=>{this.setState({open:true,modal_comment:comment});}}
                             />
                             {reply && item.uid === this.state.targetId ?
                                 <AnswerBox id="answer">

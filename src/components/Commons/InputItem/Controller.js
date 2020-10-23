@@ -164,6 +164,7 @@ export class Controller extends Component {
 
   render() {
     const { item, name, /* maxOrder */ } = this.props;
+    console.log("=====",this.props)
     return (
       <ControllerWrap>
         <div className="contentWrap">
@@ -174,9 +175,10 @@ export class Controller extends Component {
             <TextControllerClassic item={item} initClick={this.state.click} private={item.private} name={name} getValue={this.onChangeValue} deleteItem={this.deleteItem} />
           ) : item.type === "EMBED" ? (<EmbController />) : null}
         </div>
-        {/* {item.private === 1 */}
-        {/* ? <FuncButton left="90%" type="button" className="editBtn" bgcolor="gray" onClick={this.privateItem}><i className="eye icon large" /></FuncButton> */}
-        {/* : <FuncButton left="90%" type="button" className="editBtn" bgcolor="blue" onClick={this.privateItem}><i className="eye icon large" /></FuncButton>} */}
+
+        {this.props.mode=="project"?null:item.private === 1
+        ? <FuncButton left="90%" type="button" className="editBtn" bgcolor="gray" onClick={this.privateItem}><i className="eye icon large" /></FuncButton>
+        : <FuncButton left="90%" type="button" className="editBtn" bgcolor="blue" onClick={this.privateItem}><i className="eye icon large" /></FuncButton>}
         <FuncButton left="95%" type="button" className="editBtn" onClick={this.deleteItem}><i className="trash alternate icon large" /></FuncButton>
         {/* {maxOrder - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={this.moveUpItem}><i className="angle up alternate icon large" /></UpBtn> : null} */}
         {/* {maxOrder - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={this.moveDownItem}><i className="angle down alternate icon large" /></DownBtn> : null} */}

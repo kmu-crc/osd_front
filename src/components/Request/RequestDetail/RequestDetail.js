@@ -57,6 +57,14 @@ const MainBox = styled.div`
     width:100%;
     display:flex;
     padding:36px 130px 36px 136px;
+    .box_{
+      width:50%;
+    }
+    .box_centering{
+      width:50%;
+      display:flex;
+      justify-content:center;
+    }
   }
 
 `;
@@ -202,6 +210,19 @@ const ButtonWrapper = styled.div`
   margin-top: 30px;
   margin-bottom: 40px;
   justify-content:center;
+  .btnbox{
+    width:100%;
+    display:flex;
+    justify-content:flex-end;
+    margin-right:113px;
+    margin-left:113px;
+    ._box{
+      width:50%;
+      display:flex;
+      justify-content:center;
+    }
+  }
+
 `;
 
 class Detail extends Component {
@@ -230,14 +251,16 @@ class Detail extends Component {
     const TypeText = Detail.type === "maker" ? "제작" : "디자인";
     console.log("this.props:", this.props, "Detail:", Detail, "MyDetail:", MyDetail);
     console.log("===========", Detail.tag);
+    const level1 = Detail.status=="response"?Detail.request.category_level1:Detail.category_level1;
+    const level2 = Detail.status=="response"?Detail.request.category_level2:Detail.category_level2;
     const category_level1
-      = this.props.category1 && this.props.category1[Detail.category_level1] && this.props.category1[Detail.category_level1].text;
+      = this.props.category1 && this.props.category1[level1] && this.props.category1[level1].text;
     // const category2
     //   = this.props.category2 && this.props.category2[Detail.category_level1];
     let category_level2 = "";
     this.props.category2 && this.props.category2.map((item, index) => {
       // console.log(item.parent,Detail.category_level1,item.value,Detail.category_level2);
-      if (item.parent === Detail.category_level1 && item.value === Detail.category_level2) {
+      if (item.parent === level2 && item.value === level2) {
         category_level2 = item.text;
       }
       return item;
@@ -409,6 +432,10 @@ class Detail extends Component {
 
                 <div className="contentsBox">
                   <FormBox isHalf={true} isLeft={true}>
+                  <div className="wrapper flex centering">
+                      <div className="label">의뢰자</div>
+                      <div className="textBox">{Detail.client_name || ""}</div>
+                    </div>
                     <div className="wrapper flex centering">
                       <div className="label">제목</div>
                       <div className="textBox">{Detail.title}</div>
@@ -455,7 +482,7 @@ class Detail extends Component {
 
                     <div className="wrapper flex centering">
                       <div className="label">기간</div>
-                      <div className="textBox">~{Detail && Detail.request && Detail.request.term}</div>
+                      <div className="textBox">{Detail && Detail.request && `${Detail.request.start_date}~${Detail.request.end_date}`}</div>
                     </div>
 
                     <div className="wrapper flex centering">
@@ -493,10 +520,12 @@ class Detail extends Component {
                     </div>
                     <div className="wrapper flex centering">
                       <div className="label">기간</div>
-                      <div className="textBox">~{Detail.term}</div>
+                      <div className="textBox">{`${Detail.start_date}~${Detail.end_date}`}</div>
                     </div>
+                    
                   </FormBox>
                 </div>
+
               </MainBox>
               <GoList>
                   <div className="wrapper" onClick={()=>{
@@ -506,9 +535,20 @@ class Detail extends Component {
                     <div className="text">목록으로</div>
                   </div>
               </GoList>
-              <ButtonWrapper>
-                {this.props.Detail&&this.props.Detail.request&&this.props.userInfo&&this.props.Detail.request.client_id == this.props.userInfo.uid ?<RedButton value={"아이템 구입"} onClick={this.props.purchase} isConfirm={false} />:null}
+              {
+                this.props.userInfo&& this.props.Detail&&
+                this.props.userInfo.uid == this.props.Detail.expert_id?
+                <ButtonWrapper>
+                <div className="btnbox">
+                <div className="_box">
+                  <RedButton value={"응답 수정"} onClick={()=>window.location.href=`/${Detail.type=="designer"?'modifyResponseToDesignerReq':'modifyResponseToMakerReq'}/${this.props.id}`} isConfirm={false} />
+                </div>
+                </div>
               </ButtonWrapper>
+                :
+                null
+              }
+
             </Wrapper>}
       </React.Fragment>
     );

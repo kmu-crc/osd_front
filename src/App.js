@@ -38,6 +38,9 @@ import ModifyrequestDesignerPage from "pages/ModifyRequestToDesignerPage";
 import ModifyrequestMakerPage from "pages/ModifyRequestToMakerPage";
 import ResponseToDesignerReqPage from "pages/ResponseToDesignerReqPage";
 import ResponseToMakerReqPage from "pages/ResponseToMakerReqPage";
+import modifyResponseToDesignerReqPage from "pages/ModifyResponseToDesignerReqPage";
+import modifyResponseToMakerReqPage from "pages/ModifyResponseToMakerReqPage";
+
 import { GalleryDetailPage } from "pages/GalleryPage/GalleryDetailPage";
 import FooterPrivacy from "components/Commons/FooterPrivacy"
 import FooterPara from "components/Commons/FooterTerm"
@@ -93,6 +96,9 @@ class App extends Component {
             <Route path="/ModifyrequestToMaker/:id" component={RequiresAuth(RequiresPayUser(ModifyrequestMakerPage))} />
             <Route path="/responseToDesignerReq/:pid" component={RequiresAuth(RequiresPayUser(ResponseToDesignerReqPage))} />
             <Route path="/responseToMakerReq/:id" component={RequiresAuth(RequiresPayUser(ResponseToMakerReqPage))} />
+            <Route path="/modifyResponseToDesignerReq/:id" component={RequiresAuth(RequiresPayUser(modifyResponseToDesignerReqPage))} />
+            <Route path="/modifyResponseToMakerReq/:id" component={RequiresAuth(RequiresPayUser(modifyResponseToMakerReqPage))} />
+
             {/* GALLERY */}
             <Route path="/createGallery" component={RequiresAuth(CreateGalleryPage)} />
             <Route path="/modifyGallery/:id" component={RequiresAuth(ModifyGalleryPage)} />

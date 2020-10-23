@@ -269,6 +269,7 @@ class ResponseToDesignerReq extends Component {
       personal: this.props.detail.personal || null,
       start_date:this.state.startDate,
       end_date:this.state.endDate,
+      client_id:this.props.detail.client_id,
     }
     // // 페이지이동
     this.props.CreateRequestRequest(data, this.props.token)
@@ -368,7 +369,7 @@ class ResponseToDesignerReq extends Component {
 
               <div className="wrapper flex centering">
                 <div className="label">기간</div>
-                <div className="textBox">~{detail.term}</div>
+                <div className="textBox">{detail.start_date}~{detail.end_date}</div>
               </div>
 
               <div className="wrapper flex centering">
