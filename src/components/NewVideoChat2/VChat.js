@@ -121,7 +121,7 @@ const VideosContainer = styled.div`
       flex-direction: row;
       bottom: 0px;
       .peer {
-        border: 1px solid white;
+        // border: 1px solid white;
         // width: 175px;
         // height: 105px;
         margin-right: 14px;

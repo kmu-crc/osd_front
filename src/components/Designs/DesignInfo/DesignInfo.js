@@ -924,19 +924,19 @@ class DesignInfo extends Component {
     openVideoChat = () => {
         if (this.checkMember() === false) return
 
-        const url = geturl() + `/vchat/${this.props.DesignDetail.uid}`
-        const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,top=100,left=100,width=1280,height=720,scrollbars=no`;
+        const url = geturl() + `/vchat2/${this.props.DesignDetail.uid}`
+        const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,top=100,left=100,width=${window.screen.width},height=${window.screen.height - 200},scrollbars=no`;
         this.vchatwindow = window.open(url, "vchat", options);
-        try {
-            if (this.state.liveVC === false) {
-                // if (this.props.userInfo.uid === this.props.DesignDetail.user_id) {
-                if (isOpen(Socket))
-                    Socket.emit('invited-member-to-vchat', { user_id: this.props.userInfo.uid, design_id: this.props.DesignDetail.uid })
-                // }
-            }
-        } catch (e) {
-            console.error(e);
-        }
+        //try {
+        //    if (this.state.liveVC === false) {
+        //        // if (this.props.userInfo.uid === this.props.DesignDetail.user_id) {
+        //        // if (isOpen(Socket))
+        //        // Socket.emit('invited-member-to-vchat', { user_id: this.props.userInfo.uid, design_id: this.props.DesignDetail.uid })
+        //        // }
+        //    }
+        //} catch (e) {
+        //    console.error(e);
+        //}
     }
 
     openChat = () => {
@@ -1250,7 +1250,7 @@ class DesignInfo extends Component {
             </MainBox>
 
             <ChatWrapper>
-                {/*<div
+                <div
                     className="notice"
                     title="디자인 멤버들과 화상회의를 시작합니다."
                     onClick={this.openVideoChat}>
@@ -1262,7 +1262,6 @@ class DesignInfo extends Component {
                         {"화상회의"}
                     </div>
                 </div>
-                */}
 
                 <div
                     className="notice"

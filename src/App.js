@@ -28,6 +28,7 @@ import FooterPara from "components/Commons/FooterTerm"
 import Notice from "components/Header/Notice";
 import CheckAuth from "containers/Commons/CheckAuth";
 import VChatPage from "pages/VChatPage";
+import VChat2Page from "pages/VChat2Page";
 import ChatPage from "pages/ChatPage";
 
 class App extends Component {
@@ -39,6 +40,7 @@ class App extends Component {
           {/* no client template */}
           <Route path="/chat/:id" component={CheckAuth(ChatPage)} />
           <Route path="/vchat/:id" component={CheckAuth(VChatPage)} />
+          <Route path="/vchat2/:id" component={CheckAuth(VChat2Page)} />
           {/* GROUP A - main */}
           <Route exact path="/" component={MainPage} />
           <Route path="/signup" component={SignUpPage} />
