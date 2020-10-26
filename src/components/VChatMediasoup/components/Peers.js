@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import * as appPropTypes from './appPropTypes';
 // import { Appear } from './transitions';
 import Peer from './Peer';
-
+import ScrollContainer from 'react-indiana-drag-scroll'
 import styled from 'styled-components'
 const DivPeers = styled.div`
 	width: 100%;
@@ -22,22 +22,24 @@ const DivPeers = styled.div`
 `;
 const Peers = ({ clicked, member, peers, activeSpeakerId }) => {
 	return (
-		<DivPeers>
-			{peers.map((peer) => {
-				return (
-					// <Appear key={peer.id} duration={1000}>
-					<div
-						className={`peer ${peer.id === activeSpeakerId ? 'active' : ""}`}
-						key={peer.id}>
-						<Peer
-							clicked={clicked}
-							info={member.find(mem => mem.user_id === parseInt(peer.id, 10))}
-							id={peer.id} />
-					</div>
-					// </Appear>
-				);
-			})}
-		</DivPeers>
+		<ScrollContainer vertical={false} className="inner scroll-container">
+			<DivPeers>
+				{peers.map((peer) => {
+					return (
+						// <Appear key={peer.id} duration={1000}>
+						<div
+							className={`peer ${peer.id === activeSpeakerId ? 'active' : ""}`}
+							key={peer.id}>
+							<Peer
+								clicked={clicked}
+								info={member.find(mem => mem.user_id === parseInt(peer.id, 10))}
+								id={peer.id} />
+						</div>
+						// </Appear>
+					);
+				})}
+			</DivPeers>
+		</ScrollContainer>
 	);
 };
 
