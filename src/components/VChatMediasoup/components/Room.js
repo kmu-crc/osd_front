@@ -204,7 +204,7 @@ const BottomContainer = styled.div`
 	}
 	.peers {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		width: 100%;
 		// border:1px solid skyblue;
 
