@@ -445,13 +445,13 @@ const Chatting = styled.div`
     top:0;
   }
   .downloadButton{
-    height:100%;
-    width:min-content;
-    position:absolute;
-    padding-right:5px;
-    padding-bottom:3px;
-    right:0;
-    top:0;
+    height: 100%;
+    width: min-content;
+    position: absolute;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    right: 0;
+    top: 0;
   }
 
   .chatBody{
@@ -834,14 +834,14 @@ class Chat extends React.Component {
     return (
       <Chatting>
         <div className="headerBox displayflex Hcentering Vcentering">
-          <div onClick={() => this.closeChat()} className="exitButton displayflex Hcentering Vcentering">
-            <Shape imgURL={exiticon} width={15} height={15} />
-          </div>
-          <div onClick={() => this.saveChatLog()} className="downloadButton displayflex Hcentering Vend">
-            <Shape imgURL={downicon} width={15} height={15} />
-          </div>
+          {/* <div onClick={() => this.closeChat()} className="exitButton displayflex Hcentering Vcentering"> */}
+          {/* <Shape imgURL={exiticon} width={15} height={15} /> */}
+          {/* </div> */}
           <div>
             <div className="fontRed">{(this.props.DesignDetail && this.props.DesignDetail.title) || "디자인"}</div>
+          </div>
+          <div onClick={() => this.saveChatLog()} className="downloadButton displayflex Hcentering Vend">
+            <Shape imgURL={downicon} width={25} height={25} />
           </div>
         </div>
 
