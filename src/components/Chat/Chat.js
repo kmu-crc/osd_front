@@ -702,6 +702,10 @@ class Chat extends React.Component {
         this.setState({ chat: copy });
       });
       this.socket.on('chat', data => {
+        const thumbnail = this.props.DesignDetail.member &&
+          this.props.DesignDetail.member.find(mem => mem.user_id === data.user_id) &&
+          this.props.DesignDetail.member.find(mem => mem.user_id === data.user_id).thumbnail.s_img;
+        data.thumbnail = thumbnail;
         // console.log('on chat', data);
         const copy = [...this.state.chat];
         copy.push(data);
