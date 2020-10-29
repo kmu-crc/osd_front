@@ -4,9 +4,9 @@ import host from "config";
 import { alert } from "components/Commons/Alert/Alert";
 import io from "socket.io-client";
 import who from "source/thumbnail.png";
-import { Icon } from "semantic-ui-react";
-import exiticon from "source/exiticon.svg";
+// import exiticon from "source/exiticon.svg";
 import downicon from "source/saveicon.svg";
+import { shift } from 'core-js/fn/array';
 
 const DateBox = styled.div`
   width:100%;
@@ -484,7 +484,7 @@ const Chatting = styled.div`
     justify-content:center;
     align-items:center;
     }
-  .chatSubmit{
+  .chatSubmit {
     background-color: red;
     box-shadow: none;
     border: none;
@@ -494,7 +494,10 @@ const Chatting = styled.div`
     margin-left: 12px;
     width: 64px;
     height: 50px; 
-    font-size:13px;
+    font-size: 13px;
+    &.disabled {
+      background-color: gray;
+    }
   }
   .chat-submit {  
     position: absolute;
@@ -610,11 +613,13 @@ const You = (data) => {
   </YouMessage>)
 };
 function isOpen(ws) { return ws.readyState === ws.OPEN }
+let keyShift = false;
+let keyEnter = false;
 class Chat extends React.Component {
   constructor(props) {
     super(props);
     // state
-    this.state = { page: 0, chat: [], newchat: null, }
+    this.state = { page: 0, chat: [], newchat: null, empty: true }
 
     // variable
     this.serviceIP = `${host}/webrtcPeerChat`;
@@ -625,6 +630,7 @@ class Chat extends React.Component {
     this.closeChat = this.closeChat.bind(this);
     this.requestChat = this.requestChat.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
+    this.writeMessage = this.writeMessage.bind(this);
 
   };
   componentDidMount() {
@@ -638,6 +644,30 @@ class Chat extends React.Component {
     window.addEventListener('load', () => {
       window.resizeTo(496, 650);
     }, false);
+    window.addEventListener('keydown', (e) => {
+      switch (e.key) {
+        case "Shitf":
+          keyShift = true;
+          console.log("message: shift: ", keyShift);
+          break;
+        case "Enter":
+          keyEnter = true;
+          break;
+        default: break;
+      }
+    });
+    window.addEventListener('keyup', (e) => {
+      switch (e.key) {
+        case "Shitf":
+          keyShift = false;
+          break;
+        case "Enter":
+          keyEnter = false;
+          break;
+        default: break;
+      }
+    });
+
 
     if (this.props.userInfo == null) {
       alert("사용자 정보가 없으면 입장하실 수 없습니다.");
@@ -752,6 +782,16 @@ class Chat extends React.Component {
       console.error(e);
     }
   };
+
+  _sendMessage = (message) => {
+    try {
+      if (isOpen(this.socket)) {
+        this.socket.emit("chat", { message: message });
+      }
+    } catch (e) {
+      console.error(e);
+    };
+  }
   sendMessage() {
     let message = document.getElementById('chat-input');
     if (message.value.trim() == "") { alert("내용을 입력해주세요"); return; }
@@ -768,11 +808,24 @@ class Chat extends React.Component {
     }
     message.value = null;
   };
-  sendMessageEnter(event) {
+  writeMessage(event) {
+    const target = event.target;
+    console.log("message: ", target.value);
+    // event.preventDefault();
+    // const keycode = event.keyCode;
+    // const target = event.target;
+    // // target.value = event.key
+    // console.log("message:", target, ",", keycode);
+    // if (event.keyCode === 13) {
+    //   return;
+    // } else {
+    // }
+  }
+  async sendMessageEnter(event) {
+    let message = document.getElementById('chat-input')
+    await console.log("message:", message.value)
     if (event.keyCode == 13 && !event.shiftKey) {
-      let message = document.getElementById('chat-input')
       if (message.value.trim() == "") return;
-      // console.log("message:", message.value)
       var str = document.getElementById("chat-input").value;
       str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
       document.getElementById("chat-input").value = str;
@@ -780,11 +833,9 @@ class Chat extends React.Component {
       try {
         if (isOpen(this.socket))
           this.socket.emit(
-            'chat', { message: str },
-            // 'chat', { message: message.value },
-            () => {
-              // console.log(`message : ${message.value}`)
-            });
+            'chat', { message: str },/* 'chat', { message: message.value },*/
+            () => {/*console.log(`message : ${message.value}`)*/ }
+          );
       } catch (e) {
         console.error(e);
       }
@@ -826,11 +877,17 @@ class Chat extends React.Component {
       }
     };
   }
+  componentDidUpdate(props, state) {
+    if (this.state.message !== state.message) {
+      console.log("message:", this.state.message);
+    }
+  }
   render() {
     let beforeChat = -1;
     let nowChat = -1;
     let beforeDate = new Date();
     let nowDate = new Date();
+    const { empty } = this.state;
     return (
       <Chatting>
         <div className="headerBox displayflex Hcentering Vcentering">
@@ -907,12 +964,34 @@ class Chat extends React.Component {
             placeholder="문자를 입력하세요.(줄바꿈: 쉬프트+엔터)"
             className='chatdata'
             autoComplete="off"
-            onKeyDown={this.sendMessageEnter}
+            onKeyDown={e => {
+              // send
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                const chatinput = document.getElementById('chat-input');
+                // console.log("message:", chatinput.value.trim() === "");
+                if (chatinput.value.trim() !== "") {
+                  this._sendMessage(chatinput.value);
+                  chatinput.value = "";
+                  this.setState({ empty: true });
+                }
+              }
+            }}
+            onChange={e => {
+              const chatinput = e.target;
+              this.setState({ empty: chatinput.value.trim().length > 0 ? false : true });
+            }}
             autoComplete="off"
           />
-          <button onClick={this.sendMessage} className="chatSubmit" id="chat-submit">
-            <div>보내기</div>
-          </button>
+
+          {empty ?
+            <button disabled className="chatSubmit disabled" id="chat-submit">
+              <div>보내기</div>
+            </button>
+            :
+            <button onClick={this.sendMessage} className="chatSubmit" id="chat-submit">
+              <div>보내기</div>
+            </button>}
         </div>
 
       </Chatting>);
