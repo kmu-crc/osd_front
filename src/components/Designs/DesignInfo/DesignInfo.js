@@ -670,6 +670,7 @@ const ChatWrapper = styled.div`
 
     .notice {
         position: relative;
+        curosr: pointer;
 
         span {
             position: absolute;
