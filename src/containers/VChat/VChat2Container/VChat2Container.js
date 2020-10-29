@@ -65,13 +65,10 @@ class VChat2Container extends Component {
         // window.history.back();
     }
     render() {
-        return this.state.valid &&
-            this.props.userInfo
-            ? <NewVChat
-                userInfo={this.props.userInfo}
-                design={this.state.design} />
-            : <div>
-                VALIDATING YOUR INFORMATION</div>
+        return this.state.valid && this.props.userInfo
+        
+            ? <NewVChat userInfo={this.props.userInfo} design={this.state.design} />
+            : <div> VALIDATING YOUR INFORMATION </div>
     }
 }
 

@@ -181,7 +181,7 @@ const MiddleContainer = styled.div`
 		z-index: 103;
 		width: 100%;
 		height: 100%;
-		object-fit: fill;
+		object-fit: contain;
 	}
 `;
 const BottomContainer = styled.div`
@@ -286,34 +286,7 @@ class Room extends React.Component {
 				</BottomContainer>
 
 
-			</RoomContainer>
-
-			// 	<ButtonBarContainer>
-			// 	</ButtonBarContainer>
-
-			// 	<ScreenContainer>
-			// 		{/* <video /> */}
-			// 	</ScreenContainer>
-			// 	<VideosContainer>
-			// 		{/* <Me /> */}
-			// 		{/* <div style={{ width: "25%", height: "25%" }}> */}
-			// 		{/* <Peers member={this.props.design.member} /> */}
-			// 		{/* </div> */}
-			// 		{/* <div style={{ width: "25%", height: "25%" }}> */}
-			// 		{/* <ChatInput /> */}
-			// 		{/* </div> */}
-			// 	</VideosContainer>
-
-			// 	<ReactTooltip
-			// 		type='light'
-			// 		effect='solid'
-			// 		delayShow={100}
-			// 		delayHide={100}
-			// 		delayUpdate={50}
-			// 	/>
-			// </VideoChatContainer>
-			//</React.Fragment>
-		);
+			</RoomContainer>);
 	}
 	clickedview = (stream) => {
 		if (this.video && stream) {
