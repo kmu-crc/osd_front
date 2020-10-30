@@ -341,6 +341,7 @@ const TwoSideBox = styled.div`
         display:none;
     }
 `;
+
 const ThreeSideBox = styled.div`
     margin-left: auto;
     display: flex;
