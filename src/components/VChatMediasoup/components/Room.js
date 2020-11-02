@@ -81,13 +81,14 @@ const MiddleContainer = styled.div`
 	height: 100%;
 	min-height: 250px;
 	color: white;
-	background-image: url(${props => props.bg.l_img});
 	background-size: cover;
 	background-position: center center;
+	background-image: url(${props => props.bg.m_img});
 	background-repeat: no-repeat;
 	position: relative;
 	margin: auto;
-	.pannel {
+
+	.panel {
 		z-index: 100;
 		position: absolute;
 		left: 0;
@@ -97,6 +98,7 @@ const MiddleContainer = styled.div`
 		background-color: rgba(255, 255, 255, 0.5);
 		opacity: .9;
 	}
+
 	video {
 		position: relative;
 		z-index: 103;
@@ -144,7 +146,7 @@ const BottomContainer = styled.div`
 class Room extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { h: window.innerHeight, share: false, }
+		this.state = { h: window.innerHeight, shareState: "off", }
 	}
 	render() {
 		// const { roomClient, room, me, amActiveSpeaker, onRoomLinkCopy } = this.props;
@@ -164,9 +166,11 @@ class Room extends React.Component {
 					<span className='txt'>채팅</span>
 				</div>
 
-				<div ref={(ref) => this.sharebtn = ref} className='btn share'>
+				<div className='btn share'
+					ref={ref => this.sharebtn = ref}
+				>
 					<span className='txt'>
-						{this.state.share ? "화면공유 종료" : "화면공유"}
+						{this.state.shareState === "on" ? "화면공유 종료" : "화면공유"}
 					</span>
 				</div>
 
@@ -177,7 +181,7 @@ class Room extends React.Component {
 
 			{/* middle */}
 			<MiddleContainer bg={this.props.design.img}>
-				<div className="pannel"></div>
+				<div className="panel"></div>
 				<video
 					muted
 					autoPlay
@@ -189,9 +193,9 @@ class Room extends React.Component {
 				<div className="me">
 					<Me
 						userInfo={this.props.userInfo}
-						shared={() => this.setState({ share: !this.state.share })}
-						share={this.state.share}
 						sharebtn={this.sharebtn}
+						shareState={this.state.shareState}
+						share={(shareState) => this.setState({ shareState: shareState })}
 						clicked={stream => this.clickedview(stream)}
 						thumbnail={this.props.userInfo.thumbnail} />
 				</div>
@@ -208,6 +212,9 @@ class Room extends React.Component {
 	}
 	clickedview = (stream) => {
 		if (this.video && stream) {
+			stream.addEventListener('inactive', () => {
+				this.video.style.display = "none";
+			})
 			this.video.srcObject = stream;
 		}
 	}
@@ -220,7 +227,7 @@ class Room extends React.Component {
 		this.setState({ h: window.innerHeight });
 		window.addEventListener("resize", () => {
 			this.setState({ h: window.innerHeight });
-		})
+		});
 	}
 	componentWillUnmount() {
 		window.removeEventListener("resize");

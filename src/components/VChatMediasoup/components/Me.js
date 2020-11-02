@@ -191,13 +191,6 @@ class Me extends React.Component {
 		else
 			changeWebcamState = 'unsupported';
 
-		let shareState;
-
-		if (Boolean(videoProducer) && videoProducer.type === 'share')
-			shareState = 'on';
-		else
-			shareState = 'off';
-
 		const videoVisible = Boolean(videoProducer) && !videoProducer.paused;
 
 		return (
@@ -303,23 +296,30 @@ class Me extends React.Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		// if (prevProps.videoProducer && prevProps.videoProducer.type === "share" &&
-		// 	this.props.videoProducer && this.props.videoProducer.type !== 'share') {
-		// 	alert("closed");
-		// }
+
+		const { videoProducer, } = this.props;
+
+		if (videoProducer && videoProducer.type === "share") {
+			videoProducer.track.onended = () => {
+				this.props.share && this.props.share("off");
+			}
+		}
 		if (prevProps.sharebtn != this.props.sharebtn && this.props.sharebtn != null) {
-			this.props.sharebtn.addEventListener('click', () => {
+			this.props.sharebtn.addEventListener('click', async () => {
 				if (this.props.me.shareInProgress || this.props.me.webcamInProgress) {
 					return;
 				}
-				const { share } = this.props;
-				if (share) {
+				const { shareState } = this.props;
+				if (shareState === "on") {
 					this.props.roomClient.disableShare();
-					// this.props.shared();
+					this.props.share && this.props.share("off");
 				}
 				else {
-					this.props.roomClient.enableShare();
-					// this.props.shared();
+					if (await this.props.roomClient.enableShare() === "cancelled") {
+						this.props.share && this.props.share("off");
+					} else {
+						this.props.share && this.props.share("on");
+					}
 				}
 			})
 		}

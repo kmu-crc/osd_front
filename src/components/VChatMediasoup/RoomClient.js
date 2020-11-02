@@ -1175,6 +1175,7 @@ export default class RoomClient {
 
 	async enableShare() {
 		logger.debug('enableShare()');
+		let cancelled;
 
 		if (this._shareProducer)
 			return;
@@ -1312,10 +1313,12 @@ export default class RoomClient {
 
 			if (track)
 				track.stop();
+			cancelled = "cancelled";
 		}
 
 		store.dispatch(
 			stateActions.setShareInProgress(false));
+		return cancelled;
 	}
 
 	async disableShare() {
@@ -2025,23 +2028,23 @@ export default class RoomClient {
 
 				this._sendTransport.on(
 					'produce', async ({ kind, rtpParameters, appData }, callback, errback) => {
-					try {
-						// eslint-disable-next-line no-shadow
-						const { id } = await this._protoo.request(
-							'produce',
-							{
-								transportId: this._sendTransport.id,
-								kind,
-								rtpParameters,
-								appData
-							});
+						try {
+							// eslint-disable-next-line no-shadow
+							const { id } = await this._protoo.request(
+								'produce',
+								{
+									transportId: this._sendTransport.id,
+									kind,
+									rtpParameters,
+									appData
+								});
 
-						callback({ id });
-					}
-					catch (error) {
-						errback(error);
-					}
-				});
+							callback({ id });
+						}
+						catch (error) {
+							errback(error);
+						}
+					});
 
 				this._sendTransport.on('producedata', async (
 					{
