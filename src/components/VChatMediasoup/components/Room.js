@@ -1,100 +1,21 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import ReactTooltip from 'react-tooltip';
-import classnames from 'classnames';
-import clipboardCopy from 'clipboard-copy';
-import * as appPropTypes from './appPropTypes';
-import { withRoomContext } from '../RoomContext';
-import * as requestActions from '../redux/requestActions';
+// import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+// import ReactTooltip from 'react-tooltip';
+// import classnames from 'classnames';
+// import clipboardCopy from 'clipboard-copy';
+// import * as appPropTypes from './appPropTypes';
+// import { withRoomContext } from '../RoomContext';
+// import * as requestActions from '../redux/requestActions';
 //  import { Appear } from './transitions';
 import Me from './Me';
-import ChatInput from './ChatInput';
 import Peers from './Peers';
 //  import Stats from './Stats';
 import Notifications from './Notifications';
 //  import NetworkThrottle from './NetworkThrottle';
 import styled from "styled-components";
-import host, { geturl } from "config"
+import { geturl } from "config"
 
-const VideoChatContainer = styled.div`
-  position: relative;
-  // background-color: black;
-  width: 100%; // ${props => props.w}px;
-	height: 100%; // 768px; // ${props => props.h}px;
-	*{
-		border: 1px solid red;
-	}
-`;
-const ScreenContainer = styled.div`
-  z-index: 200;
-  background-color: black;
-  color: white;
-  text-algin: center;
-  display: flex;
-  width: 100%;
-  height: 82%; //100%;
-  video {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-  .txt {
-    margin: auto;
-    font-size: 2rem;
-  }
-`;
-const VideosContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  // position: fixed;
-  position: absolute;
-  bottom: 10px;
-  left: 5px;
-  width: 1249px; //100%
-  background-color: transparent;
-
-  .me {
-    .share {
-      width: 120px;
-      height: 93px;
-    }
-  }
-  .others {
-    position: relative;
-    margin-left: 10px;
-    width: 980px;
-    .member-count {
-      margin-left: auto;
-      margin-top: 30px;
-      width: 72px;
-      height: 26px;
-      border-radius: 36px;
-      background-color: rgba(125, 125, 125, 0.5);
-      text-align: center;
-      color: white;
-      font-familiy: Noto Sans KR;
-      font-weight: 300;
-      font-size: 11px;
-      line-height: 15px;
-      padding: 5px 7px;
-    }
-    .inner {
-      width: 100%;
-      overflow: hidden;
-      position: absolute;
-      display: flex;
-      flex-direction: row;
-      bottom: 0px;
-      .peer {
-        // border: 1px solid white;
-        // width: 175px;
-        // height: 105px;
-        margin-right: 14px;
-      }
-    }
-  }
-`;
 
 const RoomContainer = styled.div`
 	position: relative;
@@ -135,7 +56,7 @@ const TopContainer = styled.div`
       padding: 8px 25px;
     }
     &.share {
-      width: 103px;
+      width: max-content;
       height: 35px;
       border-radius: 36px;
       background: rgba(125, 125, 125, 0.5);
@@ -226,67 +147,64 @@ class Room extends React.Component {
 		this.state = { h: window.innerHeight, share: false, }
 	}
 	render() {
-		const {
-			roomClient,
-			room,
-			me,
-			amActiveSpeaker,
-			onRoomLinkCopy
-		} = this.props;
-		console.log("Room:", this.props);
+		// const { roomClient, room, me, amActiveSpeaker, onRoomLinkCopy } = this.props;
+		console.log("Room:", this.state, this.props);
 
-		return (// <React.Fragment>
-			<RoomContainer h={this.state.h || window.innerHeight}>
+		return (<RoomContainer h={this.state.h || window.innerHeight}>
+			{/* noti */}
+			<Notifications />
 
-				<Notifications />
+			{/* top */}
+			<TopContainer>
+				<div className='btn chat' onClick={() => {
+					const url = geturl() + `/chat/${this.props.design.uid} `
+					const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`
+					window.open(url, "chat", options)
+				}}>
+					<span className='txt'>채팅</span>
+				</div>
 
-				<TopContainer>
-					<div className='btn chat' onClick={() => {
-						const url = geturl() + `/chat/${this.props.design.uid} `
-						const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`
-						window.open(url, "chat", options)
-					}}>
-						<span className='txt'>채팅</span>
-					</div>
-					<div ref={(ref) => this.sharebtn = ref} className='btn share'>
-						<span className='txt'>화면공유</span>
-					</div>
-					<div className='btn exit' onClick={() => { window.open('', '_self').close() }}>
-						<span className='txt'>나가기</span>
-					</div>
-				</TopContainer>
+				<div ref={(ref) => this.sharebtn = ref} className='btn share'>
+					<span className='txt'>
+						{this.state.share ? "화면공유 종료" : "화면공유"}
+					</span>
+				</div>
 
+				<div className='btn exit' onClick={() => { window.open('', '_self').close() }}>
+					<span className='txt'>나가기</span>
+				</div>
+			</TopContainer>
 
-				<MiddleContainer bg={this.props.design.img}>
-					<div className="pannel"></div>
-					<video
-						muted
-						autoPlay
-						ref={(ref) => this.video = ref} />
-				</MiddleContainer>
+			{/* middle */}
+			<MiddleContainer bg={this.props.design.img}>
+				<div className="pannel"></div>
+				<video
+					muted
+					autoPlay
+					ref={(ref) => this.video = ref} />
+			</MiddleContainer>
 
-
-				<BottomContainer>
-					<div className="me">
-						<Me
-							userInfo={this.props.userInfo}
-							share={this.state.share}
-							sharebtn={this.sharebtn}
+			{/* bottom */}
+			<BottomContainer>
+				<div className="me">
+					<Me
+						userInfo={this.props.userInfo}
+						shared={() => this.setState({ share: !this.state.share })}
+						share={this.state.share}
+						sharebtn={this.sharebtn}
+						clicked={stream => this.clickedview(stream)}
+						thumbnail={this.props.userInfo.thumbnail} />
+				</div>
+				<div className="peers">
+					<div>
+						<Peers
 							clicked={(stream) => this.clickedview(stream)}
-							thumbnail={this.props.userInfo.thumbnail} />
+							member={this.props.design.member} />
 					</div>
-					<div className="peers">
-						{/* <div className="count"><p>1/1</p></div> */}
-						<div>
-							<Peers
-								clicked={(stream) => this.clickedview(stream)}
-								member={this.props.design.member} />
-						</div>
-					</div>
-				</BottomContainer>
+				</div>
+			</BottomContainer>
 
-
-			</RoomContainer>);
+		</RoomContainer>);
 	}
 	clickedview = (stream) => {
 		if (this.video && stream) {

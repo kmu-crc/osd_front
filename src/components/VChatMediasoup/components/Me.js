@@ -9,7 +9,7 @@ import styled from 'styled-components';
 // import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import * as cookiesManager from '../cookiesManager';
-import * as appPropTypes from './appPropTypes';
+// import * as appPropTypes from './appPropTypes';
 
 // ICONS
 import icon_mic_black_on from 'resources/images/icon_mic_black_on.svg';
@@ -29,27 +29,15 @@ const DivME = styled.div`
 	height: 100%;
 	position: relative;
 	padding: 0.15rem;
-	.peerName {
-		width: 250px;
-		height: 250px;
-		margin: auto;
-		background-color: #36454f;
-		p {
-			width: 200px;
-			color: white;
-			font-size: 1.75rem;
-		}
-	}
 `;
 const Thumbnail = styled.div`
 	position: absolute;
 	right: 1rem;
-	// top: 140px;
 	bottom: 1rem;
-	// border: 1px solid white;
 	border-radius: 100%;
 	width: 50px;
 	height: 50px;
+	background-color: white;
 	background-size: cover;
 	background-position: center center;
 	background-Image: url(${props => props.img});
@@ -155,7 +143,6 @@ const Control = styled.div`
 			}
 		}
 	}
-}
 `;
 
 class Me extends React.Component {
@@ -213,10 +200,6 @@ class Me extends React.Component {
 
 		const videoVisible = Boolean(videoProducer) && !videoProducer.paused;
 
-		// let tip;
-
-		console.log("Me.js:", this.props);
-
 		return (
 			<DivME
 				// style
@@ -259,41 +242,38 @@ class Me extends React.Component {
 
 					</Control> : null}
 
-
-
 				<Thumbnail img={this.props.thumbnail.s_img}></Thumbnail>
-				{videoProducer ?
-					<div
-						onClick={() => {
-							if (videoProducer && videoProducer.track) {
-								const stream = new MediaStream;
-								stream.addTrack(videoProducer.track);
-								this.props.clicked(stream);
-							}
-						}}
-					>
+				<div
+					onClick={() => {
+						if (videoProducer && videoProducer.track) {
+							const stream = new MediaStream;
+							stream.addTrack(videoProducer.track);
+							this.props.clicked(stream);
+						}
+					}}
+				>
 
-						<PeerView
-							isMe
-							peer={me}
-							audioProducerId={audioProducer ? audioProducer.id : null}
-							videoProducerId={videoProducer ? videoProducer.id : null}
-							audioRtpParameters={audioProducer ? audioProducer.rtpParameters : null}
-							videoRtpParameters={videoProducer ? videoProducer.rtpParameters : null}
-							audioTrack={audioProducer ? audioProducer.track : null}
-							videoTrack={videoProducer ? videoProducer.track : null}
-							videoVisible={videoVisible}
-							audioCodec={audioProducer ? audioProducer.codec : null}
-							videoCodec={videoProducer ? videoProducer.codec : null}
-							audioScore={audioProducer ? audioProducer.score : null}
-							videoScore={videoProducer ? videoProducer.score : null}
-							faceDetection={faceDetection}
-							onChangeDisplayName={(displayName) => { roomClient.changeDisplayName(displayName); }}
-							onChangeMaxSendingSpatialLayer={(spatialLayer) => { roomClient.setMaxSendingSpatialLayer(spatialLayer); }}
-							onStatsClick={onSetStatsPeerId}
-						/>
-					</div>
-					: <div className="peerName"><p>{this.props.userInfo.nickName}</p></div>}
+					<PeerView
+						isMe
+						peer={me}
+						audioProducerId={audioProducer ? audioProducer.id : null}
+						videoProducerId={videoProducer ? videoProducer.id : null}
+						audioRtpParameters={audioProducer ? audioProducer.rtpParameters : null}
+						videoRtpParameters={videoProducer ? videoProducer.rtpParameters : null}
+						audioTrack={audioProducer ? audioProducer.track : null}
+						videoTrack={videoProducer ? videoProducer.track : null}
+						videoVisible={videoVisible}
+						audioCodec={audioProducer ? audioProducer.codec : null}
+						videoCodec={videoProducer ? videoProducer.codec : null}
+						audioScore={audioProducer ? audioProducer.score : null}
+						videoScore={videoProducer ? videoProducer.score : null}
+						faceDetection={faceDetection}
+						onChangeDisplayName={(displayName) => { roomClient.changeDisplayName(displayName); }}
+						onChangeMaxSendingSpatialLayer={(spatialLayer) => { roomClient.setMaxSendingSpatialLayer(spatialLayer); }}
+						// onStatsClick={onSetStatsPeerId}
+						nick_name={this.props.userInfo.nickName}
+					/>
+				</div>
 
 				<ReactTooltip
 					type='light'
@@ -302,7 +282,7 @@ class Me extends React.Component {
 					delayHide={100}
 					delayUpdate={50}
 				/>
-			</DivME>
+			</DivME >
 		);
 	}
 
@@ -323,6 +303,10 @@ class Me extends React.Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		// if (prevProps.videoProducer && prevProps.videoProducer.type === "share" &&
+		// 	this.props.videoProducer && this.props.videoProducer.type !== 'share') {
+		// 	alert("closed");
+		// }
 		if (prevProps.sharebtn != this.props.sharebtn && this.props.sharebtn != null) {
 			this.props.sharebtn.addEventListener('click', () => {
 				if (this.props.me.shareInProgress || this.props.me.webcamInProgress) {
@@ -331,14 +315,18 @@ class Me extends React.Component {
 				const { share } = this.props;
 				if (share) {
 					this.props.roomClient.disableShare();
+					// this.props.shared();
 				}
 				else {
 					this.props.roomClient.enableShare();
+					// this.props.shared();
 				}
 			})
 		}
-		if (!prevProps.me.displayNameSet && this.props.me.displayNameSet)
+
+		if (!prevProps.me.displayNameSet && this.props.me.displayNameSet) {
 			ReactTooltip.hide(this._rootNode);
+		}
 	}
 }
 
@@ -355,29 +343,22 @@ class Me extends React.Component {
 
 const mapStateToProps = (state) => {
 	const producersArray = Object.values(state.producers);
-	const audioProducer =
-		producersArray.find((producer) => producer.track.kind === 'audio');
-	const videoProducer =
-		producersArray.find((producer) => producer.track.kind === 'video');
+	const audioProducer = producersArray.find((producer) => producer.track.kind === 'audio');
+	const videoProducer = producersArray.find((producer) => producer.track.kind === 'video');
 
 	return {
 		connected: state.room.state === 'connected',
 		me: state.me,
 		audioProducer: audioProducer,
 		videoProducer: videoProducer,
-		faceDetection: state.room.faceDetection
+		// faceDetection: state.room.faceDetection
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		onSetStatsPeerId: (peerId) => dispatch(stateActions.setRoomStatsPeerId(peerId))
-	};
-};
+const mapDispatchToProps = (dispatch) => ({
+	// onSetStatsPeerId: (peerId) => dispatch(stateActions.setRoomStatsPeerId(peerId))
+});
 
-const MeContainer = withRoomContext(connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Me));
+const MeContainer = withRoomContext(connect(mapStateToProps, mapDispatchToProps)(Me));
 
 export default MeContainer;

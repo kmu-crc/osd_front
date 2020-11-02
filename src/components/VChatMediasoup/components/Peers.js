@@ -12,6 +12,7 @@ const DivPeers = styled.div`
 	display: flex;
 	flex-direction: row;
 	.peer{
+		margin: 0;
 		width: 250px;
 		height: 250px;
 		border: 1px solid transparent;
@@ -20,27 +21,23 @@ const DivPeers = styled.div`
 		}
 	}
 `;
+
 const Peers = ({ clicked, member, peers, activeSpeakerId }) => {
-	return (
-		<ScrollContainer vertical={false} className="inner scroll-container">
-			<DivPeers>
-				{peers.map((peer) => {
-					return (
-						// <Appear key={peer.id} duration={1000}>
-						<div
-							className={`peer ${peer.id === activeSpeakerId ? 'active' : ""}`}
-							key={peer.id}>
-							<Peer
-								clicked={clicked}
-								info={member.find(mem => mem.user_id === parseInt(peer.id, 10))}
-								id={peer.id} />
-						</div>
-						// </Appear>
-					);
-				})}
-			</DivPeers>
-		</ScrollContainer>
-	);
+	console.log("peers:", peers);
+	return (<ScrollContainer vertical={false} className="inner scroll-container">
+		<DivPeers>
+			{peers.map((peer) => {
+				return (<div
+					className={`peer ${peer.id === activeSpeakerId ? 'active' : ""}`}
+					key={peer.id}>
+					<Peer
+						clicked={clicked}
+						info={member.find(mem => mem.user_id === parseInt(peer.id, 10))}
+						id={peer.id} />
+				</div>);
+			})}
+		</DivPeers>
+	</ScrollContainer>);
 };
 
 Peers.propTypes =

@@ -631,6 +631,11 @@ class Chat extends React.Component {
         //   // document.getElementById('scroll').style.justifyContent = "flex-end";
         //   // if (this.state.isMore) {
         await this.requestChat();
+        setTimeout(() => {
+          let scrollbar = document.getElementById("scroll");
+          scrollbar.scrollTop = scrollbar.scrollHeight;
+
+        }, 500); // 0.5sec.
         //   // }
       } else {
         //   // document.getElementById('scroll').style.justifyContent = "flex-start";

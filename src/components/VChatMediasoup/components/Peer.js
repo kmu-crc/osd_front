@@ -8,7 +8,8 @@ import PeerView from './PeerView';
 import styled from "styled-components";
 
 import who from "source/thumbnail.png";
-
+import icon_remote_mic_white_off from 'resources/images/icon_remote_mic_white_off.svg';
+import icon_remote_webcam_white_off from 'resources/images/icon_remote_webcam_white_off.svg';
 const DivPeer = styled.div`
 	width: 250px;
 	height: 250px;
@@ -21,21 +22,64 @@ const DivPeer = styled.div`
 		height: 250px;
 		margin: auto;
 		background-color: #36454f;
+		display: flex;
+		justify-content: center;
+
 		p {
-			width: 200px;
+			text-align: center;
+			margin: auto;
+			width: 215px;
+
+			word-wrap: break-word;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden
+			
 			color: white;
 			font-size: 1.75rem;
 		}
+	}
+
+	.indicators {
+		position: absolute;
+		z-index: 10;
+		top: 0;
+		right: 0;
+		width: 150px;
+		display: flex;
+		flex-direction:; row;
+		justify-content: flex-end;
+		align-items: center;
+
+		.icon {
+			flex: 0 0 auto;
+			margin: 4px;
+			margin-left: 0;
+			width: 32px;
+			height: 32px;
+			background-position: center;
+			background-size: 75%;
+			background-repeat: no-repeat;
+			transition-property: opacity;
+			transition-duration: 0.15s;
+			&.mic-off {
+				background-image: url(${icon_remote_mic_white_off});
+			}
+
+			&.webcam-off {
+				background-image: url(${icon_remote_webcam_white_off});
+			}
+		}	
 	}
 `;
 const Thumbnail = styled.div`
 	position: absolute;
 	right: 1rem;
 	bottom: 1rem;
-	// border: 1px solid white;
 	border-radius: 100%;
 	width: 50px;
 	height: 50px;
+	background-color: white;
 	background-size: cover;
 	background-position: center center;
 	background-Image: url(${props => props.img});
@@ -64,55 +108,58 @@ const Peer = (props) => {
 		!videoConsumer.locallyPaused &&
 		!videoConsumer.remotelyPaused
 	);
+
 	return (
 		<DivPeer>
+
 			<Thumbnail img={(info && info.thumbnail && info.thumbnail.s_img) || who}></Thumbnail>
+
 			<div className='indicators'>
 				{!audioEnabled && <div className='icon mic-off' />}
 				{!videoConsumer && <div className='icon webcam-off' />}
 			</div>
-			{videoConsumer ?
-				<div
-					onClick={() => {
-						if (videoConsumer && videoConsumer.track) {
-							const stream = new MediaStream;
-							stream.addTrack(videoConsumer.track)
-							props.clicked(stream);
-						}
-					}}>
 
-					<PeerView
-						peer={peer}
-						audioConsumerId={audioConsumer ? audioConsumer.id : null}
-						videoConsumerId={videoConsumer ? videoConsumer.id : null}
-						audioRtpParameters={audioConsumer ? audioConsumer.rtpParameters : null}
-						videoRtpParameters={videoConsumer ? videoConsumer.rtpParameters : null}
-						consumerSpatialLayers={videoConsumer ? videoConsumer.spatialLayers : null}
-						consumerTemporalLayers={videoConsumer ? videoConsumer.temporalLayers : null}
-						consumerCurrentSpatialLayer={videoConsumer ? videoConsumer.currentSpatialLayer : null}
-						consumerCurrentTemporalLayer={videoConsumer ? videoConsumer.currentTemporalLayer : null}
-						consumerPreferredSpatialLayer={videoConsumer ? videoConsumer.preferredSpatialLayer : null}
-						consumerPreferredTemporalLayer={videoConsumer ? videoConsumer.preferredTemporalLayer : null}
-						consumerPriority={videoConsumer ? videoConsumer.priority : null}
-						audioTrack={audioConsumer ? audioConsumer.track : null}
-						videoTrack={videoConsumer ? videoConsumer.track : null}
-						audioMuted={audioMuted}
-						videoVisible={videoVisible}
-						videoMultiLayer={videoConsumer && videoConsumer.type !== 'simple'}
-						audioCodec={audioConsumer ? audioConsumer.codec : null}
-						videoCodec={videoConsumer ? videoConsumer.codec : null}
-						audioScore={audioConsumer ? audioConsumer.score : null}
-						videoScore={videoConsumer ? videoConsumer.score : null}
-						faceDetection={faceDetection}
-						onChangeVideoPreferredLayers={(spatialLayer, temporalLayer) => { roomClient.setConsumerPreferredLayers(videoConsumer.id, spatialLayer, temporalLayer); }}
-						onChangeVideoPriority={(priority) => { roomClient.setConsumerPriority(videoConsumer.id, priority); }}
-						onRequestKeyFrame={() => { roomClient.requestConsumerKeyFrame(videoConsumer.id); }}
-						onStatsClick={onSetStatsPeerId}
-					/>
-				</div>
-				: <div className="peerName">
-					<p>{info.nick_name}</p>
-				</div>}
+			<div
+				onClick={() => {
+					if (videoConsumer && videoConsumer.track) {
+						const stream = new MediaStream;
+						stream.addTrack(videoConsumer.track)
+						props.clicked(stream);
+					}
+				}}>
+
+				<PeerView
+					peer={peer}
+					audioConsumerId={audioConsumer ? audioConsumer.id : null}
+					videoConsumerId={videoConsumer ? videoConsumer.id : null}
+					audioRtpParameters={audioConsumer ? audioConsumer.rtpParameters : null}
+					videoRtpParameters={videoConsumer ? videoConsumer.rtpParameters : null}
+					consumerSpatialLayers={videoConsumer ? videoConsumer.spatialLayers : null}
+					consumerTemporalLayers={videoConsumer ? videoConsumer.temporalLayers : null}
+					consumerCurrentSpatialLayer={videoConsumer ? videoConsumer.currentSpatialLayer : null}
+					consumerCurrentTemporalLayer={videoConsumer ? videoConsumer.currentTemporalLayer : null}
+					consumerPreferredSpatialLayer={videoConsumer ? videoConsumer.preferredSpatialLayer : null}
+					consumerPreferredTemporalLayer={videoConsumer ? videoConsumer.preferredTemporalLayer : null}
+					consumerPriority={videoConsumer ? videoConsumer.priority : null}
+					audioTrack={audioConsumer ? audioConsumer.track : null}
+					videoTrack={videoConsumer ? videoConsumer.track : null}
+					audioMuted={audioMuted}
+					audioEnabled={audioEnabled}
+					videoVisible={videoVisible}
+					videoMultiLayer={videoConsumer && videoConsumer.type !== 'simple'}
+					audioCodec={audioConsumer ? audioConsumer.codec : null}
+					videoCodec={videoConsumer ? videoConsumer.codec : null}
+					audioScore={audioConsumer ? audioConsumer.score : null}
+					videoScore={videoConsumer ? videoConsumer.score : null}
+					faceDetection={faceDetection}
+					onChangeVideoPreferredLayers={(spatialLayer, temporalLayer) => { roomClient.setConsumerPreferredLayers(videoConsumer.id, spatialLayer, temporalLayer); }}
+					onChangeVideoPriority={(priority) => { roomClient.setConsumerPriority(videoConsumer.id, priority); }}
+					onRequestKeyFrame={() => { roomClient.requestConsumerKeyFrame(videoConsumer.id); }}
+					onStatsClick={onSetStatsPeerId}
+					nick_name={info.nick_name}
+				/>
+			</div>
+				
 		</DivPeer>
 	);
 };
@@ -137,7 +184,6 @@ const mapStateToProps = (state, { id }) => {
 		consumersArray.find((consumer) => consumer.track.kind === 'audio');
 	const videoConsumer =
 		consumersArray.find((consumer) => consumer.track.kind === 'video');
-
 	return {
 		peer,
 		audioConsumer,

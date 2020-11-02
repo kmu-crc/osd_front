@@ -13,7 +13,6 @@ import * as utils from './utils';
 import deviceInfo from './deviceInfo';
 import RoomClient from './RoomClient';
 import RoomContext from './RoomContext';
-// import * as cookiesManager from './cookiesManager';
 import * as stateActions from './redux/stateActions';
 import reducers from './redux/reducers';
 import Room from './components/Room';
@@ -48,20 +47,7 @@ async function run(props) {
   const forceVP9 = urlParser.query.forceVP9 === 'true';
   const svc = urlParser.query.svc;
   const datachannel = urlParser.query.datachannel !== 'false';
-  const info = urlParser.query.info === 'true';
-  const faceDetection = urlParser.query.faceDetection === 'true';
   const externalVideo = urlParser.query.externalVideo === 'true';
-  const throttleSecret = urlParser.query.throttleSecret;
-
-  if (info) {
-    // eslint-disable-next-line require-atomic-updates
-    window.SHOW_INFO = true;
-  }
-
-  if (throttleSecret) {
-    // eslint-disable-next-line require-atomic-updates
-    window.NETWORK_THROTTLE_SECRET = throttleSecret;
-  }
 
   // Get the effective/shareable Room URL.
   const roomUrlParser = new UrlParse(window.location.href, true);
@@ -80,10 +66,6 @@ async function run(props) {
       case 'forceTcp':
       case 'svc':
       case 'datachannel':
-      case 'info':
-      case 'faceDetection':
-      case 'externalVideo':
-      case 'throttleSecret':
         break;
       default:
         delete roomUrlParser.query[key];
@@ -111,8 +93,8 @@ async function run(props) {
   store.dispatch(
     stateActions.setRoomUrl(roomUrl));
 
-  store.dispatch(
-    stateActions.setRoomFaceDetection(faceDetection));
+  // store.dispatch(
+  // stateActions.setRoomFaceDetection(faceDetection));
 
   store.dispatch(
     stateActions.setMe({ peerId, displayName, displayNameSet, device }));
@@ -149,10 +131,10 @@ async function run(props) {
   );
 }
 const TIMEOUT_SECOND = 1000;
+
 export default class NewVChat extends React.Component {
   componentDidMount() {
     domready(async () => {
-
       await utils.initialize();
       // setTimeout(() => {
       await run(this.props);
@@ -188,22 +170,17 @@ export default class NewVChat extends React.Component {
 // NOTE: Debugging stuff.
 window.__sendSdps = function () {
   logger.warn('>>> send transport local SDP offer:');
-  logger.warn(
-    roomClient._sendTransport._handler._pc.localDescription.sdp);
-
+  logger.warn(roomClient._sendTransport._handler._pc.localDescription.sdp);
   logger.warn('>>> send transport remote SDP answer:');
-  logger.warn(
-    roomClient._sendTransport._handler._pc.remoteDescription.sdp);
+  logger.warn(roomClient._sendTransport._handler._pc.remoteDescription.sdp);
 };
 window.__recvSdps = function () {
   logger.warn('>>> recv transport remote SDP offer:');
-  logger.warn(
-    roomClient._recvTransport._handler._pc.remoteDescription.sdp);
-
+  logger.warn(roomClient._recvTransport._handler._pc.remoteDescription.sdp);
   logger.warn('>>> recv transport local SDP answer:');
-  logger.warn(
-    roomClient._recvTransport._handler._pc.localDescription.sdp);
+  logger.warn(roomClient._recvTransport._handler._pc.localDescription.sdp);
 };
+
 let dataChannelTestInterval = null;
 window.__startDataChannelTest = function () {
   let number = 0;
@@ -234,17 +211,14 @@ window.__testSctp = async function ({ timeout = 100, bot = false } = {}) {
 
   if (!bot) {
     await window.CLIENT.enableChatDataProducer();
-
     dp = window.CLIENT._chatDataProducer;
   }
   else {
     await window.CLIENT.enableBotDataProducer();
-
     dp = window.CLIENT._botDataProducer;
   }
 
-  logger.warn(
-    '<<< testSctp: DataProducer created [bot:%s, streamId:%d, readyState:%s]',
+  logger.warn('<<< testSctp: DataProducer created [bot:%s, streamId:%d, readyState:%s]',
     bot ? 'true' : 'false',
     dp.sctpStreamParameters.streamId,
     dp.readyState);
@@ -258,14 +232,10 @@ window.__testSctp = async function ({ timeout = 100, bot = false } = {}) {
   }
   else {
     dp.on('open', () => {
-      logger.warn(
-        '<<< testSctp: DataChannel open [streamId:%d]',
+      logger.warn('<<< testSctp: DataChannel open [streamId:%d]',
         dp.sctpStreamParameters.streamId);
-
       send();
     });
   }
-
   setTimeout(() => window.__testSctp({ timeout, bot }), timeout);
 };
-
