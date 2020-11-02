@@ -207,76 +207,82 @@ const OneSideBox = styled.div`
     }
 `
 const TwoSideBox = styled.div`
-min-width:165px;
-max-height:170px;
-margin-top:50px;
-margin-left:20px;
-.countBox{
-
-}
-.explainBox{
-    *{
-        color:#707070;
+    min-width:165px;
+    max-height:170px;
+    margin-top:50px;
+    margin-left:20px;
+    .countBox{
     }
-    width: ${props => props.w}px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content:space-between;
-    .creater {
-        width: max-content;
-        height: 25px;
-        font-size: 17px;
-        font-weight: 500;
-        line-height: 25px;
-        text-align: left;
-        font-family: Noto Sans KR;
-    }
-    .explanationRegion{
-        display: flex;
-        height: 90px;
-        font-size: 17px;
-        color: #707070;
-        line-height: 30px;
-        .explain-text {
-            width:${props => props.w}px;
-                    height: 100%;
-                    font-size: 20px;
-                    font-weight: 200;
-                    font-family: Noto Sans KR;
-                    line-height: 30px;
-                    color: #707070;
-    
-                    white-space: nowrap; 
-                    overflow: hidden; 
-                    text-overflow: ellipsis; 
-                    white-space: normal; 
-                    text-align: left; 
-                    word-wrap: break-word; 
-                    display: -webkit-box; 
-                    -webkit-line-clamp: 3; 
-                    -webkit-box-orient: vertical;
-        }
-    }
-    .count-box{
-        width:200px;
-        display:flex;
-        align-items:center;
-        text-align:left;
-        font-weight:500;
-        .icon-wrapper{
-            display:flex;
-            margin-right:20px;
-            align-items:center;
-        }
-        .label{
+    .explainBox{
+        *{
             color:#707070;
-            margin-left:5px;
-            width:max-content;
-            font-size:15px;
+        }
+        width: ${props => props.w}px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content:space-between;
+        .creater {
+            width: max-content;
+            height: 25px;
+            font-size: 17px;
+            font-weight: 500;
+            line-height: 25px;
+            text-align: left;
+            font-family: Noto Sans KR;
+        }
+        .explanationRegion{
+            width: 100%;
+            display: flex;
+            height: 90px;
+            font-size: 17px;
+            color: #707070;
+            line-height: 30px;
+            cursor: default;
+            
+            p {
+                overflow-y: auto;
+                overflow-x: hidden;
+                width: 100%;
+                word-wrap: break-word;
+
+                font-size: 20px;
+                font-weight: 300;
+                font-family: Noto Sans KR;
+                line-height: 30px;
+                color: #707070;
+
+                :hover {
+                    background-color: #EDEDED;
+                }
+                ::-webkit-scrollbar {
+                    position: absolute;
+                    width: 3px;
+                }
+                ::-webkit-scrollbar-thumb {
+                    background: #707070 !important;
+                }
+            }
+        } 
+        .count-box{
+            width:200px;
+            display:flex;
+            align-items:center;
+            text-align:left;
+            font-weight:500;
+            .icon-wrapper{
+                display:flex;
+                margin-right:20px;
+                align-items:center;
+            }
+            .label{
+                color:#707070;
+                margin-left:5px;
+                width:max-content;
+                font-size:15px;
+            }
         }
     }
-}
 
     @media only screen and (min-width : ${opendesign_style.resolutions.MediumMinWidth}px) 
     and (max-width : ${1024}px) {
@@ -723,8 +729,7 @@ class DesignerPageHeader extends Component {
                                     <CategoryLabel>{DesignerDetail.categoryName}</CategoryLabel>
                                     : null}
                                 <div className="explanationRegion">
-                                    <div className="explain-text">
-                                        {MypageInfo.about_me}</div>
+                                    <p>{MypageInfo.about_me}</p>
                                 </div>
                                 <div className="count-box">
                                     <div className="icon-wrapper">

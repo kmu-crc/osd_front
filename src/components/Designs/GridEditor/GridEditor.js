@@ -121,8 +121,14 @@ class GridEditor extends Component {
         window.removeEventListener("scroll", this.handleScroll, true);
     }
     componentDidMount() {
+        console.log('grid-editor:', this.grid);
         window.addEventListener("resize", this.handleResize, true);
         window.addEventListener("scroll", this.handleScroll, true);
+        // if (this.grid) {
+        // console.log('grid-editor:', 'init');
+        // this.grid.current.addEventListener("scroll", this.handleScroll, true);
+        // }
+        // else
     }
     handleScroll(event) {
         if (this.grid && event.target.scrollTop !== 0) {
@@ -266,13 +272,13 @@ class GridEditor extends Component {
                         {left ? <LeftWhitePane
                             width={138} height={h}
                             background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
-                                <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} />
+                            <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} />
                         </LeftWhitePane> : null}
 
                         {right ? <RightWhitePane
                             width={138} height={h} right={0}
                             background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
-                                <Arrow angle="180deg" c gap={gap} right={50} onClick={this.ScrollRight} />
+                            <Arrow angle="180deg" c gap={gap} right={50} onClick={this.ScrollRight} />
                         </RightWhitePane> : null}
 
                         {editor && newcard
@@ -312,7 +318,7 @@ class GridEditor extends Component {
                                 close={this.CloseEditStep} />}
 
                         <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
-                            <GridEditorWrapper ref={this.grid}>
+                            <GridEditorWrapper onScroll={() => console.log('grid-editor: scroll')} ref={this.grid}>
                                 <div style={{ width: window.innerWidth + "px" }} className="Editor" ref={this.temp}>
                                     {/* ------------단계 ------------*/}
                                     {DesignDetailStep && DesignDetailStep.length > 0 &&

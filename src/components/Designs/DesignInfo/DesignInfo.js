@@ -272,6 +272,39 @@ const TwoSideBox = styled.div`
             -webkit-line-clamp: 3; 
             -webkit-box-orient: vertical;
         }
+        .explanationRegion{
+            width: 100%;
+            display: flex;
+            height: 90px;
+            font-size: 17px;
+            color: #707070;
+            line-height: 30px;
+            cursor: default;
+            
+            p {
+                overflow-y: auto;
+                overflow-x: hidden;
+                width: 100%;
+                word-wrap: break-word;
+
+                font-size: 20px;
+                font-weight: 300;
+                font-family: Noto Sans KR;
+                line-height: 30px;
+                color: #707070;
+
+                :hover {
+                    background-color: #EDEDED;
+                }
+
+                ::-webkit-scrollbar {
+                    position: absolute;
+                    width: 3px;
+                }
+                ::-webkit-scrollbar-thumb {
+                    background: #707070 !important;
+                }
+            }
     }
 
 
@@ -670,8 +703,7 @@ const ChatWrapper = styled.div`
 
     .notice {
         position: relative;
-        curosr: pointer;
-
+        cursor: pointer;
         span {
             position: absolute;
             background-color: red;
@@ -926,7 +958,9 @@ class DesignInfo extends Component {
         if (this.checkMember() === false) return
 
         const url = geturl() + `/vchat2/${this.props.DesignDetail.uid}`
-        const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,top=100,left=100,width=${window.screen.width},height=${window.screen.height - 200},scrollbars=no`;
+        const options = 
+        `toolbar=no,status=no,menubar=no,resizable=0,location=no,scrollbars=no,\
+        top=0,left=0,width=${window.screen.width/4},height=${(window.screen.height - 200)/4}`;
         this.vchatwindow = window.open(url, "vchat", options);
         //try {
         //    if (this.state.liveVC === false) {
@@ -1157,9 +1191,11 @@ class DesignInfo extends Component {
                     <TwoSideBox w={w - 750}>
                         <div className="descriptionContainer">
                             <div className="category-name">{DesignDetail.categoryName}</div>
-                            <p className="txt">
-                                {DesignDetail.explanation}
-                            </p>
+                            <div className={`explanationRegion`}>
+                                <p>
+                                    {DesignDetail.explanation}
+                                </p>
+                            </div>
                         </div>
                     </TwoSideBox>
 

@@ -296,29 +296,56 @@ const TwoSideBox = styled.div`
             font-family: Noto Sans KR;
         }
         .explanationRegion{
+            width: 100%;
             display: flex;
             height: 90px;
             font-size: 17px;
             color: #707070;
             line-height: 30px;
-            .explain-text {
-                width:${props => props.w}px;
-                height: 100%;
+            cursor: default;
+
+            p {
+                width: 100%;
+                overflow: auto;
+                word-wrap: break-word;
+
                 font-size: 20px;
-                font-weight: 200;
+                font-weight: 300;
                 font-family: Noto Sans KR;
                 line-height: 30px;
                 color: #707070;
-                white-space: nowrap; 
-                overflow: hidden; 
-                text-overflow: ellipsis; 
-                white-space: normal; 
-                text-align: left; 
-                word-wrap: break-word; 
-                display: -webkit-box; 
-                -webkit-line-clamp: 3; 
-                -webkit-box-orient: vertical;
+
+                :hover {
+                    background-color: #EAEAEA;
+                }
+
+                ::-webkit-scrollbar {
+                    position: absolute;
+                    width: 3px;
+                }
+                ::-webkit-scrollbar-thumb {
+                    background: #707070 !important;
+                }
             }
+
+            // .explain-text {
+            //     width: ${props => props.w}px;
+            //     height: 100%;
+            //     font-size: 20px;
+            //     font-weight: 200;
+            //     font-family: Noto Sans KR;
+            //     line-height: 30px;
+            //     color: #707070;
+            //     white-space: nowrap; 
+            //     overflow: hidden; 
+            //     text-overflow: ellipsis; 
+            //     white-space: normal; 
+            //     text-align: left; 
+            //     word-wrap: break-word; 
+            //     display: -webkit-box; 
+            //     -webkit-line-clamp: 3; 
+            //     -webkit-box-orient: vertical;
+            // }
         }
     }
 
@@ -631,8 +658,13 @@ class GroupInfoComponent extends Component {
                             </div>
 
                             <div className="explanationRegion">
-                                <p className="explain-text">
-                                    {GroupDetail.explanation}</p></div>
+                                <p
+                                    // className="explain-text"
+                                    dangerouslySetInnerHTML={{
+                                        __html: GroupDetail.explanation
+                                            ? GroupDetail.explanation.replace(/\n/g, "<br/>")
+                                            : null
+                                    }} /></div>
 
                             <div className="bottom">
                                 {GroupDetail.uid ? <GroupNoticeContainer id={GroupDetail.uid} /> : ""}
