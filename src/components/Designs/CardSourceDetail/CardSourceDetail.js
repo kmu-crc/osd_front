@@ -11,11 +11,10 @@ import LinkController from "./LinkController";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
-import Zoom from 'react-medium-image-zoom'
+// import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 
 const cloneObj = obj => JSON.parse(JSON.stringify(obj));
-
 function IsJsonString(str) {
   try {
     var json = JSON.parse(str);
@@ -336,19 +335,17 @@ class CardSourceDetail extends Component {
     }
     return false;
   }
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps !== this.props) {
-  //     alert("got changed");
-  //     console.log(this.props);
-  //   }
-  // }
-  async shouldComponentUpdate(nextProps) {
-    if (nextProps.hook === true) {
+  async componentDidUpdate(prevProps) {
+    if (this.props.hook === true && prevProps.hook === false) {
       this.props.handleResetHook && await this.props.handleResetHook();
       await this.onSubmit();
     }
-    if (this.props.closed === false && nextProps.closed === true) {
-      this.props.handleClosed && this.props.handleClosed(this.props.uid ? this.state : this.state.content);
+    if (this.props.closed === true && prevProps.closed === false) {
+      this.props.handleClosed &&
+        this.props.handleClosed(
+          this.props.uid
+            ? this.state
+            : this.state.content);
     }
   }
   async onChangeFile(data) {
@@ -416,14 +413,16 @@ class CardSourceDetail extends Component {
     if (!this.state.content) {
       return;
     }
-    const copy = cloneObj(this.state.content);// [...this.state.content];
+    const copy = [...this.state.content];
+    // const copy = cloneObj(this.state.content);// [...this.state.content];
     // copy[0].test = "!!!";
     // this.state.content[0].test = "???";
-    // console.log(copy[0], this.state.content[0]);
+    // await console.log("before:", copy, this.state.content);
     // var T = copy[A];
     // copy[A] = copy[B];
     // copy[B] = T;
     [copy[A], copy[B]] = [copy[B], copy[A]];
+    // await console.log("after:", copy, this.state.content);
     copy.map((ele, index) => {
       if (ele.order !== index) {
         ele.order = index;
@@ -431,7 +430,6 @@ class CardSourceDetail extends Component {
       return ele;
     })
     await this.setState({ content: copy });
-    // // console.log(this.state.content, copy);
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
     return;
   }
