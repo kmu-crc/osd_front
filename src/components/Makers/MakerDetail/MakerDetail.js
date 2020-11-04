@@ -874,7 +874,7 @@ class MakerDetail extends Component {
             <MakerBoard>
               <div className="title" style={{marginBottom:"20px"}}>메이커 게시판</div>
               <div className="title">
-                {this.props.MakerViewDetail&&this.props.MakerViewDetail.user_id !== this.props.userInfo.uid ? <div className="redText alignRight"><div className="link" onClick={this.onClickRequest}>제작 의뢰</div></div>:null}
+                {this.props.userInfo&&this.props.MakerViewDetail&&this.props.MakerViewDetail.user_id !== this.props.userInfo.uid ? <div className="redText alignRight"><div className="link" onClick={this.onClickRequest}>제작 의뢰</div></div>:null}
               </div>
               <div className="list">
                 <MakerRequestBoardContainer id={parseInt(this.props.id, 10)} />
