@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ModifyResponseToMakerReqContainer from "/Users/kmc/opendesign/front/src/containers/Request/ModifyResponseToMakerReqContainer /ModifyResponseToMakerReqContainer";
+import ModifyResponseToMakerReqContainer from "containers/Request/ModifyResponseToMakerReqContainer /ModifyResponseToMakerReqContainer";
 
 class ModifyResponseToMakerReqPage extends Component {
   render() {

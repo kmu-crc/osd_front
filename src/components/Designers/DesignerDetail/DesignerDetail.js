@@ -885,7 +885,7 @@ class DesignerDetail extends Component {
         <DesignerBoard>
           <div className="title">디자이너 게시판</div>
           <div className="title">
-            {this.props.DesignerViewDetail&&this.props.DesignerViewDetail.user_id!==this.props.userInfo.uid?<div className="redText alignRight" ><div className="link" onClick={this.onClickRequest}>디자인 의뢰</div></div>:null}
+            {this.props.userInfo&&this.props.DesignerViewDetail&&this.props.DesignerViewDetail.user_id!==this.props.userInfo.uid?<div className="redText alignRight" ><div className="link" onClick={this.onClickRequest}>디자인 의뢰</div></div>:null}
           </div>
           <div className="list">
             <DesignerRequestBoardContainer id={parseInt(this.props.id, 10)} />
