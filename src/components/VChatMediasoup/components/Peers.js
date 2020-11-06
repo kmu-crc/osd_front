@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import * as appPropTypes from './appPropTypes';
-// import { Appear } from './transitions';
 import Peer from './Peer';
-import ScrollContainer from 'react-indiana-drag-scroll'
-import styled from 'styled-components'
+import styled from 'styled-components';
+
 const DivPeers = styled.div`
-	width: 100%;
+	width: 250px;
+	height: 250px;
 	display: flex;
 	flex-direction: row;
 	.peer{
@@ -23,8 +22,7 @@ const DivPeers = styled.div`
 `;
 
 const Peers = ({ clicked, member, peers, activeSpeakerId }) => {
-	console.log("peers:", peers);
-	return (<ScrollContainer vertical={false} className="inner scroll-container">
+	return (
 		<DivPeers>
 			{peers.map((peer) => {
 				return (<div
@@ -36,8 +34,7 @@ const Peers = ({ clicked, member, peers, activeSpeakerId }) => {
 						id={peer.id} />
 				</div>);
 			})}
-		</DivPeers>
-	</ScrollContainer>);
+		</DivPeers>);
 };
 
 Peers.propTypes =
@@ -48,7 +45,6 @@ Peers.propTypes =
 
 const mapStateToProps = (state) => {
 	const peersArray = Object.values(state.peers);
-
 	return {
 		peers: peersArray,
 		activeSpeakerId: state.room.activeSpeakerId

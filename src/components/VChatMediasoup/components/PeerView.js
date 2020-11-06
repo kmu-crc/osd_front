@@ -15,16 +15,19 @@ const logger = new Logger('PeerView');
 const DivPeerView = styled.div`
   video {
 	  // border: 1px solid white;
-	  width: 250px;
-	  height: 250px;
+	  width: 248px;
+	  height: 248px;
 		object-fit: cover;
 		&.is-me {
 			// transform: scaleX(-1);
 		}
+		&.hidden {
+			display: none;
+		}
 	}
 	.peerName {
-		width: 250px;
-		height: 250px;
+		width: 248px;
+		height: 248px;
 		margin: auto;
 		background-color: #36454f;
 		display: flex;
@@ -158,6 +161,7 @@ export default class PeerView extends React.Component {
 				<div className="peerName">
 					<p>{nick_name}</p>
 				</div> : null}
+
 			<video
 				ref='videoElem'
 				autoPlay
@@ -389,39 +393,3 @@ export default class PeerView extends React.Component {
 		);
 	}
 }
-
-// PeerView.propTypes =
-// {
-// 	isMe: PropTypes.bool,
-// 	peer: PropTypes.oneOfType(
-// 		[appPropTypes.Me, appPropTypes.Peer]).isRequired,
-// 	audioProducerId: PropTypes.string,
-// 	videoProducerId: PropTypes.string,
-// 	audioConsumerId: PropTypes.string,
-// 	videoConsumerId: PropTypes.string,
-// 	audioRtpParameters: PropTypes.object,
-// 	videoRtpParameters: PropTypes.object,
-// 	consumerSpatialLayers: PropTypes.number,
-// 	consumerTemporalLayers: PropTypes.number,
-// 	consumerCurrentSpatialLayer: PropTypes.number,
-// 	consumerCurrentTemporalLayer: PropTypes.number,
-// 	consumerPreferredSpatialLayer: PropTypes.number,
-// 	consumerPreferredTemporalLayer: PropTypes.number,
-// 	consumerPriority: PropTypes.number,
-// 	audioTrack: PropTypes.any,
-// 	videoTrack: PropTypes.any,
-// 	audioMuted: PropTypes.bool,
-// 	videoVisible: PropTypes.bool.isRequired,
-// 	videoMultiLayer: PropTypes.bool,
-// 	audioCodec: PropTypes.string,
-// 	videoCodec: PropTypes.string,
-// 	audioScore: PropTypes.any,
-// 	videoScore: PropTypes.any,
-// 	// faceDetection: PropTypes.bool.isRequired,
-// 	onChangeDisplayName: PropTypes.func,
-// 	onChangeMaxSendingSpatialLayer: PropTypes.func,
-// 	onChangeVideoPreferredLayers: PropTypes.func,
-// 	onChangeVideoPriority: PropTypes.func,
-// 	onRequestKeyFrame: PropTypes.func,
-// 	onStatsClick: PropTypes.func.isRequired
-// };

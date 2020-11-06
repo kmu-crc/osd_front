@@ -4,8 +4,29 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import * as appPropTypes from './appPropTypes';
 import * as stateActions from '../redux/stateActions';
-// import { Appear } from './transitions';
+import styled from 'styled-components';
 
+const NotificationsDiv = styled.div`
+	// height: 100%;
+	border: 1px solid blue;
+	// background: transparent;
+	z-index: 400;
+
+	.notification {
+		display: block;
+		position: absolute;
+		top: 50%;
+		width: 100%;
+		height: 15%;
+		background-color: rgba(112, 112, 112, .93);
+	
+		// text
+		margin: auto;
+		text-align: center;
+		color: white;
+		font-size: 3rem;
+	}
+`;
 // > .notification {
 // 	pointer-events: auto;
 // 	margin-top: 4px;
@@ -93,16 +114,15 @@ import * as stateActions from '../redux/stateActions';
 // }
 
 const Notifications = ({ notifications, onClick }) => {
-	console.log(notifications)
+	console.log(notifications);
 	return (
-		<div data-component='Notifications'>
+		<NotificationsDiv>
 			{notifications.map((notification) => {
 				return (
-					// <Appear  duration={250}>
 					<div
 						key={notification.id}
-						className={classnames('notification', notification.type)}
-						onClick={() => onClick(notification.id)}
+						className='notification'//{classnames('notification', notification.type)}
+						// onClick={() => onClick(notification.id)}
 					>
 						<div className='icon' />
 
@@ -112,10 +132,9 @@ const Notifications = ({ notifications, onClick }) => {
 							<p className='text'>{notification.text}</p>
 						</div>
 					</div>
-					// </Appear>
 				);
 			})}
-		</div>);
+		</NotificationsDiv>);
 };
 
 Notifications.propTypes = {

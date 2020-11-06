@@ -2149,8 +2149,8 @@ export default class RoomClient {
 
 			store.dispatch(requestActions.notify(
 				{
-					text: 'You are in the room!',
-					timeout: 3000
+					text: '화상회의실에 오신 것을 환영합니다.',
+					timeout: 2000
 				}));
 
 			for (const peer of peers) {

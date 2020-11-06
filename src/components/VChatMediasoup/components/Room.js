@@ -1,65 +1,53 @@
 import React from 'react';
-// import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
-// import ReactTooltip from 'react-tooltip';
-// import classnames from 'classnames';
-// import clipboardCopy from 'clipboard-copy';
-// import * as appPropTypes from './appPropTypes';
-// import { withRoomContext } from '../RoomContext';
-// import * as requestActions from '../redux/requestActions';
-//  import { Appear } from './transitions';
+import { connect } from 'react-redux';
 import Me from './Me';
 import Peers from './Peers';
-//  import Stats from './Stats';
-import Notifications from './Notifications';
-//  import NetworkThrottle from './NetworkThrottle';
 import styled from "styled-components";
 import { geturl } from "config"
+import nobg from "source/hero1920.png";
+import ScrollContainer from 'react-indiana-drag-scroll';
+// import Notifications from './Notifications';
 
-
-const RoomContainer = styled.div`
+const RoomDiv = styled.div`
 	position: relative;
 	width: 100%;
 	height: ${props => props.h}px;
-	background-color: black;
-	z-index: 101;
 `;
-const TopContainer = styled.div`
-  z-index: 101;
+const MenuBarContainer = styled.div`
 	width: 100%;
-	height: 36px;
-	min-height: 36px;
-	// border: 1px solid red;
-	background-color: transparent; 
-  position: fixed; 
-	top: 0px;
+	height: 45px;
+  position: relative; 
 	display: flex;
   flex-direction: rows;
   justify-content: space-between;
-  background-color: transparent;
-
-	margin-top: 13px;
-  padding-left: 25px;
-	padding-right: 16px;
+  background-color: #707070; // transparent;
+	padding: 5px 25px;
 	
-	z-index: 300;
+	z-index: 150;
 
   .btn {
     cursor: pointer;
     text-align: center;
-
+		&.peer {
+			position: absolute;
+			right: 10%;
+			width: max-content;
+			padding: 8px 25px;
+			border-radius: 36px;
+			background: rgba(100,100,100, 0.75);
+		}
     &.chat {
 			width: max-content;
       height: 35px;
       border-radius: 36px;
-      background: rgba(125, 125, 125, 0.5);
+      background: rgba(244, 0, 0, 0.8);
       padding: 8px 25px;
     }
     &.share {
       width: max-content;
       height: 35px;
       border-radius: 36px;
-      background: rgba(125, 125, 125, 0.5);
+      background: rgba(125, 125, 255, 0.5);
       padding: 8px 25px;
     }
     &.exit {
@@ -75,54 +63,86 @@ const TopContainer = styled.div`
     width: max-content;
   }
 `;
-const MiddleContainer = styled.div`
-  z-index: 100;
+const ContentContainer = styled.div`
+	width: 100%;
+	height: 100%;
+	background-image: url(${props => props.bg || nobg});
+	background-size: contain;
+	background-position: center center;
+	background-repeat: no-repeat;
+	z-index: 100;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	.panel {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		z-index: 101;
+		background-color: rgba(0, 0, 0, .5);
+	}
+
+`;
+const RightVerticalScroll = styled.div`
+	z-index: 110;
+	background-color: black;
+	color: white;
+	padding: 5px;
+	width: 260px;
+`;
+const MiddleDynamicGrid = styled.div`
+	z-index: 110;
+	background-color: rgba(255,255,255, 0.5);
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	.container {
+		// height: max-content;
+		width: max-content;
+		// overflow: auto;
+		justify-items: center;
+		align-items: center;
+		margin: auto;
+		display: grid;
+		grid-template-rows: repeat(${props => props.grid.row || 1}, 252px);
+		grid-template-columns: repeat(${props => props.grid.col || 1}, 252px);
+		gap: 10px 10px;
+	}
+`;
+const BigScreenContainer = styled.div`
 	width: 100%;
 	height: 100%;
 	min-height: 250px;
 	color: white;
-	background-size: cover;
-	background-position: center center;
-	background-image: url(${props => props.bg.m_img});
-	background-repeat: no-repeat;
-	position: relative;
-	margin: auto;
 
-	.panel {
-		z-index: 100;
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(255, 255, 255, 0.5);
-		opacity: .9;
-	}
+	display: ${props => props.visible ? "block" : "none"};
+	position: relative;
+	// margin: auto;
+
+	z-index: 120;
 
 	video {
 		position: relative;
-		z-index: 103;
 		width: 100%;
 		height: 100%;
 		object-fit: contain;
+		// object-fit: cover;
 	}
 `;
-const BottomContainer = styled.div`
-	z-index: 101;
+const PeersContainer = styled.div`
 	width: 100%;
-	height: 260px;
-	min-height: 260px;
-	// border: 1px solid red;
-  // background-color: transparent;
+	height: 100%;
 	background-color: rgba(54, 69, 79, 0.25);
-	position: absolute; 
-	bottom: 0px; 
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 
 	.me {
-		width: 260px;
-		height: 260px;
+		width: 250px;
+		height: 250px;
 		// border:1px solid white;
 	}
 	.peers {
@@ -146,18 +166,34 @@ const BottomContainer = styled.div`
 class Room extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { h: window.innerHeight, shareState: "off", }
-	}
+		this.state = {
+			h: window.innerHeight,
+			shareState: "off", mode: "grid"/* :non-clicked, "scroll":clicked*/, hidepeer: false,
+		};
+	};
+
 	render() {
-		// const { roomClient, room, me, amActiveSpeaker, onRoomLinkCopy } = this.props;
-		console.log("Room:", this.state, this.props);
+		const { design, peers /*, roomClient, room, me, onRoomLinkCopy */ } = this.props;
+		const bg = (design && design.img && design.img.l_img) || nobg;
+		const { mode, hidepeer } = this.state;
 
-		return (<RoomContainer h={this.state.h || window.innerHeight}>
-			{/* noti */}
-			<Notifications />
+		const grid = [
+			/* 0*/{ row: 1, col: 1 },
+			/* 1*/{ row: 1, col: 2 },
+			/* 2*/{ row: 2, col: 2 },
+			/* 3*/{ row: 2, col: 2 },
+			/* 4*/{ row: 2, col: 3 },
+		];
 
-			{/* top */}
-			<TopContainer>
+		const total = 1 + peers.length || 0;
+		const idx = total > 4 ? 4 : total - 1;
+
+		return (<RoomDiv h={this.state.h || window.innerHeight}>
+			{/* notifications */}
+			{/* <Notifications /> */}
+
+			{/* menubar */}
+			<MenuBarContainer >
 				<div className='btn chat' onClick={() => {
 					const url = geturl() + `/chat/${this.props.design.uid} `
 					const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`
@@ -166,9 +202,7 @@ class Room extends React.Component {
 					<span className='txt'>채팅</span>
 				</div>
 
-				<div className='btn share'
-					ref={ref => this.sharebtn = ref}
-				>
+				<div className='btn share' ref={ref => this.sharebtn = ref}>
 					<span className='txt'>
 						{this.state.shareState === "on" ? "화면공유 종료" : "화면공유"}
 					</span>
@@ -177,47 +211,88 @@ class Room extends React.Component {
 				<div className='btn exit' onClick={() => { window.open('', '_self').close() }}>
 					<span className='txt'>나가기</span>
 				</div>
-			</TopContainer>
 
-			{/* middle */}
-			<MiddleContainer bg={this.props.design.img}>
-				<div className="panel"></div>
-				<video
-					muted
-					autoPlay
-					ref={(ref) => this.video = ref} />
-			</MiddleContainer>
-
-			{/* bottom */}
-			<BottomContainer>
-				<div className="me">
-					<Me
-						userInfo={this.props.userInfo}
-						sharebtn={this.sharebtn}
-						shareState={this.state.shareState}
-						share={(shareState) => this.setState({ shareState: shareState })}
-						clicked={stream => this.clickedview(stream)}
-						thumbnail={this.props.userInfo.thumbnail} />
-				</div>
-				<div className="peers">
-					<div>
-						<Peers
-							clicked={(stream) => this.clickedview(stream)}
-							member={this.props.design.member} />
+				{mode === "scroll"
+					? <div className={`btn peer ${hidepeer}`} onClick={() => this.setState({ hidepeer: !hidepeer })}>
+						<span className="txt">{!hidepeer ? "숨기기" : "보이기"}</span>
 					</div>
-				</div>
-			</BottomContainer>
+					: null}
+			</MenuBarContainer>
 
-		</RoomContainer>);
-	}
+			<ContentContainer bg={bg}>
+				<div className="panel" />
+
+				{/* <div>영상부분</div> */}
+				{/* middle */}
+				<BigScreenContainer
+					visible={(this.video && this.video.srcObject) ? true : false}>
+					<video
+						muted autoPlay loop="loop"
+						ref={ref => this.video = ref} />
+
+				</BigScreenContainer>
+
+				{/*  */}
+				{mode === "scroll" && !hidepeer
+					? <RightVerticalScroll>
+						<ScrollContainer vertical={true} horizontal={false} className="inner scroll-container">
+							<Me
+								needReload={() => {
+									this.video.srcObject = null;
+									this.setState({ mode: "grid" });
+								}}
+								userInfo={this.props.userInfo}
+								sharebtn={this.sharebtn}
+								shareState={this.state.shareState}
+								share={(shareState) => this.setState({ shareState: shareState })}
+								clicked={stream => this.clickedview(stream)}
+								thumbnail={this.props.userInfo.thumbnail}
+							/>
+							<Peers
+								clicked={(stream) => this.clickedview(stream)}
+								member={this.props.design.member} />
+						</ScrollContainer>
+					</RightVerticalScroll> : null}
+
+				{mode === "grid"
+					? <MiddleDynamicGrid grid={grid[idx]}>
+						<div className="container">
+							<Me
+								needReload={() => {
+									this.video.srcObject = null;
+									this.setState({ mode: "grid" });
+								}}
+								userInfo={this.props.userInfo}
+								sharebtn={this.sharebtn}
+								shareState={this.state.shareState}
+								share={(shareState) => this.setState({ shareState: shareState })}
+								clicked={stream => this.clickedview(stream)}
+								thumbnail={this.props.userInfo.thumbnail}
+							/>
+							<Peers
+								clicked={(stream) => this.clickedview(stream)}
+								member={this.props.design.member} />
+						</div>
+					</MiddleDynamicGrid> : null}
+			</ContentContainer>
+		</RoomDiv>);
+	};
+
 	clickedview = (stream) => {
 		if (this.video && stream) {
 			stream.addEventListener('inactive', () => {
 				this.video.style.display = "none";
+				this.video.srcObject = null;
+				this.setState({ mode: "grid" });
+			});
+			stream.addEventListener('active', () => {
+				this.video.style.display = "block";
 			})
 			this.video.srcObject = stream;
+			this.setState({ mode: "scroll" });
 		}
-	}
+	};
+
 	componentDidMount() {
 		// join
 		const { roomClient } = this.props;
@@ -228,19 +303,21 @@ class Room extends React.Component {
 		window.addEventListener("resize", () => {
 			this.setState({ h: window.innerHeight });
 		});
-	}
+	};
 	componentWillUnmount() {
 		window.removeEventListener("resize");
-	}
+	};
 }
+const mapStateToProps = (state) => {
+	const peersArray = Object.values(state.peers);
+	return {
+		peers: peersArray,
+		activeSpeakerId: state.room.activeSpeakerId
+	};
+};
 
-// Room.propTypes =
-// {
-// 	// roomClient: PropTypes.any.isRequired,
-// 	// room: appPropTypes.Room.isRequired,
-// 	// me: appPropTypes.Me.isRequired,
-// 	// amActiveSpeaker: PropTypes.bool.isRequired,
-// 	// onRoomLinkCopy: PropTypes.func.isRequired
-// };
-
-export default Room;
+const RoomContainer = connect(
+	mapStateToProps,
+	null,
+)(Room);
+export default RoomContainer;
