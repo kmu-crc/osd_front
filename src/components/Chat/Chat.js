@@ -746,7 +746,7 @@ class Chat extends React.Component {
             placeholder="문자를 입력하세요.(줄바꿈: 쉬프트+엔터)"
             className='chatdata'
             autoComplete="off"
-            onKeyDown={e => {
+            onKeyPress={e => {
               // send
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
