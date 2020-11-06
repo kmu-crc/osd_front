@@ -958,8 +958,8 @@ class DesignInfo extends Component {
         if (this.checkMember() === false) return
 
         const url = geturl() + `/vchat2/${this.props.DesignDetail.uid}`
-        const options = 
-        `toolbar=no,status=no,menubar=no,resizable=0,location=no,scrollbars=no,\
+        const options =
+            `toolbar=no,status=no,menubar=no,resizable=0,location=no,scrollbars=no,\
         top=0,left=0,width=${window.screen.width},height=${window.screen.height - 100}`;
         this.vchatwindow = window.open(url, "vchat", options);
         //try {

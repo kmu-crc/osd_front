@@ -6,20 +6,19 @@ import { withRoomContext } from '../RoomContext';
 import * as stateActions from '../redux/stateActions';
 import PeerView from './PeerView';
 import styled from "styled-components";
-
 import who from "source/thumbnail.png";
 import icon_remote_mic_white_off from 'resources/images/icon_remote_mic_white_off.svg';
 import icon_remote_webcam_white_off from 'resources/images/icon_remote_webcam_white_off.svg';
+
 const DivPeer = styled.div`
 	width: 250px;
 	height: 250px;
 	position: relative;
-	padding: 0.15rem;
 	display: flex;
 
 	.peerName {
-		width: 250px;
-		height: 250px;
+		width: 248px;
+		height: 248px;
 		margin: auto;
 		background-color: #36454f;
 		display: flex;
@@ -92,8 +91,8 @@ const Peer = (props) => {
 		audioConsumer,
 		videoConsumer,
 		audioMuted,
-		faceDetection,
-		onSetStatsPeerId,
+		// faceDetection,
+		// onSetStatsPeerId,
 		info,
 	} = props;
 
@@ -108,6 +107,7 @@ const Peer = (props) => {
 		!videoConsumer.locallyPaused &&
 		!videoConsumer.remotelyPaused
 	);
+
 
 	return (
 		<DivPeer>
@@ -151,15 +151,15 @@ const Peer = (props) => {
 					videoCodec={videoConsumer ? videoConsumer.codec : null}
 					audioScore={audioConsumer ? audioConsumer.score : null}
 					videoScore={videoConsumer ? videoConsumer.score : null}
-					faceDetection={faceDetection}
+					// faceDetection={faceDetection}
 					onChangeVideoPreferredLayers={(spatialLayer, temporalLayer) => { roomClient.setConsumerPreferredLayers(videoConsumer.id, spatialLayer, temporalLayer); }}
 					onChangeVideoPriority={(priority) => { roomClient.setConsumerPriority(videoConsumer.id, priority); }}
 					onRequestKeyFrame={() => { roomClient.requestConsumerKeyFrame(videoConsumer.id); }}
-					onStatsClick={onSetStatsPeerId}
+					// onStatsClick={onSetStatsPeerId}
 					nick_name={info.nick_name}
 				/>
 			</div>
-				
+
 		</DivPeer>
 	);
 };

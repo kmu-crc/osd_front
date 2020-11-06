@@ -5,11 +5,8 @@ import { withRoomContext } from '../RoomContext';
 import * as stateActions from '../redux/stateActions';
 import PeerView from './PeerView';
 import styled from 'styled-components';
-
-// import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import * as cookiesManager from '../cookiesManager';
-// import * as appPropTypes from './appPropTypes';
 
 // ICONS
 import icon_mic_black_on from 'resources/images/icon_mic_black_on.svg';
@@ -25,10 +22,10 @@ import icon_share_white_on from 'resources/images/icon_share_white_on.svg';
 import icon_share_white_unsupported from 'resources/images/icon_share_white_unsupported.svg';
 
 const DivME = styled.div`
-	width: 100%;
-	height: 100%;
+	width: 250px;
+	height: 250px;
 	position: relative;
-	padding: 0.15rem;
+	border: 1px solid transparent;
 `;
 const Thumbnail = styled.div`
 	position: absolute;
@@ -219,6 +216,7 @@ class Me extends React.Component {
 								if (webcamState === 'on') {
 									cookiesManager.setDevices({ webcamEnabled: false });
 									roomClient.disableWebcam();
+									this.props.needReload && this.props.needReload();
 								}
 								else {
 									cookiesManager.setDevices({ webcamEnabled: true });
@@ -226,6 +224,7 @@ class Me extends React.Component {
 								}
 							}}
 						/>
+
 						<div
 							className={classnames('button', 'change-webcam', changeWebcamState, {
 								disabled: me.webcamInProgress || me.shareInProgress
@@ -235,7 +234,8 @@ class Me extends React.Component {
 
 					</Control> : null}
 
-				<Thumbnail img={this.props.thumbnail.s_img}></Thumbnail>
+				<Thumbnail img={this.props.thumbnail.s_img} />
+
 				<div
 					onClick={() => {
 						if (videoProducer && videoProducer.track) {
@@ -268,13 +268,13 @@ class Me extends React.Component {
 					/>
 				</div>
 
-				<ReactTooltip
+				{/* <ReactTooltip
 					type='light'
 					effect='solid'
 					delayShow={100}
 					delayHide={100}
 					delayUpdate={50}
-				/>
+				/> */}
 			</DivME >
 		);
 	}
@@ -290,11 +290,9 @@ class Me extends React.Component {
 		}, 4000);
 
 	}
-
 	componentWillUnmount() {
 		this._mounted = false;
 	}
-
 	componentDidUpdate(prevProps) {
 
 		const { videoProducer, } = this.props;
