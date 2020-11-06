@@ -666,10 +666,10 @@ class MakerDetail extends Component {
   componentWillUpdate(nextProps) {
     if (this.props.MakerViewDetail !== nextProps.MakerViewDetail) {
       this.setState(nextProps.MakerViewDetail);
-      const technique = nextProps.MakerViewDetail.maker_technique.split(",");
-      technique.pop();
-      const equipment = nextProps.MakerViewDetail.maker_equipment.split(",");
-      equipment.pop();
+      const technique =nextProps.MakerViewDetail.maker_technique? nextProps.MakerViewDetail.maker_technique.split(","):[];
+      nextProps.MakerViewDetail.maker_technique&&technique.pop();
+      const equipment =nextProps.MakerViewDetail.maker_equipment?nextProps.MakerViewDetail.maker_equipment.split(","):[];
+      nextProps.MakerViewDetail.maker_equipment&&equipment.pop();
       this.setState({technique:technique,equipment:equipment,});
     }
     if (this.props.like !== nextProps.like) {
@@ -905,6 +905,7 @@ class MakerDetail extends Component {
                 //   </div>
                 // </WriteReview>
                 :
+                this.props.userInfo==null?null:
                 <CreateReview onClick={() => this.setState({ write: true })}>
                   <div className="button">
                     <div className="font">게시글 작성</div>

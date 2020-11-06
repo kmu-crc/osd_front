@@ -883,7 +883,7 @@ class DesignerDetail extends Component {
 
       <div style={{ marginTop: "61px", display: "flex", flexDirection: "row" }}>
         <DesignerBoard>
-          <div className="title">디자이너 게시판</div>
+          <div className="title" style={{marginBottom:"20px"}}>디자이너 게시판</div>
           <div className="title">
             {this.props.userInfo&&this.props.DesignerViewDetail&&this.props.DesignerViewDetail.user_id!==this.props.userInfo.uid?<div className="redText alignRight" ><div className="link" onClick={this.onClickRequest}>디자인 의뢰</div></div>:null}
           </div>
@@ -921,6 +921,7 @@ class DesignerDetail extends Component {
             //   </div>
             // </WriteReview>
             :
+            this.props.userInfo==null?null:
             <CreateReview onClick={() => this.setState({ write: true,content:"" })}>
               <div className="button">
                 <div className="font">게시글 작성</div>

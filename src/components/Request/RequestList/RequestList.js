@@ -420,6 +420,7 @@ class RequestList extends Component {
             //   </div>
             // </WriteNormalArticleModal>
             :
+            this.props.userInfo==null?null:
             <CreateNormalArticleButton onClick={() => {
               this.setState({ write: true,content:"" })}}>
               <div className="button">
