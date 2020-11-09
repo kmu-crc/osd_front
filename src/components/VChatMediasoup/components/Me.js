@@ -221,6 +221,7 @@ class Me extends React.Component {
 								else {
 									cookiesManager.setDevices({ webcamEnabled: true });
 									roomClient.enableWebcam();
+									this.props.share('off');
 								}
 							}}
 						/>
@@ -304,6 +305,7 @@ class Me extends React.Component {
 		}
 		if (prevProps.sharebtn != this.props.sharebtn && this.props.sharebtn != null) {
 			this.props.sharebtn.addEventListener('click', async () => {
+				console.log(this.props);
 				if (this.props.me.shareInProgress || this.props.me.webcamInProgress) {
 					return;
 				}
