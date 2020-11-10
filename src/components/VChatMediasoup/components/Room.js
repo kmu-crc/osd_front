@@ -91,6 +91,9 @@ const RightVerticalScroll = styled.div`
 	color: white;
 	padding: 5px;
 	width: 260px;
+	height: ${window.innerHeight}px;
+
+	display: ${props => props.hidden ? "none" : "block"};
 `;
 const MiddleDynamicGrid = styled.div`
 	z-index: 110;
@@ -233,8 +236,8 @@ class Room extends React.Component {
 				</BigScreenContainer>
 
 				{/*  */}
-				{mode === "scroll" && !hidepeer
-					? <RightVerticalScroll>
+				{mode === "scroll"
+					? <RightVerticalScroll hidden={hidepeer}>
 						<ScrollContainer vertical={true} horizontal={false} className="inner scroll-container">
 							<Me
 								needReload={() => {
@@ -248,9 +251,10 @@ class Room extends React.Component {
 								clicked={stream => this.clickedview(stream)}
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
-							<Peers
+							 <Peers
 								clicked={(stream) => this.clickedview(stream)}
 								member={this.props.design.member} />
+
 						</ScrollContainer>
 					</RightVerticalScroll> : null}
 

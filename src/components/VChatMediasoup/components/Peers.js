@@ -6,8 +6,6 @@ import Peer from './Peer';
 import styled from 'styled-components';
 
 const DivPeers = styled.div`
-	width: 250px;
-	height: 250px;
 	display: flex;
 	flex-direction: row;
 	.peer{
