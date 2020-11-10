@@ -26,6 +26,7 @@ const DivME = styled.div`
 	height: 250px;
 	position: relative;
 	border: 1px solid transparent;
+	cursor: default;
 `;
 const Thumbnail = styled.div`
 	position: absolute;
