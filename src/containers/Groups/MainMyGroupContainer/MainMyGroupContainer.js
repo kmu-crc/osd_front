@@ -38,7 +38,6 @@ class MainMyGroupContainer extends Component {
           dataList={this.props.MyMainGroup}
           dataListAdded={this.props.MyMainGroupAdded}
         />
-        <Head>추천 디자인</Head>
       </React.Fragment>
 
     );

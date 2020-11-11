@@ -5,8 +5,10 @@ import hero360 from "source/hero360.png";
 import context from "source/context_banner.png";
 import styled from 'styled-components';
 import TopDesignListContainer from "containers/Designs/TopDesignListContainer";
+import TopGroupListContainer from "containers/Groups/TopGroupListContainer";
 import MainMyDesignListContainer from "containers/Designs/MainMyDesignContainer";
 import MainMyGroupListContainer from "containers/Groups/MainMyGroupContainer";
+import opendesign_style from 'opendesign_style';
 
 const BannerWrapper = styled.div`
   // width: ${props => props.width}px;
@@ -45,7 +47,14 @@ const Context = styled.div`
     background-size: contain;
   }
 `;
-
+const Head = styled.div`
+  color: ${opendesign_style.color.grayScale.scale7};
+  font-size: ${opendesign_style.font.size.heading2};
+  line-height: ${opendesign_style.font.size.heading2};
+  text-align: center;
+  margin-top: 42px;
+  margin-bottom: 42px;
+`;
 export default class Main extends Component {
   constructor(props) {
     super(props);
@@ -82,7 +91,9 @@ export default class Main extends Component {
 
         {this.props.userInfo
           ? <MainMyGroupListContainer /> : null}
-
+        <Head>추천 그룹</Head>
+        <TopGroupListContainer />
+        <Head>추천 디자인</Head>
         <TopDesignListContainer />
       </React.Fragment>
     )
