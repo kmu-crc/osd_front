@@ -26,6 +26,7 @@ const DivME = styled.div`
 	height: 250px;
 	position: relative;
 	border: 1px solid transparent;
+	cursor: default;
 `;
 const Thumbnail = styled.div`
 	position: absolute;
@@ -221,6 +222,7 @@ class Me extends React.Component {
 								else {
 									cookiesManager.setDevices({ webcamEnabled: true });
 									roomClient.enableWebcam();
+									this.props.shareState === "on" && this.props.share && this.props.share('off');
 								}
 							}}
 						/>
@@ -304,6 +306,7 @@ class Me extends React.Component {
 		}
 		if (prevProps.sharebtn != this.props.sharebtn && this.props.sharebtn != null) {
 			this.props.sharebtn.addEventListener('click', async () => {
+				console.log(this.props);
 				if (this.props.me.shareInProgress || this.props.me.webcamInProgress) {
 					return;
 				}

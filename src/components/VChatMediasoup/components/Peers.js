@@ -6,8 +6,6 @@ import Peer from './Peer';
 import styled from 'styled-components';
 
 const DivPeers = styled.div`
-	width: 250px;
-	height: 250px;
 	display: flex;
 	flex-direction: row;
 	.peer{
@@ -20,21 +18,34 @@ const DivPeers = styled.div`
 		}
 	}
 `;
+const DivPeer = styled.div `
+	margin: 0;
+	width: 250px;
+	height: 250px;
+	border: 1px solid transparent;
+	&.active {
+		border: 1px solid white;
+	}
+	cursor: default;
+`;
 
 const Peers = ({ clicked, member, peers, activeSpeakerId }) => {
 	return (
-		<DivPeers>
-			{peers.map((peer) => {
-				return (<div
-					className={`peer ${peer.id === activeSpeakerId ? 'active' : ""}`}
+		// <DivPeers>
+			// {
+				peers.map((peer) => {
+				return (<DivPeer
+					className={`${peer.id === activeSpeakerId ? 'active' : ""}`}
 					key={peer.id}>
 					<Peer
 						clicked={clicked}
 						info={member.find(mem => mem.user_id === parseInt(peer.id, 10))}
 						id={peer.id} />
-				</div>);
-			})}
-		</DivPeers>);
+				</DivPeer>);
+			})
+		// }
+		// </DivPeers>
+		);
 };
 
 Peers.propTypes =

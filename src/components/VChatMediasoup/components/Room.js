@@ -86,11 +86,43 @@ const ContentContainer = styled.div`
 
 `;
 const RightVerticalScroll = styled.div`
-	z-index: 110;
-	background-color: black;
-	color: white;
 	padding: 5px;
 	width: 260px;
+	display: ${props => props.hidden ? "none" : "flex"};
+
+	z-index: 110;
+	background-color: rgba(255,255,255, 0.5);
+	flex-direction: column;
+	justify-content: center;
+
+  .hand {
+		cursor: grab;
+	}
+
+	.container {
+		// background-color: #eee;
+		// width: 250px;
+		// height: ${window.innerHeight - 45}px;
+		// // border: 1px dotted black;
+		// overflow-y: scroll; /* Add the ability to scroll */
+		
+		// /* Hide scrollbar for Chrome, Safari and Opera */
+		// ::-webkit-scrollbar {
+		// 		display: none;
+		// }
+		// /* Hide scrollbar for IE, Edge and Firefox */
+		// -ms-overflow-style: none; /* IE and Edge */
+		// scrollbar-width: none; /* Firefox */
+
+		height: max-content;
+		justify-items: center;
+		align-items: center;
+		margin: auto;
+		display: grid;
+		grid-template-rows: repeat(1, 252px);
+		grid-template-columns: repeat(1, 252px);
+		gap: 10px 10px;
+	}
 `;
 const MiddleDynamicGrid = styled.div`
 	z-index: 110;
@@ -99,9 +131,12 @@ const MiddleDynamicGrid = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-
+  .hand {
+		cursor: grab;
+	}
 	.container {
 		// height: max-content;
+		padding: 10px;
 		width: max-content;
 		// overflow: auto;
 		justify-items: center;
@@ -182,10 +217,12 @@ class Room extends React.Component {
 			/* 1*/{ row: 1, col: 2 },
 			/* 2*/{ row: 2, col: 2 },
 			/* 3*/{ row: 2, col: 2 },
-			/* 4*/{ row: 2, col: 3 },
+			/* 4*/{ row: 2, col: window.innerWidth > window.innerHeight ? 4 : 3 },
 		];
+		const FAKE = () => <div style={{ position: "relative", width: "250px", height: "250px", border: "1px solid white", backgroundColor: "black", color: "white", fontSize: "3em", textAlign: "center" }}>FAKE</div>
 
-		const total = 1 + peers.length || 0;
+		const total = 1 + (peers.length || 0) + 10 + 4;
+		console.log(total);
 		const idx = total > 4 ? 4 : total - 1;
 
 		return (<RoomDiv h={this.state.h || window.innerHeight}>
@@ -226,54 +263,83 @@ class Room extends React.Component {
 				{/* middle */}
 				<BigScreenContainer
 					visible={(this.video && this.video.srcObject) ? true : false}>
-					<video
-						muted autoPlay loop="loop"
-						ref={ref => this.video = ref} />
+
+					<video muted autoPlay loop="loop" ref={ref => this.video = ref} />
 
 				</BigScreenContainer>
 
-				{/*  */}
-				{mode === "scroll" && !hidepeer
-					? <RightVerticalScroll>
-						<ScrollContainer vertical={true} horizontal={false} className="inner scroll-container">
-							<Me
-								needReload={() => {
-									this.video.srcObject = null;
-									this.setState({ mode: "grid" });
-								}}
-								userInfo={this.props.userInfo}
-								sharebtn={this.sharebtn}
-								shareState={this.state.shareState}
-								share={(shareState) => this.setState({ shareState: shareState })}
-								clicked={stream => this.clickedview(stream)}
-								thumbnail={this.props.userInfo.thumbnail}
-							/>
-							<Peers
-								clicked={(stream) => this.clickedview(stream)}
-								member={this.props.design.member} />
+
+				{mode === "scroll"
+					? <RightVerticalScroll hidden={hidepeer}>
+						<ScrollContainer vertical={true} horizontal={false} className="hand scroll-container">
+							<div className="container">
+
+								<Me
+									needReload={() => {
+										this.video.srcObject = null;
+										this.setState({ mode: "grid" });
+									}}
+									userInfo={this.props.userInfo}
+									sharebtn={this.sharebtn}
+									shareState={this.state.shareState}
+									share={(shareState) => this.setState({ shareState: shareState })}
+									clicked={stream => this.clickedview(stream)}
+									thumbnail={this.props.userInfo.thumbnail}
+								/>
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<Peers
+									clicked={(stream) => this.clickedview(stream)}
+									member={this.props.design.member} />
+
+							</div>
 						</ScrollContainer>
 					</RightVerticalScroll> : null}
 
 				{mode === "grid"
 					? <MiddleDynamicGrid grid={grid[idx]}>
-						<div className="container">
-							<Me
-								needReload={() => {
-									this.video.srcObject = null;
-									this.setState({ mode: "grid" });
-								}}
-								userInfo={this.props.userInfo}
-								sharebtn={this.sharebtn}
-								shareState={this.state.shareState}
-								share={(shareState) => this.setState({ shareState: shareState })}
-								clicked={stream => this.clickedview(stream)}
-								thumbnail={this.props.userInfo.thumbnail}
-							/>
-							<Peers
-								clicked={(stream) => this.clickedview(stream)}
-								member={this.props.design.member} />
-						</div>
-					</MiddleDynamicGrid> : null}
+						<ScrollContainer vertical={true} horizontal={false} className="hand scroll-container">
+							<div className="container">
+								<Me
+									needReload={() => {
+										this.video.srcObject = null;
+										this.setState({ mode: "grid" });
+									}}
+									userInfo={this.props.userInfo}
+									sharebtn={this.sharebtn}
+									shareState={this.state.shareState}
+									share={(shareState) => this.setState({ shareState: shareState })}
+									clicked={stream => this.clickedview(stream)}
+									thumbnail={this.props.userInfo.thumbnail}
+								/>
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<FAKE />
+								<Peers
+									clicked={(stream) => this.clickedview(stream)}
+									member={this.props.design.member} />
+							</div>
+						</ScrollContainer>
+					</MiddleDynamicGrid>
+					: null}
 			</ContentContainer>
 		</RoomDiv>);
 	};
