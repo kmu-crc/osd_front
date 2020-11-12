@@ -219,10 +219,10 @@ class Room extends React.Component {
 			/* 3*/{ row: 2, col: 2 },
 			/* 4*/{ row: 2, col: window.innerWidth > window.innerHeight ? 4 : 3 },
 		];
-		const FAKE = () => <div style={{ position: "relative", width: "250px", height: "250px", border: "1px solid white", backgroundColor: "black", color: "white", fontSize: "3em", textAlign: "center" }}>FAKE</div>
+		// const FAKE = () => <div style={{ position: "relative", width: "250px", height: "250px", border: "1px solid white", backgroundColor: "black", color: "white", fontSize: "3em", textAlign: "center" }}>FAKE</div>
 
-		const total = 1 + (peers.length || 0) + 10 + 4;
-		console.log(total);
+		const total = 1 + (peers.length || 0);
+		// console.log(total);
 		const idx = total > 4 ? 4 : total - 1;
 
 		return (<RoomDiv h={this.state.h || window.innerHeight}>
@@ -286,15 +286,6 @@ class Room extends React.Component {
 									clicked={stream => this.clickedview(stream)}
 									thumbnail={this.props.userInfo.thumbnail}
 								/>
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
 								<Peers
 									clicked={(stream) => this.clickedview(stream)}
 									member={this.props.design.member} />
@@ -319,20 +310,6 @@ class Room extends React.Component {
 									clicked={stream => this.clickedview(stream)}
 									thumbnail={this.props.userInfo.thumbnail}
 								/>
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
-								<FAKE />
 								<Peers
 									clicked={(stream) => this.clickedview(stream)}
 									member={this.props.design.member} />
