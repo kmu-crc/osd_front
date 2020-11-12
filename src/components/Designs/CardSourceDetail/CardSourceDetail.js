@@ -453,11 +453,18 @@ class CardSourceDetail extends Component {
     //order
     newContent.forEach(item => {
       oldContent.forEach(old => {
-        if (old.uid === item.uid && (old.order !== item.order || old.content !== item.content)) {
-          formData.updateContent.push(item);
+        if (old.uid === item.uid) {
+          if (old.order !== item.order) {
+            formData.updateContent.push(newContent[old.order]);
+            formData.updateContent.push(item);
+          }
+          if (old.content !== item.content) {
+            formData.updateContent.push(item);
+          }
         }
       })
     });
+
     // get newcontent
     newContent.forEach(item => {
       if (item.uid == null) {
