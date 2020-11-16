@@ -317,6 +317,8 @@ class Me extends React.Component {
 				}
 				else {
 					if (await this.props.roomClient.enableShare() === "cancelled") {
+						this.props.roomClient.disableShare();
+						this.props.roomClient.checkEnabledWebcam();
 						this.props.share && this.props.share("off");
 					} else {
 						this.props.share && this.props.share("on");

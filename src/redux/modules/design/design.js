@@ -691,3 +691,53 @@ export function YesIHaveReadNewComment(id, token) {
             .catch((error) => { console.error(error); reject(error) });
     })
 }
+export function CheckInvitedUserRequest(id, token) {
+    return new Promise((resolve, reject) => {
+        const url = `${host}/design/${id}/video-chat/check-invited`;
+        fetch(url, {
+            headers: { "x-access-token": token },
+            method: "GET"
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.log("check result", res);
+                resolve(res);
+            }).catch(error => {
+                console.error(error);
+                reject(false);
+            });
+    });
+}
+export function InvitedUserRequest(id, token, data) {
+    return new Promise((resolve, reject) => {
+        const url = `${host}/design/${id}/video-chat/invite-user`;
+        fetch(url, {
+            headers: { "x-access-token": token },
+            method: "POST",
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(res => {
+                resolve(res);
+            }).catch(error => {
+                console.error(error);
+                reject(false);
+            });
+    });
+}
+export function CancelInvitedUserRequest(id, token, user_id) {
+    return new Promise((resolve, reject) => {
+        const url = `${host}/design/${id}/video-chat/cancel-invited-user/${user_id}`;
+        fetch(url, {
+            headers: { "x-access-token": token },
+            method: "DELETE"
+        })
+            .then(res => res.json())
+            .then(res => {
+                resolve(res);
+            }).catch(error => {
+                console.error(error);
+                reject(false);
+            });
+    });
+}
