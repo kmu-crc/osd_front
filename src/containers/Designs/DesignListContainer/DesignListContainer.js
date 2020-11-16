@@ -11,6 +11,7 @@ import opendesign_style from "opendesign_style";
 
 const Wrapper = styled.div`
   position:relative;
+  *{border:1px dashed transparent;}
   .orderBox{
     margin-top:10px;
     width:100%;
@@ -66,10 +67,10 @@ class DesignListContainer extends Component {
     super(props);
     this.state = {
       reload: false, screenWidth: window.innerWidth,
-      this_order: this.props.sort=="like"?{ text: "인기순", keyword: "like" }:{ text: "등록순", keyword: "update" },
+      this_order: this.props.sort == "like" ? { text: "인기순", keyword: "like" } : { text: "등록순", keyword: "update" },
       this_category: { text: null, value: null },
       main_category: { text: null, value: null }, sub_category: { text: null, value: null },
-      category2:[],
+      category2: [],
     };
     this.handleReload = this.handleReload.bind(this);
     this.handleChangeCategory = this.handleChangeCategory.bind(this);
@@ -89,37 +90,37 @@ class DesignListContainer extends Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleResize, false);
   };
-  componentWillUpdate(nextProps){
-    if(this.props.category1!==nextProps.category1){
-        let main_category={text:"",value:""};
-        nextProps.category1.map((item,index)=>{
-          if(this.props.cate1==item.value){
-            main_category.text=item.text;
-            main_category.value=item.value;
-          }
-        })
-        this.setState({main_category:main_category,this_category:main_category});
+  componentWillUpdate(nextProps) {
+    if (this.props.category1 !== nextProps.category1) {
+      let main_category = { text: "", value: "" };
+      nextProps.category1.map((item, index) => {
+        if (this.props.cate1 == item.value) {
+          main_category.text = item.text;
+          main_category.value = item.value;
+        }
+      })
+      this.setState({ main_category: main_category, this_category: main_category });
     }
-    if(this.props.category2!==nextProps.category2){
-      let sub_category={text:null,value:null};
+    if (this.props.category2 !== nextProps.category2) {
+      let sub_category = { text: null, value: null };
       let nCount = 0;
-      let nParent=-1;
-      this.props.cate1&&nextProps.category1.map((item,index)=>{
-        if(this.props.cate1==item.value){
-          nParent=nCount;
+      let nParent = -1;
+      this.props.cate1 && nextProps.category1.map((item, index) => {
+        if (this.props.cate1 == item.value) {
+          nParent = nCount;
         }
         nCount++;
       })
-      nParent!=-1&&nextProps.category2[nParent].map((item,index)=>{
-        if(this.props.cate2==item.value){
-          sub_category.text=item.text;
-          sub_category.value=item.value;
-          sub_category.parent=nParent;
+      nParent != -1 && nextProps.category2[nParent].map((item, index) => {
+        if (this.props.cate2 == item.value) {
+          sub_category.text = item.text;
+          sub_category.value = item.value;
+          sub_category.parent = nParent;
         }
       })
-      this.setState({sub_category:sub_category,category2:nextProps.category2[nParent]});
-      if(this.props.cate2!==null){
-        this.setState({this_category:sub_category});
+      this.setState({ sub_category: sub_category, category2: nextProps.category2[nParent] });
+      if (this.props.cate2 !== null) {
+        this.setState({ this_category: sub_category });
       }
     }
   }
@@ -134,33 +135,33 @@ class DesignListContainer extends Component {
     this.props.GetDesignListCountRequest(category.value, null);
     this.handleReload();
     this.getList(0);
-    const orderkeyword=this.props.sort==null?"update":`${this.props.sort}`;
+    const orderkeyword = this.props.sort == null ? "update" : `${this.props.sort}`;
 
-    window.location.href = "/design"+`/${orderkeyword}`+"/"+category.value;
+    window.location.href = "/design" + `/${orderkeyword}` + "/" + category.value;
   }
   async handleChangeSubCategory(parent, category) {
     await this.setState({ main_category: parent, this_category: category, sub_category: category });
     this.props.GetDesignListCountRequest(this.state.main_category.value, category.value);
     this.handleReload();
     this.getList(0);
-    const orderkeyword=this.props.sort==null?"update":`${this.props.sort}`;
+    const orderkeyword = this.props.sort == null ? "update" : `${this.props.sort}`;
 
-    window.location.href="/design"+`/${orderkeyword}`+"/"+parent.value+"/"+category.value;
+    window.location.href = "/design" + `/${orderkeyword}` + "/" + parent.value + "/" + category.value;
   }
   async handleChangeOrderOps(order) {
     await this.setState({ this_order: order })
     this.handleReload();
     this.getList(0);
-    const orderkeyword=order.keyword==null?"":`/${order.keyword}`;
-    const cate1=this.props.cate1==null?"":`/${this.props.cate1}`;
-    const cate2=this.props.cate2==null?"":`/${this.props.cate2}`;
-    window.location.href = "/design"+orderkeyword+cate1+cate2;
+    const orderkeyword = order.keyword == null ? "" : `/${order.keyword}`;
+    const cate1 = this.props.cate1 == null ? "" : `/${this.props.cate1}`;
+    const cate2 = this.props.cate2 == null ? "" : `/${this.props.cate2}`;
+    window.location.href = "/design" + orderkeyword + cate1 + cate2;
     // console.log("/design"+orderkeyword+cate1+cate2);
-    
+
   }
   async getList(page) {
     const { main_category, sub_category, keyword, this_order } = this.state;
-    return this.props.GetDesignListRequest(page, this_order.keyword||null, main_category.value||null, sub_category.value||null, keyword||null);
+    return this.props.GetDesignListRequest(page, this_order.keyword || null, main_category.value || null, sub_category.value || null, keyword || null);
   }
   changeCategory(category) {
     if (this.state.this_category === category) {
@@ -170,34 +171,34 @@ class DesignListContainer extends Component {
   }
 
   render() {
-    const { main_category,this_category,sub_category, reload, this_order } = this.state
-    const { category1,category2, Count, status } = this.props;
-    console.log(main_category,this_category,sub_category);
+    const { main_category, this_category, sub_category, reload, this_order } = this.state
+    const { category1, category2, Count, status } = this.props;
+    console.log(main_category, this_category, sub_category);
     return (<React.Fragment>
       <Wrapper>
 
-      <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
-        category1={category1} category2={this.state.category2} main_selected={main_category} sub_selected={sub_category} />
-      
-      <TextWrapper centerPos={this.state.screenWidth} onClick={() => this.changeCategory(main_category)}>
-        <div className="title"> {(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count})</div>
-      </TextWrapper>
-      <JoinDesignContainer>
-        <div className="joinDesign"/>
-      </JoinDesignContainer>
+        <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
+          category1={category1} category2={this.state.category2} main_selected={main_category} sub_selected={sub_category} />
 
-      <div className="orderBox">
-        <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
-      </div>
-      
-      <ScrollListContainer>
-        {status === "INIT"
-          ? <Loading />
-          : <ScrollList {...opendesign_style.design_margin} reload={reload} handleReload={this.handleReload}
-            type="design" dataList={this.props.DesignList} dataListAdded={this.props.DesignListAdded} getListRequest={this.getList} />}
-      </ScrollListContainer>
-    <BlankDiv />
-    </Wrapper>
+        <TextWrapper centerPos={this.state.screenWidth} onClick={() => this.changeCategory(main_category)}>
+          <div className="title"> {(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count})</div>
+        </TextWrapper>
+        <JoinDesignContainer>
+          <div className="joinDesign" />
+        </JoinDesignContainer>
+
+        <div className="orderBox">
+          <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
+        </div>
+
+        <ScrollListContainer>
+          {status === "INIT"
+            ? <Loading />
+            : <ScrollList {...opendesign_style.design_margin} reload={reload} handleReload={this.handleReload}
+              type="design" dataList={this.props.DesignList} dataListAdded={this.props.DesignListAdded} getListRequest={this.getList} />}
+        </ScrollListContainer>
+        <BlankDiv />
+      </Wrapper>
     </React.Fragment>)
   }
 }
