@@ -48,6 +48,14 @@ const MenuBarContainer = styled.div`
 			border-radius: 36px;
 			background: rgba(100,100,100, 0.75);
 		}
+		&.return {
+			position: absolute;
+			right: 20%;
+			width: max-content;
+			padding: 8px 25px;
+			border-radius: 36px;
+			background: rgba(100,100,100, 0.75);			
+		}
     &.chat {
 			width: max-content;
       height: 35px;
@@ -289,7 +297,12 @@ class Room extends React.Component {
 				<div className='btn exit' onClick={() => { window.open('', '_self').close() }}>
 					<span className='txt'>나가기</span>
 				</div>
-
+				{mode === "scroll" ?
+					<div className="btn return" onClick={() => {
+						this.setState({ mode: "grid" });
+						this.video.srcObject = null;
+					}}>
+						<span className="txt">큰 화면 취소</span></div> : null}
 				{mode === "scroll"
 					? <div className={`btn peer ${hidepeer}`} onClick={() => this.setState({ hidepeer: !hidepeer })}>
 						<span className="txt">{!hidepeer ? "숨기기" : "보이기"}</span>
