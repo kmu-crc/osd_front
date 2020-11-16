@@ -6,7 +6,11 @@ import styled from "styled-components";
 import { geturl } from "config"
 import nobg from "source/hero1920.png";
 import ScrollContainer from 'react-indiana-drag-scroll';
+import { SearchMemberRequest } from "redux/modules/search";
+import SearchMember from "components/Commons/SearchDesignMember";
+import { Modal } from 'semantic-ui-react';
 // import Notifications from './Notifications';
+import Cross from "components/Commons/Cross";
 
 const RoomDiv = styled.div`
 	position: relative;
@@ -31,6 +35,14 @@ const MenuBarContainer = styled.div`
 		&.peer {
 			position: absolute;
 			right: 10%;
+			width: max-content;
+			padding: 8px 25px;
+			border-radius: 36px;
+			background: rgba(100,100,100, 0.75);
+		}
+		&.invite {
+			position: absolute;
+			left: 10%;
 			width: max-content;
 			padding: 8px 25px;
 			border-radius: 36px;
@@ -197,20 +209,47 @@ const PeersContainer = styled.div`
 		}
 	}
 `;
-
+const InviteModal = styled(Modal)`
+  margin-top: 50px !important;
+  margin-bottom: 50px !important;
+	height: 400px;
+	width: 100%;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #000000;
+  border: 1px solid #EFEFEF;
+  border-radius: 10px;
+  opacity: 1;
+  ::-webkit-scrollbar {
+    position: absolute;
+    width: 3.9px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(112, 112, 112, 0.45) !important;
+	}
+	.close-box {
+		cursor: pointer;
+		position: absolute;
+		right: 10px;
+		top: 10px;
+		z-index: 500;
+	}
+	.search-bar{
+		z-index: 499;
+	}
+`;
 class Room extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			h: window.innerHeight,
-			shareState: "off", mode: "grid"/* :non-clicked, "scroll":clicked*/, hidepeer: false,
+			shareState: "off", mode: "grid"/* :non-clicked, "scroll":clicked*/, hidepeer: false, invite: false,
 		};
 	};
 
 	render() {
 		const { design, peers /*, roomClient, room, me, onRoomLinkCopy */ } = this.props;
 		const bg = (design && design.img && design.img.l_img) || nobg;
-		const { mode, hidepeer } = this.state;
+		const { mode, hidepeer, invite } = this.state;
 
 		const grid = [
 			/* 0*/{ row: 1, col: 1 },
@@ -219,18 +258,16 @@ class Room extends React.Component {
 			/* 3*/{ row: 2, col: 2 },
 			/* 4*/{ row: 2, col: window.innerWidth > window.innerHeight ? 4 : 3 },
 		];
-		// const FAKE = () => <div style={{ position: "relative", width: "250px", height: "250px", border: "1px solid white", backgroundColor: "black", color: "white", fontSize: "3em", textAlign: "center" }}>FAKE</div>
 
 		const total = 1 + (peers.length || 0);
-		// console.log(total);
-		const idx = total > 4 ? 4 : total - 1;
+		const idx = total > grid.length - 1 ? grid.length - 1 : total - 1;
 
 		return (<RoomDiv h={this.state.h || window.innerHeight}>
 			{/* notifications */}
 			{/* <Notifications /> */}
 
 			{/* menubar */}
-			<MenuBarContainer >
+			<MenuBarContainer>
 				<div className='btn chat' onClick={() => {
 					const url = geturl() + `/chat/${this.props.design.uid} `
 					const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`
@@ -238,7 +275,11 @@ class Room extends React.Component {
 				}}>
 					<span className='txt'>채팅</span>
 				</div>
-
+				{/* <div className="btn chat invite" onClick={() => {
+					// this.setState({ invite: true });
+				}}>
+					<span className="txt">초대</span>
+				</div> */}
 				<div className='btn share' ref={ref => this.sharebtn = ref}>
 					<span className='txt'>
 						{this.state.shareState === "on" ? "화면공유 종료" : "화면공유"}
@@ -257,6 +298,28 @@ class Room extends React.Component {
 			</MenuBarContainer>
 
 			<ContentContainer bg={bg}>
+
+				{/* modal */}
+				{/* invite modal */}
+				{/* <InviteModal open={invite} onClose={() => this.setState({ invite: false })}>
+					<div className="close-box" onClick={() => this.setState({ invite: false })} >
+						<Cross angle={45} color={"#707070"} weight={3} width={35} height={35} />
+					</div>
+					<div className="title-box">
+						<span className="title">손님초대</span>
+						<span className="memo">(디자인 맴버가 아닌 오픈소스사이트 사용자를 회의에 초대합니다.)</span>
+					</div>
+					<hr />
+					<div className="search-bar">
+						<SearchMember {...this.props} />
+					</div>
+					<hr />
+					<div>
+						<div>초대</div>
+						<div>취소</div>
+					</div>
+				</InviteModal> */}
+
 				<div className="panel" />
 
 				{/* <div>영상부분</div> */}
@@ -350,17 +413,22 @@ class Room extends React.Component {
 	componentWillUnmount() {
 		window.removeEventListener("resize");
 	};
-}
+};
+
+
 const mapStateToProps = (state) => {
 	const peersArray = Object.values(state.peers);
+	console.log(state);
 	return {
 		peers: peersArray,
 		activeSpeakerId: state.room.activeSpeakerId
 	};
 };
+const mapDispatchToProps = (dispatch) => {
+	return {
+		SearchMemberRequest: (id, data, token) => (dispatch(SearchMemberRequest(id, data, token)))
+	};
+};
 
-const RoomContainer = connect(
-	mapStateToProps,
-	null,
-)(Room);
+const RoomContainer = connect(mapStateToProps, mapDispatchToProps)(Room);
 export default RoomContainer;

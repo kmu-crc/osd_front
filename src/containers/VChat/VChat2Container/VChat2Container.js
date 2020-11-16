@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
-import { GetDesignDetailRequest } from "redux/modules/design";
+import { GetDesignDetailRequest, CheckInvitedUserRequest } from "redux/modules/design";
 import host from "config";
 import NewVChat from "components/VChatMediasoup";
 
@@ -25,17 +25,12 @@ class VChat2Container extends Component {
     }
     close = (msg) => {
         msg && alert(msg)
-        window.open('', '_self').close()
-        // window.history.back();
+        window.open('', '_self').close();
+        window.history.go(-1); // 주소 입력창으로 접근 시 뒤로가기 해야하기 때문에 추가됨.
     }
     componentDidMount() {
-        // if (this.props.opt == null) {
-        // this.close("올바른 접근이 아닙니다.");
-        // window.history.go(-1);
-        // }
         if (this.props.id == null) {
             this.close("올바른 접근이 아닙니다.");
-            window.history.go(-1);
         }
         if (this.props.userInfo == null) {
             this.close("로그인 후 가능합니다.");
@@ -43,15 +38,16 @@ class VChat2Container extends Component {
         // 디자인 맴버인지 체크
         this.props.token &&
             this.props.GetDesignDetailRequest(this.props.id, this.props.token)
-                .then(data => {
+                .then(async data => {
                     if (data && data.member) {
-                        const found = data.member.filter(mem => mem.user_id === this.props.userInfo.uid)
-                        if (found.length === 0) {
-                            this.close("회원이 아닙니다.")
+                        const ismember = data.member.filter(mem => mem.user_id === this.props.userInfo.uid).length > 0;
+                        const invited = await CheckInvitedUserRequest(this.props.id, this.props.token);
+                        if (ismember || (invited.result || false)) {
+                            this.setState({ design: data });
+                            this.setState({ valid: true });
+                        } else {
+                            this.close("화상회의에 입장하실 수 없습니다.");
                         }
-                        this.setState({ design: data });
-                        this.setState({ valid: true });
-                        console.log('validated');
                     } else {
                         this.close("디자인정보가 잘못되었습니다.");
                     }
@@ -65,10 +61,12 @@ class VChat2Container extends Component {
         // window.history.back();
     }
     render() {
-        return this.state.valid && this.props.userInfo
-        
+        return this.state.valid && this.props.userInfo && this.state.design
+
             ? <NewVChat userInfo={this.props.userInfo} design={this.state.design} />
-            : <div> VALIDATING YOUR INFORMATION </div>
+            : <div style={{ color: "#F0F0F0", textAlign: "center", fontSize: "2rem" }}>
+                사용자 정보를 확인하고 있습니다.
+            </div>
     }
 }
 
@@ -78,6 +76,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
     GetDesignDetailRequest: (id, token) => dispatch(GetDesignDetailRequest(id, token)),
+    // VerifyInvitedUserRequest: (id, token) => dispatch(VerifyInvitedUserRequest(id, token)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(VChat2Container));
