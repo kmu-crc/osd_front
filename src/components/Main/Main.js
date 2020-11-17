@@ -91,9 +91,9 @@ export default class Main extends Component {
 
         {this.props.userInfo
           ? <MainMyGroupListContainer /> : null}
-        <Head>추천 그룹</Head>
+        <Head>인기 그룹</Head>
         <TopGroupListContainer />
-        <Head>추천 디자인</Head>
+        <Head>인기 디자인</Head>
         <TopDesignListContainer />
       </React.Fragment>
     )
