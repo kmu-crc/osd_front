@@ -106,42 +106,31 @@ const ContentContainer = styled.div`
 
 `;
 const RightVerticalScroll = styled.div`
-	padding: 5px;
+	padding: 5px 5px 5px 0px; // top, bottom, left, right
 	width: 260px;
 	display: ${props => props.hidden ? "none" : "flex"};
 
 	z-index: 110;
 	background-color: rgba(255,255,255, 0.5);
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
 
   .hand {
 		cursor: grab;
 	}
-
-	.container {
-		// background-color: #eee;
-		// width: 250px;
-		// height: ${window.innerHeight - 45}px;
-		// // border: 1px dotted black;
-		// overflow-y: scroll; /* Add the ability to scroll */
-		
-		// /* Hide scrollbar for Chrome, Safari and Opera */
-		// ::-webkit-scrollbar {
-		// 		display: none;
-		// }
-		// /* Hide scrollbar for IE, Edge and Firefox */
-		// -ms-overflow-style: none; /* IE and Edge */
-		// scrollbar-width: none; /* Firefox */
-
-		height: max-content;
-		justify-items: center;
-		align-items: center;
-		margin: auto;
-		display: grid;
-		grid-template-rows: repeat(1, 252px);
-		grid-template-columns: repeat(1, 252px);
-		gap: 10px 10px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	:hover {
+	  ::-webkit-scrollbar {
+	  	width: 5px;
+	  }
+	}
+	::-webkit-scrollbar {
+    position: absolute;
+		width: 3px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 112, 112, 1) !important;
 	}
 `;
 const MiddleDynamicGrid = styled.div`
@@ -155,13 +144,26 @@ const MiddleDynamicGrid = styled.div`
 		cursor: grab;
 	}
 	.container {
+		overflow-x: hidden;
+		overflow-y: scroll;
+		:hover {
+			::-webkit-scrollbar {
+				width: 5px;
+			}
+		}
+		::-webkit-scrollbar {
+			position: absolute;
+			width: 3px;
+		}
+		::-webkit-scrollbar-thumb {
+			background: rgba(255, 112, 112, 1) !important;
+		}
 		// height: max-content;
 		padding: 10px;
-		width: max-content;
-		// overflow: auto;
 		justify-items: center;
 		align-items: center;
 		margin: auto;
+		margin-bottom: 50px;
 		display: grid;
 		grid-template-rows: repeat(${props => props.grid.row || 1}, 252px);
 		grid-template-columns: repeat(${props => props.grid.col || 1}, 252px);
@@ -245,6 +247,8 @@ const InviteModal = styled(Modal)`
 		z-index: 499;
 	}
 `;
+
+
 class Room extends React.Component {
 	constructor(props) {
 		super(props);
@@ -267,6 +271,7 @@ class Room extends React.Component {
 			/* 4*/{ row: 2, col: window.innerWidth > window.innerHeight ? 4 : 3 },
 		];
 
+		// const DUMMY = () => <div style={{ position: "relative", width: "250px", height: "250px", border: "1px solid white", backgroundColor: "black", color: "white", fontSize: "3em", textAlign: "center" }}>DUMMY</div>
 		const total = 1 + (peers.length || 0);
 		const idx = total > grid.length - 1 ? grid.length - 1 : total - 1;
 
@@ -347,50 +352,50 @@ class Room extends React.Component {
 
 				{mode === "scroll"
 					? <RightVerticalScroll hidden={hidepeer}>
-						<ScrollContainer vertical={true} horizontal={false} className="hand scroll-container">
-							<div className="container">
+						{/* <ScrollContainer vertical={true} horizontal={false} className="hand scroll-container"> */}
+						<div className="container">
+							<Me
+								needReload={() => {
+									this.video.srcObject = null;
+									this.setState({ mode: "grid" });
+								}}
+								userInfo={this.props.userInfo}
+								sharebtn={this.sharebtn}
+								shareState={this.state.shareState}
+								share={(shareState) => this.setState({ shareState: shareState })}
+								clicked={stream => this.clickedview(stream)}
+								thumbnail={this.props.userInfo.thumbnail}
+							/>
 
-								<Me
-									needReload={() => {
-										this.video.srcObject = null;
-										this.setState({ mode: "grid" });
-									}}
-									userInfo={this.props.userInfo}
-									sharebtn={this.sharebtn}
-									shareState={this.state.shareState}
-									share={(shareState) => this.setState({ shareState: shareState })}
-									clicked={stream => this.clickedview(stream)}
-									thumbnail={this.props.userInfo.thumbnail}
-								/>
-								<Peers
-									clicked={(stream) => this.clickedview(stream)}
-									member={this.props.design.member} />
+							<Peers
+								clicked={(stream) => this.clickedview(stream)}
+								member={this.props.design.member} />
 
-							</div>
-						</ScrollContainer>
+						</div>
+						{/* </ScrollContainer> */}
 					</RightVerticalScroll> : null}
 
 				{mode === "grid"
 					? <MiddleDynamicGrid grid={grid[idx]}>
-						<ScrollContainer vertical={true} horizontal={false} className="hand scroll-container">
-							<div className="container">
-								<Me
-									needReload={() => {
-										this.video.srcObject = null;
-										this.setState({ mode: "grid" });
-									}}
-									userInfo={this.props.userInfo}
-									sharebtn={this.sharebtn}
-									shareState={this.state.shareState}
-									share={(shareState) => this.setState({ shareState: shareState })}
-									clicked={stream => this.clickedview(stream)}
-									thumbnail={this.props.userInfo.thumbnail}
-								/>
-								<Peers
-									clicked={(stream) => this.clickedview(stream)}
-									member={this.props.design.member} />
-							</div>
-						</ScrollContainer>
+						{/* <ScrollContainer vertical={true} horizontal={false} className="hand scroll-container"> */}
+						<div className="container">
+							<Me
+								needReload={() => {
+									this.video.srcObject = null;
+									this.setState({ mode: "grid" });
+								}}
+								userInfo={this.props.userInfo}
+								sharebtn={this.sharebtn}
+								shareState={this.state.shareState}
+								share={(shareState) => this.setState({ shareState: shareState })}
+								clicked={stream => this.clickedview(stream)}
+								thumbnail={this.props.userInfo.thumbnail}
+							/>
+							<Peers
+								clicked={(stream) => this.clickedview(stream)}
+								member={this.props.design.member} />
+						</div>
+						{/* </ScrollContainer> */}
 					</MiddleDynamicGrid>
 					: null}
 			</ContentContainer>
