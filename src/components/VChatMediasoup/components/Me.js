@@ -298,35 +298,13 @@ class Me extends React.Component {
 	}
 	componentDidUpdate(prevProps) {
 
-		const { videoProducer, } = this.props;
+		// const { videoProducer, } = this.props;
 
-		if (videoProducer && videoProducer.type === "share") {
-			videoProducer.track.onended = () => {
-				this.props.share && this.props.share("off");
-			}
-		}
-		if (prevProps.sharebtn != this.props.sharebtn && this.props.sharebtn != null) {
-			this.props.sharebtn.addEventListener('click', async () => {
-				console.log(this.props);
-				if (this.props.me.shareInProgress || this.props.me.webcamInProgress) {
-					return;
-				}
-				const { shareState } = this.props;
-				if (shareState === "on") {
-					this.props.roomClient.disableShare();
-					this.props.share && this.props.share("off");
-				}
-				else {
-					if (await this.props.roomClient.enableShare() === "cancelled") {
-						this.props.roomClient.disableShare();
-						this.props.roomClient.checkEnabledWebcam();
-						this.props.share && this.props.share("off");
-					} else {
-						this.props.share && this.props.share("on");
-					}
-				}
-			})
-		}
+		// if (videoProducer && videoProducer.type === "share") {
+		// videoProducer.track.onended = () => {
+		// this.props.share && this.props.share("off");
+		// }
+		// }
 
 		if (!prevProps.me.displayNameSet && this.props.me.displayNameSet) {
 			ReactTooltip.hide(this._rootNode);
@@ -349,7 +327,6 @@ const mapStateToProps = (state) => {
 	const producersArray = Object.values(state.producers);
 	const audioProducer = producersArray.find((producer) => producer.track.kind === 'audio');
 	const videoProducer = producersArray.find((producer) => producer.track.kind === 'video');
-
 	return {
 		connected: state.room.state === 'connected',
 		me: state.me,
@@ -358,11 +335,10 @@ const mapStateToProps = (state) => {
 		// faceDetection: state.room.faceDetection
 	};
 };
+// const mapDispatchToProps = (dispatch) => ({
+// 	// onSetStatsPeerId: (peerId) => dispatch(stateActions.setRoomStatsPeerId(peerId))
+// });
 
-const mapDispatchToProps = (dispatch) => ({
-	// onSetStatsPeerId: (peerId) => dispatch(stateActions.setRoomStatsPeerId(peerId))
-});
-
-const MeContainer = withRoomContext(connect(mapStateToProps, mapDispatchToProps)(Me));
+const MeContainer = withRoomContext(connect(mapStateToProps, null /* mapDispatchToProps */)(Me));
 
 export default MeContainer;

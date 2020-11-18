@@ -248,20 +248,34 @@ const InviteModal = styled(Modal)`
 	}
 `;
 
+/*디버깅용 주석
+공유플래그: on || off
+- 공유하면 on
+- 
+화면모드플래그
 
+숨김플래그
+초대모달플래그
+
+*/
 class Room extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			h: window.innerHeight,
-			shareState: "off", mode: "grid"/* :non-clicked, "scroll":clicked*/, hidepeer: false, invite: false,
+
+			shareState: "off",
+			mode: "grid",// || "scroll",
+			hidepeer: false,
+			invite: false,
+
 		};
 	};
 
 	render() {
-		const { design, peers /*, roomClient, room, me, onRoomLinkCopy */ } = this.props;
+		const { design, peers, me, roomClient,/*, , room, onRoomLinkCopy */ } = this.props;
 		const bg = (design && design.img && design.img.l_img) || nobg;
-		const { mode, hidepeer, invite } = this.state;
+		const { h, mode, hidepeer, invite } = this.state;
 
 		const grid = [
 			/* 0*/{ row: 1, col: 1 },
@@ -275,7 +289,9 @@ class Room extends React.Component {
 		const total = 1 + (peers.length || 0);
 		const idx = total > grid.length - 1 ? grid.length - 1 : total - 1;
 
-		return (<RoomDiv h={this.state.h || window.innerHeight}>
+		const myvideo = me.find(track => track && ["front", "back", "share"].includes(track.type));
+		const shareState = myvideo && myvideo.type === "share";
+		return (<RoomDiv h={h || window.innerHeight}>
 			{/* notifications */}
 			{/* <Notifications /> */}
 
@@ -293,9 +309,28 @@ class Room extends React.Component {
 				}}>
 					<span className="txt">초대</span>
 				</div> */}
-				<div className='btn share' ref={ref => this.sharebtn = ref}>
+				<div className='btn share' //ref={ref => this.sharebtn = ref}
+					onClick={async() => {
+						if (me.shareInProgress || me.webcamInProgress) {
+							return;
+						}
+						if (shareState) {
+							roomClient.disableShare();
+							// this.props.share && this.props.share("off");
+						}
+						else {
+							if (await roomClient.enableShare() === "cancelled") {
+								roomClient.disableShare();
+								this.props.roomClient.checkEnabledWebcam();
+								// this.props.share && this.props.share("off");
+							} else {
+								// this.props.share && this.props.share("on");
+							}
+						}
+					}}>
 					<span className='txt'>
-						{this.state.shareState === "on" ? "화면공유 종료" : "화면공유"}
+						{shareState ?
+							"화면공유 종료" : "화면공유"}
 					</span>
 				</div>
 
@@ -361,7 +396,7 @@ class Room extends React.Component {
 								}}
 								userInfo={this.props.userInfo}
 								sharebtn={this.sharebtn}
-								shareState={this.state.shareState}
+								shareState={shareState}
 								share={(shareState) => this.setState({ shareState: shareState })}
 								clicked={stream => this.clickedview(stream)}
 								thumbnail={this.props.userInfo.thumbnail}
@@ -386,7 +421,7 @@ class Room extends React.Component {
 								}}
 								userInfo={this.props.userInfo}
 								sharebtn={this.sharebtn}
-								shareState={this.state.shareState}
+								shareState={shareState}
 								share={(shareState) => this.setState({ shareState: shareState })}
 								clicked={stream => this.clickedview(stream)}
 								thumbnail={this.props.userInfo.thumbnail}
@@ -399,7 +434,7 @@ class Room extends React.Component {
 					</MiddleDynamicGrid>
 					: null}
 			</ContentContainer>
-		</RoomDiv>);
+		</RoomDiv >);
 	};
 
 	clickedview = (stream) => {
@@ -436,10 +471,11 @@ class Room extends React.Component {
 
 const mapStateToProps = (state) => {
 	const peersArray = Object.values(state.peers);
-	console.log(state);
+	const me = Object.values(state.producers);
 	return {
 		peers: peersArray,
-		activeSpeakerId: state.room.activeSpeakerId
+		activeSpeakerId: state.room.activeSpeakerId,
+		me: me,
 	};
 };
 const mapDispatchToProps = (dispatch) => {
