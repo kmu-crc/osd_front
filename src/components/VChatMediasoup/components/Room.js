@@ -40,6 +40,22 @@ const MenuBarContainer = styled.div`
 			border-radius: 36px;
 			background: rgba(100,100,100, 0.75);
 		}
+		&.start {
+			position: absolute;
+			left: 20%;
+			width: max-content;
+			padding: 8px 25px;
+			border-radius: 36px;
+			background: rgba(100,100,100, 0.75);
+		}
+		&.stop {
+			position: absolute;
+			left: 30%;
+			width: max-content;
+			padding: 8px 25px;
+			border-radius: 36px;
+			background: rgba(100,100,100, 0.75);
+		}
 		&.invite {
 			position: absolute;
 			left: 10%;
@@ -258,6 +274,8 @@ const InviteModal = styled(Modal)`
 초대모달플래그
 
 */
+let mediaRecorder;
+let chunks = [];
 class Room extends React.Component {
 	constructor(props) {
 		super(props);
@@ -273,7 +291,7 @@ class Room extends React.Component {
 	};
 
 	render() {
-		const { design, peers, me, roomClient,/*, , room, onRoomLinkCopy */ } = this.props;
+		const { design, peers, me, roomClient, consumers, /*  room, onRoomLinkCopy */ } = this.props;
 		const bg = (design && design.img && design.img.l_img) || nobg;
 		const { h, mode, hidepeer, invite } = this.state;
 
@@ -290,7 +308,9 @@ class Room extends React.Component {
 		const idx = total > grid.length - 1 ? grid.length - 1 : total - 1;
 
 		const myvideo = me.find(track => track && ["front", "back", "share"].includes(track.type));
+		// const myaudio = null;//me.find(track => track && track.kind === "audio");
 		const shareState = myvideo && myvideo.type === "share";
+		console.log("formix", this.props.design);
 		return (<RoomDiv h={h || window.innerHeight}>
 			{/* notifications */}
 			{/* <Notifications /> */}
@@ -303,6 +323,49 @@ class Room extends React.Component {
 					window.open(url, "chat", options)
 				}}>
 					<span className='txt'>채팅</span>
+				</div>
+				<div style={{ display: "flex", flexDirection: "row" }}>
+					<div className="btn start" onClick={() => {
+						const actx = new AudioContext();
+						const dest = actx.createMediaStreamDestination();
+						let _stream = new MediaStream();
+						const myaudio = me.find(obj => obj && obj.track && obj.track.kind === "audio").track;
+						_stream.addTrack(myaudio);
+						actx.createMediaStreamSource(_stream).connect(dest);
+						peers.map(peer => {
+							console.log('record:', peer);
+							const consumerAry = peer.consumers.map(id => consumers[id]);
+							const audioConsumer = consumerAry.find(cnsmr => cnsmr.track.kind === "audio").track;
+							actx.createMediaStreamSource(new MediaStream([audioConsumer])).connect(dest);
+						});
+						const mixedtrack = dest.stream.getTracks()[0];
+						const stream = new MediaStream([mixedtrack]);
+						mediaRecorder = new MediaRecorder(stream);
+						mediaRecorder.start();
+						mediaRecorder.onstop = (e) => {
+							var blob = new Blob(chunks, { 'type': 'audio/ogg; codes=opus' });
+							var url = URL.createObjectURL(blob);
+							var a = document.createElement('a');
+							document.body.appendChild(a);
+							a.style = 'display:none';
+							a.href = url;
+							a.download = 'filename.ogg';//'화상회의-' + new Date().formatUTC("yyyyMMdd_HHmmss") + '.ogg';
+							a.click();
+							window.URL.revokeObjectURL(url);
+							chunks = [];
+						}
+						mediaRecorder.ondataavailable = e => {
+							chunks.push(e.data);
+						}
+					}}>
+						<span className="txt"><i className="play icon" /></span>
+					</div>
+					<div className="btn pause" onClick={() => {
+						1 ? mediaRecorder.pause() : mediaRecorder.resume();
+					}}><span className="txt"><i className="pause icon" /></span></div>
+					<div className="btn stop" onClick={() => {
+						mediaRecorder && mediaRecorder.stop();
+					}}><span className="txt"><i className="stop icon" /></span></div>
 				</div>
 				{/* <div className="btn chat invite" onClick={() => {
 					// this.setState({ invite: true });
@@ -465,6 +528,7 @@ const mapStateToProps = (state) => {
 		peers: peersArray,
 		activeSpeakerId: state.room.activeSpeakerId,
 		me: me,
+		consumers: state.consumers,
 	};
 };
 const mapDispatchToProps = (dispatch) => {
