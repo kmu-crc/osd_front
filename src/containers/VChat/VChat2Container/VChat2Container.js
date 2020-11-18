@@ -5,6 +5,15 @@ import { GetDesignDetailRequest, CheckInvitedUserRequest } from "redux/modules/d
 import host from "config";
 import NewVChat from "components/VChatMediasoup";
 
+// TODO
+// 1. 화면공유버튼 플래그 확인 ... 리덕스와 스테이터스의 관리
+// 2. 음성녹음
+// 3. 캔버스에 모든영상녹화
+// 4. 플래그에 따른 영상녹화화면 편집
+// 5. 녹화상태보기 기능
+// 6. 스피커 위주 화면배치
+// 7. 초대하기 기능 추가 ... 회원 검색목록 가져오는 컨포넌트확인필요.
+
 class VChat2Container extends Component {
     constructor(props) {
         super(props);
