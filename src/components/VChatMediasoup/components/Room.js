@@ -310,27 +310,16 @@ class Room extends React.Component {
 					<span className="txt">초대</span>
 				</div> */}
 				<div className='btn share' //ref={ref => this.sharebtn = ref}
-					onClick={async() => {
-						if (me.shareInProgress || me.webcamInProgress) {
-							return;
-						}
-						if (shareState) {
+					onClick={async () => {
+						if (shareState ||
+							await roomClient.enableShare() === "cancelled") {
 							roomClient.disableShare();
-							// this.props.share && this.props.share("off");
-						}
-						else {
-							if (await roomClient.enableShare() === "cancelled") {
-								roomClient.disableShare();
-								this.props.roomClient.checkEnabledWebcam();
-								// this.props.share && this.props.share("off");
-							} else {
-								// this.props.share && this.props.share("on");
-							}
+							roomClient.checkEnabledWebcam();
+							return;
 						}
 					}}>
 					<span className='txt'>
-						{shareState ?
-							"화면공유 종료" : "화면공유"}
+						{shareState ? "화면공유 종료" : "화면공유"}
 					</span>
 				</div>
 
@@ -395,9 +384,9 @@ class Room extends React.Component {
 									this.setState({ mode: "grid" });
 								}}
 								userInfo={this.props.userInfo}
-								sharebtn={this.sharebtn}
-								shareState={shareState}
-								share={(shareState) => this.setState({ shareState: shareState })}
+								// sharebtn={this.sharebtn}
+								// shareState={shareState}
+								// share={(shareState) => this.setState({ shareState: shareState })}
 								clicked={stream => this.clickedview(stream)}
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
@@ -420,9 +409,9 @@ class Room extends React.Component {
 									this.setState({ mode: "grid" });
 								}}
 								userInfo={this.props.userInfo}
-								sharebtn={this.sharebtn}
-								shareState={shareState}
-								share={(shareState) => this.setState({ shareState: shareState })}
+								// sharebtn={this.sharebtn}
+								// shareState={shareState}
+								// share={(shareState) => this.setState({ shareState: shareState })}
 								clicked={stream => this.clickedview(stream)}
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
