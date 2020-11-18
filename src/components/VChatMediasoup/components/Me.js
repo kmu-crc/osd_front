@@ -7,6 +7,7 @@ import PeerView from './PeerView';
 import styled from 'styled-components';
 import classnames from 'classnames';
 import * as cookiesManager from '../cookiesManager';
+import * as utils from "../utils";
 
 // ICONS
 import icon_mic_black_on from 'resources/images/icon_mic_black_on.svg';
@@ -226,13 +227,13 @@ class Me extends React.Component {
 								}
 							}}
 						/>
-
-						<div
-							className={classnames('button', 'change-webcam', changeWebcamState, {
-								disabled: me.webcamInProgress || me.shareInProgress
-							})}
-							onClick={() => roomClient.changeWebcam()}
-						/>
+						{utils.isMobileDevice() ?
+							<div
+								className={classnames('button', 'change-webcam', changeWebcamState, {
+									disabled: me.webcamInProgress || me.shareInProgress
+								})}
+								onClick={() => roomClient.changeWebcam()}
+							/> : null}
 
 					</Control> : null}
 
