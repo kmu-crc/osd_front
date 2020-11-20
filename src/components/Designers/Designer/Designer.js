@@ -340,7 +340,7 @@ class Designer extends Component {
             <div className="update">
               {DateFormat(designer.update_time)}</div>
             <div className="cate">
-              {designer.level2_name || designer.level1_name || "전체"}</div>
+              {designer.level3_name || designer.level2_name || designer.level1_name || "전체"}</div>
             <div className="counter">
               <div className="view">
                 <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>

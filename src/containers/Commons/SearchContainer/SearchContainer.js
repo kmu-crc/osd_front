@@ -16,6 +16,7 @@ class SearchContainer extends Component {
 const mapStateToProps = (state) => ({
   category1: state.Category.status.category1,
   category2: state.Category.status.category2,
+  category3: state.Category.status.category3,
   groups: state.GroupList.status.GroupListAdded,
   designs: state.DesignList.status.DesignListAdded,
   designers: state.DesignerList.status.DesignerListAdded,

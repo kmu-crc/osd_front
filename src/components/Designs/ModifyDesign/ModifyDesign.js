@@ -650,6 +650,7 @@ class ModifyDesign extends Component {
     this.onCheckedLicense03 = this.onCheckedLicense03.bind(this);
     this.onChangeCategory1 = this.onChangeCategory1.bind(this);
     this.onChangeCategory2 = this.onChangeCategory2.bind(this);
+    this.onChangeCategory3 = this.onChangeCategory3.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.onKeyDownEnter = this.onKeyDownEnter.bind(this);
     this.cancelDeleteDesign = this.cancelDeleteDesign.bind(this);
@@ -663,6 +664,7 @@ class ModifyDesign extends Component {
         explanation: nextProps.DesignDetail.explanation,
         categoryLevel1: nextProps.DesignDetail.category_level1,
         categoryLevel2: nextProps.DesignDetail.category_level2,
+        categoryLevel3: nextProps.DesignDetail.category_level3,
         members: nextProps.DesignDetail.member && nextProps.DesignDetail.member.filter((mem) => { return mem.user_id !== this.props.userInfo.uid }),
         license1: nextProps.DesignDetail.is_commercial,
         license2: nextProps.DesignDetail.is_display_creater,
@@ -748,7 +750,7 @@ class ModifyDesign extends Component {
   submit = () => {
     const data = {
       user_id: this.props.DesignDetail.user_id,
-      category_level1: this.state.categoryLevel1, category_level2: this.state.categoryLevel2,
+      category_level1: this.state.categoryLevel1, category_level2: this.state.categoryLevel2, category_level3: this.state.categoryLevel3,
       title: this.state.title, explanation: this.state.explanation,
       files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name, key: "thumbnail[]" }],
       members: { add: this.state.addmem, del: this.state.delmem },
@@ -772,11 +774,15 @@ class ModifyDesign extends Component {
     // window.location.href = geturl() + `/designDetail/` + this.state.designId;
   }
   onChangeCategory1(event, { value }) {
-    this.setState({ categoryLevel1: { value }.value });
+    this.setState({ categoryLevel1: { value }.value, categoryLevel2:null,categoryLevel3:null });
     this.checkFinishAdditional();
   }
   onChangeCategory2(event, { value }) {
-    this.setState({ categoryLevel2: { value }.value })
+    this.setState({ categoryLevel2: { value }.value,categoryLevel3:null })
+    this.checkFinishAdditional();
+  }
+  onChangeCategory3(event, { value }) {
+    this.setState({ categoryLevel3: { value }.value })
     this.checkFinishAdditional();
   }
   onCheckedLicense01 = async () => {
@@ -844,6 +850,16 @@ class ModifyDesign extends Component {
           <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
         </div>)
       });
+    }
+    let category3Index = -1;
+    let nCount=0;
+    for(let i in this.props.category2){
+      this.props.category2&&this.props.category2[i]&&this.props.category2[i].map((item,index)=>{
+          if(item.value == this.state.categoryLevel2){
+            category3Index = nCount;
+          }
+          nCount++;
+        })
     }
     const DeleteDesignModal = () => {
       return (<Modal open={this.state.deleteModal} closeOnDimmerClick={true} onClose={this.deleteDialog}
@@ -947,6 +963,10 @@ class ModifyDesign extends Component {
                       {this.props.category2[this.state.categoryLevel1 - 1] && this.state.categoryLevel1 !== 0
                         ? <CategoryDropDown options={this.props.category2[this.state.categoryLevel1 - 1]} selection id="category2" name="cate2" ref="dropdown2" onChange={this.onChangeCategory2} value={this.state.categoryLevel2} />
                         : <CategoryDropDown options={emptyCategory} selection id="category2" name="cate2" ref="dropdown2" onChange={this.onChangeCategory2} value={this.state.categoryLevel2} />}
+                      {this.state.categoryLevel1 !== 0 &&this.state.categoryLevel2 !== 0 && this.props.category3[this.state.categoryLevel2 - 1]
+                          ? <CategoryDropDown value={this.state.categoryLevel3} ref="dropdown2" selection onChange={this.onChangeCategory3} options={this.props.category3[category3Index]} />
+                          : <CategoryDropDown value={this.state.categoryLevel3} ref="dropdown2" selection onChange={this.onChangeCategory3} options={emptyCategory} />
+                        }
                     </CategoryBox>
                     : <p>카테고리를 가져오고 있습니다.</p>}
                   {/* invite member*/}

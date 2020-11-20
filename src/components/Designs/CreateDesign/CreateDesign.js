@@ -395,7 +395,7 @@ const CategoryBox = styled.div`
   }
 `;
 const CategoryDropDown = styled(Dropdown)`
-  width:410px;
+  width:380px;
   height:56px;     
   border-radius:5px;
   font-size:20px;
@@ -782,7 +782,7 @@ class CreateDesign extends Component {
       title: "",
       thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false,
       categoryLevel1: this.props.userInfo.category1 || null,
-      categoryLevel2: null,
+      categoryLevel2: null, categoryLevel3:null,
       alone: true, members: [], addmem: [], delmem: [],
       license1: true, license2: true, license3: true,
       type: null, template: null,
@@ -794,6 +794,8 @@ class CreateDesign extends Component {
     this.onCheckedLicense03 = this.onCheckedLicense03.bind(this);
     this.onChangeCategory1 = this.onChangeCategory1.bind(this);
     this.onChangeCategory2 = this.onChangeCategory2.bind(this);
+    this.onChangeCategory3 = this.onChangeCategory3.bind(this);
+
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.checkInputForm = this.checkInputForm.bind(this);
     this.onKeyDownEnter = this.onKeyDownEnter.bind(this);
@@ -907,7 +909,7 @@ class CreateDesign extends Component {
   submit = () => {
     this.setState({ loading: true });
     const {
-      contents, categoryLevel1, categoryLevel2, title, explanation,
+      contents, categoryLevel1, categoryLevel2, categoryLevel3, title, explanation,
       license1, license2, license3,
       thumbnail, thumbnail_name } = this.state;
     contents && contents.map(content => {
@@ -918,7 +920,7 @@ class CreateDesign extends Component {
       uid: this.props.userInfo.uid,
       is_project: this.state.is_project,
       contents: contents, // [*]
-      category_level1: categoryLevel1, category_level2: categoryLevel2, explanation: explanation,
+      category_level1: categoryLevel1, category_level2: categoryLevel2, category_level3: categoryLevel3, explanation: explanation,
       files: [{ key: "thumbnail[]", value: thumbnail, name: thumbnail_name }],
       is_commercial: license1 ? 1 : 0, is_display_creater: license2 ? 1 : 0, is_modify: license3 ? 1 : 0,
       members: {
@@ -942,14 +944,18 @@ class CreateDesign extends Component {
       .catch(err => alert(err + "와 같은 이유로 다음 단계로 진행할 수 없습니다."));
     this.setState({ loading: false });
   };
-  onChangeCategory1 = async (event, { value }) => {
-    await this.setState({ categoryLevel1: { value }.value });
+  onChangeCategory1(event, { value }) {
+    this.setState({ categoryLevel1: { value }.value, categoryLevel2:null,categoryLevel3:null });
     this.checkFinishAdditional();
-  };
-  onChangeCategory2 = async (event, { value }) => {
-    await this.setState({ categoryLevel2: { value }.value })
+  }
+  onChangeCategory2(event, { value }) {
+    this.setState({ categoryLevel2: { value }.value,categoryLevel3:null })
     this.checkFinishAdditional();
-  };
+  }
+  onChangeCategory3(event, { value }) {
+    this.setState({ categoryLevel3: { value }.value })
+    this.checkFinishAdditional();
+  }
   onCheckedLicense01 = async () => {
     await this.setState({ license1: !this.state.license1 });
     this.checkFinishAdditional();
@@ -1123,7 +1129,18 @@ class CreateDesign extends Component {
     const { step, is_project, contents } = this.state;
     const thumbnailURL = this.state.thumbnail;
     console.log(this.props, this.state);
-
+    let category3Index = -1;
+    let nCount=0;
+    for(let i in this.props.category2){
+      this.props.category2&&this.props.category2[i]&&this.props.category2[i].map((item,index)=>{
+          if(item.value == this.state.categoryLevel2){
+            category3Index = nCount;
+          }
+          nCount++;
+        })
+    }
+    // console.log(this.props.category3);
+    if(category3Index==-1)category3Index=0;
     return (
       <div>
 
@@ -1251,6 +1268,15 @@ class CreateDesign extends Component {
                       onChange={this.onChangeCategory2}
                       options={this.props.category2[this.state.categoryLevel1 - 1] || emptyCategory}
                       value={this.state.categoryLevel2}
+                      placeholder="서브 카테고리를 선택해주세요(선택사항)"
+                    />
+                    <CategoryDropDown
+                      selection
+                      id="category3"
+                      ref="dropdown3"
+                      onChange={this.onChangeCategory3}
+                      options={this.props.category3&&this.props.category3[category3Index] || emptyCategory}
+                      value={this.state.categoryLevel3}
                       placeholder="서브 카테고리를 선택해주세요(선택사항)"
                     />
                   </CategoryBox>

@@ -17,7 +17,7 @@ const NoDataMsg = styled.div`
 class ScrollDesignerListContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { reload: false, category1: 0, category2: 0, orderOption: "update" }
+    this.state = { reload: false, category1: 0, category2: 0, categoryLevel3:0, orderOption: "update" }
     this.getList = this.getList.bind(this);
     this.getInitList = this.getInitList.bind(this);
     this.handleReload = this.handleReload.bind(this);
@@ -29,8 +29,8 @@ class ScrollDesignerListContainer extends Component {
     if (this.props.keyword !== prevProps.keyword) {
       this.getInitList();
     }
-    if (this.props.cate1 !== prevProps.cate1 || this.props.cate2 !== prevProps.cate2) {
-      this.setState({ category1: this.props.cate1, category2: this.props.cate2 });
+    if (this.props.cate1 !== prevProps.cate1 || this.props.cate2 !== prevProps.cate2 || this.props.cate3 !== prevProps.cate3) {
+      this.setState({ category1: this.props.cate1, category2: this.props.cate2, category3: this.props.cate3 });
       this.getList(0);
     }
     if (this.props.orderOption !== prevProps.orderOption && this.props.orderOption !== undefined) {
@@ -41,10 +41,10 @@ class ScrollDesignerListContainer extends Component {
   getInitList = () => {
     this.props.keyword &&
       this.props.keyword.length &&
-      this.props.GetDesignerListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
+      this.props.GetDesignerListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.cate3, this.props.keyword);
   }
   getList = async (page) => {
-    this.props.GetDesignerListRequest(page, this.props.orderOption.keyword, this.props.cate1, this.props.cate2, this.props.keyword);
+    this.props.GetDesignerListRequest(page, this.props.orderOption.keyword, this.props.cate1, this.props.cate2, this.props.cate3, this.props.keyword);
   };
   handleReload = () => {
     this.setState({ reload: !this.state.reload });
@@ -78,8 +78,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  GetDesignerListRequest: (page, sort, categoryLevel1, categoryLevel2, keyword) =>
-    dispatch(GetDesignerListRequest(page, sort, categoryLevel1, categoryLevel2, keyword))
+  GetDesignerListRequest: (page, sort, categoryLevel1, categoryLevel2, categoryLevel3, keyword) =>
+    dispatch(GetDesignerListRequest(page, sort, categoryLevel1, categoryLevel2, categoryLevel3, keyword))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScrollDesignerListContainer);

@@ -69,12 +69,13 @@ class DesignListContainer extends Component {
       reload: false, screenWidth: window.innerWidth,
       this_order: this.props.sort == "like" ? { text: "인기순", keyword: "like" } : { text: "등록순", keyword: "update" },
       this_category: { text: null, value: null },
-      main_category: { text: null, value: null }, sub_category: { text: null, value: null },
+      main_category: { text: null, value: null }, sub_category: { text: null, value: null }, third_category:{text:null,value:null},
       category2: [],
     };
     this.handleReload = this.handleReload.bind(this);
     this.handleChangeCategory = this.handleChangeCategory.bind(this);
     this.handleChangeSubCategory = this.handleChangeSubCategory.bind(this);
+    this.handleChangeThirdCategory = this.handleChangeThirdCategory.bind(this);
     this.handleChangeOrderOps = this.handleChangeOrderOps.bind(this);
     this.getList = this.getList.bind(this);
     this.changeCategory = this.changeCategory.bind(this);
@@ -82,8 +83,8 @@ class DesignListContainer extends Component {
   }
   componentDidMount() {
     this.props.GetCategoryAllRequest()
-      .then(() => { this.props.GetDesignListCountRequest(this.props.cate1, this.props.cate2) });
-    this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, null);
+      .then(() => { this.props.GetDesignListCountRequest(this.props.cate1, this.props.cate2, this.props.cate3) });
+    this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, this.props.cate2,this.props.cate3, null);
     window.addEventListener("resize", this.handleResize, false);
 
   }
@@ -123,6 +124,33 @@ class DesignListContainer extends Component {
         this.setState({ this_category: sub_category });
       }
     }
+
+    if (this.props.category3 !== nextProps.category3) {
+      let third_category = {text:null,value:null};
+      let nCount=0;
+      let nParent;
+      for(let i in nextProps.category2){
+        nextProps.category2&&nextProps.category2[i]&&nextProps.category2[i].map((item,index)=>{
+          if(this.props.cate2==item.value){
+            nParent = nCount;
+          }
+          nCount++;
+        })
+      }
+      nParent != -1 &&nextProps.category3[nParent]&&nextProps.category3[nParent].map((item, index) => {
+        if (this.props.cate3 == item.value) {
+          third_category.text = item.text;
+          third_category.value = item.value;
+          third_category.parent = nParent;
+        }
+      })
+      this.setState({ third_category: third_category, category3: nextProps.category3[nParent] });
+      if (this.props.cate3 !== null) {
+        this.setState({ this_category: third_category });
+      }
+    }
+
+
   }
   handleResize() {
     this.setState({ screenWidth: window.innerWidth })
@@ -132,7 +160,7 @@ class DesignListContainer extends Component {
   }
   async handleChangeCategory(category) {
     await this.setState({ main_category: category, this_category: category, sub_category: { text: null, value: null } })
-    this.props.GetDesignListCountRequest(category.value, null);
+    this.props.GetDesignListCountRequest(category.value, null, null);
     this.handleReload();
     this.getList(0);
     const orderkeyword = this.props.sort == null ? "update" : `${this.props.sort}`;
@@ -140,13 +168,23 @@ class DesignListContainer extends Component {
     window.location.href = "/design" + `/${orderkeyword}` + "/" + category.value;
   }
   async handleChangeSubCategory(parent, category) {
+    console.log("handleChangeSubCategory:::::",category);
     await this.setState({ main_category: parent, this_category: category, sub_category: category });
-    this.props.GetDesignListCountRequest(this.state.main_category.value, category.value);
+    this.props.GetDesignListCountRequest(this.state.main_category.value, category.value, null);
     this.handleReload();
     this.getList(0);
     const orderkeyword = this.props.sort == null ? "update" : `${this.props.sort}`;
 
     window.location.href = "/design" + `/${orderkeyword}` + "/" + parent.value + "/" + category.value;
+  }
+  async handleChangeThirdCategory(old_parent,parent,category){
+    console.log(old_parent,parent,category.value);
+    await this.setState({ main_category: old_parent, this_category: category, sub_category: parent, third_category:category });
+    this.props.GetDesignListCountRequest(this.state.main_category.value, this.state.sub_category.value, category.value);
+    this.handleReload();
+    this.getList(0);
+    const orderkeyword = this.props.sort == null ? "update" : `${this.props.sort}`;
+    window.location.href = "/design" + `/${orderkeyword}` + "/" + old_parent.value + "/" + parent.value+ "/" + category.value;
   }
   async handleChangeOrderOps(order) {
     await this.setState({ this_order: order })
@@ -160,8 +198,8 @@ class DesignListContainer extends Component {
 
   }
   async getList(page) {
-    const { main_category, sub_category, keyword, this_order } = this.state;
-    return this.props.GetDesignListRequest(page, this_order.keyword || null, main_category.value || null, sub_category.value || null, keyword || null);
+    const { main_category, sub_category, third_category, keyword, this_order } = this.state;
+    return this.props.GetDesignListRequest(page, this_order.keyword || null, main_category.value || null, sub_category.value || null, third_category.value||null ,keyword || null);
   }
   changeCategory(category) {
     if (this.state.this_category === category) {
@@ -171,14 +209,14 @@ class DesignListContainer extends Component {
   }
 
   render() {
-    const { main_category, this_category, sub_category, reload, this_order } = this.state
-    const { category1, category2, Count, status } = this.props;
-    console.log(main_category, this_category, sub_category);
+    const { main_category, this_category, sub_category,third_category, reload, this_order } = this.state
+    const { category1, category2, category3, Count, status } = this.props;
+    // console.log(this.props.category3);
     return (<React.Fragment>
       <Wrapper>
 
-        <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
-          category1={category1} category2={this.state.category2} main_selected={main_category} sub_selected={sub_category} />
+        <Category thirdcategory_clicked={this.handleChangeThirdCategory} subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
+          category1={category1} category2={this.state.category2} category3={this.state.category3} main_selected={main_category} sub_selected={sub_category} third_selected={third_category} />
 
         <TextWrapper centerPos={this.state.screenWidth} onClick={() => this.changeCategory(main_category)}>
           <div className="title"> {(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count})</div>
@@ -210,6 +248,7 @@ const mapStateToProps = (state) => {
     userInfo: state.Authentication.status.userInfo,
     category1: state.Category.status.category1,
     category2: state.Category.status.category2,
+    category3: state.Category.status.category3,
     Count: state.DesignList.status.Count,
     status: state.DesignList.status
   }
@@ -217,11 +256,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetDesignListRequest: (page, sort, categoryLevel1, categoryLevel2) => {
-      return dispatch(GetDesignListRequest(page, sort, categoryLevel1, categoryLevel2))
+    GetDesignListRequest: (page, sort, categoryLevel1, categoryLevel2, categoryLevel3) => {
+      return dispatch(GetDesignListRequest(page, sort, categoryLevel1, categoryLevel2, categoryLevel3))
     },
-    GetDesignListCountRequest: (category1, category2) => {
-      return dispatch(GetDesignListCountRequest(category1, category2))
+    GetDesignListCountRequest: (category1, category2, category3) => {
+      return dispatch(GetDesignListCountRequest(category1, category2, category3))
     },
     GetCategoryAllRequest: () => {
       return dispatch(GetCategoryAllRequest())

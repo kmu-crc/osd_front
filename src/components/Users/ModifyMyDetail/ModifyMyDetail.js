@@ -169,7 +169,7 @@ class ModifyMyDetail extends Component {
       change_password: false, selected: 0, loading: false,
       thumbnail: "", thumbnail_name: "", nick_name: "", about_me: "",
       password: "", passwordCheck: "",
-      category_level1: 0, category_level2: 0,
+      category_level1: 0, category_level2: 0, category_level3: 0,
       is_designer: false, team: "", career: "", location: "", contact: "", screenWidth: window.innerWidth,
       careerlist: [{ number: 0, task: "", explain: "", during: "" }],
     }
@@ -180,6 +180,7 @@ class ModifyMyDetail extends Component {
     this.updatePasswordCheck = this.updatePasswordCheck.bind(this);
     this.updateCategory1 = this.updateCategory1.bind(this);
     this.updateCategory2 = this.updateCategory2.bind(this);
+    this.updateCategory3 = this.updateCategory3.bind(this);
     this.updateIsDesigner = this.updateIsDesigner.bind(this);
     this.updateTeam = this.updateTeam.bind(this);
     this.updateCareer = this.updateCareer.bind(this);
@@ -206,10 +207,13 @@ class ModifyMyDetail extends Component {
     this.setState({ passwordCheck: modifyvalue })
   }
   updateCategory1(modifyvalue) {
-    this.setState({ category_level1: modifyvalue });
+    this.setState({ category_level1: modifyvalue, category_level2:null, category_level3:null });
   }
   updateCategory2(modifyvalue) {
-    this.setState({ category_level2: modifyvalue });
+    this.setState({ category_level2: modifyvalue, category_level3:null });
+  }
+  updateCategory3(modifyvalue){
+    this.setState({category_level3: modifyvalue});
   }
   updateIsDesigner(modifyvalue) {
     this.setState({ is_designer: modifyvalue });
@@ -310,6 +314,7 @@ class ModifyMyDetail extends Component {
       password: this.state.password,
       category_level1: this.state.category_level1,
       category_level2: this.state.category_level2,
+      category_level3: this.state.category_level3,
       is_designer: this.state.is_designer,
       // team: this.state.team, career: this.state.career,
       // location: this.state.location, contact: this.state.contact,
@@ -397,7 +402,7 @@ class ModifyMyDetail extends Component {
   render() {
     const scrollmenu = scrollmenu_data
     // const { selected } = this.state
-
+    console.log(this.props.category3);
     return (<React.Fragment>
       {this.state.loading ? <Loading /> : null}
       <MainBanner >
@@ -424,8 +429,8 @@ class ModifyMyDetail extends Component {
           <HRline />
           <SectionSecurity MyDetail={this.props.MyDetail} updatePassword={this.updatePassword} updatePasswordCheck={this.updatePasswordCheck} />
           <HRline />
-          <SectionAdditional MyDetail={this.props.MyDetail} category1={this.props.category1} category2={this.props.category2}
-            updateCategory1={this.updateCategory1} updateCategory2={this.updateCategory2} />
+          <SectionAdditional MyDetail={this.props.MyDetail} category1={this.props.category1} category2={this.props.category2} category3={this.props.category3}
+            updateCategory1={this.updateCategory1} updateCategory2={this.updateCategory2} updateCategory3={this.updateCategory3}/>
           <HRline />
           <SectionBuziness MyDetail={this.props.MyDetail} updateCareerlist={this.updateCareerlist} updateIsDesigner={this.updateIsDesigner} updateTeam={this.updateTeam} updateCareer={this.updateCareer} updateLocation={this.updateLocation} updateContact={this.updateContact} />
           <div className="buttonBox">
