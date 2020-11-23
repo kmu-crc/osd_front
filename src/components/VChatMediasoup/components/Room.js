@@ -497,9 +497,6 @@ class Room extends React.Component {
 		this.setState({ isPaused: false });
 	}
 	recording = async (me, peers, consumers) => {
-		this.setState({ isRecording: true });
-
-		return;
 		const actx = new AudioContext();
 		const dest = actx.createMediaStreamDestination();
 		let _stream = new MediaStream();
@@ -536,6 +533,8 @@ class Room extends React.Component {
 		mediaRecorder.ondataavailable = e => {
 			chunks.push(e.data);
 		}
+
+		this.setState({ isRecording: true });
 	}
 
 	clickedview = (stream) => {
