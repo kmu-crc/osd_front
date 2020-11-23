@@ -6,7 +6,6 @@ import host from "config";
 import NewVChat from "components/VChatMediasoup";
 
 // TODO
-// 2. 음성녹음
 // 3. 캔버스에 모든영상녹화
 // 4. 플래그에 따른 영상녹화화면 편집
 // 5. 녹화상태보기 기능

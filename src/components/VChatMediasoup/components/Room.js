@@ -265,13 +265,10 @@ const InviteModal = styled(Modal)`
 `;
 
 /*디버깅용 주석
-공유플래그: on || off
-- 공유하면 on
-- 
-화면모드플래그
 
-숨김플래그
-초대모달플래그
+- 화면녹화 캔버스에ㅌ
+- 새로운 유저 녹화에 추가
+- 나간 유저는 어캐처리?
 
 */
 let mediaRecorder;
@@ -310,7 +307,7 @@ class Room extends React.Component {
 		const myvideo = me.find(track => track && ["front", "back", "share"].includes(track.type));
 		// const myaudio = null;//me.find(track => track && track.kind === "audio");
 		const shareState = myvideo && myvideo.type === "share";
-		console.log("formix", this.props.design);
+		
 		return (<RoomDiv h={h || window.innerHeight}>
 			{/* notifications */}
 			{/* <Notifications /> */}

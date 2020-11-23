@@ -40,6 +40,7 @@ const Thumbnail = styled.div`
 	background-size: cover;
 	background-position: center center;
 	background-Image: url(${props => props.img});
+	z-index: 501;
 `;
 const Control = styled.div`
 	position: absolute;
