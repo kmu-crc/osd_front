@@ -9,8 +9,10 @@ import ScrollContainer from 'react-indiana-drag-scroll';
 import { SearchMemberRequest } from "redux/modules/search";
 import SearchMember from "components/Commons/SearchDesignMember";
 import { Modal } from 'semantic-ui-react';
-// import Notifications from './Notifications';
 import Cross from "components/Commons/Cross";
+import { confirm } from "components/Commons/Confirm/Confirm";
+// import Notifications from './Notifications';
+
 
 const RoomDiv = styled.div`
 	position: relative;
@@ -35,6 +37,22 @@ const MenuBarContainer = styled.div`
 		&.peer {
 			position: absolute;
 			right: 10%;
+			width: max-content;
+			padding: 8px 25px;
+			border-radius: 36px;
+			background: rgba(100,100,100, 0.75);
+		}
+		&.start {
+			position: absolute;
+			left: 20%;
+			width: max-content;
+			padding: 8px 25px;
+			border-radius: 36px;
+			background: rgba(100,100,100, 0.75);
+		}
+		&.stop {
+			position: absolute;
+			left: 30%;
 			width: max-content;
 			padding: 8px 25px;
 			border-radius: 36px;
@@ -248,20 +266,35 @@ const InviteModal = styled(Modal)`
 	}
 `;
 
+/*디버깅용 주석
 
+- 화면녹화 캔버스에ㅌ
+- 새로운 유저 녹화에 추가
+- 나간 유저는 어캐처리?
+
+*/
+let mediaRecorder;
+let chunks = [];
 class Room extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			h: window.innerHeight,
-			shareState: "off", mode: "grid"/* :non-clicked, "scroll":clicked*/, hidepeer: false, invite: false,
+
+			shareState: "off",
+			mode: "grid",// || "scroll",
+			hidepeer: false,
+			invite: false,
+
+			isRecording: false,
+			isPaused: false,
 		};
 	};
 
 	render() {
-		const { design, peers /*, roomClient, room, me, onRoomLinkCopy */ } = this.props;
+		const { design, peers, me, roomClient, consumers, /*  room, onRoomLinkCopy */ } = this.props;
 		const bg = (design && design.img && design.img.l_img) || nobg;
-		const { mode, hidepeer, invite } = this.state;
+		const { h, mode, hidepeer, invite, isRecording, isPaused } = this.state;
 
 		const grid = [
 			/* 0*/{ row: 1, col: 1 },
@@ -274,34 +307,77 @@ class Room extends React.Component {
 		// const DUMMY = () => <div style={{ position: "relative", width: "250px", height: "250px", border: "1px solid white", backgroundColor: "black", color: "white", fontSize: "3em", textAlign: "center" }}>DUMMY</div>
 		const total = 1 + (peers.length || 0);
 		const idx = total > grid.length - 1 ? grid.length - 1 : total - 1;
+		const myvideo = me.find(track => track && ["front", "back", "share"].includes(track.type));
+		const shareState = myvideo && myvideo.type === "share";
+		// const myaudio = null; //me.find(track => track && track.kind === "audio");
 
-		return (<RoomDiv h={this.state.h || window.innerHeight}>
+		return (<RoomDiv h={h || window.innerHeight}>
 			{/* notifications */}
 			{/* <Notifications /> */}
 
 			{/* menubar */}
 			<MenuBarContainer>
-				<div className='btn chat' onClick={() => {
-					const url = geturl() + `/chat/${this.props.design.uid} `
-					const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`
-					window.open(url, "chat", options)
-				}}>
+				{/* recording */}
+				{isRecording
+					? <div className="btn start">
+						<div style={{ display: "flex", flexDirection: "row" }}>
+							{/* pause / resume */}
+							{isPaused
+								? <div onClick={() => this.resumeRecording()}>
+									<span className="txt">
+										<i className="icon play" /></span>
+								</div>
+								: <div onClick={() => this.pasueRecording()}>
+									<span className="txt">
+										<i className="icon pause" /></span>
+								</div>}
+
+							{/* stop */}
+							<div onClick={() => this.stopRecording()}>
+								<span className="txt">
+									<i className="icon stop" /></span>
+							</div>
+						</div>
+					</div>
+					: <div className="btn start" onClick={() => this.recording(me, peers, consumers)}>
+						<span className="txt">
+							<i className="record icon" />
+						</span>
+					</div>}
+
+				{/* chat */}
+				<div className='btn chat' onClick={() => this.openChatWin()}>
 					<span className='txt'>채팅</span>
 				</div>
-				{/* <div className="btn chat invite" onClick={() => {
+
+				{/* invite */}
+				<div className="btn chat invite" onClick={() => {
 					// this.setState({ invite: true });
 				}}>
 					<span className="txt">초대</span>
-				</div> */}
-				<div className='btn share' ref={ref => this.sharebtn = ref}>
+				</div>
+
+				{/* share */}
+				<div className='btn share' //ref={ref => this.sharebtn = ref}
+					onClick={async () => {
+						if (shareState ||
+							await roomClient.enableShare() === "cancelled") {
+							roomClient.disableShare();
+							roomClient.checkEnabledWebcam();
+							return;
+						}
+					}}>
 					<span className='txt'>
-						{this.state.shareState === "on" ? "화면공유 종료" : "화면공유"}
+						{shareState ? "화면공유 종료" : "화면공유"}
 					</span>
 				</div>
 
+				{/* exit */}
 				<div className='btn exit' onClick={() => { window.open('', '_self').close() }}>
 					<span className='txt'>나가기</span>
 				</div>
+
+				{/* layout */}
 				{mode === "scroll" ?
 					<div className="btn return" onClick={() => {
 						this.setState({ mode: "grid" });
@@ -360,9 +436,9 @@ class Room extends React.Component {
 									this.setState({ mode: "grid" });
 								}}
 								userInfo={this.props.userInfo}
-								sharebtn={this.sharebtn}
-								shareState={this.state.shareState}
-								share={(shareState) => this.setState({ shareState: shareState })}
+								// sharebtn={this.sharebtn}
+								// shareState={shareState}
+								// share={(shareState) => this.setState({ shareState: shareState })}
 								clicked={stream => this.clickedview(stream)}
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
@@ -385,9 +461,9 @@ class Room extends React.Component {
 									this.setState({ mode: "grid" });
 								}}
 								userInfo={this.props.userInfo}
-								sharebtn={this.sharebtn}
-								shareState={this.state.shareState}
-								share={(shareState) => this.setState({ shareState: shareState })}
+								// sharebtn={this.sharebtn}
+								// shareState={shareState}
+								// share={(shareState) => this.setState({ shareState: shareState })}
 								clicked={stream => this.clickedview(stream)}
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
@@ -401,6 +477,65 @@ class Room extends React.Component {
 			</ContentContainer>
 		</RoomDiv>);
 	};
+
+	openChatWin = () => {
+		const url = geturl() + `/chat/${this.props.design.uid}`;
+		const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
+		window.open(url, "chat", options);
+	};
+
+	pasueRecording = () => {
+		mediaRecorder && mediaRecorder.pause();
+		this.setState({ isPaused: true });
+	}
+	stopRecording = () => {
+		mediaRecorder && mediaRecorder.stop();
+		this.setState({ isRecording: false });
+	}
+	resumeRecording = () => {
+		mediaRecorder && mediaRecorder.resume();
+		this.setState({ isPaused: false });
+	}
+	recording = async (me, peers, consumers) => {
+		const actx = new AudioContext();
+		const dest = actx.createMediaStreamDestination();
+		let _stream = new MediaStream();
+		const myaudio = me.find(obj => obj && obj.track && obj.track.kind === "audio").track;
+		_stream.addTrack(myaudio);
+		actx.createMediaStreamSource(_stream).connect(dest);
+		peers.map(peer => {
+			console.log('record:', peer);
+			const consumerAry = peer.consumers.map(id => consumers[id]);
+			const audioConsumer = consumerAry.find(cnsmr => cnsmr.track.kind === "audio").track;
+			actx.createMediaStreamSource(new MediaStream([audioConsumer])).connect(dest);
+		});
+		const mixedtrack = dest.stream.getTracks()[0];
+		const stream = new MediaStream([mixedtrack]);
+		mediaRecorder = new MediaRecorder(stream);
+		mediaRecorder.start();
+		mediaRecorder.onstop = async (e) => {
+			const answer = await confirm("현시점에서 녹화를 종료됩니다. 파일로 저장을 원하신다면 (저장)를 클릭해주시기 바랍니다. (취소)를 클릭할 시 녹화된 내용은 사라집니다.", "저장", "취소");
+			if (answer === false) {
+				chunks = [];
+				return;
+			}
+			var blob = new Blob(chunks, { 'type': 'audio/ogg; codes=opus' });
+			var url = URL.createObjectURL(blob);
+			var a = document.createElement('a');
+			document.body.appendChild(a);
+			a.style = 'display:none';
+			a.href = url;
+			a.download = 'filename.ogg';//'화상회의-' + new Date().formatUTC("yyyyMMdd_HHmmss") + '.ogg';
+			a.click();
+			window.URL.revokeObjectURL(url);
+			chunks = [];
+		}
+		mediaRecorder.ondataavailable = e => {
+			chunks.push(e.data);
+		}
+
+		this.setState({ isRecording: true });
+	}
 
 	clickedview = (stream) => {
 		if (this.video && stream) {
@@ -436,10 +571,12 @@ class Room extends React.Component {
 
 const mapStateToProps = (state) => {
 	const peersArray = Object.values(state.peers);
-	console.log(state);
+	const me = Object.values(state.producers);
 	return {
 		peers: peersArray,
-		activeSpeakerId: state.room.activeSpeakerId
+		activeSpeakerId: state.room.activeSpeakerId,
+		me: me,
+		consumers: state.consumers,
 	};
 };
 const mapDispatchToProps = (dispatch) => {
