@@ -198,7 +198,7 @@ class ModifyMyDetail extends Component {
       change_password: false, selected: 0, loading: false, isClickModify: false,
       thumbnail: "", thumbnail_name: "", nick_name: "", about_me: "",
       password: "", passwordCheck: "",
-      category_level1: 0, category_level2: 0,
+      category_level1: 0, category_level2: 0, category_level3: 0,
       is_designer: false, team: "", career: "", location: "", contact: "",
       careerlist: [{ number: 0, task: "", explain: "", during: "" }],
     }
@@ -209,6 +209,7 @@ class ModifyMyDetail extends Component {
     this.updatePasswordCheck = this.updatePasswordCheck.bind(this);
     this.updateCategory1 = this.updateCategory1.bind(this);
     this.updateCategory2 = this.updateCategory2.bind(this);
+    this.updateCategory3 = this.updateCategory3.bind(this);
     this.updateIsDesigner = this.updateIsDesigner.bind(this);
     // this.updateTeam = this.updateTeam.bind(this);
     // this.updateCareer = this.updateCareer.bind(this);
@@ -250,10 +251,13 @@ class ModifyMyDetail extends Component {
     this.setState({ passwordCheck: modifyvalue })
   }
   updateCategory1(modifyvalue) {
-    this.setState({ category_level1: modifyvalue });
+    this.setState({ category_level1: modifyvalue, category_level2:null,category_level3:null });
   }
   updateCategory2(modifyvalue) {
-    this.setState({ category_level2: modifyvalue });
+    this.setState({ category_level2: modifyvalue,category_level3:null });
+  }
+  updateCategory3(modifyvalue){
+    this.setState({category_level3: modifyvalue});
   }
   updateIsDesigner(modifyvalue) {
     this.setState({ is_designer: modifyvalue });
@@ -350,7 +354,7 @@ class ModifyMyDetail extends Component {
       change_password: this.change_password,
       nick_name: this.state.nick_name, about_me: this.state.about_me,
       password: this.state.password, thumbnail: "",
-      category_level1: this.state.category_level1, category_level2: this.state.category_level2,
+      category_level1: this.state.category_level1, category_level2: this.state.category_level2, category_level3: this.state.category_level3,
       is_designer: this.state.is_designer,
       careerlist: careerlist,
       files: []
@@ -403,7 +407,7 @@ class ModifyMyDetail extends Component {
         if (res.success) {
           await alert("정보가 수정되었습니다.", "확인");
 
-          // window.location.href = "/designer";
+        window.location.href = "/designer";
         } else {
           await alert("다시 시도해주세요", "확인");
           this.setState({
@@ -484,8 +488,10 @@ class ModifyMyDetail extends Component {
               MyDetail={this.props.MyDetail}
               category1={this.props.category1}
               category2={this.props.category2}
+              category3={this.props.category3}
               updateCategory1={this.updateCategory1}
-              updateCategory2={this.updateCategory2} />
+              updateCategory2={this.updateCategory2}
+              updateCategory3={this.updateCategory3} />
             <HRline />
             <SectionBuziness
               MyDetail={this.props.MyDetail}
@@ -526,8 +532,10 @@ class ModifyMyDetail extends Component {
               MyDetail={this.props.MyDetail}
               category1={this.props.category1}
               category2={this.props.category2}
+              category3={this.props.category3}
               updateCategory1={this.updateCategory1}
-              updateCategory2={this.updateCategory2} />
+              updateCategory2={this.updateCategory2} 
+              updateCategory3={this.updateCategory3}/>
             <HRline />
             <SectionBuziness
               MyDetail={this.props.MyDetail}

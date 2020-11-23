@@ -116,6 +116,7 @@ class SearchListRe extends Component {
             this_category: { text: null, value: null },
             sub_category: { text: null, value: null },
             main_category: { text: null, value: null },
+            third_category: {text: null, value:null},
         }
         this.onChangeDropBox = this.onChangeDropBox.bind(this);
         this.onChangeSearchkey = this.onChangeSearchkey.bind(this);
@@ -187,6 +188,20 @@ class SearchListRe extends Component {
     handleChangeSubCategory = async (parent, category) => {
         await this.setState({ main_category: this.props.category1[parent.value - 1], this_category: category, sub_category: category })
     }
+    // handleChangeThirdCategory = async (parent, category) => {
+    //     let category3Index = -1;
+    //     let nCount=0;
+    //     for(let i in this.props.category2){
+    //       this.props.category2&&this.props.category2[i]&&this.props.category2[i].map((item,index)=>{
+    //           if(item.value == this.state.categoryLevel2){
+    //             category3Index = nCount;
+    //           }
+    //           nCount++;
+    //         })
+    //     }
+    //     await this.setState({ main_category: this.props.category1[parent.value - 1], sub_category: category })
+    // }
+    
     handleChangeOrderOps = async (order) => {
         await this.setState({ this_order: order })
     }
@@ -239,6 +254,7 @@ class SearchListRe extends Component {
                             keyword={this.state.keyword}
                             cate1={this.state.main_category.value}
                             cate2={this.state.sub_category.value}
+                            cate3={this.state.third_category.value}
                             orderOption={this.state.this_order}
                         />
                     </div>
@@ -249,6 +265,7 @@ class SearchListRe extends Component {
                             keyword={this.state.keyword}
                             cate1={this.state.main_category.value}
                             cate2={this.state.sub_category.value}
+                            cate3={this.state.third_category.value}
                             orderOption={this.state.this_order}
                         />
                     </div>
@@ -259,6 +276,7 @@ class SearchListRe extends Component {
                             keyword={this.state.keyword}
                             cate1={this.state.main_category.value}
                             cate2={this.state.sub_category.value}
+                            cate3={this.state.third_category.value}
                             orderOption={this.state.this_order}
                         />
                     </div>

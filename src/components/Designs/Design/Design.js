@@ -51,9 +51,9 @@ const DesignElement = styled.div`
   .categoryName {
     z-index: 703;
     position: absolute;
-    margin-left: 180px;
+    margin-left: 170px;
     margin-top: 285px;
-    width: 130px;
+    width: 140px;
     height: 40px;
     color: #FF0000;
     font-size: 20px;

@@ -23,6 +23,7 @@ const mapStateToProps = (state) => {
     token: state.Authentication.status.token,
     category1: state.Category.status.category1,
     category2: state.Category.status.category2,
+    category3: state.Category.status.category3,
     CheckNickName: state.Authentication.checkStatus.checkNickName
 
   }

@@ -59,40 +59,63 @@ class SectionAdditional extends Component {
     this.state = { categoryLevel1: 0, categoryLevel2: 0 };
     this.onChangeCategory1 = this.onChangeCategory1.bind(this);
     this.onChangeCategory2 = this.onChangeCategory2.bind(this);
+    this.onChangeCategory3 = this.onChangeCategory3.bind(this);
   }
   shouldComponentUpdate(nextProps) {
     if (this.props.MyDetail !== nextProps.MyDetail) {
       this.setState({
         categoryLevel1: nextProps.MyDetail.category_level1,
-        categoryLevel2: nextProps.MyDetail.category_level2 == null ? 0 : nextProps.MyDetail.category_level2
+        categoryLevel2: nextProps.MyDetail.category_level2 == null ? 0 : nextProps.MyDetail.category_level2,
+        categoryLevel3: nextProps.MyDetail.category_level3 == null ? 0: nextProps.MyDetail.category_level3
       });
       this.props.updateCategory1(nextProps.MyDetail.category_level1);
       this.props.updateCategory2(nextProps.MyDetail.category_level2 == null ? 0 : nextProps.MyDetail.category_level2);
+      this.props.updateCategory3(nextProps.MyDetail.category_level3 == null ? 0: nextProps.MyDetail.category_level3);
     }
     return true;
   }
   onChangeCategory1(event, { value }) {
-    this.setState({ categoryLevel1: { value }.value });
+    this.setState({ categoryLevel1: { value }.value, categoryLevel2:null, categoryLevel3:null });
     this.props.updateCategory1({ value }.value);
-    
   }
   onChangeCategory2(event, { value }) {
-    this.setState({ categoryLevel2: { value }.value })
+    this.setState({ categoryLevel2: { value }.value ,categoryLevel3:null})
     this.props.updateCategory2({ value }.value);
   }
+  onChangeCategory3(event, { value }) {
+    this.setState({ categoryLevel3: { value }.value })
+    this.props.updateCategory3({ value }.value);
+  }
+
 
   render() {
-    console.log(this.state.categoryLevel1);
+    let category3Index = -1;
+    let nCount=0;
+    for(let i in this.props.category2){
+      this.props.category2&&this.props.category2[i]&&this.props.category2[i].map((item,index)=>{
+          if(item.value == this.state.categoryLevel2){
+            category3Index = nCount;
+          }
+          nCount++;
+        })
+    }
+    console.log(this.props);
     return (
       <ContentsBox>
         {/* category */}
         <CategoryBox>
           <div className="title">카테고리</div>
-            <CategoryDropDown onChange={this.onChangeCategory1}
-              options={this.props.category1} selection ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요" />
-            <CategoryDropDown onChange={this.onChangeCategory2}
-              options={this.state.categoryLevel1 === 0 ? emptyCategory : this.props.category2[this.state.categoryLevel1 - 1]} selection 
-              ref="dropdown2" value={this.state.categoryLevel2} />
+          <CategoryDropDown onChange={this.onChangeCategory1}
+            options={this.props.category1} selection
+            name="cate1" ref="dropdown1" value={this.state.categoryLevel1} placeholder="카테고리를 선택해주세요" />
+          {this.state.categoryLevel1 !== 0 && this.props.category2[this.state.categoryLevel1 - 1]
+            ? <CategoryDropDown value={this.state.categoryLevel2} ref="dropdown2" selection onChange={this.onChangeCategory2} options={this.props.category2[this.state.categoryLevel1 - 1]} />
+            : <CategoryDropDown value={this.state.categoryLevel2} ref="dropdown2" selection onChange={this.onChangeCategory2} options={emptyCategory} />
+          }
+            {this.state.categoryLevel1 !== 0 &&this.state.categoryLevel2 !== 0 && this.props.category3[this.state.categoryLevel2 - 1]
+            ? <CategoryDropDown value={this.state.categoryLevel3} ref="dropdown2" selection onChange={this.onChangeCategory3} options={this.props.category3[category3Index]} />
+            : <CategoryDropDown value={this.state.categoryLevel3} ref="dropdown2" selection onChange={this.onChangeCategory3} options={emptyCategory} />
+          }
         </CategoryBox>
       </ContentsBox>
     );

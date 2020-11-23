@@ -203,6 +203,7 @@ class ScrollList extends Component {
     return (dataListAdded && dataListAdded.length > 0 ?
       <FlexContainer cols={cols} type={type} ref={this.myRef} >
         {dataListAdded.map((item, i) => {
+          console.log(item);
           const last = (((i + 1) % cols === 0 && i !== 0) || (cols === 1 && i === 0)) ? "right-last" : "";
           const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";
           return (<FlexBox width={width} height={height} marginRight={marginRight} marginBottom={marginBottom}

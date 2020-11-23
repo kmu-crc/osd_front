@@ -41,7 +41,7 @@ const CategoryBox = styled.div`
         }
 `
 const CategoryDropDown = styled(Dropdown)`
-      width:410px;
+      width:380px;
       height:56px;     
       border-radius:5px;
       font-size:20px;
@@ -61,30 +61,61 @@ class SectionAdditional extends Component {
     this.state = { categoryLevel1: 0, categoryLevel2: 0 };
     this.onChangeCategory1 = this.onChangeCategory1.bind(this);
     this.onChangeCategory2 = this.onChangeCategory2.bind(this);
+    this.onChangeCategory3 = this.onChangeCategory3.bind(this);
   }
   shouldComponentUpdate(nextProps) {
     if (this.props.MyDetail !== nextProps.MyDetail) {
       this.setState({
         categoryLevel1: nextProps.MyDetail.category_level1,
-        categoryLevel2: nextProps.MyDetail.category_level2 == null ? 0 : nextProps.MyDetail.category_level2
+        categoryLevel2: nextProps.MyDetail.category_level2 == null ? 0 : nextProps.MyDetail.category_level2,
+        categoryLevel3: nextProps.MyDetail.category_level3 == null ? 0: nextProps.MyDetail.category_level3
       });
       this.props.updateCategory1(nextProps.MyDetail.category_level1);
       this.props.updateCategory2(nextProps.MyDetail.category_level2 == null ? 0 : nextProps.MyDetail.category_level2);
+      this.props.updateCategory3(nextProps.MyDetail.category_level3 == null ? 0: nextProps.MyDetail.category_level3);
 
 
     }
     return true;
   }
   onChangeCategory1(event, { value }) {
-    this.setState({ categoryLevel1: { value }.value });
+    this.setState({ categoryLevel1: { value }.value, categoryLevel2:null, categoryLevel3:null });
     this.props.updateCategory1({ value }.value);
   }
   onChangeCategory2(event, { value }) {
-    this.setState({ categoryLevel2: { value }.value })
+    this.setState({ categoryLevel2: { value }.value ,categoryLevel3:null})
     this.props.updateCategory2({ value }.value);
+  }
+  onChangeCategory3(event, { value }) {
+    this.setState({ categoryLevel3: { value }.value })
+    this.props.updateCategory3({ value }.value);
   }
 
   render() {
+    let category3Index = -1;
+    let nCount=0;
+    for(let i in this.props.category2){
+      this.props.category2&&this.props.category2[i]&&this.props.category2[i].map((item,index)=>{
+          if(item.value == this.state.categoryLevel2){
+            category3Index = nCount;
+          }
+          nCount++;
+        })
+    }
+    console.log(category3Index);
+    // let category2_index = 0;
+    // let category1_index = -1;
+    // for( let i in this.props.category2){
+    //     category1_index++;
+    //     this.props.category2[i]&&this.props.category2[i].map((item,index)=>{
+    //       // console.log(this.state.categoryLevel2);
+    //       if(i<this.state.category_level1-1){
+    //         console.log(category2_index,this.state.categoryLevel1);
+    //         category2_index++;
+    //       }
+    //     })
+    // }
+    // console.log(this.props.category3[category2_index-1],category1_index,category2_index);
     return (
       <ContentsBox>
         {/* category */}
@@ -96,6 +127,10 @@ class SectionAdditional extends Component {
           {this.state.categoryLevel1 !== 0 && this.props.category2[this.state.categoryLevel1 - 1]
             ? <CategoryDropDown value={this.state.categoryLevel2} ref="dropdown2" selection onChange={this.onChangeCategory2} options={this.props.category2[this.state.categoryLevel1 - 1]} />
             : <CategoryDropDown value={this.state.categoryLevel2} ref="dropdown2" selection onChange={this.onChangeCategory2} options={emptyCategory} />
+          }
+          {this.state.categoryLevel1 !== 0 &&this.state.categoryLevel2 !== 0 && this.props.category3[this.state.categoryLevel2 - 1]
+            ? <CategoryDropDown value={this.state.categoryLevel3} ref="dropdown2" selection onChange={this.onChangeCategory3} options={this.props.category3[category3Index]} />
+            : <CategoryDropDown value={this.state.categoryLevel3} ref="dropdown2" selection onChange={this.onChangeCategory3} options={emptyCategory} />
           }
         </CategoryBox>
       </ContentsBox>

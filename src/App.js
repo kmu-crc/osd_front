@@ -36,7 +36,7 @@ class App extends Component {
       <BrowserRouter>
         <Notice />
         <Switch>
-          {/* no client template */}
+          {/* no client template ㅐ*/}
           <Route path="/chat/:id" component={CheckAuth(ChatPage)} />
           <Route path="/vchat2/:id" component={CheckAuth(VChat2Page)} />
           {/* GROUP A - main */}
@@ -50,7 +50,7 @@ class App extends Component {
           <Route path="/message/:id?/:name?" component={RequiresAuth(MessagePage)} />
           <Route path="/search/:sort?/:keyword?" component={SearchPage} />
           {/* GROUP B - design */}
-          <Route path="/design/:sorting?/:cate1?/:cate2?" component={DesignListPage} />
+          <Route path="/design/:sorting?/:cate1?/:cate2?/:cate3?" component={DesignListPage} />
           <Route path="/designDetail/:id" component={DesignDetailPage} />
           <Route path="/createdesign" component={RequiresAuth(CreateDesignPage)} />
           <Route path="/designModify/:id" component={RequiresAuth(ModifyDesignPage)} />
@@ -61,7 +61,7 @@ class App extends Component {
           <Route path="/modifygroup/:id" component={RequiresAuth(ModifyGroupPage)} />
           {/* GROUP D - designer */}
           <Route path="/designerDetail/:id" component={DesignerDetailPage} />
-          <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
+          <Route path="/designer/:sorting?/:cate1?/:cate2?/:cate3?" component={DesignerListPage} />
           <Route path="/createdesigner" component={RequiresAuth(CreateDesigner)} />
           <Route path="/footerPrivacy" component={FooterPrivacy} />
           <Route path="/footerPara" component={FooterPara} />

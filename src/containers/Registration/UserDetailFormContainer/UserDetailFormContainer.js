@@ -24,7 +24,8 @@ const mapStateToProps = (state) => {
     MyDetail: state.Personal.status.MyDetail,
     token: state.Authentication.status.token,
     category1: state.Category.status.category1,
-    category2: state.Category.status.category2
+    category2: state.Category.status.category2,
+    category3: state.Category.status.category3,
   }
 };
 
