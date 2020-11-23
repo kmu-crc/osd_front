@@ -133,7 +133,7 @@ export function GetTopDesignListRequest(page) {
     }
 }
 export function GetDesignListRequest(page = 0, sort = null, cate1 = null, cate2 = null,cate3=null, keyword = null) {
-    const url = `${host}/design/designList_testversion/${page}/${sort}/${cate1}/${cate2}/${cate3}/${keyword}`
+    const url = `${host}/design/designList_newversion/${page}/${sort}/${cate1}/${cate2}/${cate3}/${keyword}`
     // console.log("url:", url);
     return (dispatch) => {
         return fetch(url, {
@@ -179,7 +179,7 @@ export function GetDesignListRequest(page = 0, sort = null, cate1 = null, cate2 
 // }
 export function GetDesignListCountRequest(cate1, cate2, cate3) {
     return (dispatch) => {
-        return fetch(`${host}/design/designCount_testversion/${cate1}/${cate2}/${cate3}`, {
+        return fetch(`${host}/design/designCount_newversion/${cate1}/${cate2}/${cate3}`, {
             headers: { "Content-Type": "application/json" },
             method: "get"
         }).then((response) => {

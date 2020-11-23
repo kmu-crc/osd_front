@@ -545,7 +545,7 @@ export function InsertUserDetailRequest(data, token) {
     return (dispatch) => {
         dispatch(InsertUserDetail())
 
-        return fetch(`${host}/users/insertDetail_testversion`, { headers: { "x-access-token": token, "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
+        return fetch(`${host}/users/insertDetail_newversion`, { headers: { "x-access-token": token, "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
             .then(function (res) {
                 return res.json()
             })
@@ -562,7 +562,7 @@ export function UpdateUserDetailRequest(data, token) {
     //console.log("UpdateUserDetailRequest", data);
     return (dispatch) => {
         dispatch(UpdateUserDetail())
-        return fetch(`${host}/users/modifyDetail_testversion`, { headers: { "x-access-token": token, "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) }).then(function (res) {
+        return fetch(`${host}/users/modifyDetail_newversion`, { headers: { "x-access-token": token, "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) }).then(function (res) {
             return res.json()
         }).then(function (res) {
             //console.log("update detail", res)

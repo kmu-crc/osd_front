@@ -66,8 +66,8 @@ export function DesignerList(state, action) {
 
 
 export function GetDesignerListRequest(page, sort, cate1, cate2, cate3, keyword) {
-  const sql = `${host}/designer/designerList_testversion/${page}/${sort}/${cate1 || "null"}/${cate2 || "null"}/${cate3}/${keyword}`
-  //console.log("sql:", sql)
+  const sql = `${host}/designer/designerList_newversion/${page}/${sort}/${cate1 || "null"}/${cate2 || "null"}/${cate3}/${keyword}`
+  console.log("sql:", sql)
   return (dispatch) => {
     return fetch(sql, {
       headers: { "Content-Type": "application/json" },
@@ -116,7 +116,7 @@ export function DesignerListFail() {
 
 export function GetDesignerTotalCountRequest(cate1, cate2, cate3) {
   return (dispatch) => {
-    return fetch(`${host}/designer/designerCount_testversion/${cate1}/${cate2}/${cate3}`, {
+    return fetch(`${host}/designer/designerCount_newversion/${cate1}/${cate2}/${cate3}`, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {

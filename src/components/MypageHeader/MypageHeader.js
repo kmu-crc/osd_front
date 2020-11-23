@@ -571,7 +571,7 @@ class MypageHeader extends Component {
         window.location.href = geturl() + '/mymodify';
     }
     render() {
-        // console.log("MyDetail:", this.props);
+        console.log("MyDetail:", this.props);
 
         const { likeDialog, w } = this.state;
         const { MyDetail } = this.props;
