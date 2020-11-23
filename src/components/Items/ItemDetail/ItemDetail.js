@@ -534,7 +534,7 @@ class ItemDetail extends Component {
       this.props.LikeProductRequest(this.props.id, this.props.token)
   };
   async buyThisItem(event) {
-    if (!await confirm(`${this.props.item.price / 1000}천원이 결제됩니다.`)) {
+    if (!await confirm(`${this.props.item.price / 1000}천 point가 결제됩니다.`)) {
       event.preventDefault();
     } else {
       this.props.item.price > this.props.Point ? this.gotoChargePoint() : this.purchaseThisItem()
@@ -666,7 +666,7 @@ class ItemDetail extends Component {
                 <div className="expert line">
                   <div className="price-and-score line">
                     <div className="price" style={{ marginRight: "35px" }}>
-                      {PointFormat(item.price / 1000 || 0)} 천원</div>
+                      {PointFormat(item.price / 1000 || 0)}천 point</div>
                     <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
                       {/* {Star(item.score, 28)}({item.total || 0}) */}
                       {/* <Rating name="score" icon='star' defaultRating={parseInt(score,10)} maxRating={5} disabled /> */}

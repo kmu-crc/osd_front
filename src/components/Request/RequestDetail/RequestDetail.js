@@ -363,7 +363,7 @@ class Detail extends Component {
 
                     <div className="wrapper flex centering">
                       <div className="label">희망 비용</div>
-                      <div className="textBox">{parseInt(Detail.price, 10) / 1000 + "천원"}</div>
+                      <div className="textBox">{parseInt(Detail.price, 10) / 1000 + "천 point"}</div>
                     </div>
 
                     <div className="wrapper flex centering">
@@ -477,7 +477,7 @@ class Detail extends Component {
 
                     <div className="wrapper flex centering">
                       <div className="label">희망비용</div>
-                      <div className="textBox">{Detail && Detail.request && parseInt(Detail.request.price, 10) / 1000 + "천원"}</div>
+                      <div className="textBox">{Detail && Detail.request && parseInt(Detail.request.price, 10) / 1000 + "천 point"}</div>
                     </div>
 
                     <div className="wrapper flex centering">
@@ -516,7 +516,7 @@ class Detail extends Component {
 
                     <div className="wrapper flex">
                       <div className="label">희망비용</div>
-                      <div className="textBox">{parseInt(Detail.price, 10) / 1000 + "천원"}</div>
+                      <div className="textBox">{parseInt(Detail.price, 10) / 1000 + "천 point"}</div>
                     </div>
                     <div className="wrapper flex centering">
                       <div className="label">기간</div>

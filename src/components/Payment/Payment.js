@@ -299,7 +299,7 @@ class Payment extends Component {
                                 <div className="name">{item.title}</div>
                                 <div className="option">{(options && "[옵션]" + options.test) || ""}</div>
                             </div>
-                            <div className="amount"><div>{(options && options.amount) || "1"}</div></div>
+                            <div className="amount"><div>{(options && options.amount+"개") || "1개"}</div></div>
                             <div className="price"><div>{NumberFormat(item.price) || 0}{unit}</div></div>
                             <div className="delivery"><div>{(options && options.delivery) || ""}</div></div>
                         </HeaderBox>
