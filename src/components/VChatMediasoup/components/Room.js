@@ -514,7 +514,7 @@ class Room extends React.Component {
 		mediaRecorder = new MediaRecorder(stream);
 		mediaRecorder.start();
 		mediaRecorder.onstop = async (e) => {
-			const answer = await confirm("", "", "");
+			const answer = await confirm("현시점에서 녹화를 종료됩니다. 파일로 저장을 원하신다면 (저장)를 클릭해주시기 바랍니다. (취소)를 클릭할 시 녹화된 내용은 사라집니다.", "저장", "취소");
 			if (answer === false) {
 				chunks = [];
 				return;
