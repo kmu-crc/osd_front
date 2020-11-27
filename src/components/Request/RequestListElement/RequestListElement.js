@@ -73,6 +73,9 @@ const ListElement = styled.div`
     align-items:center;
     padding:5px;
     padding-left:27px;
+    .text{
+      cursor:pointer;
+    }
   }
   .writer{
     min-width:10%;
@@ -80,6 +83,14 @@ const ListElement = styled.div`
     justify-content:center;
     align-items:center;
     overflow:hidden;
+  }
+  .response_{
+    min-width:10%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    cursor:pointer;
   }
   .date{
     min-width:10%;
@@ -105,11 +116,14 @@ class DesignerBoardElement extends Component {
     const item = this.props.data;
     console.log("item:", item);
     // const Element = () =>
-    
+    const userLink = item.type=="designer"?"/designerDetail/"+item.expert_id:"/makerDetail/"+item.expert_id;
+    console.log(userLink);
     return (
-      <NavLink to={"/requestDetail/" + item.uid}>
+      <React.Fragment>
+      {/* // <NavLink to={"/requestDetail/" + item.uid}> */}
         <ListElement left={item.status === "response" ? 25 : 0}>
-          <div className="title_" style={{  display: "flex", flexDirection: "row" }}>
+        <NavLink  className="title_" style={{  display: "flex", flexDirection: "row" }} to={"/requestDetail/" + item.uid}>
+          {/* <div className="title_" style={{  display: "flex", flexDirection: "row" }}> */}
             {item.completed === 1 && item.status === "request" ?
               <div className="status-box completed" >완료</div> : null}
               
@@ -124,8 +138,10 @@ class DesignerBoardElement extends Component {
                   <div className="status-box response">
                     {item.type === 'maker' ? '제작' : '디자인'} 응답</div> 
                   </React.Fragment>: ""}
-            {item.title || "글 제목"}
-          </div>
+                  
+                  <div className="text">{item.title || "글 제목"}</div>
+          {/* </div> */}
+                  </NavLink>
           {/* writer */}
           {/* {item.status === "normal"
           ?
@@ -147,10 +163,10 @@ class DesignerBoardElement extends Component {
           } */}
           {
             item.status==="response"?
-            <div className="writer">
-              <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
-              <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
-          </div>
+            <NavLink className="response_" to={userLink}>
+                  <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
+                  <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
+            </NavLink>
           :
           <div className="writer">
             <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
@@ -165,8 +181,8 @@ class DesignerBoardElement extends Component {
           {/* like */}
           {/* <div style={{ marginRight: "15px" }}>{NumberFormat(item.likes || 0)}</div> */}
         </ListElement>
-      </NavLink>
-
+      {/* // </NavLink> */}
+      </React.Fragment>
       // item.private === 0 ?
       // <Element />
       // : <Element />

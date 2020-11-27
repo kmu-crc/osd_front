@@ -47,7 +47,7 @@ const TagPiece = styled.div`
     max-height:30px;
     border:1px solid #707070;
     border-radius:15px;
-    padding: 11px 10px 8px 10px;
+    padding: 11px 10px 11px 10px;
     display: flex;
     justify-content: space-between;
     align-items:center;
@@ -60,7 +60,7 @@ const TagPiece = styled.div`
         margin-left: 10px;
         width: max-content;
         height: max-content;
-        padding: 0px 2px;
+        padding: 2px 2px 7px 2px;
         cursor:pointer;
     }
 `;

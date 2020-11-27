@@ -237,6 +237,7 @@ const Introduction = styled.div`
     }
     .wrapItem {
       overflow: auto;
+      overflow-y:overlay;
     }
   }
 `;
@@ -249,7 +250,7 @@ const TagPiece = styled.div`
     color: #707070;
     padding: 5px;
     padding-left: 10px;
-    padding-right: 10px
+    padding-right: 10px;
     border-radius: 15px;
     display: flex;
     justify-content: space-between;
