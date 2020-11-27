@@ -1270,7 +1270,7 @@ class CreateDesign extends Component {
                       value={this.state.categoryLevel2}
                       placeholder="서브 카테고리를 선택해주세요(선택사항)"
                     />
-                    <CategoryDropDown
+                    {/* <CategoryDropDown
                       selection
                       id="category3"
                       ref="dropdown3"
@@ -1278,7 +1278,7 @@ class CreateDesign extends Component {
                       options={this.props.category3&&this.props.category3[category3Index] || emptyCategory}
                       value={this.state.categoryLevel3}
                       placeholder="서브 카테고리를 선택해주세요(선택사항)"
-                    />
+                    /> */}
                   </CategoryBox>
                   : <p>카테고리를 가져오고 있습니다.</p>}
                 {/* INVITE MEMBER */}
