@@ -266,15 +266,123 @@ const InviteModal = styled(Modal)`
 	}
 `;
 
-/*디버깅용 주석
 
-- 화면녹화 캔버스에ㅌ
-- 새로운 유저 녹화에 추가
-- 나간 유저는 어캐처리?
-
-*/
 let mediaRecorder;
 let chunks = [];
+
+// for video recording
+// const media_source = new MediaSource();
+// media_source.addEventListener('sourceopen', handle_source_open, false);
+
+let media_recorder;
+let recorded_blobs;
+// let source_buffer;
+
+const canvas = document.createElement('canvas');
+const video = document.querySelector('video');
+// let video = null;
+
+// const record_button = ...
+// const play_button = ...
+// const download_button = ...
+// record_button.onclick = toggle_recording;
+// play_button.onclick = play;
+// download_button.onclick = download;
+
+// main();
+
+let buttontext = "start recording";
+const stream = canvas.captureStream();
+
+
+//handle_source_open = e => {
+//	const opt = 'video/webm; codes="vp8"';
+//	source_buffer = media_source.addSourceBuffer(opt);
+//};
+
+const handle_data_available = e => {
+	if (e.data && e.data.size > 0)
+		recorded_blobs.push(e.data);
+};
+
+const handle_stop = e => {
+	// const blob = new Blob(recorded_blobs, { type: 'video/webm' });
+	// video.src = window.URL.createObjectURL(blob);
+};
+
+const toggle_recording = (track, peers, consumers) => {
+	if (buttontext === "start recording") {
+		start_recording(track, peers, consumers);
+	} else {
+		stop_recording();
+		buttontext = "start recording";
+	}
+};
+
+const start_recording = (track, peers, consumers) => {
+	let options = [
+		{ mimeType: 'video/webm' },
+		{ mimeType: 'video/webm,codesc=vp9' },
+		{ mimeType: 'video/vp8' },
+	];
+	recorded_blobs = [];
+	let idx = 0;
+	let _ = null;
+	if (peers == null || peers.length === 0) {
+		alert('peers is empty');
+		return;
+	}
+	peers.map(peer => {
+		const consumerAry = peer.consumers.map(id => consumers[id]);
+		const consumer = consumerAry.find(cnsmr => cnsmr.track.kind === "video").track;
+		_ = new MediaStream([consumer]);
+	});
+
+	// let _ = new MediaStream([track]);
+
+	// _.addTrack(track);
+	while (idx < options.length) {
+		try {
+			media_recorder = new MediaRecorder(_, options[idx]);
+			alert('set with ' + options[idx]);
+			break;
+		} catch (e) {
+			console.error(e);
+			idx++;
+		}
+	}
+	buttontext = "stop recording";
+	media_recorder.onstop = handle_stop;
+	media_recorder.ondataavailable = handle_data_available;
+	media_recorder.start(100);
+};
+
+const stop_recording = () => {
+	media_recorder.stop();
+};
+
+const download = () => {
+	if (recorded_blobs.length === 0) {
+		alert("empty");
+		return;
+	}
+
+	const blob = new Blob(recorded_blobs, { type: 'video/webm' });
+	const url = window.URL.createObjectURL(blob);
+	const a = document.createElement('a');
+	a.style.display = 'none';
+	a.href = url;
+	a.download = 'recorded.webm';
+	document.body.appendChild(a);
+	a.click();
+	setTimeout(() => {
+		document.body.removeChild(a);
+		window.URL.revokeObjectURL(url);
+	}, 500);
+};
+
+
+
 class Room extends React.Component {
 	constructor(props) {
 		super(props);
@@ -282,7 +390,7 @@ class Room extends React.Component {
 			h: window.innerHeight,
 
 			shareState: "off",
-			mode: "grid",// || "scroll",
+			mode: "grid", // || "scroll",
 			hidepeer: false,
 			invite: false,
 
@@ -317,33 +425,19 @@ class Room extends React.Component {
 
 			{/* menubar */}
 			<MenuBarContainer>
-				{/* recording */}
-				{isRecording
-					? <div className="btn start">
-						<div style={{ display: "flex", flexDirection: "row" }}>
-							{/* pause / resume */}
-							{isPaused
-								? <div onClick={() => this.resumeRecording()}>
-									<span className="txt">
-										<i className="icon play" /></span>
-								</div>
-								: <div onClick={() => this.pasueRecording()}>
-									<span className="txt">
-										<i className="icon pause" /></span>
-								</div>}
 
-							{/* stop */}
-							<div onClick={() => this.stopRecording()}>
-								<span className="txt">
-									<i className="icon stop" /></span>
-							</div>
-						</div>
+				{/* recording */}
+
+				{/*  */}
+				<div className='btn start' style={{ display: "flex", }}>
+					<div onClick={() => toggle_recording(myvideo && myvideo.track, peers, consumers)}>
+						<span className="txt">{buttontext}</span>
 					</div>
-					: <div className="btn start" onClick={() => this.recording(me, peers, consumers)}>
-						<span className="txt">
-							<i className="record icon" />
-						</span>
-					</div>}
+					<div onClick={() => download()}>
+						<span><i className="icon download " /></span>
+					</div>
+				</div>
+
 
 				{/* chat */}
 				<div className='btn chat' onClick={() => this.openChatWin()}>
@@ -497,6 +591,9 @@ class Room extends React.Component {
 		this.setState({ isPaused: false });
 	}
 	recording = async (me, peers, consumers) => {
+
+
+		return;
 		const actx = new AudioContext();
 		const dest = actx.createMediaStreamDestination();
 		let _stream = new MediaStream();
@@ -587,3 +684,179 @@ const mapDispatchToProps = (dispatch) => {
 
 const RoomContainer = connect(mapStateToProps, mapDispatchToProps)(Room);
 export default RoomContainer;
+
+// class MultiStreamsMixer {
+// 	constructor(aryMediaStreams, elementClass) {
+// 		var browserFakeUserAgent = 'Fake/5.0 (FakeOS) AppleWebKit/123 (KHTML, like Gecko) Fake/12.3.4567.89 Fake/123.45';
+// 		(function (that) {
+// 			if (typeof window !== 'undefined') {
+// 				return;
+// 			}
+// 			if (typeof global === 'undefined') {
+// 				return;
+// 			}
+// 			global.navigator = {
+// 				userAgent: browserFakeUserAgent,
+// 				getUserMedia: function () { }
+// 			};
+// 			if (!global.console) {
+// 				global.console = {};
+// 			}
+// 			if (typeof global.console.log === 'undefined' || typeof global.console.error === 'undefined') {
+// 				global.console.error = global.console.log = global.console.log || function () {
+// 					console.log(arguments);
+// 				};
+// 			}
+// 			if (typeof document === 'undefined') {
+// 				/*global document:true */
+// 				that.document = {
+// 					documentElement: {
+// 						appendChild: function () {
+// 							return '';
+// 						}
+// 					}
+// 				};
+// 				document.createElement = document.captureStream = document.mozCaptureStream = function () {
+// 					var obj = {
+// 						getContext: function () {
+// 							return obj;
+// 						},
+// 						play: function () { },
+// 						pause: function () { },
+// 						drawImage: function () { },
+// 						toDataURL: function () {
+// 							return '';
+// 						},
+// 						style: {}
+// 					};
+// 					return obj;
+// 				};
+
+// 				that.HTMLVideoElement = function () { };
+// 			}
+
+// 			if (typeof location === 'undefined') {
+// 				/*global location:true */
+// 				that.location = {
+// 					protocol: 'file:',
+// 					href: '',
+// 					hash: ''
+// 				};
+// 			}
+
+// 			if (typeof screen === 'undefined') {
+// 				/*global screen:true */
+// 				that.screen = {
+// 					width: 0,
+// 					height: 0
+// 				};
+// 			}
+
+// 			if (typeof URL === 'undefined') {
+// 				/*global screen:true */
+// 				that.URL = {
+// 					createObjectURL: function () {
+// 						return '';
+// 					},
+// 					revokeObjectURL: function () {
+// 						return '';
+// 					}
+// 				};
+// 			}
+
+// 			/*global window:true */
+// 			that.window = global;
+// 		})(typeof global !== 'undefined' ? global : null);
+
+// 		elementClass = elementClass || 'multi-streams-mixer';
+
+// 		var videos = [];
+// 		var isStopDrawingFrames = false;
+
+// 		var canvas = document.createElement('canvas');
+// 		var context = canvas.getContext('2d');
+// 		canvas.style.opacity = 0;
+// 		canvas.style.position = 'absolute';
+// 		canvas.style.zIndex = -1;
+// 		canvas.style.top = '-1000em';
+// 		canvas.style.left = '-1000em';
+// 		canvas.className = elementClass;
+// 		(document.body || document.documentElement).appendChild(canvas);
+
+// 		this.disableLogs = false;
+// 		this.frameInterval = 10;
+
+// 		this.width = 360;
+// 		this.height = 240;
+
+// 		this.useGainNode = true;
+// 		this.AudioContext = window.AudioContext;
+// 		this.URL = window.URL;
+// 		this.MediaStream = window.MediaStream;
+// 		this.Storage = {};
+
+// 		/*global MediaStream:true */
+// 		if (typeof this.MediaStream !== 'undefined') {
+// 			// override "stop" method for all browsers
+// 			if (typeof this.MediaStream.prototype.stop === 'undefined') {
+// 				this.MediaStream.prototype.stop = function () {
+// 					this.getTracks().forEach(function (track) {
+// 						track.stop();
+// 					});
+// 				};
+// 			}
+// 		}
+
+// 		Storage.AudioContext = this.AudioContext;
+// 	}
+// 	setSrcObject(stream, element) {
+// 	};
+// 	startDrawingFrames() {
+// 	};
+// 	drawVideosToCanvas() {
+// 	};
+// 	drawImage(video, idx) {
+// 	};
+// 	getMixedStream() {
+// 	};
+// 	getMixedVideoStream() {
+// 	};
+// 	getMixedAudioStream() {
+// 	};
+// 	getVideo(stream) {
+// 	};
+// 	appendStreams(streams) {
+// 	};
+// 	releaseStreams() {
+// 	};
+// 	resetVideoStreams(streams) {
+// 	};
+// }
+
+
+
+// {isRecording
+// 	? <div className="btn start">
+// 		<div style={{ display: "flex", flexDirection: "row" }}>
+// 			{/* pause / resume */}
+// 			{isPaused
+// 				? <div onClick={() => this.resumeRecording()}>
+// 					<span className="txt">
+// 						<i className="icon play" /></span>
+// 				</div>
+// 				: <div onClick={() => this.pasueRecording()}>
+// 					<span className="txt">
+// 						<i className="icon pause" /></span>
+// 				</div>}
+// 			{/* stop */}
+// 			<div onClick={() => this.stopRecording()}>
+// 				<span className="txt">
+// 					<i className="icon stop" /></span>
+// 			</div>
+// 		</div>
+// 	</div>
+// 	: <div className="btn start" onClick={() => this.recording(me, peers, consumers)}>
+// 		<span className="txt">
+// 			<i className="record icon" />
+// 		</span>
+// 	</div>}
