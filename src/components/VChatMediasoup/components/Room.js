@@ -5,13 +5,16 @@ import Peers from './Peers';
 import styled from "styled-components";
 import { geturl } from "config"
 import nobg from "source/hero1920.png";
-import ScrollContainer from 'react-indiana-drag-scroll';
-import { SearchMemberRequest } from "redux/modules/search";
-import SearchMember from "components/Commons/SearchDesignMember";
-import { Modal } from 'semantic-ui-react';
 import Cross from "components/Commons/Cross";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import { Modal } from 'semantic-ui-react';
+import SearchMember from "./SearchMember";
+// import ScrollContainer from 'react-indiana-drag-scroll';
+// import { SearchMemberRequest } from "redux/modules/search";
+// import SearchMember from "components/Commons/SearchDesignMember";
+// import SearchMemberContainer from "containers/Commons/SearchMemberContainer";
 // import Notifications from './Notifications';
+import { InvitedUserRequest } from "redux/modules/design";
 
 
 const RoomDiv = styled.div`
@@ -396,6 +399,8 @@ class Room extends React.Component {
 
 			isRecording: false,
 			isPaused: false,
+
+			selected: null,
 		};
 	};
 
@@ -419,6 +424,7 @@ class Room extends React.Component {
 		const shareState = myvideo && myvideo.type === "share";
 		// const myaudio = null; //me.find(track => track && track.kind === "audio");
 
+		console.log(this.props);
 		return (<RoomDiv h={h || window.innerHeight}>
 			{/* notifications */}
 			{/* <Notifications /> */}
@@ -446,7 +452,7 @@ class Room extends React.Component {
 
 				{/* invite */}
 				<div className="btn chat invite" onClick={() => {
-					// this.setState({ invite: true });
+					this.setState({ invite: true });
 				}}>
 					<span className="txt">초대</span>
 				</div>
@@ -489,7 +495,7 @@ class Room extends React.Component {
 
 				{/* modal */}
 				{/* invite modal */}
-				{/* <InviteModal open={invite} onClose={() => this.setState({ invite: false })}>
+				<InviteModal open={invite} onClose={() => this.setState({ invite: false })}>
 					<div className="close-box" onClick={() => this.setState({ invite: false })} >
 						<Cross angle={45} color={"#707070"} weight={3} width={35} height={35} />
 					</div>
@@ -499,14 +505,33 @@ class Room extends React.Component {
 					</div>
 					<hr />
 					<div className="search-bar">
-						<SearchMember {...this.props} />
+						<SearchMember
+							id={this.props.userInfo.uid}
+							token={this.props.token}
+							selected={mems => {
+								this.setState({ selected: mems });
+							}} />
+						{/* <SearchMemberContainer inputWidth={100} marginLeft={0} id="searchRect" addMemberItem={(item) => { console.log(item) }} /> */}
+						{/* <SearchMemberContainer {...this.props} /> */}
 					</div>
 					<hr />
 					<div>
-						<div>초대</div>
-						<div>취소</div>
+						<div onClick={() => {
+							this.state.selected &&
+								this.state.selected.map(mem => {
+									try {
+										InvitedUserRequest(this.props.userInfo.uid, this.props.token, { to_user_id: mem })
+									} catch (e) {
+										alert(e);
+									}
+								});
+							this.setState({ selected: null });
+						}}>초대</div>
+						<div onClick={() => {
+							this.setState({ invite: false, selected: null });
+						}}>취소</div>
 					</div>
-				</InviteModal> */}
+				</InviteModal>
 
 				<div className="panel" />
 
@@ -676,13 +701,12 @@ const mapStateToProps = (state) => {
 		consumers: state.consumers,
 	};
 };
-const mapDispatchToProps = (dispatch) => {
-	return {
-		SearchMemberRequest: (id, data, token) => (dispatch(SearchMemberRequest(id, data, token)))
-	};
-};
+// const mapDispatchToProps = (dispatch) => {
+// return {
+// };
+// };
 
-const RoomContainer = connect(mapStateToProps, mapDispatchToProps)(Room);
+const RoomContainer = connect(mapStateToProps, null)(Room);
 export default RoomContainer;
 
 // class MultiStreamsMixer {

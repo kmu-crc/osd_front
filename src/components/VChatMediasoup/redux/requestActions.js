@@ -1,4 +1,3 @@
-
 import * as stateActions from './stateActions';
 
 // This returns a redux-thunk action (a function).
