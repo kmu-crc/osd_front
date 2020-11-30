@@ -160,6 +160,7 @@ const EditorBottonWrapper = styled.div`
     }
 `;
 const PrivateContentWrapper = styled.div`
+  width:100%;
   padding: 25px 10px;
   margin-right:50px;
   margin-bottom:20px;
