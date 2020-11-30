@@ -241,19 +241,19 @@ class Cart extends Component {
                         <div className="calculate">
                             <div className="item_row">
                                 <div>상품금액</div>
-                                <div>{AllPrice}원</div>
+                                <div>{AllPrice} point</div>
                             </div>
                             <div className="item_row">
                                 <div>배송비</div>
-                                <div>(+)2500원</div>
+                                <div>(+)2500 point</div>
                             </div>
                             <div className="item_row">
                                 <div>할인금액</div>
-                                <div>(-)0원</div>
+                                <div>(-)0 point</div>
                             </div>
                         </div>
                         <div className="result">
-                            <div>={AllPrice + 2500}원</div>
+                            <div>={AllPrice + 2500} point</div>
                         </div>
                     </div>
 

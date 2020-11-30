@@ -56,17 +56,18 @@ const Arrow = styled.div`
     background-position: 50%;
     transform: rotate(${props => props.angle});
     opacity: 0.9;
-    cursor: pointer;
+    cursor:pointer;
     :hover{
         opacity: 1;
     }
+    cursor: pointer;
     @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) 
     and (max-width : ${1024}px) { 
         top: ${props => props.gap}px;
     }
     @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
     and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
-        top: 110px;
+        top:110px;
         // top: ${props => props.gap}px;
     }
 `;
@@ -210,9 +211,10 @@ class GridEditor extends Component {
     }
     ScrollLeft() {
         if (this.temp) {
+            console.log("LEFT", this.temp.current.scrollLeft,this.temp.current.scrollWidth - this.temp.current.scrollLeft,this.state.w);
             this.temp.current.scrollLeft -= 275;
 
-            if (this.temp.current.scrollWidth - this.temp.current.scrollLeft >= this.state.w) {
+            if (this.temp.current.scrollWidth - this.temp.current.scrollLeft >= this.state.w-10) {
                 this.setState({ right: true });
             }
 
@@ -223,9 +225,10 @@ class GridEditor extends Component {
     }
     ScrollRight() {
         if (this.temp) {
+            console.log("RIGHT", this.temp.current.scrollLeft,this.temp.current.scrollWidth - this.temp.current.scrollLeft,this.state.w);
             this.temp.current.scrollLeft += 275;
 
-            if (this.temp.current.scrollWidth - this.temp.current.scrollLeft <= this.state.w) {
+            if (this.temp.current.scrollWidth - this.temp.current.scrollLeft <= this.state.w-10) {
                 this.setState({ right: false });
             }
 
@@ -308,7 +311,7 @@ class GridEditor extends Component {
                         {right ? <RightWhitePane
                             width={138} height={h} right={0}
                             background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
-                            <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} />
+                            <Arrow angle="180deg" c gap={gap} right={50} onClick={this.ScrollRight} />
                         </RightWhitePane> : null}
 
                         {editor && newcard ?

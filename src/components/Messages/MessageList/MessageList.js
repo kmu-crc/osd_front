@@ -280,6 +280,7 @@ class MessageList extends Component {
       render: true,
       connectedCheck: false,//채팅을 받는 당사자가 접속돼있는지, 아닌지 판별하는 변수
       textmsg: "",
+      searchform:"",
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -335,6 +336,7 @@ class MessageList extends Component {
       });
       return;
     }
+    this.setState({searchform:value});
     this.props.SearchMemberRequest(null, { key: value }, this.props.token);
   }
 
@@ -344,22 +346,25 @@ class MessageList extends Component {
     });
     const index = this.state.friendList.indexOf(data.uid);
     if (index === -1) {
-      this.setState({
+      await this.setState({
         selectId: data.uid,
         selectName: data.nick_name,
         openMember: false,
+        img:data.s_img,
         msgId: -1,
-        render: true
+        render: true,
       });
     } else {
-      this.setState({
+      await this.setState({
         selectId: data.uid,
         selectName: data.nick_name,
+        img:data.s_img,
         openMember: false,
         msgId: this.props.MessageList[index].uid,
-        render: true
+        render: true,
       });
     }
+    document.getElementById("sendMsgBox").focus();
   }
 
   setMsgId = async (group_id, user_id, user_name, img) => {
@@ -406,7 +411,7 @@ class MessageList extends Component {
     // console.log(this.props, this.state);
     const { isDetailClicked } = this.state;
     const { MessageList, /*userInfo*/ } = this.props;
-
+    console.log(this.props.MessageList);
     return (
       <Container>
         <Wrapper>
@@ -424,7 +429,7 @@ class MessageList extends Component {
               <div className="searchRow">
                 <div className="heading"><div>대화상대 검색</div></div>
                 <FormInput style={{ borderRadius: "20px", outline: "none", border: "none", width: "380px", height: "29px", paddingLeft: "10px" }}
-                  type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={["MinLength2"]} getValue={this.getValue} />
+                  type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={["MinLength2"]} getValue={this.getValue} value={this.state.searchform} />
               </div>
               <div style={this.state.openMember ? { display: "block" } : { display: "none" }}>
                 {this.props.members && this.props.members.map((item, index) => {

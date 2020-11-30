@@ -114,7 +114,7 @@ export class InputPriceNew extends Component {
                         placeholder={this.props.placeholder}
                         value={this.state.price || 0}
                         onChange={this.onChangePrice}
-                    /><div className="won">원</div>
+                    /><div className="won"> point</div>
                     </div>
                     <div className="buttonbox">
                     <Button onClick={() => this.onClickButton(1000)}><div className="text">+1천</div></Button>

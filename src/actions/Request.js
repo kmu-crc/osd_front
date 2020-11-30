@@ -131,7 +131,7 @@ export const GetMyDesignerRequestListRequest = (id, page) => {
       method: "GET"
     })
       .then(res => res.json())
-      .then(data => dispatch(GetMyDesignerRequestList(data || [])))
+      .then(data =>{ console.log(data);dispatch(GetMyDesignerRequestList(data || []))})
       .catch(err => dispatch(MyDesignerRequestListFail()))
   }
 };

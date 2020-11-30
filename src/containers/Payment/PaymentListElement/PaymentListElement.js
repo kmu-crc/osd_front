@@ -59,6 +59,7 @@ const ListElement = styled.div`
     display:flex;
     align-items:center;
     padding:5px;
+    cursor:pointer;
   }
   .writer{
     min-width:10%;
@@ -66,6 +67,7 @@ const ListElement = styled.div`
     align-items:center;
     padding:5px;
     overflow:hidden;
+    cursor:pointer;
   }
   .date{
     min-width:20%;
@@ -92,11 +94,11 @@ class PaymentListElement extends Component {
     // const Element = () =>
     
     return (
-      <NavLink to={"/productPurchase/" +item.item_id+"/"+ item.uid}>
+      // <NavLink to={"/productPurchase/" +item.item_id+"/"+ item.uid}>
         <ListElement left={item.status === "response" ? 25 : 0}>
-          <div className="title_" style={{  display: "flex", flexDirection: "row" }}>
+          <NavLink to={"/productPurchase/" +item.item_id+"/"+ item.uid} className="title_" style={{  display: "flex", flexDirection: "row" }}>
             {item.payment_title || "글 제목"}
-          </div>
+          </NavLink>
           {
             item.status==="response"?
             <div className="writer">
@@ -113,7 +115,7 @@ class PaymentListElement extends Component {
           {/* date */}
           <div className="date">{DateFormat(item.create_time)}</div>
         </ListElement>
-      </NavLink>
+      // </NavLink>
     );
   }
 }

@@ -236,7 +236,9 @@ class ModifyResponseToDesignerReq extends Component {
   async componentDidUpdate(prevProps){
     if(prevProps.detail!=this.props.detail){
       this.setState({res_content:this.props.detail.content,
+      content:this.props.detail.content,
       res_price:this.props.detail.price,
+      price:this.props.detail.price,
       startDate:this.props.detail.start_date,
       endDate:this.props.detail.end_date,})
     }
@@ -250,11 +252,11 @@ class ModifyResponseToDesignerReq extends Component {
   }
   onChangeResponsePrice(event) {
     this.setState({
-      res_price: event.target.value,
+      price: event.target.value,
     })
   }
   async getPriceValue(value) {
-    await this.setState({ res_price: value });
+    await this.setState({ price: value });
   }
   async getStartDateValue(value){
     await this.setState({ startDate: value });
@@ -413,7 +415,7 @@ class ModifyResponseToDesignerReq extends Component {
                 <div className="label2">응답 내용</div>
                 {/* <InputTextarea onChange={this.onChangeResponseContent} value={this.state.res_content} width={483} height={700} /> */}
                 <TextControllerClassic
-                  item={{content:this.state.res_content,height:430}}
+                  item={{content:this.state.content,height:430}}
                   name={"comment"}
                   getValue={this.onChangeResponseContent}
                   width="480"
@@ -425,7 +427,7 @@ class ModifyResponseToDesignerReq extends Component {
 
               <div className="wrapper flex">
                 <div className="label2">희망비용</div>
-                <InputPriceNew price={this.state.res_price} name="price" getValue={this.getPriceValue} />
+                <InputPriceNew price={this.state.price} name="price" getValue={this.getPriceValue} />
               </div>
 
               <div className="wrapper flex centering">
@@ -440,7 +442,7 @@ class ModifyResponseToDesignerReq extends Component {
           <div className="contentsBox">
             <div className="box_"/>
             <div className="box_centering">
-              <RedButton text ={"수정된 내용을 저장합니다."}  okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
+              <RedButton text ={"수정된 내용을 저장합니다."}  okText="확인" cancelText="취소" value={"수정하기"} onClick={this.onSubmit} isConfirm={true} />
               <GrayButton text={"수정된 내용이 저장되지 않습니다."} value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
             </div>
           </div>

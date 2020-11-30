@@ -8,7 +8,7 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 
 const WriteNormalArticleModal = styled(Modal)`
   width:988px;
-  height:541px;
+  height:max-content;
   min-width:300px;
   min-height:200px;
   // max-width:790px;
@@ -17,7 +17,7 @@ const WriteNormalArticleModal = styled(Modal)`
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   margin-bottom:10px;
   border-radius:15px !important;
-  padding:25px 25px 50px 60px;
+  padding:25px 50px 0px 50px;
   .close-box{
     width: 100%;
     height:max-content;
@@ -45,8 +45,8 @@ const WriteNormalArticleModal = styled(Modal)`
     height:max-content;
   }
   .redButtonBox{
-    padding-top:37px;
-    width:95%;
+    padding-top:30px;
+    width:100%;
     display:flex;
     justify-content:center;
   }
@@ -143,13 +143,15 @@ class ArticleModal extends Component {
                             </div>
                             <div className="form form_height">
                             <div className="title_label ">내용<Mandatory/></div>
+                            <div style = {{width:"100%",display:"flex",justifyContent:"center"}}>
                             <TextControllerClassic
                             item={{content:this.state.content}}
                             name={"content"}
                             getValue={async(data)=>{this.setState({content:data.content})}}
-                            width="750"
+                            width="700"
                             editheight="240"
                             />
+                            </div>
                         </div>
                         <div className="form redButtonBox">
                             <div className="redButton" onClick={async()=>{

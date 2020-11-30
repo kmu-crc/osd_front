@@ -224,7 +224,7 @@ class CardSourceDetail extends Component {
       })
     );
     await this.setState({ content: newContent });
-    this.props.handlerModifyContent();
+    this.props.handlerModifyContent&&this.props.handlerModifyContent();
 
   //   let formData = await ContentForm(this.state, this.props.content);
   //   if (formData && (formData.newContent.length !== 0 && formData.updateContent.length !== 0 && formData.deleteContent.length !== 0)) {
@@ -350,7 +350,7 @@ class CardSourceDetail extends Component {
       })
     );
     await this.setState({ content: copyContent });
-    this.props.handlerModifyContent();
+    this.props.handlerModifyContent&&this.props.handlerModifyContent();
   };
 
   render() {

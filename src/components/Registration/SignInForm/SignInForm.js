@@ -124,13 +124,15 @@ class SignInForm extends Component {
   constructor(props) {
     super(props);
     // const { cookies } = props;
-    this.state = { email: cookie.load('saveid') || "", password: cookie.load('savepassword') || "", saveID: cookie.load('saveid') != null ? true : false, saveLogin: cookie.load('savepassword') != null ? true : false, };
+    this.state = { err:false, email: cookie.load('saveid') || "", password: cookie.load('savepassword') || "", saveID: cookie.load('saveid') != null ? true : false, saveLogin: cookie.load('savepassword') != null ? true : false, };
     this.onChangeID = this.onChangeID.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onCheckSaveID = this.onCheckSaveID.bind(this);
     this.onCheckSaveLogin = this.onCheckSaveLogin.bind(this);
     this.onClickSignUp = this.onClickSignUp.bind(this);
+    this.onKeyDownID = this.onKeyDownID.bind(this);
+    this.onKeyDownPass = this.onKeyDownPass.bind(this);
   }
 
   onChangeID(event) {
@@ -138,6 +140,20 @@ class SignInForm extends Component {
   }
   onChangePassword(event) {
     this.setState({ password: event.target.value });
+  }
+  onKeyDownID(event){
+    if(event.keyCode == 13){
+      if(this.state.err == false){
+        this.onSubmit(event);
+      }
+    }
+  }
+  onKeyDownPass(event){
+    if(event.keyCode == 13){
+      if(this.state.err == false){
+        this.onSubmit(event);
+      }
+    }
   }
 
 
@@ -165,9 +181,15 @@ class SignInForm extends Component {
     this.props.SignInRequest(senddata).then(async data => {
       console.log(data);
       if (data.type === "AUTH_SIGNIN_IS_NOT_MEMBER") {
+        this.setState({err:true});
         await alert("opendesign회원이 아닙니다.");
+        this.setState({err:false});
+        return;
       } else if (data.type === "AUTH_SIGNIN_IS_NOT_PASSWORD") {
+        this.setState({err:true});
         await alert("비밀번호가 일치하지 않습니다.");
+        this.setState({err:false});
+        return;
       } else {
         window.history.go(-1)
         // window.location.reload();
@@ -215,7 +237,8 @@ class SignInForm extends Component {
                 <InputTextBox
                   placeholder="아이디를 입력하세요."
                   value={this.state.email}
-                  onChange={this.onChangeID} />
+                  onChange={this.onChangeID} 
+                  onKeyDown = {this.onKeyDownID}/>
               </div>
               <div className="row">
                 <div className="label" value={this.state.password}><div>비밀번호</div></div>
@@ -223,7 +246,8 @@ class SignInForm extends Component {
                   type="password"
                   placeholder="비밀번호를 입력하세요."
                   value={this.state.password}
-                  onChange={this.onChangePassword} />
+                  onChange={this.onChangePassword} 
+                  onKeyDown = {this.onKeyDownPass}/>
               </div>
               <div className="row">
                 <div className="label" />

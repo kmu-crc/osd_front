@@ -224,9 +224,30 @@ const InfoContentChooseItemType = styled.div`
   font-size: 24px;
   color: #707070;
 `;
+const DeleteMenu = styled.div`
+  position: abolute;
+  width: 280px;
+  padding: 25px;
+  border-radius: 25px;
+  background: white;
+  font-size: 28px;
+  // line-height: 56px;
+  text-align: center;
+  font-family: Noto Sans KR;
+  opacity:0.6;
+  .active{
+    color: red;
+  }
+  .mousePointer{
+    cursor:pointer;
+  }
+  &:hover{
+    opacity:1;
+  }
+`;
 const NaviMenu = styled.div`
   position: abolute;
-  width: max-content;
+  width: 280px;
   padding: 25px;
   border: 1px solid blue;
   border-radius: 25px;
@@ -499,8 +520,10 @@ class ModifyItemInfo extends Component {
       <NaviMenu>
         <div className={tab === "basic" ? "active mousePointer" : "mousePointer"} onClick={() => this.setState({ tab: "basic" })}>기본/추가정보 변경</div>
         <div className={tab === "contents" ? "active mousePointer" : "mousePointer"} onClick={() => this.setState({ tab: "contents" })}>컨텐츠 변경</div>
-        <div className={tab === "delete" ? "active mousePointer" : "mousePointer"} onClick={this.deleteThisItem}>아이템 삭제</div>
       </NaviMenu>
+      <DeleteMenu>
+        <div className={tab === "delete" ? "active mousePointer" : "mousePointer"} onClick={this.deleteThisItem}>아이템 삭제</div>
+      </DeleteMenu>
 
       {/* 공통/기본입력사항 */}
       {tab === "basic" ?
