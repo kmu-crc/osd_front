@@ -55,7 +55,7 @@ class ClientTemplate extends Component {
   }
   checkIsOutScroll = (obj) => {
     this.setState({ scroll: true })
-    setTimeout(() => { this.setState({ scroll: false }) }, 100)
+    setTimeout(() => { this.setState({ scroll: false }) }, 50)
   }
   checkScrollUp = (obj) => {
     const currentScrollPos = obj.scrollTop
