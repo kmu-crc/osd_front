@@ -416,7 +416,8 @@ function SummaryItem(props) {
       </SummaryIcon>
       <div className="summary_box">
         <div className="summary_Name">{props.friend_name}</div>
-        <div className="summary_message">{props.message && props.message.replace(/<br\/>/g, "")}</div>
+        <div className="summary_message" 
+        dangerouslySetInnerHTML={{ __html: props.message && props.message.replace(/<br\/>/g, "") }}/>
       </div>
     </SummaryItemBox>);
 }

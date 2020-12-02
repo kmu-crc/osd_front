@@ -91,7 +91,7 @@ const CustomModal = styled(Modal)`
     .termOKBtn{
         position:absolute;
         right:35px;
-        bottom:35px;
+        bottom:140px;
         font-size:20px;
         font-weight:500;
         font-family:Noto Sans KR;

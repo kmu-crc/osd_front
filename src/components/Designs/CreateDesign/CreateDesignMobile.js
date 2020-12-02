@@ -1161,7 +1161,7 @@ class CreateDesignMobile extends Component {
             {/* LICENSE */}
             <ContentsBox>
               <TitleBox>
-                <div className="title">라이센스</div>
+                <div className="title">라이센스<sup style={{ color: "red" }}>*</sup></div>
               </TitleBox>
               <LicenseBox>
                 <div className="licenseList">

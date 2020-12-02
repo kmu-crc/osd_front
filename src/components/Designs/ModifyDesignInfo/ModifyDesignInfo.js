@@ -211,7 +211,7 @@ class ModifyDesignInfo extends Component {
             <FromFieldCard>
               <Grid>
                 <Grid.Column mobile={16} computer={4}>
-                  <FormHeader as="h2">라이센스</FormHeader>
+                  <FormHeader as="h2">라이센스<sup style={{ color: "red" }}>*</sup></FormHeader>
                 </Grid.Column>
                 <Grid.Column mobile={16} computer={12}>
                   <Form.Group widths={4}>

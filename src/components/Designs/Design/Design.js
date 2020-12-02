@@ -45,8 +45,9 @@ const DesignElement = styled.div`
     margin-left: 276px;
     margin-top: 0px;
     width: 32.63px;
-    height: 70.48px;
+    height: 67px;
     background-image: url(${forked});
+    background-size:cover;
   }
   .categoryName {
     z-index: 703;

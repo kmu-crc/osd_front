@@ -1001,7 +1001,7 @@ class ModifyDesign extends Component {
 
                   {/* LICENSE */}
                   <LicenseBox>
-                    <div className="additionalTitle">라이센스</div>
+                    <div className="additionalTitle">라이센스<sup style={{ color: "red" }}>*</sup></div>
                     <div className="licenseList">
                       <div className="licenseItem">
                         <div><CheckBox2 onChange={this.onCheckedLicense01} checked={this.state.license1 ? true : false} type="checkbox" /></div>

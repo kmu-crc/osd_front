@@ -155,7 +155,7 @@ const CardContainer = styled.div`
         z-index: 2;
         opacity: 0.5;
         display: none;
-        cursor:${props => props.editor === true ? "move" : "default"};;
+        cursor:${props => props.editor === true ? "move" : "default"};
         border-radius:15px;
         background-color:gray;
         opacity:0.1;
@@ -172,6 +172,8 @@ const CardContainer = styled.div`
         position:absolute;
         z-index:700;
         background-image: url(${props => props.first_img && props.first_img.m_img});
+        background-size: cover;
+        background-position: center;
         .gradient {
             z-index: 701;
             cursor: pointer;
