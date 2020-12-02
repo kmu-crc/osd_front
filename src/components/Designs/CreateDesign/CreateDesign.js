@@ -1319,7 +1319,7 @@ class CreateDesign extends Component {
                 <HRline />
                 {/* LICENSE */}
                 <LicenseBox>
-                  <div className="additionalTitle">라이센스</div>
+                  <div className="additionalTitle">라이센스<sup style={{ color: "red" }}>*</sup></div>
                   <div className="licenseList">
                     <div className="licenseItem"><CheckBox2 checked={this.state.license1} onChange={this.onCheckedLicense01} /><span className="textLabel">상업적으로 이용이 가능합니다</span></div>
                     <div className="licenseItem"><CheckBox2 checked={this.state.license2} onChange={this.onCheckedLicense02} /><span className="textLabel">원작자를 표시합니다</span></div>

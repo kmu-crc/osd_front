@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Header, Grid } from "semantic-ui-react";
 import opendesign_style from "opendesign_style";
 import FooterPara from "./FooterPara";
+import ClientTemplate from "templates/ClientTemplate"
 
 const FromFieldCard = styled.div`
   border:3px solid #EFEFEF;  
@@ -37,7 +38,8 @@ const FormHeader = styled(Header) `
 class FooterTerm extends Component {
   render() {
     return(
-      <div style={{width:"83%"}}>
+      <ClientTemplate>
+      <div style={{width:"99%"}}>
         <FromFieldCard>
           <Grid>
             <Grid.Column width={4}>
@@ -49,6 +51,7 @@ class FooterTerm extends Component {
           </Grid>
         </FromFieldCard>
       </div>
+      </ClientTemplate>
     );
   }
 }
