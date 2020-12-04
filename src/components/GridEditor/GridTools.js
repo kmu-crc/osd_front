@@ -81,6 +81,8 @@ const StepCardStyle = styled.div`
     position: relative;
     cursor: pointer;
     display: flex;
+    justify-content:center;
+    align-items:center;
     width: 200px;
     height: 77px;
     border-radius: 15px;
@@ -93,15 +95,13 @@ const StepCardStyle = styled.div`
     background-color: white;
     overflow:hidden;
     .text-area{
-        margin-top: 24px;
-        margin-left: 12px;
         height: 29px;
         width: 178px;
         color: #707070;
         font-family: Noto Sans KR;
         font-size: 20px;
         text-align: center;
-        line-height: 29px;
+        // line-height: 29px;
     }
     :hover{
         .icon-area{
@@ -162,7 +162,7 @@ const AuthorBox = styled.div`
   text-align: center;
   margin-top: 110px;
 //   margin-left: 13px;
-  margin-left:6px;
+  margin-left:13px;
   margin-bottom:12px;
   padding: 5px;
 `;
