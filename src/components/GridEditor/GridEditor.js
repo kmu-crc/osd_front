@@ -75,6 +75,8 @@ const GridEditorWrapper = styled.div`
     display: flex;
     margin-left:32px;
     margin-bottom: 75px;
+    padding:20px;
+    padding-right:50px;
     width: ${window.innerWidth < osdcss.resolutions.LargeMaxWidth
         ? window.innerWidth
         : osdcss.resolutions.LargeMaxWidth}; 
@@ -137,11 +139,7 @@ class GridEditor extends Component {
         }
     }
     handleResize() {
-        this.setState({
-            w: window.innerWidth < osdcss.resolutions.LargeMaxWidth
-                ? window.innerWidth
-                : osdcss.resolutions.LargeMaxWidth
-        });
+        this.setState({ w: window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth });
         if (this.temp) {
             if (this.temp.current.scrollWidth - this.temp.current.scrollLeft < this.state.w) {
                 this.setState({ right: false });
@@ -150,6 +148,19 @@ class GridEditor extends Component {
             }
             if (this.temp.current.scrollLeft > 0) { this.setState({ left: true }); }
         }
+        // this.setState({
+        //     w: window.innerWidth < osdcss.resolutions.LargeMaxWidth
+        //         ? window.innerWidth
+        //         : osdcss.resolutions.LargeMaxWidth
+        // });
+        // if (this.temp) {
+        //     if (this.temp.current.scrollWidth - this.temp.current.scrollLeft < this.state.w) {
+        //         this.setState({ right: false });
+        //     } else {
+        //         this.setState({ right: true });
+        //     }
+        //     if (this.temp.current.scrollLeft > 0) { this.setState({ left: true }); }
+        // }
     }
     createNewCard(row, boardId) {
         this.setState({ row: row, boardId: row.id, newcard: true });
@@ -209,31 +220,28 @@ class GridEditor extends Component {
             .catch(async (err) => { await alert("Failed to create new STEP"); console.error(err) });
         this.CloseNewStep();
     }
-    ScrollLeft() {
+    async ScrollLeft() {
         if (this.temp) {
-            console.log("LEFT", this.temp.current.scrollLeft,this.temp.current.scrollWidth - this.temp.current.scrollLeft,this.state.w);
-            this.temp.current.scrollLeft -= 275;
-
-            if (this.temp.current.scrollWidth - this.temp.current.scrollLeft >= this.state.w-10) {
-                this.setState({ right: true });
+            this.temp.current.scrollLeft -=275;
+            console.log(this.temp.current.scrollLeft,this.temp.current.scrollWidth - this.temp.current.scrollLeft,this.state.w);
+            if (this.temp.current.scrollWidth - this.temp.current.scrollLeft >= this.state.w-300) {
+                await this.setState({ right: true });
             }
-
+            
             if (this.temp.current.scrollLeft === 0) {
-                this.setState({ left: false });
+                await this.setState({ left: false });
             }
         }
     }
-    ScrollRight() {
-        if (this.temp) {
-            console.log("RIGHT", this.temp.current.scrollLeft,this.temp.current.scrollWidth - this.temp.current.scrollLeft,this.state.w);
+    async ScrollRight() {
+            if (this.temp) {
             this.temp.current.scrollLeft += 275;
-
-            if (this.temp.current.scrollWidth - this.temp.current.scrollLeft <= this.state.w-10) {
-                this.setState({ right: false });
+            console.log(this.temp.current.scrollLeft,this.temp.current.scrollWidth - this.temp.current.scrollLeft,this.state.w);
+            if (this.temp.current.scrollWidth - this.temp.current.scrollLeft <= this.state.w-300) {
+                await this.setState({ right: false });
             }
-
-            if (this.temp.current.scrollLeft > 0) {
-                this.setState({ left: true });
+            if (this.temp.current.scrollLeft >= 0) {
+               await this.setState({ left: true });
             }
         }
     }
@@ -296,7 +304,7 @@ class GridEditor extends Component {
         const { editor, ItemStep, itemId, userInfo } = this.props;
         const { gap, h, left, right, boardId, card, row, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         const steps = ItemStep;
-        console.log("----=================dfasdfdfd",userInfo);
+        // console.log("----=================dfasdfdfd",userInfo);
 
         return (
             <Wrapper>
@@ -305,7 +313,7 @@ class GridEditor extends Component {
                         {left ? <LeftWhitePane
                             width={138} height={h}
                             background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
-                            <Arrow angle="0deg" gap={gap} left={50} onClick={this.ScrollLeft} />
+                            <Arrow angle="0deg" top={20} gap={gap} left={50} onClick={this.ScrollLeft} />
                         </LeftWhitePane> : null}
 
                         {right ? <RightWhitePane

@@ -356,7 +356,7 @@ class CardSourceDetail extends Component {
 
   render() {
     const { loading, content } = this.state;
-    // console.log(this.props);
+
     /* {this.props.ItemDetail.public === "yes" ? "공개" : "비공개"} */
 
     return (

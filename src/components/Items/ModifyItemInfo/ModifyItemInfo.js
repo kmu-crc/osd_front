@@ -119,7 +119,9 @@ const Thumbnail = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
   cursor:pointer;
+
 `;
 const FormBox = styled.div`
   *{
@@ -772,9 +774,11 @@ class ModifyItemInfo extends Component {
         (<ButtonBox className="buttonBox" >
           <RedButton
             text={"수정된 내용을 저장합니다."}
+
             okText="확인"
             cancelText="취소"
             value={"저장하기"}
+
             onClick={this.onSubmit}
             disabled={!this.state.ismodified}
             isConfirm={true} />

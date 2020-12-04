@@ -379,7 +379,7 @@ const Content = styled.div`
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
   opacity: 1;
-  padding: 30px 0px 20px 50px;
+  padding: 50px 20px 20px 50px;
   font-family: Noto Sans KR;
   color: #000000;
   font-weight: 300;
@@ -432,6 +432,10 @@ const Content = styled.div`
     }
   }
   .detail_board{
+    // border:1px solid black;
+    width:1570px;
+    border-radius: 20px;
+    padding: 15px 35px;
     height:max-content;
     // border:1px solid black;
     // overflow:scroll;
@@ -804,7 +808,6 @@ class ItemDetail extends Component {
                     item={item}
                     id={item["item-id"]}
                     bought={item.bought}
-                  // editor={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
                   />
                 </div>
                 : null}
