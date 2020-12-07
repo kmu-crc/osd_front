@@ -70,7 +70,7 @@ class VChat2Container extends Component {
     render() {
         return this.state.valid && this.props.userInfo && this.state.design
 
-            ? <NewVChat userInfo={this.props.userInfo} design={this.state.design} />
+            ? <NewVChat userInfo={this.props.userInfo} design={this.state.design} token={this.props.token} />
             : <div style={{ color: "#F0F0F0", textAlign: "center", fontSize: "2rem" }}>
                 사용자 정보를 확인하고 있습니다.
             </div>

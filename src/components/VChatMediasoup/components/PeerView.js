@@ -165,6 +165,7 @@ export default class PeerView extends React.Component {
 				</div> : null}
 
 			<video
+				id={`video-${peer.id}`}
 				ref='videoElem'
 				autoPlay
 				playsInline
@@ -180,6 +181,7 @@ export default class PeerView extends React.Component {
 			/>
 
 			<audio
+				id={`audio-${peer.id}`}
 				ref='audioElem'
 				autoPlay
 				playsInline
