@@ -250,7 +250,7 @@ class Me extends React.Component {
 						if (videoProducer && videoProducer.track) {
 							const stream = new MediaStream;
 							stream.addTrack(videoProducer.track);
-							this.props.clicked(stream);
+							this.props.clicked(me, stream);
 						}
 					}}
 				>

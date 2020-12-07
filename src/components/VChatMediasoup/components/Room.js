@@ -6,15 +6,297 @@ import styled from "styled-components";
 import { geturl } from "config"
 import nobg from "source/hero1920.png";
 import Cross from "components/Commons/Cross";
-import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 import { Modal } from 'semantic-ui-react';
 import SearchMember from "./SearchMember";
+import { InvitedUserRequest } from "redux/modules/design";
+import { confirm } from "components/Commons/Confirm/Confirm";
 // import ScrollContainer from 'react-indiana-drag-scroll';
 // import { SearchMemberRequest } from "redux/modules/search";
 // import SearchMember from "components/Commons/SearchDesignMember";
 // import SearchMemberContainer from "containers/Commons/SearchMemberContainer";
 // import Notifications from './Notifications';
-import { InvitedUserRequest } from "redux/modules/design";
+// import noimg from "source/noimg.png";
+
+// import RecordRTC from 'recordrtc';
+const VIDEO_SIZE = 128;
+const GAP = 8;
+class Mixer {
+	constructor() {
+		this.canvas = null;
+		this.video = null;
+		this.context = null;
+		this.default = { x: 0, y: 0, w: window.screen.width, h: window.screen.height };
+		this.videos = null;
+		this.audios = null;
+		this.blob = null;
+		this.acts = null;
+		this.dest = null;
+		this.shared = null;
+		this.videoStream = null;
+		this.mediaRecorder = null;
+		this.chunks = null;
+		this.intervalId = null;
+		this.post = null;
+		this.tempfiles = null;
+	}
+
+	// 캔버스 엘레먼트 생성
+	create = () => {
+		this.canvas = document.createElement("canvas");
+		this.canvas.width = 1024;//1920;
+		this.canvas.height = 768;//1080;
+		this.video = document.createElement("video");
+		this.context = this.canvas.getContext("2d");
+		this.videos = [];
+		this.audios = [];
+		this.actx = new AudioContext();
+		this.dest = this.actx.createMediaStreamDestination();
+		this.pos = [
+			/*0*/ { x: 0, y: 0, w: this.canvas.width - ((VIDEO_SIZE + GAP) * 2), h: this.canvas.height },
+			/*1*/ { x: this.canvas.width - ((VIDEO_SIZE + GAP) * 2), y: 0, w: VIDEO_SIZE, h: VIDEO_SIZE },
+			/*2*/ { x: this.canvas.width - ((VIDEO_SIZE + GAP) * 2) + VIDEO_SIZE + GAP, y: 0, w: VIDEO_SIZE, h: VIDEO_SIZE },
+			/*3*/ { x: this.canvas.width - ((VIDEO_SIZE + GAP) * 2), y: VIDEO_SIZE + GAP, w: VIDEO_SIZE, h: VIDEO_SIZE },
+			/*4*/ { x: this.canvas.width - ((VIDEO_SIZE + GAP) * 2) + VIDEO_SIZE + GAP, y: VIDEO_SIZE + GAP, w: VIDEO_SIZE, h: VIDEO_SIZE },
+			/*5*/ { x: this.canvas.width - ((VIDEO_SIZE + GAP) * 2), y: (VIDEO_SIZE + GAP) * 2, w: VIDEO_SIZE, h: VIDEO_SIZE },
+			/*6*/ { x: this.canvas.width - ((VIDEO_SIZE + GAP) * 2) + VIDEO_SIZE + GAP, y: (VIDEO_SIZE + GAP) * 2, w: VIDEO_SIZE, h: VIDEO_SIZE },
+			/*7*/ { x: this.canvas.width - ((VIDEO_SIZE + GAP) * 2), y: (VIDEO_SIZE + GAP) * 3, w: VIDEO_SIZE, h: VIDEO_SIZE },
+			/*8*/ { x: this.canvas.width - ((VIDEO_SIZE + GAP) * 2) + VIDEO_SIZE + GAP, y: (VIDEO_SIZE + GAP) * 3, w: VIDEO_SIZE, h: VIDEO_SIZE },
+		];
+		this.tempfiles = [];
+	}
+
+	init = () => {
+		this.create();
+
+		const videos = document.querySelectorAll('video');
+		var ary_videos = Array.prototype.slice.call(videos); // converts NodeList to Array
+
+		ary_videos && ary_videos.length > 0 && ary_videos.map(video => {
+			this.videos.push(video);
+		});
+
+		const audios = document.querySelectorAll('audio');
+		var ary_audios = Array.prototype.slice.call(audios);
+		ary_audios && ary_audios.length > 0 && ary_audios.map(audio => {
+			this.audios.push(audio);
+		});
+
+		console.log(this.videos);
+
+		// peers && peers.length && peers.map(peer => {
+		// 	const consumerAry = peer.consumers.map(id => consumers[id]);
+		// 	// audio
+		// 	// actx.createMediaStreamSource(_stream).connect(dest);
+		// 	// const peeraudio = consumerAry.find(cnsmr => cnsmr.track.kind === "audio").track;
+		// 	// const peeraudiostream = peeraudio ? new MediaStream([peeraudio]):null;
+		// 	// peeraudiostream && this.audios.push(peeraudiostream);
+		// 	// actx.createMediaStreamSource(new MediaStream([peeraudio])).connect(dest);
+		// 	// });
+		// 	// const mixedtrack = dest.stream.getTracks()[0];
+		// 	// const stream = new MediaStream([mixedt
+		// });
+	}
+	set_pinned_id = (id) => {
+		this.pinned = id;
+	}
+	get_pinned_id = () => {
+		return String(this.pinned);
+	}
+	get_shared_id = () => {
+		return this.shared;
+	}
+	addvideo = (video) => {
+		if (!video) return;
+		this.videos.push(video);
+	}
+	addaudio = (audio) => {
+		if (!audio) return;
+		this.audios.push(audio);
+	}
+	drawImage = (v, x, y, w, h) => {
+		if (v.srcObject) {
+			this.context.drawImage(v, x, y, w, h);
+		} else {
+			this.context.fillStyle = "#36454F";
+			this.context.fillRect(x, y, w, h);
+		}
+	}
+
+	// 드로우함수(좌표크기영상) // 
+	determine = v => {
+		// pinned-video, video-762.is-me, video-73.hidden //
+		const pinned = this.get_pinned_id();
+		if (pinned === v.id) {
+			if (v.srcObject) {
+				return 0;
+			}
+		} else {
+			if (pinned == null && v.id.indexOf(".is-me") > -1) {
+				return 0;
+			}
+
+		}
+	}
+	// 각 스트림마다 캔버스에 그리기(드로우함수호출)
+	draw = () => {
+		// console.log(this.videos);
+		this.context.fillStyle = "#FFF";
+		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+		this.videos &&
+			this.videos.length &&
+			this.videos.map((v, i) => {
+				const { x, y, w, h } = this.pos[i];
+				this.drawImage(v, x, y, w, h);
+			});
+		// const pinned = this.videos.filter(v => v.id === "video-" + this.get_pinned_id());
+		// // console.log(pinned, this.get_pinned_id());
+		// if (pinned.length) {
+		// 	const { x, y, w, h } = this.pos[0];
+		// 	this.drawImage(pinned[0], x, y, w, h);
+		// }
+		// this.videos &&
+		// 	this.videos.length &&
+		// 	this.videos.filter(v => v.id !== "video-" + this.get_pinned_id() || v.id !== "pinned_video")
+		// 		.map((video, idx) => {
+		// 			// if (idx === 0)
+		// 			// return;
+		// 			// 		// // 자기영상빼기
+		// 			// 		// if (video.id.indexOf(".is-me") != -1) {
+		// 			// 		// 	return;
+		// 			// 		// }
+
+		// 			// 		// draw
+		// 			// 		let posIndex = 0;
+		// 			// 		if (video.id.indexOf("pinned") == -1) {
+		// 			// 			posIndex = idx - 1;
+		// 			// 		}
+		// 			const { x, y, w, h } = this.pos[idx + 1];
+		// 			this.drawImage(video, x, y, w, h);
+		// 		});
+	}
+	write_temp_file = (key, data) => {
+		return new Promise(resolve => {
+			console.log(key, data);
+			window.localStorage.setItem(key, data);
+			resolve(true);
+		});
+	}
+	// 
+	remove_temp_file = () => {
+		if (this.tempfiles && this.tempfiles.length) {
+			this.tempfiles.map(file => window.localStorage.removeItem(file));
+			this.tempfiles = [];
+		}
+	}
+	// 레코딩시작
+	start = async () => {
+
+
+
+
+		if (this.audios.length === 0 && this.videos.length === 0) {
+			await alert("녹화할 수 없습니다.");
+			return false;
+		}
+		// standby
+		this.remove_temp_file();
+
+		// start
+		// const _ = (this.videos.filter(v => v.srcObject)).map(v => v.srcObject);
+		// // console.log(_);
+		// // return;
+		// this.videoStream = RecordRTC(_, { type: "video" });
+		// this.videoStream.startRecording();
+
+
+		await alert('녹화를 시작합니다');
+
+		this.videoStream = this.canvas.captureStream(30);
+		this.audios && this.audios.length > 0 && this.audios.map(audio => {
+			this.videoStream.addTrack(audio.srcObject.getAudioTracks()[0]);
+		});
+
+		var opt = {
+			audioBitsPerSecond: 128 * 1000,
+			videoBitsPerSecond: 2500 * 1000,
+			mimeType: 'video/webm'// 'video/mp4' not supported
+		};
+		this.mediaRecorder = new MediaRecorder(this.videoStream, opt);
+		this.chunks = [];
+
+		this.mediaRecorder.ondataavailable = async (e) => {
+			console.log("ondataavailable");
+			if (e.data && e.data.size > 0) {
+				await this.chunks.push(e.data);
+			}
+		};
+		this.mediaRecorder.onstop = async (e) => {
+			console.log("onstop");
+			clearInterval(this.intervalId);
+			const answer = await confirm("녹화를 종료시켰습니다. 파일로 저장을 원하신다면 (저장)를 클릭해주시기 바랍니다. \n(취소)를 클릭할 시 녹화된 내용은 사라집니다.", "저장", "취소");
+			if (answer === false) {
+				this.chunks = [];
+				return;
+			}
+			this.download();
+		};
+		this.mediaRecorder.start();
+		this.intervalId = setInterval(this.draw, 1000 / 24);
+	}
+	// 레코딩종료
+	stop = () => {
+		if (this.mediaRecorder) {
+			this.mediaRecorder.stop();
+			// this.mediaRecorder = null;
+		}
+		// this.videoStream.stopRecording(() => {
+		// 	const blob = this.videoStream.getBlob();
+		// // 	console.log(blob);
+		// 	RecordRTC.invokeSaveAsDialog(this.videoStream.getBlob(), "test.webm");
+		// });
+	}
+	// 레코딩 블롭 다운로드
+	download = () => {
+		// if (this.blob.length === 0) {
+		// 	alert("empty");
+		// 	return;
+		// }
+		// this.blob = new Blob(this.chunks, { 'type': 'video/mp4' });
+		// // this.chunks = [];
+		// let videoURL = URL.createObjectURL(this.blob);
+		// this.video.src = videoURL;
+
+		// let huge = [];
+		// this.tempfiles.map(file => {
+		// huge.push(window.localStorage.getItem(file));
+		// });
+		// console.log("huge:", huge);
+
+		const blob = new Blob(this.chunks, { type: 'video/webm' });
+		const url = window.URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.style.display = 'none';
+		a.href = url;
+		a.download = 'recorded.webm';
+		document.body.appendChild(a);
+		a.click();
+
+		setTimeout(() => {
+			document.body.removeChild(a);
+			window.URL.revokeObjectURL(url);
+		}, 500);
+	}
+	// 레코딩중지
+	pause = () => {
+		this.mediaRecorder && this.mediaRecorder.pause();
+	}
+	// 레코딩재개
+	resume = () => {
+		this.mediaRecorder && this.mediaRecorder.resume();
+	}
+};
+
 
 
 const RoomDiv = styled.div`
@@ -194,7 +476,7 @@ const MiddleDynamicGrid = styled.div`
 const BigScreenContainer = styled.div`
 	width: 100%;
 	height: 100%;
-	min-height: 250px;
+	min-height: VIDEO_SIZEpx;
 	color: white;
 
 	display: ${props => props.visible ? "block" : "none"};
@@ -219,8 +501,8 @@ const PeersContainer = styled.div`
 	flex-direction: column;
 
 	.me {
-		width: 250px;
-		height: 250px;
+		width: VIDEO_SIZEpx;
+		height: VIDEO_SIZEpx;
 		// border:1px solid white;
 	}
 	.peers {
@@ -270,121 +552,8 @@ const InviteModal = styled(Modal)`
 `;
 
 
-let mediaRecorder;
-let chunks = [];
 
-// for video recording
-// const media_source = new MediaSource();
-// media_source.addEventListener('sourceopen', handle_source_open, false);
-
-let media_recorder;
-let recorded_blobs;
-// let source_buffer;
-
-const canvas = document.createElement('canvas');
-const video = document.querySelector('video');
-// let video = null;
-
-// const record_button = ...
-// const play_button = ...
-// const download_button = ...
-// record_button.onclick = toggle_recording;
-// play_button.onclick = play;
-// download_button.onclick = download;
-
-// main();
-
-let buttontext = "start recording";
-const stream = canvas.captureStream();
-
-
-//handle_source_open = e => {
-//	const opt = 'video/webm; codes="vp8"';
-//	source_buffer = media_source.addSourceBuffer(opt);
-//};
-
-const handle_data_available = e => {
-	if (e.data && e.data.size > 0)
-		recorded_blobs.push(e.data);
-};
-
-const handle_stop = e => {
-	// const blob = new Blob(recorded_blobs, { type: 'video/webm' });
-	// video.src = window.URL.createObjectURL(blob);
-};
-
-const toggle_recording = (track, peers, consumers) => {
-	if (buttontext === "start recording") {
-		start_recording(track, peers, consumers);
-	} else {
-		stop_recording();
-		buttontext = "start recording";
-	}
-};
-
-const start_recording = (track, peers, consumers) => {
-	let options = [
-		{ mimeType: 'video/webm' },
-		{ mimeType: 'video/webm,codesc=vp9' },
-		{ mimeType: 'video/vp8' },
-	];
-	recorded_blobs = [];
-	let idx = 0;
-	let _ = null;
-	if (peers == null || peers.length === 0) {
-		alert('peers is empty');
-		return;
-	}
-	peers.map(peer => {
-		const consumerAry = peer.consumers.map(id => consumers[id]);
-		const consumer = consumerAry.find(cnsmr => cnsmr.track.kind === "video").track;
-		_ = new MediaStream([consumer]);
-	});
-
-	// let _ = new MediaStream([track]);
-
-	// _.addTrack(track);
-	while (idx < options.length) {
-		try {
-			media_recorder = new MediaRecorder(_, options[idx]);
-			alert('set with ' + options[idx]);
-			break;
-		} catch (e) {
-			console.error(e);
-			idx++;
-		}
-	}
-	buttontext = "stop recording";
-	media_recorder.onstop = handle_stop;
-	media_recorder.ondataavailable = handle_data_available;
-	media_recorder.start(100);
-};
-
-const stop_recording = () => {
-	media_recorder.stop();
-};
-
-const download = () => {
-	if (recorded_blobs.length === 0) {
-		alert("empty");
-		return;
-	}
-
-	const blob = new Blob(recorded_blobs, { type: 'video/webm' });
-	const url = window.URL.createObjectURL(blob);
-	const a = document.createElement('a');
-	a.style.display = 'none';
-	a.href = url;
-	a.download = 'recorded.webm';
-	document.body.appendChild(a);
-	a.click();
-	setTimeout(() => {
-		document.body.removeChild(a);
-		window.URL.revokeObjectURL(url);
-	}, 500);
-};
-
-
+let mixer = new Mixer();
 
 class Room extends React.Component {
 	constructor(props) {
@@ -417,14 +586,13 @@ class Room extends React.Component {
 			/* 4*/{ row: 2, col: window.innerWidth > window.innerHeight ? 4 : 3 },
 		];
 
-		// const DUMMY = () => <div style={{ position: "relative", width: "250px", height: "250px", border: "1px solid white", backgroundColor: "black", color: "white", fontSize: "3em", textAlign: "center" }}>DUMMY</div>
+		// const DUMMY = () => <div style={{ position: "relative", width: "VIDEO_SIZEpx", height: "VIDEO_SIZEpx", border: "1px solid white", backgroundColor: "black", color: "white", fontSize: "3em", textAlign: "center" }}>DUMMY</div>
 		const total = 1 + (peers.length || 0);
 		const idx = total > grid.length - 1 ? grid.length - 1 : total - 1;
 		const myvideo = me.find(track => track && ["front", "back", "share"].includes(track.type));
 		const shareState = myvideo && myvideo.type === "share";
 		// const myaudio = null; //me.find(track => track && track.kind === "audio");
 
-		console.log(this.props);
 		return (<RoomDiv h={h || window.innerHeight}>
 			{/* notifications */}
 			{/* <Notifications /> */}
@@ -433,16 +601,46 @@ class Room extends React.Component {
 			<MenuBarContainer>
 
 				{/* recording */}
+				{isRecording
+					? <div className="btn start">
+						<div style={{ display: "flex", flexDirection: "row" }}>
+							{/* pause / resume */}
+							{isPaused
+								? <div onClick={() => this.resumeRecording()}>
+									<span className="txt">
+										<i className="icon play" /></span>
+								</div>
+								: <div onClick={() => this.pasueRecording()}>
+									<span className="txt">
+										<i className="icon pause" /></span>
+								</div>}
+							{/* stop */}
+							<div onClick={() => this.stopRecording()}>
+								<span className="txt">
+									<i className="icon stop" /></span>
+							</div>
 
+						</div>
+					</div>
+					:
+					<div style={{ display: "flex", flexDirection: "row" }}>
+						{/* <div onClick={() => this.download()}> */}
+						{/* <span><i className="icon download " /></span> */}
+						{/* </div> */}
+						<div className="btn start" onClick={() => this.recording()} // me, peers, consumers)}
+						>
+							<span className="txt">
+								<i className="record icon" />
+							</span>
+						</div>
+					</div>}
 				{/*  */}
-				<div className='btn start' style={{ display: "flex", }}>
+				{/* <div className='btn start' style={{ display: "flex", }}>
 					<div onClick={() => toggle_recording(myvideo && myvideo.track, peers, consumers)}>
 						<span className="txt">{buttontext}</span>
 					</div>
-					<div onClick={() => download()}>
-						<span><i className="icon download " /></span>
-					</div>
-				</div>
+
+				</div> */}
 
 
 				{/* chat */}
@@ -482,6 +680,7 @@ class Room extends React.Component {
 					<div className="btn return" onClick={() => {
 						this.setState({ mode: "grid" });
 						this.video.srcObject = null;
+						mixer && mixer.set_pinned_id(null);
 					}}>
 						<span className="txt">큰 화면 취소</span></div> : null}
 				{mode === "scroll"
@@ -515,21 +714,23 @@ class Room extends React.Component {
 						{/* <SearchMemberContainer {...this.props} /> */}
 					</div>
 					<hr />
-					<div>
-						<div onClick={() => {
+					<div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
+						<div style={{ marginRight: "25px", color: "red", fontSize: "2rem", fontWeight: "500", width: "max-content" }} onClick={() => {
 							this.state.selected &&
-								this.state.selected.map(mem => {
+								this.state.selected.map(async mem => {
 									try {
 										InvitedUserRequest(this.props.userInfo.uid, this.props.token, { to_user_id: mem })
 									} catch (e) {
-										alert(e);
+										await alert(e);
 									}
 								});
-							this.setState({ selected: null });
+							this.setState({ selected: null, invite: false });
 						}}>초대</div>
-						<div onClick={() => {
-							this.setState({ invite: false, selected: null });
-						}}>취소</div>
+						<div
+							style={{ marginRight: "15px", color: "#707070", fontSize: "2rem", fontWeight: "500", width: "max-content" }}
+							onClick={() => {
+								this.setState({ invite: false, selected: null });
+							}}>취소</div>
 					</div>
 				</InviteModal>
 
@@ -540,7 +741,7 @@ class Room extends React.Component {
 				<BigScreenContainer
 					visible={(this.video && this.video.srcObject) ? true : false}>
 
-					<video muted autoPlay loop="loop" ref={ref => this.video = ref} />
+					<video id="pinned-video" muted autoPlay loop="loop" ref={ref => this.video = ref} />
 
 				</BigScreenContainer>
 
@@ -552,18 +753,19 @@ class Room extends React.Component {
 							<Me
 								needReload={() => {
 									this.video.srcObject = null;
+									mixer && mixer.set_pinned_id(null);
 									this.setState({ mode: "grid" });
 								}}
 								userInfo={this.props.userInfo}
 								// sharebtn={this.sharebtn}
 								// shareState={shareState}
 								// share={(shareState) => this.setState({ shareState: shareState })}
-								clicked={stream => this.clickedview(stream)}
+								clicked={(me, stream) => this.clickedview(me, stream)}
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
 
 							<Peers
-								clicked={(stream) => this.clickedview(stream)}
+								clicked={(peer, stream) => this.clickedview(peer, stream)}
 								member={this.props.design.member} />
 
 						</div>
@@ -577,17 +779,18 @@ class Room extends React.Component {
 							<Me
 								needReload={() => {
 									this.video.srcObject = null;
+									mixer && mixer.set_pinned_id(null);
 									this.setState({ mode: "grid" });
 								}}
 								userInfo={this.props.userInfo}
 								// sharebtn={this.sharebtn}
 								// shareState={shareState}
 								// share={(shareState) => this.setState({ shareState: shareState })}
-								clicked={stream => this.clickedview(stream)}
+								clicked={(me, stream) => this.clickedview(me, stream)}
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
 							<Peers
-								clicked={(stream) => this.clickedview(stream)}
+								clicked={(peer, stream) => this.clickedview(peer, stream)}
 								member={this.props.design.member} />
 						</div>
 						{/* </ScrollContainer> */}
@@ -604,66 +807,46 @@ class Room extends React.Component {
 	};
 
 	pasueRecording = () => {
-		mediaRecorder && mediaRecorder.pause();
+		mixer.mediaRecorder && mixer.mediaRecorder.pause();
 		this.setState({ isPaused: true });
 	}
 	stopRecording = () => {
-		mediaRecorder && mediaRecorder.stop();
 		this.setState({ isRecording: false });
+		mixer.mediaRecorder && mixer.mediaRecorder.stop();
+		// mixer.stop();
 	}
 	resumeRecording = () => {
-		mediaRecorder && mediaRecorder.resume();
+		mixer.mediaRecorder && mixer.mediaRecorder.resume();
 		this.setState({ isPaused: false });
 	}
-	recording = async (me, peers, consumers) => {
 
-
-		return;
-		const actx = new AudioContext();
-		const dest = actx.createMediaStreamDestination();
-		let _stream = new MediaStream();
-		const myaudio = me.find(obj => obj && obj.track && obj.track.kind === "audio").track;
-		_stream.addTrack(myaudio);
-		actx.createMediaStreamSource(_stream).connect(dest);
-		peers.map(peer => {
-			console.log('record:', peer);
-			const consumerAry = peer.consumers.map(id => consumers[id]);
-			const audioConsumer = consumerAry.find(cnsmr => cnsmr.track.kind === "audio").track;
-			actx.createMediaStreamSource(new MediaStream([audioConsumer])).connect(dest);
-		});
-		const mixedtrack = dest.stream.getTracks()[0];
-		const stream = new MediaStream([mixedtrack]);
-		mediaRecorder = new MediaRecorder(stream);
-		mediaRecorder.start();
-		mediaRecorder.onstop = async (e) => {
-			const answer = await confirm("현시점에서 녹화를 종료됩니다. 파일로 저장을 원하신다면 (저장)를 클릭해주시기 바랍니다. (취소)를 클릭할 시 녹화된 내용은 사라집니다.", "저장", "취소");
-			if (answer === false) {
-				chunks = [];
-				return;
-			}
-			var blob = new Blob(chunks, { 'type': 'audio/ogg; codes=opus' });
-			var url = URL.createObjectURL(blob);
-			var a = document.createElement('a');
-			document.body.appendChild(a);
-			a.style = 'display:none';
-			a.href = url;
-			a.download = 'filename.ogg';//'화상회의-' + new Date().formatUTC("yyyyMMdd_HHmmss") + '.ogg';
-			a.click();
-			window.URL.revokeObjectURL(url);
-			chunks = [];
+	download = async () => {
+		if (mixer && mixer.mediaRecorder) {
+			mixer.download();
+			mixer = null;
 		}
-		mediaRecorder.ondataavailable = e => {
-			chunks.push(e.data);
+		else {
+			await alert("녹화된 영상이 없습니다.");
 		}
+	}
 
+	recording = async () => {
+		mixer = new Mixer();
+		await mixer.init();
+		if (mixer.start() === false) {
+			return;
+		}
 		this.setState({ isRecording: true });
 	}
 
-	clickedview = (stream) => {
+	clickedview = (peer, stream) => {
+		mixer && mixer.set_pinned_id(peer.id);
+		// this.setState({ pinned: peer.id });
 		if (this.video && stream) {
 			stream.addEventListener('inactive', () => {
 				this.video.style.display = "none";
 				this.video.srcObject = null;
+				mixer && mixer.set_pinned_id(null);
 				this.setState({ mode: "grid" });
 			});
 			stream.addEventListener('active', () => {
@@ -686,6 +869,11 @@ class Room extends React.Component {
 		});
 	};
 	componentWillUnmount() {
+		mixer
+			&& mixer.tempfiles.length
+			&& mixer.tempfiles.map(file => {
+				window.localStorage.removeItem(file);
+			});
 		window.removeEventListener("resize");
 	};
 };
@@ -709,178 +897,106 @@ const mapStateToProps = (state) => {
 const RoomContainer = connect(mapStateToProps, null)(Room);
 export default RoomContainer;
 
-// class MultiStreamsMixer {
-// 	constructor(aryMediaStreams, elementClass) {
-// 		var browserFakeUserAgent = 'Fake/5.0 (FakeOS) AppleWebKit/123 (KHTML, like Gecko) Fake/12.3.4567.89 Fake/123.45';
-// 		(function (that) {
-// 			if (typeof window !== 'undefined') {
-// 				return;
-// 			}
-// 			if (typeof global === 'undefined') {
-// 				return;
-// 			}
-// 			global.navigator = {
-// 				userAgent: browserFakeUserAgent,
-// 				getUserMedia: function () { }
-// 			};
-// 			if (!global.console) {
-// 				global.console = {};
-// 			}
-// 			if (typeof global.console.log === 'undefined' || typeof global.console.error === 'undefined') {
-// 				global.console.error = global.console.log = global.console.log || function () {
-// 					console.log(arguments);
-// 				};
-// 			}
-// 			if (typeof document === 'undefined') {
-// 				/*global document:true */
-// 				that.document = {
-// 					documentElement: {
-// 						appendChild: function () {
-// 							return '';
-// 						}
-// 					}
-// 				};
-// 				document.createElement = document.captureStream = document.mozCaptureStream = function () {
-// 					var obj = {
-// 						getContext: function () {
-// 							return obj;
-// 						},
-// 						play: function () { },
-// 						pause: function () { },
-// 						drawImage: function () { },
-// 						toDataURL: function () {
-// 							return '';
-// 						},
-// 						style: {}
-// 					};
-// 					return obj;
-// 				};
 
-// 				that.HTMLVideoElement = function () { };
-// 			}
 
-// 			if (typeof location === 'undefined') {
-// 				/*global location:true */
-// 				that.location = {
-// 					protocol: 'file:',
-// 					href: '',
-// 					hash: ''
-// 				};
-// 			}
 
-// 			if (typeof screen === 'undefined') {
-// 				/*global screen:true */
-// 				that.screen = {
-// 					width: 0,
-// 					height: 0
-// 				};
-// 			}
 
-// 			if (typeof URL === 'undefined') {
-// 				/*global screen:true */
-// 				that.URL = {
-// 					createObjectURL: function () {
-// 						return '';
-// 					},
-// 					revokeObjectURL: function () {
-// 						return '';
-// 					}
-// 				};
-// 			}
 
-// 			/*global window:true */
-// 			that.window = global;
-// 		})(typeof global !== 'undefined' ? global : null);
 
-// 		elementClass = elementClass || 'multi-streams-mixer';
 
-// 		var videos = [];
-// 		var isStopDrawingFrames = false;
 
-// 		var canvas = document.createElement('canvas');
-// 		var context = canvas.getContext('2d');
-// 		canvas.style.opacity = 0;
-// 		canvas.style.position = 'absolute';
-// 		canvas.style.zIndex = -1;
-// 		canvas.style.top = '-1000em';
-// 		canvas.style.left = '-1000em';
-// 		canvas.className = elementClass;
-// 		(document.body || document.documentElement).appendChild(canvas);
 
-// 		this.disableLogs = false;
-// 		this.frameInterval = 10;
 
-// 		this.width = 360;
-// 		this.height = 240;
 
-// 		this.useGainNode = true;
-// 		this.AudioContext = window.AudioContext;
-// 		this.URL = window.URL;
-// 		this.MediaStream = window.MediaStream;
-// 		this.Storage = {};
 
-// 		/*global MediaStream:true */
-// 		if (typeof this.MediaStream !== 'undefined') {
-// 			// override "stop" method for all browsers
-// 			if (typeof this.MediaStream.prototype.stop === 'undefined') {
-// 				this.MediaStream.prototype.stop = function () {
-// 					this.getTracks().forEach(function (track) {
-// 						track.stop();
-// 					});
-// 				};
-// 			}
-// 		}
+// let mediaRecorder;
+// let chunks = [];
 
-// 		Storage.AudioContext = this.AudioContext;
-// 	}
-// 	setSrcObject(stream, element) {
-// 	};
-// 	startDrawingFrames() {
-// 	};
-// 	drawVideosToCanvas() {
-// 	};
-// 	drawImage(video, idx) {
-// 	};
-// 	getMixedStream() {
-// 	};
-// 	getMixedVideoStream() {
-// 	};
-// 	getMixedAudioStream() {
-// 	};
-// 	getVideo(stream) {
-// 	};
-// 	appendStreams(streams) {
-// 	};
-// 	releaseStreams() {
-// 	};
-// 	resetVideoStreams(streams) {
-// 	};
+// for video recording
+// const media_source = new MediaSource();
+// media_source.addEventListener('sourceopen', handle_source_open, false);
+
+// let media_recorder;
+// let source_buffer;
+
+// const canvas = document.createElement('canvas');
+// const video = document.querySelector('video');
+// let video = null;
+
+// const record_button = ...
+// const play_button = ...
+// const download_button = ...
+// record_button.onclick = toggle_recording;
+// play_button.onclick = play;
+// download_button.onclick = download;
+
+// main();
+
+// let buttontext = "start recording";
+// const stream = canvas.captureStream();
+
+//handle_source_open = e => {
+//	const opt = 'video/webm; codes="vp8"';
+//	source_buffer = media_source.addSourceBuffer(opt);
+//};
+
+// const handle_data_available = e => {
+// if (e.data && e.data.size > 0)
+// recorded_blobs.push(e.data);
+// };
+
+// const handle_stop = e => {
+// const blob = new Blob(recorded_blobs, { type: 'video/webm' });
+// video.src = window.URL.createObjectURL(blob);
+// };
+
+// const toggle_recording = () => { // track, peers, consumers) => {
+// if (buttontext === "start recording") {
+// start_recording(); // track, peers, consumers);
+// buttontext = "stop recording";
+// } else {
+// stop_recording();
+// buttontext = "start recording";
 // }
+// };
 
+// const start_recording = () => { // (track, peers, consumers) => {
+// const options = [
+// 	{ mimeType: 'video/webm' },
+// 	{ mimeType: 'video/webm,codesc=vp9' },
+// 	{ mimeType: 'video/vp8' },
+// ];
+// recorded_blobs = [];
+// let idx = 0;
+// let _ = null;
+// if (peers == null || peers.length === 0) {
+// 	alert('peers is empty');
+// 	return;
+// }
+// peers.map(peer => {
+// 	const consumerAry = peer.consumers.map(id => consumers[id]);
+// 	const consumer = consumerAry.find(cnsmr => cnsmr.track.kind === "video").track;
+// 	_ = new MediaStream([consumer]);
+// });
 
+// // let _ = new MediaStream([track]);
 
-// {isRecording
-// 	? <div className="btn start">
-// 		<div style={{ display: "flex", flexDirection: "row" }}>
-// 			{/* pause / resume */}
-// 			{isPaused
-// 				? <div onClick={() => this.resumeRecording()}>
-// 					<span className="txt">
-// 						<i className="icon play" /></span>
-// 				</div>
-// 				: <div onClick={() => this.pasueRecording()}>
-// 					<span className="txt">
-// 						<i className="icon pause" /></span>
-// 				</div>}
-// 			{/* stop */}
-// 			<div onClick={() => this.stopRecording()}>
-// 				<span className="txt">
-// 					<i className="icon stop" /></span>
-// 			</div>
-// 		</div>
-// 	</div>
-// 	: <div className="btn start" onClick={() => this.recording(me, peers, consumers)}>
-// 		<span className="txt">
-// 			<i className="record icon" />
-// 		</span>
-// 	</div>}
+// // _.addTrack(track);
+// while (idx < options.length) {
+// 	try {
+// 		media_recorder = new MediaRecorder(_, options[idx]);
+// 		alert('set with ' + options[idx]);
+// 		break;
+// 	} catch (e) {
+// 		console.error(e);
+// 		idx++;
+// 	}
+// }
+// media_recorder.onstop = handle_stop;
+// media_recorder.ondataavailable = handle_data_available;
+// media_recorder.start(100);
+// };
+
+// const stop_recording = () => {
+// media_recorder.stop();
+// };

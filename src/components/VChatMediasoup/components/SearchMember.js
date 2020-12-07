@@ -41,7 +41,7 @@ class SearchMember extends React.Component {
           const key = event.target.value;
           this.props.search_member_request(id, { key: key }, token);
         }} />
-        <ul style={{ overflowY: "scroll", height: "150px", width: "75%", border: "1px solid red" }}>
+        <ul style={{ listStyle: "none", overflowY: "scroll", height: "150px", width: "75%", border: "1px solid red" }}>
           {members &&
             members.map(mem => {
               return selected.includes(mem.uid)
@@ -52,7 +52,7 @@ class SearchMember extends React.Component {
                   await this.setState({ selected: copy });
                   this.props.selected && this.props.selected(this.state.selected);
                 }}>
-                  {mem.uid}
+                  {/* {mem.uid} */}
                   {mem.email}
                   {mem.nickName}
                   {mem.nick_name}
@@ -62,7 +62,7 @@ class SearchMember extends React.Component {
         </ul>
       </div>
       <div>
-        <ul style={{ overflowY: "scroll", height: "150px", width: "75%", border: "1px solid red" }}>
+        <ul style={{ listStyle: "none", overflowY: "scroll", height: "150px", width: "75%", border: "1px solid red" }}>
           {selected && selected.map((mem, idx) => {
             return <li onClick={async _ => {
               const copy = [...selected];
