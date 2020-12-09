@@ -525,13 +525,15 @@ const PeersContainer = styled.div`
 const InviteModal = styled(Modal)`
   margin-top: 50px !important;
   margin-bottom: 50px !important;
-	height: 400px;
+	// height: 400px;
 	width: 100%;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #000000;
   border: 1px solid #EFEFEF;
   border-radius: 10px;
-  opacity: 1;
+	opacity: 1;
+	padding: 25px;
+
   ::-webkit-scrollbar {
     position: absolute;
     width: 3.9px;
@@ -546,11 +548,11 @@ const InviteModal = styled(Modal)`
 		top: 10px;
 		z-index: 500;
 	}
+
 	.search-bar{
 		z-index: 499;
 	}
 `;
-
 
 
 let mixer = new Mixer();
@@ -597,142 +599,150 @@ class Room extends React.Component {
 			{/* notifications */}
 			{/* <Notifications /> */}
 
-			{/* menubar */}
-			<MenuBarContainer>
+			{/* modal */}
+			{/* invite modal */}
+			<InviteModal open={invite} onClose={() => this.setState({ invite: false })}>
 
-				{/* recording */}
-				{isRecording
-					? <div className="btn start">
-						<div style={{ display: "flex", flexDirection: "row" }}>
-							{/* pause / resume */}
-							{isPaused
-								? <div onClick={() => this.resumeRecording()}>
-									<span className="txt">
-										<i className="icon play" /></span>
-								</div>
-								: <div onClick={() => this.pasueRecording()}>
-									<span className="txt">
-										<i className="icon pause" /></span>
-								</div>}
-							{/* stop */}
-							<div onClick={() => this.stopRecording()}>
-								<span className="txt">
-									<i className="icon stop" /></span>
-							</div>
+				<h2>화상회의 초대</h2>
 
-						</div>
-					</div>
-					:
-					<div style={{ display: "flex", flexDirection: "row" }}>
-						{/* <div onClick={() => this.download()}> */}
-						{/* <span><i className="icon download " /></span> */}
-						{/* </div> */}
-						<div className="btn start" onClick={() => this.recording()} // me, peers, consumers)}
-						>
-							<span className="txt">
-								<i className="record icon" />
-							</span>
-						</div>
-					</div>}
-				{/*  */}
-				{/* <div className='btn start' style={{ display: "flex", }}>
-					<div onClick={() => toggle_recording(myvideo && myvideo.track, peers, consumers)}>
-						<span className="txt">{buttontext}</span>
-					</div>
+				<span style={{ width: "max-content", marginLeft: "auto", marginRight: "10px" }}>(디자인 맴버가 아닌 오픈소스사이트 사용자를 회의에 초대합니다.)</span>
 
-				</div> */}
-
-
-				{/* chat */}
-				<div className='btn chat' onClick={() => this.openChatWin()}>
-					<span className='txt'>채팅</span>
+				<div className="close-box" onClick={() => this.setState({ invite: false })} >
+					<Cross angle={45} color={"#707070"} weight={3} width={35} height={35} />
 				</div>
 
-				{/* invite */}
-				<div className="btn chat invite" onClick={() => {
-					this.setState({ invite: true });
-				}}>
-					<span className="txt">초대</span>
+				<hr />
+
+				<div className="search-bar">
+					<SearchMember
+						id={this.props.userInfo.uid}
+						token={this.props.token}
+						members={design && design.member || []}
+						selected={mems => {
+							this.setState({ selected: mems });
+						}} />
 				</div>
 
-				{/* share */}
-				<div className='btn share' //ref={ref => this.sharebtn = ref}
-					onClick={async () => {
-						if (shareState ||
-							await roomClient.enableShare() === "cancelled") {
-							roomClient.disableShare();
-							roomClient.checkEnabledWebcam();
-							return;
-						}
-					}}>
-					<span className='txt'>
-						{shareState ? "화면공유 종료" : "화면공유"}
-					</span>
-				</div>
+				<hr />
 
-				{/* exit */}
-				<div className='btn exit' onClick={() => { window.open('', '_self').close() }}>
-					<span className='txt'>나가기</span>
-				</div>
-
-				{/* layout */}
-				{mode === "scroll" ?
-					<div className="btn return" onClick={() => {
-						this.setState({ mode: "grid" });
-						this.video.srcObject = null;
-						mixer && mixer.set_pinned_id(null);
-					}}>
-						<span className="txt">큰 화면 취소</span></div> : null}
-				{mode === "scroll"
-					? <div className={`btn peer ${hidepeer}`} onClick={() => this.setState({ hidepeer: !hidepeer })}>
-						<span className="txt">{!hidepeer ? "숨기기" : "보이기"}</span>
-					</div>
-					: null}
-			</MenuBarContainer>
-
-			<ContentContainer bg={bg}>
-
-				{/* modal */}
-				{/* invite modal */}
-				<InviteModal open={invite} onClose={() => this.setState({ invite: false })}>
-					<div className="close-box" onClick={() => this.setState({ invite: false })} >
-						<Cross angle={45} color={"#707070"} weight={3} width={35} height={35} />
-					</div>
-					<div className="title-box">
-						<span className="title">손님초대</span>
-						<span className="memo">(디자인 맴버가 아닌 오픈소스사이트 사용자를 회의에 초대합니다.)</span>
-					</div>
-					<hr />
-					<div className="search-bar">
-						<SearchMember
-							id={this.props.userInfo.uid}
-							token={this.props.token}
-							selected={mems => {
-								this.setState({ selected: mems });
-							}} />
-						{/* <SearchMemberContainer inputWidth={100} marginLeft={0} id="searchRect" addMemberItem={(item) => { console.log(item) }} /> */}
-						{/* <SearchMemberContainer {...this.props} /> */}
-					</div>
-					<hr />
-					<div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
-						<div style={{ marginRight: "25px", color: "red", fontSize: "2rem", fontWeight: "500", width: "max-content" }} onClick={() => {
+				<div className="button-bar" style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
+					<div style={{ cursor: "default", marginRight: "25px", color: "red", fontSize: "1.5rem", fontWeight: "500", width: "max-content" }}
+						onClick={() => {
 							this.state.selected &&
+								this.state.selected.length > 0 &&
 								this.state.selected.map(async mem => {
 									try {
-										InvitedUserRequest(this.props.userInfo.uid, this.props.token, { to_user_id: mem })
+										InvitedUserRequest(this.props.userInfo.uid, this.props.token, { to_user_id: mem.uid })
 									} catch (e) {
-										await alert(e);
+										await alert(e + '와 같은 이유로 초대에 실패하였습니다. 관리자에게 문의해주시기 바랍니다.');
 									}
 								});
 							this.setState({ selected: null, invite: false });
 						}}>초대</div>
-						<div
-							style={{ marginRight: "15px", color: "#707070", fontSize: "2rem", fontWeight: "500", width: "max-content" }}
-							onClick={() => {
-								this.setState({ invite: false, selected: null });
-							}}>취소</div>
+					<div
+						style={{ cursor: "default", marginRight: "15px", color: "#707070", fontSize: "1.5rem", fontWeight: "500", width: "max-content" }}
+						onClick={() => {
+							this.setState({ invite: false, selected: null });
+						}}>취소</div>
+				</div>
+			</InviteModal>
+
+			{/* menubar */}
+			<MenuBarContainer>
+				<div style={{ display: "flex", flexDirection: "row" }}>
+					<div>
+						{/* chat */}
+						<div className='btn chat' onClick={() => this.openChatWin()}>
+							<span className='txt'>채팅</span>
+						</div>
 					</div>
-				</InviteModal>
+
+					<div>
+						{/* invite */}
+						<div className="btn chat invite" onClick={() => { this.setState({ invite: true }); }}>
+							<span className="txt">초대</span>
+						</div>
+					</div>
+
+					<div>
+						{/* recording */}
+						{isRecording
+							? <div className="btn start">
+								<div style={{ display: "flex", flexDirection: "row" }}>
+									{/* pause / resume */}
+									{isPaused
+										? <div onClick={() => this.resumeRecording()}>
+											<span className="txt">
+												<i className="icon play" /></span>
+										</div>
+										: <div onClick={() => this.pasueRecording()}>
+											<span className="txt">
+												<i className="icon pause" /></span>
+										</div>}
+									{/* stop */}
+									<div onClick={() => this.stopRecording()}>
+										<span className="txt">
+											<i className="icon stop" /></span>
+									</div>
+
+								</div>
+							</div>
+							:
+							<div style={{ display: "flex", flexDirection: "row" }}>
+								<div className="btn start" onClick={() => this.recording()} // me, peers, consumers)}
+								>
+									<span className="txt">
+										<i className="record icon" />
+									</span>
+								</div>
+							</div>}
+					</div>
+				</div>
+
+				<div>
+					{/* share */}
+					<div className='btn share' //ref={ref => this.sharebtn = ref}
+						onClick={async () => {
+							if (shareState ||
+								await roomClient.enableShare() === "cancelled") {
+								roomClient.disableShare();
+								roomClient.checkEnabledWebcam();
+								return;
+							}
+						}}>
+						<span className='txt'>
+							{shareState ? "화면공유 종료" : "화면공유"}
+						</span>
+					</div>
+				</div>
+
+				<div style={{ display: "flex", flexDirection: "row" }}>
+					<div>
+						{/* layout */}
+						{mode === "scroll" ?
+							<div className="btn return" onClick={() => {
+								this.setState({ mode: "grid" });
+								this.video.srcObject = null;
+								mixer && mixer.set_pinned_id(null);
+							}}>
+								<span className="txt">큰 화면 취소</span></div> : null}
+						{mode === "scroll"
+							? <div className={`btn peer ${hidepeer}`} onClick={() => this.setState({ hidepeer: !hidepeer })}>
+								<span className="txt">{!hidepeer ? "숨기기" : "보이기"}</span>
+							</div>
+							: null}
+					</div>
+					<div>
+						{/* exit */}
+						<div className='btn exit' onClick={() => { window.open('', '_self').close() }}>
+							<span className='txt'>나가기</span>
+						</div>
+					</div>
+				</div>
+			</MenuBarContainer>
+
+			{/* contents */}
+			<ContentContainer bg={bg}>
 
 				<div className="panel" />
 
@@ -797,6 +807,8 @@ class Room extends React.Component {
 					</MiddleDynamicGrid>
 					: null}
 			</ContentContainer>
+
+
 		</RoomDiv>);
 	};
 
@@ -869,11 +881,6 @@ class Room extends React.Component {
 		});
 	};
 	componentWillUnmount() {
-		mixer
-			&& mixer.tempfiles.length
-			&& mixer.tempfiles.map(file => {
-				window.localStorage.removeItem(file);
-			});
 		window.removeEventListener("resize");
 	};
 };
