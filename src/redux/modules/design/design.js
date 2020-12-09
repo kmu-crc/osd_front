@@ -709,7 +709,7 @@ export function CheckInvitedUserRequest(id, token) {
     });
 }
 export function InvitedUserRequest(id, token, data) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve/*, reject*/) => {
         const url = `${host}/design/${id}/video-chat/invite-user`;
         fetch(url, {
             headers: { "x-access-token": token },
@@ -720,8 +720,8 @@ export function InvitedUserRequest(id, token, data) {
             .then(res => {
                 resolve(res);
             }).catch(error => {
-                console.error(error);
-                reject(false);
+                // reject(error);
+                throw error;
             });
     });
 }
