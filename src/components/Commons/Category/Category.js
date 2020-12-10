@@ -188,7 +188,7 @@ class Category extends Component {
                         key={element.value}>{element.text}</SubCateElement>
                 })}
             </SubCategory>
-            <ThirdCategory screenWidth={window.innerWidth}>
+            {/* <ThirdCategory screenWidth={window.innerWidth}>
                 {category3 && category3.length > 0 && category3.map(element => {
                     const style = element.value === selected2 ? "selected " : ""
                     return <ThirdCateElement
@@ -196,7 +196,7 @@ class Category extends Component {
                         onClick={() => this.clickedThirdCategory(element)}
                         key={element.value}>{element.text}</ThirdCateElement>
                 })}
-            </ThirdCategory>
+            </ThirdCategory> */}
         </Container>)
     }
 }

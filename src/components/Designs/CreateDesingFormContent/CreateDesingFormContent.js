@@ -134,7 +134,7 @@ class CreateDesingFormContent extends Component {
               <CheckBoxFieldContainer />
               <Form.Group widths="equal">
                 <FormField
-                  label="맴버추가"
+                  label="멤버추가"
                   RenderComponent={SearchMemberContainer}
                   validates={["MinLength2"]}
                   onChangeMembers={this.props.onChangeMembers}

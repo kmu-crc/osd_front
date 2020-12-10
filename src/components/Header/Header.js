@@ -225,12 +225,12 @@ class Header extends Component {
         };
         this.gotoCreateDesignPage = this.gotoCreateDesignPage.bind(this);
 
-        this.audio = new Audio("https://s3.ap-northeast-2.amazonaws.com/osd.uploads.com/tmps/26ab6f21076cabe1be4ceee12c4dca2c%2B1599462820483")
+        // this.audio = new Audio("https://s3.ap-northeast-2.amazonaws.com/osd.uploads.com/tmps/26ab6f21076cabe1be4ceee12c4dca2c%2B1599462820483")
     }
     static contextType = MenuContext
     componentDidMount() {
 
-        this.audio.addEventListener('ended', () => this.setState({ play: false }));
+        // this.audio.addEventListener('ended', () => this.setState({ play: false }));
         if (isOpen(Socket) && this.props.valid) {
             try {
                 // console.log("SOCKET INIT");
@@ -240,10 +240,10 @@ class Header extends Component {
                     this.setState({ alarm: alarm })
                     console.log(alarm)
                     if (alarm.count) {
-                        this.audio.play()
-                        setTimeout(() => {
-                            this.audio.pause();
-                        }, 3000)
+                        // this.audio.play()
+                        // setTimeout(() => {
+                        //     this.audio.pause();
+                        // }, 3000)
                     }
                 })
                 Socket.on("disconnect", () => {
@@ -266,7 +266,7 @@ class Header extends Component {
     }
     componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize, false);
-        this.audio.removeEventListener('ended', () => this.setState({ play: false }));
+        // this.audio.removeEventListener('ended', () => this.setState({ play: false }));
 
     };
     gotoCreateDesignPage() {

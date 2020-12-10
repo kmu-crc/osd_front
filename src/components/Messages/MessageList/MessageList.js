@@ -292,7 +292,7 @@ const SendMessageTextarea = styled.div`
   line-height:27px;
   background-color:#dddddd;
   resize:none;
-  border:none;글
+  border:none;
   outline:none;
   padding:20px;
   overflow:auto;
