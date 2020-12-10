@@ -882,6 +882,7 @@ class Room extends React.Component {
 	};
 	componentWillUnmount() {
 		window.removeEventListener("resize");
+		alert('will closed');
 	};
 };
 
