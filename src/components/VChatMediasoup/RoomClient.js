@@ -1345,12 +1345,11 @@ export default class RoomClient {
 		}
 
 		this._shareProducer = null;
-		this.checkEnabledWebcam();
 	}
 	async checkEnabledWebcam() {
-		const devicesCookie = cookiesManager.getDevices();
+		const devicesCookie = await cookiesManager.getDevices();
 		if (!devicesCookie || devicesCookie.webcamEnabled)// || this._externalVideo)
-			this.enableWebcam();
+			await this.enableWebcam();
 	}
 
 	async enableAudioOnly() {

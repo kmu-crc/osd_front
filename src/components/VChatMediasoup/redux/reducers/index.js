@@ -7,6 +7,7 @@ import peers from './peers';
 import consumers from './consumers';
 import dataConsumers from './dataConsumers';
 import notifications from './notifications';
+import searchpeer from './searchpeer';
 
 const reducers = combineReducers(
 	{
@@ -14,10 +15,11 @@ const reducers = combineReducers(
 		me,
 		producers,
 		dataProducers,
-		peers,
 		consumers,
 		dataConsumers,
-		notifications
+		notifications,
+		peers,
+		searchpeer,
 	});
 
 export default reducers;

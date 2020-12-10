@@ -1,7 +1,9 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import MessageList from "components/Messages/MessageList"
-import { GetMyChatRoomsListRequest, GetMyMsgListRequest, SendMessageRequest } from "redux/modules/message"
+import {
+  GetMyChatRoomsListRequest, GetMyMsgListRequest, SendMessageRequest
+} from "redux/modules/message"
 import { SearchMemberRequest } from "redux/modules/search"
 
 class MessageListContainer extends Component {

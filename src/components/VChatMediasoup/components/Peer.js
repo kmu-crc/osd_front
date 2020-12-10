@@ -124,7 +124,7 @@ const Peer = (props) => {
 					if (videoConsumer && videoConsumer.track) {
 						const stream = new MediaStream;
 						stream.addTrack(videoConsumer.track)
-						props.clicked(stream);
+						props.clicked(peer, stream);
 					}
 				}}>
 
@@ -156,7 +156,7 @@ const Peer = (props) => {
 					onChangeVideoPriority={(priority) => { roomClient.setConsumerPriority(videoConsumer.id, priority); }}
 					onRequestKeyFrame={() => { roomClient.requestConsumerKeyFrame(videoConsumer.id); }}
 					// onStatsClick={onSetStatsPeerId}
-					nick_name={info.nick_name}
+					nick_name={info && info.nick_name || "[손님]" + peer.displayName}
 				/>
 			</div>
 

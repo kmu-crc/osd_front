@@ -7,6 +7,7 @@ import PeerView from './PeerView';
 import styled from 'styled-components';
 import classnames from 'classnames';
 import * as cookiesManager from '../cookiesManager';
+import * as utils from "../utils";
 
 // ICONS
 import icon_mic_black_on from 'resources/images/icon_mic_black_on.svg';
@@ -39,6 +40,7 @@ const Thumbnail = styled.div`
 	background-size: cover;
 	background-position: center center;
 	background-Image: url(${props => props.img});
+	z-index: 501;
 `;
 const Control = styled.div`
 	position: absolute;
@@ -214,25 +216,30 @@ class Me extends React.Component {
 						<div
 							className={`button webcam ${webcamState} ${me.webcamInProgress || me.shareInProgress ? "disabled" : ""}`}
 							onClick={() => {
+								if (videoProducer && videoProducer.type === "share") {
+									roomClient.disableShare();
+									roomClient.checkEnabledWebcam();
+									return;
+								}
 								if (webcamState === 'on') {
 									cookiesManager.setDevices({ webcamEnabled: false });
 									roomClient.disableWebcam();
-									this.props.needReload && this.props.needReload();
+									return
 								}
 								else {
 									cookiesManager.setDevices({ webcamEnabled: true });
 									roomClient.enableWebcam();
-									this.props.shareState === "on" && this.props.share && this.props.share('off');
+									return;
 								}
 							}}
 						/>
-
-						<div
-							className={classnames('button', 'change-webcam', changeWebcamState, {
-								disabled: me.webcamInProgress || me.shareInProgress
-							})}
-							onClick={() => roomClient.changeWebcam()}
-						/>
+						{utils.isMobileDevice() ?
+							<div
+								className={classnames('button', 'change-webcam', changeWebcamState, {
+									disabled: me.webcamInProgress || me.shareInProgress
+								})}
+								onClick={() => roomClient.changeWebcam()}
+							/> : null}
 
 					</Control> : null}
 
@@ -243,7 +250,7 @@ class Me extends React.Component {
 						if (videoProducer && videoProducer.track) {
 							const stream = new MediaStream;
 							stream.addTrack(videoProducer.track);
-							this.props.clicked(stream);
+							this.props.clicked(me, stream);
 						}
 					}}
 				>
@@ -297,35 +304,35 @@ class Me extends React.Component {
 	}
 	componentDidUpdate(prevProps) {
 
-		const { videoProducer, } = this.props;
+		// const { videoProducer, } = this.props;
 
-		if (videoProducer && videoProducer.type === "share") {
-			videoProducer.track.onended = () => {
-				this.props.share && this.props.share("off");
-			}
-		}
-		if (prevProps.sharebtn != this.props.sharebtn && this.props.sharebtn != null) {
-			this.props.sharebtn.addEventListener('click', async () => {
-				console.log(this.props);
-				if (this.props.me.shareInProgress || this.props.me.webcamInProgress) {
-					return;
-				}
-				const { shareState } = this.props;
-				if (shareState === "on") {
-					this.props.roomClient.disableShare();
-					this.props.share && this.props.share("off");
-				}
-				else {
-					if (await this.props.roomClient.enableShare() === "cancelled") {
-						this.props.roomClient.disableShare();
-						this.props.roomClient.checkEnabledWebcam();
-						this.props.share && this.props.share("off");
-					} else {
-						this.props.share && this.props.share("on");
-					}
-				}
-			})
-		}
+		// if (videoProducer && videoProducer.type === "share") {
+		// 	videoProducer.track.onended = () => {
+		// 		this.props.share && this.props.share("off");
+		// 	}
+		// }
+		// if (prevProps.sharebtn != this.props.sharebtn && this.props.sharebtn != null) {
+		// 	this.props.sharebtn.addEventListener('click', async () => {
+		// 		console.log(this.props);
+		// 		if (this.props.me.shareInProgress || this.props.me.webcamInProgress) {
+		// 			return;
+		// 		}
+		// 		const { shareState } = this.props;
+		// 		if (shareState === "on") {
+		// 			this.props.roomClient.disableShare();
+		// 			this.props.share && this.props.share("off");
+		// 		}
+		// 		else {
+		// 			if (await this.props.roomClient.enableShare() === "cancelled") {
+		// 				this.props.roomClient.disableShare();
+		// 				this.props.roomClient.checkEnabledWebcam();
+		// 				this.props.share && this.props.share("off");
+		// 			} else {
+		// 				this.props.share && this.props.share("on");
+		// 			}
+		// 		}
+		// 	})
+		// }
 
 		if (!prevProps.me.displayNameSet && this.props.me.displayNameSet) {
 			ReactTooltip.hide(this._rootNode);
@@ -358,10 +365,10 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const mapDispatchToProps = (dispatch) => ({
-	// onSetStatsPeerId: (peerId) => dispatch(stateActions.setRoomStatsPeerId(peerId))
-});
+// const mapDispatchToProps = (dispatch) => ({
+// 	// onSetStatsPeerId: (peerId) => dispatch(stateActions.setRoomStatsPeerId(peerId))
+// });
 
-const MeContainer = withRoomContext(connect(mapStateToProps, mapDispatchToProps)(Me));
+const MeContainer = withRoomContext(connect(mapStateToProps, null /*mapDispatchToProps*/)(Me));
 
 export default MeContainer;

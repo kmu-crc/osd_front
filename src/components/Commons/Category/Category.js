@@ -166,9 +166,9 @@ class Category extends Component {
     }
     render() {
         // console.log("width",window.innerWidth);
-        const { category1, category2,category3, main_selected, sub_selected,third_selected } = this.props;
+        const { category1, category2, category3, main_selected, sub_selected, third_selected } = this.props;
         const selected = sub_selected && sub_selected.value;
-        const selected2 = third_selected&&third_selected.value;
+        const selected2 = third_selected && third_selected.value;
         const hidemenu = this.context.hidemenu ? "hidemenu " : "";
         const larger = this.context.larger ? "larger " : "";
         return (<Container className={`${hidemenu}${larger}`} >
@@ -187,10 +187,9 @@ class Category extends Component {
                         onClick={() => this.clickedSubCategory(element)}
                         key={element.value}>{element.text}</SubCateElement>
                 })}
-            </SubCategory>가나다
+            </SubCategory>
             <ThirdCategory screenWidth={window.innerWidth}>
                 {category3 && category3.length > 0 && category3.map(element => {
-                    console.log("element",element.value,selected2);
                     const style = element.value === selected2 ? "selected " : ""
                     return <ThirdCateElement
                         className={`${style}`}

@@ -18,7 +18,7 @@ const DivPeers = styled.div`
 		}
 	}
 `;
-const DivPeer = styled.div `
+const DivPeer = styled.div`
 	margin: 0;
 	width: 250px;
 	height: 250px;
@@ -32,20 +32,21 @@ const DivPeer = styled.div `
 const Peers = ({ clicked, member, peers, activeSpeakerId }) => {
 	return (
 		// <DivPeers>
-			// {
-				peers.map((peer) => {
-				return (<DivPeer
-					className={`${peer.id === activeSpeakerId ? 'active' : ""}`}
-					key={peer.id}>
-					<Peer
-						clicked={clicked}
-						info={member.find(mem => mem.user_id === parseInt(peer.id, 10))}
-						id={peer.id} />
-				</DivPeer>);
-			})
+		// {
+		peers.map((peer) => {
+			// console.log(peer);
+			return (<DivPeer
+				className={`${peer.id === activeSpeakerId ? 'active' : ""}`}
+				key={peer.id}>
+				<Peer
+					clicked={clicked}
+					info={member.find(mem => mem.user_id === parseInt(peer.id, 10))}
+					id={peer.id} />
+			</DivPeer>);
+		})
 		// }
 		// </DivPeers>
-		);
+	);
 };
 
 Peers.propTypes =

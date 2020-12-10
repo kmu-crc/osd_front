@@ -18,8 +18,10 @@ const DivPeerView = styled.div`
 	  width: 248px;
 	  height: 248px;
 		object-fit: cover;
+		z-index: 500;
 		&.is-me {
-			// transform: scaleX(-1);
+			// -webkit-transform: scaleX(-1);
+			transform: scaleX(-1);
 		}
 		&.hidden {
 			display: none;
@@ -163,6 +165,7 @@ export default class PeerView extends React.Component {
 				</div> : null}
 
 			<video
+				id={`video-${peer.id}`}
 				ref='videoElem'
 				autoPlay
 				playsInline
@@ -178,6 +181,7 @@ export default class PeerView extends React.Component {
 			/>
 
 			<audio
+				id={`audio-${peer.id}`}
 				ref='audioElem'
 				autoPlay
 				playsInline
