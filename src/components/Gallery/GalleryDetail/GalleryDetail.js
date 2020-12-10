@@ -80,7 +80,7 @@ const AdditionalInfo = styled.div`
 class GalleryDetail extends Component {
 
     render(){
-      console.log("this??????????/",this.props);
+      // console.log("this??????????/",this.props);
         return(
         <Wrapper>
             <div className="contents_box">

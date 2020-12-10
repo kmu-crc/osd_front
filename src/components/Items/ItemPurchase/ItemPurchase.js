@@ -669,7 +669,7 @@ class ItemPurchase extends Component {
       this.props.LikeProductRequest(this.props.id, this.props.token)
   };
   async buyThisItem(event) {
-    if (!await confirm(`${this.props.item.price / 1000}천 point가 결제됩니다.`)) {
+    if (!await confirm(`${this.props.item.price / (this.props.item.price>9999?10000:1)}${this.props.item.price>9999?"만":""} point가 결제됩니다.`)) {
       event.preventDefault();
     } else {
       this.props.item.price > this.props.Point ? this.gotoChargePoint() : this.purchaseThisItem()

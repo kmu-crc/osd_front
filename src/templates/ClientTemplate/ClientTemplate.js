@@ -8,6 +8,7 @@ const Container = styled.div`
   margin-top: 30px;
   margin-left: 65px;
   background: #FFFFFF;
+  padding-bottom:30px;
   @media only screen and (max-width: 767px) and (min-width: 320px){
   }
   @media only screen and (max-width: 991px) and (min-width: 768px){

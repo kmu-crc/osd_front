@@ -822,22 +822,6 @@ class DesignerDetail extends Component {
           <div className="text">{Location}</div>
         </AdditionalInfo> */}
       </div>
-
-      {/* 리뷰 */}
-      {/*  */}
-      <AdditionalInfo width={1523} height={290} mTop={60}>
-          <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
-        <div className="wrapItem" style={{ flexDirection: "column" }}>
-          <div>
-            <DesignerReviewContainer
-              id={parseInt(this.props.id, 10)}
-              handler={detail => this.setState({ reviewdetail: true, detail: detail })} />
-          </div>
-        </div>
-      </AdditionalInfo>
-      {/*리뷰자세히*/}
-      {this.state.reviewdetail ? <ReviewDetailModal open={this.state.reviewdetail} close={() => this.setState({ reviewdetail: false })} detail={this.state.detail} /> : null}
-
       {/* 경험 */}
       <AdditionalInfo width={1523} height={290} mTop={60}>
         <div className="title margin_bottom">디자인 경험</div>
@@ -880,6 +864,21 @@ class DesignerDetail extends Component {
         </div>
 
       </ItemInfo>
+
+      {/* 리뷰 */}
+      {/*  */}
+      <AdditionalInfo width={1523} height={290} mTop={60}>
+          <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
+        <div className="wrapItem" style={{ flexDirection: "column" }}>
+          <div>
+            <DesignerReviewContainer
+              id={parseInt(this.props.id, 10)}
+              handler={detail => this.setState({ reviewdetail: true, detail: detail })} />
+          </div>
+        </div>
+      </AdditionalInfo>
+      {/*리뷰자세히*/}
+      {this.state.reviewdetail ? <ReviewDetailModal open={this.state.reviewdetail} close={() => this.setState({ reviewdetail: false })} detail={this.state.detail} /> : null}
 
       <div style={{ marginTop: "61px", display: "flex", flexDirection: "row" }}>
         <DesignerBoard>

@@ -298,9 +298,7 @@ class ItemQuestion extends Component {
     };
     getData(page) {
         this.setState({ page: page });
-        this.props.getData(page);
-        alert("getDate");
-        
+        this.props.getData(page);        
     };
 
     render() {
@@ -311,7 +309,8 @@ class ItemQuestion extends Component {
         question && question .length > 0 && question.forEach(element=> {
             if(element.sort_in_group==0)countNum++;
         });
-
+        countNum = countNum*(parseInt(total/10,10)-this.state.page)+(total%10);
+        console.log("countNum======",countNum)
         const Question = (props) => {
             return (
                 <React.Fragment>
@@ -378,6 +377,7 @@ class ItemQuestion extends Component {
             <div>
                 {question && question.length > 0 ?
                     question.map((item, index) =>{
+                        console.log(countNum);
                         // reply?countNum:countNum--;
                         countNum=reply&&item.uid == this.state.targetId?countNum:countNum--;
                         return(
@@ -406,12 +406,13 @@ class ItemQuestion extends Component {
                             </div>)}) : null}
                             <HRLine height={1} marginTop={0}/>
             </div>
+            {total>10?
             <Page>
                 {total
                     ? Array(parseInt((total / 10) + 1, 10)).fill().map((_, i) =>
-                        <div key={i} onClick={() => this.getData(i)} className={page === i ? "this number" : "another number"}> {i + 1}</div>)
+                        <div style={{cursor:"pointer"}} key={i} onClick={() => this.getData(i)} className={page === i ? "this number" : "another number"}> {i + 1}</div>)
                     : (<React.Fragment>&nbsp;</React.Fragment>)}
-            </Page>
+            </Page>:null}
             {/* <Dialog open={this.state.open}>
                     <div className="close-box">
                         <Cross angle={45} color={"#707070"} weight={1} width={15} height={15} onClick={()=>{this.setState({open:false})}}/>

@@ -120,7 +120,7 @@ class Request extends Component {
         </TextWrapper>
         {/* numbers */}
         <NumberWrapper>
-          <div className="price">{PointFormat(item.price / 1000 || 0)}천 point</div>
+          <div className="price">{PointFormat(item.price / (item.price>9999?10000:1) || 0)}{item.price>9999?"만":""} point</div>
           <div className="score">
             {/* {Star(item.score + 0.5)}({NumberFormat(item.reviews)}) */}
           </div>

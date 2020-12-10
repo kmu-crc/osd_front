@@ -454,11 +454,11 @@ class ItemReview extends Component {
                                     </div> : null}
                                 </div>)}) : <div className="blank">작성된 리뷰가 없습니다.</div>}
                 </div>
-                {total>0?
+                {total>10?
                 <Page>
                     {total
                         ? Array(parseInt((total / 10) + 1, 10)).fill().map((_, i) =>
-                            <div key={i} onClick={() => this.getData(i)} className={page === i ? "this number" : "another number"}> {i + 1}</div>)
+                            <div style={{cursor:"pointer"}} key={i} onClick={() => this.getData(i)} className={page === i ? "this number" : "another number"}> {i + 1}</div>)
                         : (<React.Fragment>&nbsp;</React.Fragment>)}
                 </Page>    
                 :null
