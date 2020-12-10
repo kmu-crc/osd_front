@@ -539,7 +539,7 @@ class ItemDetail extends Component {
       this.props.LikeProductRequest(this.props.id, this.props.token)
   };
   async buyThisItem(event) {
-    if (!await confirm(`${this.props.item.price / 1000}천 point가 결제됩니다.`)) {
+    if (!await confirm(`${this.props.item.price / (this.props.item.price>9999?10000:1)}${this.props.item.price>9999?"만":""} point가 결제됩니다.`)) {
       event.preventDefault();
     } else {
       this.props.item.price > this.props.Point ? this.gotoChargePoint() : this.purchaseThisItem()
@@ -671,7 +671,7 @@ class ItemDetail extends Component {
                 <div className="expert line">
                   <div className="price-and-score line">
                     <div className="price" style={{ marginRight: "35px" }}>
-                      {PointFormat(item.price / 1000 || 0)}천 point</div>
+                      {PointFormat(item.price / (item.price>9999?10000:1) || 0)}{item.price>9999?"만":""} point</div>
                     <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
                       {/* {Star(item.score, 28)}({item.total || 0}) */}
                       {/* <Rating name="score" icon='star' defaultRating={parseInt(score,10)} maxRating={5} disabled /> */}
@@ -756,7 +756,7 @@ class ItemDetail extends Component {
               <ExpandingButton width={1600}>
                 <div onClick={() => this.setState({ expandingReview: !expandingReview })} className="button">
                   <div className="font">
-                    {expandingReview ? "▲접기" : "▼펼쳐보기"}
+                    {/* {expandingReview ? "▲접기" : "▼펼쳐보기"} */}
                   </div>
                 </div>
               </ExpandingButton>
@@ -787,7 +787,7 @@ class ItemDetail extends Component {
           <div style={{ marginTop: "35px" }}>
             <Content
               id="contents_rgn"
-              style={{ marginTop: "15px", overflow: "hidden" }}
+              style={{ marginTop: "15px",overflow: "hidden"}}
               // height={expandingContent ? "100%" : "400px"}
               width={1600}>
               <div className="title">아이템 상세내용</div>

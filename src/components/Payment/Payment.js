@@ -262,7 +262,7 @@ class Payment extends Component {
             Method: [{ type: "Point", text: "현금 충전" }, { type: "Credit", text: "신용카드" }, { type: "Bank", text: "계좌이체" }, { type: "BankDeposit", text: "무통장입금" }],
             selected_method: 0,
             discount: 0,
-            unit: "포인트",
+            unit: "point",
         }
         this.selectMethod = this.selectMethod.bind(this);
         this.gotoChargePoint = this.gotoChargePoint.bind(this);
@@ -300,7 +300,7 @@ class Payment extends Component {
                                 <div className="option">{(options && "[옵션]" + options.test) || ""}</div>
                             </div>
                             <div className="amount"><div>{(options && options.amount+"개") || "1개"}</div></div>
-                            <div className="price"><div>{NumberFormat(item.price) || 0}{unit}</div></div>
+                                <div className="price"><div>{item.price/(item.price>9999?10000:1)|| 0}{item.price>9999?"만":""}{unit}</div></div>
                             <div className="delivery"><div>{(options && options.delivery) || ""}</div></div>
                         </HeaderBox>
                         <CustomBox width={1443} height={3} color={'#E9E9E9'} marginTop={65} />
@@ -310,22 +310,22 @@ class Payment extends Component {
                                 <div className="row_Box">
                                     <Row>
                                         <div className="row_label">상품 금액</div>
-                                        <div className="row_content font_small">{NumberFormat(item.price)}{unit}</div>
+                                        <div className="row_content font_small">{item.price/(item.price>9999?10000:1)|| 0}{item.price>9999?"만":""}{unit}</div>
                                     </Row>
                                     <Row>
                                         <div className="row_label">배송비</div>
                                         <div className="row_content font_small">0{unit}</div>
                                     </Row>
-                                    <Row>
+                                    {/* <Row>
                                         <div className="row_label">할인</div>
                                         <div className="row_content font_small">(-){discount}{unit}</div>
-                                    </Row>
+                                    </Row> */}
                                 </div>
                             </div>
                             <div className="contents flex_center border_gray_left">
                                 <div className="sub_Box">
                                     <div className="font_mini" >total</div>
-                                    <div className="font_small">{NumberFormat(total)}{unit}</div>
+                                    <div className="font_small">{item.price/(item.price>9999?10000:1)|| 0}{item.price>9999?"만":""}{unit}</div>
                                 </div>
                             </div>
                         </InfoBox>

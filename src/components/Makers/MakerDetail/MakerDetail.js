@@ -819,18 +819,6 @@ class MakerDetail extends Component {
 
           </div>
 
-          {/* 리뷰 */}
-          <AdditionalInfo width={1523} height={280} mTop={60}>
-            <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
-            <div className="wrapItem" style={{ flexDirection: "column" }}>
-            <MakerReviewContainer
-              id={parseInt(this.props.id, 10)}
-              handler={detail => this.setState({ reviewdetail: true, detail: detail })} />
-              </div>
-          </AdditionalInfo>
-          {/* 리뷰자세히 모달*/}
-          {this.state.reviewdetail ? <ReviewDetailModal open={this.state.reviewdetail} close={() => this.setState({ reviewdetail: false })} detail={this.state.detail} /> : null}
-
           <AdditionalInfo width={1523} height={280} mTop={60}>
             <div className="title margin_bottom">제작 경험</div>
             <div className="wrapItem">
@@ -870,6 +858,18 @@ class MakerDetail extends Component {
             {<HaveInGalleryContainer id={this.props.id} isModify={false} />}
           </div>
         </ItemInfo>
+
+          {/* 리뷰 */}
+          <AdditionalInfo width={1523} height={280} mTop={60}>
+            <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
+            <div className="wrapItem" style={{ flexDirection: "column" }}>
+            <MakerReviewContainer
+              id={parseInt(this.props.id, 10)}
+              handler={detail => this.setState({ reviewdetail: true, detail: detail })} />
+              </div>
+          </AdditionalInfo>
+          {/* 리뷰자세히 모달*/}
+          {this.state.reviewdetail ? <ReviewDetailModal open={this.state.reviewdetail} close={() => this.setState({ reviewdetail: false })} detail={this.state.detail} /> : null}
 
           <div style={{ marginTop: "61px", display: "flex", flexDirection: "row" }}>
             <MakerBoard>

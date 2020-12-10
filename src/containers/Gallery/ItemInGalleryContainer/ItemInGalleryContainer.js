@@ -14,6 +14,7 @@ class ItemInGalleryContainer extends Component {
   }
 
   render() {
+    console.log(this.props);
     return(
       <div>
         <ScrollList

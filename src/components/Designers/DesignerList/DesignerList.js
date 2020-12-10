@@ -53,7 +53,7 @@ class DesignerList extends Component {
     this.state = { rendering: true };
   }
   componentDidMount() {
-    this.props.GetDesignerTotalCountRequest(this.props.cate1, this.props.cate2);
+    // this.props.GetDesignerTotalCountRequest(this.props.cate1, this.props.cate2);
   }
   changeState = async () => {
     await this.setState({ rendering: false });
@@ -61,7 +61,7 @@ class DesignerList extends Component {
   }
   cate1Change = (value) => {
     this.props.history.replace(`/designer/${this.props.sort}/${value}/null`);
-    this.props.GetDesignerTotalCountRequest(value, null);
+    // this.props.GetDesignerTotalCountRequest(value, null);
     this.changeState();
   }
   cate2Change = (cate1, value) => {
@@ -72,7 +72,7 @@ class DesignerList extends Component {
     } else {
       this.props.history.replace(`/designer/${this.props.sort}/${this.props.cate1}/${value}`);
     }
-    this.props.GetDesignerTotalCountRequest(this.props.cate1, value);
+    // this.props.GetDesignerTotalCountRequest(this.props.cate1, value);
     this.changeState();
   }
   sortChange = (e, { value }) => {
