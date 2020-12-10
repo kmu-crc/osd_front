@@ -76,7 +76,7 @@ const DesignElement = styled.div`
     .design-title {
       font-size: 20px;
       font-weight: 700;
-      text-shadow:2px 2px 6px gray;
+      text-shadow: 2px 2px 4px #707070;
       display: flex;
       justify-content: space-between;
     }
@@ -103,6 +103,7 @@ const DesignElement = styled.div`
       width: 285px;
       display: flex;
       justify-content: space-between;
+  
     }
   }
 
@@ -156,6 +157,11 @@ const DesignElement = styled.div`
     margin-right: 0px;
     // cursor: default;
   }
+  :hover {
+    // border-right: 1px solid #707070;
+    // border-bottom: 1px solid #707070;
+    box-shadow: 2px 1px 5px rgba(112,112,112,0.35);
+  }
 `;
 
 const DesignEmpty = {
@@ -189,10 +195,10 @@ class Design extends Component {
             <TextFormat tip width="100%" txt={data.title} single />
           </div>
           <div className="user-update-wrapper">
-            <div style={{ width: "200px" }}>
+            <div style={{ textShadow: "1px 1px 2px #707070", fontWeight: "500", fontSize:"1.25rem", width: "200px" }}>
               <TextFormat tip txt={data.userName} width="100%" />
             </div>
-            <div style={{ width: "max-content" }}>
+            <div style={{ fontSize: "1.15rem", width: "max-content" }}>
               {DateFormat(data.update_time)}
             </div>
           </div>
@@ -205,7 +211,7 @@ class Design extends Component {
           <div className="fork"><img alt="icon" src={iForked} /></div>
           <div className="fork-count">{NumberFormat(data.children_count) || 0}</div>
         </div>
-      </DesignElement>
+      </DesignElement >
     )
   }
 }
