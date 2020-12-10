@@ -77,8 +77,6 @@ const DesignElement = styled.div`
       font-size: 20px;
       font-weight: 700;
       text-shadow: 2px 2px 4px #707070;
-      display: flex;
-      justify-content: space-between;
     }
     .update-time { 
       margin-top: 5px;
@@ -192,10 +190,11 @@ class Design extends Component {
         <div className="categoryName">{data.categoryName}</div>
         <div className="innerbox">
           <div className="design-title">
-            <TextFormat tip width="100%" txt={data.title} single />
+            {/* {data.title} */}
+            <TextFormat tip width="100%" txt={data.title}  />
           </div>
           <div className="user-update-wrapper">
-            <div style={{ textShadow: "1px 1px 2px #707070", fontWeight: "500", fontSize:"1.25rem", width: "200px" }}>
+            <div style={{ textShadow: "1px 1px 2px #707070", fontWeight: "500", fontSize: "1.25rem", width: "200px" }}>
               <TextFormat tip txt={data.userName} width="100%" />
             </div>
             <div style={{ fontSize: "1.15rem", width: "max-content" }}>
