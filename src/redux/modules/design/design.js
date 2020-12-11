@@ -725,12 +725,12 @@ export function InvitedUserRequest(id, token, data) {
             });
     });
 }
-export function CancelInvitedUserRequest(id, token, user_id) {
+export function CancelInvitedUserRequest(id, token) {
     return new Promise((resolve, reject) => {
-        const url = `${host}/design/${id}/video-chat/cancel-invited-user/${user_id}`;
+        const url = `${host}/design/${id}/video-chat/cancel-invited-user`;
         fetch(url, {
             headers: { "x-access-token": token },
-            method: "DELETE"
+            method: "POST",
         })
             .then(res => res.json())
             .then(res => {

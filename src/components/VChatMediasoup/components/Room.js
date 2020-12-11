@@ -9,8 +9,9 @@ import Cross from "components/Commons/Cross";
 import { alert } from "components/Commons/Alert/Alert";
 import { Modal } from 'semantic-ui-react';
 import SearchMember from "./SearchMember";
-import { InvitedUserRequest } from "redux/modules/design";
+import { InvitedUserRequest, CancelInvitedUserRequest } from "redux/modules/design";
 import { confirm } from "components/Commons/Confirm/Confirm";
+
 // import ScrollContainer from 'react-indiana-drag-scroll';
 // import { SearchMemberRequest } from "redux/modules/search";
 // import SearchMember from "components/Commons/SearchDesignMember";
@@ -734,7 +735,12 @@ class Room extends React.Component {
 					</div>
 					<div>
 						{/* exit */}
-						<div className='btn exit' onClick={() => { window.open('', '_self').close() }}>
+						<div className='btn exit' onClick={() => {
+							if (peers.length === 0) {
+								CancelInvitedUserRequest(this.props.design.uid, this.props.token)
+							}
+							window.open('', '_self').close();
+						}}>
 							<span className='txt'>나가기</span>
 						</div>
 					</div>
@@ -870,6 +876,7 @@ class Room extends React.Component {
 	};
 
 	componentDidMount() {
+
 		// join
 		const { roomClient } = this.props;
 		roomClient.join();
@@ -882,7 +889,6 @@ class Room extends React.Component {
 	};
 	componentWillUnmount() {
 		window.removeEventListener("resize");
-		alert('will closed');
 	};
 };
 

@@ -191,7 +191,7 @@ class Design extends Component {
         <div className="innerbox">
           <div className="design-title">
             {/* {data.title} */}
-            <TextFormat tip width="100%" txt={data.title}  />
+            <TextFormat tip width="100%" txt={data.title} single />
           </div>
           <div className="user-update-wrapper">
             <div style={{ textShadow: "1px 1px 2px #707070", fontWeight: "500", fontSize: "1.25rem", width: "200px" }}>
