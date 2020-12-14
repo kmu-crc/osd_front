@@ -741,48 +741,6 @@ class ItemDetail extends Component {
 
           </div>
 
-          {/* review and board */}
-          <div style={{ marginTop: "35px" }}>
-            <Review>
-              <ItemReviewContainer
-                user_id={item.user_id}
-                detail={this.state.detail}
-                handler={detail => this.setState({ reviewdetail: true, detail: detail })}
-                isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} />
-            </Review>
-
-            {
-              this.state.isexpandingReview &&
-              <ExpandingButton width={1600}>
-                <div onClick={() => this.setState({ expandingReview: !expandingReview })} className="button">
-                  <div className="font">
-                    {/* {expandingReview ? "▲접기" : "▼펼쳐보기"} */}
-                  </div>
-                </div>
-              </ExpandingButton>
-            }
-
-          </div>
-
-          <div style={{ marginTop: "35px" }}>
-            <QuestionBoard style={{ marginTop: "15px", overflow: "hidden" }} height={expandingBoard ? "100%" : "250px"}>
-              <div className="title">게시판</div>
-              <ItemQuestionContainer user_id={item.user_id} isExpanding={(result) => { this.setState({ isexpandingBoard: result }) }} />
-              {/* {!this.state.isexpandingBoard && <CoverGrident isGradient={!expandingBoard} />} */}
-            </QuestionBoard>
-            {/* {!this.state.isexpandingBoard &&
-
-              <ExpandingButton width={1600}>
-                <div onClick={() => this.setState({ expandingBoard: !expandingBoard })} className="button">
-                  <div className="font">
-                    {expandingBoard ? "▲접기" : "▼펼쳐보기"}
-                  </div>
-                </div>
-              </ExpandingButton>
-            } */}
-
-          </div>
-
           {/* item-contents */}
           <div style={{ marginTop: "35px" }}>
             <Content
@@ -823,6 +781,49 @@ class ItemDetail extends Component {
             </ExpandingButton>
            }  */}
           </div>
+
+          <div style={{ marginTop: "35px" }}>
+            <QuestionBoard style={{ marginTop: "15px", overflow: "hidden" }} height={expandingBoard ? "100%" : "250px"}>
+              <div className="title">게시판</div>
+              <ItemQuestionContainer user_id={item.user_id} isExpanding={(result) => { this.setState({ isexpandingBoard: result }) }} />
+              {/* {!this.state.isexpandingBoard && <CoverGrident isGradient={!expandingBoard} />} */}
+            </QuestionBoard>
+            {/* {!this.state.isexpandingBoard &&
+
+              <ExpandingButton width={1600}>
+                <div onClick={() => this.setState({ expandingBoard: !expandingBoard })} className="button">
+                  <div className="font">
+                    {expandingBoard ? "▲접기" : "▼펼쳐보기"}
+                  </div>
+                </div>
+              </ExpandingButton>
+            } */}
+
+          </div>
+          {/* review and board */}
+          <div style={{ marginTop: "35px" }}>
+            <Review>
+              <ItemReviewContainer
+                user_id={item.user_id}
+                detail={this.state.detail}
+                handler={detail => this.setState({ reviewdetail: true, detail: detail })}
+                isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} />
+            </Review>
+
+            {
+              this.state.isexpandingReview &&
+              <ExpandingButton width={1600}>
+                <div onClick={() => this.setState({ expandingReview: !expandingReview })} className="button">
+                  <div className="font">
+                    {/* {expandingReview ? "▲접기" : "▼펼쳐보기"} */}
+                  </div>
+                </div>
+              </ExpandingButton>
+            }
+
+          </div>
+
+
 
         </Wrapper>
       </React.Fragment>
