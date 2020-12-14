@@ -1,7 +1,7 @@
 
 #git pull origin develop
 
-yarn build
+#yarn build
 
 rm build/static/**/*.map
 
