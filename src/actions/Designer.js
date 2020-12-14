@@ -12,7 +12,7 @@ export const GetDesignerListRequest = (page, sort, cate1, cate2, keyword) => {
     })
       .then(response => response.json())
       .then((data) => {
-        return data&&dispatch(page === 0 ? DesignerListClear(data || []) : GetDesignerList(data || []))
+        return dispatch(page === 0 ? DesignerListClear(data || []) : GetDesignerList(data || []))
       })
       .catch((error) => {
         dispatch(DesignerListFail());

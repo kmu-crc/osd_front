@@ -30,7 +30,7 @@ class ScrollDesignListContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     dataList: state.DesignList.status.DesignList,
-    dataListAdded: state.DesignList.status.DesignListAdded
+    dataListAdded: state.DesignList.status.DesignListAdded,
   };
 };
 

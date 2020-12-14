@@ -11,15 +11,17 @@ export const GetDesignListRequest = (page, sort, cate1, cate2, keyword) => {
     })
       .then(res => res.json())
       .then(data =>{
-        return data && dispatch((page === 0)
-        ? DesignListClear(data ? data : [])
-        : GetDesignList(data ? data : []))
+        console.log(data);
+        dispatch((page === 0)
+        ? DesignListClear(data ? data||[] : [])
+        : GetDesignList(data ? data||[] : []))
       })
       .catch(error => dispatch(DesignListFail()));
   }
 };
 
 export function GetDesignList(data) {
+  console.log("GetDesignList");
   return {
     type: types.GET_DESIGN_LIST,
     DesignList: data
@@ -27,6 +29,7 @@ export function GetDesignList(data) {
 };
 
 export function DesignListClear(data) {
+  console.log("DesignListClear");
   return {
     type: types.DESIGN_LIST_CLEAR,
     DesignList: data,
