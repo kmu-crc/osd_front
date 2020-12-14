@@ -215,16 +215,16 @@ class ItemQuestion extends Component {
         this.onClickEvent=this.onClickEvent.bind(this);
     }
     componentDidMount(){
-        window.addEventListener("click", this.onClickEvent, false);
+        // window.addEventListener("click", this.onClickEvent, false);
     }
     componentWillUnmount(){
-        window.removeEventListener("click", this.onClickEvent, true);
+        // window.removeEventListener("click", this.onClickEvent, true);
     }
     async onClickEvent(event){
-        if(event.target.id=="designer"||event.target.id=="maker"||event.target.id=="request"||event.target.id=="product")return;
-        if(event.target.id != "answer"&&event.target.id!="this_reply"){
-            await this.setState({reply:false});
-        }
+        // if(event.target.id=="designer"||event.target.id=="maker"||event.target.id=="request"||event.target.id=="product")return;
+        // if(event.target.id != "answer"&&event.target.id!="this_reply"){
+        //     await this.setState({reply:false});
+        // }
    }
     onChangeValue(event) {
         const name = event.target.name;
@@ -309,7 +309,7 @@ class ItemQuestion extends Component {
         question && question .length > 0 && question.forEach(element=> {
             if(element.sort_in_group==0)countNum++;
         });
-        countNum = countNum*(parseInt(total/10,10)-this.state.page)+(total%10);
+        // countNum = countNum*(parseInt(total/10,10)-this.state.page)+(total%10);
         console.log("countNum======",countNum)
         const Question = (props) => {
             return (
@@ -379,11 +379,11 @@ class ItemQuestion extends Component {
                     question.map((item, index) =>{
                         console.log(countNum);
                         // reply?countNum:countNum--;
-                        countNum=reply&&item.uid == this.state.targetId?countNum:countNum--;
+                        // countNum=reply&&item.sort_in_group>0?countNum:countNum--;
                         return(
                         <div key={index} >
                             <Question
-                                numbering={countNum--}
+                                numbering={item.sort_in_group==0?countNum--:countNum}
                                 {...item}
                                 key={index}
                                 itsmine={item.user_id === (userInfo && userInfo.uid)}

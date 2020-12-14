@@ -41,7 +41,10 @@ export function GetProductListRequest(page, sort, cate1, cate2, keyword) {
     const url =  `${host}/item/list/${page}/${sort}/${cate1}/${cate2}/${keyword}`;
     return fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
       .then(res => res.json())
-      .then(data => dispatch((page === 0) ? (ProductListClear(data || [])) : GetProductList(data || [])))
+      .then(data => {
+        console.log(data);
+        dispatch((page === 0) ? (ProductListClear(data || [])) : GetProductList(data || []))
+      })
       .catch(error => dispatch(ProductListFail()))
   }
 };

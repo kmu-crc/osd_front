@@ -19,7 +19,7 @@ const LeftWhitePane = styled.div`
     height: ${props => props.height}px;
     left: ${props => props.left}px;
     right: ${props => props.right}px;
-    background: #FFFFFF; // transparent linear-gradient(90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%);
+    background: transparent linear-gradient(90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 0) 50%, rgba(255,255,255, 0) 100%);
     backgroundRepeat: no-repeat;
     @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
     and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
@@ -46,7 +46,7 @@ const Arrow = styled.div`
     width: 17px;
     height: 48px;
     position: absolute;
-    top: ${props => props.gap + 105}px;
+    top: ${props => props.gap + 65}px;
     left: ${props => props.left}px;
     right: ${props => props.right}px;
     z-index: 831;
@@ -81,6 +81,7 @@ const GridEditorWrapper = styled.div`
         ? window.innerWidth
         : osdcss.resolutions.LargeMaxWidth}; 
     .Editor{
+        padding-left:10px;
         padding-right: 250px;
         overflow: hidden;
         white-space: nowrap;
@@ -94,6 +95,8 @@ const GridEditorWrapper = styled.div`
 `;
 const Wrapper = styled.div`
     position: relative;
+    // border:1px solid black;
+    // width:100%;
 `;
 
 
@@ -311,15 +314,15 @@ class GridEditor extends Component {
                 {itemId ?
                     <React.Fragment>
                         {left ? <LeftWhitePane
-                            width={138} height={h}
-                            background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
-                            <Arrow angle="0deg" top={20} gap={gap} left={50} onClick={this.ScrollLeft} />
+                            width={100} height={h}
+                            background="transparent linear-gradient(0deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
+                            <Arrow angle="0deg" top={10} gap={0} left={0} onClick={this.ScrollLeft} />
                         </LeftWhitePane> : null}
 
                         {right ? <RightWhitePane
-                            width={138} height={h} right={0}
-                            background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
-                            <Arrow angle="180deg" c gap={gap} right={50} onClick={this.ScrollRight} />
+                            width={100} height={h} right={0}
+                            background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
+                            <Arrow angle="180deg" top={20} gap={0} right={50} onClick={this.ScrollRight} />
                         </RightWhitePane> : null}
 
                         {editor && newcard ?

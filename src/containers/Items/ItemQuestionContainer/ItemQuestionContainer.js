@@ -3,19 +3,6 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ItemQuestion from "components/Items/ItemQuestion";
 import { GetItemQuestionRequest, CreateItemQuestionRequest, /*DeleteItemQuestionRequest*/ } from "actions/Item";
-import styled from "styled-components"
-
-const BlankBox = styled.div`
-    width:100%;
-    height:100%;
-    display:flex;
-    justify-content:center;
-    .text{
-        font-weight:500;
-        // color:#707070;
-        font-size:20px;
-    }
-`
 
 class ItemQuestionContainer extends Component {
     constructor(props) {
@@ -44,14 +31,7 @@ class ItemQuestionContainer extends Component {
     render() {
         return (
             <React.Fragment>
-                {/* {this.props.question&&
-        this.props.question.length>0? */}
                 <ItemQuestion id={this.props.match.params.id} getData={this.getData} request={this.requestQuestion} {...this.props} />
-                {/* :
-        <BlankBox>
-        <div className="text">해당 항목 없음</div>
-        </BlankBox>
-        } */}
             </React.Fragment>
         );
     }

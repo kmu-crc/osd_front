@@ -11,7 +11,7 @@ export const GetMakerListRequest = (page, sort, cate1, cate2, keyword) => {
     })
       .then(res => res.json())
       .then(data =>{
-          return data&&dispatch(page === 0
+          return dispatch(page === 0
           ? MakerListClear(data ? data : [])
           : GetMakerList(data ? data : []))
       })
