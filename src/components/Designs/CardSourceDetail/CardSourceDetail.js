@@ -8,6 +8,7 @@ import osdcss from "opendesign_style";
 import FileController from "./FileController";
 import TextController from "./TextControllerPlus";
 import LinkController from "./LinkController";
+import ProblemController from "./ProblemController";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
@@ -606,6 +607,13 @@ class CardSourceDetail extends Component {
                           </LinkPreview>
                         </div>
 
+                        // : (item.type === "PROBLEM") ?
+                        //   <div className="problemWrap">
+                        //     <Problem>
+
+                        //     </Problem>
+                        //   </div>
+
                         : <div>올바른 형식의 아이템이 아닙니다.</div>}
             </div>
           )}
@@ -624,12 +632,19 @@ class CardSourceDetail extends Component {
                 {(item.type === "FILE")
                   ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />
                   : null}
+
                 {(item.type === "TEXT")
                   ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
                   : null}
+
                 {(item.type === "LINK")
                   ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
                   : null}
+
+                {(item.type === "PROBLEM")
+                  ? <ProblemController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                  : null}
+
               </div>
 
               <DelBtn
@@ -774,6 +789,10 @@ class AddContent extends Component {
             onClick={() => this.addContent("LINK")}
             width="max-content" minWidth="134px" height="29px">
             하이퍼링크 등록하기</NewController>
+          <NewController
+            onClick={() => this.addContent("PROBLEM")}
+            width="max-content" minWidth="134px" height="29px">
+            문제 등록하기</NewController>
         </div>
 
         {this.state.type === "FILE" &&
