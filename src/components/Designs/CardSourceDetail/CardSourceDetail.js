@@ -9,6 +9,7 @@ import FileController from "./FileController";
 import TextController from "./TextControllerPlus";
 import LinkController from "./LinkController";
 import ProblemController from "./ProblemController";
+import ProblemContainer from "containers/Designs/ProblemContainer"
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
@@ -366,6 +367,7 @@ class CardSourceDetail extends Component {
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async onChangeValue(data, order) {
+    console.log("onchangeValue",data);
     let copyContent = [...this.state.content];
     copyContent[order] = data;
     this.setState({ content: copyContent });
@@ -606,7 +608,8 @@ class CardSourceDetail extends Component {
                             </div>
                           </LinkPreview>
                         </div>
-
+                    : (item.type === "PROBLEM") ?
+                    <div className="textWrap" dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
                         // : (item.type === "PROBLEM") ?
                         //   <div className="problemWrap">
                         //     <Problem>
@@ -625,7 +628,7 @@ class CardSourceDetail extends Component {
         content && content.length > 0 ? (<Fragment>
 
           {content.map((item, index) => {
-
+            console.log(item);
             return (<ControllerWrap key={item + index}>
 
               <div className="contentWrap">
@@ -642,7 +645,7 @@ class CardSourceDetail extends Component {
                   : null}
 
                 {(item.type === "PROBLEM")
-                  ? <ProblemController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                  ? <ProblemContainer item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
                   : null}
 
               </div>
