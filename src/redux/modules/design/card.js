@@ -51,6 +51,17 @@ const GET_DESIGN_SOURCE = "GET_DESIGN_SOURCE"
 const GET_DESIGN_SOURCE_SUCCESS = "GET_DESIGN_SOURCE_SUCCESS"
 const GET_DESIGN_SOURCE_FAILURE = "GET_DESIGN_SOURCE_FAILURE"
 
+////////// Problem //////////
+const GET_PROBLEM_LIST = "GET_PROBLEM_LIST"
+const GET_PROBLEM_LIST_SUCCESS = "GET_PROBLEM_LIST_SUCCESS"
+const GET_PROBLEM_LIST_FAILURE = "GET_PROBLEM_LIST_FAILURE"
+const GET_PROBLEM_DETAIL = "GET_PROBLEM_DETAIL"
+const GET_PROBLEM_DETAIL_SUCCESS = "GET_PROBLEM_DETAIL_SUCCESS"
+const GET_PROBLEM_DETAIL_FAILURE = "GET_PROBLEM_DETAIL_FAILURE"
+const UPDATE_SUBMIT_PROBLEM_ANSWER="UPDATE_SUBMIT_PROBLEM_ANSWER"
+const UPDATE_SUBMIT_PROBLEM_ANSWER_SUCCESS="UPDATE_SUBMIT_PROBLEM_ANSWER_SUCCESS"
+const UPDATE_SUBMIT_PROBLEM_ANSWER_FAILURE="UPDATE_SUBMIT_PROBLEM_ANSWER_FAILURE"
+
 
 const CreateBoard = () => ({ type: CREATE_BOARD })
 const CreateBoardSuccess = (res) => ({ type: CREATE_BOARD_SUCCESS, success: res.success })
@@ -96,6 +107,16 @@ const GetDesignSourceSuccess = res => ({ type: GET_DESIGN_SOURCE_SUCCESS, data: 
 const GetDesignSourceFailure = error => ({ type: GET_DESIGN_SOURCE_FAILURE })
 const DesignSourceReset = () => ({ type: DESIGN_SOURCE_RESET, data: [] })
 
+////////// problem //////////
+const GetProblemList = ()=>({type:GET_PROBLEM_LIST})
+const GetProblemListSuccess = (data)=>({type:GET_PROBLEM_LIST_SUCCESS, data:data})
+const GetProblemListFailure = ()=>({type:GET_PROBLEM_LIST_FAILURE})
+const GetProblemDetail = ()=>({type:GET_PROBLEM_DETAIL})
+const GetProblemDetailSuccess = (data)=>({type:GET_PROBLEM_DETAIL_SUCCESS,data:data})
+const GetProblemDetailFailure = ()=>({type:GET_PROBLEM_DETAIL_FAILURE})
+const UpdateSubmitAnswer = ()=>({type:UPDATE_SUBMIT_PROBLEM_ANSWER})
+const UpdateSubmitAnswerSuccess = (data)=>({type:UPDATE_SUBMIT_PROBLEM_ANSWER_SUCCESS,data:data})
+const UpdateSubmitAnswerFailure = error=>({type:UPDATE_SUBMIT_PROBLEM_ANSWER_FAILURE})
 
 const initialState = {
     DesignDetailStep: { status: "INIT" },
@@ -103,7 +124,10 @@ const initialState = {
     DesignSourceDetail: { status: "INIT" },
     DesignSourceEdit: { status: "INIT" },
     DesignDetailStepCard: { status: "INIT" },
-    status: { DesignDetailStepCard: {}, DesignDetailStep: [], allData: null, content: [], origin: [] }
+    ProblemList:{status:"INIT"},
+    ProblemDetail:{status:"INIT"},
+    UpdateAnswer:{status:"INIT"},
+    status: { DesignDetailStepCard: {}, DesignDetailStep: [], allData: null, content: [], origin: [], ProblemList:[],}
 }
 
 export function DesignCard(state, action) {
@@ -201,6 +225,70 @@ export function DesignCard(state, action) {
                 DesignDetailStepCard: { $set: "FAILURE" },
                 status: { DesignDetailStepCard: { $set: {} } }
             })
+            ///problemlist///
+        case GET_PROBLEM_LIST:
+            return update(state,{
+                ProblemList:{$set:"WATING"},
+            })
+        case GET_PROBLEM_LIST_SUCCESS:
+            console.log(action.data);
+                return update(state,{
+                    ProblemList:{$set:"SUCESS"},
+                    status:{ProblemList: { $set: action.data } }
+            })
+        case GET_PROBLEM_LIST_FAILURE:
+                return update(state,{
+                    ProblemList:{$set:"FAILURE"},
+                    status:{ProblemList: { $set: {} } }
+            })
+        case GET_PROBLEM_LIST:
+            return update(state,{
+                ProblemList:{$set:"WATING"},
+            })
+        case GET_PROBLEM_LIST_SUCCESS:
+            console.log(action.data);
+                return update(state,{
+                    ProblemList:{$set:"SUCESS"},
+                    status:{ProblemList: { $set: action.data } }
+            })
+        case GET_PROBLEM_LIST_FAILURE:
+                return update(state,{
+                    ProblemList:{$set:"FAILURE"},
+                    status:{ProblemList: { $set: {} } }
+            })
+        case GET_PROBLEM_DETAIL:
+            return update(state,{
+                    ProblemDetail:{$set:"WATING"},
+            })
+        case GET_PROBLEM_DETAIL_SUCCESS:
+            console.log(action.data);
+                return update(state,{
+                    ProblemDetail:{$set:"SUCESS"},
+                    status:{ProblemDetail: { $set: action.data } }
+            })
+        case GET_PROBLEM_DETAIL_FAILURE:
+                return update(state,{
+                    ProblemDetail:{$set:"FAILURE"},
+                    status:{ProblemDetail: { $set: {} } }
+            })
+        case UPDATE_SUBMIT_PROBLEM_ANSWER:
+            return update(state, {
+                UpdateAnswer: {
+                status: { $set: "WATTING" }
+                }
+            })
+        case UPDATE_SUBMIT_PROBLEM_ANSWER_SUCCESS:
+        return update(state, {
+            UpdateAnswer: {
+            status: { $set: "SUCCESS" }
+            }
+        })
+        case UPDATE_SUBMIT_PROBLEM_ANSWER_SUCCESS:
+            return update(state, {
+            UpdateAnswer: {
+            status: { $set: "FAILURE" }
+            }
+        })
         default:
             return state
     }
@@ -527,5 +615,59 @@ export const UpdateCardSourcesRequest = (data, token, id) => {
                 //console.log("insert detail err", error);
                 return dispatch(UpdateCardSourcesFailure(error));
             });
+    };
+}
+
+/////// problem
+export const getProblemListRequest = ()=>{
+    const url = `${host}/design/problem/list`;
+    return (dispatch) => {
+        dispatch(GetProblemList())
+        return fetch(`${url}`, {
+            headers: { "Content-Type": "application/json" },
+            method: "get"
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            return dispatch(GetProblemListSuccess(data.results))
+        }).catch((error) => {
+            console.error("err", error)
+            return dispatch(GetProblemListFailure(error))
+        })
+    }
+}
+
+export const getProblemDetailRequest = (uid)=>{
+    const url = `${host}/design/problem/detail/${uid}`;
+    return (dispatch) => {
+        dispatch(GetProblemDetail())
+        return fetch(`${url}`, {
+            headers: { "Content-Type": "application/json" },
+            method: "get"
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            console.log("thisthisthis?",data);
+            return dispatch(GetProblemDetailSuccess(data))
+        }).catch((error) => {
+            console.error("err", error)
+            return dispatch(GetProblemDetailFailure(error))
+        })
+    }
+}
+export const UpdateAnswerRequest = (token,data) => {
+    return async dispatch => {
+        dispatch(UpdateSubmitAnswer());
+        return fetch(`${host}/design/problem/updateAnswer`, {
+            headers: {
+                "x-access-token": token,
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(res => dispatch(UpdateSubmitAnswerSuccess(res)))
+            .catch(error => dispatch(UpdateSubmitAnswerFailure(error)))
     };
 }
