@@ -782,7 +782,7 @@ class CreateDesign extends Component {
       title: "",
       thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false,
       categoryLevel1: this.props.userInfo.category1 || null,
-      categoryLevel2: null, categoryLevel3:null,
+      categoryLevel2: null, categoryLevel3: null,
       alone: true, members: [], addmem: [], delmem: [],
       license1: true, license2: true, license3: true,
       type: null, template: null,
@@ -945,11 +945,11 @@ class CreateDesign extends Component {
     this.setState({ loading: false });
   };
   onChangeCategory1(event, { value }) {
-    this.setState({ categoryLevel1: { value }.value, categoryLevel2:null,categoryLevel3:null });
+    this.setState({ categoryLevel1: { value }.value, categoryLevel2: null, categoryLevel3: null });
     this.checkFinishAdditional();
   }
   onChangeCategory2(event, { value }) {
-    this.setState({ categoryLevel2: { value }.value,categoryLevel3:null })
+    this.setState({ categoryLevel2: { value }.value, categoryLevel3: null })
     this.checkFinishAdditional();
   }
   onChangeCategory3(event, { value }) {
@@ -1130,17 +1130,17 @@ class CreateDesign extends Component {
     const thumbnailURL = this.state.thumbnail;
     console.log(this.props, this.state);
     let category3Index = -1;
-    let nCount=0;
-    for(let i in this.props.category2){
-      this.props.category2&&this.props.category2[i]&&this.props.category2[i].map((item,index)=>{
-          if(item.value == this.state.categoryLevel2){
-            category3Index = nCount;
-          }
-          nCount++;
-        })
+    let nCount = 0;
+    for (let i in this.props.category2) {
+      this.props.category2 && this.props.category2[i] && this.props.category2[i].map((item, index) => {
+        if (item.value == this.state.categoryLevel2) {
+          category3Index = nCount;
+        }
+        nCount++;
+      })
     }
     // console.log(this.props.category3);
-    if(category3Index==-1)category3Index=0;
+    if (category3Index == -1) category3Index = 0;
     return (
       <div>
 
