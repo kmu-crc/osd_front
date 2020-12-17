@@ -412,7 +412,7 @@ const You = (data) => {
   // console.log(data);
   return (<YouMessage thumbnail={data.thumbnail || who}>
     <div className="userName">
-      {data.memberName || "디자인맴버"}
+      {data.memberName || "디자인멤버"}
     </div>
     <div className="messageWrapper">
       <div className="thumbnail" ></div>

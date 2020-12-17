@@ -4,7 +4,7 @@ import styled from "styled-components";
 const TextFormatContainer = styled.div`
   padding: 0 0 0 0; 
   cursor: default;
-  overflow: hidden; 
+  // overflow: hidden; 
   text-overflow: ellipsis;
   width: ${props => props.width + "%" || "max-content"};
   background-color: ${props => props.backgroundColor || "transparent"};

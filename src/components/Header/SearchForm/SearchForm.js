@@ -61,11 +61,13 @@ class SearchForm extends Component {
 
     submitEnter = async (e) => {
         if (e.keyCode === 13) {
+            document.getElementById("searchbox").blur();
             if (this.state.searchKeyword.trim() === "") {
                 await alert("검색할 내용을 입력하세요.", "확인");
-                return;
+                await document.getElementById("searchbox").focus();
+            }else{
+                this.goSearch();
             }
-            this.goSearch();
         }
     };
     onClickedIcon = async (e) => {
@@ -96,7 +98,7 @@ class SearchForm extends Component {
         return (
             <SearchContainer formSize={this.props.formWidth} visible={this.props.visible === 1 ? "block" : "none"} >
                 <div className="shadow_button" onClick={this.onClickedIcon} />
-                <input type="text" placeholder={this.props.formWidth > 1200 ? "Search..." : ""} maxLength="100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword} />
+                <input id="searchbox" type="text" placeholder={this.props.formWidth > 1200 ? "Search..." : ""} maxLength="100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword} />
             </SearchContainer>)
     }
 }

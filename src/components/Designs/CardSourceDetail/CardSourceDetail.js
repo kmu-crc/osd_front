@@ -9,6 +9,7 @@ import FileController from "./FileController";
 import TextController from "./TextControllerPlus";
 import LinkController from "./LinkController";
 import ProblemController from "./ProblemController";
+import ProblemContainer from "containers/Designs/ProblemContainer"
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import { Modal, Dropdown } from "semantic-ui-react";
@@ -488,6 +489,7 @@ class CardSourceDetail extends Component {
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async onChangeValue(data, order) {
+    console.log("onchangeValue",data);
     let copyContent = [...this.state.content];
     copyContent[order] = data;
     this.setState({ content: copyContent });
