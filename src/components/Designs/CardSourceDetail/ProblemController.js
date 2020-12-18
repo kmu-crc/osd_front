@@ -155,7 +155,7 @@ class ProblemController extends Component {
         <div className="th">time</div>
       </div>
     
-        {ProblemList.map((item,index)=>{
+        {ProblemList&&ProblemList.map((item,index)=>{
           return(
             <div className="contentsBox" key={index}>
               <div className="td">{item.id}</div>
