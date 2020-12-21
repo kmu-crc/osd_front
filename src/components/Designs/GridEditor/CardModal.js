@@ -57,15 +57,13 @@ const CardDialog = styled(Modal)`
     // }
     margin-top: 50px !important;
     margin-bottom: 50px !important;
+    min-width:70%;
     height: max-content;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #000000;
     border: 1px solid #EFEFEF;
     border-radius: 10px;
     opacity: 1;
-    // padding-right: 45px;
-    // padding-left: 45px;
-    // padding-top:20px;
     ::-webkit-scrollbar {
         position: absolute;
         width: 3.9px;

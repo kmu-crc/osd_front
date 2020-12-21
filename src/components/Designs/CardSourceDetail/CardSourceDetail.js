@@ -13,7 +13,7 @@ import ProblemContainer from "containers/Designs/ProblemContainer"
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import { Modal, Dropdown } from "semantic-ui-react";
-// import Zoom from 'react-medium-image-zoom'
+import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css';
 import Cross from "components/Commons/Cross";
 /*
@@ -726,9 +726,9 @@ class CardSourceDetail extends Component {
             <div key={index + item}>
               {(item.type === "FILE" && item.data_type === "image") ?
                 <div className="imgContent" >
-                  {/* <Zoom> */}
-                  <img src={item.content} alt="이미지" download={item.file_name} />
-                  {/* </Zoom> */}
+                  <Zoom>
+                  <img width="100%" src={item.content} alt="이미지" download={item.file_name} />
+                  </Zoom>
                   {/* <p>이미지를 클릭하시면 크게 보실 수 있습니다.</p> */}
                 </div>
 
