@@ -8,11 +8,147 @@ import osdcss from "opendesign_style";
 import FileController from "./FileController";
 import TextController from "./TextControllerPlus";
 import LinkController from "./LinkController";
+import ProblemController from "./ProblemController";
+import ProblemContainer from "containers/Designs/ProblemContainer"
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
+import { Modal, Dropdown } from "semantic-ui-react";
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css';
+import Cross from "components/Commons/Cross";
 
-// import Zoom from 'react-medium-image-zoom'
-import 'react-medium-image-zoom/dist/styles.css'
+import host from "config";
+
+// FOR EDITOR
+import AceEditor from "react-ace";
+import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/theme-github";
+
+/*
+  PROBLEM SUBMIT MODAL
+*/
+const SubmitModalWrapper = styled(Modal)
+  `
+  *{
+    // border: 1px solid black;
+    font-family: Noto Sans KR;
+  }
+  width: 873px;
+  height: 949px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 10px;
+  opacity: 1;
+  position: relative;
+  padding: 50px;
+  margin: auto;
+
+  .close-box {
+    width: max-content;
+    cursor: pointer;
+    position: absolute;
+    top: 16px;
+    right: 16px; 
+  }
+
+  .title {
+    font-size: 20px;
+    line-height: 29px;
+    font-weight: 500;
+    color: #707070;
+
+    margin-top: 10px;
+  }
+
+  .language {
+    margin-top: 38px;
+    display: flex;
+    flex-direction: row;
+    item-align: center;
+
+    .label {
+      font: normal normal normal 20px/29px Noto Sans KR;
+      letter-spacing: 0px;
+      color: #707070;
+      opacity: 1; 
+    }
+    .combo-box {
+      font: normal normal normal 17px/29px Noto Sans KR;
+      margin-left: 20px;
+    }
+  }
+  .coding-area {
+    *{
+      font-family: monospace !important;
+    }
+    margin-top: 26px;
+    .tab {
+      display: flex;
+      flex-direction: row;
+      
+      .label {
+        :hover {
+          background-color: #707070;
+        }
+        &.active {
+          // background-color: #707070;
+          color: white;
+        }
+        width: max-content;
+        background-color: #EFEFEF;
+        font: normal normal normal 20px/29px Noto Sans KR;
+        letter-spacing: 0px;
+        color: #707070;
+        opacity: 1;
+      }
+    }
+    .editor {
+      margin-top: 16px;
+      width: 773px;
+      height: 588px;
+      background: #E9E9E9 0% 0% no-repeat padding-box;
+      border-radius: 5px;
+      opacity: 1;
+    }
+  }
+  .button-wrapper {
+    margin: auto;
+    margin-top: 40px;
+    width: max-content;
+    display: flex;
+    flex-direction: row;
+
+    .btn {
+      cursor: pointer;
+      font-weight: 500;
+      width: max-content;
+      height: 29px;
+      opacity: 1;
+      letter-spacing: 0px;
+      font-size: 20px;
+      line-height: 29px;
+    }
+    .submit {
+      margin-left: 47.5px;
+      color: #FF0000;
+      border-bottom: 1px solid #FF0000;
+    }
+    .cancel {
+      color: #707070;
+      border-bottom: 1px solid #707070;
+    }
+  }
+`;
+const LanguageDropDown = styled(Dropdown)`
+  // top: 298px;
+  // left: 672px;
+  width: 198px;
+  height: 37px;
+  border: 2px solid #E9E9E9;
+  border-radius: 5px;
+  opacity: 1;
+  font-size: 17px !important;
+`;
 
 const cloneObj = obj => JSON.parse(JSON.stringify(obj));
 function IsJsonString(str) {
@@ -281,7 +417,8 @@ class CardSourceDetail extends Component {
       edit: false,
       content: this.props.content || [],
       origin: this.props.origin || [],
-      loading: false
+      loading: false,
+      submit: false, tab: "code",
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -294,6 +431,7 @@ class CardSourceDetail extends Component {
     this.moveItem = this.moveItem.bind(this);
     this.verifyorder = this.verifyorder.bind(this);
 
+    this.ace = React.createRef();
   }
   componentDidMount() {
     if (this.props.uid !== "new") {
@@ -365,6 +503,7 @@ class CardSourceDetail extends Component {
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async onChangeValue(data, order) {
+    console.log("onchangeValue", data);
     let copyContent = [...this.state.content];
     copyContent[order] = data;
     this.setState({ content: copyContent });
@@ -541,10 +680,154 @@ class CardSourceDetail extends Component {
   }
 
   render() {
-    const { edit, content, loading } = this.state;
-    //console.log("content:", this.state.content);
+    const { edit, content, loading, submit, tab, item, result } = this.state;
+    // console.log("content:", this.state.content);
+    console.log("result:", result);
     return (<div>
       {loading ? <Loading /> : null}
+
+      {submit ?
+        <SubmitModalWrapper
+          open={submit}
+          onClose={() => this.setState({ submit: false })}
+        >
+          {loading ? <Loading msg="문제를 제출 중입니다." /> : null}
+
+          {/* 
+            avg_memory: "0"
+            avg_time: "0"
+            code: "zxcvxzcv"
+            create_date: "2020-12-21T04:36:55.000Z"
+            language_id: 1
+            message: "main.c:1:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ at end of input↵ zxcvxzcv↵ ^~~~~~~~↵"
+            order: null
+            problem_id: 3
+            result: "C"
+            uid: 50
+            user_id: 762
+          */}
+          {result ?
+            <SubmitModalWrapper open={result ? true : false}>{result.result},{result.message}</SubmitModalWrapper> : null}
+
+          <div className="close-box" onClick={() => this.setState({ submit: false })} >
+            <Cross angle={45} color={"#707070"} weight={2} width={25} height={25} />
+          </div>
+          <div className="title">{item.name}</div>
+          <div className="language">
+            <div className="label">제출 언어</div>
+            <div className="combo-box">
+              <LanguageDropDown
+                selection
+                ref="dropdown"
+                onChange={(e, c) => this.setState({ language_id: c.value })}
+                options={[
+                  { key: 'c', text: 'C/C++', value: 'c' },
+                  { key: 'py', text: 'Python', value: 'py' }]}
+                placeholder="언어를 선택하여 주세요."
+              />
+            </div>
+          </div>
+          <div className="coding-area">
+
+            <div className="tab">
+              <p
+                onClick={() => this.setState({ tab: "code" })}
+                className={`label ${tab === "code" ? "active" : ""}`}
+              >코딩 영역</p>
+              <p
+                onClick={() => this.setState({ tab: "log" })}
+                className={`label ${tab === "log" ? "active" : ""}`}
+              >제출 내역</p>
+            </div>
+
+            <div className="editor">
+              {tab === "code"
+                ?
+                // <div style={{ width: "700px" }}>
+                <AceEditor
+                  ref={ref => this.ace = ref}
+                  setOptions={{
+                    fontSize: "20px",
+                  }}
+                  mode="python"
+                  theme="github"
+                  onChange={console.log}
+                  name="UNIQUE_ID_OF_DIV"
+                  editorProps={{ $blockScrolling: true }} />
+                // </div>
+                : <div>log container</div>}
+            </div>
+          </div>
+
+          <div className="button-wrapper">
+            <div onClick={() =>
+              this.setState({ submit: false })
+            } className="btn cancel">취소</div>
+
+            <div onClick={() => {
+              if (this.ace.editor == null) {
+                return;
+              }
+              const code = this.ace.editor.getValue();
+              if (code.trim() === "") {
+                alert("코드를 작성해주세요.");
+                return;
+              }
+              this.setState({ loading: true, });
+              let ntry = 5;
+              fetch(`${host}/design/problem/submit`, {
+                headers: {
+                  'Content-Type': 'application/json',
+                  "Access-Control-Allow-Origin": "*",
+                  "x-access-token": this.props.token
+                },
+                method: "POST",
+                body: JSON.stringify({
+                  user_id: this.props.userInfo.uid,
+                  // {"id":3,"problem_type":"C","time":100,"name":"Test Check Problem","contents":"Test Check"}
+                  problem_id: item.id,
+                  language_id: 1, //this.state.language_id || 1,
+                  code: `${code}`
+                })
+              }).then(res => res.json())
+                .then(res => {
+                  console.log(res);
+                  if (res.success) {
+                    const check = () => {
+                      this.setState({ loading: true, });
+                      fetch(`${host}/design/problem/result-request/${res.id}`, {
+                        headers: { 'Content-Type': 'application/json' },
+                        method: "GET",
+                      })
+                        .then(res1 => res1.json())
+                        .then(res1 => {
+                          console.log(res1);
+                          if (res1.result) {
+                            this.setState({ result: res1 });
+                            ntry = 0;
+                          }
+                        })
+                        .catch(e => { console.error(e); return; })
+                      if (ntry--)
+                        setTimeout(check, 1000);
+                    };
+                    check();
+                  } else {
+                    alert('제출에 실패하였습니다.');
+                    this.setState({ loading: false });
+                    return;
+                  }
+                })
+                .catch(e => console.error(e));
+              this.setState({ loading: false });
+            }} className="btn submit">제출</div>
+          </div>
+        </SubmitModalWrapper>
+
+        // <SubmitModal open={submit} close={this.setState({ submit: false })} /> : null}
+        : null
+      }
+
       {/* <ButtonContainer>
         {edit === false && !this.props.edit && this.props.isTeam && (content && content.length > 0 ?
           (<div className="content-edit-wrapper">
@@ -554,16 +837,17 @@ class CardSourceDetail extends Component {
       </ButtonContainer> */}
 
       {/* view mode */}
-      {this.props.uid && (!edit && !this.props.edit) && content.length > 0 &&
+      {
+        this.props.uid && (!edit && !this.props.edit) && content.length > 0 &&
         <ViewContent>
           {content.map((item, index) =>
             <div key={index + item}>
               {(item.type === "FILE" && item.data_type === "image") ?
                 <div className="imgContent" >
-                  {/* <Zoom> */}
-                  <img src={item.content} alt="이미지" download={item.file_name} />
-                  {/* </Zoom> */}
-                  {/* <p>이미지를 클릭하시면 크게 보실 수 있습니다.</p> */}
+                  <Zoom>
+                    <img width="100%" src={item.content} alt="이미지" download={item.file_name} />
+                  </Zoom>
+                  <p>이미지를 클릭하시면 크게 보실 수 있습니다.</p>
                 </div>
 
                 : (item.type === "FILE" && item.data_type === "video") ?
@@ -606,59 +890,84 @@ class CardSourceDetail extends Component {
                           </LinkPreview>
                         </div>
 
-                        : <div>올바른 형식의 아이템이 아닙니다.</div>}
+                        : (item.type === "PROBLEM") ?
+                          <div className="problemWrap">
+
+                            {item.content}
+
+                            <div
+                              onClick={() => {
+                                this.setState({ item: JSON.parse(item.content) });
+                                this.setState({ submit: true });
+                              }}
+                              style={{ width: "max-content", margin: "auto", borderBottom: "1px solid red", cursor: "pointer" }}>
+                              <p style={{ color: "red", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", fontWeight: "500" }}>답안 제출하기</p>
+                            </div>
+
+                          </div>
+
+                          : <div>올바른 형식의 아이템이 아닙니다.</div>}
             </div>
           )}
-        </ViewContent>}
+        </ViewContent>
+      }
 
       {/* edit mode */}
-      {(edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
+      {
+        (edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
 
-        content && content.length > 0 ? (<Fragment>
+          content && content.length > 0 ? (<Fragment>
 
-          {content.map((item, index) => {
+            {content.map((item, index) => {
 
-            return (<ControllerWrap key={item + index}>
+              return (<ControllerWrap key={item + index}>
 
-              <div className="contentWrap">
-                {(item.type === "FILE")
-                  ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />
-                  : null}
-                {(item.type === "TEXT")
-                  ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                  : null}
-                {(item.type === "LINK")
-                  ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                  : null}
-              </div>
+                <div className="contentWrap">
+                  {(item.type === "FILE")
+                    ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />
+                    : null}
 
-              <DelBtn
-                type="button"
-                className="editBtn"
-                onClick={() => this.onDelete(item.order)}>
-                <i className="trash alternate icon large" />
-              </DelBtn>
+                  {(item.type === "TEXT")
+                    ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    : null}
 
-              {content.length - 1 >= item.order && item.order !== 0 ?
-                <UpBtn
+                  {(item.type === "LINK")
+                    ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    : null}
+
+                  {(item.type === "PROBLEM")
+                    ? <ProblemController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    : null}
+
+                </div>
+
+                <DelBtn
                   type="button"
                   className="editBtn"
-                  onClick={() => this.moveItem(item.order, item.order - 1)}>
-                  <i className="angle up alternate icon large" />
-                </UpBtn> : null}
+                  onClick={() => this.onDelete(item.order)}>
+                  <i className="trash alternate icon large" />
+                </DelBtn>
 
-              {content.length - 1 !== item.order && item.order >= 0 ?
-                <DownBtn
-                  type="button"
-                  className="editBtn"
-                  onClick={() => this.moveItem(item.order, item.order + 1)}>
-                  <i className="angle down alternate icon large" />
-                </DownBtn> : null}
-            </ControllerWrap>)
-          })}
-          <AddContent getValue={this.onAddValue} order={content.length} />
-        </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
-      ) : null
+                {content.length - 1 >= item.order && item.order !== 0 ?
+                  <UpBtn
+                    type="button"
+                    className="editBtn"
+                    onClick={() => this.moveItem(item.order, item.order - 1)}>
+                    <i className="angle up alternate icon large" />
+                  </UpBtn> : null}
+
+                {content.length - 1 !== item.order && item.order >= 0 ?
+                  <DownBtn
+                    type="button"
+                    className="editBtn"
+                    onClick={() => this.moveItem(item.order, item.order + 1)}>
+                    <i className="angle down alternate icon large" />
+                  </DownBtn> : null}
+              </ControllerWrap>)
+            })}
+            <AddContent getValue={this.onAddValue} order={content.length} />
+          </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
+        ) : null
       }
 
       <ButtonContainer>
@@ -774,6 +1083,10 @@ class AddContent extends Component {
             onClick={() => this.addContent("LINK")}
             width="max-content" minWidth="134px" height="29px">
             하이퍼링크 등록하기</NewController>
+          <NewController
+            onClick={() => this.addContent("PROBLEM")}
+            width="max-content" minWidth="134px" height="29px">
+            문제 등록하기</NewController>
         </div>
 
         {this.state.type === "FILE" &&

@@ -9,11 +9,11 @@ const TextWrapper = styled.p`
     font-family: Noto Sans KR;
 `;
 
-function Loading() {
+function Loading(props) {
     return (<React.Fragment>
         <Dimmer active>
             <Loader size="huge" active >
-                <TextWrapper>데이터를 가져오고 있습니다.</TextWrapper>
+                <TextWrapper>{props.msg || "데이터를 가져오고 있습니다."}</TextWrapper>
             </Loader>
         </Dimmer>
     </React.Fragment>)
