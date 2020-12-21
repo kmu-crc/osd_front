@@ -101,7 +101,7 @@ class ModifyDesignSection02 extends Component {
           </div>
           {/* invite member*/}
           <div style={Additional_invite_Box}>
-            <div style={AdditionalTitle}>맴버 초대하기</div>
+            <div style={AdditionalTitle}>멤버 초대하기</div>
             <div style={Additional_invite_Search} ><input type="text" style={Additional_invite_SearchText} placeholder="닉네임을 검색해 주세요" /></div>
             <div style={Additional_invite_Tip}>TIP</div>
             <div style={Additional_invite_Tip_explain}>

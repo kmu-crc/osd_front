@@ -9,6 +9,7 @@ import FileController from "./FileController";
 import TextController from "./TextControllerPlus";
 import LinkController from "./LinkController";
 import ProblemController from "./ProblemController";
+import ProblemContainer from "containers/Designs/ProblemContainer"
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import { Modal, Dropdown } from "semantic-ui-react";
@@ -502,6 +503,7 @@ class CardSourceDetail extends Component {
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
   }
   async onChangeValue(data, order) {
+    console.log("onchangeValue", data);
     let copyContent = [...this.state.content];
     copyContent[order] = data;
     this.setState({ content: copyContent });
@@ -843,7 +845,7 @@ class CardSourceDetail extends Component {
               {(item.type === "FILE" && item.data_type === "image") ?
                 <div className="imgContent" >
                   <Zoom>
-                    <img src={item.content} alt="이미지" download={item.file_name} />
+                    <img width="100%" src={item.content} alt="이미지" download={item.file_name} />
                   </Zoom>
                   <p>이미지를 클릭하시면 크게 보실 수 있습니다.</p>
                 </div>

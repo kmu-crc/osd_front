@@ -539,10 +539,10 @@ const DesignMemberList = styled.div`
 const DesignMemberListElement = styled.div`
     width: max-content;
     padding: 5px;
-    margin-left: 15px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    margin-right: 50px;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
     border-radius: 15px;
     background: #EFEFEF;
     align-items: center;
@@ -626,7 +626,7 @@ const LikeDialogContainer = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    z-index:700;
+    z-index:800;
     .likeDialog{
         width: 396px;
         height: 138px;
@@ -948,7 +948,7 @@ class DesignInfo extends Component {
         if (this.props.DesignDetail && this.props.DesignDetail.member) {
             const found = this.props.DesignDetail.member.filter(mem => mem.user_id === this.props.userInfo.uid)
             if (found.length === 0) {
-                alert("이 디자인의 맴버가 아닙니다.")
+                alert("이 디자인의 멤버가 아닙니다.")
                 return false
             }
         }
@@ -1029,8 +1029,8 @@ class DesignInfo extends Component {
                 <div className="close-box" onClick={() => this.setState({ memberList: false })} >
                     <Cross angle={45} width={30} height={30} />
                 </div>
-                <div><h2>디자인 맴버 목록</h2></div>
-                <div className="list">
+                <div><h2>디자인 멤버 목록</h2></div>
+                <div className="list" style={{display:"flex",width:"100%",flexWrap:"wrap"}}>
                     {DesignDetail.member && DesignDetail.member.length > 0 &&
                         DesignDetail.member.map((mem, i) =>
                             <DesignMemberListElement face={mem.thumbnail ? mem.thumbnail.s_img : noface} key={i} >

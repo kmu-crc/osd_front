@@ -1,170 +1,177 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 // import ContentEditable from "./ContentEditable";
-
-const LinkWrap = styled.div``;
-const LinkPreview = styled.div`
-  text-align: center;
-
-  .title {
-    font-size: 0.9rem;
-    color: #707070;
+import { Modal } from "semantic-ui-react";
+const ModalBox = styled(Modal)`
+  padding:20px;
+  .closeBox{
+    width:100%;
+    display:flex;
+    justify-content:flex-end;
+    .closeIcon{
+      cursor:pointer;
+      font-size:30px;
+    }
   }
-  .url {
-    font-size: 0.9rem;
-    line-height: 0.9rem;
-    padding: .5rem;
-    color: #0645AD;
+  .contentsBox{
+    width:100%;
+    margin-top:10px;
   }
-  .description {
-    font-size: 1.5rem;
-    line-height: 2.5rem;
-    font-weight: 300;
-    color: #FF0000;
-    padding: 0.5rem; 
+  .selectBox{
+    width:100%;
+    display:flex;
+    justify-content:flex-end;
+    margin-top:20px;
+    .selecticon{
+      color:red;
+      cursor:pointer;
+      font-style:underline;
+    }
   }
-`;
-const LinkElement = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  font-size: 14px;
-
-  .title {
-    width: 20%;
-    padding: 1rem;
-    text-align: right;
-    margin-right: 0.2rem;
+`
+const Wrapper = styled.div`
+  width:100%;
+  height:max-content;
+  border:1px solid black;
+  .headerBox{
+    width:100%;
+    padding-top:10px;
+    padding-bottom:10px;
+    display:flex;
+    .th{
+      width:25%;
+      padding-left:20px;
+      padding-right:20px;
+      font-weight:500;
+    }
   }
-  .content {
-    width: 80%;
-    background: #EFEFEF;
-    border-radius: 15px;
-    border: 1px solid #707070;
-    padding: 1rem;
-    overflow-y: auto;
-    input {
-      width: 100%;
-      height: 100%;
-      border: none;
-      background: #EFEFEF;
-      :focus {
-        outline: none;
-      }
+  .contentsBox{
+    width:100%;
+    padding-top:10px;
+    padding-bottom:10px;
+    display:flex;
+    .td{
+      width:25%;
+      padding-left:20px;
+      padding-right:20px;
+      font-weight:300;
+    }
+    .cursor_pointer{
+      cursor:pointer;
     }
   }
 `;
 
-class LinkController extends Component {
+class ProblemController extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this.onSaveUrl = this.onSaveUrl.bind(this);
-    this.onSaveDescription = this.onSaveDescription.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleChangeDescription = this.handleChangeDescription.bind(this);
-    this.validURL = this.validURL.bind(this);
-  }
-  async onSaveUrl(event) {
-    if (this.validURL(this.state.url)) {
-      await this.setState({
-        content: JSON.stringify({
-          url: this.state.url,
-          description: this.state.description
-        })
-      });
-      this.props.getValue(this.state);
-    } else {
-      alert("유효하지 않는 URL주소입니다.");
-      this.setState({ url: "" });
-
+    this.state={
+      show:false,selectNum:null,contents:null,contentsString:"",
     }
+    this.handleShowModal = this.handleShowModal.bind(this);
+    this.handleCloseModal=this.handleCloseModal.bind(this);
+    this.handleSelectProblem=this.handleSelectProblem.bind(this);
   }
-  async onSaveDescription(event) {
-    await this.setState({
-      content: JSON.stringify({
-        url: this.state.url || "",
-        description: this.state.description || ""
-      })
-    });
-    this.props.getValue(this.state);
-  }
-  componentDidMount() {
-    this.setState(this.props.item);
+  componentDidMount(){
     try {
       this.props.item.content &&
         this.setState({
-          url: JSON.parse(this.props.item.content).url || "",
-          description: JSON.parse(this.props.item.content).description || ""
+          selectNum:JSON.parse(this.props.item.content).id,
+          contents:JSON.parse(this.props.item.content)||""
+          // url: JSON.parse(this.props.item.content).url || "",
+          // description: JSON.parse(this.props.item.content).description || ""
         });
     } catch (_) {
-      this.setState({ url: "", description: "" });
+      this.setState({ selectNum:null,contents:null});
     }
   }
-  async handleChange(event) {
-    await this.setState({ url: event.target.value });
-    // this.setState({ content: JSON.stringify({ url: event.target.value, description: this.state.description }) });
+  handleSelectProblem = async ()=>{
+    let {item} = this.props;
+    // item.content = {...this.state.contents};
+    item.content= JSON.stringify({
+      id: this.state.contents&&this.state.contents.id,
+      problem_type: this.state.contents&&this.state.contents.problem_type,
+      time: this.state.contents&&this.state.contents.time,
+      name: this.state.contents&&this.state.contents.name,
+      contents: this.state.contents&&this.state.contents.contents
+      })
+    await this.setState({selectNum:this.state.contents.id,show:false});
+    await this.props.getValue(item);
   }
-  handleChangeDescription(event) {
-    this.setState({ description: event.target.value });
-    // this.setState({ content: JSON.stringify({ url: this.state.url, description: event.target.value }) });
+  handleShowModal=async(uid)=>{
+    // this.props.UpdateAnswerRequest(this.props.token,{user_id:1028,problem_id:3,language_id:1,order:2,code:"#include<stdio.h>",result:true});
+    await this.props.getProblemDetailRequest(uid).then(()=>{
+      const result = `ID:${this.props.ProblemDetail&&this.props.ProblemDetail.id}</br>
+      TYPE:${this.props.ProblemDetail&&this.props.ProblemDetail.problem_type}</br>
+      TIME:${this.props.ProblemDetail&&this.props.ProblemDetail.time}</br>
+      NAME:${this.props.ProblemDetail&&this.props.ProblemDetail.name}</br>
+      CONTENTS:${this.props.ProblemDetail&&this.props.ProblemDetail.contents}`
+      this.setState({show:true,contents:this.props.ProblemDetail});
+    })
+    
   }
-  validURL(str) {
-    var pattern = new RegExp('(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-    return !!pattern.test(str);
+  handleCloseModal=()=>{
+    this.setState({show:false});
   }
-
   render() {
-    const { url, description } = this.state;
+    const {ProblemList} = this.props;
+    console.log(this.state);
+    return (
+    <React.Fragment>
+    <ModalBox open={this.state.show}>
+      <div className="closeBox"><div className="closeIcon" onClick={this.handleCloseModal}>x</div></div>
+      <div className="contentsBox" dangerouslySetInnerHTML={{__html:
+      `ID:${this.state.contents&&this.state.contents.id}</br>
+      TYPE:${this.state.contents&&this.state.contents.problem_type}</br>
+      TIME:${this.state.contents&&this.state.contents.time}</br>
+      NAME:${this.state.contents&&this.state.contents.name}</br>
+      CONTENTS:${this.state.contents&&this.state.contents.contents}`
+      }}>
+      {/* <div>ID:{this.props.ProblemDetail&&this.props.ProblemDetail.id}</div>
+      <div>TYPE:{this.props.ProblemDetail&&this.props.ProblemDetail.problem_type}</div>
+      <div>TIME:{this.props.ProblemDetail&&this.props.ProblemDetail.time}</div>
+      <div>NAME:{this.props.ProblemDetail&&this.props.ProblemDetail.name}</div>
+      <div>CONTENTS:{this.props.ProblemDetail&&this.props.ProblemDetail.contents}</div> */}
+      </div>
+      <div className="selectBox"><div className="selecticon" onClick={this.handleSelectProblem}>선택</div></div>
+    </ModalBox>
+    <Wrapper>
+    {this.state.selectNum!=null?
+      <React.Fragment>
+        <div dangerouslySetInnerHTML={{__html:
+              `ID:${this.state.contents&&this.state.contents.id}</br>
+              TYPE:${this.state.contents&&this.state.contents.problem_type}</br>
+              TIME:${this.state.contents&&this.state.contents.time}</br>
+              NAME:${this.state.contents&&this.state.contents.name}</br>
+              CONTENTS:${this.state.contents&&this.state.contents.contents}`
+        }}></div>
+      </React.Fragment>
+      :
+      <React.Fragment>
+      <div className="headerBox">
+        <div className="th">uid</div>
+        <div className="th">name</div>
+        <div className="th">type</div>
+        <div className="th">time</div>
+      </div>
+    
+        {ProblemList&&ProblemList.map((item,index)=>{
+          return(
+            <div className="contentsBox" key={index}>
+              <div className="td">{item.id}</div>
+              <div className="td cursor_pointer" onClick={()=>this.handleShowModal(item.id)}>{item.name}</div>
+              <div className="td">{item.problem_type}</div>
+              <div className="td">{item.time}</div>
+            </div>
+          );
+        })}
+        </React.Fragment>
 
-    return (<LinkWrap>
-
-      <LinkPreview>
-        <div className="title">미리보기</div>
-        <div className="description">*{description}</div>
-        <div className="url">{url}</div>
-      </LinkPreview>
-
-      <LinkElement>
-        <div className="title">url주소</div>
-
-        <div className="content">
-          <input
-            // <ContentEditable
-            // getText
-            // html={url}
-            autoComplete="off"
-            onChange={this.handleChange}
-            onBlur={this.onSaveUrl}
-          // />
-          />
-        </div>
-
-      </LinkElement>
-
-      <LinkElement>
-        <div className="title">설명</div>
-
-        <div className="content">
-          <input
-            // <ContentEditable
-            // getText
-            // html={description}
-            autoComplete="off"
-            onChange={this.handleChangeDescription}
-            onBlur={this.onSaveDescription}
-          />
-        </div>
-
-      </LinkElement>
-
-    </LinkWrap>)
+      }
+    </Wrapper>
+    </React.Fragment>
+    )
   }
 }
 
-export default LinkController;
+export default ProblemController;

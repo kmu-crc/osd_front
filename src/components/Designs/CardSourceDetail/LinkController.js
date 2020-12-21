@@ -87,6 +87,7 @@ class LinkController extends Component {
         description: this.state.description || ""
       })
     });
+    console.log(this.state);
     this.props.getValue(this.state);
   }
   componentDidMount() {

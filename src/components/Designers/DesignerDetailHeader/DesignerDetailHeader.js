@@ -759,7 +759,7 @@ class DesignerPageHeader extends Component {
                                         <SideItemIcon imageURL={iEdit} />
                                     </div>
                                     : <React.Fragment>
-                                        <InterestDesignerBox onClick={this.props.userInfo == null ? null : () => this.like()}>
+                                        <InterestDesignerBox onClick={this.props.userInfo == null ? async()=>await alert("로그인 해주세요","확인") : () => this.like()}>
                                             <InterestDesignerTitle>관심 디자이너 {like ? "취소하기" : "등록하기"}</InterestDesignerTitle>
                                             <InterestDesignerIcon opacity={like ? "0.5" : "0.25"} img={iThumbUp} />
                                         </InterestDesignerBox>
