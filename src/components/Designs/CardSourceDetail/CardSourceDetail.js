@@ -16,12 +16,14 @@ import { Modal, Dropdown } from "semantic-ui-react";
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css';
 import Cross from "components/Commons/Cross";
+import SubmitResultModal from "./SubmitResultModal";
 
 import host from "config";
 
 // FOR EDITOR
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-github";
 
 /*
@@ -78,8 +80,10 @@ const SubmitModalWrapper = styled(Modal)
     }
   }
   .coding-area {
+    // border: 1px solid blue;
     *{
       font-family: monospace !important;
+      // width: 100% !important;
     }
     margin-top: 26px;
     .tab {
@@ -88,14 +92,14 @@ const SubmitModalWrapper = styled(Modal)
       
       .label {
         :hover {
-          background-color: #707070;
+          // background-color: #707070;
         }
         &.active {
           // background-color: #707070;
-          color: white;
+          // color: white;
         }
         width: max-content;
-        background-color: #EFEFEF;
+        // background-color: #EFEFEF;
         font: normal normal normal 20px/29px Noto Sans KR;
         letter-spacing: 0px;
         color: #707070;
@@ -104,8 +108,10 @@ const SubmitModalWrapper = styled(Modal)
     }
     .editor {
       margin-top: 16px;
-      width: 773px;
-      height: 588px;
+      width: 100%;
+      height: 100%;
+      // width: 773px;
+      // height: 588px;
       background: #E9E9E9 0% 0% no-repeat padding-box;
       border-radius: 5px;
       opacity: 1;
@@ -693,21 +699,9 @@ class CardSourceDetail extends Component {
         >
           {loading ? <Loading msg="문제를 제출 중입니다." /> : null}
 
-          {/* 
-            avg_memory: "0"
-            avg_time: "0"
-            code: "zxcvxzcv"
-            create_date: "2020-12-21T04:36:55.000Z"
-            language_id: 1
-            message: "main.c:1:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ at end of input↵ zxcvxzcv↵ ^~~~~~~~↵"
-            order: null
-            problem_id: 3
-            result: "C"
-            uid: 50
-            user_id: 762
-          */}
+
           {result ?
-            <SubmitModalWrapper open={result ? true : false}>{result.result},{result.message}</SubmitModalWrapper> : null}
+            <SubmitResultModal close={() => this.setState({ result: null, loading: false })} open={result ? true : false} {...result} /> : null}
 
           <div className="close-box" onClick={() => this.setState({ submit: false })} >
             <Cross angle={45} color={"#707070"} weight={2} width={25} height={25} />
@@ -734,27 +728,34 @@ class CardSourceDetail extends Component {
                 onClick={() => this.setState({ tab: "code" })}
                 className={`label ${tab === "code" ? "active" : ""}`}
               >코딩 영역</p>
-              <p
+              {/* <p
                 onClick={() => this.setState({ tab: "log" })}
                 className={`label ${tab === "log" ? "active" : ""}`}
-              >제출 내역</p>
+              >제출 내역</p> */}
             </div>
 
             <div className="editor">
               {tab === "code"
                 ?
-                // <div style={{ width: "700px" }}>
-                <AceEditor
-                  ref={ref => this.ace = ref}
-                  setOptions={{
-                    fontSize: "20px",
-                  }}
-                  mode="python"
-                  theme="github"
-                  onChange={console.log}
-                  name="UNIQUE_ID_OF_DIV"
-                  editorProps={{ $blockScrolling: true }} />
-                // </div>
+                <div style={{ width: "100%", borderBottom: "1px solid #EFEFEF", borderRight: "1px solid #EFEFEF" }}>
+                  <AceEditor
+                    width="100%"
+                    ref={ref => this.ace = ref}
+                    setOptions={{
+                      fontSize: "20px",
+                      // width: "100%",
+                      // height: "100%",
+                      position: "absolute",
+                      top: "0",
+                      left: "0",
+                    }}
+                    mode="python" // "c_cpp"
+                    theme="github"
+                    onChange={console.log}
+                    name="UNIQUE_ID_OF_DIV"
+                    editorProps={{ $blockScrolling: true }} />
+                </div>
+
                 : <div>log container</div>}
             </div>
           </div>
@@ -823,7 +824,6 @@ class CardSourceDetail extends Component {
             }} className="btn submit">제출</div>
           </div>
         </SubmitModalWrapper>
-
         // <SubmitModal open={submit} close={this.setState({ submit: false })} /> : null}
         : null
       }
@@ -893,7 +893,11 @@ class CardSourceDetail extends Component {
                         : (item.type === "PROBLEM") ?
                           <div className="problemWrap">
 
-                            {item.content}
+                            <div style={{ margin: "25px", display: "flex", flexDirection: "row" }}>
+                              <div style={{ fontSize: "1.25rem", width: "3px", backgroundColor: "red" }}>&nbsp;</div>
+                              <div style={{ fontSize: "1.25rem", }}>{JSON.parse(item.content).name}</div>
+                            </div>
+                            <div style={{}}>pdf: {JSON.parse(item.content).contents}</div>
 
                             <div
                               onClick={() => {
@@ -913,61 +917,60 @@ class CardSourceDetail extends Component {
       }
 
       {/* edit mode */}
-      {
-        (edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
+      {(edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
 
-          content && content.length > 0 ? (<Fragment>
+        content && content.length > 0 ? (<Fragment>
 
-            {content.map((item, index) => {
+          {content.map((item, index) => {
 
-              return (<ControllerWrap key={item + index}>
+            return (<ControllerWrap key={item + index}>
 
-                <div className="contentWrap">
-                  {(item.type === "FILE")
-                    ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />
-                    : null}
+              <div className="contentWrap">
+                {(item.type === "FILE")
+                  ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />
+                  : null}
 
-                  {(item.type === "TEXT")
-                    ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                    : null}
+                {(item.type === "TEXT")
+                  ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                  : null}
 
-                  {(item.type === "LINK")
-                    ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                    : null}
+                {(item.type === "LINK")
+                  ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                  : null}
 
-                  {(item.type === "PROBLEM")
-                    ? <ProblemController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                    : null}
+                {(item.type === "PROBLEM")
+                  ? <ProblemContainer item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                  : null}
 
-                </div>
+              </div>
 
-                <DelBtn
+              <DelBtn
+                type="button"
+                className="editBtn"
+                onClick={() => this.onDelete(item.order)}>
+                <i className="trash alternate icon large" />
+              </DelBtn>
+
+              {content.length - 1 >= item.order && item.order !== 0 ?
+                <UpBtn
                   type="button"
                   className="editBtn"
-                  onClick={() => this.onDelete(item.order)}>
-                  <i className="trash alternate icon large" />
-                </DelBtn>
+                  onClick={() => this.moveItem(item.order, item.order - 1)}>
+                  <i className="angle up alternate icon large" />
+                </UpBtn> : null}
 
-                {content.length - 1 >= item.order && item.order !== 0 ?
-                  <UpBtn
-                    type="button"
-                    className="editBtn"
-                    onClick={() => this.moveItem(item.order, item.order - 1)}>
-                    <i className="angle up alternate icon large" />
-                  </UpBtn> : null}
-
-                {content.length - 1 !== item.order && item.order >= 0 ?
-                  <DownBtn
-                    type="button"
-                    className="editBtn"
-                    onClick={() => this.moveItem(item.order, item.order + 1)}>
-                    <i className="angle down alternate icon large" />
-                  </DownBtn> : null}
-              </ControllerWrap>)
-            })}
-            <AddContent getValue={this.onAddValue} order={content.length} />
-          </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
-        ) : null
+              {content.length - 1 !== item.order && item.order >= 0 ?
+                <DownBtn
+                  type="button"
+                  className="editBtn"
+                  onClick={() => this.moveItem(item.order, item.order + 1)}>
+                  <i className="angle down alternate icon large" />
+                </DownBtn> : null}
+            </ControllerWrap>)
+          })}
+          <AddContent getValue={this.onAddValue} order={content.length} />
+        </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
+      ) : null
       }
 
       <ButtonContainer>
