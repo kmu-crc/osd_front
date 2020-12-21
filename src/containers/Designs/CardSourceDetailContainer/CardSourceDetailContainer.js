@@ -17,7 +17,8 @@ const mapStateToProps = (state) => {
     content: state.DesignCard.status.content,
     origin: state.DesignCard.status.origin,
     status: state.DesignCard.DesignSourceDetail.status,
-    editStatus: state.DesignCard.DesignSourceEdit.status
+    editStatus: state.DesignCard.DesignSourceEdit.status,
+    userInfo: state.Authentication.status.userInfo,
   };
 };
 
