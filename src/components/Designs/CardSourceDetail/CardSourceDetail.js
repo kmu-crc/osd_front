@@ -27,6 +27,79 @@ import "ace-builds/src-noconflict/theme-github";
 /*
   PROBLEM SUBMIT MODAL
 */
+const ProblemBox = styled.div`
+  width:100%;
+  padding-top:20px;
+  .titleBox{
+    width:100%;
+    margin-bottom:8px;
+    .title{
+      font-size:17px;
+      color:#707070;
+      border-left:2px solid red;
+      padding-left:5px;
+    }
+  }
+  .boardBox{
+    width:100%;
+    background-color:#EFEFEF;
+    padding:10px;
+    margin-bottom:35px;
+    .board{
+      font-size:15px;
+      color:#707070;
+    }
+  }
+`
+const SubmitResultModal = styled(Modal)`
+    width: 873px;
+    height: 418px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 10px;
+    opacity: 1;
+    position: relative;
+    padding: 50px;
+    margin: auto;
+    .close-box {
+      width: max-content;
+      cursor: pointer;
+      position: absolute;
+      top: 16px;
+      right: 16px; 
+    }
+
+    .title {
+      font-size: 20px;
+      line-height: 29px;
+      font-weight: 500;
+      color: #707070;
+
+      margin-top: 10px;
+    }
+    .content_box{
+      display:flex;
+      margin-top:30px;
+      .name{
+        font-size: 20px;
+        line-height: 29px;
+        font-weight: 300;
+        color: #707070;
+      }
+      .msg{
+        font-size: 20px;
+        line-height: 29px;
+        font-weight: 500;
+        color: #707070;
+      }
+      .font_green{
+        color:green;
+      }
+      .font_red{
+        color:red;
+      }
+    }
+`
 const SubmitModalWrapper = styled(Modal)
   `
   *{
@@ -85,29 +158,42 @@ const SubmitModalWrapper = styled(Modal)
     .tab {
       display: flex;
       flex-direction: row;
-      
+      width: max-content;
+      font: normal normal normal 20px/29px Noto Sans KR;
+      letter-spacing: 0px;
+      color: #707070;
+      opacity: 1;
+      background-color:#EFEFEF;
+      .blank{
+        border:1px solid black;
+        width:100%;
+        height:100%;
+      }
       .label {
+        color:#707070;
+        opacity:0.5;
+        padding:10px;
         :hover {
-          background-color: #707070;
+          // background-color: #707070;
         }
         &.active {
           // background-color: #707070;
-          color: white;
+          opacity:1;
+          background-color:white;
+          border-top:1px solid #d6d6d6;
+          border-left:1px solid #d6d6d6;
+          border-right:1px solid #d6d6d6;
         }
-        width: max-content;
-        background-color: #EFEFEF;
-        font: normal normal normal 20px/29px Noto Sans KR;
-        letter-spacing: 0px;
-        color: #707070;
-        opacity: 1;
+
       }
     }
     .editor {
       margin-top: 16px;
       width: 773px;
       height: 588px;
+      border:1px solid #efefef;
       background: #E9E9E9 0% 0% no-repeat padding-box;
-      border-radius: 5px;
+      // border-radius: 5px;
       opacity: 1;
     }
   }
@@ -420,6 +506,7 @@ class CardSourceDetail extends Component {
       loading: false,
       submit: false, tab: "code",
       addProblem:false,
+      selectProblem:null,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -683,7 +770,7 @@ class CardSourceDetail extends Component {
   render() {
     const { edit, content, loading, submit, tab, item, result } = this.state;
     // console.log("content:", this.state.content);
-    console.log("result:", result);
+    console.log("result:", this.state.content);
     return (<div>
       {loading ? <Loading /> : null}
 
@@ -708,7 +795,25 @@ class CardSourceDetail extends Component {
             user_id: 762
           */}
           {result ?
-            <SubmitModalWrapper open={result ? true : false}>{result.result},{result.message}</SubmitModalWrapper> : null}
+            <SubmitResultModal open={result ? true : false}>
+              <div className="close-box" onClick={() => this.setState({ result: false,loading:false })} >
+              <Cross angle={45} color={"#707070"} weight={2} width={25} height={25} />
+              </div>
+              <div className="title">문제</div>
+              <div className="content_box">
+                <div className="name">제출 언어</div><div className="msg">C/C++</div>
+              </div>
+              <div className="content_box">
+                <div className="name">제출 결과</div><div className="msg font_green">성공</div>
+              </div>
+              <div className="content_box">
+                <div className="name">내가 제출한 소스 보기∨</div>
+              </div>
+              <div className="content_box">
+                <div className="msg">{result.result},{result.message}</div>
+              </div>
+              
+            </SubmitResultModal> : null}
 
           <div className="close-box" onClick={() => this.setState({ submit: false })} >
             <Cross angle={45} color={"#707070"} weight={2} width={25} height={25} />
@@ -731,21 +836,24 @@ class CardSourceDetail extends Component {
           <div className="coding-area">
 
             <div className="tab">
-              <p
+              <div
                 onClick={() => this.setState({ tab: "code" })}
                 className={`label ${tab === "code" ? "active" : ""}`}
-              >코딩 영역</p>
-              <p
+              >코딩 영역</div>
+              <div
                 onClick={() => this.setState({ tab: "log" })}
                 className={`label ${tab === "log" ? "active" : ""}`}
-              >제출 내역</p>
+              >제출 내역</div>
             </div>
+            <div className="blank"/>
 
             <div className="editor">
               {tab === "code"
                 ?
                 // <div style={{ width: "700px" }}>
                 <AceEditor
+                  width={"100%"}
+                  height={"100%"}
                   ref={ref => this.ace = ref}
                   setOptions={{
                     fontSize: "20px",
@@ -894,7 +1002,17 @@ class CardSourceDetail extends Component {
                         : (item.type === "PROBLEM") ?
                           <div className="problemWrap">
 
-                            {item.content}
+                                  <ProblemBox>
+                                    <div className="titleBox"><div className="title">제목</div></div>
+                                    <div className="boardBox"><div className="board">{item.content&&JSON.parse(item.content).name}</div></div>
+                                    <div className="titleBox"><div className="title">내용</div></div>
+                                    <div className="boardBox"><div className="board">{item.content&&JSON.parse(item.content).contents}</div></div>
+                                    <div className="titleBox"><div className="title">조건</div></div>
+                                    <div className="boardBox"><div className="board">
+                                      제한시간:{item.content&&JSON.parse(item.content).time} / 
+                                      문제유형:{item.content&&JSON.parse(item.content).problem_type}
+                                    </div></div>
+                                  </ProblemBox>
 
                             <div
                               onClick={() => {
@@ -937,7 +1055,7 @@ class CardSourceDetail extends Component {
                     : null}
 
                   {(item.type === "PROBLEM")
-                    ? <ProblemContainer open={this.state.addProblem} item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    ? <ProblemContainer open={this.state.addProblem} close={()=>this.setState({addProblem:false})} item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
                     : null}
 
                 </div>
@@ -995,27 +1113,28 @@ const ControllerWrap2 = styled.div`
   border: 1px dashed ${osdcss.color.grayScale.scale6};
   & .initWrap {
     & > ul {
-                                display: flex;
+      display: flex;
       // box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
     }
     & > span {
-                                color: ${osdcss.color.grayScale.scale6};
+      color: ${osdcss.color.grayScale.scale6};
     }
   }
   &:hover {
-                                background - color: #FAFAFA;
+       background - color: #FAFAFA;
     & .initWrap {
       & > ul {
-                                display: flex;
+       display: flex;
       }
       & > span {
-                                color: ${osdcss.color.grayScale.scale6};
+        color: ${osdcss.color.grayScale.scale6};
       }
     }
   }
   .innerBox {
-                                display: flex;
-    height: 45px;
+    display: flex;
+    min-height: 45px;
+    height:max-content;
     align-items: center;
     justify-content: center;
     list-style: none;
@@ -1024,7 +1143,8 @@ const ControllerWrap2 = styled.div`
 const NewController = styled.li`
   width: ${props => props.width};
   height: ${props => props.height};
-  margin-left: 75px;
+  margin-left: 35px;
+  margin-right:35px;
   line-height: 29px;
   color: #FF0000;
   padding-bottom: 1.5px;

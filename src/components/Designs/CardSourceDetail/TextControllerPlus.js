@@ -34,7 +34,7 @@ class TextControllerPlus extends Component {
     }
   }
   onSave = async () => {
-    let data = this.edit.editor.getData()
+    let data = this.edit.editor&&this.edit.editor.getData()
     await this.setState({ content: data })
     this.props.getValue(this.state)
   }

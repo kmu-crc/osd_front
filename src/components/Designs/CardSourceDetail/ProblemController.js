@@ -2,12 +2,20 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 // import ContentEditable from "./ContentEditable";
 import { Modal } from "semantic-ui-react";
+import Cross from "components/Commons/Cross";
+
+
 const ModalBox = styled(Modal)`
-  padding:20px;
+  width:938px;
+  padding:57px 63px 57px 63px;
   .closeBox{
     width:100%;
     display:flex;
+    padding:10px;
     justify-content:flex-end;
+    position:absolute;
+    top:0px;
+    right:0px;
     .closeIcon{
       cursor:pointer;
       font-size:30px;
@@ -29,27 +37,63 @@ const ModalBox = styled(Modal)`
     }
   }
 `
+const ProblemBox = styled.div`
+  width:100%;
+  padding-top:20px;
+  .titleBox{
+    width:100%;
+    margin-bottom:8px;
+    .title{
+      font-size:17px;
+      color:#707070;
+      border-left:2px solid red;
+      padding-left:5px;
+    }
+  }
+  .boardBox{
+    width:100%;
+    background-color:#EFEFEF;
+    padding:10px;
+    margin-bottom:35px;
+    .board{
+      font-size:15px;
+      color:#707070;
+    }
+  }
+`
 const Wrapper = styled.div`
   width:100%;
   height:max-content;
-  border:1px solid black;
+  .pagena{
+    margin-top:66px;
+  }
+  .headline{
+    font-family:Noto Sans CJK KR,Medium;
+    font-size:20px;
+    color:#707070;
+    margin-bottom:18px;
+  }
   .headerBox{
     width:100%;
-    padding-top:10px;
-    padding-bottom:10px;
+    padding-top:12px;
+    padding-bottom:12px;
     display:flex;
+    background-color:#EFEFEF;
     .th{
       width:25%;
       padding-left:20px;
       padding-right:20px;
+      font-size:17px;
       font-weight:500;
+      color:#707070;
     }
   }
   .contentsBox{
     width:100%;
-    padding-top:10px;
-    padding-bottom:10px;
+    padding-top:12px;
+    padding-bottom:12px;
     display:flex;
+    border-bottom:1px solid #D6D6D6;
     .td{
       width:25%;
       padding-left:20px;
@@ -117,59 +161,69 @@ class ProblemController extends Component {
     const {ProblemList} = this.props;
     console.log(this.state);
     return (
-    <React.Fragment>
-    <ModalBox open={this.state.show}>
-      <div className="closeBox"><div className="closeIcon" onClick={this.handleCloseModal}>x</div></div>
-      <div className="contentsBox" dangerouslySetInnerHTML={{__html:
-      `ID:${this.state.contents&&this.state.contents.id}</br>
-      TYPE:${this.state.contents&&this.state.contents.problem_type}</br>
-      TIME:${this.state.contents&&this.state.contents.time}</br>
-      NAME:${this.state.contents&&this.state.contents.name}</br>
-      CONTENTS:${this.state.contents&&this.state.contents.contents}`
-      }}>
-      {/* <div>ID:{this.props.ProblemDetail&&this.props.ProblemDetail.id}</div>
-      <div>TYPE:{this.props.ProblemDetail&&this.props.ProblemDetail.problem_type}</div>
-      <div>TIME:{this.props.ProblemDetail&&this.props.ProblemDetail.time}</div>
-      <div>NAME:{this.props.ProblemDetail&&this.props.ProblemDetail.name}</div>
-      <div>CONTENTS:{this.props.ProblemDetail&&this.props.ProblemDetail.contents}</div> */}
-      </div>
-      <div className="selectBox"><div className="selecticon" onClick={this.handleSelectProblem}>선택</div></div>
-    </ModalBox>
-    <Wrapper>
-    {this.state.selectNum!=null?
       <React.Fragment>
-        <div dangerouslySetInnerHTML={{__html:
-              `ID:${this.state.contents&&this.state.contents.id}</br>
-              TYPE:${this.state.contents&&this.state.contents.problem_type}</br>
-              TIME:${this.state.contents&&this.state.contents.time}</br>
-              NAME:${this.state.contents&&this.state.contents.name}</br>
-              CONTENTS:${this.state.contents&&this.state.contents.contents}`
-        }}></div>
-      </React.Fragment>
-      :
-      <React.Fragment>
-      <div className="headerBox">
-        <div className="th">uid</div>
-        <div className="th">name</div>
-        <div className="th">type</div>
-        <div className="th">time</div>
-      </div>
-    
-        {ProblemList&&ProblemList.map((item,index)=>{
-          return(
-            <div className="contentsBox" key={index}>
-              <div className="td">{item.id}</div>
-              <div className="td cursor_pointer" onClick={()=>this.handleShowModal(item.id)}>{item.name}</div>
-              <div className="td">{item.problem_type}</div>
-              <div className="td">{item.time}</div>
-            </div>
-          );
-        })}
+      <ModalBox open={this.state.show}>
+        <div className="closeBox"> <Cross onClick={()=>this.props.close()} angle={45} color={"#707070"} weight={1} width={33} height={33} /></div>
+        <ProblemBox>
+          <div className="titleBox"><div className="title">제목</div></div>
+          <div className="boardBox"><div className="board">{this.state.contents&&this.state.contents.name}</div></div>
+          <div className="titleBox"><div className="title">내용</div></div>
+          <div className="boardBox"><div className="board">{this.state.contents&&this.state.contents.contents}</div></div>
+          <div className="titleBox"><div className="title">조건</div></div>
+          <div className="boardBox"><div className="board">
+            제한시간:{this.state.contents&&this.state.contents.time} / 
+            문제유형:{this.state.contents&&this.state.contents.problem_type}
+          </div></div>
+        </ProblemBox>
+        {/* <div className="contentsBox" dangerouslySetInnerHTML={{__html:
+        `ID:${this.state.contents&&this.state.contents.id}</br>
+        TYPE:${this.state.contents&&this.state.contents.problem_type}</br>
+        TIME:${this.state.contents&&this.state.contents.time}</br>
+        NAME:${this.state.contents&&this.state.contents.name}</br>
+        CONTENTS:${this.state.contents&&this.state.contents.contents}`
+        }}>
+        </div> */}
+        <div className="selectBox"><div className="selecticon" onClick={this.handleSelectProblem}>선택</div></div>
+      </ModalBox>
+      <Wrapper>
+      {this.state.selectNum!=null?
+        <React.Fragment>
+        <ProblemBox>
+          <div className="titleBox"><div className="title">제목</div></div>
+          <div className="boardBox"><div className="board">{this.state.contents&&this.state.contents.name}</div></div>
+          <div className="titleBox"><div className="title">내용</div></div>
+          <div className="boardBox"><div className="board">{this.state.contents&&this.state.contents.contents}</div></div>
+          <div className="titleBox"><div className="title">조건</div></div>
+          <div className="boardBox"><div className="board">
+            제한시간:{this.state.contents&&this.state.contents.time} / 
+            문제유형:{this.state.contents&&this.state.contents.problem_type}
+          </div></div>
+        </ProblemBox>
         </React.Fragment>
-
-      }
-    </Wrapper>
-    </React.Fragment>
+        :
+        <React.Fragment>
+        <div className="headerBox">
+          <div className="th">uid</div>
+          <div className="th">name</div>
+          <div className="th">type</div>
+          <div className="th">time</div>
+        </div>
+      
+          {ProblemList&&ProblemList.map((item,index)=>{
+            return(
+              <div className="contentsBox" key={index}>
+                <div className="td">{item.id}</div>
+                <div className="td cursor_pointer" onClick={()=>this.handleShowModal(item.id)}>{item.name}</div>
+                <div className="td">{item.problem_type}</div>
+                <div className="td">{item.time}</div>
+              </div>
+            );
+          })}
+          </React.Fragment>
+  
+        }
+      </Wrapper>
+      </React.Fragment>
     )
   }
 }
