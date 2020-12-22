@@ -419,6 +419,7 @@ class CardSourceDetail extends Component {
       origin: this.props.origin || [],
       loading: false,
       submit: false, tab: "code",
+      addProblem:false,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -936,7 +937,7 @@ class CardSourceDetail extends Component {
                     : null}
 
                   {(item.type === "PROBLEM")
-                    ? <ProblemController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    ? <ProblemContainer open={this.state.addProblem} item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
                     : null}
 
                 </div>
@@ -965,8 +966,8 @@ class CardSourceDetail extends Component {
                   </DownBtn> : null}
               </ControllerWrap>)
             })}
-            <AddContent getValue={this.onAddValue} order={content.length} />
-          </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
+            <AddContent getValue={this.onAddValue} order={content.length} open={(data)=>this.setState({addProblem:data})}/>
+          </Fragment>) : <AddContent getValue={this.onAddValue} order={0} open={(data)=>this.setState({addProblem:data})}/>
         ) : null
       }
 
@@ -1084,7 +1085,7 @@ class AddContent extends Component {
             width="max-content" minWidth="134px" height="29px">
             하이퍼링크 등록하기</NewController>
           <NewController
-            onClick={() => this.addContent("PROBLEM")}
+            onClick={() => {this.addContent("PROBLEM");this.props.open(true);}}
             width="max-content" minWidth="134px" height="29px">
             문제 등록하기</NewController>
         </div>

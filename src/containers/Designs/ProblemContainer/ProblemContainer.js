@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
 import ProblemController from "components/Designs/CardSourceDetail/ProblemController";
 import { getProblemListRequest,getProblemDetailRequest,UpdateAnswerRequest } from "redux/modules/design/card";
-
+import {Modal} from "semantic-ui-react"
 
 class ProblemContainer extends Component {
   constructor(props) {
@@ -14,9 +14,9 @@ class ProblemContainer extends Component {
   }
   render() {
     return (
-      <React.Fragment>
+      <Modal open={this.props.open}>
         <ProblemController {...this.props} getValue={data=>this.props.getValue(data)}/>
-      </React.Fragment>
+      </Modal>
       )
   }
 }
