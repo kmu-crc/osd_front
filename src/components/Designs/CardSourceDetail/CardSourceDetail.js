@@ -26,6 +26,72 @@ import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-github";
 
+
+// FOR PREVIEW PDF FILES
+import { pdfjs } from 'react-pdf';
+import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+const DivPDFVIEWER = styled.div`
+  width: max-content;
+  margin: auto;
+`;
+const PdfViewer = (props) => {
+  const [numPages, setNumPages] = React.useState(null); //total
+  const [pageNumber, setPageNumber] = React.useState(1); //current
+  const onDocumentLoadSuccess = ({ numPages }) => {
+    setNumPages(numPages);
+  };
+  const left = pageNumber > 1;
+  const right = pageNumber < numPages;
+  return (<DivPDFVIEWER>
+    <Document
+      options={{
+        cMapUrl: `//cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/cmaps/`,
+        cMapPacked: true,
+      }}
+      file={props.pdf}
+      onLoadSuccess={onDocumentLoadSuccess}>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <div
+          onClick={() => left ? setPageNumber(pageNumber - 1) : null}
+          style={{
+            display: "flex", flexDirection: "column", justifyContent: "center",
+            cursor: left ? "pointer" : "default", width: "20px",
+            backgroundColor: left ? "#EFEFEF" : "#FFFFFF"
+          }}>
+          <span style={{ margin: "auto", fontSize: "2.25rem" }}>
+            {left ? "<" : null}
+          </span>
+        </div>
+        <div style={{
+          // border: "1px solid red",
+          WebkitTouchCallout: "none",
+          WebkitUserSelect: "none",
+          MozUserSelect: "none",
+          msUserSelect: "none",
+          userSelect: "none",
+        }}>
+          <Page pageNumber={pageNumber} />
+        </div>
+        <div
+          onClick={() => right ? setPageNumber(pageNumber + 1) : null}
+          style={{
+            display: "flex", flexDirection: "column", justifyContent: "center",
+            cursor: right ? "pointer" : "default", width: "20px",
+            backgroundColor: right ? "#EFEFEF" : "#FFFFFF"
+          }}>
+          <span style={{ fontSize: "2.25rem" }}>
+            {right ? ">" : null}
+          </span>
+        </div>
+      </div>
+      <p style={{ width: "max-content", marginLeft: "auto", fontSize: "1.25rem" }}>
+        <span>{numPages}페이지 중 {pageNumber}페이지</span>
+      </p>
+    </Document>
+  </DivPDFVIEWER>);
+}
+
 /*
   PROBLEM SUBMIT MODAL
 */
@@ -808,9 +874,12 @@ class CardSourceDetail extends Component {
                             ntry = 0;
                           }
                         })
-                        .catch(e => { console.error(e); return; })
+                        .catch(e => {
+                          console.error(e);
+                          return;
+                        })
                       if (ntry--)
-                        setTimeout(check, 1000);
+                        setTimeout(check, 1000 * 1.5);
                     };
                     check();
                   } else {
@@ -861,56 +930,72 @@ class CardSourceDetail extends Component {
                       <source src={item.content} type="video/mp4" download={item.file_name}></source></video>
                   </span>
 
-                  : (item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video") ?
-                    <a className="iconWrap" href={item.content} download={item.file_name} >
-                      <FileIcon type={item.data_type} extension={item.extension} />
-                      <span className="LinkFileName">{item.file_name}</span>
-                    </a>
+                  : (item.type === "FILE" && item.extension === "pdf") ?
+                    <React.Fragment>
+                      <a className="iconWrap" href={item.content} download={item.file_name} >
+                        <FileIcon type={item.data_type} extension={item.extension} />
+                        <span className="LinkFileName">{item.file_name}</span>
+                      </a>
+                      <PdfViewer pdf={item.content} />
+                    </React.Fragment>
 
-                    : (item.type === "TEXT") ?
-                      <div className="textWrap" dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
+                    : (item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video") ?
+                      <a className="iconWrap" href={item.content} download={item.file_name} >
+                        <FileIcon type={item.data_type} extension={item.extension} />
+                        <span className="LinkFileName">{item.file_name}</span>
+                      </a>
 
-                      : (item.type === "LINK") ?
-                        <div className="linkWrap">
-                          <LinkPreview>
-                            <div className="description">{
-                              IsJsonString(item.content)
-                                ? JSON.parse(item.content).hasOwnProperty('description')
-                                  ? "*" + JSON.parse(item.content).description : "" : ""}
-                            </div>
-                            <div className="url">
-                              <a target="_blank" href={`${IsJsonString(item.content)
-                                ? JSON.parse(item.content).hasOwnProperty('url')
-                                  ? JSON.parse(item.content).url : "invalid" : "invalid"}`}>
-                                ({IsJsonString(item.content)
+                      : (item.type === "TEXT") ?
+                        <div className="textWrap" dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
+
+                        : (item.type === "LINK") ?
+                          <div className="linkWrap">
+                            <LinkPreview>
+                              <div className="description">{
+                                IsJsonString(item.content)
+                                  ? JSON.parse(item.content).hasOwnProperty('description')
+                                    ? "*" + JSON.parse(item.content).description : "" : ""}
+                              </div>
+                              <div className="url">
+                                <a target="_blank" href={`${IsJsonString(item.content)
                                   ? JSON.parse(item.content).hasOwnProperty('url')
-                                    ? JSON.parse(item.content).url : "invalid" : "invalid"})
+                                    ? JSON.parse(item.content).url : "invalid" : "invalid"}`}>
+                                  ({IsJsonString(item.content)
+                                    ? JSON.parse(item.content).hasOwnProperty('url')
+                                      ? JSON.parse(item.content).url : "invalid" : "invalid"})
                               </a>
-                            </div>
-                          </LinkPreview>
-                        </div>
-
-                        : (item.type === "PROBLEM") ?
-                          <div className="problemWrap">
-
-                            <div style={{ margin: "25px", display: "flex", flexDirection: "row" }}>
-                              <div style={{ fontSize: "1.25rem", width: "3px", backgroundColor: "red" }}>&nbsp;</div>
-                              <div style={{ fontSize: "1.25rem", }}>{JSON.parse(item.content).name}</div>
-                            </div>
-                            <div style={{}}>pdf: {JSON.parse(item.content).contents}</div>
-
-                            <div
-                              onClick={() => {
-                                this.setState({ item: JSON.parse(item.content) });
-                                this.setState({ submit: true });
-                              }}
-                              style={{ width: "max-content", margin: "auto", borderBottom: "1px solid red", cursor: "pointer" }}>
-                              <p style={{ color: "red", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", fontWeight: "500" }}>답안 제출하기</p>
-                            </div>
-
+                              </div>
+                            </LinkPreview>
                           </div>
 
-                          : <div>올바른 형식의 아이템이 아닙니다.</div>}
+                          : (item.type === "PROBLEM") ?
+                            <div className="problemWrap">
+
+                              <div style={{ margin: "25px", display: "flex", flexDirection: "row" }}>
+                                <div style={{ fontSize: "1.25rem", width: "3px", backgroundColor: "red" }}>&nbsp;</div>
+                                <div style={{ fontSize: "1.25rem", }}>{JSON.parse(item.content).name}</div>
+                              </div>
+                              <div style={{}}>
+                                <div>
+                                  pdf: {JSON.parse(item.content).contents}
+                                </div>
+                                <div>
+                                  <PdfViewer pdf="https://s3.ap-northeast-2.amazonaws.com/osd.uploads.com/uploads/aa959826-2427-4ff6-8d97-0b7595627ff9.pdf" />
+                                </div>
+                              </div>
+
+                              <div
+                                onClick={() => {
+                                  this.setState({ item: JSON.parse(item.content) });
+                                  this.setState({ submit: true });
+                                }}
+                                style={{ width: "max-content", margin: "auto", borderBottom: "1px solid red", cursor: "pointer" }}>
+                                <p style={{ color: "red", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", fontWeight: "500" }}>답안 제출하기</p>
+                              </div>
+
+                            </div>
+
+                            : <div>올바른 형식의 아이템이 아닙니다.</div>}
             </div>
           )}
         </ViewContent>
