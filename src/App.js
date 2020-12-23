@@ -134,5 +134,5 @@ class App extends Component {
 const mapDispatchToProps = (dispatch) => ({
   GetCategoryAllRequest: () => dispatch(GetCategoryAllRequest())
 });
-
+ 
 export default connect(null, mapDispatchToProps)(App);
