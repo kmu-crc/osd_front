@@ -39,7 +39,17 @@ const ModalBox = styled(Modal)`
 `
 const ProblemBox = styled.div`
   width:100%;
-  padding-top:20px;
+  padding:20px;
+  .reSelectBox{
+    width:100%;
+    display:flex;
+    justify-content:flex-end;
+    .reSelect{
+      color:red;
+      text-decoration:underline;
+      cursor:pointer;
+    }
+  }
   .titleBox{
     width:100%;
     margin-bottom:8px;
@@ -141,6 +151,7 @@ class ProblemController extends Component {
       })
     await this.setState({selectNum:this.state.contents.id,show:false});
     await this.props.getValue(item);
+    this.props.openModal(false);
   }
   handleShowModal=async(uid)=>{
     // this.props.UpdateAnswerRequest(this.props.token,{user_id:1028,problem_id:3,language_id:1,order:2,code:"#include<stdio.h>",result:true});
@@ -163,7 +174,7 @@ class ProblemController extends Component {
     return (
       <React.Fragment>
       <ModalBox open={this.state.show}>
-        <div className="closeBox"> <Cross onClick={()=>this.props.close()} angle={45} color={"#707070"} weight={1} width={33} height={33} /></div>
+        <div className="closeBox"> <Cross onClick={this.handleCloseModal} angle={45} color={"#707070"} weight={1} width={33} height={33} /></div>
         <ProblemBox>
           <div className="titleBox"><div className="title">제목</div></div>
           <div className="boardBox"><div className="board">{this.state.contents&&this.state.contents.name}</div></div>
@@ -175,18 +186,10 @@ class ProblemController extends Component {
             문제유형:{this.state.contents&&this.state.contents.problem_type}
           </div></div>
         </ProblemBox>
-        {/* <div className="contentsBox" dangerouslySetInnerHTML={{__html:
-        `ID:${this.state.contents&&this.state.contents.id}</br>
-        TYPE:${this.state.contents&&this.state.contents.problem_type}</br>
-        TIME:${this.state.contents&&this.state.contents.time}</br>
-        NAME:${this.state.contents&&this.state.contents.name}</br>
-        CONTENTS:${this.state.contents&&this.state.contents.contents}`
-        }}>
-        </div> */}
         <div className="selectBox"><div className="selecticon" onClick={this.handleSelectProblem}>선택</div></div>
       </ModalBox>
       <Wrapper>
-      {this.state.selectNum!=null?
+      {this.props.open!=true?
         <React.Fragment>
         <ProblemBox>
           <div className="titleBox"><div className="title">제목</div></div>
@@ -198,6 +201,7 @@ class ProblemController extends Component {
             제한시간:{this.state.contents&&this.state.contents.time} / 
             문제유형:{this.state.contents&&this.state.contents.problem_type}
           </div></div>
+          <div className="reSelectBox"><div onClick={()=>this.props.openModal(true)} className="reSelect">다시 선택하기</div></div>
         </ProblemBox>
         </React.Fragment>
         :

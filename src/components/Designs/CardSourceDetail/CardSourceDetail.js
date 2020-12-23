@@ -953,7 +953,7 @@ class CardSourceDetail extends Component {
             <div key={index + item}>
               {(item.type === "FILE" && item.data_type === "image") ?
                 <div className="imgContent" >
-                  <Zoom>
+                  <Zoom >
                     <img width="100%" src={item.content} alt="이미지" download={item.file_name} />
                   </Zoom>
                   <p>이미지를 클릭하시면 크게 보실 수 있습니다.</p>
@@ -1055,7 +1055,7 @@ class CardSourceDetail extends Component {
                     : null}
 
                   {(item.type === "PROBLEM")
-                    ? <ProblemContainer open={this.state.addProblem} close={()=>this.setState({addProblem:false})} item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    ? <ProblemContainer open={this.state.addProblem} openModal={(data)=>this.setState({addProblem:data})} item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
                     : null}
 
                 </div>
