@@ -304,7 +304,7 @@ const RoomDiv = styled.div`
 	position: relative;
 	width: 100%;
 	height: ${props => props.h}px;
-	*{border:1px solid white;}
+	// *{border:1px solid white;}
 `;
 const MenuBarContainer = styled.div`
 	width: 100%;
@@ -476,7 +476,8 @@ const MiddleDynamicGrid = styled.div`
 	}
 `;
 const BigScreenContainer = styled.div`
-	width: 750px;//${props => props.scroll ? "max-content" : "100%"};
+	min-width: 750px; // ${props => props.scroll ? "max-content" : "100%"};
+	width: 85%;
 	height: 100%;
 	min-height: ${VIDEO_SIZE}px;
 	color: white;
