@@ -32,7 +32,6 @@ const initialState = {
 
 
 export function GroupList(state, action) {
-  console.log(action);
   if (typeof state === "undefined")
     state = initialState
 

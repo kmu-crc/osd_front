@@ -82,6 +82,7 @@ const Thumbnail = styled.div`
 	background-size: cover;
 	background-position: center center;
 	background-Image: url(${props => props.img});
+	z-index: 500;
 `;
 
 const Peer = (props) => {
@@ -108,7 +109,6 @@ const Peer = (props) => {
 		!videoConsumer.remotelyPaused
 	);
 
-
 	return (
 		<DivPeer>
 
@@ -130,6 +130,7 @@ const Peer = (props) => {
 
 				<PeerView
 					peer={peer}
+					share={videoConsumer && videoConsumer.appData && videoConsumer.appData.share || false}
 					audioConsumerId={audioConsumer ? audioConsumer.id : null}
 					videoConsumerId={videoConsumer ? videoConsumer.id : null}
 					audioRtpParameters={audioConsumer ? audioConsumer.rtpParameters : null}
