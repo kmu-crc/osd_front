@@ -225,26 +225,26 @@ class GridEditor extends Component {
     }
     async ScrollLeft() {
         if (this.temp) {
-            this.temp.current.scrollLeft -=275;
-            console.log(this.temp.current.scrollLeft,this.temp.current.scrollWidth - this.temp.current.scrollLeft,this.state.w);
-            if (this.temp.current.scrollWidth - this.temp.current.scrollLeft >= this.state.w-300) {
+            this.temp.current.scrollLeft -= 275;
+            console.log(this.temp.current.scrollLeft, this.temp.current.scrollWidth - this.temp.current.scrollLeft, this.state.w);
+            if (this.temp.current.scrollWidth - this.temp.current.scrollLeft >= this.state.w - 300) {
                 await this.setState({ right: true });
             }
-            
+
             if (this.temp.current.scrollLeft === 0) {
                 await this.setState({ left: false });
             }
         }
     }
     async ScrollRight() {
-            if (this.temp) {
+        if (this.temp) {
             this.temp.current.scrollLeft += 275;
-            console.log(this.temp.current.scrollLeft,this.temp.current.scrollWidth - this.temp.current.scrollLeft,this.state.w);
-            if (this.temp.current.scrollWidth - this.temp.current.scrollLeft <= this.state.w-300) {
+            console.log(this.temp.current.scrollLeft, this.temp.current.scrollWidth - this.temp.current.scrollLeft, this.state.w);
+            if (this.temp.current.scrollWidth - this.temp.current.scrollLeft <= this.state.w - 300) {
                 await this.setState({ right: false });
             }
             if (this.temp.current.scrollLeft >= 0) {
-               await this.setState({ left: true });
+                await this.setState({ left: true });
             }
         }
     }
@@ -375,13 +375,14 @@ class GridEditor extends Component {
                                     {/* ------------단계 ------------*/}
                                     {steps && steps.length > 0 ?
                                         <SortableDesignSteps
+                                            bought={this.props.bought}
                                             editStep={this.OpenEditStep}
                                             item_id={this.props.item.uid}
                                             editor={editor ? true : false}
                                             items={steps}
                                             cardReorder={this.requestCardReorder}
                                             createCard={this.createNewCard}
-                                            openCard={this.openCard} 
+                                            openCard={this.openCard}
                                             reorder={this.requestReorder}
                                             userInfo={userInfo}
                                         /> : null}
