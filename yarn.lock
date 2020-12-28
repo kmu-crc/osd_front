@@ -10329,6 +10329,11 @@ react-infinite-scroller@^1.2.4:
   dependencies:
     prop-types "^15.5.8"
 
+react-inner-image-zoom@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/react-inner-image-zoom/-/react-inner-image-zoom-1.3.0.tgz#e26a319d7e19b171a31e607e641310a2f38f2c20"
+  integrity sha512-ifFRgj232E1rkRrc0Kq5wSjU8Bsj+b4GfVoPZbZaRUrI0buZUgEm3MeYq7fNhEU2kqMy5iY6VIyzuu4ehF2v5A==
+
 react-is@^16.13.1, react-is@^16.4.2, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
