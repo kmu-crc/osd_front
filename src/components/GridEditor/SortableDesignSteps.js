@@ -67,7 +67,7 @@ const SortableCard = SortableElement(({ disableReorder, editor, card, openCard, 
         (card.private === 1)
             ? (userInfo && (userInfo.uid === card.user_id || userInfo.uid === 77))
                 ? openCard(card, card.order, boardId)
-                : await alert("이 컨텐츠는 비공개입니다.\n컨텐츠 작성자만 열람할 수 있습니다.")
+                : await alert("이 컨텐츠는 비공개입니다.\n컨텐츠 구매자만 열람할 수 있습니다.")
             : openCard(card, card.order, boardId)
         // : openCard(card, card.order, boardId)
     }

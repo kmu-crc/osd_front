@@ -25,6 +25,7 @@ const NewCardDialogWrapper = styled(Modal)`
     border: 1px solid #EFEFEF;
     border-radius: 10px;
     opacity: 1;
+    min-width:85%;
     ::-webkit-scrollbar {
         position: absolute;
         width: 3.9px;
