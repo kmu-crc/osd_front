@@ -87,6 +87,7 @@
     "react-image-crop": "^8.3.1",
     "react-indiana-drag-scroll": "^1.6.1",
     "react-infinite-scroller": "^1.2.4",
+    "react-inner-image-zoom": "^1.3.0",
     "react-medium-image-zoom": "^4.3.1",
     "react-modal": "^3.10.1",
     "react-pdf": "^5.1.0",
