@@ -11,7 +11,7 @@ import { Modal } from 'semantic-ui-react';
 import SearchMember from "./SearchMember";
 import { InvitedUserRequest, CancelInvitedUserRequest } from "redux/modules/design";
 import { confirm } from "components/Commons/Confirm/Confirm";
-
+import classnames from 'classnames';
 // import ScrollContainer from 'react-indiana-drag-scroll';
 // import { SearchMemberRequest } from "redux/modules/search";
 // import SearchMember from "components/Commons/SearchDesignMember";
@@ -83,7 +83,7 @@ class Mixer {
 			this.audios.push(audio);
 		});
 
-		console.log(this.videos);
+		// console.log(this.videos);
 
 		// peers && peers.length && peers.map(peer => {
 		// 	const consumerAry = peer.consumers.map(id => consumers[id]);
@@ -178,7 +178,7 @@ class Mixer {
 	}
 	write_temp_file = (key, data) => {
 		return new Promise(resolve => {
-			console.log(key, data);
+			// console.log(key, data);
 			window.localStorage.setItem(key, data);
 			resolve(true);
 		});
@@ -227,13 +227,13 @@ class Mixer {
 		this.chunks = [];
 
 		this.mediaRecorder.ondataavailable = async (e) => {
-			console.log("ondataavailable");
+			// console.log("ondataavailable");
 			if (e.data && e.data.size > 0) {
 				await this.chunks.push(e.data);
 			}
 		};
 		this.mediaRecorder.onstop = async (e) => {
-			console.log("onstop");
+			// console.log("onstop");
 			clearInterval(this.intervalId);
 			const answer = await confirm("녹화를 종료시켰습니다. 파일로 저장을 원하신다면 (저장)를 클릭해주시기 바랍니다. \n(취소)를 클릭할 시 녹화된 내용은 사라집니다.", "저장", "취소");
 			if (answer === false) {
@@ -304,6 +304,7 @@ const RoomDiv = styled.div`
 	position: relative;
 	width: 100%;
 	height: ${props => props.h}px;
+	*{border:1px solid white;}
 `;
 const MenuBarContainer = styled.div`
 	width: 100%;
@@ -475,9 +476,9 @@ const MiddleDynamicGrid = styled.div`
 	}
 `;
 const BigScreenContainer = styled.div`
-	width: 100%;
+	width: 750px;//${props => props.scroll ? "max-content" : "100%"};
 	height: 100%;
-	min-height: VIDEO_SIZEpx;
+	min-height: ${VIDEO_SIZE}px;
 	color: white;
 
 	display: ${props => props.visible ? "block" : "none"};
@@ -492,6 +493,7 @@ const BigScreenContainer = styled.div`
 		height: 100%;
 		object-fit: contain;
 		// object-fit: cover;
+		transform: ${props => props.flip ? "scaleX(-1)" : "scaleX(1)"};
 	}
 `;
 const PeersContainer = styled.div`
@@ -573,6 +575,7 @@ class Room extends React.Component {
 			isPaused: false,
 
 			selected: null,
+			pinned: null,
 		};
 	};
 
@@ -596,6 +599,18 @@ class Room extends React.Component {
 		const shareState = myvideo && myvideo.type === "share";
 		// const myaudio = null; //me.find(track => track && track.kind === "audio");
 
+		// console.log("Room.js", this.props.peers);// this.video && this.video.srcObject && this.video.srcObject.getTracks());
+		// console.log(this.state.pinned, this.props.userInfo.uid, myvideo && myvideo.type);
+		const areyouselectedsharepeer = () => {
+			const clicked = false;
+			this.props.peersVids.find(peer => {
+				if ((peer.appData && peer.appData.peerId === this.state.pinned) &&
+					(peer.appData && peer.appData.share))
+					clicked = true;
+			});
+			return clicked;
+		}
+		console.log(areyouselectedsharepeer());
 		return (<RoomDiv h={h || window.innerHeight}>
 			{/* notifications */}
 			{/* <Notifications /> */}
@@ -752,11 +767,18 @@ class Room extends React.Component {
 
 				<div className="panel" />
 
-				{/* <div>영상부분</div> */}
 				{/* middle */}
 				<BigScreenContainer
-					visible={(this.video && this.video.srcObject) ? true : false}>
+					scroll={mode === "scroll" ? true : false}
+					visible={(this.video && this.video.srcObject) ? true : false}
+					flip={
+						(this.state.pinned === this.props.userInfo.uid) && (myvideo && myvideo.type === "front")
+						// ||
 
+						// (this.props.peersVids.find(peer => peer.id === this.state.pinned && peer.appData && peer.appData.share).length)
+					}
+				>
+					{/* {peersVids.} */}
 					<video id="pinned-video" muted autoPlay loop="loop" ref={ref => this.video = ref} />
 
 				</BigScreenContainer>
@@ -764,7 +786,6 @@ class Room extends React.Component {
 
 				{mode === "scroll"
 					? <RightVerticalScroll hidden={hidepeer}>
-						{/* <ScrollContainer vertical={true} horizontal={false} className="hand scroll-container"> */}
 						<div className="container">
 							<Me
 								needReload={() => {
@@ -773,9 +794,6 @@ class Room extends React.Component {
 									this.setState({ mode: "grid" });
 								}}
 								userInfo={this.props.userInfo}
-								// sharebtn={this.sharebtn}
-								// shareState={shareState}
-								// share={(shareState) => this.setState({ shareState: shareState })}
 								clicked={(me, stream) => this.clickedview(me, stream)}
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
@@ -785,12 +803,10 @@ class Room extends React.Component {
 								member={this.props.design.member} />
 
 						</div>
-						{/* </ScrollContainer> */}
 					</RightVerticalScroll> : null}
 
 				{mode === "grid"
 					? <MiddleDynamicGrid grid={grid[idx]}>
-						{/* <ScrollContainer vertical={true} horizontal={false} className="hand scroll-container"> */}
 						<div className="container">
 							<Me
 								needReload={() => {
@@ -799,9 +815,6 @@ class Room extends React.Component {
 									this.setState({ mode: "grid" });
 								}}
 								userInfo={this.props.userInfo}
-								// sharebtn={this.sharebtn}
-								// shareState={shareState}
-								// share={(shareState) => this.setState({ shareState: shareState })}
 								clicked={(me, stream) => this.clickedview(me, stream)}
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
@@ -809,13 +822,12 @@ class Room extends React.Component {
 								clicked={(peer, stream) => this.clickedview(peer, stream)}
 								member={this.props.design.member} />
 						</div>
-						{/* </ScrollContainer> */}
 					</MiddleDynamicGrid>
 					: null}
 			</ContentContainer>
 
 
-		</RoomDiv>);
+		</RoomDiv >);
 	};
 
 	openChatWin = () => {
@@ -857,15 +869,17 @@ class Room extends React.Component {
 		this.setState({ isRecording: true });
 	}
 
-	clickedview = (peer, stream) => {
+	clickedview = async (peer, stream) => {
+
 		mixer && mixer.set_pinned_id(peer.id);
-		// this.setState({ pinned: peer.id });
+		await this.setState({ pinned: peer.id });
+
 		if (this.video && stream) {
 			stream.addEventListener('inactive', () => {
 				this.video.style.display = "none";
 				this.video.srcObject = null;
 				mixer && mixer.set_pinned_id(null);
-				this.setState({ mode: "grid" });
+				this.setState({ mode: "grid", pinned: null });
 			});
 			stream.addEventListener('active', () => {
 				this.video.style.display = "block";
@@ -894,9 +908,12 @@ class Room extends React.Component {
 
 
 const mapStateToProps = (state) => {
-	const peersArray = Object.values(state.peers);
 	const me = Object.values(state.producers);
+	const peersArray = Object.values(state.peers);
+	const peers = Object.values(state.consumers).filter(consumers => consumers.track.kind === 'video');
+
 	return {
+		peersVids: peers,
 		peers: peersArray,
 		activeSpeakerId: state.room.activeSpeakerId,
 		me: me,

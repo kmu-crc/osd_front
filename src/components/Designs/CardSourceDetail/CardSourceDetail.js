@@ -906,17 +906,26 @@ class CardSourceDetail extends Component {
       </ButtonContainer> */}
 
       {/* view mode */}
-      {
-        this.props.uid && (!edit && !this.props.edit) && content.length > 0 &&
+      {this.props.uid && (!edit && !this.props.edit) && content.length > 0 &&
         <ViewContent>
           {content.map((item, index) =>
             <div key={index + item}>
               {(item.type === "FILE" && item.data_type === "image") ?
-                <div className="imgContent" >
-                  <Zoom>
-                    <img width="100%" src={item.content} alt="이미지" download={item.file_name} />
-                  </Zoom>
-                  <p>이미지를 클릭하시면 크게 보실 수 있습니다.</p>
+                <div className="imgContent" onClick={() => {
+                  const url = item.content;
+                  const img = '<img id="image" src="' + url + '">';
+                  const popup = window.open("", "_blank", "image-view");
+                  popup.document.write(img);
+                  const imgnode = popup.document.getElementById("image");
+                  popup.resizeTo(
+                    /* width */imgnode.naturalWidth > window.screen.width ? window.screen.width / 2 : imgnode.naturalWidth * 1.06,
+                    /* height */imgnode.naturalHeight > window.screen.height ? window.screen.height / 2 : imgnode.naturalHeight * 1.06
+                  );
+                }}>
+                  {/* <Zoom> */}
+                  <img width="100%" src={item.content} alt="이미지" download={item.file_name} />
+                  {/* </Zoom> */}
+                  <p>이미지를 클릭하시면 원본크기로 보실 수 있습니다.</p>
                 </div>
 
                 : (item.type === "FILE" && item.data_type === "video") ?
@@ -1002,60 +1011,61 @@ class CardSourceDetail extends Component {
       }
 
       {/* edit mode */}
-      {(edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
+      {
+        (edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
 
-        content && content.length > 0 ? (<Fragment>
+          content && content.length > 0 ? (<Fragment>
 
-          {content.map((item, index) => {
+            {content.map((item, index) => {
 
-            return (<ControllerWrap key={item + index}>
+              return (<ControllerWrap key={item + index}>
 
-              <div className="contentWrap">
-                {(item.type === "FILE")
-                  ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />
-                  : null}
+                <div className="contentWrap">
+                  {(item.type === "FILE")
+                    ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />
+                    : null}
 
-                {(item.type === "TEXT")
-                  ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                  : null}
+                  {(item.type === "TEXT")
+                    ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    : null}
 
-                {(item.type === "LINK")
-                  ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                  : null}
+                  {(item.type === "LINK")
+                    ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    : null}
 
-                {(item.type === "PROBLEM")
-                  ? <ProblemContainer item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                  : null}
+                  {(item.type === "PROBLEM")
+                    ? <ProblemContainer item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    : null}
 
-              </div>
+                </div>
 
-              <DelBtn
-                type="button"
-                className="editBtn"
-                onClick={() => this.onDelete(item.order)}>
-                <i className="trash alternate icon large" />
-              </DelBtn>
-
-              {content.length - 1 >= item.order && item.order !== 0 ?
-                <UpBtn
+                <DelBtn
                   type="button"
                   className="editBtn"
-                  onClick={() => this.moveItem(item.order, item.order - 1)}>
-                  <i className="angle up alternate icon large" />
-                </UpBtn> : null}
+                  onClick={() => this.onDelete(item.order)}>
+                  <i className="trash alternate icon large" />
+                </DelBtn>
 
-              {content.length - 1 !== item.order && item.order >= 0 ?
-                <DownBtn
-                  type="button"
-                  className="editBtn"
-                  onClick={() => this.moveItem(item.order, item.order + 1)}>
-                  <i className="angle down alternate icon large" />
-                </DownBtn> : null}
-            </ControllerWrap>)
-          })}
-          <AddContent getValue={this.onAddValue} order={content.length} />
-        </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
-      ) : null
+                {content.length - 1 >= item.order && item.order !== 0 ?
+                  <UpBtn
+                    type="button"
+                    className="editBtn"
+                    onClick={() => this.moveItem(item.order, item.order - 1)}>
+                    <i className="angle up alternate icon large" />
+                  </UpBtn> : null}
+
+                {content.length - 1 !== item.order && item.order >= 0 ?
+                  <DownBtn
+                    type="button"
+                    className="editBtn"
+                    onClick={() => this.moveItem(item.order, item.order + 1)}>
+                    <i className="angle down alternate icon large" />
+                  </DownBtn> : null}
+              </ControllerWrap>)
+            })}
+            <AddContent getValue={this.onAddValue} order={content.length} />
+          </Fragment>) : <AddContent getValue={this.onAddValue} order={0} />
+        ) : null
       }
 
       <ButtonContainer>
