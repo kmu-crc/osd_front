@@ -1254,10 +1254,10 @@ class AddContent extends Component {
             onClick={() => this.addContent("LINK")}
             width="max-content" minWidth="134px" height="29px">
             하이퍼링크 등록하기</NewController>
-          <NewController
+          {/* <NewController
             onClick={() => { this.addContent("PROBLEM"); this.props.open(true); }}
             width="max-content" minWidth="134px" height="29px">
-            문제 등록하기</NewController>
+            문제 등록하기</NewController> */}
         </div>
 
         {this.state.type === "FILE" &&
