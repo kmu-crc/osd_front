@@ -5,6 +5,9 @@ import { Pagination } from 'semantic-ui-react'
 import { InputPriceNew } from "components/Commons/InputItem"
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+
+import $ from "jquery";
+
 const Wrapper = styled.div`
   width: 100%;
   .title{
@@ -295,6 +298,7 @@ class Point extends Component {
       paymentType:0,
     }
     this.PointUp = this.PointUp.bind(this);
+    this.callback = this.callback.bind(this);
     this.pointChange = this.pointChange.bind(this);
     this.PointToMoney = this.PointToMoney.bind(this);
     this.onChangePoint = this.onChangePoint.bind(this);
@@ -323,12 +327,18 @@ goPage = async (pagenum) => {
 async getPriceValue(value) {
   await this.setState({ point: value });
 }
-  pointChange(event){
+pointChange(event){
     console.log(event.target.value);
     this.setState({point:event.target.value});
-  }
-  PointUp = (type) => {
-    this.props.PointUpRequest(
+}
+callback =(rsp,type)=>{
+    if ( rsp.success ) {
+      let msg = '결제가 완료되었습니다.';
+      msg += '고유ID : ' + rsp.imp_uid;
+      msg += '상점 거래ID : ' + rsp.merchant_uid;
+      msg += '결제 금액 : ' + rsp.paid_amount;
+      msg += '카드 승인번호 : ' + rsp.apply_num;
+      this.props.PointUpRequest(
       { id: this.props.userInfo.uid, token: this.props.token },
       { point: 1000, type: type }
     ).then(async() => {
@@ -336,6 +346,36 @@ async getPriceValue(value) {
       this.props.GetHistoryRequest(this.props.userInfo.uid,0, this.props.token);
       // await alert("현금 전환이 완료되었습니다.");
     })
+  } else {
+      var msg = '결제에 실패하였습니다.';
+      msg += '에러내용 : ' + rsp.error_msg;
+  }
+  // alert(msg);
+}
+PointUp = async(type) => {
+    const {IMP} = window;
+    const pointMoney = this.state.point;
+    await IMP.request_pay({
+      pg : 'html5_inicis', // version 1.1.0부터 지원.
+      pay_method : 'card',
+      merchant_uid : 'merchant_' + new Date().getTime(),
+      name : '주문명:결제테스트',
+      amount : pointMoney,
+      buyer_email : 'iana6528@gmail.com',
+      buyer_name : '구매자이름',
+      buyer_tel : '010-1234-5678',
+      buyer_addr : '서울특별시 강남구 삼성동',
+      buyer_postcode : '123-456',
+      m_redirect_url : 'http://localhost:3000/mypage'
+  }, (rsp)=>this.callback(rsp,type));
+    // this.props.PointUpRequest(
+    //   { id: this.props.userInfo.uid, token: this.props.token },
+    //   { point: 1000, type: type }
+    // ).then(async() => {
+    //   this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token);
+    //   this.props.GetHistoryRequest(this.props.userInfo.uid,0, this.props.token);
+    //   // await alert("현금 전환이 완료되었습니다.");
+    // })
   };
   async PointToMoney(type) {
     console.log(this.props.Point,this.state.point);
@@ -375,6 +415,14 @@ async getPriceValue(value) {
     const { page } = this.state;
     const lastPage = parseInt(HistoryCount / 5, 10);
     let pagecount=0;
+    
+    //---------------------------결제관련-----------------------------------
+      const {IMP} = window;
+      IMP.init(`imp21280997`);
+      console.log(IMP);
+
+    //--------------------------------------------------------------------
+    
     return (<Wrapper>
       <PointContainer>
         <div className="title"> 내 포인트 관리</div>
