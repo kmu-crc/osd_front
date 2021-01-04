@@ -700,7 +700,7 @@ export function CheckInvitedUserRequest(id, token) {
         })
             .then(res => res.json())
             .then(res => {
-                console.log("check result", res);
+                // console.log("check result", res);
                 resolve(res);
             }).catch(error => {
                 console.error(error);

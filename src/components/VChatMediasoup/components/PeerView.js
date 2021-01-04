@@ -14,19 +14,32 @@ const logger = new Logger('PeerView');
 
 const DivPeerView = styled.div`
   video {
+		z-index: 400;
 	  // border: 1px solid white;
 	  width: 248px;
 	  height: 248px;
 		object-fit: cover;
 		z-index: 500;
-		&.is-me {
-			// -webkit-transform: scaleX(-1);
-			transform: scaleX(-1);
+
+		-moz-transform: scaleX(-1);
+		-webkit-transform: scaleX(-1);
+		transform: scaleX(-1);
+
+		// &.is-me {
+		// }
+
+		&.share {
+			-moz-transform: scaleX(1);
+			-webkit-transform: scaleX(1);
+			transform: scaleX(1);
 		}
+
 		&.hidden {
 			display: none;
 		}
+
 	}
+
 	.peerName {
 		width: 248px;
 		height: 248px;
@@ -120,6 +133,7 @@ export default class PeerView extends React.Component {
 		const {
 			isMe,
 			peer,
+			share,
 			audioProducerId,
 			videoProducerId,
 			audioConsumerId,
@@ -150,13 +164,15 @@ export default class PeerView extends React.Component {
 
 		const {
 			audioVolume,
-			// showInfo,
+			showInfo,
 			videoResolutionWidth,
 			videoResolutionHeight,
 			videoCanPlay,
 			videoElemPaused,
 			maxSpatialLayer
 		} = this.state;
+
+		// console.log(this.props, this.state);
 
 		return (<DivPeerView>
 			{!videoVisible ?
@@ -172,6 +188,7 @@ export default class PeerView extends React.Component {
 				muted
 				controls={false}
 				className={classnames({
+					'share': share,
 					'is-me': isMe,
 					hidden: !videoVisible || !videoCanPlay,
 					// 	'network-error': (

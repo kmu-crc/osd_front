@@ -353,7 +353,8 @@ export default class RoomClient {
 									preferredTemporalLayer: temporalLayers - 1,
 									priority: 1,
 									codec: consumer.rtpParameters.codecs[0].mimeType.split('/')[1],
-									track: consumer.track
+									track: consumer.track,
+									appData: consumer.appData
 								},
 								peerId));
 
