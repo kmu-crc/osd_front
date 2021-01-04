@@ -127,7 +127,8 @@ const SubmitModalWrapper = styled(Modal)
     font-family: Noto Sans KR;
   }
   width: 873px;
-  height: 949px;
+  // height: 949px;
+  height:max-content;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 10px;
@@ -887,6 +888,37 @@ class CardSourceDetail extends Component {
                   </div>
                   : <div>log container</div>}
               </div>
+            </SubmitResultModal> : null}
+
+          <div className="close-box" onClick={() => this.setState({ submit: false })} >
+            <Cross angle={45} color={"#707070"} weight={2} width={25} height={25} />
+          </div>
+          <div className="title">{item.name}</div>
+          {/* <div className="language">
+            <div className="label">제출 언어</div>
+            <div className="combo-box">
+              <LanguageDropDown
+                selection
+                ref="dropdown"
+                onChange={(e, c) => this.setState({ language_id: c.value })}
+                options={[
+                  { key: 'c', text: 'C/C++', value: 'c' },
+                  { key: 'py', text: 'Python', value: 'py' }]}
+                placeholder="언어를 선택하여 주세요."
+              />
+            </div>
+          </div> */}
+          <div className="coding-area">
+
+            <div className="tab">
+              <div
+                onClick={() => this.setState({ tab: "code" })}
+                className={`label ${tab === "code" ? "active" : ""}`}
+              >코딩 영역</div>
+              <div
+                onClick={() => this.setState({ tab: "log" })}
+                className={`label ${tab === "log" ? "active" : ""}`}
+              >제출 내역</div>
             </div>
 
             <div className="button-wrapper">

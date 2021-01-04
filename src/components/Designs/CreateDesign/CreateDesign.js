@@ -1259,7 +1259,7 @@ class CreateDesign extends Component {
                       onChange={this.onChangeCategory1}
                       options={this.props.category1}
                       value={this.state.categoryLevel1}
-                      placeholder="카테고리를 선택해주세요(필수사항)"
+                      placeholder="카테고리를 선택해주세요(필수)"
                     />
                     <CategoryDropDown
                       selection
@@ -1268,17 +1268,20 @@ class CreateDesign extends Component {
                       onChange={this.onChangeCategory2}
                       options={this.props.category2[this.state.categoryLevel1 - 1] || emptyCategory}
                       value={this.state.categoryLevel2}
-                      placeholder="서브 카테고리를 선택해주세요(선택사항)"
+                      placeholder="카테고리를 선택해주세요(선택)"
                     />
-                    {/* <CategoryDropDown
-                      selection
-                      id="category3"
-                      ref="dropdown3"
-                      onChange={this.onChangeCategory3}
-                      options={this.props.category3&&this.props.category3[category3Index] || emptyCategory}
-                      value={this.state.categoryLevel3}
-                      placeholder="서브 카테고리를 선택해주세요(선택사항)"
-                    /> */}
+                    {this.state.categoryLevel2==28?
+                    <CategoryDropDown
+                    selection
+                    id="category3"
+                    ref="dropdown3"
+                    onChange={this.onChangeCategory3}
+                    options={this.props.category3&&this.props.category3[category3Index] || emptyCategory}
+                    value={this.state.categoryLevel3}
+                    placeholder="카테고리를 선택해주세요(선택)"
+                  />
+                  :null
+                    }
                   </CategoryBox>
                   : <p>카테고리를 가져오고 있습니다.</p>}
                 {/* INVITE MEMBER */}
