@@ -1064,6 +1064,7 @@ class CardSourceDetail extends Component {
                                   <div>
                                     <PdfViewer pdf="https://s3.ap-northeast-2.amazonaws.com/osd.uploads.com/uploads/aa959826-2427-4ff6-8d97-0b7595627ff9.pdf" />
                                   </div>
+                                  *개발중으로 위의 슬라이드 테스트용입니다.
                                 </div>
 
                               </ProblemBox>
@@ -1186,7 +1187,7 @@ const ControllerWrap2 = styled.div`
     min-height: 45px;
     height:max-content;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     list-style: none;
   }
 `;
