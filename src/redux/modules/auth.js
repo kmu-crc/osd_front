@@ -214,7 +214,7 @@ export function CheckEmailRequest(email) {
 export function CheckNickNameRequest(NickName) {
   return (dispatch) => {
     dispatch(CheckNickName());
-    return fetch(`${host}/users/checkNickName`, { headers: { 'Content-Type': 'application/json'}, method: "POST", body: JSON.stringify(NickName) })
+    return fetch(`${host}/users/checkNickName`, { headers: { 'Content-Type': 'application/json' }, method: "POST", body: JSON.stringify(NickName) })
       .then(res => res.json())
       .then(res => {
         if (res.success) {
