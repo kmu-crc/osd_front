@@ -26,71 +26,8 @@ import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-github";
 
+import { PdfViewer } from "./PDFviewer";
 
-// FOR PREVIEW PDF FILES
-import { pdfjs } from 'react-pdf';
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-const DivPDFVIEWER = styled.div`
-  width: max-content;
-  margin: auto;
-`;
-const PdfViewer = (props) => {
-  const [numPages, setNumPages] = React.useState(null); //total
-  const [pageNumber, setPageNumber] = React.useState(1); //current
-  const onDocumentLoadSuccess = ({ numPages }) => {
-    setNumPages(numPages);
-  };
-  const left = pageNumber > 1;
-  const right = pageNumber < numPages;
-  return (<DivPDFVIEWER>
-    <Document
-      options={{
-        cMapUrl: `//cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/cmaps/`,
-        cMapPacked: true,
-      }}
-      file={props.pdf}
-      onLoadSuccess={onDocumentLoadSuccess}>
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        <div
-          onClick={() => left ? setPageNumber(pageNumber - 1) : null}
-          style={{
-            display: "flex", flexDirection: "column", justifyContent: "center",
-            cursor: left ? "pointer" : "default", width: "20px",
-            backgroundColor: left ? "#EFEFEF" : "#FFFFFF"
-          }}>
-          <span style={{ margin: "auto", fontSize: "2.25rem" }}>
-            {left ? "<" : null}
-          </span>
-        </div>
-        <div style={{
-          // border: "1px solid red",
-          WebkitTouchCallout: "none",
-          WebkitUserSelect: "none",
-          MozUserSelect: "none",
-          msUserSelect: "none",
-          userSelect: "none",
-        }}>
-          <Page pageNumber={pageNumber} />
-        </div>
-        <div
-          onClick={() => right ? setPageNumber(pageNumber + 1) : null}
-          style={{
-            display: "flex", flexDirection: "column", justifyContent: "center",
-            cursor: right ? "pointer" : "default", width: "20px",
-            backgroundColor: right ? "#EFEFEF" : "#FFFFFF"
-          }}>
-          <span style={{ fontSize: "2.25rem" }}>
-            {right ? ">" : null}
-          </span>
-        </div>
-      </div>
-      <p style={{ width: "max-content", marginLeft: "auto", fontSize: "1.25rem" }}>
-        <span>{numPages}페이지 중 {pageNumber}페이지</span>
-      </p>
-    </Document>
-  </DivPDFVIEWER>);
-}
 
 /*
   PROBLEM SUBMIT MODAL
@@ -549,6 +486,7 @@ class CardSourceDetail extends Component {
     this.ace = React.createRef();
   }
   componentDidMount() {
+    console.log('debug', this.props);
     if (this.props.uid !== "new") {
       this.props.GetDesignSourceRequest(this.props.uid)
         .then(async () => {
@@ -1043,8 +981,8 @@ class CardSourceDetail extends Component {
                           : (item.type === "PROBLEM") ?
                             <div className="problemWrap">
                               <ProblemBox>
-                                <div className="boardBox"><div className="board">{item.content && JSON.parse(item.content).name}</div></div>
-                                <div className="boardBox"><div className="board">{item.content && JSON.parse(item.content).contents}</div></div>
+                                <div className="boardBox"><div className="board">{item.content.length !== "" && JSON.parse(item.content).name}</div></div>
+                                <div className="boardBox"><div className="board">{item.content.length !== "" && JSON.parse(item.content).contents}</div></div>
                                 <div className="titleBox"><div className="title">조건</div></div>
                                 <div className="boardBox"><div className="board">
                                   제한시간:{item.content && JSON.parse(item.content).time} /
@@ -1053,16 +991,18 @@ class CardSourceDetail extends Component {
                                 <div className="titleBox"><div className="title">제목</div></div>
                                 <div style={{ margin: "25px", display: "flex", flexDirection: "row" }}>
                                   <div style={{ fontSize: "1.25rem", width: "3px", backgroundColor: "red" }}>&nbsp;</div>
-                                  <div style={{ fontSize: "1.25rem", }}>{JSON.parse(item.content).name}</div>
+                                  <div style={{ fontSize: "1.25rem", }}>{item.content.length !== "" && JSON.parse(item.content).name}</div>
                                 </div>
 
                                 <div className="titleBox"><div className="title">내용</div></div>
                                 <div >
                                   <div>
-                                    pdf: {JSON.parse(item.content).contents}
+                                    <a href={JSON.parse(item.content).contents}>다운로드</a>
                                   </div>
                                   <div>
-                                    <PdfViewer pdf="https://s3.ap-northeast-2.amazonaws.com/osd.uploads.com/uploads/aa959826-2427-4ff6-8d97-0b7595627ff9.pdf" />
+                                    <PdfViewer
+                                       pdf={JSON.parse(item.content).contents}
+                                    />
                                   </div>
                                   *개발중으로 위의 슬라이드 테스트용입니다.
                                 </div>
