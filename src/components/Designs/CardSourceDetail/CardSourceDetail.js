@@ -736,16 +736,18 @@ class CardSourceDetail extends Component {
   render() {
     const { edit, content, loading, submit, tab, item, result } = this.state;
     // console.log("content:", this.state.content);
-    console.log("result:", this.props.DesignDetail&&this.props.DesignDetail.category_level3-1);
+    console.log("result:", this.props.DesignDetail && this.props.DesignDetail.category_level3 - 1);
     return (<div>
       {loading ? <Loading /> : null}
 
       {
-        submit ?
+        submit ? <React.Fragment>
           <SubmitModalWrapper
             open={submit}
             onClose={() => this.setState({ submit: false })}
           >
+
+
             {loading ? <Loading msg="문제를 제출 중입니다." /> : null}
 
 
@@ -773,165 +775,110 @@ class CardSourceDetail extends Component {
             <div className="close-box" onClick={() => this.setState({ submit: false })} >
               <Cross angle={45} color={"#707070"} weight={2} width={25} height={25} />
             </div>
+
             <div className="title">{item.name}</div>
+
             <div className="language">
               <div className="label">제출 언어</div>
               <div className="combo-box">
                 <LanguageDropDown
+                  disabled
                   selection
                   ref="dropdown"
-                  onChange={(e, c) => this.setState({ language_id: c.value })}
+                  // onChange={(e, c) => this.setState({ language_id: c.value })}
                   options={[
                     { key: 'c', text: 'C/C++', value: 'c' },
                     { key: 'py', text: 'Python', value: 'py' }]}
                   placeholder="언어를 선택하여 주세요."
+                  value={this.props.DesignDetail && this.props.DesignDetail.category_level3 == 1 ? 'c' :
+                    this.props.DesignDetail && this.props.DesignDetail.category_level3 == 2 ? 'py'
+                      : null}
                 />
               </div>
             </div>
+
             <div className="coding-area">
 
               <div className="tab">
                 <div
                   onClick={() => this.setState({ tab: "code" })}
                   className={`label ${tab === "code" ? "active" : ""}`}
-                ><p>코딩 영역</p>
-                  {/* <p
-          onClick={() => this.setState({ tab: "log" })}
-          className={`label ${tab === "log" ? "active" : ""}`}
-        >제출 내역</p> */}
-                </div>
+                >코딩 영역</div>
+                <div
+                  onClick={() => this.setState({ tab: "log" })}
+                  className={`label ${tab === "log" ? "active" : ""}`}
+                >제출 내역</div>
               </div>
-              <div className="blank" />
 
-              <div className="editor">
-                {tab === "code"
-                  ?
-                  <div style={{ width: "100%", borderBottom: "1px solid #EFEFEF", borderRight: "1px solid #EFEFEF" }}>
-                    <AceEditor
-                      width="100%"
-                      ref={ref => this.ace = ref}
-                      setOptions={{
-                        fontSize: "20px",
-                        // width: "100%",
-                        // height: "100%",
-                        position: "absolute",
-                        top: "0",
-                        left: "0",
-                      }}
-                      mode="python" // "c_cpp"
-                      theme="github"
-                      onChange={console.log}
-                      name="UNIQUE_ID_OF_DIV"
-                      editorProps={{ $blockScrolling: true }} />
-                  </div>
-                  : <div>log container</div>}
+              <div className="button-wrapper">
+                <div onClick={() =>
+                  this.setState({ submit: false })
+                } className="btn cancel">취소</div>
+
+                <div onClick={() => {
+                  if (this.ace.editor == null) {
+                    return;
+                  }
+                  const code = this.ace.editor.getValue();
+                  if (code.trim() === "") {
+                    alert("코드를 작성해주세요.");
+                    return;
+                  }
+                  this.setState({ loading: true, });
+                  let ntry = 5;
+                  fetch(`${host}/design/problem/submit`, {
+                    headers: {
+                      'Content-Type': 'application/json',
+                      "Access-Control-Allow-Origin": "*",
+                      "x-access-token": this.props.token
+                    },
+                    method: "POST",
+                    body: JSON.stringify({
+                      user_id: this.props.userInfo.uid,
+                      // {"id":3,"problem_type":"C","time":100,"name":"Test Check Problem","contents":"Test Check"}
+                      problem_id: item.id,
+                      language_id: 1, //this.state.language_id || 1,
+                      code: `${code}`
+                    })
+                  }).then(res => res.json())
+                    .then(res => {
+                      console.log(res);
+                      if (res.success) {
+                        const check = () => {
+                          this.setState({ loading: true, });
+                          fetch(`${host}/design/problem/result-request/${res.id}`, {
+                            headers: { 'Content-Type': 'application/json' },
+                            method: "GET",
+                          })
+                            .then(res1 => res1.json())
+                            .then(res1 => {
+                              console.log(res1);
+                              if (res1.result) {
+                                this.setState({ result: res1 });
+                                ntry = 0;
+                              }
+                            })
+                            .catch(e => {
+                              console.error(e);
+                              return;
+                            })
+                          if (ntry--)
+                            setTimeout(check, 1000 * 1.5);
+                        };
+                        check();
+                      } else {
+                        alert('제출에 실패하였습니다.');
+                        this.setState({ loading: false });
+                        return;
+                      }
+                    })
+                    .catch(e => console.error(e));
+                  this.setState({ loading: false });
+                }} className="btn submit">제출</div>
               </div>
-            </SubmitResultModal> : null}
-
-          <div className="close-box" onClick={() => this.setState({ submit: false })} >
-            <Cross angle={45} color={"#707070"} weight={2} width={25} height={25} />
-          </div>
-          <div className="title">{item.name}</div>
-          <div className="language">
-            <div className="label">제출 언어</div>
-            <div className="combo-box">
-              <LanguageDropDown
-                disabled
-                selection
-                ref="dropdown"
-                // onChange={(e, c) => this.setState({ language_id: c.value })}
-                options={[
-                  { key: 'c', text: 'C/C++', value: 'c' },
-                  { key: 'py', text: 'Python', value: 'py' }]}
-                placeholder="언어를 선택하여 주세요."
-                value={this.props.DesignDetail&&this.props.DesignDetail.category_level3==1?'c':
-                this.props.DesignDetail&&this.props.DesignDetail.category_level3==2?'py'
-                :null}
-              />
-            </div>
-          </div>
-          <div className="coding-area">
-
-            <div className="tab">
-              <div
-                onClick={() => this.setState({ tab: "code" })}
-                className={`label ${tab === "code" ? "active" : ""}`}
-              >코딩 영역</div>
-              <div
-                onClick={() => this.setState({ tab: "log" })}
-                className={`label ${tab === "log" ? "active" : ""}`}
-              >제출 내역</div>
-            </div>
-
-            <div className="button-wrapper">
-              <div onClick={() =>
-                this.setState({ submit: false })
-              } className="btn cancel">취소</div>
-
-              <div onClick={() => {
-                if (this.ace.editor == null) {
-                  return;
-                }
-                const code = this.ace.editor.getValue();
-                if (code.trim() === "") {
-                  alert("코드를 작성해주세요.");
-                  return;
-                }
-                this.setState({ loading: true, });
-                let ntry = 5;
-                fetch(`${host}/design/problem/submit`, {
-                  headers: {
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
-                    "x-access-token": this.props.token
-                  },
-                  method: "POST",
-                  body: JSON.stringify({
-                    user_id: this.props.userInfo.uid,
-                    // {"id":3,"problem_type":"C","time":100,"name":"Test Check Problem","contents":"Test Check"}
-                    problem_id: item.id,
-                    language_id: 1, //this.state.language_id || 1,
-                    code: `${code}`
-                  })
-                }).then(res => res.json())
-                  .then(res => {
-                    console.log(res);
-                    if (res.success) {
-                      const check = () => {
-                        this.setState({ loading: true, });
-                        fetch(`${host}/design/problem/result-request/${res.id}`, {
-                          headers: { 'Content-Type': 'application/json' },
-                          method: "GET",
-                        })
-                          .then(res1 => res1.json())
-                          .then(res1 => {
-                            console.log(res1);
-                            if (res1.result) {
-                              this.setState({ result: res1 });
-                              ntry = 0;
-                            }
-                          })
-                          .catch(e => {
-                            console.error(e);
-                            return;
-                          })
-                        if (ntry--)
-                          setTimeout(check, 1000 * 1.5);
-                      };
-                      check();
-                    } else {
-                      alert('제출에 실패하였습니다.');
-                      this.setState({ loading: false });
-                      return;
-                    }
-                  })
-                  .catch(e => console.error(e));
-                this.setState({ loading: false });
-              }} className="btn submit">제출</div>
             </div>
           </SubmitModalWrapper>
-          // <SubmitModal open={submit} close={this.setState({ submit: false })} /> : null} 
-          : null
+        </React.Fragment> : null
       }
 
       {/* <ButtonContainer>
@@ -1010,33 +957,33 @@ class CardSourceDetail extends Component {
                                     ? JSON.parse(item.content).hasOwnProperty('url')
                                       ? JSON.parse(item.content).url : "invalid" : "invalid"})
                               </a>
-                            </div>
-                          </LinkPreview>
-                        </div>
+                              </div>
+                            </LinkPreview>
+                          </div>
 
-                        : (item.type === "PROBLEM") ?
-                          <div className="problemWrap">
+                          : (item.type === "PROBLEM") ?
+                            <div className="problemWrap">
 
-                                  <ProblemBox>
-                                    <div className="titleBox"><div className="title">제목</div></div>
-                                    <div className="boardBox"><div className="board">{item.content&&JSON.parse(item.content).name}</div></div>
-                                    <div className="titleBox"><div className="title">내용</div></div>
-                                    <div className="boardBox"><div className="board">{item.content&&JSON.parse(item.content).contents}</div></div>
-                                    {/* <div className="titleBox"><div className="title">조건</div></div>
+                              <ProblemBox>
+                                <div className="titleBox"><div className="title">제목</div></div>
+                                <div className="boardBox"><div className="board">{item.content && JSON.parse(item.content).name}</div></div>
+                                <div className="titleBox"><div className="title">내용</div></div>
+                                <div className="boardBox"><div className="board">{item.content && JSON.parse(item.content).contents}</div></div>
+                                {/* <div className="titleBox"><div className="title">조건</div></div>
                                     <div className="boardBox"><div className="board">
                                       제한시간:{item.content&&JSON.parse(item.content).time} / 
                                       문제유형:{item.content&&JSON.parse(item.content).problem_type}
                                     </div></div> */}
-                                  </ProblemBox>
+                              </ProblemBox>
 
-                            <div
-                              onClick={() => {
-                                this.setState({ item: JSON.parse(item.content) });
-                                this.setState({ submit: true });
-                              }}
-                              style={{ width: "max-content", margin: "auto", borderBottom: "1px solid red", cursor: "pointer" }}>
-                              <p style={{ color: "red", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", fontWeight: "500" }}>답안 제출하기</p>
-                            </div>
+                              <div
+                                onClick={() => {
+                                  this.setState({ item: JSON.parse(item.content) });
+                                  this.setState({ submit: true });
+                                }}
+                                style={{ width: "max-content", margin: "auto", borderBottom: "1px solid red", cursor: "pointer" }}>
+                                <p style={{ color: "red", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", fontWeight: "500" }}>답안 제출하기</p>
+                              </div>
                             </div>
                             : <div>올바른 형식의 아이템이 아닙니다.</div>}
             </div>
