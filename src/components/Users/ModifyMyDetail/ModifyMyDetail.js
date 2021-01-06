@@ -10,6 +10,7 @@ import Loading from "components/Commons/Loading";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import opendesign_style from "opendesign_style";
+import { SetSession } from 'modules/Sessions'
 
 const MainBanner = styled.div`
   width: 100%;
@@ -46,10 +47,21 @@ const MainSection = styled.div`
       flex-direction:column;
   }
 `
+const MenuItem = styled.div`
+  height:62px;
+  padding-left:36px;
+  padding-top:18px;
+  lineHeight:29px;
+  border-bottom: ${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
+  cursor:pointer;
+  &.white{
+    background-color: white;
+  }
+}`
 const NavMenu = styled.div`
-  min-width:433px;
-  height:300px;
-  position:relative;
+min-width:433px;
+height:300px;
+position:relative;
   .menuBox{
     width:325px;
     position: fixed;
@@ -92,12 +104,12 @@ const NavMenu = styled.div`
   }
 `
 const MenuText = styled.div`
-  font-size:20px;
-  font-family:Noto Sans KR;
-  font-weight:300;
-  text-align:left;
-  color: ${props => props.selected ? "#FF0000" : "#707070"};
-  border-bottom:${props => props.borderBottom};
+font-size:20px;
+font-family:Noto Sans KR;
+font-weight:300;
+text-align:left;
+color: ${props => props.selected ? "#FF0000" : "#707070"};
+border-bottom:${props => props.borderBottom};
 `
 //const Arrow = styled.span`
 //  margin-left:70px;
@@ -393,9 +405,22 @@ class ModifyMyDetail extends Component {
     this.setState({ change_password: true })
   }
   onDeleteUser = async () => {
+
     let isconfirm = await confirm("정말 탈퇴하시겠습니까?","예","아니오");
     if (isconfirm) {
-      this.props.SecessionRequest(this.props.token);
+      this.props.DeleteUserRequest(this.props.token)
+      .then(()=>{
+        SetSession("opendesign_token", null)
+        .then(data => {
+            // console.log("data:", data)
+            this.props.SignOutRequest()
+            this.setState({ sign_modal: false, user_popup: null })
+            window.location.reload()
+        })
+      })
+      .then(()=>{
+        window.location.href="/"
+      });
     }
   }
 
@@ -413,13 +438,17 @@ class ModifyMyDetail extends Component {
         <NavMenu>
           <div className="menuBox">
             {scrollmenu.map((menu, index) => {
-              return (<div onClick={() => this.scrollMove(menu, index)}
+              return (<MenuItem onClick={() => this.scrollMove(menu, index)}
                 className="menuItem"
                 borderBottom={index + 1 === scrollmenu.length}
                 key={menu.txt}>
                 <MenuText selected={this.state.selected === index}>{menu.txt}</MenuText>
-              </div>)
+              </MenuItem>)
             })}
+          
+          <MenuItem className="white" onClick={this.onDeleteUser}>
+                  <div className="deleteText">탈퇴하기</div>
+          </MenuItem>
           </div>
         </NavMenu>
 
