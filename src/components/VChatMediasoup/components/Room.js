@@ -603,9 +603,9 @@ class Room extends React.Component {
 		// console.log("Room.js", this.props.peers);// this.video && this.video.srcObject && this.video.srcObject.getTracks());
 		// console.log(this.state.pinned, this.props.userInfo.uid, myvideo && myvideo.type);
 		const areyouselectedsharepeer = () => {
-			const clicked = false;
+			let clicked = false;
 			this.props.peersVids.find(peer => {
-				if ((peer.appData && peer.appData.peerId === this.state.pinned) &&
+				if (peer && (peer.appData && peer.appData.peerId === this.state.pinned) &&
 					(peer.appData && peer.appData.share))
 					clicked = true;
 			});
