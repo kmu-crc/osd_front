@@ -246,6 +246,17 @@ const ContentsBox = styled.div`
     }
   }
 `
+const IsProblemBox = styled.div`
+  margin-top:10px;
+  display:flex;
+  justify-content:flex-start;
+  align-items:flex-start;
+  .check{
+  }
+  .check_label{
+    padding-top:5px;
+  }
+`
 const ImageBox = styled.div`
   
   margin-left: 67px;
@@ -638,13 +649,14 @@ class ModifyDesign extends Component {
     super(props);
     this.state = {
       deleteModal: false,
-      loading: false, designId: null, isMyDesign: false, editor: false,
+      loading: false, designId: null, isMyDesign: false, editor: false,is_problem:false,
       basic: false, additional: false, content: false, step: 0, title: "", explanation: "",
       showSearch: false, thumbnail: noimg, thumbnail_name: "", grid: false,
       categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [], license1: false, license2: false, license3: false,
     }
     this.addMember = this.addMember.bind(this);
     this.removeMember = this.removeMember.bind(this);
+    this.onCheckIsProblem = this.onCheckIsProblem.bind(this);
     this.onCheckedLicense01 = this.onCheckedLicense01.bind(this);
     this.onCheckedLicense02 = this.onCheckedLicense02.bind(this);
     this.onCheckedLicense03 = this.onCheckedLicense03.bind(this);
@@ -668,7 +680,8 @@ class ModifyDesign extends Component {
         members: nextProps.DesignDetail.member && nextProps.DesignDetail.member.filter((mem) => { return mem.user_id !== this.props.userInfo.uid }),
         license1: nextProps.DesignDetail.is_commercial,
         license2: nextProps.DesignDetail.is_display_creater,
-        license3: nextProps.DesignDetail.is_modify
+        license3: nextProps.DesignDetail.is_modify,
+        is_problem:nextProps.DesignDetail.is_problem,
       })
     }
     return true;
@@ -754,7 +767,7 @@ class ModifyDesign extends Component {
       title: this.state.title, explanation: this.state.explanation,
       files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name, key: "thumbnail[]" }],
       members: { add: this.state.addmem, del: this.state.delmem },
-      is_commercial: this.state.license1 ? 1 : 0, is_display_creater: this.state.license2 ? 1 : 0, is_modify: this.state.license3 ? 1 : 0
+      is_commercial: this.state.license1 ? 1 : 0, is_display_creater: this.state.license2 ? 1 : 0, is_modify: this.state.license3 ? 1 : 0,is_problem: this.state.is_problem ? 1 : 0
     };
     if (data.files.length <= 0 || data.files[0].value === this.props.DesignDetail.img.m_img) {
       delete data.files;
@@ -783,6 +796,10 @@ class ModifyDesign extends Component {
   }
   onChangeCategory3(event, { value }) {
     this.setState({ categoryLevel3: { value }.value })
+    this.checkFinishAdditional();
+  }
+  onCheckIsProblem = async()=>{
+    await this.setState({ is_problem: !this.state.is_problem });
     this.checkFinishAdditional();
   }
   onCheckedLicense01 = async () => {
@@ -963,12 +980,24 @@ class ModifyDesign extends Component {
                       {this.props.category2[this.state.categoryLevel1 - 1] && this.state.categoryLevel1 !== 0
                         ? <CategoryDropDown options={this.props.category2[this.state.categoryLevel1 - 1]} selection id="category2" name="cate2" ref="dropdown2" onChange={this.onChangeCategory2} value={this.state.categoryLevel2} />
                         : <CategoryDropDown options={emptyCategory} selection id="category2" name="cate2" ref="dropdown2" onChange={this.onChangeCategory2} value={this.state.categoryLevel2} />}
-                      {/* {this.state.categoryLevel1 !== 0 &&this.state.categoryLevel2 !== 0 && this.props.category3[this.state.categoryLevel2 - 1]
+                      {this.state.categoryLevel2==28&&this.state.categoryLevel1 !== 0 &&this.state.categoryLevel2 !== 0 && this.props.category3[this.state.categoryLevel2 - 1]
                           ? <CategoryDropDown value={this.state.categoryLevel3} ref="dropdown2" selection onChange={this.onChangeCategory3} options={this.props.category3[category3Index]} />
-                          : <CategoryDropDown value={this.state.categoryLevel3} ref="dropdown2" selection onChange={this.onChangeCategory3} options={emptyCategory} />
-                        } */}
+                          : null
+                      }
                     </CategoryBox>
                     : <p>카테고리를 가져오고 있습니다.</p>}
+
+                    <section style={{ display: step === 1 ? "block" : "none" }} >
+                    {
+                      this.state.categoryLevel3!=null?
+                        <IsProblemBox>
+                          <div className="additionalTitle"/>
+                          <CheckBox2 className="check" onChange={this.onCheckIsProblem} checked={this.state.is_problem ? true : false} type="checkbox" />
+                          <div className="check_label">문제 출제 기능을 사용합니다.</div>
+                        </IsProblemBox>
+                      :null
+                    }
+                    </section>
                   {/* invite member*/}
                   <InviteMemberBox>
                     <div className="additionalTitle ">멤버 초대하기

@@ -64,7 +64,8 @@ const SubmitModalWrapper = styled(Modal)
     font-family: Noto Sans KR;
   }
   width: 873px;
-  height: 949px;
+  // height: 949px;
+  height:max-content;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 10px;
@@ -735,7 +736,7 @@ class CardSourceDetail extends Component {
   render() {
     const { edit, content, loading, submit, tab, item, result } = this.state;
     // console.log("content:", this.state.content);
-    console.log("result:", this.state.content);
+    console.log("result:", this.props.DesignDetail&&this.props.DesignDetail.category_level3-1);
     return (<div>
       {loading ? <Loading /> : null}
 
@@ -825,6 +826,41 @@ class CardSourceDetail extends Component {
                   </div>
                   : <div>log container</div>}
               </div>
+            </SubmitResultModal> : null}
+
+          <div className="close-box" onClick={() => this.setState({ submit: false })} >
+            <Cross angle={45} color={"#707070"} weight={2} width={25} height={25} />
+          </div>
+          <div className="title">{item.name}</div>
+          <div className="language">
+            <div className="label">제출 언어</div>
+            <div className="combo-box">
+              <LanguageDropDown
+                disabled
+                selection
+                ref="dropdown"
+                // onChange={(e, c) => this.setState({ language_id: c.value })}
+                options={[
+                  { key: 'c', text: 'C/C++', value: 'c' },
+                  { key: 'py', text: 'Python', value: 'py' }]}
+                placeholder="언어를 선택하여 주세요."
+                value={this.props.DesignDetail&&this.props.DesignDetail.category_level3==1?'c':
+                this.props.DesignDetail&&this.props.DesignDetail.category_level3==2?'py'
+                :null}
+              />
+            </div>
+          </div>
+          <div className="coding-area">
+
+            <div className="tab">
+              <div
+                onClick={() => this.setState({ tab: "code" })}
+                className={`label ${tab === "code" ? "active" : ""}`}
+              >코딩 영역</div>
+              <div
+                onClick={() => this.setState({ tab: "log" })}
+                className={`label ${tab === "log" ? "active" : ""}`}
+              >제출 내역</div>
             </div>
 
             <div className="button-wrapper">
@@ -974,48 +1010,33 @@ class CardSourceDetail extends Component {
                                     ? JSON.parse(item.content).hasOwnProperty('url')
                                       ? JSON.parse(item.content).url : "invalid" : "invalid"})
                               </a>
-                              </div>
-                            </LinkPreview>
-                          </div>
+                            </div>
+                          </LinkPreview>
+                        </div>
 
-                          : (item.type === "PROBLEM") ?
-                            <div className="problemWrap">
-                              <ProblemBox>
-                                <div className="boardBox"><div className="board">{item.content.length !== "" && JSON.parse(item.content).name}</div></div>
-                                <div className="boardBox"><div className="board">{item.content.length !== "" && JSON.parse(item.content).contents}</div></div>
-                                <div className="titleBox"><div className="title">조건</div></div>
-                                <div className="boardBox"><div className="board">
-                                  제한시간:{item.content && JSON.parse(item.content).time} /
-                                      문제유형:{item.content && JSON.parse(item.content).problem_type}
-                                </div></div>
-                                <div className="titleBox"><div className="title">제목</div></div>
-                                <div style={{ margin: "25px", display: "flex", flexDirection: "row" }}>
-                                  <div style={{ fontSize: "1.25rem", width: "3px", backgroundColor: "red" }}>&nbsp;</div>
-                                  <div style={{ fontSize: "1.25rem", }}>{item.content.length !== "" && JSON.parse(item.content).name}</div>
-                                </div>
+                        : (item.type === "PROBLEM") ?
+                          <div className="problemWrap">
 
-                                <div className="titleBox"><div className="title">내용</div></div>
-                                <div >
-                                  <div>
-                                    <a href={JSON.parse(item.content).contents}>다운로드</a>
-                                  </div>
-                                  <div>
-                                    <PdfViewer
-                                       pdf={JSON.parse(item.content).contents}
-                                    />
-                                  </div>
-                                  *개발중으로 위의 슬라이드 테스트용입니다.
-                                </div>
+                                  <ProblemBox>
+                                    <div className="titleBox"><div className="title">제목</div></div>
+                                    <div className="boardBox"><div className="board">{item.content&&JSON.parse(item.content).name}</div></div>
+                                    <div className="titleBox"><div className="title">내용</div></div>
+                                    <div className="boardBox"><div className="board">{item.content&&JSON.parse(item.content).contents}</div></div>
+                                    {/* <div className="titleBox"><div className="title">조건</div></div>
+                                    <div className="boardBox"><div className="board">
+                                      제한시간:{item.content&&JSON.parse(item.content).time} / 
+                                      문제유형:{item.content&&JSON.parse(item.content).problem_type}
+                                    </div></div> */}
+                                  </ProblemBox>
 
-                              </ProblemBox>
-                              <div
-                                onClick={() => {
-                                  this.setState({ item: JSON.parse(item.content) });
-                                  this.setState({ submit: true });
-                                }}
-                                style={{ width: "max-content", margin: "auto", borderBottom: "1px solid red", cursor: "pointer" }}>
-                                <p style={{ color: "red", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", fontWeight: "500" }}>답안 제출하기</p>
-                              </div>
+                            <div
+                              onClick={() => {
+                                this.setState({ item: JSON.parse(item.content) });
+                                this.setState({ submit: true });
+                              }}
+                              style={{ width: "max-content", margin: "auto", borderBottom: "1px solid red", cursor: "pointer" }}>
+                              <p style={{ color: "red", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", fontWeight: "500" }}>답안 제출하기</p>
+                            </div>
                             </div>
                             : <div>올바른 형식의 아이템이 아닙니다.</div>}
             </div>
@@ -1083,10 +1104,10 @@ class CardSourceDetail extends Component {
       <ButtonContainer>
         {(this.props.edit && this.props.uid) &&
           <EditorBottonWrapper>
-            <button onClick={this.onCancel} className="cancel" type="button">
-              <i className="icon trash" />취소</button>
             <button onClick={this.onSubmit} className="submit" type="button">
               <i className="icon outline save" />저장</button>
+            <button onClick={this.onCancel} className="cancel" type="button">
+              <i className="icon trash" />취소</button>
           </EditorBottonWrapper>}
       </ButtonContainer>
     </div >);

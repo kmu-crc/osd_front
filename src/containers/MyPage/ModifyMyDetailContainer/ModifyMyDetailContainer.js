@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { GetMyDetailRequest, UpdateUserDetailRequest } from "redux/modules/personal"
+import { GetMyDetailRequest, UpdateUserDetailRequest,DeleteUserRequest } from "redux/modules/personal"
 import { GetCategoryAllRequest } from "redux/modules/category"
-import { CheckNickNameRequest } from "redux/modules/auth"
+import { CheckNickNameRequest,SignOutRequest } from "redux/modules/auth"
 
 import ModifyMyDetail from "components/Users/ModifyMyDetail"
 
@@ -42,7 +42,13 @@ const mapDispatchToProps = (dispatch) => {
     },
     CheckNickNameRequest: (NickName) => {
       return dispatch(CheckNickNameRequest(NickName))
-    }
+    },
+    DeleteUserRequest: (token) => {
+      return dispatch(DeleteUserRequest(token))
+    },
+    SignOutRequest: () => {
+      return dispatch(SignOutRequest())
+    },
   }
 }
 

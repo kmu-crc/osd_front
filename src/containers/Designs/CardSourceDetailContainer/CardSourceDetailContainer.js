@@ -4,6 +4,9 @@ import { GetDesignDetailRequest, GetCardDetailRequest, UpdateDesignTime, GetDesi
 import CardSourceDetail from "components/Designs/CardSourceDetail";
 
 class CardSourceDetailContainer extends Component {
+  async componentDidMount(){
+    await this.props.GetDesignDetailRequest(this.props.design_id, this.props.token);
+  }
   render() {
     return (
       <CardSourceDetail {...this.props} upDateRequest={this.props.UpdateDesignSourceRequest} />
@@ -19,6 +22,7 @@ const mapStateToProps = (state) => {
     status: state.DesignCard.DesignSourceDetail.status,
     editStatus: state.DesignCard.DesignSourceEdit.status,
     userInfo: state.Authentication.status.userInfo,
+    DesignDetail: state.Design.status.DesignDetail,
   };
 };
 
