@@ -253,6 +253,17 @@ const ContentsBox = styled.div`
     }
   }
 `;
+const IsProblemBox = styled.div`
+  margin-top:10px;
+  display:flex;
+  justify-content:flex-start;
+  align-items:flex-start;
+  .check{
+  }
+  .check_label{
+    padding-top:5px;
+  }
+`
 const ImageBox = styled.div`
   margin-left: 67px;
   min-width: 210px;
@@ -785,10 +796,11 @@ class CreateDesign extends Component {
       categoryLevel2: null, categoryLevel3: null,
       alone: true, members: [], addmem: [], delmem: [],
       license1: true, license2: true, license3: true,
-      type: null, template: null,
+      type: null, template: null,is_problem:false,
     };
     this.addMember = this.addMember.bind(this);
     this.removeMember = this.removeMember.bind(this);
+    this.onCheckIsProblem = this.onCheckIsProblem.bind(this);
     this.onCheckedLicense01 = this.onCheckedLicense01.bind(this);
     this.onCheckedLicense02 = this.onCheckedLicense02.bind(this);
     this.onCheckedLicense03 = this.onCheckedLicense03.bind(this);
@@ -910,7 +922,7 @@ class CreateDesign extends Component {
     this.setState({ loading: true });
     const {
       contents, categoryLevel1, categoryLevel2, categoryLevel3, title, explanation,
-      license1, license2, license3,
+      license1, license2, license3,is_problem,
       thumbnail, thumbnail_name } = this.state;
     contents && contents.map(content => {
       delete content.initClick;
@@ -922,7 +934,7 @@ class CreateDesign extends Component {
       contents: contents, // [*]
       category_level1: categoryLevel1, category_level2: categoryLevel2, category_level3: categoryLevel3, explanation: explanation,
       files: [{ key: "thumbnail[]", value: thumbnail, name: thumbnail_name }],
-      is_commercial: license1 ? 1 : 0, is_display_creater: license2 ? 1 : 0, is_modify: license3 ? 1 : 0,
+      is_commercial: license1 ? 1 : 0, is_display_creater: license2 ? 1 : 0, is_modify: license3 ? 1 : 0,is_problem: is_problem ? 1 : 0,
       members: {
         add: this.state.addmem, del: this.state.delmem
       },
@@ -968,6 +980,10 @@ class CreateDesign extends Component {
     await this.setState({ license3: !this.state.license3 });
     this.checkFinishAdditional();
   };
+  onCheckIsProblem = async()=>{
+    await this.setState({ is_problem: !this.state.is_problem });
+    this.checkFinishAdditional();
+  }
   LeaveMeAlone = async () => {
     await this.setState({ alone: !this.state.alone, members: [] });
     this.checkFinishAdditional();
@@ -1284,6 +1300,17 @@ class CreateDesign extends Component {
                     }
                   </CategoryBox>
                   : <p>카테고리를 가져오고 있습니다.</p>}
+                    <section style={{ display: step === 1 ? "block" : "none" }} >
+                    {
+                      this.state.categoryLevel3!=null?
+                        <IsProblemBox>
+                          <div className="additionalTitle"/>
+                          <CheckBox2 className="check" onChange={this.onCheckIsProblem} checked={this.state.is_problem ? true : false} type="checkbox" />
+                          <div className="check_label">문제 출제 기능을 사용합니다.</div>
+                        </IsProblemBox>
+                      :null
+                    }
+                    </section>
                 {/* INVITE MEMBER */}
                 <InviteMemberBox>
                   <div className="additionalTitle">멤버 초대하기

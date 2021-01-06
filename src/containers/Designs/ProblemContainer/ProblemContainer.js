@@ -41,12 +41,12 @@ class ProblemContainer extends Component {
         this.props.open==true||this.props.item.content==""?
         <ModalBox open={this.props.open}>
         <div className="closeBox"> <Cross onClick={()=>this.props.openModal(false)} angle={45} color={"#707070"} weight={1} width={33} height={33} /></div>
-        <ProblemController {...this.props} getValue={data=>this.props.getValue(data)}/>
+        <ProblemController {...this.props} onCloseModal={()=>this.props.openModal(false)}  getValue={data=>this.props.getValue(data)}/>
         </ModalBox>
         :
         <React.Fragment>
         {/* <div className="closeBox"> <Cross onClick={()=>this.props.close()} angle={45} color={"#707070"} weight={1} width={33} height={33} /></div> */}
-        <ProblemController {...this.props}  getValue={data=>this.props.getValue(data)}/>
+        <ProblemController {...this.props} onCloseModal={()=>this.props.openModal(false)}  getValue={data=>this.props.getValue(data)}/>
         </React.Fragment>
       }
       </React.Fragment>

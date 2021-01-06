@@ -183,6 +183,7 @@ export function CheckTokenRequest(token) {
       .then(res => res.json())
       .then(res => {
         if (res.success) {
+          console.log(res);
           return dispatch(CkeckTokenSuccess(res.info, token));
         } else {
           // SetSession("opendesign_token", null);

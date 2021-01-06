@@ -39,6 +39,10 @@ const GET_MY_MAIN_GROUP_LIST = "GET_MY_MAIN_GROUP_LIST";
 const MY_MAIN_GROUP_LIST_CLEAR = "MY_MAIN_GROUP_LIST_CLEAR";
 const MY_MAIN_GROUP_LIST_FAIL = "MY_MAIN_GROUP_LIST_FAIL";
 
+const DELETE_USER = "DELETE_USER";
+const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
+const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
+
 const GetMyMainGroupList = (data) => ({ type: GET_MY_MAIN_GROUP_LIST, MyMainGroup: data })
 const MyMainGroupListClear = (data) => ({ type: MY_MAIN_GROUP_LIST_CLEAR, MyMainGroup: data, MyMainGroupAdded: [] })
 const MyMainGroupListFail = () => ({ type: MY_MAIN_GROUP_LIST_FAIL, MyMainGroup: [], MyMainGroupAdded: [] })
@@ -78,6 +82,9 @@ const UpdateUserDetail = () => ({ type: UPDATE_USER_DETAIL })
 const UpdateUserDetailSuccess = () => ({ type: UPDATE_USER_DETAIL_SUCCESS, success: true })
 const UpdateUserDetailFailure = () => ({ type: UPDATE_USER_DETAIL_FAILURE, success: false })
 const GetMyInvitingListFailure = () => ({ type: GET_MY_INVITING_LIST_FAILURE, list: [] })
+const DeleteUser = () => ({ type: DELETE_USER })
+const DeleteUserSuccess = () => ({ type: DELETE_USER_SUCCESS, success: true })
+const DeleteUserFailure = () => ({ type: DELETE_USER_FAILURE, success: false })
 
 export default function Personal(state, action) {
     if (typeof state === "undefined")
@@ -612,6 +619,23 @@ export function GetMyMainGroupListRequest(token, page) {
             }).catch(error => {
                 console.error("err:", error)
                 dispatch(MyMainGroupListFail())
+            })
+    }
+}
+
+export function DeleteUserRequest(token){
+    return (dispatch) => {
+        dispatch(DeleteUser())
+        return fetch(`${host}/users/deleteUser`, 
+        { headers: { "x-access-token": token, "Content-Type": "application/json" }, 
+            method: "POST" })
+            .then(function (res) {
+                return res.json()
+            })
+            .then(function (res) {
+                return dispatch(DeleteUserSuccess())
+            }).catch((error) => {
+                return dispatch(DeleteUserFailure())
             })
     }
 }
