@@ -8,12 +8,12 @@ import osdcss from "opendesign_style";
 import FileController from "./FileController";
 import TextController from "./TextControllerPlus";
 import LinkController from "./LinkController";
-import ProblemController from "./ProblemController";
+// import ProblemController from "./ProblemController";
 import ProblemContainer from "containers/Designs/ProblemContainer"
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import { Modal, Dropdown } from "semantic-ui-react";
-import Zoom from 'react-medium-image-zoom'
+// import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css';
 import Cross from "components/Commons/Cross";
 
@@ -23,6 +23,10 @@ import host from "config";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-github";
+
+import { PdfViewer } from "./PDFviewer";
+
+
 
 /*
   PROBLEM SUBMIT MODAL
@@ -957,11 +961,21 @@ class CardSourceDetail extends Component {
           {content.map((item, index) =>
             <div key={index + item}>
               {(item.type === "FILE" && item.data_type === "image") ?
-                <div className="imgContent" >
-                  <Zoom >
-                    <img width="100%" src={item.content} alt="이미지" download={item.file_name} />
-                  </Zoom>
-                  <p>이미지를 클릭하시면 크게 보실 수 있습니다.</p>
+                <div className="imgContent" onClick={() => {
+                  const url = item.content;
+                  const img = '<img id="image" src="' + url + '">';
+                  const popup = window.open("", "_blank", "image-view");
+                  popup.document.write(img);
+                  const imgnode = popup.document.getElementById("image");
+                  popup.resizeTo(
+                    /* width */imgnode.naturalWidth > window.screen.width ? window.screen.width / 2 : imgnode.naturalWidth * 1.06,
+                    /* height */imgnode.naturalHeight > window.screen.height ? window.screen.height / 2 : imgnode.naturalHeight * 1.06
+                  );
+                }}>
+                  {/* <Zoom > */}
+                  <img width="100%" src={item.content} alt="이미지" download={item.file_name} />
+                  {/* </Zoom> */}
+                  <p>이미지를 클릭하시면 원본크기로 보실 수 있습니다.</p>
                 </div>
 
                 : (item.type === "FILE" && item.data_type === "video") ?
@@ -974,63 +988,71 @@ class CardSourceDetail extends Component {
                       controls="controls">
                       <source src={item.content} type="video/mp4" download={item.file_name}></source></video>
                   </span>
+                  : (item.type === "FILE" && item.extension === "pdf") ?
+                    <React.Fragment>
+                      <a className="iconWrap" href={item.content} download={item.file_name} >
+                        <FileIcon type={item.data_type} extension={item.extension} />
+                        <span className="LinkFileName">{item.file_name}</span>
+                      </a>
+                      <PdfViewer pdf={item.content} />
+                    </React.Fragment>
 
-                  : (item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video") ?
-                    <a className="iconWrap" href={item.content} download={item.file_name} >
-                      <FileIcon type={item.data_type} extension={item.extension} />
-                      <span className="LinkFileName">{item.file_name}</span>
-                    </a>
+                    : (item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video") ?
+                      <a className="iconWrap" href={item.content} download={item.file_name} >
+                        <FileIcon type={item.data_type} extension={item.extension} />
+                        <span className="LinkFileName">{item.file_name}</span>
+                      </a>
 
-                    : (item.type === "TEXT") ?
-                      <div className="textWrap" dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
+                      : (item.type === "TEXT") ?
+                        <div className="textWrap" dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
 
-                      : (item.type === "LINK") ?
-                        <div className="linkWrap">
-                          <LinkPreview>
-                            <div className="description">{
-                              IsJsonString(item.content)
-                                ? JSON.parse(item.content).hasOwnProperty('description')
-                                  ? "*" + JSON.parse(item.content).description : "" : ""}
-                            </div>
-                            <div className="url">
-                              <a target="_blank" href={`${IsJsonString(item.content)
-                                ? JSON.parse(item.content).hasOwnProperty('url')
-                                  ? JSON.parse(item.content).url : "invalid" : "invalid"}`}>
-                                ({IsJsonString(item.content)
+                        : (item.type === "LINK") ?
+                          <div className="linkWrap">
+                            <LinkPreview>
+                              <div className="description">{
+                                IsJsonString(item.content)
+                                  ? JSON.parse(item.content).hasOwnProperty('description')
+                                    ? "*" + JSON.parse(item.content).description : "" : ""}
+                              </div>
+                              <div className="url">
+                                <a target="_blank" href={`${IsJsonString(item.content)
                                   ? JSON.parse(item.content).hasOwnProperty('url')
-                                    ? JSON.parse(item.content).url : "invalid" : "invalid"})
+                                    ? JSON.parse(item.content).url : "invalid" : "invalid"}`}>
+                                  ({IsJsonString(item.content)
+                                    ? JSON.parse(item.content).hasOwnProperty('url')
+                                      ? JSON.parse(item.content).url : "invalid" : "invalid"})
                               </a>
-                            </div>
-                          </LinkPreview>
-                        </div>
+                              </div>
+                            </LinkPreview>
+                          </div>
 
-                        : (item.type === "PROBLEM") && IsJsonString(item.content) ?
-                          <div className="problemWrap">
+                          : (item.type === "PROBLEM") && IsJsonString(item.content) ?
+                            <div className="problemWrap">
 
-                            <ProblemBox>
-                              <div className="titleBox"><div className="title">제목</div></div>
-                              <div className="boardBox"><div className="board">{item.content && JSON.parse(item.content).name}</div></div>
-                              <div className="titleBox"><div className="title">내용</div></div>
-                              <div className="boardBox"><div className="board">{item.content && JSON.parse(item.content).contents}</div></div>
-                              {/* <div className="titleBox"><div className="title">조건</div></div>
+                              <ProblemBox>
+                                <div className="titleBox"><div className="title">제목</div></div>
+                                <div className="boardBox"><div className="board">{item.content && JSON.parse(item.content).name}</div></div>
+                                <div className="titleBox"><div className="title">내용</div></div>
+                                <div className="boardBox"><div className="board">{item.content && JSON.parse(item.content).contents}</div></div>
+                                {/* <div className="titleBox"><div className="title">조건</div></div>
                                     <div className="boardBox"><div className="board">
                                       제한시간:{item.content&&JSON.parse(item.content).time} / 
                                       문제유형:{item.content&&JSON.parse(item.content).problem_type}
                                     </div></div> */}
-                            </ProblemBox>
+                              </ProblemBox>
 
-                            <div
-                              onClick={() => {
-                                this.setState({ item: JSON.parse(item.content) });
-                                this.setState({ submit: true });
-                              }}
-                              style={{ width: "max-content", margin: "auto", borderBottom: "1px solid red", cursor: "pointer" }}>
-                              <p style={{ color: "red", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", fontWeight: "500" }}>답안 제출하기</p>
+                              <div
+                                onClick={() => {
+                                  this.setState({ item: JSON.parse(item.content) });
+                                  this.setState({ submit: true });
+                                }}
+                                style={{ width: "max-content", margin: "auto", borderBottom: "1px solid red", cursor: "pointer" }}>
+                                <p style={{ color: "red", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", fontWeight: "500" }}>답안 제출하기</p>
+                              </div>
+
                             </div>
 
-                          </div>
-
-                          : <div>올바른 형식의 아이템이 아닙니다.</div>}
+                            : <div>올바른 형식의 아이템이 아닙니다.</div>}
             </div>
           )}
         </ViewContent>

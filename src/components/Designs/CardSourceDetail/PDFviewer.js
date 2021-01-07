@@ -6,11 +6,11 @@ export const PdfViewer = (props) => {
       `https://docs.google.com/viewer?url=${props.pdf}&embedded=true`
       // `${props.pdf}`
     }
-      frameborder="0" height="500px" width="100%"></iframe>
+      frameBorder="0" height="500px" width="100%"></iframe>
     {/* <object data={props.pdf} type="application/pdf" width="300" height="200"> */}
     {/* alt : <a href={props.pdf}>{props.pdf}</a> */}
     {/* </object> */}
-    {/* {props.pdf} */}
+    {props.pdf}
   </div>);
 }
 
