@@ -771,7 +771,8 @@ class CardSourceDetail extends Component {
   render() {
     const { edit, content, loading, submit, tab, item, result } = this.state;
     // console.log("content:", content.find(item => item.type === "TEXT"));
-    console.log("result:", this.props.DesignDetail)// && this.props.DesignDetail.category_level3 - 1);
+    // console.log("result:", this.props.DesignDetail)// && this.props.DesignDetail.category_level3 - 1);
+
     return (<div>
       {loading ? <Loading /> : null}
 
@@ -829,17 +830,20 @@ class CardSourceDetail extends Component {
                 ref="dropdown"
                 // onChange={(e, c) => this.setState({ language_id: c.value })}
                 options={[
-                  { key: 'c', text: 'C/C++', value: 'c' },
-                  { key: 'py', text: 'Python', value: 'py' }]}
+                  { key: 'cpp', text: 'C++', value: 'cpp' },
+                  { key: 'py', text: 'Python', value: 'py' },
+                  { key: 'c', text: 'C', value: 'c' },
+                ]}
                 placeholder="언어를 선택하여 주세요."
-                value={this.props.DesignDetail && this.props.DesignDetail.category_level3 == 1 ? 'c' :
-                  this.props.DesignDetail && this.props.DesignDetail.category_level3 == 2 ? 'py'
-                    : null}
+                value={
+                  this.props.DesignDetail && this.props.DesignDetail.category_level3 == 1 ? 'cpp'
+                    : this.props.DesignDetail && this.props.DesignDetail.category_level3 == 2 ? 'py'
+                      : this.props.DesignDetail && this.props.DesignDetail.category_level3 == 3 ? 'c'
+                        : null}
               />
             </div>
           </div>
           <div className="coding-area">
-
             {/* <div className="tab">
               <div
                 onClick={() => this.setState({ tab: "code" })}
