@@ -770,8 +770,8 @@ class CardSourceDetail extends Component {
 
   render() {
     const { edit, content, loading, submit, tab, item, result } = this.state;
-    console.log("content:", content.find(item => item.type === "TEXT"));
-    console.log("result:", this.props.DesignDetail && this.props.DesignDetail.category_level3 - 1);
+    // console.log("content:", content.find(item => item.type === "TEXT"));
+    console.log("result:", this.props.DesignDetail)// && this.props.DesignDetail.category_level3 - 1);
     return (<div>
       {loading ? <Loading /> : null}
 
@@ -840,7 +840,7 @@ class CardSourceDetail extends Component {
           </div>
           <div className="coding-area">
 
-            <div className="tab">
+            {/* <div className="tab">
               <div
                 onClick={() => this.setState({ tab: "code" })}
                 className={`label ${tab === "code" ? "active" : ""}`}
@@ -849,7 +849,7 @@ class CardSourceDetail extends Component {
                 onClick={() => this.setState({ tab: "log" })}
                 className={`label ${tab === "log" ? "active" : ""}`}
               >제출 내역</div>
-            </div>
+            </div> */}
             <div className="blank" />
 
             <div className="editor">
@@ -900,7 +900,7 @@ class CardSourceDetail extends Component {
                   user_id: this.props.userInfo.uid,
                   // {"id":3,"problem_type":"C","time":100,"name":"Test Check Problem","contents":"Test Check"}
                   problem_id: item.id,
-                  language_id: 1, //this.state.language_id || 1,
+                  language_id: this.props.DesignDetail.category_level3 || 1, //this.state.language_id || 1,
                   code: `${code}`
                 })
               }).then(res => res.json())
@@ -954,13 +954,14 @@ class CardSourceDetail extends Component {
       {
         this.props.uid && (!edit && !this.props.edit) && content.length > 0 &&
         <ViewContent>
-          {(content.find(item => item.type === "TEXT") !== null) ?
+          {/* todo */}
+          {/* {(content.find(item => item.type === "TEXT") !== null) ?
             <div style={{ display: "flex" }}>
               <div>글씨크기:</div>
               <div onClick={() => { }}>+</div>
               <div onClick={() => { }}>-</div>
             </div>
-            : null}
+            : null} */}
           {content.map((item, index) =>
             <div key={index + item}>
               {(item.type === "FILE" && item.data_type === "image") ?
@@ -1114,8 +1115,17 @@ class CardSourceDetail extends Component {
                   </DownBtn> : null}
               </ControllerWrap>)
             })}
-            <AddContent getValue={this.onAddValue} order={content.length} open={(data) => this.setState({ addProblem: data })} />
-          </Fragment>) : <AddContent getValue={this.onAddValue} order={0} open={(data) => this.setState({ addProblem: data })} />
+            <AddContent
+              is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
+              getValue={this.onAddValue}
+              order={content.length}
+              open={(data) => this.setState({ addProblem: data })} />
+          </Fragment>) :
+            <AddContent
+              is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
+              getValue={this.onAddValue}
+              order={0}
+              open={(data) => this.setState({ addProblem: data })} />
         ) : null
       }
 
@@ -1164,7 +1174,7 @@ const ControllerWrap2 = styled.div`
   .innerBox {
     display: flex;
     min-height: 45px;
-    height:max-content;
+    // height:max-content;
     align-items: center;
     justify-content: center;
     list-style: none;
@@ -1234,10 +1244,10 @@ class AddContent extends Component {
             onClick={() => this.addContent("LINK")}
             width="max-content" minWidth="134px" height="29px">
             하이퍼링크 등록하기</NewController>
-          <NewController
+          {this.props.is_problem ? <NewController
             onClick={() => { this.addContent("PROBLEM"); this.props.open(true); }}
             width="max-content" minWidth="134px" height="29px">
-            문제 등록하기</NewController>
+            문제 등록하기</NewController> : null}
         </div>
 
         {this.state.type === "FILE" &&

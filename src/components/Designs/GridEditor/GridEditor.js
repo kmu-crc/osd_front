@@ -264,6 +264,7 @@ class GridEditor extends Component {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
         const { gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         //console.log("items - ", DesignDetailStep);
+        console.log(design);
 
         return (
             <div style={{ position: "relative" }}>
@@ -286,6 +287,7 @@ class GridEditor extends Component {
                                 isTeam={editor}
                                 boardId={boardId}
                                 designId={this.props.design.uid}
+                                is_problem={this.props.design.is_problem}
                                 open={newcard}
                                 close={() => this.setState({ newcard: false })} />
                             : null}
