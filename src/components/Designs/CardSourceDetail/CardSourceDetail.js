@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-// import update from "react-addons-update";
 import styled from "styled-components";
 import FileIcon from "components/Commons/FileIcon";
 import Loading from "components/Commons/Loading";
@@ -8,15 +7,12 @@ import osdcss from "opendesign_style";
 import FileController from "./FileController";
 import TextController from "./TextControllerPlus";
 import LinkController from "./LinkController";
-// import ProblemController from "./ProblemController";
 import ProblemContainer from "containers/Designs/ProblemContainer"
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import { Modal, Dropdown } from "semantic-ui-react";
-// import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css';
 import Cross from "components/Commons/Cross";
-
 import host from "config";
 
 // FOR EDITOR
@@ -774,7 +770,7 @@ class CardSourceDetail extends Component {
 
   render() {
     const { edit, content, loading, submit, tab, item, result } = this.state;
-    // console.log("content:", this.state.content);
+    console.log("content:", content.find(item => item.type === "TEXT"));
     console.log("result:", this.props.DesignDetail && this.props.DesignDetail.category_level3 - 1);
     return (<div>
       {loading ? <Loading /> : null}
@@ -958,6 +954,13 @@ class CardSourceDetail extends Component {
       {
         this.props.uid && (!edit && !this.props.edit) && content.length > 0 &&
         <ViewContent>
+          {(content.find(item => item.type === "TEXT") !== null) ?
+            <div style={{ display: "flex" }}>
+              <div>글씨크기:</div>
+              <div onClick={() => { }}>+</div>
+              <div onClick={() => { }}>-</div>
+            </div>
+            : null}
           {content.map((item, index) =>
             <div key={index + item}>
               {(item.type === "FILE" && item.data_type === "image") ?
