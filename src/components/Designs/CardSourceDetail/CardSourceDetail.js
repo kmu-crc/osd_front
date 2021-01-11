@@ -18,10 +18,14 @@ import host from "config";
 // FOR EDITOR
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-github";
 
 import { PdfViewer } from "./PDFviewer";
 
+// FOR SUBMIT LIST
+import DateFormat from "modules/DateFormat";
+import Table from "rc-table";
 
 
 /*
@@ -174,6 +178,8 @@ const SubmitModalWrapper = styled(Modal)
         color:#707070;
         opacity:0.5;
         padding:10px;
+        cursor: pointer;
+
         :hover {
           // background-color: #707070;
         }
@@ -216,12 +222,12 @@ const SubmitModalWrapper = styled(Modal)
       line-height: 29px;
     }
     .submit {
-      margin-left: 47.5px;
       color: #FF0000;
       border-bottom: 1px solid #FF0000;
     }
     .cancel {
       color: #707070;
+      margin-left: 47.5px;
       border-bottom: 1px solid #707070;
     }
   }
@@ -803,18 +809,35 @@ class CardSourceDetail extends Component {
               </div>
               <div className="title">문제</div>
               <div className="content_box">
-                <div className="name">제출 언어</div><div className="msg">C/C++</div>
+                <div className="name">제출 언어: </div>
+                <div className="msg">
+                  {this.props.DesignDetail ?
+                    this.props.DesignDetail.category_level3 === 1 ?
+                      "C++" :
+                      this.props.DesignDetail.category_level3 === 2 ?
+                        "Python" :
+                        this.props.DesignDetail.category_level3 === 3 ?
+                          "C" : "etc."
+                    : null}
+                </div>
               </div>
               <div className="content_box">
-                <div className="name">제출 결과</div><div className="msg font_green">성공</div>
+                <div className="name">제출 결과: </div>
+                {result.result === "S"
+                  ? <div className="msg font_green">성공</div>
+                  : <div className="msg font_red">실패</div>}
               </div>
+              {/* <div className="content_box"> */}
+              {/* <div className="name">내가 제출한 소스 보기∨</div> */}
+              {/* </div> */}
               <div className="content_box">
-                <div className="name">내가 제출한 소스 보기∨</div>
-              </div>
-              <div className="content_box">
-                <div className="msg">{result.result},{result.message}</div>
+                <div className="msg">{result.message}</div>
               </div>
 
+              <div className="button-wrapper">
+                <div
+                  onClick={() => this.setState({ result: false, loading: false })} >닫기</div>
+              </div>
             </SubmitResultModal> : null}
 
           <div className="close-box" onClick={() => this.setState({ submit: false })} >
@@ -844,7 +867,7 @@ class CardSourceDetail extends Component {
             </div>
           </div>
           <div className="coding-area">
-            {/* <div className="tab">
+            <div className="tab">
               <div
                 onClick={() => this.setState({ tab: "code" })}
                 className={`label ${tab === "code" ? "active" : ""}`}
@@ -853,13 +876,12 @@ class CardSourceDetail extends Component {
                 onClick={() => this.setState({ tab: "log" })}
                 className={`label ${tab === "log" ? "active" : ""}`}
               >제출 내역</div>
-            </div> */}
+            </div>
             <div className="blank" />
 
             <div className="editor">
               {tab === "code"
                 ?
-                // <div style={{ width: "700px" }}>
                 <AceEditor
                   width={"100%"}
                   height={"100%"}
@@ -867,21 +889,28 @@ class CardSourceDetail extends Component {
                   setOptions={{
                     fontSize: "20px",
                   }}
-                  mode="python"
+                  mode= //"python"
+                  {this.props.DesignDetail &&
+                    (this.props.DesignDetail.category_level3 == 1 ||
+                      this.props.DesignDetail.category_level3 == 3)
+                    ? 'c_cpp'
+                    : this.props.DesignDetail &&
+                      this.props.DesignDetail.category_level3 == 2
+                      ? 'python'
+                      : ""}
                   theme="github"
                   onChange={console.log}
                   name="UNIQUE_ID_OF_DIV"
                   editorProps={{ $blockScrolling: true }} />
-                // </div>
-                : <div>log container</div>}
+                :
+                <SubmitLogContainer
+                  user_id={this.props.userInfo && this.props.userInfo.uid}
+                  content_id={this.props.uid}
+                />}
             </div>
           </div>
 
           <div className="button-wrapper">
-            <div onClick={() =>
-              this.setState({ submit: false })
-            } className="btn cancel">취소</div>
-
             <div onClick={() => {
               if (this.ace.editor == null) {
                 return;
@@ -905,7 +934,8 @@ class CardSourceDetail extends Component {
                   // {"id":3,"problem_type":"C","time":100,"name":"Test Check Problem","contents":"Test Check"}
                   problem_id: item.id,
                   language_id: this.props.DesignDetail.category_level3 || 1, //this.state.language_id || 1,
-                  code: `${code}`
+                  code: `${code}`,
+                  content_id: this.props.uid
                 })
               }).then(res => res.json())
                 .then(res => {
@@ -939,6 +969,10 @@ class CardSourceDetail extends Component {
                 .catch(e => console.error(e));
               this.setState({ loading: false });
             }} className="btn submit">제출</div>
+            <div onClick={() =>
+              this.setState({ submit: false })
+            } className="btn cancel">취소</div>
+
           </div>
         </SubmitModalWrapper>
 
@@ -1261,3 +1295,108 @@ class AddContent extends Component {
     );
   }
 }
+
+
+
+
+
+/*
+문제 출제/ 제출 관련 코드 임시 저장공간
+*/
+
+class SubmitLogContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { MySubmitList: [] }
+  }
+  get_submit_list = (user, content) => {
+    return new Promise((resolve, reject) => {
+      const url = `${host}/design/problem/mySubmitList/${user}/${content}`;
+      fetch(url, {
+        headers: { 'Content-Type': 'application/json' },
+        method: "GET",
+      })
+        .then(res =>
+          res.json())
+        .then(async res => {
+          await this.setState({ MySubmitList: res && res.MySubmitList || [] });
+          resolve(true);
+        })
+        .catch(er => reject(er));
+    })
+  }
+  componentDidMount() {
+    this.setState({ loading: true });
+    const { user_id, content_id } = this.props;
+    this.get_submit_list(user_id, content_id);
+    this.setState({ loading: false });
+  }
+  render() {
+    const { loading, MySubmitList } = this.state;
+    const data = MySubmitList && MySubmitList.map((submit, index) => {
+      const row = {
+        "key": index,
+        "result": submit.result === "S" ? "성공" : "실패",
+        "message": submit.message || "",
+        "time": submit.avg_time + "초",
+        "space": submit.avg_memory + "MB",
+        "submit-time": DateFormat(submit.create_date)
+      }
+      return row;
+    })
+    const columns = [
+      {
+        title: "결과",
+        dataIndex: "result",
+        key: "result",
+        width: 100,
+      },
+      {
+        title: "메세지",
+        dataIndex: "message",
+        key: "message",
+        width: 500,
+      },
+      {
+        title: "소요시간",
+        dataIndex: "time",
+        key: "time",
+        width: 100,
+      },
+      {
+        title: "사용용량",
+        dataIndex: "space",
+        key: "space",
+        width: 100,
+      },
+      {
+        title: "제출시간",
+        dataIndex: "submit-time",
+        key: "submit-time",
+        width: 100,
+      }
+    ]
+
+    return (MySubmitList && MySubmitList.length ?
+      <React.Fragment>
+        <Table
+          // {/* result message create_date avg_time avg_memory code */}
+          columns={
+            columns
+          }
+          data={
+            data
+          }
+          tableLayout="auto"
+        />
+      </React.Fragment>
+      :
+      <React.Fragment>
+        {loading
+          ? "제출 이력을 가져오고 있습니다."
+          : "제출 이력이 없습니다."}
+      </React.Fragment>
+    )
+  }
+}
+//
