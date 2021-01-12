@@ -1,16 +1,27 @@
 import React from 'react';
+import Spinner from 'react-spinner';
 export const PdfViewer = (props) => {
+  const [loading, setLoading] = React.useState(true);
   // const path = props.pdf.search(".pdf") ? props.pdf : props.pdf + ".pdf"
   return (<div>
+
+    {loading ?
+      <div className='spinner-container'>
+        <Spinner />
+      </div> : null}
+
     <iframe src={
       `https://docs.google.com/viewer?url=${props.pdf}&embedded=true`
       // `${props.pdf}`
     }
-      frameBorder="0" height="500px" width="100%"></iframe>
+      onLoad={() =>
+        setTimeout(() => { }, 500)}
+      // setLoading(false)}
+      frameBorder="0" height="500px" width="100%" />
     {/* <object data={props.pdf} type="application/pdf" width="300" height="200"> */}
     {/* alt : <a href={props.pdf}>{props.pdf}</a> */}
     {/* </object> */}
-    {props.pdf}
+    {/* {props.pdf} */}
   </div>);
 }
 

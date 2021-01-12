@@ -777,7 +777,7 @@ class CardSourceDetail extends Component {
   render() {
     const { edit, content, loading, submit, tab, item, result } = this.state;
     // console.log("content:", content.find(item => item.type === "TEXT"));
-    // console.log("result:", this.props.DesignDetail)// && this.props.DesignDetail.category_level3 - 1);
+    console.log("result:", this.props, this.state)// && this.props.DesignDetail.category_level3 - 1);
 
     return (<div>
       {loading ? <Loading /> : null}
@@ -1032,10 +1032,10 @@ class CardSourceDetail extends Component {
                   </span>
                   : (item.type === "FILE" && item.extension === "pdf") ?
                     <React.Fragment>
-                      <a className="iconWrap" href={item.content} download={item.file_name} >
-                        <FileIcon type={item.data_type} extension={item.extension} />
-                        <span className="LinkFileName">{item.file_name}</span>
-                      </a>
+                      {/* <a className="iconWrap" href={item.content} download={item.file_name} > */}
+                      {/* <FileIcon type={item.data_type} extension={item.extension} /> */}
+                      {/* <span className="LinkFileName">{item.file_name}</span> */}
+                      {/* </a> */}
                       <PdfViewer pdf={item.content} />
                     </React.Fragment>
 
@@ -1075,7 +1075,10 @@ class CardSourceDetail extends Component {
                                 <div className="titleBox"><div className="title">제목</div></div>
                                 <div className="boardBox"><div className="board">{item.content && JSON.parse(item.content).name}</div></div>
                                 <div className="titleBox"><div className="title">내용</div></div>
-                                <div className="boardBox"><div className="board">{item.content && JSON.parse(item.content).contents}</div></div>
+                                <div>
+                                  <PdfViewer pdf={item.content && JSON.parse(item.content).contents} />
+                                </div>
+                                {/* <div className="boardBox"><div className="board">{item.content && JSON.parse(item.content).contents}</div></div> */}
                                 {/* <div className="titleBox"><div className="title">조건</div></div>
                                     <div className="boardBox"><div className="board">
                                       제한시간:{item.content&&JSON.parse(item.content).time} / 
