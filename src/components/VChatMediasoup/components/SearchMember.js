@@ -93,6 +93,7 @@ class SearchMember extends React.Component {
               return ids_members.includes(mem.uid) || ids_selected.includes(mem.uid)
                 ? null :
                 <li
+                  key={mem.uid}
                   style={{ display: "flex", flexDirection: "row" }}
                   onClick={async _ => {
                     const copy = [...selected];
@@ -123,7 +124,7 @@ class SearchMember extends React.Component {
           })}
         </ul>
       </SearchMemberDiv>
-    </React.Fragment>
+    </React.Fragment >
     );
   }
 };
