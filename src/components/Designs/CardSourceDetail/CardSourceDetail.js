@@ -501,7 +501,6 @@ const EditorBottonWrapper = styled.div`
       }
     }
 `;
-
 class CardSourceDetail extends Component {
   constructor(props) {
     super(props);
@@ -514,6 +513,8 @@ class CardSourceDetail extends Component {
       submit: false, tab: "code",
       addProblem: false,
       selectProblem: null,
+      fontsizer_pos_top: 0,
+      fontratio: 1,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -539,6 +540,16 @@ class CardSourceDetail extends Component {
           }
         })
     }
+    const node = window.document.getElementById("card-source-detail-root-node");
+    if (node) {
+      window.addEventListener("scroll", (e) => {
+        // console.log(e.target.scrollTop);
+        this.setState({ fontsizer_pos_top: e.target.scrollTop });
+      }, true);
+    }
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", null, true);
   }
   async verifyorder(content) {
     console.log("verify:", content);
@@ -777,10 +788,43 @@ class CardSourceDetail extends Component {
   render() {
     const { edit, content, loading, submit, tab, item, result } = this.state;
     // console.log("content:", content.find(item => item.type === "TEXT"));
-    console.log("result:", this.props, this.state)// && this.props.DesignDetail.category_level3 - 1);
+    // console.log("result:", this.props, this.state)// && this.props.DesignDetail.category_level3 - 1);
+    console.log(this.state.fontratio);
+    const fontoffset = 0.3;
 
-    return (<div>
+    return (<div id="card-source-detail-root-node">
       {loading ? <Loading /> : null}
+
+      {content.find(item => item.type === "TEXT") != null ?
+        <div style={{
+          zIndex: "900",
+          width: "max-content",
+          height: "50px",
+          borderRadius: "25%",
+          display: "flex",
+          // background: "gray",
+          // border: "1px solid red",
+          lineHeight: "3.5rem",
+          position: "fixed",
+          right: 15,
+          top: (200 + this.state.fontsizer_pos_top) + "px",
+        }} >
+
+          <div style={{ cursor: "default", paddingTop: "3px", lineHeight: "1rem", fontSize: "1rem" }}>폰트<br />크기</div>
+
+          <div style={{
+            width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio < 3 ? "black" : "#EFEFEF",
+            textAlign: "center", color: "white", cursor: this.state.fontratio < 3 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem"
+          }}
+            onClick={() => { this.state.fontratio < 3 && this.setState({ fontratio: this.state.fontratio + fontoffset }) }} >+</div>
+
+          <div style={{
+            width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio > 1 ? "black" : "#EFEFEF",
+            textAlign: "center", color: "white", cursor: this.state.fontratio > 1 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem"
+          }}
+            onClick={() => { this.state.fontratio > 1 && this.setState({ fontratio: this.state.fontratio - fontoffset }) }} >-</div>
+        </div>
+        : null}
 
       {submit ?
         <SubmitModalWrapper
@@ -911,7 +955,7 @@ class CardSourceDetail extends Component {
           </div>
 
           <div className="button-wrapper">
-            <div onClick={() => {
+            <div onClick={async () => {
               if (this.ace.editor == null) {
                 return;
               }
@@ -920,7 +964,7 @@ class CardSourceDetail extends Component {
                 alert("코드를 작성해주세요.");
                 return;
               }
-              this.setState({ loading: true, });
+              await this.setState({ loading: true, });
               let ntry = 5;
               fetch(`${host}/design/problem/submit`, {
                 headers: {
@@ -992,16 +1036,10 @@ class CardSourceDetail extends Component {
       {
         this.props.uid && (!edit && !this.props.edit) && content.length > 0 &&
         <ViewContent>
-          {/* todo */}
-          {/* {(content.find(item => item.type === "TEXT") !== null) ?
-            <div style={{ display: "flex" }}>
-              <div>글씨크기:</div>
-              <div onClick={() => { }}>+</div>
-              <div onClick={() => { }}>-</div>
-            </div>
-            : null} */}
-          {content.map((item, index) =>
-            <div key={index + item}>
+
+          {content.map((item, index) => {
+            // console.log(item.content);
+            return <div key={index + item}>
               {(item.type === "FILE" && item.data_type === "image") ?
                 <div className="imgContent" onClick={() => {
                   const url = item.content;
@@ -1046,7 +1084,22 @@ class CardSourceDetail extends Component {
                       </a>
 
                       : (item.type === "TEXT") ?
-                        <div className="textWrap" dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
+                        <React.Fragment>
+                          <div
+                            style={{
+                              fontSize: `${this.state.fontratio}rem`
+                            }}
+                            dangerouslySetInnerHTML={{
+                              __html: `${item.content
+                                .replace("\"font-size:14px;\"", `"font-size:${14 * this.state.fontratio}px;"`)
+                                .replace("\"font-size:18px;\"", `"font-size:${18 * this.state.fontratio}px;"`)
+                                .replace("\"font-size:24px;\"", `"font-size:${24 * this.state.fontratio}px;"`)
+                                .replace("\"font-size:30px;\"", `"font-size:${30 * this.state.fontratio}px;"`)
+                                .replace("\"font-size:36px;\"", `"font-size:${36 * this.state.fontratio}px;"`)
+                                .replace("\"font-size:48px;\"", `"font-size:${48 * this.state.fontratio}px;"`)
+                                }`
+                            }} />
+                        </React.Fragment>
 
                         : (item.type === "LINK") ?
                           <div className="linkWrap">
@@ -1099,7 +1152,7 @@ class CardSourceDetail extends Component {
 
                             : <div>올바른 형식의 아이템이 아닙니다.</div>}
             </div>
-          )}
+          })}
         </ViewContent>
       }
 
