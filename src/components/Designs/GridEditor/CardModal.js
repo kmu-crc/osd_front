@@ -435,6 +435,14 @@ class CardModal extends Component {
             private: this.props.card.private || false,
         }
     };
+    // componentDidMount() {
+    //     window.document.addEventListener("scroll", () => {
+    //         console.log("!!!!");
+    //     })
+    // }
+    // componentWillUnmount() {
+    //     window.document.removeEventListener("scroll");
+    // }
     componentWillReceiveProps(nextProps) {
         if (nextProps.card !== this.props.card) {
             // this.setState({ private: nextProps.card.private });
@@ -579,11 +587,11 @@ class CardModal extends Component {
     render() {
         const imgURL = (this.props.card && this.props.card.first_img && this.props.card.first_img.l_img) || null;
         const { card, isTeam } = this.props;
-        // console.log("card", card);
 
         return (
             <React.Fragment>
                 <CardDialog open={this.props.open} onClose={this.onClose}>
+
                     {this.state.loading && <Loading />}
 
                     <div className="close-box" onClick={this.onClose} >
@@ -690,6 +698,7 @@ class CardModal extends Component {
                     </div>
                     {/* } */}
                 </CardDialog>
+
                 {/* <BlankSpace /> */}
             </React.Fragment >)
     }
