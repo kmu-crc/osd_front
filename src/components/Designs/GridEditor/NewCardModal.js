@@ -13,7 +13,12 @@ import { alert } from "components/Commons/Alert/Alert";
 
 const NewCardDialogWrapper = styled(Modal)`
     margin-top: 50px !important;
+// <<<<<<< HEAD
     margin-bottom: 66px !important;
+// =======
+//     margin-bottom: 50px !important;
+//     min-width: 85%;
+// >>>>>>> 4a94944b105d8538e62ccca6c020a2ff87e689ee
     height: max-content;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #000000;
@@ -374,7 +379,7 @@ class NewCardModal extends Component {
         await ValidationGroup(this.state, false)
             .then(async data => {
                 files = await data && data.files;
-                await this.props.CreateDesignCardRequest({ title: this.state.title}, this.props.designId, this.props.boardId, this.props.token)
+                await this.props.CreateDesignCardRequest({ title: this.state.title }, this.props.designId, this.props.boardId, this.props.token)
                     .then(async (res) => {
                         if (res.success) {
                             // and get new card id

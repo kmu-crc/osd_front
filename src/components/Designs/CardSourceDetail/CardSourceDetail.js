@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-// import update from "react-addons-update";
 import styled from "styled-components";
 import FileIcon from "components/Commons/FileIcon";
 import Loading from "components/Commons/Loading";
@@ -8,21 +7,26 @@ import osdcss from "opendesign_style";
 import FileController from "./FileController";
 import TextController from "./TextControllerPlus";
 import LinkController from "./LinkController";
-import ProblemController from "./ProblemController";
 import ProblemContainer from "containers/Designs/ProblemContainer"
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import { Modal, Dropdown } from "semantic-ui-react";
-import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css';
 import Cross from "components/Commons/Cross";
-
 import host from "config";
 
 // FOR EDITOR
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-github";
+
+import { PdfViewer } from "./PDFviewer";
+
+// FOR SUBMIT LIST
+import DateFormat from "modules/DateFormat";
+import Table from "rc-table";
+
 
 /*
   PROBLEM SUBMIT MODAL
@@ -63,13 +67,13 @@ const ProblemBox = styled.div`
 `
 const SubmitResultModal = styled(Modal)`
     width: 873px;
-    height: 418px;
+    height: max-content;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 10px;
     opacity: 1;
     position: relative;
-    padding: 50px;
+    padding: 60px 50px 37px 50px;
     margin: auto;
     .close-box {
       width: max-content;
@@ -84,8 +88,6 @@ const SubmitResultModal = styled(Modal)`
       line-height: 29px;
       font-weight: 500;
       color: #707070;
-
-      margin-top: 10px;
     }
     .content_box{
       display:flex;
@@ -96,11 +98,18 @@ const SubmitResultModal = styled(Modal)`
         font-weight: 300;
         color: #707070;
       }
+      .codeBox{
+        margin-top:28px;
+        border:1px solid #EFEFEF;
+        width:100%;
+        padding:20px;
+      }
       .msg{
         font-size: 20px;
         line-height: 29px;
         font-weight: 500;
         color: #707070;
+        margin-left:39px;
       }
       .font_green{
         color:green;
@@ -109,23 +118,30 @@ const SubmitResultModal = styled(Modal)`
         color:red;
       }
     }
+    .button-wrapper{
+      display:flex;
+      justify-content:center;
+      margin-top:80px;
+      .close{
+        font-size:18px;
+        color:red;
+        font-weight:500;
+        cursor:pointer;
+      }
+    }
 `
 const SubmitModalWrapper = styled(Modal)
   `
-  *{
-    // border: 1px solid black;
-    font-family: Noto Sans KR;
-  }
   width: 873px;
-  // height: 949px;
   height:max-content;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 10px;
   opacity: 1;
   position: relative;
-  padding: 50px;
+  padding: 60px 50px;
   margin: auto;
+  font-family:Noto Sans CJK KR;
 
   .close-box {
     width: max-content;
@@ -140,7 +156,6 @@ const SubmitModalWrapper = styled(Modal)
     line-height: 29px;
     font-weight: 500;
     color: #707070;
-
     margin-top: 10px;
   }
 
@@ -151,7 +166,7 @@ const SubmitModalWrapper = styled(Modal)
     item-align: center;
 
     .label {
-      font: normal normal normal 20px/29px Noto Sans KR;
+      font: normal normal normal 18px/29px Noto Sans KR;
       letter-spacing: 0px;
       color: #707070;
       opacity: 1; 
@@ -171,7 +186,7 @@ const SubmitModalWrapper = styled(Modal)
       display: flex;
       flex-direction: row;
       width: max-content;
-      font: normal normal normal 20px/29px Noto Sans KR;
+      font: normal normal normal 18px/29px Noto Sans KR;
       letter-spacing: 0px;
       color: #707070;
       opacity: 1;
@@ -185,6 +200,8 @@ const SubmitModalWrapper = styled(Modal)
         color:#707070;
         opacity:0.5;
         padding:10px;
+        cursor: pointer;
+
         :hover {
           // background-color: #707070;
         }
@@ -201,24 +218,24 @@ const SubmitModalWrapper = styled(Modal)
     }
     .editor {
       margin-top: 16px;
-      width: 773px;
+      width: 100%;
       height: 588px;
+      overflow-y:auto;
       border:1px solid #efefef;
       background: #E9E9E9 0% 0% no-repeat padding-box;
-      // border-radius: 5px;
       opacity: 1;
     }
   }
   .button-wrapper {
     margin: auto;
-    margin-top: 40px;
+    margin-top: 34px;
     width: max-content;
     display: flex;
     flex-direction: row;
 
     .btn {
       cursor: pointer;
-      font-weight: 500;
+      font-weight: 700;
       width: max-content;
       height: 29px;
       opacity: 1;
@@ -227,13 +244,11 @@ const SubmitModalWrapper = styled(Modal)
       line-height: 29px;
     }
     .submit {
-      margin-left: 47.5px;
       color: #FF0000;
-      border-bottom: 1px solid #FF0000;
     }
     .cancel {
       color: #707070;
-      border-bottom: 1px solid #707070;
+      margin-left: 47.5px;
     }
   }
 `;
@@ -506,7 +521,6 @@ const EditorBottonWrapper = styled.div`
       }
     }
 `;
-
 class CardSourceDetail extends Component {
   constructor(props) {
     super(props);
@@ -517,8 +531,11 @@ class CardSourceDetail extends Component {
       origin: this.props.origin || [],
       loading: false,
       submit: false, tab: "code",
-      addProblem:false,
-      selectProblem:null,
+      addProblem: false,
+      selectProblem: null,
+      fontsizer_pos_top: 0,
+      fontratio: 1,
+      mySource:false,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -544,6 +561,16 @@ class CardSourceDetail extends Component {
           }
         })
     }
+    const node = window.document.getElementById("card-source-detail-root-node");
+    if (node) {
+      window.addEventListener("scroll", (e) => {
+        // console.log(e.target.scrollTop);
+        this.setState({ fontsizer_pos_top: e.target.scrollTop });
+      }, true);
+    }
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", null, true);
   }
   async verifyorder(content) {
     console.log("verify:", content);
@@ -781,10 +808,44 @@ class CardSourceDetail extends Component {
 
   render() {
     const { edit, content, loading, submit, tab, item, result } = this.state;
-    // console.log("content:", this.state.content);
-    console.log("result:", this.props.DesignDetail&&this.props.DesignDetail.category_level3-1);
-    return (<div>
+    // console.log("content:", content.find(item => item.type === "TEXT"));
+    // console.log("result:", this.props, this.state)// && this.props.DesignDetail.category_level3 - 1);
+    console.log(result);
+    const fontoffset = 0.3;
+
+    return (<div id="card-source-detail-root-node">
       {loading ? <Loading /> : null}
+
+      {content.find(item => item.type === "TEXT") != null ?
+        <div style={{
+          zIndex: "900",
+          width: "max-content",
+          height: "50px",
+          borderRadius: "25%",
+          display: "flex",
+          // background: "gray",
+          // border: "1px solid red",
+          lineHeight: "3.5rem",
+          position: "fixed",
+          right: 15,
+          top: (200 + this.state.fontsizer_pos_top) + "px",
+        }} >
+
+          <div style={{ cursor: "default", paddingTop: "3px", lineHeight: "1rem", fontSize: "1rem" }}>폰트<br />크기</div>
+
+          <div style={{
+            width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio < 3 ? "black" : "#EFEFEF",
+            textAlign: "center", color: "white", cursor: this.state.fontratio < 3 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem"
+          }}
+            onClick={() => { this.state.fontratio < 3 && this.setState({ fontratio: this.state.fontratio + fontoffset }) }} >+</div>
+
+          <div style={{
+            width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio > 1 ? "black" : "#EFEFEF",
+            textAlign: "center", color: "white", cursor: this.state.fontratio > 1 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem"
+          }}
+            onClick={() => { this.state.fontratio > 1 && this.setState({ fontratio: this.state.fontratio - fontoffset }) }} >-</div>
+        </div>
+        : null}
 
       {submit ?
         <SubmitModalWrapper
@@ -808,23 +869,48 @@ class CardSourceDetail extends Component {
           */}
           {result ?
             <SubmitResultModal open={result ? true : false}>
-              <div className="close-box" onClick={() => this.setState({ result: false,loading:false })} >
-              <Cross angle={45} color={"#707070"} weight={2} width={25} height={25} />
+              <div className="close-box" onClick={() => this.setState({ result: false, loading: false })} >
+                <Cross angle={45} color={"#707070"} weight={2} width={25} height={25} />
               </div>
               <div className="title">문제</div>
               <div className="content_box">
-                <div className="name">제출 언어</div><div className="msg">C/C++</div>
+                <div className="name">제출 언어: </div>
+                <div className="msg">
+                  {this.props.DesignDetail ?
+                    this.props.DesignDetail.category_level3 === 1 ?
+                      "C++" :
+                      this.props.DesignDetail.category_level3 === 2 ?
+                        "Python" :
+                        this.props.DesignDetail.category_level3 === 3 ?
+                          "C" : "etc."
+                    : null}
+                </div>
               </div>
               <div className="content_box">
-                <div className="name">제출 결과</div><div className="msg font_green">성공</div>
+                <div className="name">제출 결과 </div>
+                {result.result === "S"
+                  ? <div className="msg font_green">성공</div>
+                  : <div className="msg font_red">실패</div>}
               </div>
               <div className="content_box">
-                <div className="name">내가 제출한 소스 보기∨</div>
+                <div className="msg">{result.message}</div>
               </div>
-              <div className="content_box">
-                <div className="msg">{result.result},{result.message}</div>
-              </div>
+              <div className="content_box" style={{display:"flex",flexDirection:"column"}}> 
               
+                  <div className="name" style={{cursor:"pointer"}}
+                  onClick={()=>{this.setState({mySource:!this.state.mySource})}}
+                  >{this.state.mySource==false?"내가 제출한 소스보기∧":"내가 제출한 소스보기∨"}</div>
+                  {this.state.mySource == true?
+                    <div className="codeBox">
+                      {result.code}
+                    </div>
+                    :null
+                  }
+              </div>
+              <div className="button-wrapper">
+                <div className="close"
+                  onClick={() => this.setState({ result: false, loading: false })} >확인</div>
+              </div>
             </SubmitResultModal> : null}
 
           <div className="close-box" onClick={() => this.setState({ submit: false })} >
@@ -839,8 +925,10 @@ class CardSourceDetail extends Component {
                 selection
                 ref="dropdown"
                 options={[
-                  { key: 'c', text: 'C/C++', value: 'c' },
-                  { key: 'py', text: 'Python', value: 'py' }]}
+                  { key: 'cpp', text: 'C++', value: 'cpp' },
+                  { key: 'py', text: 'Python', value: 'py' },
+                  { key: 'c', text: 'C', value: 'c' },
+                ]}
                 placeholder="언어를 선택하여 주세요."
                 value={this.props.DesignDetail&&this.props.DesignDetail.category_level3==1?'c':
                 this.props.DesignDetail&&this.props.DesignDetail.category_level3==2?'py'
@@ -850,10 +938,10 @@ class CardSourceDetail extends Component {
                 this.props.DesignDetail&&this.props.DesignDetail.category_level3==1?"C++":
                 this.props.DesignDetail&&this.props.DesignDetail.category_level3==2?"Python":"C"
               }
+
             </div>
           </div>
           <div className="coding-area">
-
             <div className="tab">
               <div
                 onClick={() => this.setState({ tab: "code" })}
@@ -864,35 +952,41 @@ class CardSourceDetail extends Component {
                 className={`label ${tab === "log" ? "active" : ""}`}
               >제출 내역</div>
             </div>
-            <div className="blank"/>
+            <div className="blank" />
 
             <div className="editor">
               {tab === "code"
                 ?
-                // <div style={{ width: "700px" }}>
                 <AceEditor
                   width={"100%"}
-                  height={"100%"}
+                  height={"588px"}
                   ref={ref => this.ace = ref}
                   setOptions={{
                     fontSize: "20px",
                   }}
-                  mode="python"
+                  mode= //"python"
+                  {this.props.DesignDetail &&
+                    (this.props.DesignDetail.category_level3 == 1 ||
+                      this.props.DesignDetail.category_level3 == 3)
+                    ? 'c_cpp'
+                    : this.props.DesignDetail &&
+                      this.props.DesignDetail.category_level3 == 2
+                      ? 'python'
+                      : ""}
                   theme="github"
                   onChange={console.log}
                   name="UNIQUE_ID_OF_DIV"
                   editorProps={{ $blockScrolling: true }} />
-                // </div>
-                : <div>log container</div>}
+                :
+                <SubmitLogContainer
+                  user_id={this.props.userInfo && this.props.userInfo.uid}
+                  content_id={this.props.uid}
+                />}
             </div>
           </div>
 
           <div className="button-wrapper">
-            <div onClick={() =>
-              this.setState({ submit: false })
-            } className="btn cancel">취소</div>
-
-            <div onClick={() => {
+            <div onClick={async () => {
               if (this.ace.editor == null) {
                 return;
               }
@@ -901,7 +995,7 @@ class CardSourceDetail extends Component {
                 alert("코드를 작성해주세요.");
                 return;
               }
-              this.setState({ loading: true, });
+              await this.setState({ loading: true, });
               let ntry = 5;
               fetch(`${host}/design/problem/submit`, {
                 headers: {
@@ -914,12 +1008,13 @@ class CardSourceDetail extends Component {
                   user_id: this.props.userInfo.uid,
                   // {"id":3,"problem_type":"C","time":100,"name":"Test Check Problem","contents":"Test Check"}
                   problem_id: item.id,
-                  language_id: 1, //this.state.language_id || 1,
-                  code: `${code}`
+                  language_id: this.props.DesignDetail.category_level3 || 1, //this.state.language_id || 1,
+                  code: `${code}`,
+                  content_id: this.props.uid
                 })
               }).then(res => res.json())
                 .then(res => {
-                  console.log(res);
+                  console.log("result:::::",res);
                   if (res.success) {
                     const check = () => {
                       this.setState({ loading: true, });
@@ -949,6 +1044,10 @@ class CardSourceDetail extends Component {
                 .catch(e => console.error(e));
               this.setState({ loading: false });
             }} className="btn submit">제출</div>
+            <div onClick={() =>
+              this.setState({ submit: false })
+            } className="btn cancel">취소</div>
+
           </div>
         </SubmitModalWrapper>
 
@@ -968,14 +1067,26 @@ class CardSourceDetail extends Component {
       {
         this.props.uid && (!edit && !this.props.edit) && content.length > 0 &&
         <ViewContent>
-          {content.map((item, index) =>
-            <div key={index + item}>
+
+          {content.map((item, index) => {
+            // console.log(item.content);
+            return <div key={index + item}>
               {(item.type === "FILE" && item.data_type === "image") ?
-                <div className="imgContent" >
-                  <Zoom >
-                    <img width="100%" src={item.content} alt="이미지" download={item.file_name} />
-                  </Zoom>
-                  <p>이미지를 클릭하시면 크게 보실 수 있습니다.</p>
+                <div className="imgContent" onClick={() => {
+                  const url = item.content;
+                  const img = '<img id="image" src="' + url + '">';
+                  const popup = window.open("", "_blank", "image-view");
+                  popup.document.write(img);
+                  const imgnode = popup.document.getElementById("image");
+                  popup.resizeTo(
+                    /* width */imgnode.naturalWidth > window.screen.width ? window.screen.width / 2 : imgnode.naturalWidth * 1.06,
+                    /* height */imgnode.naturalHeight > window.screen.height ? window.screen.height / 2 : imgnode.naturalHeight * 1.06
+                  );
+                }}>
+                  {/* <Zoom > */}
+                  <img width="100%" src={item.content} alt="이미지" download={item.file_name} />
+                  {/* </Zoom> */}
+                  <p>이미지를 클릭하시면 원본크기로 보실 수 있습니다.</p>
                 </div>
 
                 : (item.type === "FILE" && item.data_type === "video") ?
@@ -988,31 +1099,54 @@ class CardSourceDetail extends Component {
                       controls="controls">
                       <source src={item.content} type="video/mp4" download={item.file_name}></source></video>
                   </span>
+                  : (item.type === "FILE" && item.extension === "pdf") ?
+                    <React.Fragment>
+                      {/* <a className="iconWrap" href={item.content} download={item.file_name} > */}
+                      {/* <FileIcon type={item.data_type} extension={item.extension} /> */}
+                      {/* <span className="LinkFileName">{item.file_name}</span> */}
+                      {/* </a> */}
+                      <PdfViewer pdf={item.content} />
+                    </React.Fragment>
 
-                  : (item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video") ?
-                    <a className="iconWrap" href={item.content} download={item.file_name} >
-                      <FileIcon type={item.data_type} extension={item.extension} />
-                      <span className="LinkFileName">{item.file_name}</span>
-                    </a>
+                    : (item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video") ?
+                      <a className="iconWrap" href={item.content} download={item.file_name} >
+                        <FileIcon type={item.data_type} extension={item.extension} />
+                        <span className="LinkFileName">{item.file_name}</span>
+                      </a>
 
-                    : (item.type === "TEXT") ?
-                      <div className="textWrap" dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
+                      : (item.type === "TEXT") ?
+                        <React.Fragment>
+                          <div
+                            style={{
+                              fontSize: `${this.state.fontratio}rem`
+                            }}
+                            dangerouslySetInnerHTML={{
+                              __html: `${item.content
+                                .replace("\"font-size:14px;\"", `"font-size:${14 * this.state.fontratio}px;"`)
+                                .replace("\"font-size:18px;\"", `"font-size:${18 * this.state.fontratio}px;"`)
+                                .replace("\"font-size:24px;\"", `"font-size:${24 * this.state.fontratio}px;"`)
+                                .replace("\"font-size:30px;\"", `"font-size:${30 * this.state.fontratio}px;"`)
+                                .replace("\"font-size:36px;\"", `"font-size:${36 * this.state.fontratio}px;"`)
+                                .replace("\"font-size:48px;\"", `"font-size:${48 * this.state.fontratio}px;"`)
+                                }`
+                            }} />
+                        </React.Fragment>
 
-                      : (item.type === "LINK") ?
-                        <div className="linkWrap">
-                          <LinkPreview>
-                            <div className="description">{
-                              IsJsonString(item.content)
-                                ? JSON.parse(item.content).hasOwnProperty('description')
-                                  ? "*" + JSON.parse(item.content).description : "" : ""}
-                            </div>
-                            <div className="url">
-                              <a target="_blank" href={`${IsJsonString(item.content)
-                                ? JSON.parse(item.content).hasOwnProperty('url')
-                                  ? JSON.parse(item.content).url : "invalid" : "invalid"}`}>
-                                ({IsJsonString(item.content)
+                        : (item.type === "LINK") ?
+                          <div className="linkWrap">
+                            <LinkPreview>
+                              <div className="description">{
+                                IsJsonString(item.content)
+                                  ? JSON.parse(item.content).hasOwnProperty('description')
+                                    ? "*" + JSON.parse(item.content).description : "" : ""}
+                              </div>
+                              <div className="url">
+                                <a target="_blank" href={`${IsJsonString(item.content)
                                   ? JSON.parse(item.content).hasOwnProperty('url')
-                                    ? JSON.parse(item.content).url : "invalid" : "invalid"})
+                                    ? JSON.parse(item.content).url : "invalid" : "invalid"}`}>
+                                  ({IsJsonString(item.content)
+                                    ? JSON.parse(item.content).hasOwnProperty('url')
+                                      ? JSON.parse(item.content).url : "invalid" : "invalid"})
                               </a>
                             </div>
                           </LinkPreview>
@@ -1026,11 +1160,6 @@ class CardSourceDetail extends Component {
                                     <div className="problemBox"><div className="board">{item.content&&JSON.parse(item.content).name}</div></div>
                                     <div className="titleBox"><div className="title">내용</div></div>
                                     <div className="problemBox"><div className="board">{item.content&&JSON.parse(item.content).contents}</div></div>
-                                    {/* <div className="titleBox"><div className="title">조건</div></div>
-                                    <div className="boardBox"><div className="board">
-                                      제한시간:{item.content&&JSON.parse(item.content).time} / 
-                                      문제유형:{item.content&&JSON.parse(item.content).problem_type}
-                                    </div></div> */}
                                   </ProblemBox>
 
                             <div
@@ -1042,11 +1171,21 @@ class CardSourceDetail extends Component {
                               <p style={{padding:"5px 13px",color:"white",backgroundColor:"red",borderRadius:"18px"}}>답안 제출하기</p>
                             </div>
 
-                          </div>
 
-                          : <div>올바른 형식의 아이템이 아닙니다.</div>}
+                              {/* <div
+                                onClick={() => {
+                                  this.setState({ item: JSON.parse(item.content) });
+                                  this.setState({ submit: true });
+                                }}
+                                style={{ width: "max-content", margin: "auto", borderBottom: "1px solid red", cursor: "pointer" }}>
+                                <p style={{ color: "red", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", fontWeight: "500" }}>답안 제출하기</p>
+                              </div> */}
+
+                            </div>
+
+                            : <div>올바른 형식의 아이템이 아닙니다.</div>}
             </div>
-          )}
+          })}
         </ViewContent>
       }
 
@@ -1074,7 +1213,7 @@ class CardSourceDetail extends Component {
                     : null}
 
                   {(item.type === "PROBLEM")
-                    ? <ProblemContainer open={this.state.addProblem} openModal={(data)=>this.setState({addProblem:data})} item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    ? <ProblemContainer open={this.state.addProblem} openModal={(data) => this.setState({ addProblem: data })} item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
                     : null}
 
                 </div>
@@ -1103,8 +1242,17 @@ class CardSourceDetail extends Component {
                   </DownBtn> : null}
               </ControllerWrap>)
             })}
-            <AddContent getValue={this.onAddValue} order={content.length} open={(data)=>this.setState({addProblem:data})}/>
-          </Fragment>) : <AddContent getValue={this.onAddValue} order={0} open={(data)=>this.setState({addProblem:data})}/>
+            <AddContent
+              is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
+              getValue={this.onAddValue}
+              order={content.length}
+              open={(data) => this.setState({ addProblem: data })} />
+          </Fragment>) :
+            <AddContent
+              is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
+              getValue={this.onAddValue}
+              order={0}
+              open={(data) => this.setState({ addProblem: data })} />
         ) : null
       }
 
@@ -1153,7 +1301,7 @@ const ControllerWrap2 = styled.div`
   .innerBox {
     display: flex;
     min-height: 45px;
-    height:max-content;
+    // height:max-content;
     align-items: center;
     justify-content: center;
     list-style: none;
@@ -1223,10 +1371,10 @@ class AddContent extends Component {
             onClick={() => this.addContent("LINK")}
             width="max-content" minWidth="134px" height="29px">
             하이퍼링크 등록하기</NewController>
-          <NewController
-            onClick={() => {this.addContent("PROBLEM");this.props.open(true);}}
+          {this.props.is_problem ? <NewController
+            onClick={() => { this.addContent("PROBLEM"); this.props.open(true); }}
             width="max-content" minWidth="134px" height="29px">
-            문제 출제하기</NewController>
+            문제 출제하기</NewController>:null}
         </div>
 
         {this.state.type === "FILE" &&
@@ -1237,3 +1385,107 @@ class AddContent extends Component {
   }
 }
 
+
+
+
+
+/*
+문제 출제/ 제출 관련 코드 임시 저장공간
+*/
+
+class SubmitLogContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { MySubmitList: [] }
+  }
+  get_submit_list = (user, content) => {
+    return new Promise((resolve, reject) => {
+      const url = `${host}/design/problem/mySubmitList/${user}/${content}`;
+      fetch(url, {
+        headers: { 'Content-Type': 'application/json' },
+        method: "GET",
+      })
+        .then(res =>
+          res.json())
+        .then(async res => {
+          await this.setState({ MySubmitList: res && res.MySubmitList || [] });
+          resolve(true);
+        })
+        .catch(er => reject(er));
+    })
+  }
+  componentDidMount() {
+    this.setState({ loading: true });
+    const { user_id, content_id } = this.props;
+    this.get_submit_list(user_id, content_id);
+    this.setState({ loading: false });
+  }
+  render() {
+    const { loading, MySubmitList } = this.state;
+    const data = MySubmitList && MySubmitList.map((submit, index) => {
+      const row = {
+        "key": index,
+        "result": submit.result === "S" ? "성공" : "실패",
+        "message": submit.message || "",
+        "time": submit.avg_time + "초",
+        "space": submit.avg_memory + "MB",
+        "submit-time": DateFormat(submit.create_date)
+      }
+      return row;
+    })
+    const columns = [
+      {
+        title: "결과",
+        dataIndex: "result",
+        key: "result",
+        width: 100,
+      },
+      {
+        title: "메세지",
+        dataIndex: "message",
+        key: "message",
+        width: 500,
+      },
+      {
+        title: "소요시간",
+        dataIndex: "time",
+        key: "time",
+        width: 100,
+      },
+      {
+        title: "사용용량",
+        dataIndex: "space",
+        key: "space",
+        width: 100,
+      },
+      {
+        title: "제출시간",
+        dataIndex: "submit-time",
+        key: "submit-time",
+        width: 100,
+      }
+    ]
+
+    return (MySubmitList && MySubmitList.length ?
+      <React.Fragment>
+        <Table
+          // {/* result message create_date avg_time avg_memory code */}
+          columns={
+            columns
+          }
+          data={
+            data
+          }
+          tableLayout="auto"
+        />
+      </React.Fragment>
+      :
+      <React.Fragment>
+        {loading
+          ? "제출 이력을 가져오고 있습니다."
+          : "제출 이력이 없습니다."}
+      </React.Fragment>
+    )
+  }
+}
+//

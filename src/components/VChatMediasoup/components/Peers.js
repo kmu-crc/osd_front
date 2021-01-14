@@ -57,6 +57,7 @@ Peers.propTypes =
 
 const mapStateToProps = (state) => {
 	const peersArray = Object.values(state.peers);
+
 	return {
 		peers: peersArray,
 		activeSpeakerId: state.room.activeSpeakerId

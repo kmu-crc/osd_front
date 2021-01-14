@@ -42,6 +42,7 @@ class VChat2Container extends Component {
                     if (data && data.member) {
                         const ismember = data.member.filter(mem => mem.user_id === this.props.userInfo.uid).length > 0;
                         const invited = await CheckInvitedUserRequest(this.props.id, this.props.token);
+                        alert(invited.result);
                         if (ismember || (invited.result || false)) {
                             this.setState({ design: data });
                             this.setState({ valid: true });

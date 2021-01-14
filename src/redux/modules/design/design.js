@@ -700,7 +700,7 @@ export function CheckInvitedUserRequest(id, token) {
         })
             .then(res => res.json())
             .then(res => {
-                console.log("check result", res);
+                // console.log("check result", res);
                 resolve(res);
             }).catch(error => {
                 console.error(error);
@@ -714,7 +714,7 @@ export function InvitedUserRequest(id, token, data) {
         fetch(url, {
             headers: { "x-access-token": token },
             method: "POST",
-            body: JSON.stringify(data)
+            body: JSON.stringify({ to_user_id: data })
         })
             .then(res => res.json())
             .then(res => {
