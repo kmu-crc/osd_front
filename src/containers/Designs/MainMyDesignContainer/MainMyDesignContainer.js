@@ -7,12 +7,13 @@ import opendesign_style from 'opendesign_style';
 import styled from 'styled-components';
 
 const Head = styled.div`
+  font: normal normal bold 23px/34px Noto Sans KR;
   color: ${opendesign_style.color.grayScale.scale7};
-  font-size: ${opendesign_style.font.size.heading2};
+  // font-size: ${opendesign_style.font.size.heading2};
   line-height: ${opendesign_style.font.size.heading2};
   text-align: center;
-  margin-top: 42px;
-  margin-bottom: 42px;
+  margin-top: 30px;
+  margin-bottom: 27px;
 `;
 class MainMyDesignContainer extends Component {
   componentWillMount() {
@@ -31,7 +32,7 @@ class MainMyDesignContainer extends Component {
       <React.Fragment>
         {this.props.MyMainDesignAdded &&
           (this.props.MyMainDesignAdded.length > 0)
-          ? <Head>내디자인 / 관심디자인</Head>
+          ? <Head>내 디자인 | 관심 디자인</Head>
           : null}
         <ScrollList
           {...opendesign_style.design_margin}

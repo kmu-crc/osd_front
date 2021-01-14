@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import MenuContext from "Global/Context/GlobalContext"
+import opendesign_style from "opendesign_style"
 
 const Container = styled.div`
     height: ${props => props.height};
@@ -13,20 +14,22 @@ const Container = styled.div`
 		top: -55px;
 		opacity: 0;
     }&.larger {;}
-    
     -webkit-transition: all 0.45s;
 	-moz-transition: all 0.45s;
 	-ms-transition: all 0.45s;
 	-o-transition: all 0.45s;
-	transition: all 0.45s;
+    transition: all 0.45s;
+
 `
 const MainCategory = styled.div`
+    // margin-top:20px;
     width: 100%;
     position: fixed;
     z-index: 820;
-    top: 50px;
-    padding-left: 115px;
+    top: 70px;
+    // padding-left: 115px;
     display: flex;
+    justify-content:center;
     background-color: #FFFFFF;
     @media only screen and (max-width : 900px) {
     top:100px;
@@ -37,11 +40,19 @@ const MainCategory = styled.div`
 
     }
 
+    @media only screen and (min-width : 1920px) {
+        width:1920px;
+    }
+
+    @media only screen and (max-width : 450px) {
+        top:140px;
+    }
+
 `
 const MainCateElement = styled.div`
     z-index: 820;
     height: 29px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 300;
     font-family: Noto Sans KR;
     line-height: 29px;
@@ -62,29 +73,35 @@ const SubCategory = styled.div`
     z-index: 810;
     position: fixed;
     width:${props => props.screenWidth < 1920 ? window.innerWidth + "px" : "1920px"};
-    top: 70px;
+    top: 85px;
     padding-top: 17px;
     height:70px;
     display: flex;
     justify-content: center;
     background-color: #FFFFFF;
     margin-right:25px;
-    @media only screen and (max-width : 900px) {
-        justify-content: center;
-        ::-webkit-scrollbar { display: none; }
-    }
+
     @media only screen and (max-width : 900px) {
         top:120px;
         overflow:scroll;
         padding-left:30px;
-        justify-content: flex-start;
+        justify-content: center;
         ::-webkit-scrollbar { display: none; }
+        
     }
+    @media only screen and (min-width : 1920px) {
+        width:1920px;
+    }
+
+    @media only screen and (max-width : 450px) {
+        top:150px;
+    }
+
 `
 const SubCateElement = styled.div`
     z-index: 810;
     height: 29px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 300;
     font-family: Noto Sans KR;
     line-height: 29px;

@@ -12,6 +12,7 @@ const OrderWrapper = styled.div`
     padding: 10px;
 `
 const OrderElement = styled.div`
+    width:max-content;
     font-family: Noto Sans KR;
     font-weight: 500;
     line-height: 29px;

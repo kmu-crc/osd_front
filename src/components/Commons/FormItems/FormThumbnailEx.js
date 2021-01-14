@@ -4,13 +4,16 @@ import styled from "styled-components";
 import { FormFile } from "./FormFile";
 
 const InputWrap = styled.div`
-// div{border:1px solid red;};
-  // position: relative;
-  margin-bottom: 2.5rem;
+  height:156px;
   display: flex;
   flex-direction: row;
+  align-items:flex-end;
+
   @media only screen and (min-width: 0px) and (max-width: 700px) {
     flex-direction: column;
+  }
+  .textWrapper{
+    width:100%;
   }
   label{
     width: 63px;
@@ -18,8 +21,8 @@ const InputWrap = styled.div`
     cursor: pointer;
   }
   .wrapper{
-    margin-left: 54.5px;
-    margin-top: 100px;
+    margin-left: 18px;
+    // margin-top: 100px;
     @media only screen and (min-width: 0px) and (max-width: 700px) {
       margin-left: 10px;
       margin-top: 25px;
@@ -30,9 +33,9 @@ const InputWrap = styled.div`
     height: 25px;
   }
   .find{
-    font-weight: 500;
-    font-size: 17px;
-    border-bottom: 1.5px solid #FF0000;
+    font-weight: 700;
+    font-size: 16px;
+    // border-bottom: 1.5px solid #FF0000;
     line-height: 25px;
     text-align: left;
     color: #FF0000;
@@ -42,7 +45,7 @@ const InputWrap = styled.div`
     height: 45px;
     margin-top: 11px;
     font-weight: 300;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 20px;
     text-align: left;
     color: #707070;
@@ -51,9 +54,11 @@ const InputWrap = styled.div`
 
 const ThumbnailImgEx = styled.label`
   display: block;
-  width: 200px;
-  height: 200px;
-  margin-bottom: 10px;
+  min-width: 156px;
+  min-height: 156px;
+  max-width: 156px;
+  max-height: 156px;
+  // margin-bottom: 10px;
   background-position: center;
   background-size: cover;
   background-color: #EFEFEF;
@@ -116,15 +121,6 @@ export class FormThumbnailEx extends Component {
     newstyle.backgroundImage = this.state.imageUrl ? `url(${this.state.imageUrl})` : null
     return (
       <InputWrap>
-        <ThumbnailImgEx style={newstyle} />
-        <div>
-          <label htmlFor={id ? id : name} >
-            <div className="wrapper">
-              <div className="inside-wrapper">
-                <div className="find">찾아보기</div></div>
-              <div className="text">프로필 사진은 대표적으로 보이게 되는 사진으로,<br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
-            </div>
-          </label>
         <FormFile
           name={name}
           id={id ? id : name}
@@ -135,6 +131,16 @@ export class FormThumbnailEx extends Component {
           validates={validates}
           onlyImage={true}
         />
+        <ThumbnailImgEx style={newstyle} />
+        <div className="textWrapper">
+          <label htmlFor={id ? id : name} >
+            <div className="wrapper">
+              <div className="inside-wrapper">
+                <div className="find">찾아보기</div></div>
+              <div className="text">프로필 사진은 대표적으로 보이게 되는 사진으로,<br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+            </div>
+          </label>
+
         </div>
       </InputWrap>
     );

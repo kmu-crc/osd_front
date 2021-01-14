@@ -36,7 +36,7 @@ const SearchContainer = styled.div`
         outline: none;
         width: 80%;
         border: none;
-        margin: 0px 10px;
+        margin: 5px 10px;
     }
     .shadow_button{
         width:21px;

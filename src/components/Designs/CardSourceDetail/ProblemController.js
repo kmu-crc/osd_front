@@ -83,17 +83,18 @@ const ProblemBox = styled.div`
   .titleBox{
     width:100%;
     margin-bottom:8px;
-    .title{
-      font-size:17px;
+    .title_{
+      font-size:15px;
       color:#707070;
       border-left:2px solid red;
+      font-weight:500;
       padding-left:5px;
     }
   }
   .boardBox{
     width:100%;
     background-color:#EFEFEF;
-    padding:10px;
+    padding:18px 11px;
     margin-bottom:35px;
     .board{
       font-size:15px;
@@ -210,9 +211,9 @@ class ProblemController extends Component {
       <ModalBox open={this.state.show}>
         <div className="closeBox"> <Cross onClick={this.handleCloseModal} angle={45} color={"#707070"} weight={1} width={33} height={33} /></div>
         <ProblemBox>
-          <div className="titleBox"><div className="title">제목</div></div>
+          <div className="titleBox"><div className="title_" >제목</div></div>
           <div className="boardBox"><div className="board">{this.state.contents&&this.state.contents.name}</div></div>
-          <div className="titleBox"><div className="title">내용</div></div>
+          <div className="titleBox"><div className="title_" >내용</div></div>
           <div className="boardBox"><div className="board">{this.state.contents&&this.state.contents.contents}</div></div>
           {/* <div className="titleBox"><div className="title">조건</div></div>
           <div className="boardBox"><div className="board">
@@ -229,9 +230,9 @@ class ProblemController extends Component {
       {this.props.open!=true?
         <React.Fragment>
         <ProblemBox>
-          <div className="titleBox"><div className="title">제목</div></div>
+          <div className="titleBox"><div className="title_" >제목</div></div>
           <div className="boardBox"><div className="board">{this.state.contents&&this.state.contents.name}</div></div>
-          <div className="titleBox"><div className="title">내용</div></div>
+          <div className="titleBox"><div className="title_" >내용</div></div>
           <div className="boardBox"><div className="board">{this.state.contents&&this.state.contents.contents}</div></div>
           {/* <div className="titleBox"><div className="title">조건</div></div>
           <div className="boardBox"><div className="board">

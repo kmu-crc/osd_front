@@ -19,7 +19,9 @@ const BannerWrapper = styled.div`
   background: url(${props => props.img});
   background-repeat: no-repeat;
   background-size: 100% 349.5px;
-
+  display:flex;
+  justify-content:center;
+  align-items:center;
   @media only screen and (min-width : 1920){
     width:1920px;
   }
@@ -36,24 +38,37 @@ const BannerWrapper = styled.div`
 const Context = styled.div`
   width: 504px;
   height: 196px;
-  top: 40px;
-  position: relative;
-  background: url(${context});
-  background-repeat: no-repeat;
-  background-size: 504px 196px;
-  margin: auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  .red_label{
+    font-size:26px;
+    font: normal normal 900 26px/38px Noto Sans KR;
+    color:red;
+    text-align: center;
+  }
+  .black_label{
+    font: normal normal 18px/27px Noto Sans KR;
+    letter-spacing: 0px;
+    text-align: center;
+    font-size:18px;
+    color:#707070;
+    text-align: center;
+  }
   @media only screen and (min-width : 0px) and (max-width:500px) {
     width:100%;
     background-size: contain;
   }
 `;
 const Head = styled.div`
+  font: normal normal bold 23px/34px Noto Sans KR;
   color: ${opendesign_style.color.grayScale.scale7};
-  font-size: ${opendesign_style.font.size.heading2};
+  // font-size: ${opendesign_style.font.size.heading2};
   line-height: ${opendesign_style.font.size.heading2};
   text-align: center;
-  margin-top: 42px;
-  margin-bottom: 42px;
+  margin-top: 27px;
+  margin-bottom: 27px;
 `;
 export default class Main extends Component {
   constructor(props) {
@@ -83,8 +98,14 @@ export default class Main extends Component {
     return (
       <React.Fragment>
         <BannerWrapper width={heroSize === 'l' ? 1920 : heroSize === 'm' ? 1440 : 360} img={heroSize === 'l' ? hero1920 : heroSize === 'm' ? hero1440 : hero360}>
-          <Context /> {/* <LinkWrapper><a href="/tour">이용 가이드 보러가기</a></LinkWrapper> */}
-        </BannerWrapper> {/* const Textwrapper = styled.div`float: center;margin-top: 60.5px;// margin-bottom: 60px;text-align: center;font-size: 25px;font-family: Noto Sans KR;font-weight: 700;line-height: 37px;color: #FF0000;cursor: default;`;<Textwrapper>인기 디자인</Textwrapper> */}
+          {/* <Context /> */}
+          <Context>
+          <div className="red_label">OPEN SOURCE DESIGN</div><br/><br/>
+          <div className="black_label">오픈 소스 기반 플랫폼을 통해 다양한 사람들과 함께<br/>
+          당신의 아이디어를 쉽게, 최고의 디자인으로 만들어 보세요.<br/><br/>
+          당신의 아이디어가 최고가 되는 경험을 저희와 함께하세요!</div>
+          </Context>
+        </BannerWrapper>
 
         {this.props.userInfo
           ? <MainMyDesignListContainer /> : null}

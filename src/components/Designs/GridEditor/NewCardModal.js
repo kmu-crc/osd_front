@@ -13,7 +13,7 @@ import { alert } from "components/Commons/Alert/Alert";
 
 const NewCardDialogWrapper = styled(Modal)`
     margin-top: 50px !important;
-    margin-bottom: 50px !important;
+    margin-bottom: 66px !important;
     height: max-content;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #000000;
@@ -28,7 +28,7 @@ const NewCardDialogWrapper = styled(Modal)`
         background: rgba(112, 112, 112, 0.45) !important;
     } 
     .content {
-        padding: 45px;
+        padding: 0px 45px;
         margin-left: auto;
         line-height: 17px;
         .title {
@@ -37,6 +37,7 @@ const NewCardDialogWrapper = styled(Modal)`
             color: #707070;
             font-weight: 500;
             line-height: 29px;
+            margin-bottom:16px;
         }
     }
     .close-box {
@@ -141,7 +142,7 @@ const NewCardDialogWrapper = styled(Modal)`
     }
 `;
 const ContentBorder = styled.div`
-    height: 29px;
+    height: 21px;
     font-family: Noto Sans KR;
     font-size: 20px;
     color: #707070;
@@ -158,51 +159,40 @@ const EditCardHeaderContainer = styled.div`
     .edit-header-container {
         display: flex;
         margin-top: 15px;
-        margin-left: 45px;
+        margin-left: 48px;
         .edit-card-info {
             width: max-content;
             height: 29px;
             font-size: 20px;
-            font-weight: 500;
-            font-family: Noto Sans KR;
+            font-weight: 700;
+            font-family: Noto Sans CJK KR;
             text-align: left;
             line-height: 40px;
             color: #707070;
         }
     }
+    .subtitle-txt{
+            width: max-content;
+            height: 22px;
+            font-size: 15px;
+            font-weight: 700;
+            font-family: Noto Sans CJK KR, Medium;
+            text-align: right;
+            color: #707070;   
+    }
     .edit-header-thumbnail {
         display: flex;
         margin-top: 25px;
-        margin-left: 65px;
-        .thumbnail-txt {
-            width: max-content;
-            height: 29px;
-            font-size: 20px;
-            font-weight: 500;
-            font-family: Noto Sans KR;
-            text-align: right;
-            line-height: 40px;
-            color: #707070;
-        }
-
+        margin-left: 95px;
     }
     .edit-header-title {
         display: flex;
-        margin-top: 15px;
-        margin-left: 65px;
-        .title-txt {
-            width: 97px;
-            height: 29px;
-            font-size: 20px;
-            font-weight: 500;
-            font-family: Noto Sans KR;
-            text-align: right;
-            line-height: 40px;
-            color: #707070;
-        }
+        align-items:center;
+        margin-top: 37px;
+        margin-left: 95px;
         .title-input-container{
-            margin-left: 31px;
-            width: 500px;
+            margin-left: 46px;
+            width: 80%;
             height: 56px;
             background-color: #EFEFEF;
             border-radius: 5px;
@@ -221,21 +211,12 @@ const EditCardHeaderContainer = styled.div`
     }
     .edit-header-description {
         display: flex;
-        margin-top: 15px;
-        margin-left: 65px;
-        .description-txt {
-            width: 97px;
-            height: 29px;
-            font-size: 20px;
-            font-weight: 500;
-            font-family: Noto Sans KR;
-            text-align: right;
-            line-height: 40px;
-            color: #707070;
-        }
+        align-items:center;
+        margin-top: 26px;
+        margin-left: 95px;
         .description-input-container {
-            margin-left: 31px;
-            width: 505px;
+            margin-left: 46px;
+            width: 80%;
             height: 56px;
             background-color: #EFEFEF;
             border-radius: 5px;
@@ -458,18 +439,18 @@ class NewCardModal extends Component {
                                 <div className="edit-card-info">새 컨텐츠</div>
                             </div>
                             <div className="edit-header-thumbnail">
-                                <div className="thumbnail-txt">썸네일</div>
+                                <div className="subtitle-txt">썸네일</div>
                                 <FormThumbnailEx name="thumbnail" placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]}
-                                    style={{ marginLeft: "30px", width: "210px", height: "210px", backgroundColor: "#EFEFEF", borderRadius: "10px" }} />
+                                    style={{ marginLeft: "33px", width: "156px", height: "156px", backgroundColor: "#EFEFEF", borderRadius: "10px" }} />
                             </div>
                             <div className="edit-header-title">
-                                <div className="title-txt">제목</div>
+                                <div className="subtitle-txt">제목</div>
                                 <div className="title-input-container">
                                     <input className="title-input-style" name="title" onChange={this.onChangeTitle} maxLength="20" placeholder="제목을 입력해주세요." />
                                 </div>
                             </div>
                             <div className="edit-header-description">
-                                <div className="description-txt">설명</div>
+                                <div className="subtitle-txt">설명</div>
                                 <div className="description-input-container">
                                     <input className="description-input-style" name="content" onChange={this.onChangeContent} maxLength="1000" placeholder="설명을 입력해주세요." />
                                 </div>

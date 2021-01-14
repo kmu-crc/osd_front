@@ -34,10 +34,20 @@ const ProblemBox = styled.div`
     width:100%;
     margin-bottom:8px;
     .title{
-      font-size:17px;
+      font-size:15px;
       color:#707070;
       border-left:2px solid red;
       padding-left:5px;
+    }
+  }
+  .problemBox{
+    width:100%;
+    // background-color:#EFEFEF;
+    padding:10px;
+    margin-bottom:35px;
+    .board{
+      font-size:15px;
+      color:#707070;
     }
   }
   .boardBox{
@@ -148,6 +158,7 @@ const SubmitModalWrapper = styled(Modal)
     }
     .combo-box {
       font: normal normal normal 17px/29px Noto Sans KR;
+      color:#707070;
       margin-left: 20px;
     }
   }
@@ -416,7 +427,7 @@ const ViewContent = styled.div`
   }
 `;
 const ButtonContainer = styled.div`
-  margin-bottom: 35px;
+  // margin-bottom: 35px;
   margin-left: auto;
   margin-right: auto;
   .content-edit-wrapper {
@@ -823,11 +834,10 @@ class CardSourceDetail extends Component {
           <div className="language">
             <div className="label">제출 언어</div>
             <div className="combo-box">
-              <LanguageDropDown
+              {/* <LanguageDropDown
                 disabled
                 selection
                 ref="dropdown"
-                // onChange={(e, c) => this.setState({ language_id: c.value })}
                 options={[
                   { key: 'c', text: 'C/C++', value: 'c' },
                   { key: 'py', text: 'Python', value: 'py' }]}
@@ -835,7 +845,11 @@ class CardSourceDetail extends Component {
                 value={this.props.DesignDetail&&this.props.DesignDetail.category_level3==1?'c':
                 this.props.DesignDetail&&this.props.DesignDetail.category_level3==2?'py'
                 :null}
-              />
+              /> */}
+              {
+                this.props.DesignDetail&&this.props.DesignDetail.category_level3==1?"C++":
+                this.props.DesignDetail&&this.props.DesignDetail.category_level3==2?"Python":"C"
+              }
             </div>
           </div>
           <div className="coding-area">
@@ -1009,9 +1023,9 @@ class CardSourceDetail extends Component {
 
                                   <ProblemBox>
                                     <div className="titleBox"><div className="title">제목</div></div>
-                                    <div className="boardBox"><div className="board">{item.content&&JSON.parse(item.content).name}</div></div>
+                                    <div className="problemBox"><div className="board">{item.content&&JSON.parse(item.content).name}</div></div>
                                     <div className="titleBox"><div className="title">내용</div></div>
-                                    <div className="boardBox"><div className="board">{item.content&&JSON.parse(item.content).contents}</div></div>
+                                    <div className="problemBox"><div className="board">{item.content&&JSON.parse(item.content).contents}</div></div>
                                     {/* <div className="titleBox"><div className="title">조건</div></div>
                                     <div className="boardBox"><div className="board">
                                       제한시간:{item.content&&JSON.parse(item.content).time} / 
@@ -1024,8 +1038,8 @@ class CardSourceDetail extends Component {
                                 this.setState({ item: JSON.parse(item.content) });
                                 this.setState({ submit: true });
                               }}
-                              style={{ width: "max-content", margin: "auto", borderBottom: "1px solid red", cursor: "pointer" }}>
-                              <p style={{ color: "red", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", fontWeight: "500" }}>답안 제출하기</p>
+                              style={{ width: "max-content", margin: "auto",  cursor: "pointer" }}>
+                              <p style={{padding:"5px 13px",color:"white",backgroundColor:"red",borderRadius:"18px"}}>답안 제출하기</p>
                             </div>
 
                           </div>
@@ -1153,10 +1167,10 @@ const NewController = styled.li`
   line-height: 29px;
   color: #FF0000;
   padding-bottom: 1.5px;
-  border-bottom: 1.5px solid #FF0000;
-  font-size: 20px;
+  // border-bottom: 1.5px solid #FF0000;
+  font-size: 16px;
   font-weight: 500;
-  font-family: Noto Sans KR;
+  font-family: Noto Sans KR, Bold;
   text-align: center;
   cursor: pointer;
 
@@ -1212,7 +1226,7 @@ class AddContent extends Component {
           <NewController
             onClick={() => {this.addContent("PROBLEM");this.props.open(true);}}
             width="max-content" minWidth="134px" height="29px">
-            문제 등록하기</NewController>
+            문제 출제하기</NewController>
         </div>
 
         {this.state.type === "FILE" &&
