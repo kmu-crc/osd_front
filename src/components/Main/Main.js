@@ -70,6 +70,9 @@ const Head = styled.div`
   margin-top: 27px;
   margin-bottom: 27px;
 `;
+const ScrollListContainer = styled.div`
+    padding-left:20px;
+`;
 export default class Main extends Component {
   constructor(props) {
     super(props);
@@ -108,14 +111,18 @@ export default class Main extends Component {
         </BannerWrapper>
 
         {this.props.userInfo
-          ? <MainMyDesignListContainer /> : null}
+          ? <ScrollListContainer><MainMyDesignListContainer /></ScrollListContainer> : null}
 
         {this.props.userInfo
-          ? <MainMyGroupListContainer /> : null}
+          ? <ScrollListContainer><MainMyGroupListContainer /></ScrollListContainer> : null}
         <Head>인기 그룹</Head>
+        <ScrollListContainer>
         <TopGroupListContainer />
+        </ScrollListContainer>
         <Head>인기 디자인</Head>
+        <ScrollListContainer>
         <TopDesignListContainer />
+        </ScrollListContainer>
       </React.Fragment>
     )
   }

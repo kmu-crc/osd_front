@@ -102,6 +102,9 @@ const CenterMenu = styled.ul`
         // margin-top:5px
         border:none;
     }
+    @media only screen and (min-width : 1600px) {
+        margin-left:40px;
+    }
     @media only screen and (max-width : 1600px) {
         width:60%;
     }
@@ -162,9 +165,10 @@ const RightMenu = styled.ul`
         display:flex;
         justify-content:center;
         align-items:center;
-        padding:3px 16px 4px 16px;
+        padding:4px 16px 4px 16px;
         margin-right:36px;
         cursor: pointer;
+        font-weight:900;
     }
     .profileItem{
         *{
