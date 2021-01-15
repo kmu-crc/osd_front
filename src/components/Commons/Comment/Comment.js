@@ -55,8 +55,8 @@ const CommentInner = styled.div`
         margin-left: 10px;
         width: max-content;
         min-width: 150px;
-        max-width: 560px;
-        height:max-content;
+        max-width: 473px;
+        height:40px;
         .nick {
             display: flex;
             flex-direction: row;
@@ -409,8 +409,8 @@ class Comment extends Component {
                     <textarea value={this_comment || ""} onChange={this.onChangeValue} name="this_comment" />
                 </div>
                 <div className="another-wrapper">
-                    <div className="cancel" onClick={this.undoComment}>취소</div>
                     <div className="submit" onClick={this.requestComment}>게시</div>
+                    <div className="cancel" onClick={this.undoComment}>취소</div>
                 </div>
                 </div>
             </CommentInputTextContainer>

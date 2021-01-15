@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-// import update from "react-addons-update";
 import styled from "styled-components";
 import FileIcon from "components/Commons/FileIcon";
 import Loading from "components/Commons/Loading";
@@ -8,16 +7,12 @@ import osdcss from "opendesign_style";
 import FileController from "./FileController";
 import TextController from "./TextControllerPlus";
 import LinkController from "./LinkController";
-import ProblemController from "./ProblemController";
 import ProblemContainer from "containers/Designs/ProblemContainer"
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import { Modal, Dropdown } from "semantic-ui-react";
-import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css';
 import Cross from "components/Commons/Cross";
-import SubmitResultModal from "./SubmitResultModal";
-
 import host from "config";
 
 // FOR EDITOR
@@ -26,71 +21,12 @@ import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-github";
 
+import { PdfViewer } from "./PDFviewer";
 
-// FOR PREVIEW PDF FILES
-import { pdfjs } from 'react-pdf';
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-const DivPDFVIEWER = styled.div`
-  width: max-content;
-  margin: auto;
-`;
-const PdfViewer = (props) => {
-  const [numPages, setNumPages] = React.useState(null); //total
-  const [pageNumber, setPageNumber] = React.useState(1); //current
-  const onDocumentLoadSuccess = ({ numPages }) => {
-    setNumPages(numPages);
-  };
-  const left = pageNumber > 1;
-  const right = pageNumber < numPages;
-  return (<DivPDFVIEWER>
-    <Document
-      options={{
-        cMapUrl: `//cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/cmaps/`,
-        cMapPacked: true,
-      }}
-      file={props.pdf}
-      onLoadSuccess={onDocumentLoadSuccess}>
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        <div
-          onClick={() => left ? setPageNumber(pageNumber - 1) : null}
-          style={{
-            display: "flex", flexDirection: "column", justifyContent: "center",
-            cursor: left ? "pointer" : "default", width: "20px",
-            backgroundColor: left ? "#EFEFEF" : "#FFFFFF"
-          }}>
-          <span style={{ margin: "auto", fontSize: "2.25rem" }}>
-            {left ? "<" : null}
-          </span>
-        </div>
-        <div style={{
-          // border: "1px solid red",
-          WebkitTouchCallout: "none",
-          WebkitUserSelect: "none",
-          MozUserSelect: "none",
-          msUserSelect: "none",
-          userSelect: "none",
-        }}>
-          <Page pageNumber={pageNumber} />
-        </div>
-        <div
-          onClick={() => right ? setPageNumber(pageNumber + 1) : null}
-          style={{
-            display: "flex", flexDirection: "column", justifyContent: "center",
-            cursor: right ? "pointer" : "default", width: "20px",
-            backgroundColor: right ? "#EFEFEF" : "#FFFFFF"
-          }}>
-          <span style={{ fontSize: "2.25rem" }}>
-            {right ? ">" : null}
-          </span>
-        </div>
-      </div>
-      <p style={{ width: "max-content", marginLeft: "auto", fontSize: "1.25rem" }}>
-        <span>{numPages}페이지 중 {pageNumber}페이지</span>
-      </p>
-    </Document>
-  </DivPDFVIEWER>);
-}
+// FOR SUBMIT LIST
+import DateFormat from "modules/DateFormat";
+import Table from "rc-table";
+
 
 /*
   PROBLEM SUBMIT MODAL
@@ -102,10 +38,20 @@ const ProblemBox = styled.div`
     width:100%;
     margin-bottom:8px;
     .title{
-      font-size:17px;
+      font-size:15px;
       color:#707070;
       border-left:2px solid red;
       padding-left:5px;
+    }
+  }
+  .problemBox{
+    width:100%;
+    // background-color:#EFEFEF;
+    padding:10px;
+    margin-bottom:35px;
+    .board{
+      font-size:15px;
+      color:#707070;
     }
   }
   .boardBox{
@@ -119,22 +65,83 @@ const ProblemBox = styled.div`
     }
   }
 `
+const SubmitResultModal = styled(Modal)`
+    width: 873px;
+    height: max-content;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 10px;
+    opacity: 1;
+    position: relative;
+    padding: 60px 50px 37px 50px;
+    margin: auto;
+    .close-box {
+      width: max-content;
+      cursor: pointer;
+      position: absolute;
+      top: 16px;
+      right: 16px; 
+    }
 
+    .title {
+      font-size: 20px;
+      line-height: 29px;
+      font-weight: 500;
+      color: #707070;
+    }
+    .content_box{
+      display:flex;
+      margin-top:30px;
+      .name{
+        font-size: 20px;
+        line-height: 29px;
+        font-weight: 300;
+        color: #707070;
+      }
+      .codeBox{
+        margin-top:28px;
+        border:1px solid #EFEFEF;
+        width:100%;
+        padding:20px;
+      }
+      .msg{
+        font-size: 20px;
+        line-height: 29px;
+        font-weight: 500;
+        color: #707070;
+        margin-left:39px;
+      }
+      .font_green{
+        color:green;
+      }
+      .font_red{
+        color:red;
+      }
+    }
+    .button-wrapper{
+      display:flex;
+      justify-content:center;
+      margin-top:80px;
+      .close{
+        font-size:18px;
+        color:red;
+        font-weight:500;
+        cursor:pointer;
+      }
+    }
+`
 const SubmitModalWrapper = styled(Modal)
   `
-  *{
-    // border: 1px solid black;
-    font-family: Noto Sans KR;
-  }
   width: 873px;
-  height: 949px;
+  height:max-content;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 10px;
   opacity: 1;
   position: relative;
-  padding: 50px;
+  padding: 60px 50px;
   margin: auto;
+  font-family:Noto Sans CJK KR;
 
   .close-box {
     width: max-content;
@@ -149,7 +156,6 @@ const SubmitModalWrapper = styled(Modal)
     line-height: 29px;
     font-weight: 500;
     color: #707070;
-
     margin-top: 10px;
   }
 
@@ -160,28 +166,27 @@ const SubmitModalWrapper = styled(Modal)
     item-align: center;
 
     .label {
-      font: normal normal normal 20px/29px Noto Sans KR;
+      font: normal normal normal 18px/29px Noto Sans KR;
       letter-spacing: 0px;
       color: #707070;
       opacity: 1; 
     }
     .combo-box {
       font: normal normal normal 17px/29px Noto Sans KR;
+      color:#707070;
       margin-left: 20px;
     }
   }
   .coding-area {
-    // border: 1px solid blue;
     *{
       font-family: monospace !important;
-      // width: 100% !important;
     }
     margin-top: 26px;
     .tab {
       display: flex;
       flex-direction: row;
       width: max-content;
-      font: normal normal normal 20px/29px Noto Sans KR;
+      font: normal normal normal 18px/29px Noto Sans KR;
       letter-spacing: 0px;
       color: #707070;
       opacity: 1;
@@ -195,45 +200,42 @@ const SubmitModalWrapper = styled(Modal)
         color:#707070;
         opacity:0.5;
         padding:10px;
+        cursor: pointer;
+
         :hover {
           // background-color: #707070;
         }
         &.active {
           // background-color: #707070;
-          // color: white;
-        }
-        width: max-content;
-        // background-color: #EFEFEF;
-        font: normal normal normal 20px/29px Noto Sans KR;
-        letter-spacing: 0px;
-        color: #707070;
-        opacity: 1;
+          opacity:1;
           background-color:white;
           border-top:1px solid #d6d6d6;
           border-left:1px solid #d6d6d6;
           border-right:1px solid #d6d6d6;
+        }
+
       }
     }
     .editor {
       margin-top: 16px;
       width: 100%;
-      height: 100%;
+      height: 588px;
+      overflow-y:auto;
       border:1px solid #efefef;
       background: #E9E9E9 0% 0% no-repeat padding-box;
-      // border-radius: 5px;
       opacity: 1;
     }
   }
   .button-wrapper {
     margin: auto;
-    margin-top: 40px;
+    margin-top: 34px;
     width: max-content;
     display: flex;
     flex-direction: row;
 
     .btn {
       cursor: pointer;
-      font-weight: 500;
+      font-weight: 700;
       width: max-content;
       height: 29px;
       opacity: 1;
@@ -242,13 +244,11 @@ const SubmitModalWrapper = styled(Modal)
       line-height: 29px;
     }
     .submit {
-      margin-left: 47.5px;
       color: #FF0000;
-      border-bottom: 1px solid #FF0000;
     }
     .cancel {
       color: #707070;
-      border-bottom: 1px solid #707070;
+      margin-left: 47.5px;
     }
   }
 `;
@@ -442,7 +442,7 @@ const ViewContent = styled.div`
   }
 `;
 const ButtonContainer = styled.div`
-  margin-bottom: 35px;
+  // margin-bottom: 35px;
   margin-left: auto;
   margin-right: auto;
   .content-edit-wrapper {
@@ -521,7 +521,6 @@ const EditorBottonWrapper = styled.div`
       }
     }
 `;
-
 class CardSourceDetail extends Component {
   constructor(props) {
     super(props);
@@ -534,6 +533,9 @@ class CardSourceDetail extends Component {
       submit: false, tab: "code",
       addProblem: false,
       selectProblem: null,
+      fontsizer_pos_top: 0,
+      fontratio: 1,
+      mySource:false,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -559,6 +561,16 @@ class CardSourceDetail extends Component {
           }
         })
     }
+    const node = window.document.getElementById("card-source-detail-root-node");
+    if (node) {
+      window.addEventListener("scroll", (e) => {
+        // console.log(e.target.scrollTop);
+        this.setState({ fontsizer_pos_top: e.target.scrollTop });
+      }, true);
+    }
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", null, true);
   }
   async verifyorder(content) {
     console.log("verify:", content);
@@ -796,168 +808,251 @@ class CardSourceDetail extends Component {
 
   render() {
     const { edit, content, loading, submit, tab, item, result } = this.state;
-    // console.log("content:", this.state.content);
-    console.log("result:", this.state.content);
-    return (<div>
+    // console.log("content:", content.find(item => item.type === "TEXT"));
+    // console.log("result:", this.props, this.state)// && this.props.DesignDetail.category_level3 - 1);
+    console.log(result);
+    const fontoffset = 0.3;
+
+    return (<div id="card-source-detail-root-node">
       {loading ? <Loading /> : null}
 
-      {
-        submit ?
-          <SubmitModalWrapper
-            open={submit}
-            onClose={() => this.setState({ submit: false })}
-          >
-            {loading ? <Loading msg="문제를 제출 중입니다." /> : null}
+      {content.find(item => item.type === "TEXT") != null ?
+        <div style={{
+          zIndex: "900",
+          width: "max-content",
+          height: "50px",
+          borderRadius: "25%",
+          display: "flex",
+          // background: "gray",
+          // border: "1px solid red",
+          lineHeight: "3.5rem",
+          position: "fixed",
+          right: 15,
+          top: (200 + this.state.fontsizer_pos_top) + "px",
+        }} >
 
+          <div style={{ cursor: "default", paddingTop: "3px", lineHeight: "1rem", fontSize: "1rem" }}>폰트<br />크기</div>
 
-            {result ?
-              // <SubmitResultModal close={() => this.setState({ result: null, loading: false })} open={result ? true : false} {...result} /> : null}
-              <SubmitResultModal open={result ? true : false}>
-                <div className="close-box" onClick={() => this.setState({ result: false, loading: false })} >
-                  <Cross angle={45} color={"#707070"} weight={2} width={25} height={25} />
-                </div>
-                <div className="title">문제</div>
-                <div className="content_box">
-                  <div className="name">제출 언어</div><div className="msg">C/C++</div>
-                </div>
-                <div className="content_box">
-                  <div className="name">제출 결과</div><div className="msg font_green">성공</div>
-                </div>
-                <div className="content_box">
-                  <div className="name">내가 제출한 소스 보기∨</div>
-                </div>
-                <div className="content_box">
-                  <div className="msg">{result.result},{result.message}</div>
-                </div>
-              </SubmitResultModal> : null}
+          <div style={{
+            width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio < 3 ? "black" : "#EFEFEF",
+            textAlign: "center", color: "white", cursor: this.state.fontratio < 3 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem"
+          }}
+            onClick={() => { this.state.fontratio < 3 && this.setState({ fontratio: this.state.fontratio + fontoffset }) }} >+</div>
 
-            <div className="close-box" onClick={() => this.setState({ submit: false })} >
-              <Cross angle={45} color={"#707070"} weight={2} width={25} height={25} />
-            </div>
-            <div className="title">{item.name}</div>
-            <div className="language">
-              <div className="label">제출 언어</div>
-              <div className="combo-box">
-                <LanguageDropDown
-                  selection
-                  ref="dropdown"
-                  onChange={(e, c) => this.setState({ language_id: c.value })}
-                  options={[
-                    { key: 'c', text: 'C/C++', value: 'c' },
-                    { key: 'py', text: 'Python', value: 'py' }]}
-                  placeholder="언어를 선택하여 주세요."
-                />
+          <div style={{
+            width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio > 1 ? "black" : "#EFEFEF",
+            textAlign: "center", color: "white", cursor: this.state.fontratio > 1 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem"
+          }}
+            onClick={() => { this.state.fontratio > 1 && this.setState({ fontratio: this.state.fontratio - fontoffset }) }} >-</div>
+        </div>
+        : null}
+
+      {submit ?
+        <SubmitModalWrapper
+          open={submit}
+          onClose={() => this.setState({ submit: false })}
+        >
+          {loading ? <Loading msg="문제를 제출 중입니다." /> : null}
+
+          {/* 
+            avg_memory: "0"
+            avg_time: "0"
+            code: "zxcvxzcv"
+            create_date: "2020-12-21T04:36:55.000Z"
+            language_id: 1
+            message: "main.c:1:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ at end of input↵ zxcvxzcv↵ ^~~~~~~~↵"
+            order: null
+            problem_id: 3
+            result: "C"
+            uid: 50
+            user_id: 762
+          */}
+          {result ?
+            <SubmitResultModal open={result ? true : false}>
+              <div className="close-box" onClick={() => this.setState({ result: false, loading: false })} >
+                <Cross angle={45} color={"#707070"} weight={2} width={25} height={25} />
               </div>
-            </div>
-            <div className="coding-area">
-
-              <div className="tab">
-                <div
-                  onClick={() => this.setState({ tab: "code" })}
-                  className={`label ${tab === "code" ? "active" : ""}`}
-                ><p>코딩 영역</p>
-                  {/* <p
-          onClick={() => this.setState({ tab: "log" })}
-          className={`label ${tab === "log" ? "active" : ""}`}
-        >제출 내역</p> */}
+              <div className="title">문제</div>
+              <div className="content_box">
+                <div className="name">제출 언어: </div>
+                <div className="msg">
+                  {this.props.DesignDetail ?
+                    this.props.DesignDetail.category_level3 === 1 ?
+                      "C++" :
+                      this.props.DesignDetail.category_level3 === 2 ?
+                        "Python" :
+                        this.props.DesignDetail.category_level3 === 3 ?
+                          "C" : "etc."
+                    : null}
                 </div>
               </div>
-              <div className="blank" />
-
-              <div className="editor">
-                {tab === "code"
-                  ?
-                  <div style={{ width: "100%", borderBottom: "1px solid #EFEFEF", borderRight: "1px solid #EFEFEF" }}>
-                    <AceEditor
-                      width="100%"
-                      ref={ref => this.ace = ref}
-                      setOptions={{
-                        fontSize: "20px",
-                        // width: "100%",
-                        // height: "100%",
-                        position: "absolute",
-                        top: "0",
-                        left: "0",
-                      }}
-                      mode="python" // "c_cpp"
-                      theme="github"
-                      onChange={console.log}
-                      name="UNIQUE_ID_OF_DIV"
-                      editorProps={{ $blockScrolling: true }} />
-                  </div>
-                  : <div>log container</div>}
+              <div className="content_box">
+                <div className="name">제출 결과 </div>
+                {result.result === "S"
+                  ? <div className="msg font_green">성공</div>
+                  : <div className="msg font_red">실패</div>}
               </div>
+              <div className="content_box">
+                <div className="msg">{result.message}</div>
+              </div>
+              <div className="content_box" style={{display:"flex",flexDirection:"column"}}> 
+              
+                  <div className="name" style={{cursor:"pointer"}}
+                  onClick={()=>{this.setState({mySource:!this.state.mySource})}}
+                  >{this.state.mySource==false?"내가 제출한 소스보기∧":"내가 제출한 소스보기∨"}</div>
+                  {this.state.mySource == true?
+                    <div className="codeBox">
+                      {result.code}
+                    </div>
+                    :null
+                  }
+              </div>
+              <div className="button-wrapper">
+                <div className="close"
+                  onClick={() => this.setState({ result: false, loading: false })} >확인</div>
+              </div>
+            </SubmitResultModal> : null}
+
+          <div className="close-box" onClick={() => this.setState({ submit: false })} >
+            <Cross angle={45} color={"#707070"} weight={2} width={25} height={25} />
+          </div>
+          <div className="title">{item.name}</div>
+          <div className="language">
+            <div className="label">제출 언어</div>
+            <div className="combo-box">
+              {/* <LanguageDropDown
+                disabled
+                selection
+                ref="dropdown"
+                options={[
+                  { key: 'cpp', text: 'C++', value: 'cpp' },
+                  { key: 'py', text: 'Python', value: 'py' },
+                  { key: 'c', text: 'C', value: 'c' },
+                ]}
+                placeholder="언어를 선택하여 주세요."
+                value={this.props.DesignDetail&&this.props.DesignDetail.category_level3==1?'c':
+                this.props.DesignDetail&&this.props.DesignDetail.category_level3==2?'py'
+                :null}
+              /> */}
+              {
+                this.props.DesignDetail&&this.props.DesignDetail.category_level3==1?"C++":
+                this.props.DesignDetail&&this.props.DesignDetail.category_level3==2?"Python":"C"
+              }
+
             </div>
+          </div>
+          <div className="coding-area">
+            <div className="tab">
+              <div
+                onClick={() => this.setState({ tab: "code" })}
+                className={`label ${tab === "code" ? "active" : ""}`}
+              >코딩 영역</div>
+              <div
+                onClick={() => this.setState({ tab: "log" })}
+                className={`label ${tab === "log" ? "active" : ""}`}
+              >제출 내역</div>
+            </div>
+            <div className="blank" />
 
-            <div className="button-wrapper">
-              <div onClick={() =>
-                this.setState({ submit: false })
-              } className="btn cancel">취소</div>
+            <div className="editor">
+              {tab === "code"
+                ?
+                <AceEditor
+                  width={"100%"}
+                  height={"588px"}
+                  ref={ref => this.ace = ref}
+                  setOptions={{
+                    fontSize: "20px",
+                  }}
+                  mode= //"python"
+                  {this.props.DesignDetail &&
+                    (this.props.DesignDetail.category_level3 == 1 ||
+                      this.props.DesignDetail.category_level3 == 3)
+                    ? 'c_cpp'
+                    : this.props.DesignDetail &&
+                      this.props.DesignDetail.category_level3 == 2
+                      ? 'python'
+                      : ""}
+                  theme="github"
+                  onChange={console.log}
+                  name="UNIQUE_ID_OF_DIV"
+                  editorProps={{ $blockScrolling: true }} />
+                :
+                <SubmitLogContainer
+                  user_id={this.props.userInfo && this.props.userInfo.uid}
+                  content_id={this.props.uid}
+                />}
+            </div>
+          </div>
 
-              <div onClick={() => {
-                if (this.ace.editor == null) {
-                  return;
-                }
-                const code = this.ace.editor.getValue();
-                if (code.trim() === "") {
-                  alert("코드를 작성해주세요.");
-                  return;
-                }
-                this.setState({ loading: true, });
-                let ntry = 5;
-                fetch(`${host}/design/problem/submit`, {
-                  headers: {
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
-                    "x-access-token": this.props.token
-                  },
-                  method: "POST",
-                  body: JSON.stringify({
-                    user_id: this.props.userInfo.uid,
-                    // {"id":3,"problem_type":"C","time":100,"name":"Test Check Problem","contents":"Test Check"}
-                    problem_id: item.id,
-                    language_id: 1, //this.state.language_id || 1,
-                    code: `${code}`
-                  })
-                }).then(res => res.json())
-                  .then(res => {
-                    console.log(res);
-                    if (res.success) {
-                      const check = () => {
-                        this.setState({ loading: true, });
-                        fetch(`${host}/design/problem/result-request/${res.id}`, {
-                          headers: { 'Content-Type': 'application/json' },
-                          method: "GET",
+          <div className="button-wrapper">
+            <div onClick={async () => {
+              if (this.ace.editor == null) {
+                return;
+              }
+              const code = this.ace.editor.getValue();
+              if (code.trim() === "") {
+                alert("코드를 작성해주세요.");
+                return;
+              }
+              await this.setState({ loading: true, });
+              let ntry = 5;
+              fetch(`${host}/design/problem/submit`, {
+                headers: {
+                  'Content-Type': 'application/json',
+                  "Access-Control-Allow-Origin": "*",
+                  "x-access-token": this.props.token
+                },
+                method: "POST",
+                body: JSON.stringify({
+                  user_id: this.props.userInfo.uid,
+                  // {"id":3,"problem_type":"C","time":100,"name":"Test Check Problem","contents":"Test Check"}
+                  problem_id: item.id,
+                  language_id: this.props.DesignDetail.category_level3 || 1, //this.state.language_id || 1,
+                  code: `${code}`,
+                  content_id: this.props.uid
+                })
+              }).then(res => res.json())
+                .then(res => {
+                  console.log("result:::::",res);
+                  if (res.success) {
+                    const check = () => {
+                      this.setState({ loading: true, });
+                      fetch(`${host}/design/problem/result-request/${res.id}`, {
+                        headers: { 'Content-Type': 'application/json' },
+                        method: "GET",
+                      })
+                        .then(res1 => res1.json())
+                        .then(res1 => {
+                          console.log(res1);
+                          if (res1.result) {
+                            this.setState({ result: res1 });
+                            ntry = 0;
+                          }
                         })
-                          .then(res1 => res1.json())
-                          .then(res1 => {
-                            console.log(res1);
-                            if (res1.result) {
-                              this.setState({ result: res1 });
-                              ntry = 0;
-                            }
-                          })
-                          .catch(e => {
-                            console.error(e);
-                            return;
-                          })
-                        if (ntry--)
-                          setTimeout(check, 1000 * 1.5);
-                      };
-                      check();
-                    } else {
-                      alert('제출에 실패하였습니다.');
-                      this.setState({ loading: false });
-                      return;
-                    }
-                  })
-                  .catch(e => console.error(e));
-                this.setState({ loading: false });
-              }} className="btn submit">제출</div>
-            </div>
-          </SubmitModalWrapper>
-          // <SubmitModal open={submit} close={this.setState({ submit: false })} /> : null} 
-          : null
+                        .catch(e => { console.error(e); return; })
+                      if (ntry--)
+                        setTimeout(check, 1000);
+                    };
+                    check();
+                  } else {
+                    alert('제출에 실패하였습니다.');
+                    this.setState({ loading: false });
+                    return;
+                  }
+                })
+                .catch(e => console.error(e));
+              this.setState({ loading: false });
+            }} className="btn submit">제출</div>
+            <div onClick={() =>
+              this.setState({ submit: false })
+            } className="btn cancel">취소</div>
+
+          </div>
+        </SubmitModalWrapper>
+
+        // <SubmitModal open={submit} close={this.setState({ submit: false })} /> : null}
+        : null
       }
 
       {/* <ButtonContainer>
@@ -969,10 +1064,13 @@ class CardSourceDetail extends Component {
       </ButtonContainer> */}
 
       {/* view mode */}
-      {this.props.uid && (!edit && !this.props.edit) && content.length > 0 &&
+      {
+        this.props.uid && (!edit && !this.props.edit) && content.length > 0 &&
         <ViewContent>
-          {content.map((item, index) =>
-            <div key={index + item}>
+
+          {content.map((item, index) => {
+            // console.log(item.content);
+            return <div key={index + item}>
               {(item.type === "FILE" && item.data_type === "image") ?
                 <div className="imgContent" onClick={() => {
                   const url = item.content;
@@ -985,7 +1083,7 @@ class CardSourceDetail extends Component {
                     /* height */imgnode.naturalHeight > window.screen.height ? window.screen.height / 2 : imgnode.naturalHeight * 1.06
                   );
                 }}>
-                  {/* <Zoom> */}
+                  {/* <Zoom > */}
                   <img width="100%" src={item.content} alt="이미지" download={item.file_name} />
                   {/* </Zoom> */}
                   <p>이미지를 클릭하시면 원본크기로 보실 수 있습니다.</p>
@@ -1001,13 +1099,12 @@ class CardSourceDetail extends Component {
                       controls="controls">
                       <source src={item.content} type="video/mp4" download={item.file_name}></source></video>
                   </span>
-
                   : (item.type === "FILE" && item.extension === "pdf") ?
                     <React.Fragment>
-                      <a className="iconWrap" href={item.content} download={item.file_name} >
-                        <FileIcon type={item.data_type} extension={item.extension} />
-                        <span className="LinkFileName">{item.file_name}</span>
-                      </a>
+                      {/* <a className="iconWrap" href={item.content} download={item.file_name} > */}
+                      {/* <FileIcon type={item.data_type} extension={item.extension} /> */}
+                      {/* <span className="LinkFileName">{item.file_name}</span> */}
+                      {/* </a> */}
                       <PdfViewer pdf={item.content} />
                     </React.Fragment>
 
@@ -1018,7 +1115,22 @@ class CardSourceDetail extends Component {
                       </a>
 
                       : (item.type === "TEXT") ?
-                        <div className="textWrap" dangerouslySetInnerHTML={{ __html: `${item.content}` }} />
+                        <React.Fragment>
+                          <div
+                            style={{
+                              fontSize: `${this.state.fontratio}rem`
+                            }}
+                            dangerouslySetInnerHTML={{
+                              __html: `${item.content
+                                .replace("\"font-size:14px;\"", `"font-size:${14 * this.state.fontratio}px;"`)
+                                .replace("\"font-size:18px;\"", `"font-size:${18 * this.state.fontratio}px;"`)
+                                .replace("\"font-size:24px;\"", `"font-size:${24 * this.state.fontratio}px;"`)
+                                .replace("\"font-size:30px;\"", `"font-size:${30 * this.state.fontratio}px;"`)
+                                .replace("\"font-size:36px;\"", `"font-size:${36 * this.state.fontratio}px;"`)
+                                .replace("\"font-size:48px;\"", `"font-size:${48 * this.state.fontratio}px;"`)
+                                }`
+                            }} />
+                        </React.Fragment>
 
                         : (item.type === "LINK") ?
                           <div className="linkWrap">
@@ -1036,116 +1148,121 @@ class CardSourceDetail extends Component {
                                     ? JSON.parse(item.content).hasOwnProperty('url')
                                       ? JSON.parse(item.content).url : "invalid" : "invalid"})
                               </a>
-                              </div>
-                            </LinkPreview>
-                          </div>
+                            </div>
+                          </LinkPreview>
+                        </div>
 
-                          : (item.type === "PROBLEM") ?
-                            <div className="problemWrap">
-                              <ProblemBox>
-                                <div className="boardBox"><div className="board">{item.content && JSON.parse(item.content).name}</div></div>
-                                <div className="boardBox"><div className="board">{item.content && JSON.parse(item.content).contents}</div></div>
-                                <div className="titleBox"><div className="title">조건</div></div>
-                                <div className="boardBox"><div className="board">
-                                  제한시간:{item.content && JSON.parse(item.content).time} /
-                                      문제유형:{item.content && JSON.parse(item.content).problem_type}
-                                </div></div>
-                                <div className="titleBox"><div className="title">제목</div></div>
-                                <div style={{ margin: "25px", display: "flex", flexDirection: "row" }}>
-                                  <div style={{ fontSize: "1.25rem", width: "3px", backgroundColor: "red" }}>&nbsp;</div>
-                                  <div style={{ fontSize: "1.25rem", }}>{JSON.parse(item.content).name}</div>
-                                </div>
+                        : (item.type === "PROBLEM") ?
+                          <div className="problemWrap">
 
-                                <div className="titleBox"><div className="title">내용</div></div>
-                                <div >
-                                  <div>
-                                    pdf: {JSON.parse(item.content).contents}
-                                  </div>
-                                  <div>
-                                    <PdfViewer pdf="https://s3.ap-northeast-2.amazonaws.com/osd.uploads.com/uploads/aa959826-2427-4ff6-8d97-0b7595627ff9.pdf" />
-                                  </div>
-                                </div>
+                                  <ProblemBox>
+                                    <div className="titleBox"><div className="title">제목</div></div>
+                                    <div className="problemBox"><div className="board">{item.content&&JSON.parse(item.content).name}</div></div>
+                                    <div className="titleBox"><div className="title">내용</div></div>
+                                    <div className="problemBox"><div className="board">{item.content&&JSON.parse(item.content).contents}</div></div>
+                                  </ProblemBox>
 
-                              </ProblemBox>
-                              <div
+                            <div
+                              onClick={() => {
+                                this.setState({ item: JSON.parse(item.content) });
+                                this.setState({ submit: true });
+                              }}
+                              style={{ width: "max-content", margin: "auto",  cursor: "pointer" }}>
+                              <p style={{padding:"5px 13px",color:"white",backgroundColor:"red",borderRadius:"18px"}}>답안 제출하기</p>
+                            </div>
+
+
+                              {/* <div
                                 onClick={() => {
                                   this.setState({ item: JSON.parse(item.content) });
                                   this.setState({ submit: true });
                                 }}
                                 style={{ width: "max-content", margin: "auto", borderBottom: "1px solid red", cursor: "pointer" }}>
                                 <p style={{ color: "red", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", fontWeight: "500" }}>답안 제출하기</p>
-                              </div>
+                              </div> */}
+
                             </div>
+
                             : <div>올바른 형식의 아이템이 아닙니다.</div>}
             </div>
-          )}
+          })}
         </ViewContent>
       }
 
       {/* edit mode */}
-      {(edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
+      {
+        (edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
 
-        content && content.length > 0 ? (<Fragment>
+          content && content.length > 0 ? (<Fragment>
 
-          {content.map((item, index) => {
+            {content.map((item, index) => {
 
-            return (<ControllerWrap key={item + index}>
+              return (<ControllerWrap key={item + index}>
 
-              <div className="contentWrap">
-                {(item.type === "FILE")
-                  ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />
-                  : null}
+                <div className="contentWrap">
+                  {(item.type === "FILE")
+                    ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />
+                    : null}
 
-                {(item.type === "TEXT")
-                  ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                  : null}
+                  {(item.type === "TEXT")
+                    ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    : null}
 
-                {(item.type === "LINK")
-                  ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                  : null}
+                  {(item.type === "LINK")
+                    ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    : null}
 
-                {(item.type === "PROBLEM")
-                  // ? <ProblemContainer item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                  ? <ProblemContainer open={this.state.addProblem} openModal={(data) => this.setState({ addProblem: data })} item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                  : null}
+                  {(item.type === "PROBLEM")
+                    ? <ProblemContainer open={this.state.addProblem} openModal={(data) => this.setState({ addProblem: data })} item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    : null}
 
-              </div>
+                </div>
 
-              <DelBtn
-                type="button"
-                className="editBtn"
-                onClick={() => this.onDelete(item.order)}>
-                <i className="trash alternate icon large" />
-              </DelBtn>
-
-              {content.length - 1 >= item.order && item.order !== 0 ?
-                <UpBtn
+                <DelBtn
                   type="button"
                   className="editBtn"
-                  onClick={() => this.moveItem(item.order, item.order - 1)}>
-                  <i className="angle up alternate icon large" />
-                </UpBtn> : null}
+                  onClick={() => this.onDelete(item.order)}>
+                  <i className="trash alternate icon large" />
+                </DelBtn>
 
-              {content.length - 1 !== item.order && item.order >= 0 ?
-                <DownBtn
-                  type="button"
-                  className="editBtn"
-                  onClick={() => this.moveItem(item.order, item.order + 1)}>
-                  <i className="angle down alternate icon large" />
-                </DownBtn> : null}
-            </ControllerWrap>)
-          })}
-          <AddContent getValue={this.onAddValue} order={content.length} open={(data) => this.setState({ addProblem: data })} />
-        </Fragment>) : <AddContent getValue={this.onAddValue} order={0} open={(data) => this.setState({ addProblem: data })} />
-      ) : null}
+                {content.length - 1 >= item.order && item.order !== 0 ?
+                  <UpBtn
+                    type="button"
+                    className="editBtn"
+                    onClick={() => this.moveItem(item.order, item.order - 1)}>
+                    <i className="angle up alternate icon large" />
+                  </UpBtn> : null}
+
+                {content.length - 1 !== item.order && item.order >= 0 ?
+                  <DownBtn
+                    type="button"
+                    className="editBtn"
+                    onClick={() => this.moveItem(item.order, item.order + 1)}>
+                    <i className="angle down alternate icon large" />
+                  </DownBtn> : null}
+              </ControllerWrap>)
+            })}
+            <AddContent
+              is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
+              getValue={this.onAddValue}
+              order={content.length}
+              open={(data) => this.setState({ addProblem: data })} />
+          </Fragment>) :
+            <AddContent
+              is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
+              getValue={this.onAddValue}
+              order={0}
+              open={(data) => this.setState({ addProblem: data })} />
+        ) : null
+      }
 
       <ButtonContainer>
         {(this.props.edit && this.props.uid) &&
           <EditorBottonWrapper>
-            <button onClick={this.onCancel} className="cancel" type="button">
-              <i className="icon trash" />취소</button>
             <button onClick={this.onSubmit} className="submit" type="button">
               <i className="icon outline save" />저장</button>
+            <button onClick={this.onCancel} className="cancel" type="button">
+              <i className="icon trash" />취소</button>
           </EditorBottonWrapper>}
       </ButtonContainer>
     </div >);
@@ -1184,7 +1301,7 @@ const ControllerWrap2 = styled.div`
   .innerBox {
     display: flex;
     min-height: 45px;
-    height:max-content;
+    // height:max-content;
     align-items: center;
     justify-content: center;
     list-style: none;
@@ -1198,10 +1315,10 @@ const NewController = styled.li`
   line-height: 29px;
   color: #FF0000;
   padding-bottom: 1.5px;
-  border-bottom: 1.5px solid #FF0000;
-  font-size: 20px;
+  // border-bottom: 1.5px solid #FF0000;
+  font-size: 16px;
   font-weight: 500;
-  font-family: Noto Sans KR;
+  font-family: Noto Sans KR, Bold;
   text-align: center;
   cursor: pointer;
 
@@ -1254,10 +1371,10 @@ class AddContent extends Component {
             onClick={() => this.addContent("LINK")}
             width="max-content" minWidth="134px" height="29px">
             하이퍼링크 등록하기</NewController>
-          {/* <NewController
+          {this.props.is_problem ? <NewController
             onClick={() => { this.addContent("PROBLEM"); this.props.open(true); }}
             width="max-content" minWidth="134px" height="29px">
-            문제 등록하기</NewController> */}
+            문제 출제하기</NewController>:null}
         </div>
 
         {this.state.type === "FILE" &&
@@ -1268,3 +1385,107 @@ class AddContent extends Component {
   }
 }
 
+
+
+
+
+/*
+문제 출제/ 제출 관련 코드 임시 저장공간
+*/
+
+class SubmitLogContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { MySubmitList: [] }
+  }
+  get_submit_list = (user, content) => {
+    return new Promise((resolve, reject) => {
+      const url = `${host}/design/problem/mySubmitList/${user}/${content}`;
+      fetch(url, {
+        headers: { 'Content-Type': 'application/json' },
+        method: "GET",
+      })
+        .then(res =>
+          res.json())
+        .then(async res => {
+          await this.setState({ MySubmitList: res && res.MySubmitList || [] });
+          resolve(true);
+        })
+        .catch(er => reject(er));
+    })
+  }
+  componentDidMount() {
+    this.setState({ loading: true });
+    const { user_id, content_id } = this.props;
+    this.get_submit_list(user_id, content_id);
+    this.setState({ loading: false });
+  }
+  render() {
+    const { loading, MySubmitList } = this.state;
+    const data = MySubmitList && MySubmitList.map((submit, index) => {
+      const row = {
+        "key": index,
+        "result": submit.result === "S" ? "성공" : "실패",
+        "message": submit.message || "",
+        "time": submit.avg_time + "초",
+        "space": submit.avg_memory + "MB",
+        "submit-time": DateFormat(submit.create_date)
+      }
+      return row;
+    })
+    const columns = [
+      {
+        title: "결과",
+        dataIndex: "result",
+        key: "result",
+        width: 100,
+      },
+      {
+        title: "메세지",
+        dataIndex: "message",
+        key: "message",
+        width: 500,
+      },
+      {
+        title: "소요시간",
+        dataIndex: "time",
+        key: "time",
+        width: 100,
+      },
+      {
+        title: "사용용량",
+        dataIndex: "space",
+        key: "space",
+        width: 100,
+      },
+      {
+        title: "제출시간",
+        dataIndex: "submit-time",
+        key: "submit-time",
+        width: 100,
+      }
+    ]
+
+    return (MySubmitList && MySubmitList.length ?
+      <React.Fragment>
+        <Table
+          // {/* result message create_date avg_time avg_memory code */}
+          columns={
+            columns
+          }
+          data={
+            data
+          }
+          tableLayout="auto"
+        />
+      </React.Fragment>
+      :
+      <React.Fragment>
+        {loading
+          ? "제출 이력을 가져오고 있습니다."
+          : "제출 이력이 없습니다."}
+      </React.Fragment>
+    )
+  }
+}
+//

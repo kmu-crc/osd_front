@@ -78,8 +78,8 @@ const opendesign_style = {
   design_margin: {
     width: 330,
     height: 330,
-    marginRight: 63,
-    marginBottom: 63,
+    marginRight: 45,
+    marginBottom: 45,
     marginBottomLast: 0,
     small: { marginRightLast: 87, cols: 1, },
     medium: { marginRightLast: 72, cols: 3, },
@@ -87,8 +87,8 @@ const opendesign_style = {
     big: { marginRightLast: 9, cols: 5, },
   },
   group_margin: {
-    marginRight: 94,
-    marginBottom: 60,
+    marginRight: 26,
+    marginBottom: 26,
     marginBottomLast: 0,
     small: { marginRightLast: 0, cols: 1,},
     medium: { marginRightLast: 433, cols: 1, },
@@ -96,8 +96,8 @@ const opendesign_style = {
     big: { marginRightLast: 11, cols: 2, },
   },
   designer_margin: {
-    marginRight: 63,
-    marginBottom: 80,
+    marginRight: 33,
+    marginBottom: 33,
     marginBottomLast: 0,
     small: { marginRightLast: 0, cols: 1, },
     medium: { marginRightLast: 0, cols: 2, },

@@ -38,18 +38,25 @@ const ContentBorder = styled.div`
     }
 `;
 const CommentWrapper = styled.div`
-    .comment-title {
-        margin-left: 45px;
+
+    .commentBox{
+        .comment-title {
+            margin-left: 45px;
+            font-size:20px;
+            font-family:Noto Sans KR, Medium;
+        }
+        .comment-body{
+            margin-left: 52px;
+            margin-top: 15px;
+            color: #707070;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            line-height: 29px;
+        }
+
     }
-    .comment-body{
-        margin-left: 52px;
-        margin-top: 15px;
-        color: #707070;
-        font-size: 20px;
-        font-weight: 500;
-        font-family: Noto Sans KR;
-        line-height: 29px;
-    }
+
 `;
 const CardDialog = styled(Modal)`
     // *{
@@ -435,6 +442,14 @@ class CardModal extends Component {
             private: this.props.card.private || false,
         }
     };
+    // componentDidMount() {
+    //     window.document.addEventListener("scroll", () => {
+    //         console.log("!!!!");
+    //     })
+    // }
+    // componentWillUnmount() {
+    //     window.document.removeEventListener("scroll");
+    // }
     componentWillReceiveProps(nextProps) {
         if (nextProps.card !== this.props.card) {
             // this.setState({ private: nextProps.card.private });
@@ -579,11 +594,11 @@ class CardModal extends Component {
     render() {
         const imgURL = (this.props.card && this.props.card.first_img && this.props.card.first_img.l_img) || null;
         const { card, isTeam } = this.props;
-        // console.log("card", card);
 
         return (
             <React.Fragment>
                 <CardDialog open={this.props.open} onClose={this.onClose}>
+
                     {this.state.loading && <Loading />}
 
                     <div className="close-box" onClick={this.onClose} >
@@ -682,14 +697,17 @@ class CardModal extends Component {
                             <div className="border-line" /></ContentBorder>
 
                         <CommentWrapper>
-                            <div className="comment-title"><h3>댓글</h3></div>
+                            <div className="commentBox">
+                            <div className="comment-title">댓글</div>
                             <div className="comment-body">
                                 <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} />
+                            </div>
                             </div>
                         </CommentWrapper>
                     </div>
                     {/* } */}
                 </CardDialog>
+
                 {/* <BlankSpace /> */}
             </React.Fragment >)
     }

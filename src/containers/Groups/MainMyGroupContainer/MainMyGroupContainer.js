@@ -6,12 +6,13 @@ import opendesign_style from 'opendesign_style';
 import styled from 'styled-components';
 
 const Head = styled.div`
+  font: normal normal bold 23px/34px Noto Sans KR;
   color: ${opendesign_style.color.grayScale.scale7};
-  font-size: ${opendesign_style.font.size.heading2};
+  // font-size: ${opendesign_style.font.size.heading2};
   line-height: ${opendesign_style.font.size.heading2};
   text-align: center;
-  margin-top: 42px;
-  margin-bottom: 42px;
+  margin-top: 27px;
+  margin-bottom: 27px;
 `;
 class MainMyGroupContainer extends Component {
   componentWillMount() {
@@ -30,7 +31,7 @@ class MainMyGroupContainer extends Component {
 
     return (
       <React.Fragment>
-        {this.props.MyMainGroupAdded && this.props.MyMainGroupAdded.length > 0 ? <Head>내그룹 / 관심그룹</Head> : null}
+        {this.props.MyMainGroupAdded && this.props.MyMainGroupAdded.length > 0 ? <Head>내그룹 | 관심그룹</Head> : null}
         <ScrollList
           {...opendesign_style.group_margin}
           getListRequest={this.getList}

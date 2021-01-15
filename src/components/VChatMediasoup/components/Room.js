@@ -603,15 +603,19 @@ class Room extends React.Component {
 		// console.log("Room.js", this.props.peers);// this.video && this.video.srcObject && this.video.srcObject.getTracks());
 		// console.log(this.state.pinned, this.props.userInfo.uid, myvideo && myvideo.type);
 		const areyouselectedsharepeer = () => {
-			const clicked = false;
+			let clicked = false;
 			this.props.peersVids.find(peer => {
-				if ((peer.appData && peer.appData.peerId === this.state.pinned) &&
+				if (peer && (peer.appData && peer.appData.peerId === this.state.pinned) &&
 					(peer.appData && peer.appData.share))
 					clicked = true;
 			});
 			return clicked;
 		}
-		console.log(areyouselectedsharepeer());
+		// console.log(areyouselectedsharepeer());
+		// console.log(
+		// this.props.peersVids &&
+		// this.props.peersVids.find(peer => peer.id === this.state.pinned && peer.appData && peer.appData.share)
+		// );
 		return (<RoomDiv h={h || window.innerHeight}>
 			{/* notifications */}
 			{/* <Notifications /> */}
@@ -648,8 +652,9 @@ class Room extends React.Component {
 							this.state.selected &&
 								this.state.selected.length > 0 &&
 								this.state.selected.map(async mem => {
+									// alert(mem.uid); return;
 									try {
-										InvitedUserRequest(this.props.userInfo.uid, this.props.token, { to_user_id: mem.uid })
+										InvitedUserRequest(design.uid, this.props.token, mem.uid) //{ to_user_id: mem.uid })
 									} catch (e) {
 										await alert(e + '와 같은 이유로 초대에 실패하였습니다. 관리자에게 문의해주시기 바랍니다.');
 									}
@@ -774,8 +779,14 @@ class Room extends React.Component {
 					visible={(this.video && this.video.srcObject) ? true : false}
 					flip={
 						(this.state.pinned === this.props.userInfo.uid) && (myvideo && myvideo.type === "front")
-						// ||
-
+						||
+						this.props.peersVids &&
+						this.props.peersVids.find(
+							peer => peer &&
+								peer.appData.peerId == String(this.state.pinned) &&
+								peer.appData.share == null)
+						// this.props.peersVids &&
+						// this.props.peersVids.find(peer => peer.id === this.state.pinned && peer.appData && peer.appData.share)
 						// (this.props.peersVids.find(peer => peer.id === this.state.pinned && peer.appData && peer.appData.share).length)
 					}
 				>

@@ -30,6 +30,7 @@ const Menu = styled.div`
     display: flex;
     flex-direction:row-reverse;
     justify-content: space-between;
+    align-items:center;
     font-size: 20px;
     font-weight: 500;
     font-family: Noto Sans KR;
@@ -49,19 +50,17 @@ const Menu = styled.div`
     }
 `
 const LeftMenu = styled.ul`
-    // position: absolute;
     left: 0px;
     min-width: 400px;
     margin: 0px;
     padding: 0px;
     vertical-align: top;
     display: flex;
-    line-height: 29px;
     list-style: none;
     .logoBox{
         height: 55px;
         min-width: 55px;
-        margin-left: 10px;
+        margin-left: 36px;
         .logo{
             width: 55px;
             height: 55px;
@@ -76,9 +75,9 @@ const LeftMenu = styled.ul`
        }
 `
 const MenuItem = styled.li`
-    min-width:55x;
+    min-width:max-content;
     height:29px;
-    margin-left:55px;
+    margin-left:36px;
     margin-top:11px;
     text-align:center;
     .link_tag{
@@ -91,8 +90,48 @@ const MenuItem = styled.li`
         font-size:18px;
     }
 `
+const CenterMenu = styled.ul`
+    width:65%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:0px;
+    .searchItem{
+        height:36px;
+        // margin-right:50px;
+        // margin-top:5px
+        border:none;
+    }
+    @media only screen and (max-width : 1600px) {
+        width:60%;
+    }
+    @media only screen and (max-width : 1440px) {
+        width:50%;
+    }
+    @media only screen and (max-width : 1024px) {
+        width:40%;
+        .searchItem{
+            margin-right:3%;
+            min-width:200px;
+            display:flex;
+            justify-content:center;
+        }
+    }
+    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
+        width:100%;
+        .searchItem{
+            min-width:100%;
+            max-width:300px;
+            margin-right:0px;
+            margin-top:5px;
+            display:flex;
+            justify-content:center;
+        }
+    }
+`
 const RightMenu = styled.ul`
-    width:max-content;
+    width:77%;
     background-color:#FFFFFF;
 
     right:0px;
@@ -100,53 +139,47 @@ const RightMenu = styled.ul`
     padding:0px;
     list-style:none;
     display:flex;
-    line-height:29px;
+    justify-content:space-between;
     vertical-align:top;
-
-
-
-    .searchItem{
-        height:36px;
-        margin-right:50px;
-        margin-top:9px
-        border:none;
+    .signnav{
+        min-width:max-content;
+        display:flex;
+        justify-content:flex-end;
     }
     .IconItem{
         width:34px;
         height:34px;
-        margin-right:50px;
-        margin-top:10px;
+        margin-right:35px;
+        // margin-top:10px;
         position:relative;
     }
     .redItem{
-        min-width:97px;
-        line-height:29px;
+        min-width:max-content;
         height:29px;
-        margin-right:50px;
-        margin-top:11px
-        color: red;
-        border-bottom: 1.5px solid red;
+        border-radius:18px;
+        background-color:red;
+        color:white;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding:3px 16px 4px 16px;
+        margin-right:36px;
         cursor: pointer;
-        @media only screen and (max-width : 1024px) {
-            margin-top:5px;
-            margin-bottom:5px;
-        }
     }
     .profileItem{
         *{
             cursor:pointer;
         }
-        min-width:55px;
+        max-width:150px;
         height:29px;
-        margin-right:17px;
-        margin-top:11px;
+        display:flex;
+        line-height:29px;
+        margin-right:45px;
+        // margin-top:11px;
         cursor:pointer;
+        // overflow:hidden;
     }
     @media only screen and (max-width : 1440px) {
-
-        .searchItem{
-            margin-right:25px;
-        }
         .IconItem{
             margin-right:25px;
         }
@@ -157,20 +190,11 @@ const RightMenu = styled.ul`
         }
     }
     @media only screen and (max-width : 1024px) {
-        width:100%;
+        min-width:100%;
         background-color:#EFEFEF;
         display:flex;
         justify-content:center;
         flex-wrap:wrap;
-
-        .searchItem{
-            margin-right:3%;
-            min-width:200px;
-            margin-top:5px;
-            margin-bottom:5px;
-            display:flex;
-            justify-content:center;
-        }
         .IconItem{
             margin-right:3%;
             margin-top:5px;
@@ -185,6 +209,9 @@ const RightMenu = styled.ul`
             margin-right:3%;
             margin-top:5px;
             margin-bottom:5px;
+        }
+        .signnav{
+            width:50%;
         }
     }
     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
@@ -193,13 +220,6 @@ const RightMenu = styled.ul`
         display:flex;
         justify-content:center;
         flex-wrap:wrap;
-        .searchItem{
-            min-width:100%;
-            max-width:300px;
-            margin-right:0px;
-            display:flex;
-            justify-content:center;
-        }
         .IconItem{
             margin-right:25px;
         }
@@ -208,6 +228,9 @@ const RightMenu = styled.ul`
         }
         .profileItem{
             margin-right:0px;
+        }
+        .signnav{
+            justify-content:flex-start;
         }
 
     }
@@ -283,10 +306,13 @@ class Header extends Component {
                     <Menu className={(this.context.hidemenu ? " hidemenu" : "")}>
 
                         <RightMenu>
-                            {window.location.href.search('/search') > -1 ? null :
-                                <li className="searchItem">
+                                <CenterMenu>
+                                {window.location.href.search('/search') > -1 ? null :
+                                <div className="searchItem">
                                     <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={1} />
-                                </li>}
+                                </div>}
+                                 </CenterMenu>
+                            <div className="signnav">
                             {this.props.userInfo != null ? (
                                 <React.Fragment>
                                     <li className="IconItem"><Message noti={this.state.alarm} /></li>
@@ -297,7 +323,9 @@ class Header extends Component {
                                 <div onClick={this.gotoCreateDesignPage}>디자인 등록</div></li>
                             <li className="profileItem">
                                 <SignNav formWidth={this.state.screenWidth} {...this.props} /></li> {/* <SignNavContainer /> */}
+                            </div>
                         </RightMenu>
+
                         <LeftMenu>
                             <li className="logoBox">
                                 <a href="/"><img alt="logo" className="logo" src={logo} /></a></li>
@@ -319,6 +347,7 @@ class Header extends Component {
                                     || window.location.pathname.search("/createDesigner/") > -1 ? true : false
                                         || window.location.pathname.search("/modifyDesigner/") > -1 ? true : false}>
                                 <a className="link_tag" href="/designer">디자이너</a></MenuItem>
+
                         </LeftMenu>
                         {/* window.location.pathname === '/design'==false?1:-1||window.location.pathname.search('/design/') || window.location.pathname.search('/designDetail/') > -1 ? true : false */}
 
