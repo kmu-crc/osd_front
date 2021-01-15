@@ -2,51 +2,75 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 // import ContentEditable from "./ContentEditable";
 
-const LinkWrap = styled.div``;
-const LinkPreview = styled.div`
-  text-align: center;
+const LinkWrap = styled.div`
+  padding:20px;
 
-  .title {
-    font-size: 0.9rem;
-    color: #707070;
-  }
-  .url {
-    font-size: 0.9rem;
-    line-height: 0.9rem;
-    padding: .5rem;
-    color: #0645AD;
-  }
-  .description {
-    font-size: 1.5rem;
-    line-height: 2.5rem;
-    font-weight: 300;
-    color: #FF0000;
-    padding: 0.5rem; 
-  }
 `;
-const LinkElement = styled.div`
+const LinkPreview = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   font-size: 14px;
 
-  .title {
-    width: 20%;
-    padding: 1rem;
-    text-align: right;
-    margin-right: 0.2rem;
+  .title_{
+    font-size:15px;
+    color:#707070;
+    border-left:2px solid red;
+    font-weight:500;
+    padding-left:5px;
+    margin-bottom:11px;
+    margin-top:37px;
+  }
+  .preview_{
+    padding:10px;
+    width:100%;
+    min-height:74px;
+    border:1px solid #efefef;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    .url {
+      font-size: 0.9rem;
+      line-height: 0.9rem;
+      // padding: .5rem;
+      color: #0645AD;
+    }
+    .description {
+      font-size: 1.5rem;
+      line-height: 2.5rem;
+      font-weight: 300;
+      color: #FF0000;
+      padding: 0.5rem; 
+    }
+  
+  }
+`;
+const LinkElement = styled.div`
+
+  display: flex;
+  flex-direction: column
+  align-items: flex-start;
+  font-size: 14px;
+
+  .title_{
+    font-size:15px;
+    color:#707070;
+    border-left:2px solid red;
+    font-weight:500;
+    padding-left:5px;
+    margin-bottom:11px;
+    margin-top:37px;
   }
   .content {
-    width: 80%;
+    width: 100%;
     background: #EFEFEF;
-    border-radius: 15px;
-    border: 1px solid #707070;
-    padding: 1rem;
-    overflow-y: auto;
+    overflow-y: hidden;
     input {
       width: 100%;
       height: 100%;
       border: none;
+      margin:18px 0px;
       background: #EFEFEF;
       :focus {
         outline: none;
@@ -126,13 +150,15 @@ class LinkController extends Component {
     return (<LinkWrap>
 
       <LinkPreview>
-        <div className="title">미리보기</div>
-        <div className="description">*{description}</div>
+        <div className="title_">미리보기</div>
+        <div className="preview_">
+        <div className="description">{description}</div>
         <div className="url">{url}</div>
+        </div>
       </LinkPreview>
 
       <LinkElement>
-        <div className="title">url주소</div>
+        <div className="title_">url주소</div>
 
         <div className="content">
           <input
@@ -149,7 +175,7 @@ class LinkController extends Component {
       </LinkElement>
 
       <LinkElement>
-        <div className="title">설명</div>
+        <div className="title_">설명</div>
 
         <div className="content">
           <input

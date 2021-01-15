@@ -42,6 +42,7 @@ const FlexContainer = styled.div`
 
 `;
 const FlexBox = styled.div`
+    // border:1px solid black;
   flex: 0 0 ${props => props.width}px;
   width: ${props => props.width}px;
   margin-bottom: ${props => props.marginBottom}px;

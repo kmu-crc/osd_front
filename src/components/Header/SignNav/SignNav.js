@@ -110,7 +110,7 @@ class SignNav extends Component {
             {/* {this.state.signin_modal && <SignInModal open={signin_modal} CheckEmailRequest={this.props.CheckEmailRequest} FindPwRequest={this.props.FindPwRequest} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />} */}
             {isLoggedIn
                 ? (<div onClick={this.openUserMenu} style={{ width: "max-content", margin: "0", padding: "0", cursor: "pointer", display: "flex" }}><UserThumbnail url={profile} /><TextFormat chars={9} txt={this.props.formWidth < 1000 ? "" : info.nickName} /></div>)
-                : (<div onClick={this.openModal} style={{ width: "max-content", marginRight: "30px", padding: "0", cursor: "pointer" }}>로그인</div>)}
+                : (<div onClick={this.openModal} style={{ minWidth: "max-content", marginRight: "0px", padding: "0", cursor: "pointer",display: "flex" }}>로그인</div>)}
         </React.Fragment>)
     }
 }

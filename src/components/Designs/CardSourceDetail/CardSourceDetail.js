@@ -38,10 +38,20 @@ const ProblemBox = styled.div`
     width:100%;
     margin-bottom:8px;
     .title{
-      font-size:17px;
+      font-size:15px;
       color:#707070;
       border-left:2px solid red;
       padding-left:5px;
+    }
+  }
+  .problemBox{
+    width:100%;
+    // background-color:#EFEFEF;
+    padding:10px;
+    margin-bottom:35px;
+    .board{
+      font-size:15px;
+      color:#707070;
     }
   }
   .boardBox{
@@ -57,13 +67,13 @@ const ProblemBox = styled.div`
 `
 const SubmitResultModal = styled(Modal)`
     width: 873px;
-    height: 418px;
+    height: max-content;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 10px;
     opacity: 1;
     position: relative;
-    padding: 50px;
+    padding: 60px 50px 37px 50px;
     margin: auto;
     .close-box {
       width: max-content;
@@ -78,8 +88,6 @@ const SubmitResultModal = styled(Modal)`
       line-height: 29px;
       font-weight: 500;
       color: #707070;
-
-      margin-top: 10px;
     }
     .content_box{
       display:flex;
@@ -90,11 +98,18 @@ const SubmitResultModal = styled(Modal)`
         font-weight: 300;
         color: #707070;
       }
+      .codeBox{
+        margin-top:28px;
+        border:1px solid #EFEFEF;
+        width:100%;
+        padding:20px;
+      }
       .msg{
         font-size: 20px;
         line-height: 29px;
         font-weight: 500;
         color: #707070;
+        margin-left:39px;
       }
       .font_green{
         color:green;
@@ -103,23 +118,30 @@ const SubmitResultModal = styled(Modal)`
         color:red;
       }
     }
+    .button-wrapper{
+      display:flex;
+      justify-content:center;
+      margin-top:80px;
+      .close{
+        font-size:18px;
+        color:red;
+        font-weight:500;
+        cursor:pointer;
+      }
+    }
 `
 const SubmitModalWrapper = styled(Modal)
   `
-  *{
-    // border: 1px solid black;
-    font-family: Noto Sans KR;
-  }
   width: 873px;
-  // height: 949px;
   height:max-content;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 10px;
   opacity: 1;
   position: relative;
-  padding: 50px;
+  padding: 60px 50px;
   margin: auto;
+  font-family:Noto Sans CJK KR;
 
   .close-box {
     width: max-content;
@@ -134,7 +156,6 @@ const SubmitModalWrapper = styled(Modal)
     line-height: 29px;
     font-weight: 500;
     color: #707070;
-
     margin-top: 10px;
   }
 
@@ -145,13 +166,14 @@ const SubmitModalWrapper = styled(Modal)
     item-align: center;
 
     .label {
-      font: normal normal normal 20px/29px Noto Sans KR;
+      font: normal normal normal 18px/29px Noto Sans KR;
       letter-spacing: 0px;
       color: #707070;
       opacity: 1; 
     }
     .combo-box {
       font: normal normal normal 17px/29px Noto Sans KR;
+      color:#707070;
       margin-left: 20px;
     }
   }
@@ -164,7 +186,7 @@ const SubmitModalWrapper = styled(Modal)
       display: flex;
       flex-direction: row;
       width: max-content;
-      font: normal normal normal 20px/29px Noto Sans KR;
+      font: normal normal normal 18px/29px Noto Sans KR;
       letter-spacing: 0px;
       color: #707070;
       opacity: 1;
@@ -196,24 +218,24 @@ const SubmitModalWrapper = styled(Modal)
     }
     .editor {
       margin-top: 16px;
-      width: 773px;
+      width: 100%;
       height: 588px;
+      overflow-y:auto;
       border:1px solid #efefef;
       background: #E9E9E9 0% 0% no-repeat padding-box;
-      // border-radius: 5px;
       opacity: 1;
     }
   }
   .button-wrapper {
     margin: auto;
-    margin-top: 40px;
+    margin-top: 34px;
     width: max-content;
     display: flex;
     flex-direction: row;
 
     .btn {
       cursor: pointer;
-      font-weight: 500;
+      font-weight: 700;
       width: max-content;
       height: 29px;
       opacity: 1;
@@ -223,12 +245,10 @@ const SubmitModalWrapper = styled(Modal)
     }
     .submit {
       color: #FF0000;
-      border-bottom: 1px solid #FF0000;
     }
     .cancel {
       color: #707070;
       margin-left: 47.5px;
-      border-bottom: 1px solid #707070;
     }
   }
 `;
@@ -422,7 +442,7 @@ const ViewContent = styled.div`
   }
 `;
 const ButtonContainer = styled.div`
-  margin-bottom: 35px;
+  // margin-bottom: 35px;
   margin-left: auto;
   margin-right: auto;
   .content-edit-wrapper {
@@ -515,6 +535,7 @@ class CardSourceDetail extends Component {
       selectProblem: null,
       fontsizer_pos_top: 0,
       fontratio: 1,
+      mySource:false,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -789,7 +810,7 @@ class CardSourceDetail extends Component {
     const { edit, content, loading, submit, tab, item, result } = this.state;
     // console.log("content:", content.find(item => item.type === "TEXT"));
     // console.log("result:", this.props, this.state)// && this.props.DesignDetail.category_level3 - 1);
-    console.log(this.state.fontratio);
+    console.log(result);
     const fontoffset = 0.3;
 
     return (<div id="card-source-detail-root-node">
@@ -866,21 +887,29 @@ class CardSourceDetail extends Component {
                 </div>
               </div>
               <div className="content_box">
-                <div className="name">제출 결과: </div>
+                <div className="name">제출 결과 </div>
                 {result.result === "S"
                   ? <div className="msg font_green">성공</div>
                   : <div className="msg font_red">실패</div>}
               </div>
-              {/* <div className="content_box"> */}
-              {/* <div className="name">내가 제출한 소스 보기∨</div> */}
-              {/* </div> */}
               <div className="content_box">
                 <div className="msg">{result.message}</div>
               </div>
-
+              <div className="content_box" style={{display:"flex",flexDirection:"column"}}> 
+              
+                  <div className="name" style={{cursor:"pointer"}}
+                  onClick={()=>{this.setState({mySource:!this.state.mySource})}}
+                  >{this.state.mySource==false?"내가 제출한 소스보기∧":"내가 제출한 소스보기∨"}</div>
+                  {this.state.mySource == true?
+                    <div className="codeBox">
+                      {result.code}
+                    </div>
+                    :null
+                  }
+              </div>
               <div className="button-wrapper">
-                <div
-                  onClick={() => this.setState({ result: false, loading: false })} >닫기</div>
+                <div className="close"
+                  onClick={() => this.setState({ result: false, loading: false })} >확인</div>
               </div>
             </SubmitResultModal> : null}
 
@@ -891,23 +920,25 @@ class CardSourceDetail extends Component {
           <div className="language">
             <div className="label">제출 언어</div>
             <div className="combo-box">
-              <LanguageDropDown
+              {/* <LanguageDropDown
                 disabled
                 selection
                 ref="dropdown"
-                // onChange={(e, c) => this.setState({ language_id: c.value })}
                 options={[
                   { key: 'cpp', text: 'C++', value: 'cpp' },
                   { key: 'py', text: 'Python', value: 'py' },
                   { key: 'c', text: 'C', value: 'c' },
                 ]}
                 placeholder="언어를 선택하여 주세요."
-                value={
-                  this.props.DesignDetail && this.props.DesignDetail.category_level3 == 1 ? 'cpp'
-                    : this.props.DesignDetail && this.props.DesignDetail.category_level3 == 2 ? 'py'
-                      : this.props.DesignDetail && this.props.DesignDetail.category_level3 == 3 ? 'c'
-                        : null}
-              />
+                value={this.props.DesignDetail&&this.props.DesignDetail.category_level3==1?'c':
+                this.props.DesignDetail&&this.props.DesignDetail.category_level3==2?'py'
+                :null}
+              /> */}
+              {
+                this.props.DesignDetail&&this.props.DesignDetail.category_level3==1?"C++":
+                this.props.DesignDetail&&this.props.DesignDetail.category_level3==2?"Python":"C"
+              }
+
             </div>
           </div>
           <div className="coding-area">
@@ -928,7 +959,7 @@ class CardSourceDetail extends Component {
                 ?
                 <AceEditor
                   width={"100%"}
-                  height={"100%"}
+                  height={"588px"}
                   ref={ref => this.ace = ref}
                   setOptions={{
                     fontSize: "20px",
@@ -983,7 +1014,7 @@ class CardSourceDetail extends Component {
                 })
               }).then(res => res.json())
                 .then(res => {
-                  console.log(res);
+                  console.log("result:::::",res);
                   if (res.success) {
                     const check = () => {
                       this.setState({ loading: true, });
@@ -1117,36 +1148,38 @@ class CardSourceDetail extends Component {
                                     ? JSON.parse(item.content).hasOwnProperty('url')
                                       ? JSON.parse(item.content).url : "invalid" : "invalid"})
                               </a>
-                              </div>
-                            </LinkPreview>
-                          </div>
+                            </div>
+                          </LinkPreview>
+                        </div>
 
-                          : (item.type === "PROBLEM") && IsJsonString(item.content) ?
-                            <div className="problemWrap">
+                        : (item.type === "PROBLEM") ?
+                          <div className="problemWrap">
 
-                              <ProblemBox>
-                                <div className="titleBox"><div className="title">제목</div></div>
-                                <div className="boardBox"><div className="board">{item.content && JSON.parse(item.content).name}</div></div>
-                                <div className="titleBox"><div className="title">내용</div></div>
-                                <div>
-                                  <PdfViewer pdf={item.content && JSON.parse(item.content).contents} />
-                                </div>
-                                {/* <div className="boardBox"><div className="board">{item.content && JSON.parse(item.content).contents}</div></div> */}
-                                {/* <div className="titleBox"><div className="title">조건</div></div>
-                                    <div className="boardBox"><div className="board">
-                                      제한시간:{item.content&&JSON.parse(item.content).time} / 
-                                      문제유형:{item.content&&JSON.parse(item.content).problem_type}
-                                    </div></div> */}
-                              </ProblemBox>
+                                  <ProblemBox>
+                                    <div className="titleBox"><div className="title">제목</div></div>
+                                    <div className="problemBox"><div className="board">{item.content&&JSON.parse(item.content).name}</div></div>
+                                    <div className="titleBox"><div className="title">내용</div></div>
+                                    <div className="problemBox"><div className="board">{item.content&&JSON.parse(item.content).contents}</div></div>
+                                  </ProblemBox>
 
-                              <div
+                            <div
+                              onClick={() => {
+                                this.setState({ item: JSON.parse(item.content) });
+                                this.setState({ submit: true });
+                              }}
+                              style={{ width: "max-content", margin: "auto",  cursor: "pointer" }}>
+                              <p style={{padding:"5px 13px",color:"white",backgroundColor:"red",borderRadius:"18px"}}>답안 제출하기</p>
+                            </div>
+
+
+                              {/* <div
                                 onClick={() => {
                                   this.setState({ item: JSON.parse(item.content) });
                                   this.setState({ submit: true });
                                 }}
                                 style={{ width: "max-content", margin: "auto", borderBottom: "1px solid red", cursor: "pointer" }}>
                                 <p style={{ color: "red", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", fontWeight: "500" }}>답안 제출하기</p>
-                              </div>
+                              </div> */}
 
                             </div>
 
@@ -1282,10 +1315,10 @@ const NewController = styled.li`
   line-height: 29px;
   color: #FF0000;
   padding-bottom: 1.5px;
-  border-bottom: 1.5px solid #FF0000;
-  font-size: 20px;
+  // border-bottom: 1.5px solid #FF0000;
+  font-size: 16px;
   font-weight: 500;
-  font-family: Noto Sans KR;
+  font-family: Noto Sans KR, Bold;
   text-align: center;
   cursor: pointer;
 
@@ -1341,7 +1374,7 @@ class AddContent extends Component {
           {this.props.is_problem ? <NewController
             onClick={() => { this.addContent("PROBLEM"); this.props.open(true); }}
             width="max-content" minWidth="134px" height="29px">
-            문제 등록하기</NewController> : null}
+            문제 출제하기</NewController>:null}
         </div>
 
         {this.state.type === "FILE" &&

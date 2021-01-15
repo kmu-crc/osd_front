@@ -59,7 +59,7 @@ export class FormFile extends Component {
     const { name, placeholder, /*style,*/ id, hidden, onlyImage } = this.props;
     return (
       <InputWrap display={hidden ? "none" : "block"}>
-        <input type="file" name={name && `${name}[]`} placeholder={placeholder && placeholder}
+        <input display={hidden ? "none" : "block"} type="file" name={name && `${name}[]`} placeholder={placeholder && placeholder}
           id={id ? id : name} onChange={this.onChangeValue} ref={ref => (this.input = ref)}
           className="" accept={onlyImage ? "image/*" : "*"} />
         <Message></Message>

@@ -10,35 +10,45 @@ import osdstyle from "opendesign_style";
 const Wrapper = styled.div`
   position:relative;
   .orderBox{
-    margin-top:10px;
-    width:100%;
+    width:max-content;
     height:max-content;
+  }
+  margin-top:100px;
+  @media only screen and (max-width : 900px) {
+  margin-top:150px;
   }
 `
 const TextWrapper = styled.div`
     width:100%;
     display:flex;
     justify-content:center;
+    align-items:center;
     top: 25px;
     font-size: 25px;
     font-family: Noto Sans KR;
     font-weight: 700;
     color: red;
     cursor: pointer;
-    margin-top:100px;
+    // margin-top:100px;
     @media only screen and (max-width : 900px) {
-    margin-top:150px;
+    // margin-top:150px;
     }
     .title{
     width:300px;
     text-align:center;
     }
 `;
+const WrapperSub = styled.div`
+    display:flex;
+    padding-left:36px;
+    padding-right:45px;
+`
 const JoinGroupContainer = styled.div`
     display:flex;
-    justify-content:flex-end;
-    padding:10px;
+    align-items:center;
     .joinGroup{
+        background: #707070 0% 0% no-repeat padding-box;
+        border-radius: 18px;
         width:max-content;
         height:29px;
         text-align: left;
@@ -46,16 +56,16 @@ const JoinGroupContainer = styled.div`
         cursor: pointer;
         font-family: Noto Sans KR;
         font-weight:500;
-        color: red;
-        line-height: 29px;
-        border-bottom: 1.5px solid red;
-        margin-top:10px;
+        color: white;
+        padding:4px 16px;
     }
 
 `;
 const ScrollListContainer = styled.div`
-    padding-top: 100px;
+    padding-top: 30px;
     padding-bottom: 68px;
+
+    padding-left:20px;
 `;
 
 const BlankDiv = styled.div`
@@ -117,18 +127,17 @@ class GroupListContainer extends Component {
     return (
       <React.Fragment>
         <Wrapper>
-          <TextWrapper centerPos={this.state.screenWidth}>
-            <div className="title">그룹({count})</div>
-          </TextWrapper>
-
+          <WrapperSub>
           <JoinGroupContainer>
             <div className="joinGroup" onClick={() => this.createGroup()}>그룹 등록하기</div>
           </JoinGroupContainer>
-
+          <TextWrapper centerPos={this.state.screenWidth}>
+            <div className="title">그룹({count})</div>
+          </TextWrapper>
           <div className="orderBox">
             <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
           </div>
-
+          </WrapperSub>
           <ScrollListContainer id="list">
             {this.props.status === "INIT"
               ? <Loading />
