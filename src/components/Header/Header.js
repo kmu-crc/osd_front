@@ -168,7 +168,7 @@ const RightMenu = styled.ul`
         padding:4px 16px 4px 16px;
         margin-right:36px;
         cursor: pointer;
-        font-weight:900;
+        font-weight: 900;
     }
     .profileItem{
         *{
