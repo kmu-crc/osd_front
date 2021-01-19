@@ -14,6 +14,7 @@ import { Modal, Dropdown } from "semantic-ui-react";
 import 'react-medium-image-zoom/dist/styles.css';
 import Cross from "components/Commons/Cross";
 import host from "config";
+import { geturl } from "config"
 
 // FOR EDITOR
 import AceEditor from "react-ace";
@@ -535,7 +536,7 @@ class CardSourceDetail extends Component {
       selectProblem: null,
       fontsizer_pos_top: 0,
       fontratio: 1,
-      mySource:false,
+      mySource: false,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -805,7 +806,18 @@ class CardSourceDetail extends Component {
   changeMode() {
     this.setState({ edit: !this.state.edit });
   }
-
+  replaceFontUnitToRem(string) {
+    const fz = [...Array(28 + 1).keys()].map(a => a + 10);
+    let newstring = `${string}`;
+    fz.forEach((size, index) => {
+      newstring = newstring
+        .replace(new RegExp(`${size}pt`, "g"), `${(index + 1) * 10 * 0.0625}rem`)
+        .replace(new RegExp(`${size}px`, "g"), `${(index + 1) * 10 * 0.0625}rem`)
+        .replace(new RegExp(`${size} px`, "g"), `${(index + 1) * 10 * 0.0625}rem`)
+        .replace(new RegExp(`${size} pt`, "g"), `${(index + 1) * 10 * 0.0625}rem`)
+    });
+    return newstring
+  }
   render() {
     const { edit, content, loading, submit, tab, item, result } = this.state;
     // console.log("content:", content.find(item => item.type === "TEXT"));
@@ -895,17 +907,17 @@ class CardSourceDetail extends Component {
               <div className="content_box">
                 <div className="msg">{result.message}</div>
               </div>
-              <div className="content_box" style={{display:"flex",flexDirection:"column"}}> 
-              
-                  <div className="name" style={{cursor:"pointer"}}
-                  onClick={()=>{this.setState({mySource:!this.state.mySource})}}
-                  >{this.state.mySource==false?"내가 제출한 소스보기∧":"내가 제출한 소스보기∨"}</div>
-                  {this.state.mySource == true?
-                    <div className="codeBox">
-                      {result.code}
-                    </div>
-                    :null
-                  }
+              <div className="content_box" style={{ display: "flex", flexDirection: "column" }}>
+
+                <div className="name" style={{ cursor: "pointer" }}
+                  onClick={() => { this.setState({ mySource: !this.state.mySource }) }}
+                >{this.state.mySource == false ? "내가 제출한 소스보기∧" : "내가 제출한 소스보기∨"}</div>
+                {this.state.mySource == true ?
+                  <div className="codeBox">
+                    {result.code}
+                  </div>
+                  : null
+                }
               </div>
               <div className="button-wrapper">
                 <div className="close"
@@ -935,8 +947,8 @@ class CardSourceDetail extends Component {
                 :null}
               /> */}
               {
-                this.props.DesignDetail&&this.props.DesignDetail.category_level3==1?"C++":
-                this.props.DesignDetail&&this.props.DesignDetail.category_level3==2?"Python":"C"
+                this.props.DesignDetail && this.props.DesignDetail.category_level3 == 1 ? "C++" :
+                  this.props.DesignDetail && this.props.DesignDetail.category_level3 == 2 ? "Python" : "C"
               }
 
             </div>
@@ -1014,7 +1026,7 @@ class CardSourceDetail extends Component {
                 })
               }).then(res => res.json())
                 .then(res => {
-                  console.log("result:::::",res);
+                  console.log("result:::::", res);
                   if (res.success) {
                     const check = () => {
                       this.setState({ loading: true, });
@@ -1121,13 +1133,60 @@ class CardSourceDetail extends Component {
                               fontSize: `${this.state.fontratio}rem`
                             }}
                             dangerouslySetInnerHTML={{
-                              __html: `${item.content
-                                .replace("\"font-size:14px;\"", `"font-size:${14 * this.state.fontratio}px;"`)
-                                .replace("\"font-size:18px;\"", `"font-size:${18 * this.state.fontratio}px;"`)
-                                .replace("\"font-size:24px;\"", `"font-size:${24 * this.state.fontratio}px;"`)
-                                .replace("\"font-size:30px;\"", `"font-size:${30 * this.state.fontratio}px;"`)
-                                .replace("\"font-size:36px;\"", `"font-size:${36 * this.state.fontratio}px;"`)
-                                .replace("\"font-size:48px;\"", `"font-size:${48 * this.state.fontratio}px;"`)
+                              __html: `${
+                                // this.replaceFontUnitToRem(item.content)
+                                item.content
+                                  /*
+                                  10px = 0.625rem
+                                  12px = 0.75rem
+                                  14px = 0.875rem
+                                  16px = 1rem (base)
+                                  18px = 1.125rem
+                                  20px = 1.25rem
+                                  24px = 1.5rem
+                                  30px = 1.875rem
+                                  32px = 2rem
+                                  34px = 2.125rem
+                                  36px = 2.25rem
+                                  38px = 2.5rem
+                                  40px = 2.875rem
+                                  42px = 3rem
+                                  44px = 3.125rem
+                                  46px = 3.25rem
+                                  48px = 3.5rem
+                                  */
+
+                                  // .replace("10px", `${this.state.fontratio * 0.625}rem`)
+                                  // .replace("12px", `${this.state.fontratio * 0.75}rem`)
+                                  // .replace("14px", `${this.state.fontratio * 0.875}rem`)
+                                  // .replace("16px", `${this.state.fontratio * 1}rem`)
+                                  // .replace("18px", `${this.state.fontratio * 1.125}rem`)
+                                  // .replace("20px", `${this.state.fontratio * 1.25}rem`)
+                                  // .replace("24px", `${this.state.fontratio * 1.5}rem`)
+                                  // .replace("30px", `${this.state.fontratio * 1.875}rem`)
+                                  // .replace("32px", `${this.state.fontratio * 2}rem`)
+                                  // .replace("34px", `${this.state.fontratio * 2.125}rem`)
+                                  // .replace("36px", `${this.state.fontratio * 2.25}rem`)
+                                  // .replace("38px", `${this.state.fontratio * 2.5}rem`)
+                                  // .replace("40px", `${this.state.fontratio * 2.875}rem`)
+                                  // .replace("42px", `${this.state.fontratio * 3}rem`)
+                                  // .replace("44px", `${this.state.fontratio * 3.125}rem`)
+                                  // .replace("46px", `${this.state.fontratio * 3.25}rem`)
+                                  // .replace("48px", `${this.state.fontratio * 3.5}rem`)
+
+                                  // .replace("14px;", `${0.875 * this.state.fontratio}rem;`)
+                                  // .replace("18px;", `${1.125 * this.state.fontratio}rem;`)
+                                  // .replace("24px;", `${1.500 * this.state.fontratio}rem;`)
+                                  // .replace("30px;", `${1.875 * this.state.fontratio}rem;`)
+                                  // .replace("36px;", `${2.25 * this.state.fontratio}rem;`)
+                                  // .replace("48px;", `${3.5 * this.state.fontratio}rem;`)
+
+                                  .replace("\"font-size:14px;\"", `"font-size:${0.875 * this.state.fontratio}rem;"`)
+                                  .replace("\"font-size:18px;\"", `"font-size:${1.125 * this.state.fontratio}rem;"`)
+                                  .replace("\"font-size:24px;\"", `"font-size:${1.500 * this.state.fontratio}rem;"`)
+                                  .replace("\"font-size:30px;\"", `"font-size:${1.875 * this.state.fontratio}rem;"`)
+                                  .replace("\"font-size:36px;\"", `"font-size:${2.25 * this.state.fontratio}rem;"`)
+                                  .replace("\"font-size:48px;\"", `"font-size:${3.5 * this.state.fontratio}rem;"`)
                                 }`
                             }} />
                         </React.Fragment>
@@ -1148,28 +1207,28 @@ class CardSourceDetail extends Component {
                                     ? JSON.parse(item.content).hasOwnProperty('url')
                                       ? JSON.parse(item.content).url : "invalid" : "invalid"})
                               </a>
-                            </div>
-                          </LinkPreview>
-                        </div>
+                              </div>
+                            </LinkPreview>
+                          </div>
 
-                        : (item.type === "PROBLEM") ?
-                          <div className="problemWrap">
+                          : (item.type === "PROBLEM") ?
+                            <div className="problemWrap">
 
-                                  <ProblemBox>
-                                    <div className="titleBox"><div className="title">제목</div></div>
-                                    <div className="problemBox"><div className="board">{item.content&&JSON.parse(item.content).name}</div></div>
-                                    <div className="titleBox"><div className="title">내용</div></div>
-                                    <div className="problemBox"><div className="board">{item.content&&JSON.parse(item.content).contents}</div></div>
-                                  </ProblemBox>
+                              <ProblemBox>
+                                <div className="titleBox"><div className="title">제목</div></div>
+                                <div className="problemBox"><div className="board">{item.content && JSON.parse(item.content).name}</div></div>
+                                <div className="titleBox"><div className="title">내용</div></div>
+                                <div className="problemBox"><div className="board">{item.content && JSON.parse(item.content).contents}</div></div>
+                              </ProblemBox>
 
-                            <div
-                              onClick={() => {
-                                this.setState({ item: JSON.parse(item.content) });
-                                this.setState({ submit: true });
-                              }}
-                              style={{ width: "max-content", margin: "auto",  cursor: "pointer" }}>
-                              <p style={{padding:"5px 13px",color:"white",backgroundColor:"red",borderRadius:"18px"}}>답안 제출하기</p>
-                            </div>
+                              <div
+                                onClick={() => {
+                                  this.setState({ item: JSON.parse(item.content) });
+                                  this.setState({ submit: true });
+                                }}
+                                style={{ width: "max-content", margin: "auto", cursor: "pointer" }}>
+                                <p style={{ padding: "5px 13px", color: "white", backgroundColor: "red", borderRadius: "18px" }}>답안 제출하기</p>
+                              </div>
 
 
                               {/* <div
@@ -1280,26 +1339,26 @@ const ControllerWrap2 = styled.div`
   border: 1px dashed ${osdcss.color.grayScale.scale6};
   & .initWrap {
     & > ul {
-      display: flex;
+                            display: flex;
       // box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
     }
     & > span {
-      color: ${osdcss.color.grayScale.scale6};
+                            color: ${osdcss.color.grayScale.scale6};
     }
   }
   &:hover {
-       background - color: #FAFAFA;
+                            background - color: #FAFAFA;
     & .initWrap {
       & > ul {
-       display: flex;
+                            display: flex;
       }
       & > span {
-        color: ${osdcss.color.grayScale.scale6};
+                            color: ${osdcss.color.grayScale.scale6};
       }
     }
   }
   .innerBox {
-    display: flex;
+                            display: flex;
     min-height: 45px;
     // height:max-content;
     align-items: center;
@@ -1323,12 +1382,28 @@ const NewController = styled.li`
   cursor: pointer;
 
   @media only screen and (max-width: 480px) {
-                                font - size: 16px;
+                            font - size: 16px;
     margin-left: 15px;
     width: max-content;
   }
 `;
-
+const TableWrapper = styled.div`
+  padding:10px;
+  .rc-table-thead{
+    .rc-table-cell{
+      padding:10px 5px;
+    }  
+  }
+  .rc-table-tbody{
+    .rc-table-row{
+      .rc-table-cell{
+        padding:10px 5px;
+        background-color:#FAFAFA;
+      }
+    }
+  }
+  
+`
 class AddContent extends Component {
   constructor(props) {
     super(props);
@@ -1374,7 +1449,7 @@ class AddContent extends Component {
           {this.props.is_problem ? <NewController
             onClick={() => { this.addContent("PROBLEM"); this.props.open(true); }}
             width="max-content" minWidth="134px" height="29px">
-            문제 출제하기</NewController>:null}
+            문제 출제하기</NewController> : null}
         </div>
 
         {this.state.type === "FILE" &&
@@ -1422,6 +1497,11 @@ class SubmitLogContainer extends React.Component {
   }
   render() {
     const { loading, MySubmitList } = this.state;
+    const AddButton=()=>{
+      return(
+        <button>hi</button>
+      );
+    }
     const data = MySubmitList && MySubmitList.map((submit, index) => {
       const row = {
         "key": index,
@@ -1429,7 +1509,8 @@ class SubmitLogContainer extends React.Component {
         "message": submit.message || "",
         "time": submit.avg_time + "초",
         "space": submit.avg_memory + "MB",
-        "submit-time": DateFormat(submit.create_date)
+        "submit-time": DateFormat(submit.create_date),
+        "code": submit.code,
       }
       return row;
     })
@@ -1463,11 +1544,29 @@ class SubmitLogContainer extends React.Component {
         dataIndex: "submit-time",
         key: "submit-time",
         width: 100,
+      },
+      {
+        title: "내 코드",
+        dataIndex: "coding",
+        key: "coding",
+        width: 100,
+        render: (text,row,index) => (
+          <a onClick={()=>{
+            const url = geturl() + `/codepage`;
+            const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
+            const code = window.open( "","_blank", options);
+            // code.document.title("코드")
+            // const replaceCode = row.code.replace(/\n/g, "<br/>");
+            code.document.write(row.code);
+            }}>
+            Delete
+          </a>
+        )
       }
     ]
 
     return (MySubmitList && MySubmitList.length ?
-      <React.Fragment>
+      <TableWrapper>
         <Table
           // {/* result message create_date avg_time avg_memory code */}
           columns={
@@ -1478,7 +1577,7 @@ class SubmitLogContainer extends React.Component {
           }
           tableLayout="auto"
         />
-      </React.Fragment>
+      </TableWrapper>
       :
       <React.Fragment>
         {loading

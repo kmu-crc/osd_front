@@ -29,6 +29,7 @@ import Notice from "components/Header/Notice";
 import CheckAuth from "containers/Commons/CheckAuth";
 import VChat2Page from "pages/VChat2Page";
 import ChatPage from "pages/ChatPage";
+import CodePage from "pages/CodePage";
 
 class App extends Component {
   render() {
@@ -39,6 +40,8 @@ class App extends Component {
           {/* no client template ㅐ*/}
           <Route path="/chat/:id" component={CheckAuth(ChatPage)} />
           <Route path="/vchat2/:id" component={CheckAuth(VChat2Page)} />
+          <Route path="/codepage" component={CodePage} />
+
           {/* GROUP A - main */}
           <Route exact path="/" component={MainPage} />
           <Route path="/signup" component={SignUpPage} />
