@@ -14,6 +14,7 @@ import { Modal, Dropdown } from "semantic-ui-react";
 import 'react-medium-image-zoom/dist/styles.css';
 import Cross from "components/Commons/Cross";
 import host from "config";
+import { geturl } from "config"
 
 // FOR EDITOR
 import AceEditor from "react-ace";
@@ -1386,7 +1387,23 @@ const NewController = styled.li`
     width: max-content;
   }
 `;
-
+const TableWrapper = styled.div`
+  padding:10px;
+  .rc-table-thead{
+    .rc-table-cell{
+      padding:10px 5px;
+    }  
+  }
+  .rc-table-tbody{
+    .rc-table-row{
+      .rc-table-cell{
+        padding:10px 5px;
+        background-color:#FAFAFA;
+      }
+    }
+  }
+  
+`
 class AddContent extends Component {
   constructor(props) {
     super(props);
@@ -1480,6 +1497,11 @@ class SubmitLogContainer extends React.Component {
   }
   render() {
     const { loading, MySubmitList } = this.state;
+    const AddButton=()=>{
+      return(
+        <button>hi</button>
+      );
+    }
     const data = MySubmitList && MySubmitList.map((submit, index) => {
       const row = {
         "key": index,
@@ -1487,7 +1509,8 @@ class SubmitLogContainer extends React.Component {
         "message": submit.message || "",
         "time": submit.avg_time + "초",
         "space": submit.avg_memory + "MB",
-        "submit-time": DateFormat(submit.create_date)
+        "submit-time": DateFormat(submit.create_date),
+        "code": submit.code,
       }
       return row;
     })
@@ -1521,11 +1544,29 @@ class SubmitLogContainer extends React.Component {
         dataIndex: "submit-time",
         key: "submit-time",
         width: 100,
+      },
+      {
+        title: "내 코드",
+        dataIndex: "coding",
+        key: "coding",
+        width: 100,
+        render: (text,row,index) => (
+          <a onClick={()=>{
+            const url = geturl() + `/codepage`;
+            const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
+            const code = window.open( "","_blank", options);
+            // code.document.title("코드")
+            // const replaceCode = row.code.replace(/\n/g, "<br/>");
+            code.document.write(row.code);
+            }}>
+            Delete
+          </a>
+        )
       }
     ]
 
     return (MySubmitList && MySubmitList.length ?
-      <React.Fragment>
+      <TableWrapper>
         <Table
           // {/* result message create_date avg_time avg_memory code */}
           columns={
@@ -1536,7 +1577,7 @@ class SubmitLogContainer extends React.Component {
           }
           tableLayout="auto"
         />
-      </React.Fragment>
+      </TableWrapper>
       :
       <React.Fragment>
         {loading
