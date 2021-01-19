@@ -15,6 +15,7 @@ const Head = styled.div`
   margin-top: 30px;
   margin-bottom: 27px;
 `;
+
 class MainMyDesignContainer extends Component {
   componentWillMount() {
     this.props.token &&
@@ -34,13 +35,15 @@ class MainMyDesignContainer extends Component {
           (this.props.MyMainDesignAdded.length > 0)
           ? <Head>내 디자인 | 관심 디자인</Head>
           : null}
+        {/* <ScrollListContainer> */}
         <ScrollList
-          {...opendesign_style.design_margin}
-          getListRequest={this.getList}
+            {...opendesign_style.design_margin}
+            getListRequest={this.getList}
           type="design"
           dataList={this.props.MyMainDesign}
           dataListAdded={this.props.MyMainDesignAdded}
         />
+        {/* </ScrollListContainer> */}
       </React.Fragment>
     );
   }

@@ -14,6 +14,9 @@ const Head = styled.div`
   margin-top: 27px;
   margin-bottom: 27px;
 `;
+const ScrollListContainer = styled.div`
+    padding-left:20px;
+`;
 class MainMyGroupContainer extends Component {
   componentWillMount() {
     this.props.token &&
@@ -32,6 +35,7 @@ class MainMyGroupContainer extends Component {
     return (
       <React.Fragment>
         {this.props.MyMainGroupAdded && this.props.MyMainGroupAdded.length > 0 ? <Head>내그룹 | 관심그룹</Head> : null}
+        {/* <ScrollListContainer> */}
         <ScrollList
           {...opendesign_style.group_margin}
           getListRequest={this.getList}
@@ -39,6 +43,7 @@ class MainMyGroupContainer extends Component {
           dataList={this.props.MyMainGroup}
           dataListAdded={this.props.MyMainGroupAdded}
         />
+        {/* </ScrollListContainer> */}
       </React.Fragment>
 
     );
