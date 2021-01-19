@@ -9,10 +9,12 @@ import { ReactHeight } from 'react-height';
 import arrow from "source/arrow.svg";
 import SortableDesignSteps from "./SortableDesignSteps";
 import osdcss from "opendesign_style";
+
 // const SmallMinWidth = 0;
 // const MediumMinWidth = 480;
 // const LargeMinWidth = 1440;
 // const WideMinWidth = 1920;
+
 const LeftWhitePane = styled.div`
     position: absolute;
     z-index: 830;
@@ -89,7 +91,39 @@ and (max-width : ${osdcss.resolutions.MediumMinWidth}px) {
         margin-left:60px;
     }
 `;
-
+// let wiredraw = false;
+// const WireContainer = styled.div`
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     svg{
+//         z-index: -1;
+//     }
+//     float: right;
+// `;
+// const Wiring = (props) => {
+//     const { wires, gap } = props;
+//     return <WireContainer>
+//         <svg height="2000" width="2000">
+//             <g fill="none">
+//                 {wires.map(wire => {
+//                     const to = document.getElementById(`div_card_${wire.to_card_id}`);
+//                     if (to == null) return;
+//                     const to_x = to.getBoundingClientRect().left + 150;
+//                     const to_y = to.getBoundingClientRect().top - 260 + gap;
+//                     const from = document.getElementById(`div_card_${wire.from_card_id}`);
+//                     const from_x = from.getBoundingClientRect().left + 150;
+//                     const from_y = from.getBoundingClientRect().top - 260 + gap;
+//                     return <path
+//                         key={wire.uid}
+//                         strokeWidth="17"
+//                         stroke="#707070"
+//                         d={`M${from_x} ${from_y} L${from_x} ${from_y} L${to_x} ${to_y} `} />
+//                 })}
+//             </g>
+//         </svg>
+//     </WireContainer>
+// }
 class GridEditor extends Component {
     constructor(props) {
         super(props);
@@ -99,7 +133,7 @@ class GridEditor extends Component {
             h: 0, w: window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth,
             left: false, right: false, card_loading: false, card: false, newcard: false, row: null, col: null,
             boardId: null, newstep: false, editstep: false, cardDetail: null, title: null, where: null, tmp: null,
-            gap: null,
+            gap: null, wire: false,
         };
         this.handleScroll = this.handleScroll.bind(this);
         this.handleResize = this.handleResize.bind(this);
@@ -254,20 +288,35 @@ class GridEditor extends Component {
                 }
             }
         }
-        if (nextProps.DesignDetailStepCard && nextProps.DesignDetailStepCard.uid != null && this.props.DesignDetailStepCard !== nextProps.DesignDetailStepCard) {
-            // console.log(nextProps.DesignDetailStepCard.uid, "i got it", nextProps.DesignDetailStepCard, this.props.DesignDetailStepCard, typeof this.props.DesignDetailStepCard);
-            this.setState({ cardDetail: nextProps.DesignDetailStepCard });
-        }
+        // if (nextProps.DesignDetailStepCard && nextProps.DesignDetailStepCard.uid != null && this.props.DesignDetailStepCard !== nextProps.DesignDetailStepCard) {
+        //     // console.log(nextProps.DesignDetailStepCard.uid, "i got it", nextProps.DesignDetailStepCard, this.props.DesignDetailStepCard, typeof this.props.DesignDetailStepCard);
+        //     this.setState({ cardDetail: nextProps.DesignDetailStepCard });
+        // }
         return true;
     }
+
+    // componentDidUpdate(prevProps) {
+    // const { design } = this.props;
+    // const { design: prev } = prevProps;
+    // if (wiredraw == false && design.wires) {
+    // console.log("wire: :(");
+    // this.setState({ wire: true });
+    // wiredraw = true;
+    // }
+    // }
+
     render() {
         const { editor, design, DesignDetailStep, userInfo } = this.props;
-        const { gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
+        const { wire, gap, h, left, right, boardId, card, newcard, newstep, editstep, cardDetail, title, where } = this.state;
         //console.log("items - ", DesignDetailStep);
         // console.log(design);
 
+
         return (
             <div style={{ position: "relative" }}>
+
+                {/* {wire ? <Wiring gap={gap} wires={design && design.wires} /> : null} */}
+
                 {design.uid ?
                     <React.Fragment>
                         {left ? <LeftWhitePane
@@ -279,7 +328,7 @@ class GridEditor extends Component {
                         {right ? <RightWhitePane
                             width={138} height={h} right={0}
                             background="transparent linear-gradient(-90deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%)">
-                            <Arrow angle="180deg" c gap={gap} right={50} onClick={this.ScrollRight} />
+                            <Arrow angle="180deg" gap={gap} right={50} onClick={this.ScrollRight} />
                         </RightWhitePane> : null}
 
                         {editor && newcard
@@ -299,6 +348,12 @@ class GridEditor extends Component {
                             close={() => this.setState({ card: false })}
                             title={title}
                             boardId={boardId}
+                            open={(card_id) => {
+                                // console.log(id)
+                                // this.openCard(card, row, boardId);
+                                console.log(card_id, boardId, card, this.props, this.state);
+                            }}
+                            // wires={this.props.design.wires}
                             designId={this.props.design.uid}
                             card={cardDetail} />}
 
@@ -331,6 +386,8 @@ class GridEditor extends Component {
                                 </div>
                             </GridEditorWrapper>
                         </ReactHeight>
+
+
                     </React.Fragment>
                     : null//<div>디자인정보를 가져오고 있습니다.</div>
                 }</div>)
