@@ -593,7 +593,11 @@ class CardModal extends Component {
 
     render() {
         const imgURL = (this.props.card && this.props.card.first_img && this.props.card.first_img.l_img) || null;
-        const { card, isTeam } = this.props;
+        const { card, isTeam, wires } = this.props;
+
+        // const goPrev = wires && wires.filter(wire => wire.to_card_id === card.uid);
+        // const goNext = wires && wires.filter(wire => wire.from_card_id === card.uid);
+        // console.log('go prev', goPrev, wires, card);
 
         return (
             <React.Fragment>
@@ -604,6 +608,34 @@ class CardModal extends Component {
                     <div className="close-box" onClick={this.onClose} >
                         <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
                     </div>
+
+                    {/* LEFT  */}
+                    {/* {goPrev && goPrev.length > 0 &&
+                        goPrev.map((prev, index) =>
+                            <div
+                                onClick={() => {
+                                    const cardId = prev && prev.from_card_id
+                                    this.props.open(cardId);
+                                }}
+                                style={{
+                                    textAlign: "center", fontSize: "2rem", position: "absolute", top: `${10 + 30 * index}%`, left: "-5%", width: "50px", height: "100px", background: "white"
+                                }}>
+                            </div>
+                        )} */}
+
+                    {/* RIGHT */}
+                    {/* {goNext && goNext.length > 0 &&
+                        goNext.map((next, index) =>
+                            <div
+                                onClick={() => {
+                                    const cardId = next && next.from_card_id
+                                    this.props.open(cardId);
+                                }}
+                                style={{
+                                    textAlign: "center", fontSize: "2rem", position: "absolute", top: `${10 + 30 * index}%`, right: "-5%", width: "50px", height: "100px", background: "white"
+                                }}>
+                            </div>
+                        )} */}
 
                     {/* {(card.private === 1) && (card.user_id !== (this.props.userInfo && this.props.userInfo.uid)) ? */}
                     {/* // <div>이 컨텐츠는 비공개 컨텐츠입니다. 컨텐츠 작성자만 열람하실 수 있습니다.</div> */}
@@ -698,10 +730,10 @@ class CardModal extends Component {
 
                         <CommentWrapper>
                             <div className="commentBox">
-                            <div className="comment-title">댓글</div>
-                            <div className="comment-body">
-                                <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} />
-                            </div>
+                                <div className="comment-title">댓글</div>
+                                <div className="comment-body">
+                                    <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} />
+                                </div>
                             </div>
                         </CommentWrapper>
                     </div>
