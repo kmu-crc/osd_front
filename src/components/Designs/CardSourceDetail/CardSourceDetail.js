@@ -1497,8 +1497,8 @@ class SubmitLogContainer extends React.Component {
   }
   render() {
     const { loading, MySubmitList } = this.state;
-    const AddButton=()=>{
-      return(
+    const AddButton = () => {
+      return (
         <button>hi</button>
       );
     }
@@ -1550,22 +1550,22 @@ class SubmitLogContainer extends React.Component {
         dataIndex: "coding",
         key: "coding",
         width: 100,
-        render: (text,row,index) => (
-          <a onClick={()=>{
+        render: (text, row, index) => (
+          <a onClick={() => {
             const url = geturl() + `/codepage`;
             const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
-            const code = window.open( "","_blank", options);
+            const code = window.open("", "_blank", options);
             // code.document.title("코드")
             // const replaceCode = row.code.replace(/\n/g, "<br/>");
             code.document.write(row.code);
-            }}>
+          }}>
             Delete
           </a>
         )
       }
     ]
 
-    return (MySubmitList && MySubmitList.length ?
+    return (MySubmitList && MySubmitList.length > 0 ?
       <TableWrapper>
         <Table
           // {/* result message create_date avg_time avg_memory code */}
