@@ -879,12 +879,12 @@ class CardSourceDetail extends Component {
                 <div className="msg">
                   {this.props.DesignDetail ?
                     this.props.DesignDetail.category_level3 === 1 ?
-                      "C++" :
+                      "C/C++" :
                       this.props.DesignDetail.category_level3 === 2 ?
                         "Python" :
-                        this.props.DesignDetail.category_level3 === 3 ?
-                          "C" : "etc."
-                    : null}
+                        // this.props.DesignDetail.category_level3 === 3 ?
+                        //   "C" : 
+                          "etc.": null}
                 </div>
               </div>
               <div className="content_box">
@@ -936,8 +936,10 @@ class CardSourceDetail extends Component {
                 :null}
               /> */}
               {
-                this.props.DesignDetail&&this.props.DesignDetail.category_level3==1?"C++":
-                this.props.DesignDetail&&this.props.DesignDetail.category_level3==2?"Python":"C"
+                this.props.DesignDetail&&this.props.DesignDetail.category_level3==1?"C/C++":
+                this.props.DesignDetail&&this.props.DesignDetail.category_level3==2?"Python"
+                :null
+                // :"C"
               }
 
             </div>
@@ -1334,6 +1336,7 @@ const TableWrapper = styled.div`
   .rc-table-thead{
     .rc-table-cell{
       padding:10px 5px;
+      font-size:20px;
     }  
   }
   .rc-table-tbody{
@@ -1341,6 +1344,7 @@ const TableWrapper = styled.div`
       .rc-table-cell{
         padding:10px 5px;
         background-color:#FAFAFA;
+        font-size:18px;
       }
     }
   }
@@ -1458,34 +1462,34 @@ class SubmitLogContainer extends React.Component {
     })
     const columns = [
       {
+        title: "메세지",
+        dataIndex: "message",
+        key: "message",
+        width: 450,
+      },
+      {
         title: "결과",
         dataIndex: "result",
         key: "result",
         width: 100,
       },
       {
-        title: "메세지",
-        dataIndex: "message",
-        key: "message",
-        width: 500,
-      },
-      {
         title: "소요시간",
         dataIndex: "time",
         key: "time",
-        width: 100,
+        width: 110,
       },
       {
         title: "사용용량",
         dataIndex: "space",
         key: "space",
-        width: 100,
+        width: 110,
       },
       {
         title: "제출시간",
         dataIndex: "submit-time",
         key: "submit-time",
-        width: 100,
+        width: 110,
       },
       {
         title: "내 코드",
