@@ -1038,13 +1038,16 @@ class CardSourceDetail extends Component {
                       })
                         .then(res1 => res1.json())
                         .then(res1 => {
-                          console.log(res1);
                           if (res1.result) {
+                            console.log(res1, '이걸가지고 또 컨텐츠 추가요청을 해야함.');
                             this.setState({ result: res1 });
                             ntry = 0;
                           }
                         })
-                        .catch(e => { console.error(e); return; })
+                        .catch(e => {
+                          console.error(e);
+                          return;
+                        });
                       if (ntry--)
                         setTimeout(check, 1000);
                     };
@@ -1217,10 +1220,18 @@ class CardSourceDetail extends Component {
                             <div className="problemWrap">
 
                               <ProblemBox>
-                                <div className="titleBox"><div className="title">제목</div></div>
-                                <div className="problemBox"><div className="board">{item.content && JSON.parse(item.content).name}</div></div>
-                                <div className="titleBox"><div className="title">내용</div></div>
-                                <div className="problemBox"><div className="board">{item.content && JSON.parse(item.content).contents}</div></div>
+                                <div className="titleBox">
+                                  <div className="title">제목</div></div>
+                                <div className="problemBox">
+                                  <div className="board">{item.content && JSON.parse(item.content).name}</div></div>
+                                <div className="titleBox">
+                                  <div className="title">내용</div></div>
+                                <div className="problemBox">
+                                  <div className="board">
+                                    {/* {item.content && IsJsonString(item.content) && JSON.parse(item.content).cotents && */}
+                                    {item.content && <PdfViewer pdf={JSON.parse(item.content).contents} />}
+                                    {/* {item.content && JSON.parse(item.content).contents} */}
+                                  </div></div>
                               </ProblemBox>
 
                               <div
@@ -1501,20 +1512,21 @@ class SubmitLogContainer extends React.Component {
   }
   render() {
     const { loading, MySubmitList } = this.state;
-    const AddButton=()=>{
-      return(
+    const AddButton = () => {
+      return (
         <button>hi</button>
       );
     }
-    const data = MySubmitList && MySubmitList.map((submit, index) => {
+    console.log("MySubmitList", MySubmitList);
+    const data = MySubmitList && MySubmitList.length > 0 && MySubmitList.map((submit, index) => {
       const row = {
         "key": index,
-        "result": submit.result === "S" ? "성공" : "실패",
+        "result": submit.result === "S" ? "성공" : submit.result === "F" ? "실패" : "---",
         "message": submit.message || "",
-        "time": submit.avg_time + "초",
-        "space": submit.avg_memory + "MB",
-        "submit-time": DateFormat(submit.create_date),
-        "code": submit.code,
+        "time": submit.avg_time ? submit.avg_time + "초" : "",
+        "space": submit.avg_memory ? submit.avg_memory + "MB" : "",
+        "submit-time": submit.create_data ? DateFormat(submit.create_date) : "",
+        "code": submit.code || "",
       }
       return row;
     })
@@ -1554,22 +1566,22 @@ class SubmitLogContainer extends React.Component {
         dataIndex: "coding",
         key: "coding",
         width: 100,
-        render: (text,row,index) => (
-          <a onClick={()=>{
-            const url = geturl() + `/codepage`;
+        render: (text, row, index) => (
+          <a onClick={() => {
+            // const url = geturl() + `/codepage`;
             const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
-            const code = window.open( "","_blank", options);
+            const code = window.open("", "_blank", options);
             // code.document.title("코드")
             // const replaceCode = row.code.replace(/\n/g, "<br/>");
             code.document.write(row.code);
-            }}>
-            Delete
+          }}>
+            코드보기
           </a>
         )
       }
     ]
 
-    return (MySubmitList && MySubmitList.length ?
+    return (MySubmitList && MySubmitList.length > 0 ?
       <TableWrapper>
         <Table
           // {/* result message create_date avg_time avg_memory code */}
