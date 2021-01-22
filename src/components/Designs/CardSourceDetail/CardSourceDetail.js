@@ -220,7 +220,7 @@ const SubmitModalWrapper = styled(Modal)
     .editor {
       margin-top: 16px;
       width: 100%;
-      height: 588px;
+      height: 480px;
       overflow-y:auto;
       border:1px solid #efefef;
       background: #E9E9E9 0% 0% no-repeat padding-box;
@@ -962,7 +962,7 @@ class CardSourceDetail extends Component {
                 ?
                 <AceEditor
                   width={"100%"}
-                  height={"588px"}
+                  height={"478px"}
                   ref={ref => this.ace = ref}
                   setOptions={{
                     fontSize: "20px",
