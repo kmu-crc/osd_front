@@ -46,6 +46,7 @@ export const CreateCard = (props) => {
     return (<div onClick={props.onClick}
         style={{
             width: "215px", height: "215px", marginRight: props.marginRight,
+            background: "white",
             borderRadius: "15px", backgroundClip: "padding-box", border: "2px solid rgba(112,112,112, 0.5)",
             cursor: "pointer", marginBottom: "10px"
         }}>
@@ -170,7 +171,8 @@ const CardContainer = styled.div`
         overflow:hidden;
         cursor:pointer;
         position:absolute;
-        z-index:700;
+        z-index: 700;
+        background: #EFEFEF;
         background-image: url(${props => props.first_img && props.first_img.m_img});
         background-size: cover;
         background-position: center;
@@ -251,7 +253,7 @@ export const ContentCard = (props) => {
 
             <div className="icon-area">{props.children}</div>
             {props.card.first_img ?
-                <div className="bound_box_">
+                <div id={`div_card_${props.uid}`} className="bound_box_">
                     <div className="gradient" />
                     <div className="text">
                         <TextFormat txt={props.card.title} />
@@ -266,7 +268,7 @@ export const ContentCard = (props) => {
                 </div>
                 :
                 <React.Fragment>
-                    <div className="bound_box_">
+                    <div id={`div_card_${props.uid}`} className="bound_box_">
                         <div style={{ zIndex: "702", position: "absolute", width: "100%", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", textAlign: "center", lineHeight: "40px", marginTop: "27px", }}>
                             <TextFormat txt={props.card.title || ""} />
                         </div>

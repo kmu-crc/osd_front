@@ -5,22 +5,21 @@ export const PdfViewer = (props) => {
   // const path = props.pdf.search(".pdf") ? props.pdf : props.pdf + ".pdf"
   return (<div>
 
-    {loading ?
+    {/* {loading ?
       <div className='spinner-container'>
         <Spinner />
       </div> : null}
-
-    <iframe src={
-      `https://docs.google.com/viewer?url=${props.pdf}&embedded=true`
-      // `${props.pdf}`
-    }
+*/}
+    <iframe
+      style={{ minHeight: "500px", backgroundColor: "#EFEFEF", border: "1px dashed #707070" }}
+      src={
+        `https://docs.google.com/viewer?url=${props.pdf}&embedded=true`
+        // `${props.pdf}`
+      }
       onLoad={() =>
         setTimeout(() => { }, 500)}
       // setLoading(false)}
-      frameBorder="0" height="500px" width="100%" />
-    {/* <object data={props.pdf} type="application/pdf" width="300" height="200"> */}
-    {/* alt : <a href={props.pdf}>{props.pdf}</a> */}
-    {/* </object> */}
+      frameBorder="0" minHeight="500px" width="100%" />
     {/* {props.pdf} */}
   </div>);
 }
