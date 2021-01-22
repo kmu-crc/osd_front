@@ -822,7 +822,6 @@ class CardSourceDetail extends Component {
     const { edit, content, loading, submit, tab, item, result } = this.state;
     // console.log("content:", content.find(item => item.type === "TEXT"));
     // console.log("result:", this.props, this.state)// && this.props.DesignDetail.category_level3 - 1);
-    console.log(result);
     const fontoffset = 0.3;
 
     return (<div id="card-source-detail-root-node">
@@ -895,7 +894,7 @@ class CardSourceDetail extends Component {
                         "Python" :
                         // this.props.DesignDetail.category_level3 === 3 ?
                         //   "C" : 
-                          "etc.": null}
+                        "etc." : null}
                 </div>
               </div>
               <div className="content_box">
@@ -947,9 +946,9 @@ class CardSourceDetail extends Component {
                 :null}
               /> */}
               {
-                this.props.DesignDetail&&this.props.DesignDetail.category_level3==1?"C/C++":
-                this.props.DesignDetail&&this.props.DesignDetail.category_level3==2?"Python"
-                :null
+                this.props.DesignDetail && this.props.DesignDetail.category_level3 == 1 ? "C/C++" :
+                  this.props.DesignDetail && this.props.DesignDetail.category_level3 == 2 ? "Python"
+                    : null
                 // :"C"
               }
 
@@ -993,7 +992,10 @@ class CardSourceDetail extends Component {
                   editorProps={{ $blockScrolling: true }} />
                 :
                 <SubmitLogContainer
-                  user_id={this.props.userInfo && this.props.userInfo.uid}
+                  user_id=
+                  {
+                    this.props.userInfo && this.props.userInfo.uid
+                  }
                   content_id={this.props.uid}
                 />}
             </div>
@@ -1235,12 +1237,20 @@ class CardSourceDetail extends Component {
                               </ProblemBox>
 
                               <div
-                                onClick={() => {
-                                  this.setState({ item: JSON.parse(item.content) });
-                                  this.setState({ submit: true });
+                                onClick={async () => {
+                                  // console.log("user_id", this.props.userInfo.uid, item.user_id);
+                                  if (this.props.userInfo.uid === item.user_id) {
+                                    this.setState({ item: JSON.parse(item.content) });
+                                    this.setState({ submit: true });
+                                  } else {
+                                    await alert("해당문제의 제출 권한이 없습니다.");
+                                  }
                                 }}
                                 style={{ width: "max-content", margin: "auto", cursor: "pointer" }}>
-                                <p style={{ padding: "5px 13px", color: "white", backgroundColor: "red", borderRadius: "18px" }}>답안 제출하기</p>
+                                <p style={{
+                                  padding: "5px 13px", color: "white", borderRadius: "18px",
+                                  backgroundColor: (this.props.userInfo.uid === item.user_id) ? "red" : "gray",
+                                }}>답안 제출하기</p>
                               </div>
 
 
@@ -1273,19 +1283,54 @@ class CardSourceDetail extends Component {
 
                 <div className="contentWrap">
                   {(item.type === "FILE")
-                    ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />
+                    ? <FileController
+                      item={item}
+                      name="source"
+                      initClick={this.state.click}
+                      getValue={this.onChangeFile}
+                      setController={this.setController} />
                     : null}
 
                   {(item.type === "TEXT")
-                    ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    ? <TextController
+                      item={item}
+                      initClick={this.state.click}
+                      getValue={(data) => this.onChangeValue(data, item.order)} />
                     : null}
 
                   {(item.type === "LINK")
-                    ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    ? <LinkController
+                      item={item}
+                      initClick={this.state.click}
+                      getValue={(data) => this.onChangeValue(data, item.order)} />
                     : null}
 
                   {(item.type === "PROBLEM")
-                    ? <ProblemContainer open={this.state.addProblem} openModal={(data) => this.setState({ addProblem: data })} item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    ? <ProblemContainer
+                      open={this.state.addProblem}
+                      openModal={async (data) => {
+                        this.setState({ addProblem: data });
+                        if (data === false && item.content === "") {
+                          let copyContent = [...this.state.content];
+                          for (var i = 0; i < copyContent.length; i++) {
+                            if (copyContent[i].type === "PROBLEM" && copyContent[i].content === "") {
+                              copyContent.splice(i, 1);
+                            }
+                          }
+                          for (i = 0; i < copyContent.length; i++) {
+                            copyContent[i].order = i;
+                          }
+                          await this.setState({ content: copyContent });
+                          this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
+                          // console.log("csd:", item);
+                        }
+                      }}
+                      item={item}
+                      initClick={this.state.click}
+                      getValue={(data) => {
+                        this.onChangeValue(data, item.order)
+                      }}
+                    />
                     : null}
 
                 </div>
@@ -1491,6 +1536,7 @@ class SubmitLogContainer extends React.Component {
   get_submit_list = (user, content) => {
     return new Promise((resolve, reject) => {
       const url = `${host}/design/problem/mySubmitList/${user}/${content}`;
+      console.log(url);
       fetch(url, {
         headers: { 'Content-Type': 'application/json' },
         method: "GET",

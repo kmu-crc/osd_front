@@ -1,31 +1,41 @@
 import React from 'react';
-import Spinner from 'react-spinner';
+// import Spinner from 'react-spinner';
+// import styled from "styled-components";
+
 export const PdfViewer = (props) => {
-  const [loading, setLoading] = React.useState(true);
+  // const [loading, setLoading] = React.useState(true);
   // const path = props.pdf.search(".pdf") ? props.pdf : props.pdf + ".pdf"
+
   return (<div>
 
     {/* {loading ?
       <div className='spinner-container'>
         <Spinner />
-      </div> : null}
-*/}
+      </div> : null}*/}
+
     <iframe
+
       style={{ minHeight: "500px", backgroundColor: "#EFEFEF", border: "1px dashed #707070" }}
+
       src={
         `https://docs.google.com/viewer?url=${props.pdf}&embedded=true`
         // `${props.pdf}`
       }
-      onLoad={() =>
-        setTimeout(() => { }, 500)}
+
+      // onAbort={(e) => {
+      // console.log("pdf-viewer", e);
+      // }}
+      onLoad={() => {
+        // console.log("pdf-viewer", e);
+        setTimeout(() => { }, 500);
+      }}
+
       // setLoading(false)}
       frameBorder="0" minHeight="500px" width="100%" />
-    {/* {props.pdf} */}
   </div>);
 }
 
 // import React from 'react';
-// import styled from "styled-components";
 // // FOR PREVIEW PDF FILES
 // import { pdfjs } from 'react-pdf';
 // import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
