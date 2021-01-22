@@ -412,6 +412,12 @@ const CategoryDropDown = styled(Dropdown)`
   font-size:20px;
   background-color:#EFEFEF !important;
   margin-right:30px;
+  display:flex;
+  align-items:center;
+  .default{
+    font-size:16px;
+    margin-top:0px;
+  }
   @media only screen and (min-width : 780px) and (max-width:1440px) {
   }
   @media only screen and (min-width : 360px) and (max-width:780px) {
@@ -788,7 +794,7 @@ class CreateDesign extends Component {
       is_project: 0, info_dialog: false, contents: [],
       crop: { unit: "%", width: 50, aspect: 1 },
       loading: false, designId: null, isMyDesign: false, editor: false,
-      basic: false, additional: false, content: false, step: 0,
+      basic: false, additional: false, content: false, step: 1,
       showSearch: false,
       title: "",
       thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false,

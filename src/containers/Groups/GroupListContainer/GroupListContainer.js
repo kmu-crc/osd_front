@@ -8,12 +8,14 @@ import Loading from "components/Commons/Loading";
 import osdstyle from "opendesign_style";
 
 const Wrapper = styled.div`
+
   position:relative;
   .orderBox{
     width:max-content;
     height:max-content;
   }
-  margin-top:100px;
+  // margin-top:100px;
+  margin-top:71px;
   @media only screen and (max-width : 900px) {
   margin-top:150px;
   }

@@ -51,7 +51,7 @@ const Menu = styled.div`
 `
 const LeftMenu = styled.ul`
     left: 0px;
-    min-width: 400px;
+    min-width: 30%;
     margin: 0px;
     padding: 0px;
     vertical-align: top;
@@ -91,7 +91,7 @@ const MenuItem = styled.li`
     }
 `
 const CenterMenu = styled.ul`
-    width:65%;
+    min-width:56%;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -103,16 +103,16 @@ const CenterMenu = styled.ul`
         border:none;
     }
     @media only screen and (min-width : 1600px) {
-        margin-left:40px;
+        // margin-left:40px;
     }
     @media only screen and (max-width : 1600px) {
-        width:60%;
+        min-width:60%;
     }
     @media only screen and (max-width : 1440px) {
-        width:50%;
+        min-width:50%;
     }
     @media only screen and (max-width : 1024px) {
-        width:40%;
+        min-width:40%;
         .searchItem{
             margin-right:3%;
             min-width:200px;
@@ -134,7 +134,7 @@ const CenterMenu = styled.ul`
     }
 `
 const RightMenu = styled.ul`
-    width:77%;
+    width:70%;
     background-color:#FFFFFF;
 
     right:0px;
@@ -145,7 +145,7 @@ const RightMenu = styled.ul`
     justify-content:space-between;
     vertical-align:top;
     .signnav{
-        min-width:max-content;
+        min-width:44%;
         display:flex;
         justify-content:flex-end;
     }
@@ -189,11 +189,13 @@ const RightMenu = styled.ul`
         }
         .redItem{
             margin-right:25px;
+            margin-left:15px;
         }
         .profileItem{
         }
     }
     @media only screen and (max-width : 1024px) {
+        
         min-width:100%;
         background-color:#EFEFEF;
         display:flex;
@@ -215,7 +217,7 @@ const RightMenu = styled.ul`
             margin-bottom:5px;
         }
         .signnav{
-            width:50%;
+            width:60%;
         }
     }
     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
@@ -234,7 +236,8 @@ const RightMenu = styled.ul`
             margin-right:0px;
         }
         .signnav{
-            justify-content:flex-start;
+            width:100%;
+            justify-content:center;
         }
 
     }
@@ -321,10 +324,11 @@ class Header extends Component {
                                 <React.Fragment>
                                     <li className="IconItem"><Message noti={this.state.alarm} /></li>
                                     <li className="IconItem"><AlarmContainer {...this.props} alarm={this.state.alarm} /></li>
+                                    <li className="redItem">
+                                    <div onClick={this.gotoCreateDesignPage}>디자인 등록</div></li>
                                 </React.Fragment>
                             ) : null}
-                            <li className="redItem">
-                                <div onClick={this.gotoCreateDesignPage}>디자인 등록</div></li>
+
                             <li className="profileItem">
                                 <SignNav formWidth={this.state.screenWidth} {...this.props} /></li> {/* <SignNavContainer /> */}
                             </div>
