@@ -11,27 +11,32 @@ const Wrapper = styled.div`
     cursor:pointer;
   }
   border: 1px solid transparent;
-  width: 247px;
-  height: 322px;
+  width: 250px;
+  height: 300px;
   background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
+  box-shadow: 5px 5px 5px #0000001A;
   border-radius: 20px;
   cursor:pointer;
-
+  padding:7px 25px;
 `;
 const Profile = styled.div`
-  width: 164px;
-  height: 164px;
-  margin-top: 25px;
-  margin-left: 42px;
-  background: transparent;
-  background-image: url(${props => props.face});
-  border-radius: 50%;
-  background-size: cover;
-  background-position: center center;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  .profile_img{
+    min-width: 200px;
+    min-height: 200px;
+    max-width: 200px;
+    max-height: 200px;
+    background: transparent;
+    background-image: url(${props => props.face});
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center center;
+  
+  }
 `;
 const TextWrapper = styled.div`
-  margin-top: 19px;
   margin-left: auto;
   margin-right: auto;
   width: max-content;
@@ -39,26 +44,24 @@ const TextWrapper = styled.div`
   text-align: center;
   letter-spacing: 0;
   .nick {
+    margin-top:8px;
     font-weight: 500;
-    font-size: 17px;
+    font-size: 13px;
     color: #060000;
-    line-height: 25px;
   }
   .category {
     margin-top: 5px;
-    font-weight: 300;
-    font-size: 12px;
-    line-height: 18px;
+    font-weight: 500;
+    font-size: 11px;
     color: #FF0000;
   }
 `;
 const Counter = styled.div`
-
-  margin-top: 35px;
   display: flex;
   flex-direction: row;
   width: max-content;
   margin-left: auto;
+  margin-top: 10px;
   margin-right: auto;
   font-family: Noto Sans KR;
   letter-spacing: 0;
@@ -66,7 +69,7 @@ const Counter = styled.div`
 
   .items {
     text-align: center;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 300;
     line-height: 18px;
   }
@@ -74,12 +77,12 @@ const Counter = styled.div`
     margin-left: 10.5px;
     margin-right: 10.5px;
     width: 0px;
-    height: 16px;
+    height: 11px;
     border: 0.5px solid #707070;
   }
   .likes {
     text-align: left;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     line-height: 18px;
     .heart{
@@ -115,7 +118,9 @@ class Expert extends Component {
     return (
       <Wrapper onClick={this.onClickItem}>
         {/* profile */}
-        <Profile face={(expert && expert.m_img) || profile} />
+        <Profile face={(expert && expert.m_img) || profile}>
+          <div className="profile_img"/>
+        </Profile>
         {/* text */}
         <TextWrapper>
           <div className="nick"><TextFormat txt={expert.nick_name} chars={32} /></div>
@@ -124,10 +129,10 @@ class Expert extends Component {
         {/* counter */}
         <Counter>
           <div className="items">
-            {NumberFormat(expert.itemCount) || 0}개의 아이템</div>
-          <div className="v-line" />
+            {NumberFormat(expert.itemCount) || 0}개의 아이템&nbsp;&nbsp;&nbsp;&nbsp;|</div>
+          {/* <div className="v-line" /> */}
           <div className="likes">{/*♥*/}
-            <Icon className="heart" size="small" color="red" />{NumberFormat(expert.likeCount) || 0}</div>
+          &nbsp;&nbsp;&nbsp;&nbsp;<Icon className="heart" size="small" color="red" />{NumberFormat(expert.likeCount) || 0}</div>
         </Counter>
       </Wrapper>
     );

@@ -14,18 +14,22 @@ const Wrapper = styled.div`
   *{
     cursor:pointer;
   }
+  width: 320px;
+  height: 410px;
+  padding:27px 15px;
   position: relative;
   border: 1px solid transparent;
-  width: 247px;
-  height: 335px;
-  background: transparent;//#FFFFFF;
+  border-radius: 20px;
+  box-shadow: 3px 3px 3px #00000029;
+  background: transparent;
   font-family: Noto Sans KR;
-  // div{border:1px solid red;}
   cursor: pointer;
 `;
 const ItemPic = styled.div`
-  width: 247px;
-  height: 206px;
+  min-width: 290px;
+  min-height: 250px;
+  max-width: 290px;
+  max-height: 250px;
   font-size:30px;
   font-weight:500;
   color:white;
@@ -39,21 +43,20 @@ const ItemPic = styled.div`
   background-position: center center
 `;
 const TextWrapper = styled.div`
-  margin-top: 8px;
+  margin-top: 22px;
   width: 100%;
   .title {
     font-weight: 500;
-    font-size: 17px;
+    font-size: 13px;
     text-align: left;
-    line-height: 25px;
   }
   .author {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 8px;
+    margin-top: 10px;
     font-weight: 300;
-    font-size: 12px;
+    font-size: 11px;
     text-align: left;
     line-height: 18px;
   }
@@ -69,11 +72,12 @@ const NumberWrapper = styled.div`
   // margin-top: 23px;
   display: flex;
   flex-direction: row;
+  align-items:center;
+  margin-top:20px;
   .price {
     font-weight: 500;
-    font-size: 17px;
+    font-size: 15px;
     text-align: left;
-    line-height: 25px;
   }
   .score {
     margin-left: auto;
@@ -83,7 +87,6 @@ const NumberWrapper = styled.div`
     font-weight: 300;
     font-size: 15px;
     text-align: left;
-    line-height: 22px;
   }
 `;
 const PrivateLabel = styled.div`
@@ -134,11 +137,11 @@ class Item extends Component {
           <div className="title"><TextFormat txt={item.title} /></div>
           <div className="author">
             <TextFormat txt={item.userName} />
-            <div className="date">{date}</div>
+            {/* <div className="date">{date}</div> */}
           </div>
         </TextWrapper>
         {/* numbers */}
-        <TypeWrapper>
+        {/* <TypeWrapper>
         <TypeText>
           {item.type===0?"디자인":null}
           {item.type===1?"프로젝트":null}
@@ -149,7 +152,7 @@ class Item extends Component {
           {item.type===6?"지적재산권":null}
           {item.type===7?"제작품":null}
         </TypeText>
-        </TypeWrapper>
+        </TypeWrapper> */}
         <NumberWrapper>
           <div className="price">{PointFormat(item.price / (parseInt(item.price)>9999?10000:1000) || 0)}{parseInt(item.price)>9999?"만 point":" point"}</div>
           <div className="score">

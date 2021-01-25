@@ -10,19 +10,15 @@ const MainContainer = styled.div`
 `;
 const Wrapper = styled.div`
   width: 100%;
-  padding-top: ${Margin}px;
-  // border:1px solid black;
 `;
 const Head = styled.div`
   margin-left: auto;
   margin-right: auto;
-  margin-bottom:30px;
-  // border:1px solid black;
+  margin-bottom:20px;
   width: max-content;
   text-align: left;
   font-weight: 500;
-  font-size: 2.6rem;
-  line-height: 2.6rem;
+  font-size: 18px;
   font-family: Noto Sans KR;
   letter-spacing: 0;
   color: #060000;
@@ -41,7 +37,7 @@ class Main extends Component {
 
       <Wrapper>
         <TextWrapper>
-          <Head>인기 디자이너 / 메이커</Head>
+          <Head>인기 디자이너 | 메이커</Head>
         </TextWrapper>
         <ScrollTopDesignerContainer />
       </Wrapper>

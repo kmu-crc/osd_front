@@ -4,17 +4,18 @@ import styled from "styled-components";
 // import { geturl } from 'config';
 
 const Container = styled.div`
-  // width: 100%;
+  width:100%;
   font-family: Noto Sans KR;
-  // display: flex;
-  // flex-direction: colum;
   cursor: default;
   .over {
     display: flex;
     flex-direction: row;
+    height:22px;
   }
   .under {
-    margin-top: 18px;
+    margin-top: 5px;
+    margin-bottom:35px;
+    height:22px;
   }
 `;
 const CategoryItem =styled.div`
@@ -25,27 +26,26 @@ const CategoryItem =styled.div`
 `
 const CurrentCategory = styled.div`
   width: 180px;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 500;
   text-align: left;
   line-height: 29px;
 `;
 const CategoryMenu = styled.div`
+  width:100%;
   display: flex;
+  justify-content:center;
   flex-direction: row;
-  font-size: 20px;
+  font-size: 15px;
   text-align: left;
-  font-weight: 500;
-  line-height: 29px;
+  font-weight: 300;
   .element {
-    margin-right: 20px;
+    margin-right: 10px;
   }
   .active {
-    color: #FF0000;
+    font-weight:700;
   }
   &.fly {
-    position: absolute;
-    left: 10%;
   }
 `;
 class Category extends Component {
@@ -70,7 +70,7 @@ class Category extends Component {
     return (
       <Container>
         <div className="over">
-          <CurrentCategory onClick={this.resetCate}>{this.props.which}</CurrentCategory>
+          {/* <CurrentCategory onClick={this.resetCate}>{this.props.which}</CurrentCategory> */}
           <CategoryMenu>
             {category1.map((cate, i) => cate.value !== 0 &&
               <CategoryItem
