@@ -15,7 +15,7 @@ const ListContainer = styled.div`
   .item {
     flex: 0 0 180px;
     justify-content: space-around;
-    margin: 0px 45px 45px 0px;
+    margin: 0px 15px 29px 0px;
     padding: 0px;
     // background: #F7F7F7;
     // border: 1px solid #EFEFEF;
@@ -23,7 +23,7 @@ const ListContainer = styled.div`
   .designer {
     flex: 0 0 247px;
     justify-content: space-around;
-    margin: 0px 45px 45px 0px;
+    margin: 0px 19px 35px 0px;
     padding: 0px;
     // background: #707070;
     // border: 1px solid #FAFAFA;
@@ -31,7 +31,7 @@ const ListContainer = styled.div`
   .maker {
     flex: 0 0 247px;
     justify-content: space-around;
-    margin: 0px 45px 45px 0px;
+    margin: 0px 19px 35px 0px;
     padding: 0px;
     // background: #707070;
     // border: 1px solid #FAFAFA;

@@ -10,119 +10,79 @@ import { Icon } from "semantic-ui-react";
 import AlarmContainer from "containers/Commons/AlarmContainer";
 import { alert } from "components/Commons/Alert/Alert";
 // import { confirm } from "components/Commons/Confirm/Confirm";
-
-const LogoWrapper = styled.div`
-  margin: 0;
-  padding: 0;
-  font-family: Noto Sans KR;
-  width: 150px;
-  height: 74px;
-  .over {
-    border: 1px solid red;
-    background: #F00;
-    height: 43px;
-    display:flex;
-    justify-content:center;
-    .text {
-      width: 130px;
-      height: 29px;
-      line-height: 29px;
-      margin-top: 5px;
-      color: #FFF;
-      font-size: 20px;
-      font-weight: 500;
-      text-align:center;
-      letter-spacing: 0px;
-    }
-  }
-  .under {
-    display:flex;
-    justify-content:center;
-    height: 32px;
-    .text {
-      width: 130px;
-      margin-top: 6px;
-      margin-left: 10px;
-      color: #F00;
-      font-weight: 500;
-      font-size: 15px;
-      text-align: center;
-      line-height: 22px;
-      letter-spacing: 12px;
-    }
-  }
-`;
-const Logo = () => <React.Fragment>
-  <LogoWrapper>
-    <div className="over">
-      <div className="text">Open Design</div>
-    </div>
-    <div className="under">
-      <div className="text">MARKET</div>
-    </div>
-  </LogoWrapper>
-</React.Fragment>
+import MarketLogo from "source/market_logo.png";
 
 const HeaderContainer = styled.ul`
+  height:54px;
+  padding:10px 20px 13px 20px;
   display: flex;
-
-  height: 74px;
-  flex-direction: row;
-  
+  align-items:center;
+  .left_menu{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    width:35%;
+  }
+  .center_menu{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:30%;
+  }
+  .right_menu{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    width:35%
+  }
 `;
+
 const HeaderItem = styled.li`
-  margin-left: 50px;
-  margin-top: 7px; 
-  width: max-content;
-  min-width: max-content;
-  height: 29px;
-  text-align: left;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 29px;
-  font-family: Noto Sans KR;
-  letter-spacing: 0;
-  color: #000000;
-  opacity: 1;
-  cursor: default;
+  min-width:max-content;
+  height:max-content;
+  font-size:13px;
+  font-family:Noto Sans KR, Medium;
+  font-weight:500;
+  margin-right:20px;
+  .logo_box{
+    width:35px;
+    height:35px;
+    background-image:url(${MarketLogo});
+    background-size:contain;
+    cursor:pointer;
+  }
+  .non_margin{
+    margin:0px;
+  }
   .margin_left{
     margin-left:100px;
   }
   &.first {
-    margin-left: 0px;
-    margin-top: 0px;
-  }
-  &.left {
-    margin-left: auto;
-  }
-  &.cart {
-    margin-left: 35px;
-    margin-right: 12px;
+    width:max-content;
+    height:max-content;
   }
   &.search {
-    margin-top: 5px;
-    width: 354px;
-    min-width: 300px;
-    height: 43px;
+    width: 300px;
+    height: 25px;
     background: #E9E9E9;
-    border-radius: 21px;
+    border-radius: 15px;
     position: relative;
     .search-icon-wrapper {
       .input-style {
         width: 100%;
-        height: 43px;
+        height: 25px;
         padding-left: 14px;
-        padding-right: 45px;
+        padding-right: 40px;
         border: none;
         outline:none;
         background: transparent;
       }
       .search-icon {
         position: absolute;
-        top: 4px;
-        right: 14px;
-        width: 35px;
-        height: 35px;
+        top: 2px;
+        right: 10px;
+        width: 20px;
+        height: 20px;
         opacity: .3;
       }
     }
@@ -140,7 +100,6 @@ const UserMenu = styled.div`
   position: absolute;
   height: max-content;
   width: 175px;
-  // padding:10px;
   pointer-events: auto;
   margin-top: 45px;
   border-radius: 15px;
@@ -165,6 +124,26 @@ const UserMenu = styled.div`
 
 const LoginBox = styled.div`
   display:flex;
+  align-items:center;
+  .addItem{
+    padding:3px 10px;
+    background-color:red;
+    margin-right:20px;
+    ._text{
+      font-size:13px;
+      font-family:Noto Sans KR;
+      font-weight:500;
+      color:white;
+    }
+  }
+  .login_text{
+    min-width:max-content;
+    height:max-content;
+    font-size:13px;
+    font-family:Noto Sans KR, Medium;
+    font-weight:500;
+    margin-left:20px;
+  }
   .iconBox{
     width:35px;
     height35px;
@@ -293,8 +272,10 @@ class Header extends Component {
     // active alarm icon
     return (<HeaderContainer>
       {/*  */}
-      <HeaderItem className="first">
-        <Link to={`/`}><Logo /></Link>
+      <div className="left_menu">
+      <HeaderItem>
+          <div className="logo_box"
+          onClick={()=>window.location.href="/"}/>
       </HeaderItem>
       {/*  */}
       <HeaderItem>
@@ -322,44 +303,11 @@ class Header extends Component {
           게시판
           </Link>
       </HeaderItem>
+      </div>
 
-      {/* {
-        (location.indexOf("/requestMaker") !== -1 || location.indexOf("/requestToMaker") !== -1 || location.indexOf("/ModifyrequestToMaker") !== -1 ||
-          location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) &&
-        <HeaderItem>
-          <Link to={`/request/maker`}
-            className={location.indexOf("/request/maker") !== -1 || location.indexOf("/requestDetail") !== -1 ? "active margin_left" : "margin_left"}>
-            메이커 게시판
-        </Link>
-        </HeaderItem>
-      }
-      {
-        (location.indexOf("/request/item") !== -1 || location.indexOf("/createProduct") !== -1 || location.indexOf("/productModify") !== -1 ||
-          location.indexOf("/productDetail") !== -1 || location.indexOf("/product") !== -1) &&
-        <HeaderItem>
-          <Link to={`/request/item`}
-            className={location.indexOf("/request/item") !== -1 ? "active margin_left" : "margin_left"}>
-            아이템 게시판
-        </Link>
-        </HeaderItem>
-      } */}
-
-      {/*  */}
-      {/* {window.location.href.search('/search') > -1 ? null :
-        <li className="searchItem">
-              <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={1} />
-        </li>} */}
-      {/* {location.indexOf("/search") !== -1 ? null :
-        <HeaderItem className="left search">
-          <div className="search-icon-wrapper">
-            <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
-            <Link to={`/search/${searchtype}/null/${this.state.keyword}`} id="searchLink">
-              <img alt="icon" src={Zoom} className="search-icon" />
-            </Link>
-          </div>
-        </HeaderItem>} */}
+      <div className="center_menu">
         {location.indexOf("/search") !== -1 ? null :
-        <HeaderItem className="left search">
+        <HeaderItem className="search">
           <div className="search-icon-wrapper">
             <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
             <Link to={`/search/${searchtype}/null/${this.state.keyword}`} id="searchLink">
@@ -367,8 +315,10 @@ class Header extends Component {
             </Link>
           </div>
         </HeaderItem>}
+      </div>
       {/*  */}
-      <HeaderItem className={`${location.indexOf("/search") !== -1 ? "left" : ""}`}>
+      <div className="right_menu">
+      {/* <HeaderItem className={`${location.indexOf("/search") !== -1 ? "left" : ""}`}> */}
         {valid && userInfo
           ? (<LoginBox>
 
@@ -380,10 +330,10 @@ class Header extends Component {
             <div className="iconBox" onClick={this.onClickMessageIcon}>
               <Icon className="grey envelope" size="large" />
             </div>
-
-            <div onClick={async () => await this.setState({ active: !this.state.active })} style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
+            <div className="addItem"><div className="_text">아이템 등록</div></div>
+            <div onClick={async () => await this.setState({ active: !this.state.active })} style={{ display: "flex",alignItems:"center", flexDirection: "row", cursor: "pointer" }}>
               <div  style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
-              <div  style={{ width: "max-content", height: "35px", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={pattern_eng.test(userInfo.nickName)?6:3} /></div>
+              <div  style={{ width: "max-content", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={pattern_eng.test(userInfo.nickName)?6:3} /></div>
               {this.state.active ?
                 <UserMenu id="popmenu">
                   <Link to={`/mypage`}>
@@ -394,8 +344,11 @@ class Header extends Component {
                 : null}
             </div>
           </LoginBox>)
-          : (<Link to={`/signin`}>로그인</Link>)}
-      </HeaderItem>
+          : (<LoginBox>
+                <div className="login_text"><Link to={`/signin`}>로그인</Link></div>
+            </LoginBox>)}
+      {/* </HeaderItem> */}
+      </div>
       {/* <HeaderItem className="cart">
         <Link to={'/cart'}>
           {this.props.cart ?

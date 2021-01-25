@@ -10,7 +10,7 @@ import Carousel from 'react-leaf-carousel';
 
 
 const SlideWrap = styled.div`
-  width: 100%;
+  min-width: 1366px;
   height: 350px;
   overflow: hidden;
   position: relative;
@@ -61,7 +61,7 @@ const SlideWrap = styled.div`
     bottom: 0;
     margin: 10px 0;
     text-align: center;
-    width: 100%;
+    width: 1366px;
     & li {
       box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
       background: #fff;
@@ -77,6 +77,10 @@ const SlideWrap = styled.div`
     & .dot.selected,
     & .dot:hover {
       opacity: 1;
+    }
+  }
+  .InfiniteCarouselFrame{
+    & ul{
     }
   }
 `;
@@ -179,23 +183,23 @@ class ScrollListHorizontal extends Component {
       {
         breakpoint: 500,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToShow: 1,
+          slidesToScroll: 1,
         },
       },
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: 1,
+          slidesToScroll: 1,
         },
       },
     ]}
     // dots={true}
     showSides={true}
     sidesOpacity={.5}
-    sideSize={.2}
-    slidesToScroll={6}
+    sideSize={-0.5}
+    slidesToScroll={4}
     slidesToShow={6}
     scrollOnDevice={true}
     cycleInterval={6000}

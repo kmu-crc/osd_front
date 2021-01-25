@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 `;
 const Content = styled(ContentBox)`
   margin-top: ${props => props.top}px;
-  width: 1790px;
+  width: 100%;
   @media only screen and (max-width: 991px) and (min-width: 768px){
     & .ui.grid>.row{
       margin-left: 6.25% !important;
@@ -27,24 +27,29 @@ const Content = styled(ContentBox)`
   background-color: ${props => props.bgcolor || "#FFFFFF"};
 `;
 const RequestButton = styled.div`
-  margin-left: 100px;
   width: 150px;
   color: #FF0000;
   font-family: Noto Sans KR;
-  font-size: 20px;
-  line-height: 29px;
+  font-size:12px;
 `;
 const Container = styled.div`
-  display: flex;
-  .categoy {
-    width: max-content;
-  }
-  .sort {
-    width: max-content;
-    margin-left: auto;
-  }
-  .request {
-    width: max-content;
+  ._wrapper{
+    display:flex;
+    justify-content:space-between;
+    .category {
+      width: 100%;
+    }
+    ._title{
+      font-family:Noto Sans KR;
+      font-weight:500;
+      font-size:18px;
+    }
+    .sort {
+      width: max-content;
+    }
+    .request {
+      width: max-content;
+    }
   }
 `;
 const target = `maker`;
@@ -99,14 +104,21 @@ class MakerList extends Component {
               category1={category1}
               category2={category2}
               which="메이커" /></div>
-          <div className="sort">
-            <Sorting handleClick={this.sortChange} placeholder={sort} /></div>
-          <div className="request"><RequestButton>
-            <Link to={`/requestToMaker/null`}>제작 의뢰</Link></RequestButton></div>
+            <div className="_wrapper">
+                <div className="request">
+                  <RequestButton>
+                    <Link to={`/requestToMaker/null`}>제작 의뢰</Link>
+                  </RequestButton>
+                </div>
+                <div className="_title">메이커</div>
+                <div className="sort">
+                  <Sorting handleClick={this.sortChange} placeholder={sort} />
+                </div>
+          </div>
         </Container>
       </Content>
 
-      <Content top={80}>
+      <Content top={16}>
         <Wrapper className="listWrap">
           {this.state.rendering &&
             <ScrollMakerListContainer

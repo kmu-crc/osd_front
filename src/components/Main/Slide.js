@@ -8,7 +8,7 @@ import Together_img from "source/together_bg.jpg";
 
 const SlideWrap = styled.div`
   width: 100%;
-  height: 250px;
+  height: 263px;
   overflow: hidden;
   position: relative;
   & .slider-wrapper ul {
