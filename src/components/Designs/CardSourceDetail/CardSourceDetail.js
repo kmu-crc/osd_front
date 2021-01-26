@@ -76,6 +76,8 @@ const SubmitResultModal = styled(Modal)`
     position: relative;
     padding: 60px 50px 37px 50px;
     margin: auto;
+    font-family: Noto Sans KR;
+
     .close-box {
       width: max-content;
       cursor: pointer;
@@ -131,8 +133,7 @@ const SubmitResultModal = styled(Modal)`
       }
     }
 `
-const SubmitModalWrapper = styled(Modal)
-  `
+const SubmitModalWrapper = styled(Modal)`
   width: 873px;
   height:max-content;
   background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -142,7 +143,7 @@ const SubmitModalWrapper = styled(Modal)
   position: relative;
   padding: 60px 50px;
   margin: auto;
-  font-family:Noto Sans CJK KR;
+  font-family: Noto Sans KR;
 
   .close-box {
     width: max-content;
@@ -264,7 +265,7 @@ const LanguageDropDown = styled(Dropdown)`
   font-size: 17px !important;
 `;
 
-const cloneObj = obj => JSON.parse(JSON.stringify(obj));
+// const cloneObj = obj => JSON.parse(JSON.stringify(obj));
 function IsJsonString(str) {
   try {
     var json = JSON.parse(str);
@@ -574,7 +575,7 @@ class CardSourceDetail extends Component {
     window.removeEventListener("scroll", null, true);
   }
   async verifyorder(content) {
-    console.log("verify:", content);
+    // console.log("verify:", content);
     // check order
     let formData = { updateContent: [], newContent: [], deleteContent: [] }
     if (content && content.length > 0) {
@@ -818,11 +819,39 @@ class CardSourceDetail extends Component {
     });
     return newstring
   }
+  setPermission(item) {
+    if (this.props.userInfo == null) {
+      return "";
+    }
+    if (this.props.userInfo.uid === item.user_id) {
+      return "LOG SUBMIT";
+    }
+    const url = `${host}/design/problem/checkGroupOwner`;
+    fetch(url, {
+      headers: {},
+      method: "POST",
+      body: {
+        design_id: this.props.DesignDetail.uid,
+        user_id: this.props.userInfo.uid,
+      }
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.isOwner) {
+          return "LOG";
+        }
+        return "";
+      })
+      .catch(e => {
+        console.error(e);
+        return "";
+      })
+    return "";
+  }
   render() {
     const { edit, content, loading, submit, tab, item, result } = this.state;
     // console.log("content:", content.find(item => item.type === "TEXT"));
     // console.log("result:", this.props, this.state)// && this.props.DesignDetail.category_level3 - 1);
-    console.log(result);
     const fontoffset = 0.3;
 
     return (<div id="card-source-detail-root-node">
@@ -861,7 +890,7 @@ class CardSourceDetail extends Component {
 
       {submit ?
         <SubmitModalWrapper
-          open={submit}
+          open={submit ? true : false}
           onClose={() => this.setState({ submit: false })}
         >
           {loading ? <Loading msg="문제를 제출 중입니다." /> : null}
@@ -895,7 +924,7 @@ class CardSourceDetail extends Component {
                         "Python" :
                         // this.props.DesignDetail.category_level3 === 3 ?
                         //   "C" : 
-                          "etc.": null}
+                        "etc." : null}
                 </div>
               </div>
               <div className="content_box">
@@ -947,9 +976,9 @@ class CardSourceDetail extends Component {
                 :null}
               /> */}
               {
-                this.props.DesignDetail&&this.props.DesignDetail.category_level3==1?"C/C++":
-                this.props.DesignDetail&&this.props.DesignDetail.category_level3==2?"Python"
-                :null
+                this.props.DesignDetail && this.props.DesignDetail.category_level3 == 1 ? "C/C++" :
+                  this.props.DesignDetail && this.props.DesignDetail.category_level3 == 2 ? "Python"
+                    : null
                 // :"C"
               }
 
@@ -993,7 +1022,11 @@ class CardSourceDetail extends Component {
                   editorProps={{ $blockScrolling: true }} />
                 :
                 <SubmitLogContainer
-                  user_id={this.props.userInfo && this.props.userInfo.uid}
+                  user_id=
+                  {
+                    this.state.item_user
+                    // this.props.userInfo && this.props.userInfo.uid
+                  }
                   content_id={this.props.uid}
                 />}
             </div>
@@ -1086,7 +1119,8 @@ class CardSourceDetail extends Component {
         <ViewContent>
 
           {content.map((item, index) => {
-            // console.log(item.content);
+            const PERMISSION = item.type === "PROBLEM" ? this.setPermission(item) : "";
+
             return <div key={index + item}>
               {(item.type === "FILE" && item.data_type === "image") ?
                 <div className="imgContent" onClick={() => {
@@ -1221,26 +1255,54 @@ class CardSourceDetail extends Component {
 
                               <ProblemBox>
                                 <div className="titleBox">
-                                  <div className="title">제목</div></div>
+                                  <div className="title">제목</div>
+                                </div>
                                 <div className="problemBox">
-                                  <div className="board">{item.content && JSON.parse(item.content).name}</div></div>
+                                  <div className="board">
+                                    {item.content && JSON.parse(item.content).name}
+                                  </div>
+                                </div>
                                 <div className="titleBox">
-                                  <div className="title">내용</div></div>
+                                  <div className="title">
+                                    내용
+                                  </div>
+                                </div>
                                 <div className="problemBox">
                                   <div className="board">
                                     {/* {item.content && IsJsonString(item.content) && JSON.parse(item.content).cotents && */}
                                     {item.content && <PdfViewer pdf={JSON.parse(item.content).contents} />}
                                     {/* {item.content && JSON.parse(item.content).contents} */}
-                                  </div></div>
+                                  </div>
+                                </div>
                               </ProblemBox>
 
                               <div
-                                onClick={() => {
-                                  this.setState({ item: JSON.parse(item.content) });
-                                  this.setState({ submit: true });
+                                onClick={async () => {
+                                  // console.log("user_id", this.props.userInfo.uid, item.user_id);
+                                  // if (this.props.userInfo && (this.props.userInfo.uid === item.user_id)) {
+                                  if (PERMISSION === "LOG SUBMIT" || PERMISSION === "LOG") {
+                                    this.setState({ item: JSON.parse(item.content), item_user: item.user_id });
+                                    this.setState({ submit: true });
+                                  } else {
+                                    await alert("해당문제의 제출 권한이 없습니다.");
+                                  }
                                 }}
-                                style={{ width: "max-content", margin: "auto", cursor: "pointer" }}>
-                                <p style={{ padding: "5px 13px", color: "white", backgroundColor: "red", borderRadius: "18px" }}>답안 제출하기</p>
+                                style={{
+                                  width: "max-content",
+                                  margin: "auto",
+                                  cursor: "pointer"
+                                }}>
+
+                                <p
+                                  style={{
+                                    padding: "5px 13px",
+                                    color: "white",
+                                    borderRadius: "18px",
+                                    backgroundColor:
+                                      PERMISSION === "LOG" || PERMISSION === "LOG SUBMIT" ? "red" : "gray",
+                                  }}>
+                                  답안 제출하기
+                                  </p>
                               </div>
 
 
@@ -1273,19 +1335,54 @@ class CardSourceDetail extends Component {
 
                 <div className="contentWrap">
                   {(item.type === "FILE")
-                    ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} setController={this.setController} />
+                    ? <FileController
+                      item={item}
+                      name="source"
+                      initClick={this.state.click}
+                      getValue={this.onChangeFile}
+                      setController={this.setController} />
                     : null}
 
                   {(item.type === "TEXT")
-                    ? <TextController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    ? <TextController
+                      item={item}
+                      initClick={this.state.click}
+                      getValue={(data) => this.onChangeValue(data, item.order)} />
                     : null}
 
                   {(item.type === "LINK")
-                    ? <LinkController item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    ? <LinkController
+                      item={item}
+                      initClick={this.state.click}
+                      getValue={(data) => this.onChangeValue(data, item.order)} />
                     : null}
 
                   {(item.type === "PROBLEM")
-                    ? <ProblemContainer open={this.state.addProblem} openModal={(data) => this.setState({ addProblem: data })} item={item} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                    ? <ProblemContainer
+                      open={this.state.addProblem}
+                      openModal={async (data) => {
+                        this.setState({ addProblem: data });
+                        if (data === false && item.content === "") {
+                          let copyContent = [...this.state.content];
+                          for (var i = 0; i < copyContent.length; i++) {
+                            if (copyContent[i].type === "PROBLEM" && copyContent[i].content === "") {
+                              copyContent.splice(i, 1);
+                            }
+                          }
+                          for (i = 0; i < copyContent.length; i++) {
+                            copyContent[i].order = i;
+                          }
+                          await this.setState({ content: copyContent });
+                          this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
+                          // console.log("csd:", item);
+                        }
+                      }}
+                      item={item}
+                      initClick={this.state.click}
+                      getValue={(data) => {
+                        this.onChangeValue(data, item.order)
+                      }}
+                    />
                     : null}
 
                 </div>
@@ -1491,6 +1588,7 @@ class SubmitLogContainer extends React.Component {
   get_submit_list = (user, content) => {
     return new Promise((resolve, reject) => {
       const url = `${host}/design/problem/mySubmitList/${user}/${content}`;
+      console.log(url);
       fetch(url, {
         headers: { 'Content-Type': 'application/json' },
         method: "GET",
@@ -1507,7 +1605,11 @@ class SubmitLogContainer extends React.Component {
   componentDidMount() {
     this.setState({ loading: true });
     const { user_id, content_id } = this.props;
-    this.get_submit_list(user_id, content_id);
+    if (user_id) {
+      this.get_submit_list(user_id, content_id);
+    } else {
+      alert("잘못된 요청입니다.")
+    }
     this.setState({ loading: false });
   }
   render() {

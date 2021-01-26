@@ -3,6 +3,7 @@ import styled from 'styled-components';
 // import ContentEditable from "./ContentEditable";
 import { Modal } from "semantic-ui-react";
 import Cross from "components/Commons/Cross";
+import { PdfViewer } from './PDFviewer';
 
 
 const ModalBox = styled(Modal)`
@@ -109,7 +110,8 @@ const Wrapper = styled.div`
     margin-top:66px;
   }
   .headline{
-    font-family:Noto Sans CJK KR,Medium;
+    font-family:Noto Sans KR;
+    font-weight: 700;
     font-size:20px;
     color:#707070;
     margin-bottom:18px;
@@ -214,7 +216,12 @@ class ProblemController extends Component {
             <div className="titleBox"><div className="title_" >제목</div></div>
             <div className="boardBox"><div className="board">{this.state.contents && this.state.contents.name}</div></div>
             <div className="titleBox"><div className="title_" >내용</div></div>
-            <div className="boardBox"><div className="board">{this.state.contents && this.state.contents.contents}</div></div>
+            <div className="boardBox">
+              <div className="board">
+                {this.state.contents &&
+                  <PdfViewer pdf={this.state.contents.contents} />}
+              </div>
+            </div>
             {/* <div className="titleBox"><div className="title">조건</div></div>
           <div className="boardBox"><div className="board">
             제한시간:{this.state.contents&&this.state.contents.time} / 
@@ -233,7 +240,12 @@ class ProblemController extends Component {
                 <div className="titleBox"><div className="title_" >제목</div></div>
                 <div className="boardBox"><div className="board">{this.state.contents && this.state.contents.name}</div></div>
                 <div className="titleBox"><div className="title_" >내용</div></div>
-                <div className="boardBox"><div className="board">{this.state.contents && this.state.contents.contents}</div></div>
+                <div className="boardBox">
+                  <div className="board">
+                    {this.state.contents &&
+                      <PdfViewer pdf={this.state.contents.contents} />}
+                  </div>
+                </div>
                 {/* <div className="titleBox"><div className="title">조건</div></div>
           <div className="boardBox"><div className="board">
             제한시간:{this.state.contents&&this.state.contents.time} / 

@@ -53,7 +53,7 @@ const NoticeModal = styled(Modal)`
         width: 37px;
         height: 29px;
         text-align: left;
-        font: normal normal medium 20px/35px Noto Sans CJK KR;
+        font: normal normal medium 20px/35px Noto Sans KR;
         letter-spacing: 0px;
         color: #707070;
         opacity: 1;
