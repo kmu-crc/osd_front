@@ -853,7 +853,8 @@ class CardSourceDetail extends Component {
     // console.log("content:", content.find(item => item.type === "TEXT"));
     // console.log("result:", this.props, this.state)// && this.props.DesignDetail.category_level3 - 1);
     const fontoffset = 0.3;
-
+    let __code = result&&result.code&&result.code.replaceAll( "\n", "<br/>");
+    __code = __code&&__code.replaceAll( "   ", "&emsp;");
     return (<div id="card-source-detail-root-node">
       {loading ? <Loading /> : null}
 
@@ -871,7 +872,8 @@ class CardSourceDetail extends Component {
           right: 15,
           top: (200 + this.state.fontsizer_pos_top) + "px",
         }} >
-
+          {this.props.isEdit==false?
+          <React.Fragment>
           <div style={{ cursor: "default", paddingTop: "3px", lineHeight: "1rem", fontSize: "1rem" }}>폰트<br />크기</div>
 
           <div style={{
@@ -885,6 +887,9 @@ class CardSourceDetail extends Component {
             textAlign: "center", color: "white", cursor: this.state.fontratio > 1 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem"
           }}
             onClick={() => { this.state.fontratio > 1 && this.setState({ fontratio: this.state.fontratio - fontoffset }) }} >-</div>
+          </React.Fragment>
+          :null
+          }
         </div>
         : null}
 
@@ -931,7 +936,14 @@ class CardSourceDetail extends Component {
                 <div className="name">제출 결과 </div>
                 {result.result === "S"
                   ? <div className="msg font_green">성공</div>
-                  : <div className="msg font_red">실패</div>}
+                  : result.result === "F"?<div className="msg font_red">실패</div>
+                  : result.result === "T"?<div className="msg font_red">실패(시간초과)</div>
+                  : result.result === "M"?<div className="msg font_red">실패(메모리초과)</div>
+                  : result.result === "C"?<div className="msg font_red">실패(컴파일에러)</div>
+                  : result.result === "R"?<div className="msg font_red">실패(런타임에러)</div>
+                  : result.result === "E"?<div className="msg font_red">실패(서버에러)</div>
+                  : result.result === "P"?<div className="msg font_red">실패(문제에러)</div>
+                  :<div className="msg font_red">실패</div>}
               </div>
               <div className="content_box">
                 <div className="msg">{result.message}</div>
@@ -942,8 +954,8 @@ class CardSourceDetail extends Component {
                   onClick={() => { this.setState({ mySource: !this.state.mySource }) }}
                 >{this.state.mySource == false ? "내가 제출한 소스보기∧" : "내가 제출한 소스보기∨"}</div>
                 {this.state.mySource == true ?
-                  <div className="codeBox">
-                    {result.code}
+                  <div className="codeBox" dangerouslySetInnerHTML={{__html:__code}}>
+                    {/* {result.code} */}
                   </div>
                   : null
                 }
@@ -1137,7 +1149,7 @@ class CardSourceDetail extends Component {
                   {/* <Zoom > */}
                   <img width="100%" src={item.content} alt="이미지" download={item.file_name} />
                   {/* </Zoom> */}
-                  <p>이미지를 클릭하시면 원본크기로 보실 수 있습니다.</p>
+                  {/* <p>이미지를 클릭하시면 원본크기로 보실 수 있습니다.</p> */}
                 </div>
 
                 : (item.type === "FILE" && item.data_type === "video") ?
@@ -1672,10 +1684,14 @@ class SubmitLogContainer extends React.Component {
           <a onClick={() => {
             // const url = geturl() + `/codepage`;
             const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
+            const code_ = '<div dangerouslySetInnerHTML={{ __html:'+row.code+'}}></div>';
             const code = window.open("", "_blank", options);
             // code.document.title("코드")
-            // const replaceCode = row.code.replace(/\n/g, "<br/>");
-            code.document.write(row.code);
+            let replace1 = row.code.replaceAll( "\n", "<br/>");
+            replace1 = replace1.replaceAll( "   ", "&emsp;");
+            // const replace2 = replace1.replace(/\t/,"<br/>");
+            
+            code.document.write(replace1);
           }}>
             코드보기
           </a>

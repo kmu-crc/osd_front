@@ -22,12 +22,11 @@ const Container = styled.div`
 
 `
 const MainCategory = styled.div`
-    // margin-top:20px;
     width: 100%;
     position: fixed;
     z-index: 820;
-    top: 70px;
-    // padding-left: 115px;
+    padding-top:15px;
+    top: 55px;
     display: flex;
     justify-content:center;
     background-color: #FFFFFF;

@@ -711,6 +711,7 @@ class CardModal extends Component {
                                 <div className="border-line" /></ContentBorder>
 
                             <CardSourceDetailContainer
+                                isEdit={this.state.edit}
                                 design_id={this.props.designId}
                                 handleUpdate={this.handleUpdate}
                                 handleSubmit={this.handleHeaderSubmit}
