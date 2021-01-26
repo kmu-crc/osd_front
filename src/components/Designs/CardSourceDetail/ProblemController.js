@@ -110,7 +110,8 @@ const Wrapper = styled.div`
     margin-top:66px;
   }
   .headline{
-    font-family:Noto Sans CJK KR,Medium;
+    font-family:Noto Sans KR;
+    font-weight: 700;
     font-size:20px;
     color:#707070;
     margin-bottom:18px;

@@ -601,7 +601,7 @@ class CardModal extends Component {
 
         return (
             <React.Fragment>
-                <CardDialog open={this.props.open} onClose={this.onClose}>
+                <CardDialog open={this.props.open ? true : false} onClose={this.onClose}>
 
                     {this.state.loading && <Loading />}
 
