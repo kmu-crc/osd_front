@@ -32,6 +32,27 @@ import Table from "rc-table";
 /*
   PROBLEM SUBMIT MODAL
 */
+const FontZoom = styled.div`
+  width: 100%;
+  .zoomRgn{
+    opacity:0;
+    zIndex: 900;
+    width: 100%;
+    height: 50px;
+    borderRadius: 25%;
+    display: flex;
+    justify-content:flex-end;
+    lineHeight: 3.5rem;
+    position: fixed;
+    right: 15px;
+  }
+  &:hover{
+    .zoomRgn{
+      display:flex;
+      opacity:1;
+    }
+  }
+`
 const ProblemBox = styled.div`
   width:100%;
   padding-top:20px;
@@ -872,7 +893,7 @@ class CardSourceDetail extends Component {
           right: 15,
           top: (200 + this.state.fontsizer_pos_top) + "px",
         }} >
-          {this.props.isEdit==false?
+          {/* {this.props.isEdit==false?
           <React.Fragment>
           <div style={{ cursor: "default", paddingTop: "3px", lineHeight: "1rem", fontSize: "1rem" }}>폰트<br />크기</div>
 
@@ -889,7 +910,7 @@ class CardSourceDetail extends Component {
             onClick={() => { this.state.fontratio > 1 && this.setState({ fontratio: this.state.fontratio - fontoffset }) }} >-</div>
           </React.Fragment>
           :null
-          }
+          } */}
         </div>
         : null}
 
@@ -1179,6 +1200,25 @@ class CardSourceDetail extends Component {
 
                       : (item.type === "TEXT") ?
                         <React.Fragment>
+                                    {this.props.isEdit==false?
+                                          <FontZoom>
+                                            <div className="zoomRgn">
+                                          <div style={{ cursor: "default", paddingTop: "3px", lineHeight: "1rem", fontSize: "1rem" }}>폰트<br />크기</div>
+                                          <div style={{
+                                            width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio < 3 ? "black" : "#EFEFEF",
+                                            textAlign: "center", color: "white", cursor: this.state.fontratio < 3 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem"
+                                          }}
+                                            onClick={() => { this.state.fontratio < 3 && this.setState({ fontratio: this.state.fontratio + fontoffset }) }} >+</div>
+
+                                          <div style={{
+                                            width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio > 1 ? "black" : "#EFEFEF",
+                                            textAlign: "center", color: "white", cursor: this.state.fontratio > 1 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem"
+                                          }}
+                                            onClick={() => { this.state.fontratio > 1 && this.setState({ fontratio: this.state.fontratio - fontoffset }) }} >-</div>
+                                          </div>
+                                          </FontZoom>
+                                          :null
+                                          }
                           <div
                             style={{
                               fontSize: `${this.state.fontratio}rem`
