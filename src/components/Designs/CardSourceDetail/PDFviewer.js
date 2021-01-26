@@ -1,31 +1,43 @@
 import React from 'react';
-import Spinner from 'react-spinner';
+import Loading from "components/Commons/Loading";
+
 export const PdfViewer = (props) => {
   const [loading, setLoading] = React.useState(true);
   // const path = props.pdf.search(".pdf") ? props.pdf : props.pdf + ".pdf"
+
   return (<div>
 
+    {loading ? <Loading msg={`문제 파일을 준비중입니다.\n이 화면이 지속된다면 다시 시도하여 주세요.`} /> : null}
     {/* {loading ?
       <div className='spinner-container'>
         <Spinner />
-      </div> : null}
-*/}
+      </div> : null}*/}
+
     <iframe
-      style={{ minHeight: "500px", backgroundColor: "#EFEFEF", border: "1px dashed #707070" }}
+
+      style={{
+        frameBorder: "0",
+        width: "100%",
+        minHeight: "500px",
+        backgroundColor: "#EFEFEF",
+        border: "1px dashed #707070"
+      }}
+
       src={
         `https://docs.google.com/viewer?url=${props.pdf}&embedded=true`
-        // `${props.pdf}`
       }
-      onLoad={() =>
-        setTimeout(() => { }, 500)}
-      // setLoading(false)}
-      frameBorder="0" minHeight="500px" width="100%" />
-    {/* {props.pdf} */}
+
+      onLoad={() => {
+        setTimeout(() => {
+          setLoading(false)
+        }, 500);
+      }}
+    />
+
   </div>);
 }
 
 // import React from 'react';
-// import styled from "styled-components";
 // // FOR PREVIEW PDF FILES
 // import { pdfjs } from 'react-pdf';
 // import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';

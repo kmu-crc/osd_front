@@ -170,7 +170,7 @@ const EditCardHeaderContainer = styled.div`
             height: 29px;
             font-size: 20px;
             font-weight: 700;
-            font-family: Noto Sans CJK KR;
+            font-family: Noto Sans KR;
             text-align: left;
             line-height: 40px;
             color: #707070;
@@ -181,7 +181,7 @@ const EditCardHeaderContainer = styled.div`
             height: 22px;
             font-size: 15px;
             font-weight: 700;
-            font-family: Noto Sans CJK KR, Medium;
+            font-family: Noto Sans KR;
             text-align: right;
             color: #707070;   
     }
