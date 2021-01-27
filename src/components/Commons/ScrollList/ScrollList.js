@@ -197,14 +197,27 @@ class ScrollList extends Component {
   };
 
   myRef = React.createRef();
+
   render() {
     const { type, manual, handleAccept, handleReject, height, width, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded, rejectText } = this.props;
     const { hasMore, loading, cols } = this.state;
-    // console.log(this.props);
+    // console.log("onload:", this.state.page);
     return (dataListAdded && dataListAdded.length > 0 ?
-      <FlexContainer cols={cols} type={type} ref={this.myRef} >
+      <FlexContainer
+        cols={cols}
+        type={type}
+        ref={this.myRef}
+        onLoad={() => {
+          const { loading, page } = this.state;
+          let footer = document.getElementById("footer-div");
+          footer = footer.getBoundingClientRect();
+          const box = this.myRef.current.getBoundingClientRect();
+          if (loading == false && page === 0 && this.myRef &&footer.y> box.y + box.height ) {
+            this.getLoadData();
+          }
+        }} >
         {dataListAdded.map((item, i) => {
-          console.log(item);
+          // console.log(item);
           const last = (((i + 1) % cols === 0 && i !== 0) || (cols === 1 && i === 0)) ? "right-last" : "";
           const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";
           return (<FlexBox width={width} height={height} marginRight={marginRight} marginBottom={marginBottom}
