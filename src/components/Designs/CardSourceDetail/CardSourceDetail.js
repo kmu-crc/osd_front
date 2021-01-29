@@ -202,7 +202,7 @@ const SubmitModalWrapper = styled(Modal)`
   }
   .coding-area {
     *{
-      font-family: monospace !important;
+      // font-family: monospace !important;
     }
     margin-top: 26px;
     .tab {
@@ -559,6 +559,7 @@ class CardSourceDetail extends Component {
       fontsizer_pos_top: 0,
       fontratio: 1,
       mySource: false,
+      coding:[],
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -570,7 +571,11 @@ class CardSourceDetail extends Component {
     this.onChangeFile = this.onChangeFile.bind(this);
     this.moveItem = this.moveItem.bind(this);
     this.verifyorder = this.verifyorder.bind(this);
-
+    this.onAddCoding = this.onAddCoding.bind(this);
+    this.onChangeCode = this.onChangeCode.bind(this);
+    this.onDeleteCoding = this.onDeleteCoding.bind(this);
+    this.moveCoding = this.moveCoding.bind(this);
+    this.onChangeCodingFile  = this.onChangeCodingFile.bind(this);
     this.ace = React.createRef();
   }
   componentDidMount() {
@@ -636,6 +641,97 @@ class CardSourceDetail extends Component {
             : this.state.content);
     }
   }
+
+  // coding content
+  async moveCoding(A, B) {
+    await console.log(this.state.coding);
+    if (!this.state.coding) {
+      return;
+    }
+    const copy = [...this.state.coding];
+    [copy[A], copy[B]] = [copy[B], copy[A]];
+    console.log(A,B);
+
+    copy.map((ele, index) => {
+
+      if (ele.order !== index) {
+        ele.order = index;
+      }
+      return ele;
+    })
+    await this.setState({ coding: copy });
+    await console.log(this.state.coding);
+    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.coding);
+    return;
+  }
+  async onAddCoding(data) {
+    let copyContent = [...this.state.coding];
+    let copyData = { ...data };
+    copyData.initClick = true;
+    for (let item of copyContent) {
+      if ((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")) {
+        await copyContent.splice(item.order, 1, null);
+      }
+    }
+    await console.log(this.state.coding);
+    await copyContent.splice(copyData.order, 0, copyData);
+    let newContent = copyContent.filter((item) => { return item !== null })
+    newContent = await Promise.all(
+      newContent.map(async (item, index) => {
+        item.order = await index;
+        delete item.target;
+        if (item.type === "FILE") delete item.initClick;
+        if (item.order !== copyData.order) delete item.initClick;
+        return item;
+      })
+    );
+    await console.log(newContent);
+
+    await this.setState({ coding: newContent });
+    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.coding);
+  }
+  async onChangeCode(data, order) {
+    console.log("onChangeCode", data,order);
+    let copyContent = [...this.state.coding];
+    copyContent[order].content = data;
+    console.log(this.state.coding,copyContent)
+    // this.setState({ coding: copyContent });
+    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.coding);
+  }
+
+  async onDeleteCoding(order) {
+    if (await confirm("선택하신 컨텐츠를 삭제하시겠습니까?", "예", "아니오") === false) {
+      return;
+    }
+    let copyContent = [...this.state.coding];
+    for (var i = 0; i < copyContent.length; i++) {
+      if (copyContent[i].order === order) {
+        copyContent.splice(i, 1);
+      }
+    }
+    for (i = 0; i < copyContent.length; i++) {
+      copyContent[i].order = i;
+    }
+    await this.setState({ coding: copyContent });
+    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.coding);
+  }
+  async onChangeCodingFile(data) {
+    // await this.setState({ loading: !this.state.loading });
+    let copyContent = [...this.state.coding];
+    delete data.initClick;
+    delete data.target;
+    await copyContent.splice(data.order, 1, data);
+    copyContent = await Promise.all(
+      copyContent.map(async (item, index) => {
+        delete item.initClick;
+        return item;
+      })
+    );
+    await this.setState({ coding: copyContent });
+    // await this.setState({ loading: !this.state.loading });
+    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.coding);
+  }
+  ///////////
   async onChangeFile(data) {
     await this.setState({ loading: !this.state.loading });
     let copyContent = [...this.state.content];
@@ -870,7 +966,7 @@ class CardSourceDetail extends Component {
     return "";
   }
   render() {
-    const { edit, content, loading, submit, tab, item, result } = this.state;
+    const { edit, content, loading, submit, tab, item, result, coding } = this.state;
     // console.log("content:", content.find(item => item.type === "TEXT"));
     // console.log("result:", this.props, this.state)// && this.props.DesignDetail.category_level3 - 1);
     const fontoffset = 0.3;
@@ -1033,26 +1129,95 @@ class CardSourceDetail extends Component {
             <div className="editor">
               {tab === "code"
                 ?
-                <AceEditor
-                  width={"100%"}
-                  height={"478px"}
-                  ref={ref => this.ace = ref}
-                  setOptions={{
-                    fontSize: "20px",
-                  }}
-                  mode= //"python"
-                  {this.props.DesignDetail &&
-                    (this.props.DesignDetail.category_level3 == 1 ||
-                      this.props.DesignDetail.category_level3 == 3)
-                    ? 'c_cpp'
-                    : this.props.DesignDetail &&
-                      this.props.DesignDetail.category_level3 == 2
-                      ? 'python'
-                      : ""}
-                  theme="github"
-                  onChange={console.log}
-                  name="UNIQUE_ID_OF_DIV"
-                  editorProps={{ $blockScrolling: true }} />
+                <React.Fragment>
+                  {
+                    coding.map((item,index)=>{
+                      return (<ControllerWrap key={item + index}>
+                                <div className="contentWrap">
+                                {(item.type === "FILE")
+                                ? <FileController
+                                  item={item}
+                                  name="source"
+                                  initClick={this.state.click}
+                                  getValue={this.onChangeFile}
+                                  setController={this.setController} />
+                                : null}
+                                {(item.type === "TEXT")
+                                ?                
+                                <AceEditor
+                                  width={"100%"}
+                                  height={"278px"}
+                                  ref={ref => this.ace = ref}
+                                  setOptions={{
+                                    fontSize: "20px",
+                                  }}
+                                  value = {this.state.coding&&this.state.coding[item.order]&&this.state.coding[item.order].content}
+                                  mode= //"python"
+                                  {this.props.DesignDetail &&
+                                    (this.props.DesignDetail.category_level3 == 1 ||
+                                      this.props.DesignDetail.category_level3 == 3)
+                                    ? 'c_cpp'
+                                    : this.props.DesignDetail &&
+                                      this.props.DesignDetail.category_level3 == 2
+                                      ? 'python'
+                                      : ""}
+                                  theme="github"
+                                  // onChange={(data) => this.onChangeValue(data, item.order)}
+                                  onChange={(data)=>{this.onChangeCode(data, item.order)}}
+                                  // onChange={console.log}
+                                  name={`UNIQUE_ID_OF_DIV${index}`}
+                                  editorProps={{ $blockScrolling: true }} />
+                                : null}
+                                </div>
+                                <DelBtn
+                                  type="button"
+                                  className="editBtn"
+                                  onClick={() => this.onDeleteCoding(item.order)}>
+                                  <i className="trash alternate icon large" />
+                                </DelBtn>
+
+                                {coding.length - 1 >= item.order && item.order !== 0 ?
+                                  <UpBtn
+                                    type="button"
+                                    className="editBtn"
+                                    onClick={() => this.moveCoding(item.order, item.order - 1)}>
+                                    <i className="angle up alternate icon large" />
+                                  </UpBtn> : null}
+
+                                {coding.length - 1 !== item.order && item.order >= 0 ?
+                                  <DownBtn
+                                    type="button"
+                                    className="editBtn"
+                                    onClick={() => this.moveCoding(item.order, item.order + 1)}>
+                                    <i className="angle down alternate icon large" />
+                                  </DownBtn> : null}
+                              </ControllerWrap>)
+                    }
+                  )}
+                  <CodingContent
+                    getValue={this.onAddCoding}
+                    order={coding.length}/>
+                </React.Fragment>
+                // <AceEditor
+                //   width={"100%"}
+                //   height={"478px"}
+                //   ref={ref => this.ace = ref}
+                //   setOptions={{
+                //     fontSize: "20px",
+                //   }}
+                //   mode= //"python"
+                //   {this.props.DesignDetail &&
+                //     (this.props.DesignDetail.category_level3 == 1 ||
+                //       this.props.DesignDetail.category_level3 == 3)
+                //     ? 'c_cpp'
+                //     : this.props.DesignDetail &&
+                //       this.props.DesignDetail.category_level3 == 2
+                //       ? 'python'
+                //       : ""}
+                //   theme="github"
+                //   onChange={console.log}
+                //   name="UNIQUE_ID_OF_DIV"
+                //   editorProps={{ $blockScrolling: true }} />
                 :
                 <SubmitLogContainer
                   user_id=
@@ -1067,14 +1232,23 @@ class CardSourceDetail extends Component {
 
           <div className="button-wrapper">
             <div onClick={async () => {
-              if (this.ace.editor == null) {
-                return;
-              }
-              const code = this.ace.editor.getValue();
-              if (code.trim() === "") {
-                alert("코드를 작성해주세요.");
-                return;
-              }
+              if(this.state.coding.length<=0)return;
+              let datalist =[];
+              await Promise.all(
+                this.state.coding.map(async (item, index) => {
+                  let data ={type:item.type,content:"",data_type:""};
+                  if(item.type=="TEXT"){
+                    data.content = item.content;
+                    datalist.push(data);
+                  }else{ 
+                    const s3path = await FileUploadRequest(item.file);
+                    data.content = s3path.path || null;
+                    data.data_type = content.file_type;
+                    datalist.push(data);
+                  }
+                })
+              ).then(async()=>{
+                
               await this.setState({ loading: true, });
               let ntry = 5;
               fetch(`${host}/design/problem/submit`, {
@@ -1089,7 +1263,8 @@ class CardSourceDetail extends Component {
                   // {"id":3,"problem_type":"C","time":100,"name":"Test Check Problem","contents":"Test Check"}
                   problem_id: item.id,
                   language_id: this.props.DesignDetail.category_level3 || 1, //this.state.language_id || 1,
-                  code: `${code}`,
+                  // code: `${code}`,
+                  answer:JSON.stringify(datalist),
                   content_id: this.props.uid
                 })
               }).then(res => res.json())
@@ -1098,7 +1273,7 @@ class CardSourceDetail extends Component {
                   if (res.success) {
                     const check = () => {
                       this.setState({ loading: true, });
-                      fetch(`${host}/design/problem/result-request/${res.id}`, {
+                      fetch(`${host}/design/problem/result-request2/${res.id}`, {
                         headers: { 'Content-Type': 'application/json' },
                         method: "GET",
                       })
@@ -1126,6 +1301,60 @@ class CardSourceDetail extends Component {
                 })
                 .catch(e => console.error(e));
               this.setState({ loading: false });
+              });
+
+              // await this.setState({ loading: true, });
+              // let ntry = 5;
+              // fetch(`${host}/design/problem/submit`, {
+              //   headers: {
+              //     'Content-Type': 'application/json',
+              //     "Access-Control-Allow-Origin": "*",
+              //     "x-access-token": this.props.token
+              //   },
+              //   method: "POST",
+              //   body: JSON.stringify({
+              //     user_id: this.props.userInfo.uid,
+              //     // {"id":3,"problem_type":"C","time":100,"name":"Test Check Problem","contents":"Test Check"}
+              //     problem_id: item.id,
+              //     language_id: this.props.DesignDetail.category_level3 || 1, //this.state.language_id || 1,
+              //     // code: `${code}`,
+              //     answer:JSON.stringify(this.state.coding),
+              //     content_id: this.props.uid
+              //   })
+              // }).then(res => res.json())
+              //   .then(res => {
+              //     console.log("result:::::", res);
+              //     if (res.success) {
+              //       const check = () => {
+              //         this.setState({ loading: true, });
+              //         fetch(`${host}/design/problem/result-request2/${res.id}`, {
+              //           headers: { 'Content-Type': 'application/json' },
+              //           method: "GET",
+              //         })
+              //           .then(res1 => res1.json())
+              //           .then(res1 => {
+              //             if (res1.result) {
+              //               console.log(res1, '이걸가지고 또 컨텐츠 추가요청을 해야함.');
+              //               this.setState({ result: res1 });
+              //               ntry = 0;
+              //             }
+              //           })
+              //           .catch(e => {
+              //             console.error(e);
+              //             return;
+              //           });
+              //         if (ntry--)
+              //           setTimeout(check, 1000);
+              //       };
+              //       check();
+              //     } else {
+              //       alert('제출에 실패하였습니다.');
+              //       this.setState({ loading: false });
+              //       return;
+              //     }
+              //   })
+              //   .catch(e => console.error(e));
+              // this.setState({ loading: false });
             }} className="btn submit">제출</div>
             <div onClick={() =>
               this.setState({ submit: false })
@@ -1624,6 +1853,54 @@ class AddContent extends Component {
   }
 }
 
+// 코딩 컨트롤러
+class CodingContent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { type: null, content: "", order: null };
+  }
+  addContent = async (type) => {
+    if (type === "FILE") {
+      await this.setState({ type, order: this.props.order, content: "", initClick: true });
+      setTimeout(() => {
+        this.setState({ initClick: false });
+      }, 100);
+    } else {
+      await this.setState({ type, order: this.props.order, content: "" });
+      this.returnData();
+    }
+  }
+
+  returnData = async (data) => {
+    if (data) {
+      await this.setState({ type: null, order: this.props.order, content: "", initClick: false })
+      this.props.getValue(data);
+    } else {
+      if (this.props.getValue) this.props.getValue(this.state);
+    }
+  }
+
+  render() {
+    return (
+      <ControllerWrap2>
+        <div className="innerBox" >
+          <NewController
+            onClick={() => this.addContent("FILE")}
+            width="max-content" minWidth="116px" height="29px">
+            파일 등록하기</NewController>
+          <NewController
+            onClick={() => this.addContent("TEXT")}
+            width="max-content" minWidth="134px" height="29px">
+            텍스트 입력하기</NewController>
+        </div>
+
+        {this.state.type === "FILE" &&
+          <FileController item={this.state} getValue={this.returnData} />}
+
+      </ControllerWrap2>
+    );
+  }
+}
 
 
 
