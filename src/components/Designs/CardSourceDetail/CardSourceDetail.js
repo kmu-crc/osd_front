@@ -27,6 +27,7 @@ import { PdfViewer } from "./PDFviewer";
 // FOR SUBMIT LIST
 import DateFormat from "modules/DateFormat";
 import Table from "rc-table";
+import { resolve } from "core-js/fn/promise";
 
 
 /*
@@ -52,6 +53,16 @@ const FontZoom = styled.div`
       opacity:1;
     }
   }
+`
+const FileName = styled.input` 
+  width:100%;
+  height:29px;
+  display:flex;
+  align-items:center;
+  outline:none;
+  border:0px;
+  background-color:#efefef;
+  font-size:15px;
 `
 const ProblemBox = styled.div`
   width:100%;
@@ -576,6 +587,8 @@ class CardSourceDetail extends Component {
     this.onDeleteCoding = this.onDeleteCoding.bind(this);
     this.moveCoding = this.moveCoding.bind(this);
     this.onChangeCodingFile  = this.onChangeCodingFile.bind(this);
+    this.onChangeFileName = this.onChangeFileName.bind(this);
+    this.submitCode = this.submitCode.bind(this);
     this.ace = React.createRef();
   }
   componentDidMount() {
@@ -690,12 +703,20 @@ class CardSourceDetail extends Component {
     await this.setState({ coding: newContent });
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.coding);
   }
+  async onChangeFileName(data, order) {
+    let copyContent = [...this.state.coding];
+    copyContent[order].name = data;
+    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.coding);
+    console.log(this.state.coding);
+    this.setState({ coding: copyContent });
+
+  }
   async onChangeCode(data, order) {
     console.log("onChangeCode", data,order);
     let copyContent = [...this.state.coding];
     copyContent[order].content = data;
     console.log(this.state.coding,copyContent)
-    // this.setState({ coding: copyContent });
+    this.setState({ coding: copyContent });
     this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.coding);
   }
 
@@ -965,6 +986,95 @@ class CardSourceDetail extends Component {
       })
     return "";
   }
+  async submitCode(item){
+    if(this.state.coding.length<=0)return;
+    let datalist = [];
+    const arr = this.state.coding.map(async(item,index)=>{
+      console.log(item);
+      return new Promise((resolve,reject)=>{
+        let data ={type:item.type,content:"",file_name:"",order:index};
+        
+        if(item.type=="TEXT"){
+          data.file_name = item.name;
+          data.content = item.content;
+          resolve(data);
+        }else{ 
+          const fileReader = new FileReader();
+          fileReader.onloadend=()=>{
+            const res = fileReader.result;
+            data.file_name = item.file[0].name;
+            data.content=res;
+            resolve(data);
+            console.log(item.file[0]);
+          }
+          fileReader.readAsText(item.file[0],"UTF-8")
+        }
+      }).then((data)=>{
+        datalist.push(data);
+        console.log(datalist);
+      })
+
+    })
+    Promise.all(arr)
+    .then(()=>{
+      //정렬
+      return datalist.sort((a,b)=>{
+        return a.order < b.order ? -1:a.order>b.order?1:0;
+      })
+    }).then(async()=>{
+      await this.setState({ loading: true, });
+      let ntry = 5;
+      fetch(`${host}/design/problem/submit`, {
+        headers: {
+          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": "*",
+          "x-access-token": this.props.token
+        },
+                method: "POST",
+                body: JSON.stringify({
+                  user_id: this.props.userInfo.uid,
+                  problem_id: item.id,
+                  language_id: this.props.DesignDetail.category_level3 || 1, 
+                  answer:JSON.stringify(datalist),
+                  content_id: this.props.uid
+                })
+              }).then(res => res.json())
+              .then(res => {
+                console.log("result:::::", res);
+                if (res.success) {
+                  const check = () => {
+                    this.setState({ loading: true, });
+                    fetch(`${host}/design/problem/result-request2/${res.id}`, {
+                      headers: { 'Content-Type': 'application/json' },
+                      method: "GET",
+                    })
+                      .then(res1 => res1.json())
+                      .then(res1 => {
+                        if (res1.result) {
+                          console.log(res1, '이걸가지고 또 컨텐츠 추가요청을 해야함.');
+                          this.setState({ result: res1 });
+                          ntry = 0;
+                        }
+                      })
+                      .catch(e => {
+                        console.error(e);
+                        return;
+                      });
+                    if (ntry--)
+                      setTimeout(check, 1000);
+                  };
+                  check();
+                } else {
+                  alert('제출에 실패하였습니다.');
+                  this.setState({ loading: false });
+                  return;
+                }
+              })
+              .catch(e => console.error(e));
+            this.setState({ loading: false });
+            
+    });
+  }
   render() {
     const { edit, content, loading, submit, tab, item, result, coding } = this.state;
     // console.log("content:", content.find(item => item.type === "TEXT"));
@@ -972,6 +1082,8 @@ class CardSourceDetail extends Component {
     const fontoffset = 0.3;
     let __code = result&&result.code&&result.code.replaceAll( "\n", "<br/>");
     __code = __code&&__code.replaceAll( "   ", "&emsp;");
+    let datalist =[];
+
     return (<div id="card-source-detail-root-node">
       {loading ? <Loading /> : null}
 
@@ -1136,14 +1248,22 @@ class CardSourceDetail extends Component {
                                 <div className="contentWrap">
                                 {(item.type === "FILE")
                                 ? <FileController
-                                  item={item}
-                                  name="source"
-                                  initClick={this.state.click}
-                                  getValue={this.onChangeFile}
-                                  setController={this.setController} />
+                                item={item}
+                                name="source"
+                                initClick={this.state.click}
+                                getValue={this.onChangeFile}
+                                extension = ".cpp,.hpp,.h,.js"
+                                setController={this.setController} />
+                                
                                 : null}
                                 {(item.type === "TEXT")
-                                ?                
+                                ?  
+                                <React.Fragment>
+                                <FileName 
+                                placeholder={"파일 이름을 입력하세요(ex:helloWorld.cpp)"}
+                                onChange={(e)=>{this.onChangeFileName(e.target.value, item.order)}}
+                                value={this.state.coding&&this.state.coding[item.order]&&this.state.coding[item.order].name}
+                                />
                                 <AceEditor
                                   width={"100%"}
                                   height={"278px"}
@@ -1167,6 +1287,7 @@ class CardSourceDetail extends Component {
                                   // onChange={console.log}
                                   name={`UNIQUE_ID_OF_DIV${index}`}
                                   editorProps={{ $blockScrolling: true }} />
+                                  </React.Fragment>              
                                 : null}
                                 </div>
                                 <DelBtn
@@ -1231,131 +1352,8 @@ class CardSourceDetail extends Component {
           </div>
 
           <div className="button-wrapper">
-            <div onClick={async () => {
-              if(this.state.coding.length<=0)return;
-              let datalist =[];
-              await Promise.all(
-                this.state.coding.map(async (item, index) => {
-                  let data ={type:item.type,content:"",data_type:""};
-                  if(item.type=="TEXT"){
-                    data.content = item.content;
-                    datalist.push(data);
-                  }else{ 
-                    const s3path = await FileUploadRequest(item.file);
-                    data.content = s3path.path || null;
-                    data.data_type = content.file_type;
-                    datalist.push(data);
-                  }
-                })
-              ).then(async()=>{
-                
-              await this.setState({ loading: true, });
-              let ntry = 5;
-              fetch(`${host}/design/problem/submit`, {
-                headers: {
-                  'Content-Type': 'application/json',
-                  "Access-Control-Allow-Origin": "*",
-                  "x-access-token": this.props.token
-                },
-                method: "POST",
-                body: JSON.stringify({
-                  user_id: this.props.userInfo.uid,
-                  // {"id":3,"problem_type":"C","time":100,"name":"Test Check Problem","contents":"Test Check"}
-                  problem_id: item.id,
-                  language_id: this.props.DesignDetail.category_level3 || 1, //this.state.language_id || 1,
-                  // code: `${code}`,
-                  answer:JSON.stringify(datalist),
-                  content_id: this.props.uid
-                })
-              }).then(res => res.json())
-                .then(res => {
-                  console.log("result:::::", res);
-                  if (res.success) {
-                    const check = () => {
-                      this.setState({ loading: true, });
-                      fetch(`${host}/design/problem/result-request2/${res.id}`, {
-                        headers: { 'Content-Type': 'application/json' },
-                        method: "GET",
-                      })
-                        .then(res1 => res1.json())
-                        .then(res1 => {
-                          if (res1.result) {
-                            console.log(res1, '이걸가지고 또 컨텐츠 추가요청을 해야함.');
-                            this.setState({ result: res1 });
-                            ntry = 0;
-                          }
-                        })
-                        .catch(e => {
-                          console.error(e);
-                          return;
-                        });
-                      if (ntry--)
-                        setTimeout(check, 1000);
-                    };
-                    check();
-                  } else {
-                    alert('제출에 실패하였습니다.');
-                    this.setState({ loading: false });
-                    return;
-                  }
-                })
-                .catch(e => console.error(e));
-              this.setState({ loading: false });
-              });
-
-              // await this.setState({ loading: true, });
-              // let ntry = 5;
-              // fetch(`${host}/design/problem/submit`, {
-              //   headers: {
-              //     'Content-Type': 'application/json',
-              //     "Access-Control-Allow-Origin": "*",
-              //     "x-access-token": this.props.token
-              //   },
-              //   method: "POST",
-              //   body: JSON.stringify({
-              //     user_id: this.props.userInfo.uid,
-              //     // {"id":3,"problem_type":"C","time":100,"name":"Test Check Problem","contents":"Test Check"}
-              //     problem_id: item.id,
-              //     language_id: this.props.DesignDetail.category_level3 || 1, //this.state.language_id || 1,
-              //     // code: `${code}`,
-              //     answer:JSON.stringify(this.state.coding),
-              //     content_id: this.props.uid
-              //   })
-              // }).then(res => res.json())
-              //   .then(res => {
-              //     console.log("result:::::", res);
-              //     if (res.success) {
-              //       const check = () => {
-              //         this.setState({ loading: true, });
-              //         fetch(`${host}/design/problem/result-request2/${res.id}`, {
-              //           headers: { 'Content-Type': 'application/json' },
-              //           method: "GET",
-              //         })
-              //           .then(res1 => res1.json())
-              //           .then(res1 => {
-              //             if (res1.result) {
-              //               console.log(res1, '이걸가지고 또 컨텐츠 추가요청을 해야함.');
-              //               this.setState({ result: res1 });
-              //               ntry = 0;
-              //             }
-              //           })
-              //           .catch(e => {
-              //             console.error(e);
-              //             return;
-              //           });
-              //         if (ntry--)
-              //           setTimeout(check, 1000);
-              //       };
-              //       check();
-              //     } else {
-              //       alert('제출에 실패하였습니다.');
-              //       this.setState({ loading: false });
-              //       return;
-              //     }
-              //   })
-              //   .catch(e => console.error(e));
-              // this.setState({ loading: false });
-            }} className="btn submit">제출</div>
+            <div onClick = {(item)=>this.submitCode(item)}
+            className="btn submit">제출</div>
             <div onClick={() =>
               this.setState({ submit: false })
             } className="btn cancel">취소</div>
@@ -1957,7 +1955,7 @@ class SubmitLogContainer extends React.Component {
         "time": submit.avg_time ? submit.avg_time + "초" : "",
         "space": submit.avg_memory ? submit.avg_memory + "MB" : "",
         "submit-time": submit.create_data ? DateFormat(submit.create_date) : "",
-        "code": submit.code || "",
+        "code": submit.answer || "",
       }
       return row;
     })
@@ -1998,20 +1996,33 @@ class SubmitLogContainer extends React.Component {
         key: "coding",
         width: 100,
         render: (text, row, index) => (
-          <a onClick={() => {
-            // const url = geturl() + `/codepage`;
-            const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
-            const code_ = '<div dangerouslySetInnerHTML={{ __html:'+row.code+'}}></div>';
+          <div
+            style={{cursor:"pointer"}}
+            onClick={() => {
+            const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=800,height=600,scrollbars=no`;
+            const answer = JSON.parse(row.code);
+            console.log(answer);
+            let str = "";
+            const list = answer&&answer.length>0?answer.map((item,index)=>{ 
+              console.log(item);
+              str+='<React.Fragment><h3>'+item.file_name+'</h3><div>'+item.content+'</div></React.Fragment>'
+              // return(
+              // <React.Fragment>
+              // <div style={{width:"100%",backgroundColor:"#EFEFEF",padding:"5px"}}>{item.file_name}</div>
+              // <div style={{width:"100%",}} dangerouslySetInnerHTML={{ __html:'+row.code+'}}/>
+              // </React.Fragment>)
+            }):null;
+            // const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
+            // const code_ = '<div dangerouslySetInnerHTML={{ __html:'+row.code+'}}></div>';
             const code = window.open("", "_blank", options);
-            // code.document.title("코드")
-            let replace1 = row.code.replaceAll( "\n", "<br/>");
+            let replace1 = str.replaceAll( "\n", "<br/>");
+            replace1 = replace1.replaceAll( "/\n/g", "<br/>");
             replace1 = replace1.replaceAll( "   ", "&emsp;");
-            // const replace2 = replace1.replace(/\t/,"<br/>");
-            
+            // console.log(replace1);
             code.document.write(replace1);
           }}>
             코드보기
-          </a>
+          </div>
         )
       }
     ]
