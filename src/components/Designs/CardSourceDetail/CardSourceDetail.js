@@ -1666,7 +1666,7 @@ class SubmitLogContainer extends React.Component {
         "time": submit.avg_time ? submit.avg_time + "초" : "",
         "space": submit.avg_memory ? submit.avg_memory + "MB" : "",
         "submit-time": submit.create_data ? DateFormat(submit.create_date) : "",
-        "code": submit.code.replace(/\\n/g, "<br/>").replace(/ /g, "&nbsp;") || "",
+        "code": submit.code && submit.code.replace(/\\n/g, "<br/>").replace(/ /g, "&nbsp;") || "",
       }
       return row;
     })
