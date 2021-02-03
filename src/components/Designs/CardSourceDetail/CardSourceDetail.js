@@ -1007,7 +1007,7 @@ class CardSourceDetail extends Component {
     this.setState({ permission: "" });
     return "";
   }
-  async submitCode(item) {
+  async submitCode(_item) {
     if (this.state.coding.length <= 0) return;
     let datalist = [];
     const arr = this.state.coding.map(async (item, index) => {
@@ -1017,14 +1017,14 @@ class CardSourceDetail extends Component {
 
         if (item.type == "TEXT") {
           data.file_name = item.name;
-          data.content = item.content;
+          data.code = item.content;
           resolve(data);
         } else {
           const fileReader = new FileReader();
           fileReader.onloadend = () => {
             const res = fileReader.result;
             data.file_name = item.file[0].name;
-            data.content = res;
+            data.code = res;
             resolve(data);
             console.log(item.file[0]);
           }
@@ -1054,7 +1054,7 @@ class CardSourceDetail extends Component {
           method: "POST",
           body: JSON.stringify({
             user_id: this.props.userInfo.uid,
-            problem_id: item.id,
+            problem_id: _item.id,
             language_id: this.props.DesignDetail.category_level3 || 1,
             answer: JSON.stringify(datalist),
             content_id: this.props.uid
@@ -1376,7 +1376,7 @@ class CardSourceDetail extends Component {
             </div>
 
             <div className="button-wrapper">
-              <div onClick={(item) => this.submitCode(item)}
+              <div onClick={() => this.submitCode(item)}
                 className="btn submit">제출</div>
               <div onClick={() =>
                 this.setState({ submit: false, item: null })
