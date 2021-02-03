@@ -1183,7 +1183,7 @@ class CardSourceDetail extends Component {
                   onClick={() => { this.setState({ mySource: !this.state.mySource }) }}
                 >{this.state.mySource == false ? "내가 제출한 소스보기∧" : "내가 제출한 소스보기∨"}</div>
                 {this.state.mySource == true ?
-                  <div className="codeBox" dangerouslySetInnerHTML={{__html:__code}}>
+                  <div className="codeBox" dangerouslySetInnerHTML={{__html:__code&&__code.substring(0,1000)}}>
                     {/* {result.code} */}
                   </div>
                   : null
@@ -1840,7 +1840,7 @@ class AddContent extends Component {
           {this.props.is_problem ? <NewController
             onClick={() => { this.addContent("PROBLEM"); this.props.open(true); }}
             width="max-content" minWidth="134px" height="29px">
-            문제 출제하기</NewController> : null}
+            문제 등록하기</NewController> : null}
         </div>
 
         {this.state.type === "FILE" &&
