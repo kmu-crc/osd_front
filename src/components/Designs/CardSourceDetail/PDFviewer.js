@@ -1,41 +1,56 @@
 import React from 'react';
-import Loading from "components/Commons/Loading";
+import { Viewer } from '@react-pdf-viewer/core';
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import styled from 'styled-components';
+
+const PDFwrapper = styled.div`
+  width: 100%;
+  &.fixed-height {
+    height: 500px;
+  }
+  background-color: #EFEFEF;
+  border: 1px dashed #707070;
+  overflow-y: scroll;
+`;
 
 export const PdfViewer = (props) => {
-  const [loading, setLoading] = React.useState(true);
-  // const path = props.pdf.search(".pdf") ? props.pdf : props.pdf + ".pdf"
-
-  return (<div>
-
-    {loading ? <Loading msg={`문제 파일을 준비중입니다.\n이 화면이 지속된다면 다시 시도하여 주세요.`} /> : null}
-    {/* {loading ?
-      <div className='spinner-container'>
-        <Spinner />
-      </div> : null}*/}
-
-    <iframe
-
-      style={{
-        frameBorder: "0",
-        width: "100%",
-        minHeight: "500px",
-        backgroundColor: "#EFEFEF",
-        border: "1px dashed #707070"
-      }}
-
-      src={
-        `https://docs.google.com/viewer?url=${props.pdf}&embedded=true`
-      }
-
-      onLoad={() => {
-        setTimeout(() => {
-          setLoading(false)
-        }, 500);
-      }}
+  return (<PDFwrapper className={props.height ? "fixed-height" : ""}>
+    <Viewer
+      fileUrl={props.pdf}
     />
-
-  </div>);
+  </PDFwrapper>)
 }
+
+// import React from 'react';
+// import Loading from "components/Commons/Loading";
+// export const PdfViewer = (props) => {
+//   const [loading, setLoading] = React.useState(true);
+//   // const path = props.pdf.search(".pdf") ? props.pdf : props.pdf + ".pdf"
+//   return (<div>
+//     {loading ? <Loading msg={`문제 파일을 준비중입니다.\n이 화면이 지속된다면 다시 시도하여 주세요.`} /> : null}
+//     {/* {loading ?
+//       <div className='spinner-container'>
+//         <Spinner />
+//       </div> : null}*/}
+//     <iframe
+//       style={{
+//         frameBorder: "0",
+//         width: "100%",
+//         minHeight: "500px",
+//         backgroundColor: "#EFEFEF",
+//         border: "1px dashed #707070"
+//       }}
+//       src={
+//         `https://docs.google.com/viewer?url=${props.pdf}&embedded=true`
+//       }
+//       onLoad={() => {
+//         setTimeout(() => {
+//           setLoading(false)
+//         }, 500);
+//       }}
+//     />
+//   </div>);
+// }
 
 // import React from 'react';
 // // FOR PREVIEW PDF FILES
@@ -82,11 +97,7 @@ export const PdfViewer = (props) => {
 //     </Document>
 //   </DivPDFVIEWER>);
 // }
-
-
-
 // /*
-
 // import React from 'react';
 // import styled from "styled-components";
 // // FOR PREVIEW PDF FILES
@@ -153,5 +164,4 @@ export const PdfViewer = (props) => {
 //     </Document>
 //   </DivPDFVIEWER>);
 // }
-
 // */
