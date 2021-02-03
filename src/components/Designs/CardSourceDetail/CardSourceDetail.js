@@ -1523,12 +1523,12 @@ class CardSourceDetail extends Component {
                                     // .replace("36px;", `${2.25 * this.state.fontratio}rem;`)
                                     // .replace("48px;", `${3.5 * this.state.fontratio}rem;`)
 
-                                    .replace("\"font-size:14px;\"", `"font-size:${0.875 * this.state.fontratio}rem;"`)
-                                    .replace("\"font-size:18px;\"", `"font-size:${1.125 * this.state.fontratio}rem;"`)
-                                    .replace("\"font-size:24px;\"", `"font-size:${1.500 * this.state.fontratio}rem;"`)
-                                    .replace("\"font-size:30px;\"", `"font-size:${1.875 * this.state.fontratio}rem;"`)
-                                    .replace("\"font-size:36px;\"", `"font-size:${2.25 * this.state.fontratio}rem;"`)
-                                    .replace("\"font-size:48px;\"", `"font-size:${3.5 * this.state.fontratio}rem;"`)
+                                    .replace(/font-size:14px;/g, `font-size:${0.875 * this.state.fontratio}rem;`)
+                                    .replace(/font-size:18px;/g, `font-size:${1.125 * this.state.fontratio}rem;`)
+                                    .replace(/font-size:24px;/g, `font-size:${1.500 * this.state.fontratio}rem;`)
+                                    .replace(/font-size:30px;/g, `font-size:${1.875 * this.state.fontratio}rem;`)
+                                    .replace(/font-size:36px;/g, `font-size:${2.25 * this.state.fontratio}rem;`)
+                                    .replace(/font-size:48px;/g, `font-size:${3.5 * this.state.fontratio}rem;`)
                                   }`
                               }} />
                           </React.Fragment>
@@ -1567,8 +1567,7 @@ class CardSourceDetail extends Component {
                                   </div>
                                   <div className="titleBox">
                                     <div className="title">
-                                      내용
-                                </div>
+                                      내용</div>
                                   </div>
                                   <div className="problemBox">
                                     <div className="board">
@@ -1583,7 +1582,9 @@ class CardSourceDetail extends Component {
                                   ? <div>
                                     <h3>최근제출이력</h3>
                                     <span>
+                                      {
 
+                                      }
                                     </span>
                                   </div>
                                   : null}
