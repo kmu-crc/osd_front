@@ -1182,31 +1182,31 @@ class CardSourceDetail extends Component {
                           //   "C" : 
                           "etc." : null}
                   </div>
-              </div>
-              <div className="content_box">
-                <div className="name">제출 결과 </div>
-                {result.result === "S"
-                  ? <div className="msg font_green">성공</div>
-                  : result.result === "F"?<div className="msg font_red">실패</div>
-                  : result.result === "T"?<div className="msg font_red">실패(시간초과)</div>
-                  : result.result === "M"?<div className="msg font_red">실패(메모리초과)</div>
-                  : result.result === "C"?<div className="msg font_red">실패(컴파일에러)</div>
-                  : result.result === "R"?<div className="msg font_red">실패(런타임에러)</div>
-                  : result.result === "E"?<div className="msg font_red">실패(서버에러)</div>
-                  : result.result === "P"?<div className="msg font_red">실패(문제에러)</div>
-                  :<div className="msg font_red">실패</div>}
-              </div>
-              <div className="content_box">
-                <div className="msg">{result.message}</div>
-              </div>
-              <div className="content_box" style={{ display: "flex", flexDirection: "column" }}>
+                </div>
+                <div className="content_box">
+                  <div className="name">제출 결과 </div>
+                  {result.result === "S"
+                    ? <div className="msg font_green">성공</div>
+                    : result.result === "F" ? <div className="msg font_red">실패</div>
+                      : result.result === "T" ? <div className="msg font_red">실패(시간초과)</div>
+                        : result.result === "M" ? <div className="msg font_red">실패(메모리초과)</div>
+                          : result.result === "C" ? <div className="msg font_red">실패(컴파일에러)</div>
+                            : result.result === "R" ? <div className="msg font_red">실패(런타임에러)</div>
+                              : result.result === "E" ? <div className="msg font_red">실패(서버에러)</div>
+                                : result.result === "P" ? <div className="msg font_red">실패(문제에러)</div>
+                                  : <div className="msg font_red">실패</div>}
+                </div>
+                <div className="content_box">
+                  <div className="msg">{result.message}</div>
+                </div>
+                <div className="content_box" style={{ display: "flex", flexDirection: "column" }}>
 
-                <div className="name" style={{ cursor: "pointer" }}
-                  onClick={() => { this.setState({ mySource: !this.state.mySource }) }}
-                >{this.state.mySource == false ? "내가 제출한 소스보기∧" : "내가 제출한 소스보기∨"}</div>
-                {this.state.mySource == true ?
-                  <div className="codeBox" dangerouslySetInnerHTML={{__html:__code&&__code.substring(0,1000)}}>
-                    {/* {result.code} */}
+                  <div className="name" style={{ cursor: "pointer" }}
+                    onClick={() => { this.setState({ mySource: !this.state.mySource }) }}
+                  >{this.state.mySource == false ? "내가 제출한 소스보기∧" : "내가 제출한 소스보기∨"}</div>
+                  {this.state.mySource == true ?
+                    <div className="codeBox" dangerouslySetInnerHTML={{ __html: __code && __code.substring(0, 1000) }}>
+                      {/* {result.code} */}
                     </div>
                     : null
                   }
@@ -1581,7 +1581,7 @@ class CardSourceDetail extends Component {
 
                                 {permission === "LOG SUBMIT" || permission === "LOG"
                                   ? <div>
-                                    <h6>최근제출이력</h6>
+                                    <h3>최근제출이력</h3>
                                     <span>
 
                                     </span>
@@ -1985,6 +1985,16 @@ class SubmitLogContainer extends React.Component {
     const data = MySubmitList && MySubmitList.length > 0 && MySubmitList.map((submit, index) => {
       const row = {
         "key": index,
+        // "result":result.result === "S"
+        //             ? <div className="msg font_green">성공</div>
+        //             : result.result === "F" ? <div className="msg font_red">실패</div>
+        //               : result.result === "T" ? <div className="msg font_red">실패(시간초과)</div>
+        //                 : result.result === "M" ? <div className="msg font_red">실패(메모리초과)</div>
+        //                   : result.result === "C" ? <div className="msg font_red">실패(컴파일에러)</div>
+        //                     : result.result === "R" ? <div className="msg font_red">실패(런타임에러)</div>
+        //                       : result.result === "E" ? <div className="msg font_red">실패(서버에러)</div>
+        //                         : result.result === "P" ? <div className="msg font_red">실패(문제에러)</div>
+        //                           : <div className="msg font_red">실패</div>
         "result": submit.result === "S" ? "성공" : submit.result === "F" ? "실패" : "---",
         "message": submit.message || "",
         "time": submit.avg_time ? submit.avg_time + "초" : "",
@@ -2076,7 +2086,7 @@ class SubmitLogContainer extends React.Component {
         />
       </TableWrapper>
       :
-      <div style={{ marginTop: "25px", border: "1px solid red", width: "max-content", fontFamily: "Noto Sans KR", fontSize: "1.25rem", textAlign: "center" }}>
+      <div style={{ margin: "auto", marginTop: "25px", width: "max-content", fontFamily: "Noto Sans KR", fontSize: "1.25rem", textAlign: "center" }}>
         {loading
           ? "제출 이력을 가져오고 있습니다."
           : "제출 이력이 없습니다."}
