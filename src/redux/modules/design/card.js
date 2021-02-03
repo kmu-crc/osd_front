@@ -324,6 +324,7 @@ export const GetDesignSourceRequest = id => {
     };
 }
 export const FileUploadRequest = file => {
+    console.log(file);
     return new Promise(async (resolve, reject) => {
         const formData = new FormData();
         await formData.append('source', file[0]);
