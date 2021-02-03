@@ -1185,16 +1185,16 @@ class CardSourceDetail extends Component {
                 </div>
                 <div className="content_box">
                   <div className="name">제출 결과 </div>
-                  {submit.result === "S"
+                  {result.result === "S"
                     ? <div className="msg font_green">성공</div>
-                    : submit.result === "F" ? "실패</d"iv>
-                      : submit.result === "T" ? "실패(시간초과)"</div>
-                        : submit.result === "M" ? "실패(메모리초과)"</div>
-              : submit.result === "C" ? "실패(컴파일에러)"</div>
-          : submit.result === "R" ? "실패(런타임에러)"</div>
-                              : submit.result === "E" ? "실패(서버에러)"</div>
-                                : submit.result === "P" ? "실패(문제에러)"</div >
-                                  : "실패</d"iv >}
+                    : result.result === "F" ? <div className="msg font_red">실패</div>
+                      : result.result === "T" ? <div className="msg font_red">실패(시간초과)</div>
+                        : result.result === "M" ? <div className="msg font_red">실패(메모리초과)</div>
+                          : result.result === "C" ? <div className="msg font_red">실패(컴파일에러)</div>
+                            : result.result === "R" ? <div className="msg font_red">실패(런타임에러)</div>
+                              : result.result === "E" ? <div className="msg font_red">실패(서버에러)</div>
+                                : result.result === "P" ? <div className="msg font_red">실패(문제에러)</div>
+                                  : <div className="msg font_red">실패</div>}
                 </div>
                 <div className="content_box">
                   <div className="msg">{result.message}</div>
@@ -1215,7 +1215,7 @@ class CardSourceDetail extends Component {
                   <div className="close"
                     onClick={() => this.setState({ result: false, loading: false })} >확인</div>
                 </div>
-              </SubmitResultModal > : null}
+              </SubmitResultModal> : null}
 
             <div className="close-box" onClick={() => this.setState({ submit: false })} >
               <Cross angle={45} color={"#707070"} weight={2} width={25} height={25} />
@@ -1383,13 +1383,13 @@ class CardSourceDetail extends Component {
               } className="btn cancel">취소</div>
 
             </div>
-          </SubmitModalWrapper >
+          </SubmitModalWrapper>
 
           // <SubmitModal open={submit} close={this.setState({ submit: false })} /> : null}
           : null
         }
 
-{/* <ButtonContainer>
+        {/* <ButtonContainer>
         {edit === false && !this.props.edit && this.props.isTeam && (content && content.length > 0 ?
           (<div className="content-edit-wrapper">
             <button onClick={() => this.setState({ edit: !edit })} className="content-edit-button">컨텐츠 수정</button></div>) :
@@ -1397,229 +1397,229 @@ class CardSourceDetail extends Component {
             <button onClick={() => this.setState({ edit: !edit })} className="content-add-button" >컨텐츠 추가</button></div>))}
       </ButtonContainer> */}
 
-{/* view mode */ }
-{
-  this.props.uid && (!edit && !this.props.edit) && content.length > 0 &&
-    <ViewContent>
+        {/* view mode */}
+        {
+          this.props.uid && (!edit && !this.props.edit) && content.length > 0 &&
+          <ViewContent>
 
-      {content.map((item, index) => {
-        // const PERMISSION = item.type === "PROBLEM" ? this.setPermission(item) : "";
+            {content.map((item, index) => {
+              // const PERMISSION = item.type === "PROBLEM" ? this.setPermission(item) : "";
 
-        return <div key={index + item}>
-          {(item.type === "FILE" && item.data_type === "image") ?
-            <div className="imgContent" onClick={() => {
-              const url = item.content;
-              const img = '<img id="image" src="' + url + '">';
-              const popup = window.open("", "_blank", "image-view");
-              popup.document.write(img);
-              const imgnode = popup.document.getElementById("image");
-              popup.resizeTo(
+              return <div key={index + item}>
+                {(item.type === "FILE" && item.data_type === "image") ?
+                  <div className="imgContent" onClick={() => {
+                    const url = item.content;
+                    const img = '<img id="image" src="' + url + '">';
+                    const popup = window.open("", "_blank", "image-view");
+                    popup.document.write(img);
+                    const imgnode = popup.document.getElementById("image");
+                    popup.resizeTo(
                     /* width */imgnode.naturalWidth > window.screen.width ? window.screen.width / 2 : imgnode.naturalWidth * 1.06,
                     /* height */imgnode.naturalHeight > window.screen.height ? window.screen.height / 2 : imgnode.naturalHeight * 1.06
-              );
-            }}>
-              {/* <Zoom > */}
-              <img width="100%" src={item.content} alt="이미지" download={item.file_name} />
-              {/* </Zoom> */}
-              {/* <p>이미지를 클릭하시면 원본크기로 보실 수 있습니다.</p> */}
-            </div>
+                    );
+                  }}>
+                    {/* <Zoom > */}
+                    <img width="100%" src={item.content} alt="이미지" download={item.file_name} />
+                    {/* </Zoom> */}
+                    {/* <p>이미지를 클릭하시면 원본크기로 보실 수 있습니다.</p> */}
+                  </div>
 
-            : (item.type === "FILE" && item.data_type === "video") ?
-              <span >
-                <span className="LinkFileName">{item.file_name}</span>
-                <video
-                  className="iconWrap"
-                  width={`${window.innerWidth > 480 ? "640" : window.innerWidth - 55}`}
-                  height={`${window.innerWidth > 480 ? "360" : (window.innerWidth - 55) * .55}`}
-                  controls="controls">
-                  <source src={item.content} type="video/mp4" download={item.file_name}></source></video>
-              </span>
-              : (item.type === "FILE" && item.extension === "pdf") ?
-                <React.Fragment>
-                  {/* <a className="iconWrap" href={item.content} download={item.file_name} > */}
-                  {/* <FileIcon type={item.data_type} extension={item.extension} /> */}
-                  {/* <span className="LinkFileName">{item.file_name}</span> */}
-                  {/* </a> */}
-                  <PdfViewer pdf={item.content} height={true} />
-                </React.Fragment>
+                  : (item.type === "FILE" && item.data_type === "video") ?
+                    <span >
+                      <span className="LinkFileName">{item.file_name}</span>
+                      <video
+                        className="iconWrap"
+                        width={`${window.innerWidth > 480 ? "640" : window.innerWidth - 55}`}
+                        height={`${window.innerWidth > 480 ? "360" : (window.innerWidth - 55) * .55}`}
+                        controls="controls">
+                        <source src={item.content} type="video/mp4" download={item.file_name}></source></video>
+                    </span>
+                    : (item.type === "FILE" && item.extension === "pdf") ?
+                      <React.Fragment>
+                        {/* <a className="iconWrap" href={item.content} download={item.file_name} > */}
+                        {/* <FileIcon type={item.data_type} extension={item.extension} /> */}
+                        {/* <span className="LinkFileName">{item.file_name}</span> */}
+                        {/* </a> */}
+                        <PdfViewer pdf={item.content} height={true} />
+                      </React.Fragment>
 
-                : (item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video") ?
-                  <a className="iconWrap" href={item.content} download={item.file_name} >
-                    <FileIcon type={item.data_type} extension={item.extension} />
-                    <span className="LinkFileName">{item.file_name}</span>
-                  </a>
+                      : (item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video") ?
+                        <a className="iconWrap" href={item.content} download={item.file_name} >
+                          <FileIcon type={item.data_type} extension={item.extension} />
+                          <span className="LinkFileName">{item.file_name}</span>
+                        </a>
 
-                  : (item.type === "TEXT") ?
-                    <React.Fragment>
-                      {this.props.isEdit == false ?
-                        <FontZoom>
-                          <div className="zoomRgn">
-                            <div style={{ cursor: "default", paddingTop: "3px", lineHeight: "1rem", fontSize: "1rem" }}>폰트<br />크기</div>
-                            <div style={{
-                              width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio < 3 ? "black" : "#EFEFEF",
-                              textAlign: "center", color: "white", cursor: this.state.fontratio < 3 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem"
-                            }}
-                              onClick={() => { this.state.fontratio < 3 && this.setState({ fontratio: this.state.fontratio + fontoffset }) }} >+</div>
+                        : (item.type === "TEXT") ?
+                          <React.Fragment>
+                            {this.props.isEdit == false ?
+                              <FontZoom>
+                                <div className="zoomRgn">
+                                  <div style={{ cursor: "default", paddingTop: "3px", lineHeight: "1rem", fontSize: "1rem" }}>폰트<br />크기</div>
+                                  <div style={{
+                                    width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio < 3 ? "black" : "#EFEFEF",
+                                    textAlign: "center", color: "white", cursor: this.state.fontratio < 3 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem"
+                                  }}
+                                    onClick={() => { this.state.fontratio < 3 && this.setState({ fontratio: this.state.fontratio + fontoffset }) }} >+</div>
 
-                            <div style={{
-                              width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio > 1 ? "black" : "#EFEFEF",
-                              textAlign: "center", color: "white", cursor: this.state.fontratio > 1 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem"
-                            }}
-                              onClick={() => { this.state.fontratio > 1 && this.setState({ fontratio: this.state.fontratio - fontoffset }) }} >-</div>
-                          </div>
-                        </FontZoom>
-                        : null
-                      }
-                      <div
-                        style={{
-                          fontSize: `${this.state.fontratio}rem`
-                        }}
-                        dangerouslySetInnerHTML={{
-                          __html: `${
-                            // this.replaceFontUnitToRem(item.content)
-                            item.content
-                              /*
-                              10px = 0.625rem
-                              12px = 0.75rem
-                              14px = 0.875rem
-                              16px = 1rem (base)
-                              18px = 1.125rem
-                              20px = 1.25rem
-                              24px = 1.5rem
-                              30px = 1.875rem
-                              32px = 2rem
-                              34px = 2.125rem
-                              36px = 2.25rem
-                              38px = 2.5rem
-                              40px = 2.875rem
-                              42px = 3rem
-                              44px = 3.125rem
-                              46px = 3.25rem
-                              48px = 3.5rem
-                              */
-
-                              // .replace("10px", `${this.state.fontratio * 0.625}rem`)
-                              // .replace("12px", `${this.state.fontratio * 0.75}rem`)
-                              // .replace("14px", `${this.state.fontratio * 0.875}rem`)
-                              // .replace("16px", `${this.state.fontratio * 1}rem`)
-                              // .replace("18px", `${this.state.fontratio * 1.125}rem`)
-                              // .replace("20px", `${this.state.fontratio * 1.25}rem`)
-                              // .replace("24px", `${this.state.fontratio * 1.5}rem`)
-                              // .replace("30px", `${this.state.fontratio * 1.875}rem`)
-                              // .replace("32px", `${this.state.fontratio * 2}rem`)
-                              // .replace("34px", `${this.state.fontratio * 2.125}rem`)
-                              // .replace("36px", `${this.state.fontratio * 2.25}rem`)
-                              // .replace("38px", `${this.state.fontratio * 2.5}rem`)
-                              // .replace("40px", `${this.state.fontratio * 2.875}rem`)
-                              // .replace("42px", `${this.state.fontratio * 3}rem`)
-                              // .replace("44px", `${this.state.fontratio * 3.125}rem`)
-                              // .replace("46px", `${this.state.fontratio * 3.25}rem`)
-                              // .replace("48px", `${this.state.fontratio * 3.5}rem`)
-
-                              // .replace("14px;", `${0.875 * this.state.fontratio}rem;`)
-                              // .replace("18px;", `${1.125 * this.state.fontratio}rem;`)
-                              // .replace("24px;", `${1.500 * this.state.fontratio}rem;`)
-                              // .replace("30px;", `${1.875 * this.state.fontratio}rem;`)
-                              // .replace("36px;", `${2.25 * this.state.fontratio}rem;`)
-                              // .replace("48px;", `${3.5 * this.state.fontratio}rem;`)
-
-                              .replace("\"font-size:14px;\"", `"font-size:${0.875 * this.state.fontratio}rem;"`)
-                              .replace("\"font-size:18px;\"", `"font-size:${1.125 * this.state.fontratio}rem;"`)
-                              .replace("\"font-size:24px;\"", `"font-size:${1.500 * this.state.fontratio}rem;"`)
-                              .replace("\"font-size:30px;\"", `"font-size:${1.875 * this.state.fontratio}rem;"`)
-                              .replace("\"font-size:36px;\"", `"font-size:${2.25 * this.state.fontratio}rem;"`)
-                              .replace("\"font-size:48px;\"", `"font-size:${3.5 * this.state.fontratio}rem;"`)
-                            }`
-                        }} />
-                    </React.Fragment>
-
-                    : (item.type === "LINK") ?
-                      <div className="linkWrap">
-                        <LinkPreview>
-                          <div className="description">{
-                            IsJsonString(item.content)
-                              ? JSON.parse(item.content).hasOwnProperty('description')
-                                ? "*" + JSON.parse(item.content).description : "" : ""}
-                          </div>
-                          <div className="url">
-                            <a target="_blank" href={`${IsJsonString(item.content)
-                              ? JSON.parse(item.content).hasOwnProperty('url')
-                                ? JSON.parse(item.content).url : "invalid" : "invalid"}`}>
-                              ({IsJsonString(item.content)
-                                ? JSON.parse(item.content).hasOwnProperty('url')
-                                  ? JSON.parse(item.content).url : "invalid" : "invalid"})
-                              </a>
-                          </div>
-                        </LinkPreview>
-                      </div>
-
-                      : (item.type === "PROBLEM") ?
-                        <div className="problemWrap">
-
-                          <ProblemBox>
-                            <div className="titleBox">
-                              <div className="title">제목</div>
-                            </div>
-                            <div className="problemBox">
-                              <div className="board">
-                                {item.content && JSON.parse(item.content).name}
-                              </div>
-                            </div>
-                            <div className="titleBox">
-                              <div className="title">
-                                내용
+                                  <div style={{
+                                    width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio > 1 ? "black" : "#EFEFEF",
+                                    textAlign: "center", color: "white", cursor: this.state.fontratio > 1 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem"
+                                  }}
+                                    onClick={() => { this.state.fontratio > 1 && this.setState({ fontratio: this.state.fontratio - fontoffset }) }} >-</div>
                                 </div>
-                            </div>
-                            <div className="problemBox">
-                              <div className="board">
-                                {/* {item.content && IsJsonString(item.content) && JSON.parse(item.content).cotents && */}
-                                {item.content && <PdfViewer pdf={JSON.parse(item.content).contents} />}
-                                {/* {item.content && JSON.parse(item.content).contents} */}
-                              </div>
-                            </div>
-                          </ProblemBox>
-
-                          {permission === "LOG SUBMIT" || permission === "LOG"
-                            ? <div>
-                              <h3>최근제출이력</h3>
-                              <span>
-
-                              </span>
-                            </div>
-                            : null}
-
-                          <div
-                            onClick={async () => {
-                              // console.log("user_id", this.props.userInfo.uid, item.user_id);
-                              // if (this.props.userInfo && (this.props.userInfo.uid === item.user_id)) {
-                              if (permission === "LOG SUBMIT" || permission === "LOG") {
-                                this.setState({ item: JSON.parse(item.content), item_user: item.user_id, tab: item.user_id === this.props.userInfo.uid ? "code" : "log" });
-                                this.setState({ submit: true });
-                              } else {
-                                await alert("해당문제의 제출 권한이 없습니다.");
-                              }
-                            }}
-                            style={{
-                              width: "max-content",
-                              margin: "auto",
-                              cursor: "pointer"
-                            }}>
-
-
-                            <p
+                              </FontZoom>
+                              : null
+                            }
+                            <div
                               style={{
-                                padding: "5px 13px",
-                                color: "white",
-                                borderRadius: "18px",
-                                backgroundColor:
-                                  permission == "LOG" || permission === "LOG SUBMIT" ? "red" : "gray",
-                              }}>
-                              답안 제출하기
+                                fontSize: `${this.state.fontratio}rem`
+                              }}
+                              dangerouslySetInnerHTML={{
+                                __html: `${
+                                  // this.replaceFontUnitToRem(item.content)
+                                  item.content
+                                    /*
+                                    10px = 0.625rem
+                                    12px = 0.75rem
+                                    14px = 0.875rem
+                                    16px = 1rem (base)
+                                    18px = 1.125rem
+                                    20px = 1.25rem
+                                    24px = 1.5rem
+                                    30px = 1.875rem
+                                    32px = 2rem
+                                    34px = 2.125rem
+                                    36px = 2.25rem
+                                    38px = 2.5rem
+                                    40px = 2.875rem
+                                    42px = 3rem
+                                    44px = 3.125rem
+                                    46px = 3.25rem
+                                    48px = 3.5rem
+                                    */
+
+                                    // .replace("10px", `${this.state.fontratio * 0.625}rem`)
+                                    // .replace("12px", `${this.state.fontratio * 0.75}rem`)
+                                    // .replace("14px", `${this.state.fontratio * 0.875}rem`)
+                                    // .replace("16px", `${this.state.fontratio * 1}rem`)
+                                    // .replace("18px", `${this.state.fontratio * 1.125}rem`)
+                                    // .replace("20px", `${this.state.fontratio * 1.25}rem`)
+                                    // .replace("24px", `${this.state.fontratio * 1.5}rem`)
+                                    // .replace("30px", `${this.state.fontratio * 1.875}rem`)
+                                    // .replace("32px", `${this.state.fontratio * 2}rem`)
+                                    // .replace("34px", `${this.state.fontratio * 2.125}rem`)
+                                    // .replace("36px", `${this.state.fontratio * 2.25}rem`)
+                                    // .replace("38px", `${this.state.fontratio * 2.5}rem`)
+                                    // .replace("40px", `${this.state.fontratio * 2.875}rem`)
+                                    // .replace("42px", `${this.state.fontratio * 3}rem`)
+                                    // .replace("44px", `${this.state.fontratio * 3.125}rem`)
+                                    // .replace("46px", `${this.state.fontratio * 3.25}rem`)
+                                    // .replace("48px", `${this.state.fontratio * 3.5}rem`)
+
+                                    // .replace("14px;", `${0.875 * this.state.fontratio}rem;`)
+                                    // .replace("18px;", `${1.125 * this.state.fontratio}rem;`)
+                                    // .replace("24px;", `${1.500 * this.state.fontratio}rem;`)
+                                    // .replace("30px;", `${1.875 * this.state.fontratio}rem;`)
+                                    // .replace("36px;", `${2.25 * this.state.fontratio}rem;`)
+                                    // .replace("48px;", `${3.5 * this.state.fontratio}rem;`)
+
+                                    .replace("\"font-size:14px;\"", `"font-size:${0.875 * this.state.fontratio}rem;"`)
+                                    .replace("\"font-size:18px;\"", `"font-size:${1.125 * this.state.fontratio}rem;"`)
+                                    .replace("\"font-size:24px;\"", `"font-size:${1.500 * this.state.fontratio}rem;"`)
+                                    .replace("\"font-size:30px;\"", `"font-size:${1.875 * this.state.fontratio}rem;"`)
+                                    .replace("\"font-size:36px;\"", `"font-size:${2.25 * this.state.fontratio}rem;"`)
+                                    .replace("\"font-size:48px;\"", `"font-size:${3.5 * this.state.fontratio}rem;"`)
+                                  }`
+                              }} />
+                          </React.Fragment>
+
+                          : (item.type === "LINK") ?
+                            <div className="linkWrap">
+                              <LinkPreview>
+                                <div className="description">{
+                                  IsJsonString(item.content)
+                                    ? JSON.parse(item.content).hasOwnProperty('description')
+                                      ? "*" + JSON.parse(item.content).description : "" : ""}
+                                </div>
+                                <div className="url">
+                                  <a target="_blank" href={`${IsJsonString(item.content)
+                                    ? JSON.parse(item.content).hasOwnProperty('url')
+                                      ? JSON.parse(item.content).url : "invalid" : "invalid"}`}>
+                                    ({IsJsonString(item.content)
+                                      ? JSON.parse(item.content).hasOwnProperty('url')
+                                        ? JSON.parse(item.content).url : "invalid" : "invalid"})
+                              </a>
+                                </div>
+                              </LinkPreview>
+                            </div>
+
+                            : (item.type === "PROBLEM") ?
+                              <div className="problemWrap">
+
+                                <ProblemBox>
+                                  <div className="titleBox">
+                                    <div className="title">제목</div>
+                                  </div>
+                                  <div className="problemBox">
+                                    <div className="board">
+                                      {item.content && JSON.parse(item.content).name}
+                                    </div>
+                                  </div>
+                                  <div className="titleBox">
+                                    <div className="title">
+                                      내용
+                                </div>
+                                  </div>
+                                  <div className="problemBox">
+                                    <div className="board">
+                                      {/* {item.content && IsJsonString(item.content) && JSON.parse(item.content).cotents && */}
+                                      {item.content && <PdfViewer pdf={JSON.parse(item.content).contents} />}
+                                      {/* {item.content && JSON.parse(item.content).contents} */}
+                                    </div>
+                                  </div>
+                                </ProblemBox>
+
+                                {permission === "LOG SUBMIT" || permission === "LOG"
+                                  ? <div>
+                                    <h3>최근제출이력</h3>
+                                    <span>
+
+                                    </span>
+                                  </div>
+                                  : null}
+
+                                <div
+                                  onClick={async () => {
+                                    // console.log("user_id", this.props.userInfo.uid, item.user_id);
+                                    // if (this.props.userInfo && (this.props.userInfo.uid === item.user_id)) {
+                                    if (permission === "LOG SUBMIT" || permission === "LOG") {
+                                      this.setState({ item: JSON.parse(item.content), item_user: item.user_id, tab: item.user_id === this.props.userInfo.uid ? "code" : "log" });
+                                      this.setState({ submit: true });
+                                    } else {
+                                      await alert("해당문제의 제출 권한이 없습니다.");
+                                    }
+                                  }}
+                                  style={{
+                                    width: "max-content",
+                                    margin: "auto",
+                                    cursor: "pointer"
+                                  }}>
+
+
+                                  <p
+                                    style={{
+                                      padding: "5px 13px",
+                                      color: "white",
+                                      borderRadius: "18px",
+                                      backgroundColor:
+                                        permission == "LOG" || permission === "LOG SUBMIT" ? "red" : "gray",
+                                    }}>
+                                    답안 제출하기
                                 </p>
-                          </div>
+                                </div>
 
 
-                          {/* <div
+                                {/* <div
                               onClick={() => {
                                 this.setState({ item: JSON.parse(item.content) });
                                 this.setState({ submit: true });
@@ -1628,126 +1628,126 @@ class CardSourceDetail extends Component {
                               <p style={{ color: "red", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", fontWeight: "500" }}>답안 제출하기</p>
                             </div> */}
 
-                        </div>
+                              </div>
 
-                        : <div>올바른 형식의 아이템이 아닙니다.</div>}
-        </div>
-      })}
-    </ViewContent>
-}
+                              : <div>올바른 형식의 아이템이 아닙니다.</div>}
+              </div>
+            })}
+          </ViewContent>
+        }
 
-{/* edit mode */ }
-{
-  (edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
+        {/* edit mode */}
+        {
+          (edit || this.props.edit || (edit && this.props.uid !== "new")) ? (
 
-    content && content.length > 0 ? (<Fragment>
+            content && content.length > 0 ? (<Fragment>
 
-      {content.map((item, index) => {
+              {content.map((item, index) => {
 
-        return (<ControllerWrap key={item + index}>
+                return (<ControllerWrap key={item + index}>
 
-          <div className="contentWrap">
-            {(item.type === "FILE")
-              ? <FileController
-                item={item}
-                name="source"
-                initClick={this.state.click}
-                getValue={this.onChangeFile}
-                setController={this.setController} />
-              : null}
+                  <div className="contentWrap">
+                    {(item.type === "FILE")
+                      ? <FileController
+                        item={item}
+                        name="source"
+                        initClick={this.state.click}
+                        getValue={this.onChangeFile}
+                        setController={this.setController} />
+                      : null}
 
-            {(item.type === "TEXT")
-              ? <TextController
-                item={item}
-                initClick={this.state.click}
-                getValue={(data) => this.onChangeValue(data, item.order)} />
-              : null}
+                    {(item.type === "TEXT")
+                      ? <TextController
+                        item={item}
+                        initClick={this.state.click}
+                        getValue={(data) => this.onChangeValue(data, item.order)} />
+                      : null}
 
-            {(item.type === "LINK")
-              ? <LinkController
-                item={item}
-                initClick={this.state.click}
-                getValue={(data) => this.onChangeValue(data, item.order)} />
-              : null}
+                    {(item.type === "LINK")
+                      ? <LinkController
+                        item={item}
+                        initClick={this.state.click}
+                        getValue={(data) => this.onChangeValue(data, item.order)} />
+                      : null}
 
-            {(item.type === "PROBLEM")
-              ? <ProblemContainer
-                open={this.state.addProblem}
-                openModal={async (data) => {
-                  this.setState({ addProblem: data });
-                  if (data === false && item.content === "") {
-                    let copyContent = [...this.state.content];
-                    for (var i = 0; i < copyContent.length; i++) {
-                      if (copyContent[i].type === "PROBLEM" && copyContent[i].content === "") {
-                        copyContent.splice(i, 1);
-                      }
-                    }
-                    for (i = 0; i < copyContent.length; i++) {
-                      copyContent[i].order = i;
-                    }
-                    await this.setState({ content: copyContent });
-                    this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
-                    // console.log("csd:", item);
-                  }
-                }}
-                item={item}
-                initClick={this.state.click}
-                getValue={(data) => {
-                  this.onChangeValue(data, item.order)
-                }}
-              />
-              : null}
+                    {(item.type === "PROBLEM")
+                      ? <ProblemContainer
+                        open={this.state.addProblem}
+                        openModal={async (data) => {
+                          this.setState({ addProblem: data });
+                          if (data === false && item.content === "") {
+                            let copyContent = [...this.state.content];
+                            for (var i = 0; i < copyContent.length; i++) {
+                              if (copyContent[i].type === "PROBLEM" && copyContent[i].content === "") {
+                                copyContent.splice(i, 1);
+                              }
+                            }
+                            for (i = 0; i < copyContent.length; i++) {
+                              copyContent[i].order = i;
+                            }
+                            await this.setState({ content: copyContent });
+                            this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
+                            // console.log("csd:", item);
+                          }
+                        }}
+                        item={item}
+                        initClick={this.state.click}
+                        getValue={(data) => {
+                          this.onChangeValue(data, item.order)
+                        }}
+                      />
+                      : null}
 
-          </div>
+                  </div>
 
-          <DelBtn
-            type="button"
-            className="editBtn"
-            onClick={() => this.onDelete(item.order)}>
-            <i className="trash alternate icon large" />
-          </DelBtn>
+                  <DelBtn
+                    type="button"
+                    className="editBtn"
+                    onClick={() => this.onDelete(item.order)}>
+                    <i className="trash alternate icon large" />
+                  </DelBtn>
 
-          {content.length - 1 >= item.order && item.order !== 0 ?
-            <UpBtn
-              type="button"
-              className="editBtn"
-              onClick={() => this.moveItem(item.order, item.order - 1)}>
-              <i className="angle up alternate icon large" />
-            </UpBtn> : null}
+                  {content.length - 1 >= item.order && item.order !== 0 ?
+                    <UpBtn
+                      type="button"
+                      className="editBtn"
+                      onClick={() => this.moveItem(item.order, item.order - 1)}>
+                      <i className="angle up alternate icon large" />
+                    </UpBtn> : null}
 
-          {content.length - 1 !== item.order && item.order >= 0 ?
-            <DownBtn
-              type="button"
-              className="editBtn"
-              onClick={() => this.moveItem(item.order, item.order + 1)}>
-              <i className="angle down alternate icon large" />
-            </DownBtn> : null}
-        </ControllerWrap>)
-      })}
-      <AddContent
-        is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
-        getValue={this.onAddValue}
-        order={content.length}
-        open={(data) => this.setState({ addProblem: data })} />
-    </Fragment>) :
-      <AddContent
-        is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
-        getValue={this.onAddValue}
-        order={0}
-        open={(data) => this.setState({ addProblem: data })} />
-  ) : null
-}
+                  {content.length - 1 !== item.order && item.order >= 0 ?
+                    <DownBtn
+                      type="button"
+                      className="editBtn"
+                      onClick={() => this.moveItem(item.order, item.order + 1)}>
+                      <i className="angle down alternate icon large" />
+                    </DownBtn> : null}
+                </ControllerWrap>)
+              })}
+              <AddContent
+                is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
+                getValue={this.onAddValue}
+                order={content.length}
+                open={(data) => this.setState({ addProblem: data })} />
+            </Fragment>) :
+              <AddContent
+                is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
+                getValue={this.onAddValue}
+                order={0}
+                open={(data) => this.setState({ addProblem: data })} />
+          ) : null
+        }
 
-<ButtonContainer>
-  {(this.props.edit && this.props.uid) &&
-    <EditorBottonWrapper>
-      <button onClick={this.onSubmit} className="submit" type="button">
-        <i className="icon outline save" />저장</button>
-      <button onClick={this.onCancel} className="cancel" type="button">
-        <i className="icon trash" />취소</button>
-    </EditorBottonWrapper>}
-</ButtonContainer>
-      </Worker >
+        <ButtonContainer>
+          {(this.props.edit && this.props.uid) &&
+            <EditorBottonWrapper>
+              <button onClick={this.onSubmit} className="submit" type="button">
+                <i className="icon outline save" />저장</button>
+              <button onClick={this.onCancel} className="cancel" type="button">
+                <i className="icon trash" />취소</button>
+            </EditorBottonWrapper>}
+        </ButtonContainer>
+      </Worker>
     </div >);
   }
 }
@@ -1985,16 +1985,17 @@ class SubmitLogContainer extends React.Component {
     const data = MySubmitList && MySubmitList.length > 0 && MySubmitList.map((submit, index) => {
       const row = {
         "key": index,
-        "result": submit.result === "S"
-          ? "성공"
-          : submit.result === "F" ? "실패"
-            : submit.result === "T" ? "실패(시간초과)"
-              : submit.result === "M" ? "실패(메모리초과)"
-                : submit.result === "C" ? "실패(컴파일에러)"
-                  : submit.result === "R" ? "실패(런타임에러)"
-                    : submit.result === "E" ? "실패(서버에러)"
-                      : submit.result === "P" ? "실패(문제에러)"
-                        : "실패",
+        // "result":result.result === "S"
+        //             ? <div className="msg font_green">성공</div>
+        //             : result.result === "F" ? <div className="msg font_red">실패</div>
+        //               : result.result === "T" ? <div className="msg font_red">실패(시간초과)</div>
+        //                 : result.result === "M" ? <div className="msg font_red">실패(메모리초과)</div>
+        //                   : result.result === "C" ? <div className="msg font_red">실패(컴파일에러)</div>
+        //                     : result.result === "R" ? <div className="msg font_red">실패(런타임에러)</div>
+        //                       : result.result === "E" ? <div className="msg font_red">실패(서버에러)</div>
+        //                         : result.result === "P" ? <div className="msg font_red">실패(문제에러)</div>
+        //                           : <div className="msg font_red">실패</div>
+        "result": submit.result === "S" ? "성공" : submit.result === "F" ? "실패" : "---",
         "message": submit.message || "",
         "time": submit.avg_time ? submit.avg_time + "초" : "",
         "space": submit.avg_memory ? submit.avg_memory + "MB" : "",
