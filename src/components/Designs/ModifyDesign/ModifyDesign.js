@@ -993,7 +993,7 @@ class ModifyDesign extends Component {
                         <IsProblemBox>
                           <div className="additionalTitle"/>
                           <CheckBox2 className="check" onChange={this.onCheckIsProblem} checked={this.state.is_problem ? true : false} type="checkbox" />
-                          <div className="check_label">문제 출제 기능을 사용합니다.</div>
+                          <div className="check_label">문제 등록 기능을 사용합니다.</div>
                         </IsProblemBox>
                       :null
                     }

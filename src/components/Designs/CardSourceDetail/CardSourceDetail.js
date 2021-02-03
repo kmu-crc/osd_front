@@ -1182,31 +1182,31 @@ class CardSourceDetail extends Component {
                           //   "C" : 
                           "etc." : null}
                   </div>
-                </div>
-                <div className="content_box">
-                  <div className="name">제출 결과 </div>
-                  {result.result === "S"
-                    ? <div className="msg font_green">성공</div>
-                    : result.result === "F" ? <div className="msg font_red">실패</div>
-                      : result.result === "T" ? <div className="msg font_red">실패(시간초과)</div>
-                        : result.result === "M" ? <div className="msg font_red">실패(메모리초과)</div>
-                          : result.result === "C" ? <div className="msg font_red">실패(컴파일에러)</div>
-                            : result.result === "R" ? <div className="msg font_red">실패(런타임에러)</div>
-                              : result.result === "E" ? <div className="msg font_red">실패(서버에러)</div>
-                                : result.result === "P" ? <div className="msg font_red">실패(문제에러)</div>
-                                  : <div className="msg font_red">실패</div>}
-                </div>
-                <div className="content_box">
-                  <div className="msg">{result.message}</div>
-                </div>
-                <div className="content_box" style={{ display: "flex", flexDirection: "column" }}>
+              </div>
+              <div className="content_box">
+                <div className="name">제출 결과 </div>
+                {result.result === "S"
+                  ? <div className="msg font_green">성공</div>
+                  : result.result === "F"?<div className="msg font_red">실패</div>
+                  : result.result === "T"?<div className="msg font_red">실패(시간초과)</div>
+                  : result.result === "M"?<div className="msg font_red">실패(메모리초과)</div>
+                  : result.result === "C"?<div className="msg font_red">실패(컴파일에러)</div>
+                  : result.result === "R"?<div className="msg font_red">실패(런타임에러)</div>
+                  : result.result === "E"?<div className="msg font_red">실패(서버에러)</div>
+                  : result.result === "P"?<div className="msg font_red">실패(문제에러)</div>
+                  :<div className="msg font_red">실패</div>}
+              </div>
+              <div className="content_box">
+                <div className="msg">{result.message}</div>
+              </div>
+              <div className="content_box" style={{ display: "flex", flexDirection: "column" }}>
 
-                  <div className="name" style={{ cursor: "pointer" }}
-                    onClick={() => { this.setState({ mySource: !this.state.mySource }) }}
-                  >{this.state.mySource == false ? "내가 제출한 소스보기∧" : "내가 제출한 소스보기∨"}</div>
-                  {this.state.mySource == true ?
-                    <div className="codeBox" dangerouslySetInnerHTML={{ __html: __code }}>
-                      {/* {result.code} */}
+                <div className="name" style={{ cursor: "pointer" }}
+                  onClick={() => { this.setState({ mySource: !this.state.mySource }) }}
+                >{this.state.mySource == false ? "내가 제출한 소스보기∧" : "내가 제출한 소스보기∨"}</div>
+                {this.state.mySource == true ?
+                  <div className="codeBox" dangerouslySetInnerHTML={{__html:__code&&__code.substring(0,1000)}}>
+                    {/* {result.code} */}
                     </div>
                     : null
                   }
@@ -1875,7 +1875,7 @@ class AddContent extends Component {
           {this.props.is_problem ? <NewController
             onClick={() => { this.addContent("PROBLEM"); this.props.open(true); }}
             width="max-content" minWidth="134px" height="29px">
-            문제 출제하기</NewController> : null}
+            문제 등록하기</NewController> : null}
         </div>
 
         {this.state.type === "FILE" &&
