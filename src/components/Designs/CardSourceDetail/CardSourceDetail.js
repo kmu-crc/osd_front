@@ -1981,21 +1981,19 @@ class SubmitLogContainer extends React.Component {
         <button>hi</button>
       );
     }
-    console.log("MySubmitList", MySubmitList);
     const data = MySubmitList && MySubmitList.length > 0 && MySubmitList.map((submit, index) => {
       const row = {
         "key": index,
-        // "result":result.result === "S"
-        //             ? <div className="msg font_green">성공</div>
-        //             : result.result === "F" ? <div className="msg font_red">실패</div>
-        //               : result.result === "T" ? <div className="msg font_red">실패(시간초과)</div>
-        //                 : result.result === "M" ? <div className="msg font_red">실패(메모리초과)</div>
-        //                   : result.result === "C" ? <div className="msg font_red">실패(컴파일에러)</div>
-        //                     : result.result === "R" ? <div className="msg font_red">실패(런타임에러)</div>
-        //                       : result.result === "E" ? <div className="msg font_red">실패(서버에러)</div>
-        //                         : result.result === "P" ? <div className="msg font_red">실패(문제에러)</div>
-        //                           : <div className="msg font_red">실패</div>
-        "result": submit.result === "S" ? "성공" : submit.result === "F" ? "실패" : "---",
+        "result":
+          submit.result === "S" ? "성공"
+            : submit.result === "F" ? "실패"
+              : submit.result === "T" ? "실패(시간초과)"
+                : submit.result === "M" ? "실패(메모리초과)"
+                  : submit.result === "C" ? "실패(컴파일에러)"
+                    : submit.result === "R" ? "실패(런타임에러)"
+                      : submit.result === "E" ? "실패(서버에러)"
+                        : submit.result === "P" ? "실패(문제에러)"
+                          : "실패",
         "message": submit.message || "",
         "time": submit.avg_time ? submit.avg_time + "초" : "",
         "space": submit.avg_memory ? submit.avg_memory + "MB" : "",
