@@ -573,6 +573,9 @@ class CardSourceDetail extends Component {
       mySource: false,
       coding: [],
       permission: null,
+      item_uid: null,
+      item_user: null,
+      item: null,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -591,6 +594,7 @@ class CardSourceDetail extends Component {
     this.onChangeCodingFile = this.onChangeCodingFile.bind(this);
     this.onChangeFileName = this.onChangeFileName.bind(this);
     this.submitCode = this.submitCode.bind(this);
+
     this.ace = React.createRef();
   }
   componentDidMount() {
@@ -1057,11 +1061,10 @@ class CardSourceDetail extends Component {
             problem_id: _item.id,
             language_id: this.props.DesignDetail.category_level3 || 1,
             answer: JSON.stringify(datalist),
-            content_id: this.props.uid
+            content_id: this.state.item_uid,
           })
         }).then(res => res.json())
           .then(res => {
-            console.log("result:::::", res);
             if (res.success) {
               const check = () => {
                 this.setState({ loading: true, });
@@ -1072,7 +1075,6 @@ class CardSourceDetail extends Component {
                   .then(res1 => res1.json())
                   .then(res1 => {
                     if (res1.result) {
-                      console.log(res1, '이걸가지고 또 컨텐츠 추가요청을 해야함.');
                       this.setState({ result: res1 });
                       ntry = 0;
                     }
@@ -1081,7 +1083,7 @@ class CardSourceDetail extends Component {
                     console.error(e);
                     return;
                   });
-                if (ntry--)
+                if (ntry-- > 0)
                   setTimeout(check, 1000);
               };
               check();
@@ -1096,8 +1098,15 @@ class CardSourceDetail extends Component {
 
       });
   }
+
+  // 
+  getLastestSubmit(item) {
+    const { permission } = this.state;
+    console.log(permission);
+  }
+
   render() {
-    const { edit, content, loading, submit, tab, item, result, coding, permission, item_user } = this.state;
+    const { edit, content, loading, submit, tab, item, result, coding, permission, item_uid, item_user } = this.state;
     // console.log("content:", content.find(item => item.type === "TEXT"));
     // console.log("result:", this.props, this.state)// && this.props.DesignDetail.category_level3 - 1);
     const fontoffset = 0.3;
@@ -1403,7 +1412,7 @@ class CardSourceDetail extends Component {
           <ViewContent>
 
             {content.map((item, index) => {
-              // const PERMISSION = item.type === "PROBLEM" ? this.setPermission(item) : "";
+              console.log("content:");
 
               return <div key={index + item}>
                 {(item.type === "FILE" && item.data_type === "image") ?
@@ -1523,12 +1532,12 @@ class CardSourceDetail extends Component {
                                     // .replace("36px;", `${2.25 * this.state.fontratio}rem;`)
                                     // .replace("48px;", `${3.5 * this.state.fontratio}rem;`)
 
-                                    .replace("\"font-size:14px;\"", `"font-size:${0.875 * this.state.fontratio}rem;"`)
-                                    .replace("\"font-size:18px;\"", `"font-size:${1.125 * this.state.fontratio}rem;"`)
-                                    .replace("\"font-size:24px;\"", `"font-size:${1.500 * this.state.fontratio}rem;"`)
-                                    .replace("\"font-size:30px;\"", `"font-size:${1.875 * this.state.fontratio}rem;"`)
-                                    .replace("\"font-size:36px;\"", `"font-size:${2.25 * this.state.fontratio}rem;"`)
-                                    .replace("\"font-size:48px;\"", `"font-size:${3.5 * this.state.fontratio}rem;"`)
+                                    .replace(/font-size:14px;/g, `font-size:${0.875 * this.state.fontratio}rem;`)
+                                    .replace(/font-size:18px;/g, `font-size:${1.125 * this.state.fontratio}rem;`)
+                                    .replace(/font-size:24px;/g, `font-size:${1.500 * this.state.fontratio}rem;`)
+                                    .replace(/font-size:30px;/g, `font-size:${1.875 * this.state.fontratio}rem;`)
+                                    .replace(/font-size:36px;/g, `font-size:${2.25 * this.state.fontratio}rem;`)
+                                    .replace(/font-size:48px;/g, `font-size:${3.5 * this.state.fontratio}rem;`)
                                   }`
                               }} />
                           </React.Fragment>
@@ -1567,8 +1576,7 @@ class CardSourceDetail extends Component {
                                   </div>
                                   <div className="titleBox">
                                     <div className="title">
-                                      내용
-                                </div>
+                                      내용</div>
                                   </div>
                                   <div className="problemBox">
                                     <div className="board">
@@ -1579,21 +1587,23 @@ class CardSourceDetail extends Component {
                                   </div>
                                 </ProblemBox>
 
-                                {permission === "LOG SUBMIT" || permission === "LOG"
-                                  ? <div>
-                                    <h3>최근제출이력</h3>
-                                    <span>
-
-                                    </span>
-                                  </div>
-                                  : null}
+                                <div style={{ margin: "0px", marginBottom: "15px", marginTop: "15px", }}>
+                                  <h3>최근에 제출한 코드</h3>
+                                  {permission === "LOG SUBMIT" || permission === "LOG"
+                                    ? <div>
+                                      <span>{JSON.parse(item.content).id}</span>
+                                    </div>
+                                    : <div style={{ width: "100%", height: "250px", background: "#707070", }}>
+                                      <span style={{ color: "white", width: "max-content", padding: "10px", display: "flex" }}>작성자만 볼 수 있습니다.</span>
+                                    </div>}
+                                </div>
 
                                 <div
                                   onClick={async () => {
                                     // console.log("user_id", this.props.userInfo.uid, item.user_id);
                                     // if (this.props.userInfo && (this.props.userInfo.uid === item.user_id)) {
                                     if (permission === "LOG SUBMIT" || permission === "LOG") {
-                                      this.setState({ item: JSON.parse(item.content), item_user: item.user_id, tab: item.user_id === this.props.userInfo.uid ? "code" : "log" });
+                                      this.setState({ item: JSON.parse(item.content), item_uid: item.uid, item_user: item.user_id, tab: item.user_id === this.props.userInfo.uid ? "code" : "log" });
                                       this.setState({ submit: true });
                                     } else {
                                       await alert("해당문제의 제출 권한이 없습니다.");
@@ -1981,21 +1991,19 @@ class SubmitLogContainer extends React.Component {
         <button>hi</button>
       );
     }
-    console.log("MySubmitList", MySubmitList);
     const data = MySubmitList && MySubmitList.length > 0 && MySubmitList.map((submit, index) => {
       const row = {
         "key": index,
-        // "result":result.result === "S"
-        //             ? <div className="msg font_green">성공</div>
-        //             : result.result === "F" ? <div className="msg font_red">실패</div>
-        //               : result.result === "T" ? <div className="msg font_red">실패(시간초과)</div>
-        //                 : result.result === "M" ? <div className="msg font_red">실패(메모리초과)</div>
-        //                   : result.result === "C" ? <div className="msg font_red">실패(컴파일에러)</div>
-        //                     : result.result === "R" ? <div className="msg font_red">실패(런타임에러)</div>
-        //                       : result.result === "E" ? <div className="msg font_red">실패(서버에러)</div>
-        //                         : result.result === "P" ? <div className="msg font_red">실패(문제에러)</div>
-        //                           : <div className="msg font_red">실패</div>
-        "result": submit.result === "S" ? "성공" : submit.result === "F" ? "실패" : "---",
+        "result":
+          submit.result === "S" ? "성공"
+            : submit.result === "F" ? "실패"
+              : submit.result === "T" ? "실패(시간초과)"
+                : submit.result === "M" ? "실패(메모리초과)"
+                  : submit.result === "C" ? "실패(컴파일에러)"
+                    : submit.result === "R" ? "실패(런타임에러)"
+                      : submit.result === "E" ? "실패(서버에러)"
+                        : submit.result === "P" ? "실패(문제에러)"
+                          : "실패",
         "message": submit.message || "",
         "time": submit.avg_time ? submit.avg_time + "초" : "",
         "space": submit.avg_memory ? submit.avg_memory + "MB" : "",
