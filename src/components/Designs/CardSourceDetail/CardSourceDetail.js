@@ -1943,7 +1943,7 @@ class CodingContent extends Component {
         </div>
 
         {this.state.type === "FILE" &&
-          <FileController item={this.state} getValue={this.returnData} />}
+          <FileController accept=".py, .pyc, .pyo, .py, .cpp, .h, .hpp" item={this.state} getValue={this.returnData} />}
 
       </ControllerWrap2>
     );
