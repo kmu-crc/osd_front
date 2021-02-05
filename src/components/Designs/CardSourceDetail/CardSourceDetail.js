@@ -556,6 +556,7 @@ const EditorBottonWrapper = styled.div`
       }
     }
 `;
+
 class CardSourceDetail extends Component {
   constructor(props) {
     super(props);
@@ -1459,11 +1460,7 @@ class CardSourceDetail extends Component {
                     </span>
                     : (item.type === "FILE" && item.extension === "pdf") ?
                       <React.Fragment>
-                        {/* <a className="iconWrap" href={item.content} download={item.file_name} > */}
-                        {/* <FileIcon type={item.data_type} extension={item.extension} /> */}
-                        {/* <span className="LinkFileName">{item.file_name}</span> */}
-                        {/* </a> */}
-                        <PdfViewer pdf={item.content} height={true} />
+                        <PdfViewer pdf={item.content} height={true}/>
                       </React.Fragment>
 
                       : (item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video") ?
