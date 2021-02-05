@@ -1049,7 +1049,7 @@ class CardSourceDetail extends Component {
         })
       }).then(async () => {
         await this.setState({ loading: true, });
-        let ntry = 5;
+        let ntry = 10;
         fetch(`${host}/design/problem/submit`, {
           headers: {
             'Content-Type': 'application/json',
@@ -1085,7 +1085,7 @@ class CardSourceDetail extends Component {
                     return;
                   });
                 if (ntry-- > 0)
-                  setTimeout(check, 1000);
+                  setTimeout(check, 1500);
               };
               check();
             } else {
@@ -1389,12 +1389,8 @@ class CardSourceDetail extends Component {
                   //   editorProps={{ $blockScrolling: true }} />
                   :
                   <SubmitLogContainer
-                    user_id=
-                    {
-                      this.state.item_user
-                      // this.props.userInfo && this.props.userInfo.uid
-                    }
-                    content_id={this.props.uid}
+                    user_id={this.state.item_user}
+                    content_id={item_uid}
                   />}
               </div>
             </div>
@@ -1598,7 +1594,7 @@ class CardSourceDetail extends Component {
                                   </div>
                                 </ProblemBox>
 
-                                <div style={{ margin: "0px", marginBottom: "15px", marginTop: "15px", }}>
+                                {/* <div style={{ margin: "0px", marginBottom: "15px", marginTop: "15px", }}>
                                   <h3>최근에 제출한 코드</h3>
                                   {permission === "LOG SUBMIT" || permission === "LOG"
                                     ? <div>
@@ -1607,7 +1603,7 @@ class CardSourceDetail extends Component {
                                     : <div style={{ width: "100%", height: "250px", background: "#707070", }}>
                                       <span style={{ color: "white", width: "max-content", padding: "10px", display: "flex" }}>작성자만 볼 수 있습니다.</span>
                                     </div>}
-                                </div>
+                                </div> */}
 
                                 <div
                                   onClick={async () => {
@@ -1636,7 +1632,7 @@ class CardSourceDetail extends Component {
                                       backgroundColor:
                                         permission == "LOG" || permission === "LOG SUBMIT" ? "red" : "gray",
                                     }}>
-                                    답안 제출하기
+                                    문제 제출하기
                                 </p>
                                 </div>
 
@@ -1989,6 +1985,7 @@ class SubmitLogContainer extends React.Component {
   componentDidMount() {
     this.setState({ loading: true });
     const { user_id, content_id } = this.props;
+    console.log("submit log container : ", this.props);
     if (user_id) {
       this.get_submit_list(user_id, content_id);
     } else {
