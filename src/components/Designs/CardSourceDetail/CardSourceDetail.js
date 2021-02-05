@@ -1581,22 +1581,22 @@ class CardSourceDetail extends Component {
                                   <div className="problemBox">
                                     <div className="board">
                                       {/* {item.content && IsJsonString(item.content) && JSON.parse(item.content).cotents && */}
-                                      {/* {item.content && <PdfViewer pdf={JSON.parse(item.content).contents} />} */}
+                                      {item.content && <PdfViewer pdf={JSON.parse(item.content).contents} />}
                                       {/* {item.content && JSON.parse(item.content).contents} */}
                                     </div>
                                   </div>
                                 </ProblemBox>
 
-                                <div style={{ margin: "0px", marginBottom: "15px", marginTop: "15px", }}>
+                                {/* <div style={{ margin: "0px", marginBottom: "15px", marginTop: "15px", }}>
                                   <h3>최근에 제출한 코드</h3>
                                   {permission === "LOG SUBMIT" || permission === "LOG"
                                     ? <div>
-                                      {/* <span>{JSON.parse(item.content).id}</span> */}
+                                      <span>{JSON.parse(item.content).id}</span>
                                     </div>
                                     : <div style={{ width: "100%", height: "250px", background: "#707070", }}>
                                       <span style={{ color: "white", width: "max-content", padding: "10px", display: "flex" }}>작성자만 볼 수 있습니다.</span>
                                     </div>}
-                                </div>
+                                </div> */}
 
                                 <div
                                   onClick={async () => {
