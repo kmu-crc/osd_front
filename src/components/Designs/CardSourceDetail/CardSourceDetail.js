@@ -1113,7 +1113,8 @@ class CardSourceDetail extends Component {
     let __code = result && result.code && result.code.replaceAll("\n", "<br/>");
     __code = __code && __code.replaceAll("   ", "&emsp;");
     let datalist = [];
-
+    const answer = result&&JSON.parse(result.answer);
+    console.log("result",result);
     return (<div id="card-source-detail-root-node">
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
         {loading ? <Loading /> : null}
@@ -1214,9 +1215,22 @@ class CardSourceDetail extends Component {
                     onClick={() => { this.setState({ mySource: !this.state.mySource }) }}
                   >{this.state.mySource == false ? "내가 제출한 소스보기∧" : "내가 제출한 소스보기∨"}</div>
                   {this.state.mySource == true ?
-                    <div className="codeBox" dangerouslySetInnerHTML={{ __html: __code && __code.substring(0, 1000) }}>
-                      {/* {result.code} */}
-                    </div>
+                    answer&&answer.length>0?answer.map((item,index)=>{
+                      const file_name = item.file_name;
+                      let replace1 = item.code.replaceAll("\n", "<br/>");
+                      replace1 = replace1.replaceAll("/\n/g", "<br/>");
+                      replace1 = replace1.replaceAll("   ", "&emsp;");
+                      
+                      return(
+                        <div style={{marginTop:"20px"}}>
+                          <h3>{file_name}</h3>
+                          <div dangerouslySetInnerHTML={{ __html: replace1}}/>
+                        </div>
+                      );
+                    }):null
+                    // <div className="codeBox" dangerouslySetInnerHTML={{ __html: __code}}>
+                    //   {/* {result.code} */}
+                    // </div>
                     : null
                   }
                 </div>
@@ -1605,6 +1619,7 @@ class CardSourceDetail extends Component {
                                     if (permission === "LOG SUBMIT" || permission === "LOG") {
                                       this.setState({ item: JSON.parse(item.content), item_uid: item.uid, item_user: item.user_id, tab: item.user_id === this.props.userInfo.uid ? "code" : "log" });
                                       this.setState({ submit: true });
+                                      this.setState({coding:[]});
                                     } else {
                                       await alert("해당문제의 제출 권한이 없습니다.");
                                     }
@@ -1938,7 +1953,7 @@ class CodingContent extends Component {
         </div>
 
         {this.state.type === "FILE" &&
-          <FileController item={this.state} getValue={this.returnData} />}
+          <FileController accept=".py, .pyc, .pyo, .py, .cpp, .h, .hpp" item={this.state} getValue={this.returnData} />}
 
       </ControllerWrap2>
     );

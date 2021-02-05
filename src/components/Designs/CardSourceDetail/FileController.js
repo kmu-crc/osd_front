@@ -255,6 +255,7 @@ class FileController extends Component {
             name="source"
             onChange={this.onChangeValue}
             ref={ref => (this.input = ref)}
+            accept={this.props.accept==null?null:this.props.accept}
           />
           <span></span>
         </File>
