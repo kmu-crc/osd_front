@@ -1374,12 +1374,8 @@ class CardSourceDetail extends Component {
                   //   editorProps={{ $blockScrolling: true }} />
                   :
                   <SubmitLogContainer
-                    user_id=
-                    {
-                      this.state.item_user
-                      // this.props.userInfo && this.props.userInfo.uid
-                    }
-                    content_id={this.props.uid}
+                    user_id={this.state.item_user}
+                    content_id={item_uid}
                   />}
               </div>
             </div>
@@ -1977,6 +1973,7 @@ class SubmitLogContainer extends React.Component {
   componentDidMount() {
     this.setState({ loading: true });
     const { user_id, content_id } = this.props;
+    console.log("submit log container : ", this.props);
     if (user_id) {
       this.get_submit_list(user_id, content_id);
     } else {
