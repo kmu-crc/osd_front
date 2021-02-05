@@ -1048,7 +1048,7 @@ class CardSourceDetail extends Component {
         })
       }).then(async () => {
         await this.setState({ loading: true, });
-        let ntry = 5;
+        let ntry = 10;
         fetch(`${host}/design/problem/submit`, {
           headers: {
             'Content-Type': 'application/json',
@@ -1084,7 +1084,7 @@ class CardSourceDetail extends Component {
                     return;
                   });
                 if (ntry-- > 0)
-                  setTimeout(check, 1000);
+                  setTimeout(check, 1500);
               };
               check();
             } else {
@@ -1581,7 +1581,7 @@ class CardSourceDetail extends Component {
                                   <div className="problemBox">
                                     <div className="board">
                                       {/* {item.content && IsJsonString(item.content) && JSON.parse(item.content).cotents && */}
-                                      {item.content && <PdfViewer pdf={JSON.parse(item.content).contents} />}
+                                      {/* {item.content && <PdfViewer pdf={JSON.parse(item.content).contents} />} */}
                                       {/* {item.content && JSON.parse(item.content).contents} */}
                                     </div>
                                   </div>
@@ -1591,7 +1591,7 @@ class CardSourceDetail extends Component {
                                   <h3>최근에 제출한 코드</h3>
                                   {permission === "LOG SUBMIT" || permission === "LOG"
                                     ? <div>
-                                      <span>{JSON.parse(item.content).id}</span>
+                                      {/* <span>{JSON.parse(item.content).id}</span> */}
                                     </div>
                                     : <div style={{ width: "100%", height: "250px", background: "#707070", }}>
                                       <span style={{ color: "white", width: "max-content", padding: "10px", display: "flex" }}>작성자만 볼 수 있습니다.</span>
