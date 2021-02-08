@@ -127,7 +127,7 @@ const initialState = {
     ProblemList:{status:"INIT"},
     ProblemDetail:{status:"INIT"},
     UpdateAnswer:{status:"INIT"},
-    status: { DesignDetailStepCard: {}, DesignDetailStep: [], allData: null, content: [], origin: [], ProblemList:[],}
+    status: { DesignDetailStepCard: {}, DesignDetailStep: [], allData: null, content: [], origin: [], ProblemList:[],ProblemCount:0}
 }
 
 export function DesignCard(state, action) {
@@ -234,7 +234,7 @@ export function DesignCard(state, action) {
             console.log(action.data);
                 return update(state,{
                     ProblemList:{$set:"SUCESS"},
-                    status:{ProblemList: { $set: action.data } }
+                    status:{ProblemList: { $set: action.data.results }, ProblemCount:{$set:action.data.count} }
             })
         case GET_PROBLEM_LIST_FAILURE:
                 return update(state,{
@@ -620,8 +620,8 @@ export const UpdateCardSourcesRequest = (data, token, id) => {
 }
 
 /////// problem
-export const getProblemListRequest = ()=>{
-    const url = `${host}/design/problem/list`;
+export const getProblemListRequest = (page)=>{
+    const url = `${host}/design/problem/list/${page}`;
     return (dispatch) => {
         dispatch(GetProblemList())
         return fetch(`${url}`, {
@@ -630,7 +630,9 @@ export const getProblemListRequest = ()=>{
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            return dispatch(GetProblemListSuccess(data.results))
+            console.log(data);
+            // return dispatch(GetProblemListSuccess(data.results))
+            return dispatch(GetProblemListSuccess(data))
         }).catch((error) => {
             console.error("err", error)
             return dispatch(GetProblemListFailure(error))

@@ -9,6 +9,7 @@ import Cross from "components/Commons/Cross";
 
 const ModalBox = styled(Modal)`
   width:938px;
+  height:max-content;
   padding:57px 63px 57px 63px;
   position:relative;
   .closeBox{
@@ -31,10 +32,10 @@ class ProblemContainer extends Component {
     super(props);
   }
   componentDidMount() {
-    this.props.getProblemListRequest();
+    this.props.getProblemListRequest(1);
   }
   render() {
-    console.log(this.props.item)
+    console.log(this.props)
     return (
       <React.Fragment>
         {
@@ -58,6 +59,7 @@ class ProblemContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     ProblemList: state.DesignCard.status.ProblemList,
+    ProblemCount: state.DesignCard.status.ProblemCount,
     ProblemDetail: state.DesignCard.status.ProblemDetail,
     token: state.Authentication.status.token,
   };
@@ -65,8 +67,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getProblemListRequest: () => {
-      return dispatch(getProblemListRequest());
+    getProblemListRequest: (page) => {
+      return dispatch(getProblemListRequest(page));
     },
     getProblemDetailRequest: (uid) => {
       return dispatch(getProblemDetailRequest(uid));

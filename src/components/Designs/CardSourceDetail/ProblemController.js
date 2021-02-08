@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { Modal } from "semantic-ui-react";
 import Cross from "components/Commons/Cross";
 import { PdfViewer } from './PDFviewer';
+import { alert } from "components/Commons/Alert/Alert";
+import { Pagination } from 'semantic-ui-react';
 
 
 const ModalBox = styled(Modal)`
@@ -157,11 +159,13 @@ class ProblemController extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false, selectNum: null, contents: null, contentsString: "",
+      show: false, selectNum: null, contents: null, contentsString: "",page:1,
     }
     // this.handleShowModal = this.handleShowModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleSelectProblem = this.handleSelectProblem.bind(this);
+    this.handleAddProblem = this.handleAddProblem.bind(this);
+    this.selectPage = this.selectPage.bind(this);
   }
   componentDidMount() {
     try {
@@ -176,6 +180,10 @@ class ProblemController extends Component {
       this.setState({ selectNum: null, contents: null });
     }
   }
+  selectPage=(e,{activePage})=>{
+    this.setState({page:activePage});
+    this.props.getProblemListRequest(activePage);
+  }
   handleSelectProblem = async (uid) => {
     await this.props.getProblemDetailRequest(uid).then(async() => {
       let { item } = this.props;
@@ -189,10 +197,23 @@ class ProblemController extends Component {
         contents: ProblemDetail.contents && ProblemDetail.contents
       })
       await this.setState({ selectNum: uid, show: false });
-      await this.props.getValue(item);
-      this.props.openModal(false);
+      // await this.props.getValue(item);
+      // this.props.openModal(false);
     })
 
+  }
+  handleAddProblem = async (uid) =>{
+    let { item } = this.props;
+    const {ProblemDetail} = this.props;
+    item.content = JSON.stringify({
+      id: ProblemDetail && ProblemDetail.id,
+      problem_type: ProblemDetail && ProblemDetail.problem_type,
+      time: ProblemDetail.contents && ProblemDetail.time,
+      name: ProblemDetail.contents && ProblemDetail.name,
+      contents: ProblemDetail.contents && ProblemDetail.contents
+    })
+      await this.props.getValue(item);
+      this.props.openModal(false);
   }
   // handleShowModal = async (uid) => {
   //   // this.props.UpdateAnswerRequest(this.props.token,{user_id:1028,problem_id:3,language_id:1,order:2,code:"#include<stdio.h>",result:true});
@@ -211,7 +232,7 @@ class ProblemController extends Component {
   }
   render() {
     const { ProblemList } = this.props;
-    console.log(this.state);
+    console.log(ProblemList);
     return (
       <React.Fragment>
         {/* <ModalBox open={this.state.show}>
@@ -258,13 +279,26 @@ class ProblemController extends Component {
                 ProblemList.length > 0 &&
                 ProblemList.map((item, index) => {
                   return (
-                    <div className="contentsBox" key={index}>
+                    item.id == this.state.selectNum ?
+                    <div className="contentsBox" style={{backgroundColor:"#FFE4E1"}} key={index}>
                       <div className="td" styled={{ width: "25%" }}>{item.id}</div>
                       <div className="td cursor_pointer" styled={{ width: "75%" }} onClick={() => this.handleSelectProblem(item.id)}>{item.name}</div>
                     </div>
+                    :
+                    <div className="contentsBox"  key={index}>
+                    <div className="td" styled={{ width: "25%" }}>{item.id}</div>
+                    <div className="td cursor_pointer" styled={{ width: "75%" }} onClick={() => this.handleSelectProblem(item.id)}>{item.name}</div>
+                  </div>
                   );
                 })}
               <SelectBox>
+              <Pagination activePage={this.state.page} defaultActivePage={1} totalPages={this.props.ProblemCount/30} 
+              onPageChange={this.selectPage}/>
+              </SelectBox>
+              <SelectBox>
+                <div className="selecticon" onClick={async () => {
+                  this.state.selectNum == null? await alert("문제를 선택하세요", "확인"):this.handleAddProblem(this.state.selectNum)
+                }}>등록</div>
                 <div className="cancel" onClick={() => this.props.onCloseModal()}>취소</div>
               </SelectBox>
             </React.Fragment>
