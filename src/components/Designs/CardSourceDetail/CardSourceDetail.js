@@ -1030,8 +1030,8 @@ class CardSourceDetail extends Component {
             const res = fileReader.result;
             data.file_name = item.file[0].name;
             data.code = res;
+            console.log(fileReader);
             resolve(data);
-            console.log(item.file[0]);
           }
           fileReader.readAsText(item.file[0], "UTF-8")
         }
@@ -1115,7 +1115,7 @@ class CardSourceDetail extends Component {
     __code = __code && __code.replaceAll("   ", "&emsp;");
     let datalist = [];
     const answer = result&&JSON.parse(result.answer);
-    console.log("result",result);
+    console.log("result",this.props);
     return (<div id="card-source-detail-root-node">
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
         {loading ? <Loading /> : null}
@@ -1210,9 +1210,9 @@ class CardSourceDetail extends Component {
                 <div className="content_box">
                   <div className="msg">{result.message}</div>
                 </div>
-                <div className="content_box" style={{ display: "flex", flexDirection: "column" }}>
+                {/* <div className="content_box" style={{ display: "flex", flexDirection: "column" }}> */}
 
-                  <div className="name" style={{ cursor: "pointer" }}
+                  {/* <div className="name" style={{ cursor: "pointer" }}
                     onClick={() => { this.setState({ mySource: !this.state.mySource }) }}
                   >{this.state.mySource == false ? "내가 제출한 소스보기∧" : "내가 제출한 소스보기∨"}</div>
                   {this.state.mySource == true ?
@@ -1229,15 +1229,12 @@ class CardSourceDetail extends Component {
                         </div>
                       );
                     }):null
-                    // <div className="codeBox" dangerouslySetInnerHTML={{ __html: __code}}>
-                    //   {/* {result.code} */}
-                    // </div>
                     : null
-                  }
-                </div>
+                  } */}
+                {/* </div> */}
                 <div className="button-wrapper">
                   <div className="close"
-                    onClick={() => this.setState({ result: false, loading: false })} >확인</div>
+                    onClick={() => this.setState({ result: false, submit:false, loading: false })} >확인</div>
                 </div>
               </SubmitResultModal> : null}
 
@@ -1364,6 +1361,7 @@ class CardSourceDetail extends Component {
                       }
                       )}
                     <CodingContent
+                      categoryType={this.props.DesignDetail&&this.props.DesignDetail.category_level3}
                       getValue={this.onAddCoding}
                       order={coding.length} />
                   </React.Fragment>
@@ -1394,7 +1392,7 @@ class CardSourceDetail extends Component {
                       this.state.item_user
                       // this.props.userInfo && this.props.userInfo.uid
                     }
-                    content_id={this.props.uid}
+                    content_id={item_uid}
                   />}
               </div>
             </div>
@@ -1921,7 +1919,7 @@ class CodingContent extends Component {
         this.setState({ initClick: false });
       }, 100);
     } else {
-      await this.setState({ type, order: this.props.order, content: "" });
+      await this.setState({ type, order: this.props.order, content: "",name:`__main${this.props.order==0?"":this.props.order}.cpp` });
       this.returnData();
     }
   }
@@ -1950,7 +1948,7 @@ class CodingContent extends Component {
         </div>
 
         {this.state.type === "FILE" &&
-          <FileController accept=".py, .pyc, .pyo, .py, .cpp, .h, .hpp" item={this.state} getValue={this.returnData} />}
+          <FileController accept={this.props.categoryType == "1"?".c, .cpp, .h":this.props.categoryType=="2"?".py":null} item={this.state} getValue={this.returnData} />}
 
       </ControllerWrap2>
     );
@@ -1980,6 +1978,7 @@ class SubmitLogContainer extends React.Component {
         .then(res =>
           res.json())
         .then(async res => {
+          console.log(res)
           await this.setState({ MySubmitList: res && res.MySubmitList || [] });
           resolve(true);
         })
@@ -1997,6 +1996,7 @@ class SubmitLogContainer extends React.Component {
     this.setState({ loading: false });
   }
   render() {
+    console.log("-----------",this.props)
     const { loading, MySubmitList } = this.state;
     const AddButton = () => {
       return (
@@ -2004,7 +2004,9 @@ class SubmitLogContainer extends React.Component {
       );
     }
     const data = MySubmitList && MySubmitList.length > 0 && MySubmitList.map((submit, index) => {
-      const row = {
+    // console.log(submit && new Date(submit.create_date).toLocaleDateString('ko-KR').substring(0, new Date(submit.create_date).toLocaleDateString('ko-KR').length - 1));
+    const timecheck = submit && new Date(submit.create_date).toLocaleDateString('ko-KR').substring(0, new Date(submit.create_date).toLocaleDateString('ko-KR').length - 1);  
+    const row = {
         "key": index,
         "result":
           submit.result === "S" ? "성공"
@@ -2016,10 +2018,10 @@ class SubmitLogContainer extends React.Component {
                       : submit.result === "E" ? "실패(서버에러)"
                         : submit.result === "P" ? "실패(문제에러)"
                           : "실패",
-        "message": submit.message || "",
-        "time": submit.avg_time ? submit.avg_time + "초" : "",
-        "space": submit.avg_memory ? submit.avg_memory + "MB" : "",
-        "submit-time": submit.create_data ? DateFormat(submit.create_date) : "",
+        "message": submit.result=="S"?"성공": submit.message || "",
+        // "time": submit.avg_time ? submit.avg_time + "초" : "",
+        // "space": submit.avg_memory ? submit.avg_memory + "kb" : "",
+        "submit-time": timecheck+"",
         "code": submit.answer || "",
       }
       return row;
@@ -2037,18 +2039,18 @@ class SubmitLogContainer extends React.Component {
         key: "result",
         width: 100,
       },
-      {
-        title: "소요시간",
-        dataIndex: "time",
-        key: "time",
-        width: 110,
-      },
-      {
-        title: "사용용량",
-        dataIndex: "space",
-        key: "space",
-        width: 110,
-      },
+      // {
+      //   title: "소요시간",
+      //   dataIndex: "time",
+      //   key: "time",
+      //   width: 110,
+      // },
+      // {
+      //   title: "사용용량",
+      //   dataIndex: "space",
+      //   key: "space",
+      //   width: 110,
+      // },
       {
         title: "제출시간",
         dataIndex: "submit-time",
@@ -2070,7 +2072,7 @@ class SubmitLogContainer extends React.Component {
               let str = "";
               const list = answer && answer.length > 0 ? answer.map((item, index) => {
                 console.log(item);
-                str += '<React.Fragment><h3>' + item.file_name + '</h3><div>' + item.content + '</div></React.Fragment>'
+                str += '<React.Fragment><h3>' + item.file_name + '</h3><div>' + item.code + '</div></React.Fragment>'
                 // return(
                 // <React.Fragment>
                 // <div style={{width:"100%",backgroundColor:"#EFEFEF",padding:"5px"}}>{item.file_name}</div>
@@ -2086,7 +2088,7 @@ class SubmitLogContainer extends React.Component {
               // console.log(replace1);
               code.document.write(replace1);
             }}>
-            코드보기
+            소스보기
           </div>
         )
       }

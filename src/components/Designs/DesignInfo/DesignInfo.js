@@ -24,6 +24,13 @@ import vChatIcon from "source/video-chat-icon.png";
 import Socket from "modules/Socket"
 import Loading from 'components/Commons/Loading';
 
+import CCL1 from "source/ccl-1.png";
+import CCL2 from "source/ccl-2.png";
+import CCL3 from "source/ccl-3.png";
+import CCL4 from "source/ccl-4.png";
+import CCL5 from "source/ccl-5.png";
+
+
 // new style
 const Thumbnail = styled.div`
     .fork-mark {
@@ -98,8 +105,14 @@ const MainBox = styled.div`
     .margin_bottom{margin-bottom:10px;}
     .margin_bottom_small{margin-bottom:5px;}
     .alignItem_end{align-items:flex-end;}
+    .justify_end{justify-content:flex-end;}
     .line_height{line-height:20px;}
     .position_relative{position:relative;}
+    .mini_icon{
+        width:20px;
+        height:20px;
+        margin-right:3px;
+    }
     .transparent_btn{
         width: max-content;
         margin-top:15px;
@@ -993,7 +1006,7 @@ class DesignInfo extends Component {
         const { isMyDesign, editor, DesignDetail, Count, like, WaitingList, CountDesignComment } = this.props
         const { w } = this.state;
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg
-
+        console.log(DesignDetail);
         const MemberModal = () => {
             return (
                 <DesignMemberModalContainer open={isMyDesign && this.state.memberList} closeOnDimmerClick={false} onClose={() => this.setState({ memberList: false })}>
@@ -1201,8 +1214,13 @@ class DesignInfo extends Component {
 
                     <ThreeSideBox>
                         <div className="content_box">
+                            {DesignDetail&&DesignDetail.is_modify == true?
                             <div className="cursor_pointer font_red font_bold font_big"
-                                onClick={() => this.forkDesign()}>파생 디자인 생성</div>
+                            onClick={() => this.forkDesign()}>파생 디자인 생성</div>
+                            :
+                            <div className="cursor_pointer font_red font_bold font_big"/>
+
+                            }                           
                             {isMyDesign === false &&
                                 <div className="flexBox margin_top">
                                     {editor === false ?
@@ -1228,7 +1246,15 @@ class DesignInfo extends Component {
                                 </div>}
                         </div>
                         <div className="content_box">
-                            {/* <div className="update-time">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div> */}
+                            <div className="justify_end flexBox">
+                            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                                <img className="mini_icon" src={CCL2}/>
+                                <img className="mini_icon" src={CCL3}/>
+                                {DesignDetail&&DesignDetail.is_modify==false?<img className="mini_icon" src={CCL4}/>:null}
+                                {DesignDetail&&DesignDetail.is_commercial==false?<img className="mini_icon" src={CCL5}/>:null}
+                                {/* <img className="mini_icon" src={CCL1}/> */}
+                                </a>
+                            </div>
                             <div className="_txt font_midBig font_fit margin_bottom">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
                             <div className="_txt font_midBig font_fit">등록 일자 {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
                         </div>

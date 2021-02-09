@@ -533,6 +533,9 @@ margin-top:22px;
   .textLabel{
     vertical-align:top;
   }
+  .disabled{
+    color:#9e9e9e;
+  }
 }
 
 @media only screen and (min-width : 780px) and (max-width:1440px) {
@@ -754,7 +757,7 @@ class ModifyDesign extends Component {
   }
   checkFinishAdditional = async () => {
     const { categoryLevel1, alone, members, license1, license2, license3 } = this.state;
-    if (categoryLevel1 != null && ((alone && members.length === 0) || (!alone && members.length > 0)) && license1 && license2 && license3) {
+    if (categoryLevel1 != null && ((alone && members.length === 0) || (!alone && members.length > 0))) {
       await this.setState({ additional: true });
     } else {
       await this.setState({ additional: false });
@@ -1030,15 +1033,15 @@ class ModifyDesign extends Component {
 
                   {/* LICENSE */}
                   <LicenseBox>
-                    <div className="additionalTitle">라이센스<sup style={{ color: "red" }}>*</sup></div>
+                    <div className="additionalTitle">라이센스</div>
                     <div className="licenseList">
                       <div className="licenseItem">
                         <div><CheckBox2 onChange={this.onCheckedLicense01} checked={this.state.license1 ? true : false} type="checkbox" /></div>
                         <div className="textLabel">상업적으로 이용이 가능합니다</div>
                       </div>
                       <div className="licenseItem">
-                        <div><CheckBox2 onChange={this.onCheckedLicense02} checked={this.state.license2 ? true : false} type="checkbox" /></div>
-                        <div className="textLabel">원작자를 표시합니다</div></div>
+                        <div><CheckBox2 disabled={true} onChange={this.onCheckedLicense02} checked={this.state.license2 ? true : false} type="checkbox" /></div>
+                        <div className="textLabel disabled">원작자를 표시합니다</div></div>
                       <div className="licenseItem">
                         <div><CheckBox2 onChange={this.onCheckedLicense03} checked={this.state.license3 ? true : false} type="checkbox" /></div>
                         <div className="textLabel">추후에 수정이 가능합니다</div></div>
