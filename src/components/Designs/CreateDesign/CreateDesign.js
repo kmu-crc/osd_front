@@ -525,6 +525,9 @@ const LicenseBox = styled.div`
   margin-left: 35px;
   vertical-align: top;
   }
+  .disabled{
+    color:#9e9e9e;
+  }
   @media only screen and (min-width : 780px) and (max-width:1440px) {
   flex-direction:column;
   }
@@ -794,14 +797,15 @@ class CreateDesign extends Component {
       is_project: 0, info_dialog: false, contents: [],
       crop: { unit: "%", width: 50, aspect: 1 },
       loading: false, designId: null, isMyDesign: false, editor: false,
-      basic: false, additional: false, content: false, step: 1,
+      basic: false, additional: false, content: false, step: 0,
       showSearch: false,
       title: "",
       thumbnail: noimg, thumbnail_name: "", cropper: false, is_rectangle: false,
-      categoryLevel1: this.props.userInfo.category1 || null,
+      // categoryLevel1: this.props.userInfo.category1 || null,
+      categoryLevel1: null,
       categoryLevel2: null, categoryLevel3: null,
       alone: true, members: [], addmem: [], delmem: [],
-      license1: true, license2: true, license3: true,
+      license1: false, license2: true, license3: false,
       type: null, template: null,is_problem:false,
     };
     this.addMember = this.addMember.bind(this);
@@ -918,7 +922,7 @@ class CreateDesign extends Component {
   };
   checkFinishAdditional = async () => {
     const { categoryLevel1, alone, members, license1, license2, license3 } = this.state;
-    if (categoryLevel1 != null && ((alone && members.length === 0) || (!alone && members.length > 0)) && license1 && license2 && license3) {
+    if (categoryLevel1 != null && ((alone && members.length === 0) || (!alone && members.length > 0)) ) {
       await this.setState({ additional: true, content: true });
     } else {
       await this.setState({ additional: false });
@@ -1194,7 +1198,7 @@ class CreateDesign extends Component {
                 onClick={() =>
                   this.state.basic ?
                     this.setState({ step: 1 }) :
-                    alert("기본 정보의 필수항목(*로 표시)을 입력하셔야 합니다.")}
+                    alert("기본 정보의 필수항목(*)을 입력하셔야 합니다.")}
               >
                 <div className="MenuText">
                   {scrollmenu[1].txt}</div>
@@ -1206,7 +1210,7 @@ class CreateDesign extends Component {
                 onClick={() =>
                   this.state.additional ?
                     this.setState({ step: 2 }) :
-                    alert("부가 정보의 필수항목(*로 표시)을 입력하셔야 합니다.")}
+                    alert("부가 정보의 필수항목(*)을 입력하셔야 합니다.")}
               >
                 <div className="MenuText">
                   {scrollmenu[2].txt}</div>
@@ -1355,10 +1359,10 @@ class CreateDesign extends Component {
                 <HRline />
                 {/* LICENSE */}
                 <LicenseBox>
-                  <div className="additionalTitle">라이센스<sup style={{ color: "red" }}>*</sup></div>
+                  <div className="additionalTitle">라이센스</div>
                   <div className="licenseList">
                     <div className="licenseItem"><CheckBox2 checked={this.state.license1} onChange={this.onCheckedLicense01} /><span className="textLabel">상업적으로 이용이 가능합니다</span></div>
-                    <div className="licenseItem"><CheckBox2 checked={this.state.license2} onChange={this.onCheckedLicense02} /><span className="textLabel">원작자를 표시합니다</span></div>
+                    <div className="licenseItem"><CheckBox2 disabled checked={this.state.license2} onChange={this.onCheckedLicense02} /><span className="textLabel disabled">원작자를 표시합니다</span></div>
                     <div className="licenseItem"><CheckBox2 checked={this.state.license3} onChange={this.onCheckedLicense03} /><span className="textLabel">추후에 수정이 가능합니다</span></div>
                   </div>
                 </LicenseBox>
