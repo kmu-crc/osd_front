@@ -246,9 +246,7 @@ class ProblemController extends Component {
     })
   }
   handleCloseModal = async () => {
-    await this.setState({ show: false, selectNum: null, contents: null });
-    await this.props.onCloseModal();
-
+    this.setState({show:false});
   }
   render() {
     const { ProblemList } = this.props;
@@ -295,13 +293,13 @@ class ProblemController extends Component {
                   return (
                     item.id == this.state.selectNum ?
                     <div className="contentsBox" style={{backgroundColor:"#FFE4E1"}} key={index} >
-                      <div className="td one" >{item.id}</div>
+                      <div className="td one" >{30*(this.state.page-1)+index+1}</div>
                       <div className="td two cursor_pointer" onClick={() => this.handleSelectProblem(item.id)}>{item.name}</div>
                       <div className="td three cursor_pointer" onClick={() => this.handleShowModal(item.id)}>보기</div>
                     </div>
                     :
                     <div className="contentsBox"  key={index}>
-                    <div className="td one" >{item.id}</div>
+                    <div className="td one" >{30*(this.state.page-1)+index+1}</div>
                     <div className="td two cursor_pointer"   onClick={() => this.handleSelectProblem(item.id)}>{item.name}</div>
                     <div className="td three cursor_pointer" onClick={() => this.handleShowModal(item.id)}>보기</div>
                   </div>
@@ -315,7 +313,10 @@ class ProblemController extends Component {
                 <div className="selecticon" onClick={async () => {
                   this.state.selectNum == null? await alert("문제를 선택하세요", "확인"):this.handleAddProblem(this.state.selectNum)
                 }}>등록</div>
-                <div className="cancel" onClick={this.handleCloseModal}>취소</div>
+                <div className="cancel" onClick={()=>{
+                  this.setState({selectNum:null,contents:""});
+                  this.props.onCloseModal();
+                }}>취소</div>
               </SelectBox>
             </React.Fragment>
 

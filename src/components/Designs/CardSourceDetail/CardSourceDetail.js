@@ -1846,7 +1846,7 @@ const TableWrapper = styled.div`
       .rc-table-cell{
         padding:10px 5px;
         background-color:#FAFAFA;
-        font-size:18px;
+        font-size:14px;
       }
     }
   }
@@ -2006,8 +2006,16 @@ class SubmitLogContainer extends React.Component {
       );
     }
     const data = MySubmitList && MySubmitList.length > 0 && MySubmitList.map((submit, index) => {
-    // console.log(submit && new Date(submit.create_date).toLocaleDateString('ko-KR').substring(0, new Date(submit.create_date).toLocaleDateString('ko-KR').length - 1));
-    const timecheck = submit && new Date(submit.create_date).toLocaleDateString('ko-KR').substring(0, new Date(submit.create_date).toLocaleDateString('ko-KR').length - 1);  
+    console.log(submit&&new Date(submit.create_date));
+    const create_Date = submit && new Date(submit.create_date); 
+    const timecheck = create_Date == null? null
+    :create_Date.getFullYear().toString().substr(2,2)+":"
+    +((create_Date.getMonth()+1)<10?"0"+(create_Date.getMonth()+1):(create_Date.getMonth()+1))+":"
+    +(create_Date.getDate()<10?"0"+create_Date.getDate():create_Date.getDate())+":"
+    +(create_Date.getHours()<10?"0"+create_Date.getHours():create_Date.getHours())+":"
+    +(create_Date.getMinutes()<10?"0"+create_Date.getMinutes():create_Date.getMinutes());
+    console.log(timecheck)
+    
     const row = {
         "key": index,
         "result":

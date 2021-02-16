@@ -14,7 +14,7 @@ import { RenderZoomProps } from '@react-pdf-viewer/zoom';
 const PDFwrapper = styled.div`
   width: 100%;
   &.fixed-height {
-    height: 500px;
+    height: 750px;
   }
   background-color: #EFEFEF;
   border: 1px dashed #707070;
