@@ -35,7 +35,7 @@ class ProblemContainer extends Component {
     this.props.getProblemListRequest(1);
   }
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     return (
       <React.Fragment>
         {

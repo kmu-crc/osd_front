@@ -650,7 +650,6 @@ export const getProblemDetailRequest = (uid)=>{
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("thisthisthis?",data);
             return dispatch(GetProblemDetailSuccess(data))
         }).catch((error) => {
             console.error("err", error)

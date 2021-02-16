@@ -1115,7 +1115,7 @@ class CardSourceDetail extends Component {
     __code = __code && __code.replaceAll("   ", "&emsp;");
     let datalist = [];
     const answer = result&&JSON.parse(result.answer);
-    console.log("result",this.props);
+    // console.log("result",this.props);
     return (<div id="card-source-detail-root-node">
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
         {loading ? <Loading /> : null}
@@ -1425,7 +1425,7 @@ class CardSourceDetail extends Component {
           <ViewContent>
 
             {content.map((item, index) => {
-              console.log("content:");
+              // console.log("content:");
 
               return <div key={index + item}>
                 {(item.type === "FILE" && item.data_type === "image") ?
@@ -1693,9 +1693,9 @@ class CardSourceDetail extends Component {
                     {(item.type === "PROBLEM")
                       ? <ProblemContainer
                         open={this.state.addProblem}
-                        openModal={async (data) => {
-                          this.setState({ addProblem: data });
-                          if (data === false && item.content === "") {
+                        openModal={async (show) => {
+                          this.setState({ addProblem: show });
+                          if (show === false && item.content === "") {
                             let copyContent = [...this.state.content];
                             for (var i = 0; i < copyContent.length; i++) {
                               if (copyContent[i].type === "PROBLEM" && copyContent[i].content === "") {
@@ -1713,7 +1713,9 @@ class CardSourceDetail extends Component {
                         item={item}
                         initClick={this.state.click}
                         getValue={(data) => {
-                          this.onChangeValue(data, item.order)
+                          if(data!=null){
+                            this.onChangeValue(data, item.order)
+                          }
                         }}
                       />
                       : null}
