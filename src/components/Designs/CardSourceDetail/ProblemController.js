@@ -47,6 +47,8 @@ const ModalBox = styled(Modal)`
       padding-left:10px;
     }
   }
+
+
 `
 const SelectBox = styled.div`
   width:100%;
@@ -124,6 +126,9 @@ const Wrapper = styled.div`
     padding-bottom:12px;
     display:flex;
     background-color:#EFEFEF;
+    .one{width:20%;}
+    .two{width:70%;}
+    .three{width:10%;}
     .th{
       padding-left:20px;
       padding-right:20px;
@@ -136,11 +141,15 @@ const Wrapper = styled.div`
     }
   }
   .contentsBox{
+
     width:100%;
     padding-top:12px;
     padding-bottom:12px;
     display:flex;
     border-bottom:1px solid #D6D6D6;
+    .one{width:20%;}
+    .two{width:70%;}
+    .three{width:10%;}
     .td{
       padding-left:20px;
       padding-right:20px;
@@ -151,6 +160,9 @@ const Wrapper = styled.div`
     }
     .cursor_pointer{
       cursor:pointer;
+    }
+    &:hover{
+      background-color:#d6d6d6;
     }
   }
 `;
@@ -166,6 +178,7 @@ class ProblemController extends Component {
     this.handleSelectProblem = this.handleSelectProblem.bind(this);
     this.handleAddProblem = this.handleAddProblem.bind(this);
     this.selectPage = this.selectPage.bind(this);
+    this.handleShowModal = this.handleShowModal.bind(this);
   }
   componentDidMount() {
     try {
@@ -173,8 +186,6 @@ class ProblemController extends Component {
         this.setState({
           selectNum: JSON.parse(this.props.item.content).id,
           contents: JSON.parse(this.props.item.content) || ""
-          // url: JSON.parse(this.props.item.content).url || "",
-          // description: JSON.parse(this.props.item.content).description || ""
         });
     } catch (_) {
       this.setState({ selectNum: null, contents: null });
@@ -186,19 +197,16 @@ class ProblemController extends Component {
   }
   handleSelectProblem = async (uid) => {
     await this.props.getProblemDetailRequest(uid).then(async() => {
-      let { item } = this.props;
-      // item.content = {...this.state.contents};
-      const {ProblemDetail} = this.props;
-      item.content = JSON.stringify({
-        id: ProblemDetail && ProblemDetail.id,
-        problem_type: ProblemDetail && ProblemDetail.problem_type,
-        time: ProblemDetail.contents && ProblemDetail.time,
-        name: ProblemDetail.contents && ProblemDetail.name,
-        contents: ProblemDetail.contents && ProblemDetail.contents
-      })
+      // let { item } = this.props;
+      // const {ProblemDetail} = this.props;
+      // item.content = JSON.stringify({
+      //   id: ProblemDetail && ProblemDetail.id,
+      //   problem_type: ProblemDetail && ProblemDetail.problem_type,
+      //   time: ProblemDetail.contents && ProblemDetail.time,
+      //   name: ProblemDetail.contents && ProblemDetail.name,
+      //   contents: ProblemDetail.contents && ProblemDetail.contents
+      // })
       await this.setState({ selectNum: uid, show: false });
-      // await this.props.getValue(item);
-      // this.props.openModal(false);
     })
 
   }
@@ -227,20 +235,29 @@ class ProblemController extends Component {
   //   })
 
   // }
-  handleCloseModal = () => {
-    this.setState({ show: false });
+  handleShowModal = async (uid) => {
+    await this.props.getProblemDetailRequest(uid).then(() => {
+      const result = `ID:${this.props.ProblemDetail && this.props.ProblemDetail.id}</br>
+      TYPE:${this.props.ProblemDetail && this.props.ProblemDetail.problem_type}</br>
+      TIME:${this.props.ProblemDetail && this.props.ProblemDetail.time}</br>
+      NAME:${this.props.ProblemDetail && this.props.ProblemDetail.name}</br>
+      CONTENTS:${this.props.ProblemDetail && this.props.ProblemDetail.contents}`
+      this.setState({ show: true,selectNum: uid, contents: this.props.ProblemDetail });
+    })
+  }
+  handleCloseModal = async () => {
+    await this.setState({ show: false, selectNum: null, contents: null });
+    await this.props.onCloseModal();
+
   }
   render() {
     const { ProblemList } = this.props;
-    console.log(ProblemList);
+    console.log(this.state);
     return (
       <React.Fragment>
-        {/* <ModalBox open={this.state.show}>
+        <ModalBox open={this.state.show}>
           <div className="closeBox"> <Cross onClick={this.handleCloseModal} angle={45} color={"#707070"} weight={1} width={33} height={33} /></div>
           <ProblemBox>
-            <div className="titleBox"><div className="title_" >제목</div></div>
-            <div className="boardBox"><div className="board">{this.state.contents && this.state.contents.name}</div></div>
-            <div className="titleBox"><div className="title_" >내용</div></div>
             <div className="boardBox">
               <div className="board">
                 {this.state.contents &&
@@ -248,11 +265,7 @@ class ProblemController extends Component {
               </div>
             </div>
           </ProblemBox>
-          <SelectBox>
-            <div className="selecticon" onClick={this.handleSelectProblem}>등록</div>
-            <div className="cancel" onClick={this.handleCloseModal}>뒤로</div>
-          </SelectBox>
-        </ModalBox> */}
+        </ModalBox>
         <Wrapper>
           {this.props.open != true ?
             <React.Fragment>
@@ -271,8 +284,9 @@ class ProblemController extends Component {
             :
             <React.Fragment>
               <div className="headerBox">
-                <div className="th" styled={{ width: "25%" }}>번호</div>
-                <div className="th" styled={{ width: "75%" }}>제목</div>
+                <div className="th one">번호</div>
+                <div className="th two">제목</div>
+                <div className="th three">PDF</div>
               </div>
 
               {ProblemList &&
@@ -280,14 +294,16 @@ class ProblemController extends Component {
                 ProblemList.map((item, index) => {
                   return (
                     item.id == this.state.selectNum ?
-                    <div className="contentsBox" style={{backgroundColor:"#FFE4E1"}} key={index}>
-                      <div className="td" styled={{ width: "25%" }}>{item.id}</div>
-                      <div className="td cursor_pointer" styled={{ width: "75%" }} onClick={() => this.handleSelectProblem(item.id)}>{item.name}</div>
+                    <div className="contentsBox" style={{backgroundColor:"#FFE4E1"}} key={index} >
+                      <div className="td one" >{item.id}</div>
+                      <div className="td two cursor_pointer" onClick={() => this.handleSelectProblem(item.id)}>{item.name}</div>
+                      <div className="td three cursor_pointer" onClick={() => this.handleShowModal(item.id)}>보기</div>
                     </div>
                     :
                     <div className="contentsBox"  key={index}>
-                    <div className="td" styled={{ width: "25%" }}>{item.id}</div>
-                    <div className="td cursor_pointer" styled={{ width: "75%" }} onClick={() => this.handleSelectProblem(item.id)}>{item.name}</div>
+                    <div className="td one" >{item.id}</div>
+                    <div className="td two cursor_pointer"   onClick={() => this.handleSelectProblem(item.id)}>{item.name}</div>
+                    <div className="td three cursor_pointer" onClick={() => this.handleShowModal(item.id)}>보기</div>
                   </div>
                   );
                 })}
@@ -299,7 +315,7 @@ class ProblemController extends Component {
                 <div className="selecticon" onClick={async () => {
                   this.state.selectNum == null? await alert("문제를 선택하세요", "확인"):this.handleAddProblem(this.state.selectNum)
                 }}>등록</div>
-                <div className="cancel" onClick={() => this.props.onCloseModal()}>취소</div>
+                <div className="cancel" onClick={this.handleCloseModal}>취소</div>
               </SelectBox>
             </React.Fragment>
 
