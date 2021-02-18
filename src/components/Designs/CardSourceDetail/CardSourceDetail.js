@@ -1630,7 +1630,7 @@ class CardSourceDetail extends Component {
                                       backgroundColor:
                                         permission == "LOG" || permission === "LOG SUBMIT" ? "red" : "gray",
                                     }}>
-                                    문제 제출하기
+                                    답안 제출하기
                                 </p>
                                 </div>
 
