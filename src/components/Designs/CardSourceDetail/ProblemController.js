@@ -6,6 +6,7 @@ import Cross from "components/Commons/Cross";
 import { PdfViewer } from './PDFviewer';
 import { alert } from "components/Commons/Alert/Alert";
 import { Pagination } from 'semantic-ui-react';
+import { Dropdown } from "semantic-ui-react";
 
 
 const ModalBox = styled(Modal)`
@@ -107,9 +108,20 @@ const ProblemBox = styled.div`
     }
   }
 `
+const CategoryDropDown = styled(Dropdown)`
+// width:410px;
+// height:56px;     
+// border-radius:5px;
+// font-size:20px;
+// background-color:#EFEFEF !important;
+// margin-right:30px;
+`
 const Wrapper = styled.div`
   width:100%;
   height:max-content;
+  .category_box{
+    width:100%;
+  }
   .pagena{
     margin-top:66px;
   }
@@ -179,6 +191,7 @@ class ProblemController extends Component {
     this.handleAddProblem = this.handleAddProblem.bind(this);
     this.selectPage = this.selectPage.bind(this);
     this.handleShowModal = this.handleShowModal.bind(this);
+    this.handleChangeCategory=  this.handleChangeCategory.bind(this);
   }
   componentDidMount() {
     try {
@@ -194,6 +207,9 @@ class ProblemController extends Component {
   selectPage=(e,{activePage})=>{
     this.setState({page:activePage});
     this.props.getProblemListRequest(activePage);
+  }
+  handleChangeCategory = async(event, { value })=>{
+    await this.props.getProblemListFilterRequest({value}.value);
   }
   handleSelectProblem = async (uid) => {
     await this.props.getProblemDetailRequest(uid).then(async() => {
@@ -250,7 +266,7 @@ class ProblemController extends Component {
   }
   render() {
     const { ProblemList } = this.props;
-    console.log(this.state);
+    console.log(this.props);
     return (
       <React.Fragment>
         <ModalBox open={this.state.show}>
@@ -281,6 +297,13 @@ class ProblemController extends Component {
             </React.Fragment>
             :
             <React.Fragment>
+              <div className="category_box">
+                      <CategoryDropDown
+                      selection
+                      options={this.props.Category}
+                      onChange={this.handleChangeCategory}
+                      />
+              </div>
               <div className="headerBox">
                 <div className="th one">번호</div>
                 <div className="th two">제목</div>
@@ -306,7 +329,10 @@ class ProblemController extends Component {
                   );
                 })}
               <SelectBox>
-              <Pagination activePage={this.state.page} defaultActivePage={1} totalPages={this.props.ProblemCount/30} 
+              <Pagination 
+              activePage={this.state.page} 
+              // defaultActivePage={1} 
+              totalPages={this.props.ProblemCount/30} 
               onPageChange={this.selectPage}/>
               </SelectBox>
               <SelectBox>
