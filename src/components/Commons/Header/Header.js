@@ -134,6 +134,7 @@ const LoginBox = styled.div`
       font-family:Noto Sans KR;
       font-weight:500;
       color:white;
+      cursor:pointer;
     }
   }
   .login_text{
@@ -330,7 +331,7 @@ class Header extends Component {
             <div className="iconBox" onClick={this.onClickMessageIcon}>
               <Icon className="grey envelope" size="large" />
             </div>
-            <div className="addItem"><div className="_text">아이템 등록</div></div>
+            <div className="addItem" onClick={()=>{window.location.href="/createProduct"}}><div className="_text">아이템 등록</div></div>
             <div onClick={async () => await this.setState({ active: !this.state.active })} style={{ display: "flex",alignItems:"center", flexDirection: "row", cursor: "pointer" }}>
               <div  style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
               <div  style={{ width: "max-content", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={pattern_eng.test(userInfo.nickName)?6:3} /></div>
