@@ -32,10 +32,10 @@ class ProblemContainer extends Component {
     super(props);
     this.state = { category:[]}
   }
-  componentDidMount() {
-    this.props.getProblemListRequest(1);
-    this.props.getProblemCategoryRequest().then(()=>{
-      this.setState({category:[]});
+  async componentDidMount() {
+    await this.props.getProblemListRequest(1);
+    this.props.getProblemCategoryRequest().then(async()=>{
+      await this.setState({category:[{value:0,text:"전체"}]})
       this.props.ProblemCategory.map((item,index)=>{
         this.setState({category:this.state.category.concat({value:item.id,text:item.category_name})});
       })
