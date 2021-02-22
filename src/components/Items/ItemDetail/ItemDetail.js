@@ -782,24 +782,6 @@ class ItemDetail extends Component {
            }  */}
           </div>
 
-          <div style={{ marginTop: "35px" }}>
-            <QuestionBoard style={{ marginTop: "15px", overflow: "hidden" }} height={expandingBoard ? "100%" : "250px"}>
-              <div className="title">게시판</div>
-              <ItemQuestionContainer user_id={item.user_id} isExpanding={(result) => { this.setState({ isexpandingBoard: result }) }} />
-              {/* {!this.state.isexpandingBoard && <CoverGrident isGradient={!expandingBoard} />} */}
-            </QuestionBoard>
-            {/* {!this.state.isexpandingBoard &&
-
-              <ExpandingButton width={1600}>
-                <div onClick={() => this.setState({ expandingBoard: !expandingBoard })} className="button">
-                  <div className="font">
-                    {expandingBoard ? "▲접기" : "▼펼쳐보기"}
-                  </div>
-                </div>
-              </ExpandingButton>
-            } */}
-
-          </div>
           {/* review and board */}
           <div style={{ marginTop: "35px" }}>
             <Review>
@@ -824,6 +806,24 @@ class ItemDetail extends Component {
           </div>
 
 
+          <div style={{ marginTop: "35px" }}>
+            <QuestionBoard style={{ marginTop: "15px", overflow: "hidden" }} height={expandingBoard ? "100%" : "250px"}>
+              <div className="title">게시판</div>
+              <ItemQuestionContainer user_id={item.user_id} isExpanding={(result) => { this.setState({ isexpandingBoard: result }) }} />
+              {/* {!this.state.isexpandingBoard && <CoverGrident isGradient={!expandingBoard} />} */}
+            </QuestionBoard>
+            {/* {!this.state.isexpandingBoard &&
+
+              <ExpandingButton width={1600}>
+                <div onClick={() => this.setState({ expandingBoard: !expandingBoard })} className="button">
+                  <div className="font">
+                    {expandingBoard ? "▲접기" : "▼펼쳐보기"}
+                  </div>
+                </div>
+              </ExpandingButton>
+            } */}
+
+          </div>
 
         </Wrapper>
       </React.Fragment>

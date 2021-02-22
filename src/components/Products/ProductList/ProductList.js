@@ -110,7 +110,7 @@ class ProductList extends Component {
                   <Link to={`/createproduct`}>{this.props.userInfo != null && (this.props.userInfo.isDesigner === 1 || this.props.userInfo.isMaker === 1) ? "아이템 등록" : null}</Link>
                   </RequestButton>
                 </div>
-                <div className="_title">디자이너</div>
+                <div className="_title">아이템</div>
                 <div className="sort">
                   <Sorting handleClick={this.sortChange} placeholder={sort} />
                 </div>

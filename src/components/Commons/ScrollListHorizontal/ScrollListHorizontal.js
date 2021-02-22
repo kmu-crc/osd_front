@@ -178,7 +178,7 @@ class ScrollListHorizontal extends Component {
     return (
       <SlideWrap id="content">
         <Carousel
-        autoCycle={true}
+        autoCycle={false}
         breakpoints={[
       {
         breakpoint: 500,
