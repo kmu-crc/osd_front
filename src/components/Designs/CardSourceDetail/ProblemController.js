@@ -115,6 +115,7 @@ const CategoryDropDown = styled(Dropdown)`
 // font-size:20px;
 // background-color:#EFEFEF !important;
 // margin-right:30px;
+margin-bottom:10px;
 `
 const Wrapper = styled.div`
   width:100%;
@@ -209,7 +210,12 @@ class ProblemController extends Component {
     this.props.getProblemListRequest(activePage);
   }
   handleChangeCategory = async(event, { value })=>{
-    await this.props.getProblemListFilterRequest({value}.value);
+    await this.setState({page:1});
+    if({value}.value==0){
+      await this.props.getProblemListRequest(1);
+    }else{
+      await this.props.getProblemListFilterRequest({value}.value);
+    }
   }
   handleSelectProblem = async (uid) => {
     await this.props.getProblemDetailRequest(uid).then(async() => {
@@ -300,6 +306,7 @@ class ProblemController extends Component {
               <div className="category_box">
                       <CategoryDropDown
                       selection
+                      defaultValue={0}
                       options={this.props.Category}
                       onChange={this.handleChangeCategory}
                       />
