@@ -85,6 +85,7 @@
     "react-dev-utils": "^9.1.0",
     "react-dom": "^16.11.0",
     "react-dropdown": "^1.6.4",
+    "react-export-excel": "^0.5.3",
     "react-filepond": "^7.0.1",
     "react-height": "^3.0.0",
     "react-image-crop": "^8.3.1",
