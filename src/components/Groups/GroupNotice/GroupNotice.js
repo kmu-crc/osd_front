@@ -5,6 +5,8 @@ import Cross from "components/Commons/Cross";
 import TextController from "components/Designs/CardSourceDetail/TextControllerPlus.js";
 import GroupNoticeListContainer from "containers/Groups/GroupNoticeListContainer";
 import opendesign_style from "opendesign_style";
+import host from "config";
+import ExportExcelFile from "./ExportExcelFile";
 
 const Wrapper = styled.div`
   display: flex;
@@ -24,7 +26,7 @@ const Wrapper = styled.div`
     cursor: pointer; 
     color: white;
     font-weight: 500;
-    padding: 2px 2px;
+    padding: 2px 5px;
     line-height: 1rem;
   }
 `;
@@ -195,6 +197,8 @@ class GroupNotice extends Component {
       // mode
       edit: "view", //"edit"
 
+      // export data
+      data: null,
     }
     this.requestNewNotice = this.requestNewNotice.bind(this);
     this.requestEditNotice = this.requestEditNotice.bind(this);
@@ -210,8 +214,40 @@ class GroupNotice extends Component {
   onChangeNoticeContent(data) {
     this.setState({ "notice-content": data.content });
   }
-  getExportFile(){
-    
+  getExportFile() {
+    const url = `${host}/group/getSubmitStatus/${this.props.GroupDetail.uid}`;
+    fetch(url, {
+      headers: { 'Content-Type': 'application/json', "x-access-token": this.props.token },
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(data => {
+        const newdata = data.data.map(content => {
+          content.problem_name = JSON.parse(content.content).name;
+          delete content.content;
+          content.submit_result = content.submit ? content.submit.result === "S" ? "성공" : "실패" : "미제출";
+          if (content.submit) {
+            const t = content.submit.create_date.split(/[- T Z :]/);
+            content.submit_date = `${t[0]}-${t[1]}-${t[2]} ${(parseInt(t[3], 10) + 9).toPrecision(2)}:${t[4]}:${t[5]}`;
+          } else {
+            content.submit_date = "미제출";
+          }
+          delete content.submit;
+          return content;
+        });
+        // console.log(newdata);
+        // // first sorting - design_id
+        // const sorted = newdata.sort((a, b) => (a.design_id > b.design_id) ? 1 : -1)
+        //   // second sorting - board_order
+        //   .sort((a, b) => (a.board_order > b.board_order) ? 1 : -1)
+        //   // third sorting - card_order
+        //   .sort((a, b) => (a.card_order > b.card_order) ? 1 : -1);
+        // console.log(sorted);
+        this.setState({ data: newdata })
+      })
+      .catch(e => {
+        console.error(e);
+      })
   }
   requestDelNotice(notice_id) {
     this.props.DeleteGroupNoticeRequest &&
@@ -300,7 +336,7 @@ class GroupNotice extends Component {
     }
   }
   render() {
-    const { lastest, count, GroupDetail, userInfo } = this.props;
+    const { lastest, count, GroupDetail, userInfo, hasProgrammingDesign } = this.props;
     const user_id = userInfo && userInfo.uid;
 
     return (<React.Fragment>
@@ -490,13 +526,13 @@ class GroupNotice extends Component {
             onClick={() => { this.setState({ newNoticeDialog: true }) }}>
             <p style={{ color: "white" }}>새 공지사항 등록하기</p>
           </div> : null}
-        {user_id === GroupDetail.user_id ?
+        {user_id === GroupDetail.user_id && hasProgrammingDesign && this.state.data == null ?
           <div
             className="new-notice"
             onClick={this.getExportFile}>
-            <p style={{ color: "white" }}>제출 내역 다운로드</p>
+            <p style={{ color: "white" }}>제출현황 추출하기</p>
           </div> : null}
-
+        {this.state.data ? <ExportExcelFile data={this.state.data} /> : null}
       </Wrapper>
     </React.Fragment>
     )

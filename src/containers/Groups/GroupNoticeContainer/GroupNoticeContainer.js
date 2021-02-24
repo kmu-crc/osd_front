@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   GetLastestGroupNoticeRequest, GetTotalCountGroupNoticeRequest,
-  CreateGroupNoticeRequest, UpdateGroupNoticeRequest, DeleteGroupNoticeRequest
+  CreateGroupNoticeRequest, UpdateGroupNoticeRequest, DeleteGroupNoticeRequest,
+  checkHaveProgrammingDesign
 } from "redux/modules/group";
 import GroupNotice from "components/Groups/GroupNotice"
 
 class GroupNoticeContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { count: 0, lastest: "" };
+    this.state = { count: 0, lastest: "", hasProgrammingDesign: false };
     this.init = this.init.bind(this);
   }
 
@@ -35,6 +36,10 @@ class GroupNoticeContainer extends Component {
       .catch(err => {
         console.error(err);
       })
+    checkHaveProgrammingDesign(this.props.id, this.props.token)
+      .then(res => this.setState({ hasProgrammingDesign: res }))
+      .catch(e => console.error(e));
+
   }
 
   render() {
@@ -44,6 +49,7 @@ class GroupNoticeContainer extends Component {
           {...this.props}
           {...this.state}
           init={this.init}
+
           CreateGroupNoticeRequest={CreateGroupNoticeRequest}
           UpdateGroupNoticeRequest={UpdateGroupNoticeRequest}
           DeleteGroupNoticeRequest={DeleteGroupNoticeRequest}

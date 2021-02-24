@@ -1015,6 +1015,21 @@ export function CreateGroupNoticeRequest(token, obj) {
       .catch(error => reject(error));
   });
 }
+export function checkHaveProgrammingDesign(group_id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/check-has-programming-design/${group_id}`;
+    return fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token
+      },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(e => reject(e));
+  })
+}
 export function GetLastestGroupNoticeRequest(group_id) {
   return new Promise((resolve, reject) => {
     const url = `${host}/group/lastest-notice/${group_id}`;
