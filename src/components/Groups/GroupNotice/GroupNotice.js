@@ -200,6 +200,7 @@ class GroupNotice extends Component {
     this.requestEditNotice = this.requestEditNotice.bind(this);
     this.requestDelNotice = this.requestDelNotice.bind(this);
     this.onChangeNoticeContent = this.onChangeNoticeContent.bind(this);
+    this.getExportFile = this.getExportFile.bind(this);
   }
   componentDidUpdate(prevProps) {
     if (this.props.lastest != prevProps.lastest) {
@@ -208,6 +209,9 @@ class GroupNotice extends Component {
   }
   onChangeNoticeContent(data) {
     this.setState({ "notice-content": data.content });
+  }
+  getExportFile(){
+    
   }
   requestDelNotice(notice_id) {
     this.props.DeleteGroupNoticeRequest &&
@@ -486,7 +490,12 @@ class GroupNotice extends Component {
             onClick={() => { this.setState({ newNoticeDialog: true }) }}>
             <p style={{ color: "white" }}>새 공지사항 등록하기</p>
           </div> : null}
-
+        {user_id === GroupDetail.user_id ?
+          <div
+            className="new-notice"
+            onClick={this.getExportFile}>
+            <p style={{ color: "white" }}>제출 내역 다운로드</p>
+          </div> : null}
 
       </Wrapper>
     </React.Fragment>

@@ -799,7 +799,7 @@ class CreateDesignMobile extends Component {
   };
   checkFinishAdditional = async () => {
     const { categoryLevel1, alone, members, license1, license2, license3 } = this.state;
-    if (categoryLevel1 != null && ((alone && members.length === 0) || (!alone && members.length > 0)) && license1 && license2 && license3) {
+    if (categoryLevel1 != null && ((alone && members.length === 0) || (!alone && members.length > 0)) ) {
       await this.setState({ additional: true, content: true });
     } else {
       await this.setState({ additional: false });
@@ -1169,19 +1169,19 @@ class CreateDesignMobile extends Component {
                     <CheckBox2
                       checked={this.state.license1}
                       onChange={this.onCheckedLicense01} />
-                    <span className="textLabel">상업적으로 이용이 가능합니다</span>
+                    <span className="textLabel">상업적으로 이용이 가능합니다.</span>
                   </div>
                   <div className="licenseItem">
                     <CheckBox2
                       checked={this.state.license2}
                       onChange={this.onCheckedLicense02} />
-                    <span className="textLabel">원작자를 표시합니다</span>
+                    <span className="textLabel">원작자를 표시합니다.</span>
                   </div>
                   <div className="licenseItem">
                     <CheckBox2
                       checked={this.state.license3}
                       onChange={this.onCheckedLicense03} />
-                    <span className="textLabel">추후에 수정이 가능합니다</span>
+                    <span className="textLabel">추후에 수정이 가능합니다.</span>
                   </div>
                 </div>
               </LicenseBox>

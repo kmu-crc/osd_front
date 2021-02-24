@@ -2025,7 +2025,7 @@ class SubmitLogContainer extends React.Component {
                       : submit.result === "E" ? "실패(서버에러)"
                         : submit.result === "P" ? "실패(문제에러)"
                           : "실패",
-        "message": submit.result=="S"?"성공": submit.message || "",
+        "message": submit.result=="S"?"성공": submit.message || "실패",
         // "time": submit.avg_time ? submit.avg_time + "초" : "",
         // "space": submit.avg_memory ? submit.avg_memory + "kb" : "",
         "submit-time": timecheck+"",
@@ -2035,17 +2035,12 @@ class SubmitLogContainer extends React.Component {
     })
     const columns = [
       {
-        title: "메세지",
-        dataIndex: "message",
+        title: "결과",
+        
         key: "message",
         width: 450,
       },
-      {
-        title: "결과",
-        dataIndex: "result",
-        key: "result",
-        width: 100,
-      },
+
       // {
       //   title: "소요시간",
       //   dataIndex: "time",
