@@ -8,7 +8,7 @@ const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 export default class ExportExcelFile extends React.Component {
     render() {
         return (
-            <ExcelFile element={<button style={{ border: "none", marginLeft: "15px", background: "#EFEFEF", color: "red", borderRadius: "15%" }} id="excel-file-donwn">엑셀파일로 다운받기</button>}>
+            <ExcelFile filename={`${this.props.group.title}.xls`} fileExtension="xls" element={<button style={{ border: "none", marginLeft: "15px", background: "#EFEFEF", color: "red", borderRadius: "15%" }} id="excel-file-donwn">엑셀파일로 다운받기</button>}>
                 <ExcelSheet data={this.props.data} name="제출현황" >
                     <ExcelColumn label="디자인" value="design_title" />
                     <ExcelColumn label="제출자" value="nick_name" />

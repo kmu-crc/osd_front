@@ -532,7 +532,7 @@ class GroupNotice extends Component {
             onClick={this.getExportFile}>
             <p style={{ color: "white" }}>제출현황 추출하기</p>
           </div> : null}
-        {this.state.data ? <ExportExcelFile data={this.state.data} /> : null}
+        {this.state.data ? <ExportExcelFile group={this.props.GroupDetail} data={this.state.data} /> : null}
       </Wrapper>
     </React.Fragment>
     )
