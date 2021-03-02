@@ -259,11 +259,12 @@ class SectionBasic extends Component {
   }
   render() {
     const thumbnailURL = this.state.thumbnail;
+    console.log(window.location)
     return (
       <ContentsBox>
         {/* thumbnail */}
         <ThumbnailBox>
-          <div className="title">프로필 사진</div>
+          <div className="title">프로필 사진{window.location.pathname=="/insertUserDetail"?<sup style={{color:"red"}}>*</sup>:null}</div>
           <ImageBox imageURL={thumbnailURL == null ? noimg : thumbnailURL}></ImageBox>
           <div className="findThumbnailBox">
             <div className="findThumbnailBtn">
