@@ -5,6 +5,7 @@ import Sorting from "components/Commons/Sorting";
 import ScrollProductListContainer from "containers/Products/ScrollProductListContainer";
 import ContentBox from "components/Commons/ContentBox";
 import Category from "components/Commons/Category";
+import market_style from "market_style";
 
 // CSS STYLING
 const Wrapper = styled.div`
@@ -29,8 +30,8 @@ const RequestButton = styled.div`
     width: 150px;
     color: #FF0000;
     font-family: Noto Sans KR;
-    font-size:12px;
-`;
+    font-size:${market_style.font.size.mini1};
+    `;
 const Container = styled.div`
   ._wrapper{
     display:flex;
@@ -41,7 +42,7 @@ const Container = styled.div`
     ._title{
       font-family:Noto Sans KR;
       font-weight:500;
-      font-size:18px;
+      font-size:${market_style.font.size.normal1};
     }
     .sort {
       width: max-content;

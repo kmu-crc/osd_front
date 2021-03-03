@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { Loader } from "semantic-ui-react";
 import styled from "styled-components";
-
+import market_style from "market_style";
 // CSS STYLING
 const ScrollContainer = styled.div`
 *{
@@ -53,7 +53,7 @@ const NoData = styled.div`
   width: max-content;
   padding: 15px;
   text-align: center;
-  font-size: 18px;
+  font-size:${market_style.font.size.normal1};
   font-family: Noto Sans KR;
   font-weight: 500;
   // border: 1px dashed gray;

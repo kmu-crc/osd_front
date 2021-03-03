@@ -7,8 +7,12 @@ const MainBox = styled.div`
 *{
     font-family:Noto Sans KR;
 }
-.font_small{font-size:15px;}
-.font_big{font-size:20px;}
+.font_small{    
+    font-size:${market_style.font.size.small1};
+}
+.font_big{
+    font-size:${market_style.font.size.normal3};
+}
 .font_lignt{font-weight:200;}
 .font_bold{font-weight:500;}
 .margin_top{margin-top:24px;}

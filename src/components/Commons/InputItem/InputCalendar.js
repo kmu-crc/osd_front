@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
-
+import market_style from "market_style";
 const FormBox = styled.div`
     display:flex;
     align-items:center;
@@ -15,7 +15,7 @@ const FormStyle = styled.input.attrs({ type: "date" })`
     margin: 0;
     padding: 0.67857143em 1em;
     margin-right:5px;
-    font-size:17px;
+    font-size: ${market_style.font.size.small3};
     text-align:center;
     font-family:Noto Sans CJK KR, Regular;
     background-color:#E9E9E9;
@@ -53,7 +53,7 @@ const FormText = styled.input.attrs({ type: "number" })`
     border-radius:26px;
     text-align:center;
     font-family:Noto Sans KR;
-    font-size:17px;
+    font-size: ${market_style.font.size.small3};
     background-color:#E9E9E9;
     outline:none;
     -webkit-appearance: none;

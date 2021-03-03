@@ -9,6 +9,8 @@ import { InputContent, /*AddController, Controller */ } from "components/Commons
 // import CardSourceDetail from 'components/Designs/CardSourceDetail';
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import market_style from "market_style";
+
 const NewCardDialogWrapper = styled(Modal)`
     margin-top: 50px !important;
     margin-bottom: 50px !important;
@@ -31,7 +33,7 @@ const NewCardDialogWrapper = styled(Modal)`
         line-height: 17px;
         .title {
             font-family: Noto Sans KR;
-            font-size: 20px;
+            font-size:${market_style.font.size.normal3};
             color: #707070;
             font-weight: 500;
             line-height: 29px;
@@ -55,14 +57,14 @@ const NewCardDialogWrapper = styled(Modal)`
             margin-left: 52px;
             .header-title {
                 font-family: Noto Sans KR;
-                font-size: 20px;
+                font-size:${market_style.font.size.normal3};
                 color: #707070;
                 font-weight: 500;
                 line-height: 29px;
             }
             .header-edit-button {
                 font-family: Noto Sans KR;
-                font-size: 17px;
+                font-size:${market_style.font.size.small3};
                 color: #707070;
                 font-weight: 900;
                 line-height: 29px;
@@ -76,7 +78,7 @@ const NewCardDialogWrapper = styled(Modal)`
                     color: #FF0000;
                     padding-bottom: 1.5px;
                     border-bottom: 1.5px solid #FF0000;
-                    font-size: 20px;
+                    font-size:${market_style.font.size.normal3};
                     font-weight: 500;
                     font-family: Noto Sans KR;
                     text-align: left;
@@ -92,7 +94,7 @@ const NewCardDialogWrapper = styled(Modal)`
                     color: #707070;
                     padding-bottom: 1.5px;
                     border-bottom: 1.5px solid #707070;
-                    font-size: 20px;
+                    font-size:${market_style.font.size.normal3};
                     font-weight: 500;
                     font-family: Noto Sans KR;
                     text-align: left;
@@ -110,7 +112,7 @@ const NewCardDialogWrapper = styled(Modal)`
             padding-left: 52px;
             margin-top: 30px;
             .contents {
-                font-size: 20px;
+                font-size:${market_style.font.size.normal3};
                 color: #707070;
                 font-weight: 300;
                 font-family: Noto Sans KR;
@@ -120,7 +122,7 @@ const NewCardDialogWrapper = styled(Modal)`
                 width: max-content;
                 margin-left: auto;
                 margin-right: 5px;
-                font-size: 20px;
+                font-size:${market_style.font.size.normal3};
                 color: #707070;
                 font-weight: 300;
                 font-family: Noto Sans KR;
@@ -130,7 +132,7 @@ const NewCardDialogWrapper = styled(Modal)`
                 width: max-content;
                 margin-right: 75px;
                 color: #707070;
-                font-size: 17px;
+                font-size:${market_style.font.size.small3};
                 font-weight: 300;
                 font-family: Noto Sans KR;
                 line-height: 29px;
@@ -141,7 +143,7 @@ const NewCardDialogWrapper = styled(Modal)`
 const ContentBorder = styled.div`
     height: 29px;
     font-family: Noto Sans KR;
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
     color: #707070;
     font-weight: 500;
     line-height: 29px;
@@ -160,7 +162,7 @@ const EditCardHeaderContainer = styled.div`
         .edit-card-info {
             width: max-content;
             height: 29px;
-            font-size: 20px;
+            font-size:${market_style.font.size.normal3};
             font-weight: 500;
             font-family: Noto Sans KR;
             text-align: left;
@@ -175,7 +177,7 @@ const EditCardHeaderContainer = styled.div`
         .thumbnail-txt {
             width: max-content;
             height: 29px;
-            font-size: 20px;
+            font-size:${market_style.font.size.normal3};
             font-weight: 500;
             font-family: Noto Sans KR;
             text-align: right;
@@ -191,7 +193,7 @@ const EditCardHeaderContainer = styled.div`
         .title-txt {
             width: 97px;
             height: 29px;
-            font-size: 20px;
+            font-size:${market_style.font.size.normal3};
             font-weight: 500;
             font-family: Noto Sans KR;
             text-align: right;
@@ -210,7 +212,7 @@ const EditCardHeaderContainer = styled.div`
             width: 100%;
             border: none;
             background: transparent;
-            font-size: 20px;
+            font-size:${market_style.font.size.normal3};
             font-weight: 500;
             color: #707070;
             height: 100%;
@@ -224,7 +226,7 @@ const EditCardHeaderContainer = styled.div`
         .description-txt {
             width: 97px;
             height: 29px;
-            font-size: 20px;
+            font-size:${market_style.font.size.normal3};
             font-weight: 500;
             font-family: Noto Sans KR;
             text-align: right;
@@ -243,7 +245,7 @@ const EditCardHeaderContainer = styled.div`
             width: 100%;
             border: none;
             background: transparent;
-            font-size: 20px;
+            font-size:${market_style.font.size.normal3};
             font-weight: 500;
             color: #707070;
             height: 100%;
@@ -263,7 +265,7 @@ const EditCardHeaderContainer = styled.div`
             color: #FF0000;
             padding-bottom: 1.5px;
             border-bottom: 1.5px solid #FF0000;
-            font-size: 20px;
+            font-size:${market_style.font.size.normal3};
             font-weight: 500;
             font-family: Noto Sans KR;
             text-align: left;
@@ -279,7 +281,7 @@ const EditCardHeaderContainer = styled.div`
             color: #707070;
             padding-bottom: 1.5px;
             border-bottom: 1.5px solid #707070;
-            font-size: 20px;
+            font-size:${market_style.font.size.normal3};
             font-weight: 500;
             font-family: Noto Sans KR;
             text-align: left;
@@ -309,7 +311,7 @@ const ButtonContainer = styled.div`
     border: none;
     border-bottom: 1px solid red;
     color: #FF0000;
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
     font-weight: 500;
     background: none;
     cursor: pointer;
@@ -326,7 +328,7 @@ const ButtonContainer = styled.div`
     padding-bottom: 1px;
     border-bottom: 1px solid red;
     color: #FF0000;
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
     font-weight: 500;
     background: none;
     cursor: pointer;
@@ -348,7 +350,7 @@ const EditorBottonWrapper = styled.div`
       padding: 7px;
       padding-bottom: 1px;
       color: #FF0000;
-      font-size: 20px;
+      font-size:${market_style.font.size.normal3};
       font-weight: 500;
       cursor: pointer;
       :hover{
@@ -364,7 +366,7 @@ const EditorBottonWrapper = styled.div`
       padding: 7px;
       padding-bottom: 1px;
       color: #707070;
-      font-size: 20px;
+      font-size:${market_style.font.size.normal3};
       font-weight: 500;
       cursor: pointer;
       :hover{

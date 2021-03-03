@@ -20,6 +20,7 @@ import ModifyMyDetailContainer from "containers/MyPage/ModifyMyDetailContainer/M
 import MyPointStatusContainer from "containers/Point/PointContainer";
 
 import category_icon from "source/category_icon.svg";
+import market_style from "market_style";
 
 const CustomIcon=styled.div`
   width:${props => props.width}px;
@@ -55,8 +56,8 @@ const ProfileBox = styled.div`
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 5px 5px 10px #00000029;
 
-  .fontBig{font-size:19px;}
-  .fontSmall{font-size:13px;}
+  .fontBig{font-size:${market_style.font.size.normal2};}
+  .fontSmall{font-size:${market_style.font.size.mini2};}
   .fontStyleNormal{font-family:Noto Sans KR; font-weight:500;}
   .fontStyleLight{font-family:Noto Sans KR; font-weight:200;}
   .red{color:red;}
@@ -78,8 +79,10 @@ const ProfileBox = styled.div`
   }
 `;
 const InformationBox = styled.div` 
-    .fontDefault{font-size:20px;}
-    .fontBig{font-size:17px;}
+    .fontDefault{
+      font-size:${market_style.font.size.normal3};
+    }
+    .fontBig{    font-size:${market_style.font.size.small3}}
     .fontStyleNormal{font-family:Noto Sans KR; font-weight:500;}
     .alignCenter{text-align:center;}
     .red{color:red;}
@@ -173,7 +176,7 @@ const MenuBox = styled.div`
     .title_Label{
       width:100%;
       height:20px;
-      font-size:20px;
+      font-size:${market_style.font.size.normal3};
       font-family:Noto Sans KR,Medium;
       margin-left:15px;
       margin-top:35px;
@@ -190,7 +193,7 @@ const MenuBox = styled.div`
 const MenuButton = styled.div`
   width:100%;
   height:20px;
-  font-size:20px;
+  font-size:${market_style.font.size.normal3};
   font-family:Noto Sans KR;
   font-weight:200;
   margin-left:15px;
@@ -224,7 +227,7 @@ const BoardBox = styled.div`
       }
       .title {
         color: #000000;
-        font-size: 19px;
+        font-size:${market_style.font.size.normal1};
         font-weight: 500;
         line-height: 28px;
         text-align: left;
@@ -233,7 +236,7 @@ const BoardBox = styled.div`
       .list {
         margin-top: 72px;
         font-weight: 300;
-        font-size: 19px;
+        font-size:${market_style.font.size.normal1};
         text-align: left;
         line-height: 27px;
         color: #000000;

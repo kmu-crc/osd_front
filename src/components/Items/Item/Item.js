@@ -10,6 +10,9 @@ import noimg from "source/noimg.png";
 import customimg from "source/toolbox.png";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import market_style from "market_style";
+
+
 const Wrapper = styled.div`
   *{
     cursor:pointer;
@@ -47,7 +50,7 @@ const TextWrapper = styled.div`
   width: 100%;
   .title {
     font-weight: 500;
-    font-size: 13px;
+    font-size:${market_style.font.size.mini2};
     text-align: left;
   }
   .author {
@@ -56,7 +59,7 @@ const TextWrapper = styled.div`
     justify-content: space-between;
     margin-top: 10px;
     font-weight: 300;
-    font-size: 11px;
+    font-size:${market_style.font.size.tiny3};
     text-align: left;
     line-height: 18px;
   }
@@ -76,7 +79,7 @@ const NumberWrapper = styled.div`
   margin-top:20px;
   .price {
     font-weight: 500;
-    font-size: 15px;
+    font-size:${market_style.font.size.small1};
     text-align: left;
   }
   .score {
@@ -85,7 +88,7 @@ const NumberWrapper = styled.div`
     flex-direction: row;
     vertical-align: middle;
     font-weight: 300;
-    font-size: 15px;
+    font-size:${market_style.font.size.small1};
     text-align: left;
   }
 `;
@@ -100,8 +103,8 @@ const PrivateLabel = styled.div`
   border-radius: 15px;
 `;
 const TypeText = styled.div`
-  font-size:9px;
-  font-weight:100;
+font-size:${market_style.font.size.tiny1};
+font-weight:100;
   color:red;
 `
 const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 };

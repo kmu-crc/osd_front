@@ -16,7 +16,7 @@ const CardContainer = styled.div`
   padding: 10px 5px;
   cursor: pointer;
   & span {
-    font-size: 12px;
+    font-size:${market_style.font.size.small1};
     font-weight: 400;
     margin-right: 10px;
   }

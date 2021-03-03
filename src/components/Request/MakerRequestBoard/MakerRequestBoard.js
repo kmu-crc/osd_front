@@ -3,6 +3,7 @@ import ScrollBoardList from "components/Commons/ScrollBoardList";
 import RequestElement from "components/Request/RequestListElement";
 import styled from "styled-components";
 import ContentBox from "components/Commons/ContentBox";
+import market_style from "market_style";
 
 // CSS STYLING
 const Wrapper = styled.div`
@@ -47,7 +48,7 @@ const Content = styled(ContentBox)`
 const ListElement = styled.div`
   width: 100%;
   margin: 0 auto 0.9rem;
-  font-size: 13px;
+  font-size:${market_style.font.size.mini2};
   border-radius: 3px 3px 3px 3px;
   overflow: hidden;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);

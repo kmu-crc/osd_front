@@ -29,7 +29,7 @@ margin-bottom:80px;
         display:flex;
         .inner_label{
             min-width:120px;
-            font-size:12pt;
+            font-size:${market_style.font.size.mini1};
             font-weight:500;
             padding:10px;     
             margin-right:80px;                   

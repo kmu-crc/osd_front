@@ -7,7 +7,7 @@ import NumberFormat from "modules/NumberFormat";
 import TextSlicer from "modules/TextSlicer"
 import noimg from "source/noimg.png";
 import { alert } from "components/Commons/Alert/Alert";
-
+import market_style from "market_style";
 // const Btn = styled.button`
 //   padding: 0.75em 1.5em;
 //   width: 50%;
@@ -80,7 +80,7 @@ const AllAlarmRead=styled.li`
       display:flex;
       justify-content:flex-end;
       .text{
-        font-size:13px;
+        font-size: ${market_style.font.size.mini2};
       }
     }
 `
@@ -101,7 +101,7 @@ const AlarmItem = styled.li`
   }
   div {}
   h4 {
-    font-size: 9pt;
+    font-size: ${market_style.font.size.tiny1};
     text-align: center;
   }
   &:last-child {
@@ -112,7 +112,7 @@ const AlarmItem = styled.li`
     flexDirection: row;
     justify-content: left;
     h5 {
-      font-size: 10pt;
+      font-size: ${market_style.font.size.tiny2};
       color: ${StyleGuide.color.geyScale.scale6};
     }
     color: ${StyleGuide.color.geyScale.scale5};

@@ -5,6 +5,7 @@ import { Icon } from "semantic-ui-react";
 import profile from "source/thumbnail.png";
 import NumberFormat from "modules/NumberFormat";
 import TextFormat from "modules/TextFormat";
+import market_style from "market_style";
 
 const Wrapper = styled.div`
   *{
@@ -46,13 +47,13 @@ const TextWrapper = styled.div`
   .nick {
     margin-top:8px;
     font-weight: 500;
-    font-size: 13px;
+    font-size:${market_style.font.size.mini2};
     color: #060000;
   }
   .category {
     margin-top: 5px;
     font-weight: 500;
-    font-size: 11px;
+    font-size:${market_style.font.size.tiny3};
     color: #FF0000;
   }
 `;
@@ -69,7 +70,7 @@ const Counter = styled.div`
 
   .items {
     text-align: center;
-    font-size: 11px;
+    font-size:${market_style.font.size.tiny3};
     font-weight: 300;
     line-height: 18px;
   }
@@ -82,7 +83,7 @@ const Counter = styled.div`
   }
   .likes {
     text-align: left;
-    font-size: 11px;
+    font-size:${market_style.font.size.tiny3};
     font-weight: 500;
     line-height: 18px;
     .heart{

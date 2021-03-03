@@ -6,6 +6,8 @@ import { Modal } from 'semantic-ui-react'
 // import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import market_style from "market_style";
+
 const InputWrapper = styled.div`
     display: flex;
     flex-direction: row;
@@ -22,7 +24,7 @@ const InputWrapper = styled.div`
         margin-right: 10px;
         color: #707070;
         font-family: Noto Sans KR;
-        font-size: 20px;
+        font-size:${market_style.font.size.normal3};
         font-weight: 500;
         text-align: left;
     }
@@ -42,7 +44,7 @@ const InputWrapper = styled.div`
             padding-left: 10px;
             border: none;
             background-color: transparent;
-            font-size: 20px;
+            font-size:${market_style.font.size.normal3};
             font-family: Noto Sans KR;
             font-weight: 300;
         }
@@ -58,7 +60,7 @@ const TitleWrapper = styled.div`
     line-height: 29px;
     color: #707070;
     font-family: Noto Sans KR;
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
     font-weight: 500;
     text-align: left;
     margin-top: 45px;
@@ -88,7 +90,7 @@ const StepDialog = styled(Modal)`
             margin-left: auto;
             text-align: middle;
             color: #FF0000;
-            font-size: 20px;
+            font-size:${market_style.font.size.normal3};
             font-weight: 500;
             font-family: Noto Sans KR;
             line-height: 40px;
@@ -107,7 +109,7 @@ const StepDialog = styled(Modal)`
             color: #707070;
             padding-bottom: 1.5px;
             border-bottom: 1.5px solid #707070;
-            font-size: 20px;
+            font-size:${market_style.font.size.normal3};
             font-weight: 500;
             font-family: Noto Sans KR;
             text-align: left;

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { FormInput } from "components/Commons/FormItem";
 import { Icon } from "semantic-ui-react";
 import styled from "styled-components";
+import market_style from "market_style";
 
 const MemberItem = styled.div`
   display: inline-block;
@@ -11,13 +12,13 @@ const MemberItem = styled.div`
   border-radius: 3px;
   margin-right: 5px;
   margin-bottom: 5px;
-  font-size: 12px;
-`
+  font-size:${market_style.font.size.mini1};
+  `
 const DeleteBtn = styled.button`
   background-color: transparent;
   border: 0;
   padding: 0;
-  font-size: 12px;
+  font-size:${market_style.font.size.mini1};
   color: white;
   margin-left: 5px;
 `

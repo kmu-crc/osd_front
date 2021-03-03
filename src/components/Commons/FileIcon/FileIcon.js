@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon } from "semantic-ui-react";
 import styled from "styled-components";
-
+import market_style from "market_style";
 const FileWrap = styled.div`
   display: inline-block;
   box-sizing: border-box;
@@ -29,7 +29,7 @@ const FileWrap = styled.div`
     border-bottom: 7.5px solid #d9d7cb;
   }
   i.icon{
-    font-size: 20px;
+    font-size: ${market_style.font.size.normal3};
     text-align: center;
     position: absolute;
     top: 20px;
@@ -46,7 +46,7 @@ const FileWrap = styled.div`
     height: 22px;
     line-height: 22px;
     background-color: #f4b400;
-    font-size: 12px;
+    font-size: ${market_style.font.size.mini1};
     font-weight: bold;
     text-align: center;
     color: white;

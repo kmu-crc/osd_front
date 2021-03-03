@@ -5,7 +5,7 @@ import { TextControllerClassic } from "components/Commons/InputItem/TextControll
 import styled from "styled-components";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
-
+import market_style from "market_style";
 const WriteNormalArticleModal = styled(Modal)`
   width:988px;
   height:max-content;
@@ -27,7 +27,7 @@ const WriteNormalArticleModal = styled(Modal)`
   
   }
   .title_label{
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     font-weight:500;
     min-width:65px;
     height:max-content;
@@ -59,7 +59,7 @@ const WriteNormalArticleModal = styled(Modal)`
     align-items:center;
     cursor:pointer;
     .btnText{
-      font-size:20px;
+      font-size:${market_style.font.size.normal3};
       color:white;
     }
   }

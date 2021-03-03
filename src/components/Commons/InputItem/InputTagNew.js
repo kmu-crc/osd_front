@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
+import market_style from "market_style";
 
 const FormStyle = styled.input.attrs({type:"text"})`
     width: ${props => props.width}px;
@@ -18,7 +19,7 @@ const FormStyle = styled.input.attrs({type:"text"})`
     &::placeholder {
         color: ${StyleGuide.color.geyScale.scale5};
         font-family:Noto Sans CJK KR, Regular;
-        font-size:17px;
+        font-size:${market_style.font.size.samll3};
     }
     &:focus {
         &::placeholder {
@@ -51,7 +52,7 @@ const TagPiece = styled.div`
     display: flex;
     justify-content: space-between;
     align-items:center;
-    font-size:15px;
+    font-size:${market_style.font.size.samll1};
     font-family:Noto Sans CJK KR, Regular;
     margin-right:8px;
     margin-bottom:8px;

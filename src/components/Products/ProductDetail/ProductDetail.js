@@ -78,7 +78,7 @@ const MainBox = styled.div`
                 padding:20px;
                 .product_name{
                     width:100%;
-                    font-size:20pt;
+                    font-size:${market_style.font.size.normal3};
                     font-weight:1000;
                     padding:10px;
                 }
@@ -90,7 +90,7 @@ const MainBox = styled.div`
                 }
                 .product_price{
                     width:100%;
-                    font-size:16pt;
+                    font-size:${market_style.font.size.small2};
                     font-weight:500;
                     padding:10px;
 
@@ -113,7 +113,7 @@ const MainBox = styled.div`
                         width:100%;
                         height:100%;
                         padding-top:10px;
-                        font-size:10pt;
+                        font-size:${market_style.font.size.tiny2};
                         text-align:right;
                     }
                     
@@ -128,7 +128,7 @@ const MainBox = styled.div`
                         width:220px;
                         height:70px;
                         padding:5%;
-                        font-size:15pt;
+                        font-size:${market_style.font.size.small1};
                         color:white;
                         text-align:center;
                         background-color:#707070;
@@ -142,7 +142,7 @@ const MainBox = styled.div`
             .product_detail_label{
                 width:100%;
                 height:50px;
-                font-size:15pt;
+                font-size:${market_style.font.size.small1};
                 font-weight:1000;
             }
             .detail_box{
@@ -152,7 +152,7 @@ const MainBox = styled.div`
                 margin-top:20px;
                 
                 .detail_explain{
-                    font-size:11pt;
+                  font-size:${market_style.font.size.tiny3};
                 }
             }
             .delivery_box{
@@ -238,13 +238,13 @@ const ReviewCommentBox = styled.div`
         .user_name{
             width:100%;
             height:30px; 
-            font-size:13pt;
+            font-size:${market_style.font.size.mini2};
             font-weight:500;
             padding:5px;
         }
         .user_comment{
             width:100%;
-            font-size:12pt;
+            font-size:${market_style.font.size.mini1};
             padding:5px;
         }
         .buy_info_box{

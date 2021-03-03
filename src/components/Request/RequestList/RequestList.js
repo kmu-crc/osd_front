@@ -8,6 +8,7 @@ import { Modal } from "semantic-ui-react";
 import Cross from "components/Commons/Cross";
 import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
 import ArticleModal from "components/Commons/ArticleModal/ArticleModal";
+import market_style from "market_style";
 
 // CSS STYLING
 const Wrapper = styled.div`
@@ -36,7 +37,7 @@ const TabContainer = styled.div`
   cursor: default;
   display: flex;
   flex-direction: row;
-  font-size: 20px;
+  font-size:${market_style.font.size.normal3};
   font-weight: 500;
   font-family: Noto Sans KR;
   line-height: 29px;
@@ -95,7 +96,7 @@ const WriteNormalArticleModal = styled(Modal)`
   
   }
   .title_label{
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     font-weight:500;
     min-width:65px;
     height:max-content;
@@ -126,7 +127,7 @@ const WriteNormalArticleModal = styled(Modal)`
     justify-content:center;
     align-items:center;
     .btnText{
-      font-size:20px;
+      font-size:${market_style.font.size.normal3};
       color:white;
     }
   }
@@ -174,8 +175,8 @@ const CreateNormalArticleButton = styled.div`
         padding:12px 39px 12px 39px;
     }
     .font{
-        font-size:20px;
-        color:white;
+      font-size:${market_style.font.size.normal3};
+      color:white;
     }
 `;
 const Container = styled.div`
@@ -196,7 +197,7 @@ const ListElement = styled.div`
   width: 100%;
   height:55px;
   margin: 0 auto 0.9rem;
-  font-size: 13px;
+  font-size:${market_style.font.size.mini2};
   border-radius: 3px 3px 3px 3px;
   overflow: hidden;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
@@ -211,7 +212,7 @@ const ListElement = styled.div`
     min-width:77%;
     display:flex;
     align-items:center;
-    font-size:15px;
+    font-size:${market_style.font.size.small1};
     padding-left:65px;
   }
   .writer{
@@ -219,14 +220,14 @@ const ListElement = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:15px;
+    font-size:${market_style.font.size.small1};
   }
   .date{
     min-width:10%;
     display:flex; 
     justify-content:center;
     align-items:center;
-    font-size:15px;
+    font-size:${market_style.font.size.small1};
     }
 `;
 

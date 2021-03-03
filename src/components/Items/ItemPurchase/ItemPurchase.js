@@ -16,6 +16,8 @@ import { FileUploadRequest } from "actions/Uploads";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 // import FileIcon from "components/Commons/FileIcon";
+import market_style from "market_style";
+
 const MessageBox = styled.div`
   padding:10px;
 `
@@ -56,7 +58,7 @@ const InputText = styled.input.attrs({ type: "text" })`
   height:100px;
   border-radius:10px;
   font-family:Noto Sans KR;
-  font-size:20px;
+  font-size:${market_style.font.size.normal3};
   background-color:#efefef;
   margin-right:21px;
   outline:none;
@@ -78,7 +80,7 @@ const MessageWrapper = styled.div`
     justify-content:center;
     align-items:flex-end;
     border-radius:30px;
-    font-size:17px;
+    font-size:${market_style.font.size.small3};
   }
   .file_bubble{
     max-width:400px;
@@ -88,12 +90,12 @@ const MessageWrapper = styled.div`
     justify-content:center;
     align-items:flex-end;
     border-radius:5px;
-    font-size:17px;
+    font-size:${market_style.font.size.small3};
   }
   .msg_time{
     width:max-content;
     height:25px;
-    font-size:10px;
+    font-size:${market_style.font.size.tiny2};
     margin-left:12px;
     margin-right:12px;
   }
@@ -152,7 +154,7 @@ const ItemInfo = styled.div`
   border-radius: 20px; 
   padding:35px;
   .title {
-    font-size: 23px;
+    font-size:${market_style.font.size.big3};
     // line-height: 50px;
     text-align: left;
     color: #000000;
@@ -171,7 +173,7 @@ const ItemInfo = styled.div`
     }
     .nick{
       cursor:pointer;
-      font-size: 17px;
+      font-size:${market_style.font.size.small3};
       font-weight: 300;
       line-height: 29px;
       color: #060000;
@@ -185,7 +187,7 @@ const ItemInfo = styled.div`
     overflow: auto;
     text-align: left;
     font-weight: 300;
-    font-size: 15px;
+    font-size:${market_style.font.size.small1};
     line-height: 27px;
     letter-spacing: 0;
     color: #000000;
@@ -198,7 +200,7 @@ const ItemInfo = styled.div`
     margin-top: 10px;
     margin-bottom: 10px;
     font-weight: 500;
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
     line-height: 29px;
     text-align: left;
     color: #060000;
@@ -209,7 +211,7 @@ const ItemInfo = styled.div`
       width: max-content;
       text-align: left;
       font-weight: 500;
-      font-size: 20px;
+      font-size:${market_style.font.size.normal3};
       line-height: 29px;
       letter-spacing: 0;
       color: #000000;
@@ -244,7 +246,7 @@ const ItemInfo = styled.div`
         margin-right: auto;
         margin-top: 15px;
         line-height: 37px;
-        font-size: 25px;
+        font-size:${market_style.font.size.giant2};
         font-weight: 500;
       }
       &.first { 
@@ -280,7 +282,7 @@ const Introduction = styled.div`
  
     .title {
       margin-top: 10px;
-      font-size: 19px;
+      font-size:${market_style.font.size.normal1};
       font-weight: 500;
       line-height: 28px;
       text-align: left;
@@ -291,7 +293,7 @@ const Introduction = styled.div`
       width: 100%;
       margin-top: 15px;
       margin-bottom:29px;
-      font-size: 15px;
+      font-size:${market_style.font.size.small1};
       font-weight: 300;
       line-weight: 27px;
       text-align: left;
@@ -425,7 +427,7 @@ const Content = styled.div`
   font-family: Noto Sans KR;
   color: #000000;
   font-weight: 300;
-  font-size: 19px;
+  font-size:${market_style.font.size.normal1};
   line-height: 28px;
   text-align: left;
   position:relative;
@@ -455,7 +457,7 @@ const Content = styled.div`
   }
   .nick{
     cursor:pointer;
-    font-size: 17px;
+    font-size:${market_style.font.size.small3};
     font-weight: 300;
     line-height: 29px;
     color: #060000;
@@ -502,7 +504,7 @@ const Content = styled.div`
       margin-top: 32px;
       width: max-content;
       font-weight: 500;
-      font-size: 17px;
+      font-size:${market_style.font.size.small3};
       line-height: 25px;
       text-align: left;
     }

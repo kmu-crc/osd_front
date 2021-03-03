@@ -8,6 +8,8 @@ import { EmbController } from "components/Commons/InputItem/EmbController";
 // css styling
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import market_style from "market_style";
+
 const ControllerWrap = styled.div`
   position: relative;
   &:hover {
@@ -88,7 +90,7 @@ const FuncButton = styled.button`
   border-radius: 25px;
   line-height: 25px;
   box-sizing: border-box;
-  font-size: 12px;
+  font-size: ${market_style.font.size.mini1};
   background-color: ${props => props.bgcolor || "#E72327"};
   color: white;
   text-align: center;

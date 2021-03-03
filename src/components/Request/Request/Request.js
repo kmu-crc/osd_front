@@ -8,6 +8,7 @@ import TextFormat from 'modules/TextFormat';
 import noimg from "source/noimg.png";
 // import { geturl } from 'config';
 // import { NavLink } from "react-router-dom";
+import market_style from "market_style";
 
 const Wrapper = styled.div`
   *{
@@ -41,7 +42,7 @@ const TextWrapper = styled.div`
   width: 100%;
   .title {
     font-weight: 500;
-    font-size: 17px;
+    font-size:${market_style.font.size.small3};
     text-align: left;
     line-height: 25px;
   }
@@ -51,7 +52,7 @@ const TextWrapper = styled.div`
     justify-content: space-between;
     margin-top: 8px;
     font-weight: 300;
-    font-size: 12px;
+    font-size:${market_style.font.size.mini2};
     text-align: left;
     line-height: 18px;
   }
@@ -62,7 +63,7 @@ const NumberWrapper = styled.div`
   flex-direction: row;
   .price {
     font-weight: 500;
-    font-size: 17px;
+    font-size:${market_style.font.size.small3};
     text-align: left;
     line-height: 25px;
   }
@@ -72,7 +73,7 @@ const NumberWrapper = styled.div`
     flex-direction: row;
     vertical-align: middle;
     font-weight: 300;
-    font-size: 15px;
+    font-size:${market_style.font.size.small1};
     text-align: left;
     line-height: 22px;
   }

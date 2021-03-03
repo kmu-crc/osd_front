@@ -7,6 +7,8 @@ import styled from "styled-components";
 import cookie from 'react-cookies';
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import market_style from "market_style";
+
 const MainBox = styled.div`
   *{
     font-family:Noto Sans KR,Medium;
@@ -32,13 +34,13 @@ const MainBox = styled.div`
       justify-content:center;
       align-items:center;
       .title{
-        font-size:20px;
+        font-size:${market_style.font.size.normal3};
         font-weight:700;
       }
     }
     .row{
       *{
-        font-size:16px;
+        font-size:${market_style.font.size.small2};
       }
       display:flex;
       height:43px;

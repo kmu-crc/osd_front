@@ -5,6 +5,8 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { options } from "components/Commons/InputItem/AlertConfirm"
+import market_style from "market_style";
+
 const StyleButton = styled.div`
   width:290px;
   height:70px;
@@ -18,8 +20,8 @@ const StyleButton = styled.div`
   .text{
     color:${props => props.disabled == false || props.disabled == null ? "white" : "white"};
     font-family:Noto Sans CJK KR, Regular;
-    font-size:25px;
-  }
+    font-size: ${market_style.font.size.giant2};
+}
   &:hover{
       opacity:90%;
   }

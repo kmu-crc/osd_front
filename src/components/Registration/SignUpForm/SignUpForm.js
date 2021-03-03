@@ -11,6 +11,9 @@ import styled from "styled-components";
 // import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import market_style from "market_style";
+
+
 const MainBox = styled.div`
   *{
     font-family:Noto Sans KR,Medium;
@@ -36,14 +39,14 @@ const MainBox = styled.div`
       justify-content:center;
       align-items:center;
       .title{
-        font-size:20px;
+        font-size:${market_style.font.size.normal3};
         font-weight:500;
       }
     }
     
     .row{
       *{
-        font-size:15px;
+        font-size:${market_style.font.size.small1};
       }
       display:flex;
       height:43px;

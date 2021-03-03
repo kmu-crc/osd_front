@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from "styled-components";
 import { FormFile } from "../FormItem/FormItem";
 import { Icon } from "semantic-ui-react";
+import market_style from "market_style";
 const UploaderButton = styled.label`
   display: block;
   width: 100%;
@@ -18,13 +19,13 @@ const ImagesItem = styled.div`
   border-radius: 3px;
   margin-right: 5px;
   margin-bottom: 5px;
-  font-size: 12px;
-`
+  font-size: ${market_style.font.size.mini1};
+  `
 const DeleteBtn = styled.button`
   background-color: transparent;
   border: 0;
   padding: 0;
-  font-size: 12px;
+  font-size: ${market_style.font.size.mini1};
   color: white;
   margin-left: 5px;
 `

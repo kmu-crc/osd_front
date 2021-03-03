@@ -4,6 +4,8 @@ import { Dropdown } from "semantic-ui-react"
 import noimg from "source/noimg.png";
 import { RedButton, GrayButton } from "components/Commons/CustomButton";
 import { alert } from "components/Commons/Alert/Alert";
+import market_style from "market_style";
+
 // import { Link } from "react-router-dom";
 // import { Icon } from "semantic-ui-react";
 // import { InputTag } from "components/Commons/InputItem/InputTag";
@@ -22,7 +24,7 @@ const MainBox = styled.div`
     width:max-content;
     height:29px;
     font-family:Noto Sans KR, Medium;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     font-weight:500;
   }
     .contentBox{
@@ -38,7 +40,7 @@ const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
     font-weight:500;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
   }
   width:562px;
   height:540px;
@@ -78,8 +80,7 @@ const Thumbnail = styled.div`
 `;
 const FormBox = styled.div`
   *{
-
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
   }
   width:939px;
   box-shadow: 5px 5px 10px #00000029;
@@ -132,7 +133,7 @@ const InputText =  styled.input.attrs({ type: "text" })`
   height:43px;
   border-radius:20px;
   font-family:Noto Sans KR;
-  font-size:20px;
+  font-size:${market_style.font.size.normal3};
   background-color:#E9E9E9;
   margin-right:21px;
   outline:none;
@@ -145,7 +146,7 @@ const InputTextarea = styled.textarea`
   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
   border-radius:20px;
   font-family:Noto Sans KR;
-  font-size:20px;
+  font-size:${market_style.font.size.normal3};
   background-color:#E9E9E9;
   outline:none;
   border:0px;

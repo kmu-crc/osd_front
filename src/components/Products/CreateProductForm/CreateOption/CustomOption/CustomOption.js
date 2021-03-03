@@ -15,7 +15,7 @@ const OptionListBox = styled.div`
     }
     .addName_box{
         width:50%;
-        font-size:16pt;
+        font-size:${market_style.font.size.small2};
         font-weight:500;
     }
 `
@@ -27,7 +27,7 @@ const OptionValuePiece = styled.div`
     .OptionValue_label{
         width:160px;
         height:100%;
-        font-size:11pt;
+        font-size:${market_style.font.size.tiny3};
         font-weight:11pt;
         padding:10px;
     }

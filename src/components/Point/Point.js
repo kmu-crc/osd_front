@@ -7,19 +7,20 @@ import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 
 import $ from "jquery";
+import market_style from "market_style";
 
 const Wrapper = styled.div`
   width: 100%;
   .title{
     width:100%;
     font-family:Noto Sans CJK KR, Medium;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     margin-bottom:40px;
   }
   .tabBox{
     width:100%;
     margin-bottom:30px;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     font-family:Noto Sans CJK KR, Medium;
     display:flex;
     .text_grey{color:#d6d6d6;cursor:pointer;}
@@ -60,14 +61,14 @@ const PointWrapper = styled.div`
  
   .text {
     margin-right: 10px;
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
     font-weight: 300;
   }
   .point {
     margin-left: auto;
     margin-left: 50px;
     margin-right: 15px;
-    font-size: 26px;
+    font-size:${market_style.font.size.giant3};
     font-weight: 500;
   }
   .unit {
@@ -130,7 +131,7 @@ const FormStyle = styled.input.attrs({ type: "number" })`
     height:43px;
     border-radius:20px;
     font-family:Noto Sans KR;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     background-color:#E9E9E9;
     outline:none;
     border:0px;
@@ -157,7 +158,7 @@ const PaymentBox = styled.div`
     cursor:pointer;
     width:100%;
     text-align:right;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     font-family:Noto Sans CJK KR, Medium;
     color:red;
   }
@@ -171,13 +172,13 @@ const PaymentBox = styled.div`
     width:100%;
     text-align:right;
     font-family:Noto Sans CJK KR, Regular;
-    font-size:17px;
+    font-size:${market_style.font.size.small3};
     color:red;
     margin-bottom:75px;
   }
   .input_title{
     font-family:Noto Sans CJK KR, Medium;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     margin-top:15px;
     margin-right:36px;
   } 
@@ -188,7 +189,7 @@ const PaymentBox = styled.div`
     // margin-left:47px;
     margin-top:15px;
     border-right:1px solid #707070;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
   }
   .margin_top{
     margin-top:107px;
@@ -207,7 +208,7 @@ const PaymentBox = styled.div`
       justify-content:center;
       align-items:center;
       color:white;
-      font-size:25px;
+      font-size:${market_style.font.size.giant2};
       background-color:red;
       cursor:pointer;
     }
@@ -225,8 +226,16 @@ const PaymentBox = styled.div`
       align-items:center;
       margin-bottom:42px;
     }
-    .redbtn{background-color:red;color:white;font-size:20px;}
-    .defaultbtn{border:1px solid #707070;color:#707070;font-size:20px;}
+    .redbtn{
+      background-color:red;
+      color:white;
+      font-size:${market_style.font.size.normal3};
+    }
+    .defaultbtn{
+      border:1px solid #707070;
+      color:#707070;
+      font-size:${market_style.font.size.normal3};
+    }
   }
 `
 const PointListBox = styled.div`
@@ -248,7 +257,7 @@ const PointListBox = styled.div`
         width:100%;
         height:max-content;
         font-family:Noto Sans CJK KR, Medium;
-        font-size:17px;
+        font-size:${market_style.font.size.small3};
         text-align:center;
         font-weight:500;
       }
@@ -261,7 +270,7 @@ const PointListBox = styled.div`
       .history{
         width:100%;
         font-family:Noto Sans CJK KR, Regular;
-        font-size:17px;
+        font-size:${market_style.font.size.small3};
         text-align:center;
       }
     }

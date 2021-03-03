@@ -66,7 +66,7 @@ const ProfileSection = styled.div`
   & .title {
     min-height: 80px;
     font-weight: bold;
-    font-size: 24px;
+    font-size:${market_style.font.size.giant1};
     text-align: center;
     padding: 10px 0;
   }
@@ -92,18 +92,18 @@ const CountSection = styled.div`
   & .list {
     height: 24px;
     width: 100%;
-    font-size: 13px;
+    font-size:${market_style.font.size.mini2};
   }
   & .list span {
     float: right;
-    font-size: 18px;
+    font-size:${market_style.font.size.normal1};
   }
 `;
 
 const InfoSection = styled.div`
   padding: 1rem;
   & .explanation {
-    font-size: 13px;
+    font-size:${market_style.font.size.mini2};
   }
 `;
 
@@ -118,7 +118,7 @@ const IssueContainer = styled.div`
     font-weight: bold;
   }
   & ul .issueDate {
-    font-size: 12px;
+    font-size:${market_style.font.size.small1};
     margin: 0 5px;
     font-weight: lighter;
     color: ${StyleGuide.color.geyScale.scale5};

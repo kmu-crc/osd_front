@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
+import market_style from "market_style";
 
 const FormBox = styled.div`
     display:flex;
@@ -18,7 +19,7 @@ const FormStyle = styled.input.attrs({ type: "number" })`
     height:43px;
     border-radius:20px;
     font-family:Noto Sans KR;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     background-color:#E9E9E9;
     outline:none;
     border:0px;
@@ -54,7 +55,7 @@ const Button = styled.div`
     margin:5px;
     cursor:pointer;
     .text{
-        font-size:13px;
+        font-size:${market_style.font.size.mini2};
         color:#ffffff;
     }
 `

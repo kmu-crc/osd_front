@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import styled from "styled-components";
 import Gallery from "components/Gallery/Gallery/Gallery"; 
 import ItemInGalleryContainer from "containers/Gallery/ItemInGalleryContainer/ItemInGalleryContainer";
+import market_style from "market_style";
+
+
 const Wrapper = styled.div`
 *{
     // border:1px solid black;
@@ -43,7 +46,7 @@ const AdditionalInfo = styled.div`
   padding: 62px 59px 61px 60px;
   font-family: Noto Sans KR;
   .title {
-    font-size: 19px;
+    font-size:${market_style.font.size.normal1};
     font-weight: 500;
     line-height: 28px;
     text-align: left;
@@ -55,7 +58,7 @@ const AdditionalInfo = styled.div`
     height: 86px;
     margin-top: 20px;
     margin-bottom: 34px;
-    font-size: 15px;
+    font-size:${market_style.font.size.small1};
     font-weight: 300;
     line-weight: 27px;
     text-align: left;

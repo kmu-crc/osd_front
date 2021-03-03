@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import { FileUploadRequest } from "actions/Uploads";
-
+import market_style from "market_style";
 const FormStyle = styled.input.attrs({type:"text"})`
     width: ${props => props.width}px;
 
@@ -16,13 +16,13 @@ const FormStyle = styled.input.attrs({type:"text"})`
     border:0px;
     text-align:center;
     color:#707070;
-    font-size:17px;
+    font-size:${market_style.font.size.small3};
 
     transition: color 0.1s ease, border-color 0.1s ease;
     &::placeholder {
         color: ${StyleGuide.color.geyScale.scale5};
         font-family:Noto Sans CJK KR, Regular;
-        font-size:17px;
+        font-size:${market_style.font.size.small3};
     }
     &:focus {
         &::placeholder {
@@ -51,14 +51,14 @@ const Label = styled.label`
     margin-left:18px;
     margin-right:20px;
     .text{
-        font-size:17px;
+        font-size:${market_style.font.size.small3};
         font-weight:500;
         color:#707070;
     }
 `
 const Tag=styled.div`
 color:red;
-font-size:17px;
+font-size:${market_style.font.size.small3};
 font-weight:300;
 
 `

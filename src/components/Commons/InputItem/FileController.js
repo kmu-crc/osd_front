@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import FileIcon from "components/Commons/FileIcon";
 import { FormControl } from "modules/FormControl";
+import market_style from "market_style";
 
 const FileWrap = styled.div`
   width: 100%;
@@ -20,7 +21,7 @@ const FileWrap = styled.div`
     }
     .LinkFileName {
       line-height: 70px;
-      font-size: 20px;
+      font-size: ${market_style.font.size.normal3};
     }
   }
 `;

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Controller, FileController } from "components/Commons/InputItem";
 import StyleGuide from "StyleGuide";
 import styled from "styled-components";
-
+import market_style from "market_style";
 //const PrivateItem = styled.div`
 //    padding: 25px 10px;
 //    border-radius: 15px;
@@ -158,7 +158,7 @@ const NewController = styled.li`
   }
   line-height: 29px;
   padding-bottom: 1.5px;
-  font-size: 20px;
+  font-size: ${market_style.font.size.normal3};
   font-weight: 500;
   font-family: Noto Sans KR;
   text-align: center;

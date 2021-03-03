@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import { Icon } from "semantic-ui-react";
-
 const Btn = styled.button`
   padding: 0.75em 2em;
   ${props => props.fluid && "width: 100%"};

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Socket from "modules/socket";
 import styled from 'styled-components';
+import market_style from "market_style";
 
 const MemberStatus = styled.div`
   position: fixed;
@@ -13,7 +14,7 @@ const MemberStatus = styled.div`
   background-color: #EFEFEF;
   z-index: 999;
   .title {
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
     color: #707070;
   }
   .member {

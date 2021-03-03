@@ -6,6 +6,9 @@ import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import Loading from "components/Commons/Loading";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import market_style from "market_style";
+
+
 const Wrapper = styled(ContentBox)`
   width:100%;
   margin-top:60px;
@@ -19,7 +22,7 @@ const MainBox = styled.div`
     width:170px;
     height:29px;
     font-family:Noto Sans KR, Medium;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     font-weight:500;
   }
   .contentsBox{
@@ -48,7 +51,7 @@ const InputTextBox = styled.input`
 const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
   }
   width:562px;
   height:540px;
@@ -91,7 +94,7 @@ const Thumbnail = styled.div`
 const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
   }
   width:939px;
   box-shadow: 5px 5px 10px #00000029;

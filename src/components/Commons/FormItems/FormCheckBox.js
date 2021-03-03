@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
-
+import market_style from "market_style";
 const InputWrap = styled.div`
   position: relative;
   margin-bottom: 2.5rem;
@@ -34,7 +34,7 @@ const CheckBoxLabel = styled.label`
     font-family: "Icons";
     display: block;
     position: absolute;
-    font-size: 12px;
+    font-size: ${market_style.font.size.mini1};
     left: 4px;
     top: -1px;
   }

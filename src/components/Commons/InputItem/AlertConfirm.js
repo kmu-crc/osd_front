@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Modal } from "semantic-ui-react"
+import market_style from "market_style";
+
 const ModalBox = styled(Modal)`
 *{
     // border:1px solid black;
@@ -21,7 +23,7 @@ const ModalBox = styled(Modal)`
         display:flex;
         align-items:center;
         .message{
-            font-size:22px;
+            font-size: ${market_style.font.size.big2};
             font-weight:500;
             line-height:30px;
         }
@@ -50,7 +52,7 @@ const Button = styled.div`
     cursor:pointer;
     .text{
         font-family:Noto Sans KR;
-        font-size:20px;
+        font-size: ${market_style.font.size.normal3};
     }
 `
 

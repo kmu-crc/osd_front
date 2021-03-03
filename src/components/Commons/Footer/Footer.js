@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import TextFormat from "modules/TextFormat"
+import market_style from "market_style";
 // import { Grid } from "semantic-ui-react";
 
 // css styling
@@ -24,7 +25,7 @@ const Foot = styled.footer`
   & .list > a {
     float: left;
     margin-right: 3rem;
-    font-size: 11px;
+    font-size: ${market_style.font.size.tiny3};
     cursor: pointer;
   }
 

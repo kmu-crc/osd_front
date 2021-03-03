@@ -5,6 +5,7 @@ import StyleGuide from "StyleGuide";
 import Open_img from "source/design_bg.jpg";
 import Easy_img from "source/easy_bg2.jpg";
 import Together_img from "source/together_bg.jpg";
+import market_style from "market_style";
 
 const SlideWrap = styled.div`
   width: 100%;
@@ -27,7 +28,7 @@ const SlideWrap = styled.div`
     top: 50%;
     position: absolute;
     color: #fff;
-    font-size: 26px;
+    font-size:${market_style.font.size.giant3};
     width: 80px;
     height: 80px;
     background: transparent;

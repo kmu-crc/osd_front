@@ -23,6 +23,7 @@ import Loading from "components/Commons/Loading";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { Icon } from 'semantic-ui-react'
+import market_style from "market_style";
 
 // import CardComment from './CardComment';
 // import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
@@ -30,7 +31,7 @@ import { Icon } from 'semantic-ui-react'
 const ContentBorder = styled.div`
    height: 29px;
    font-family: Noto Sans KR;
-   font-size: 20px;
+   font-size:${market_style.font.size.normal3};
    color: #707070;
    font-weight: 500;
    line-height: 29px;
@@ -49,7 +50,7 @@ const CommentWrapper = styled.div`
        margin-left: 52px;
        margin-top: 15px;
        color: #707070;
-       font-size: 20px;
+       font-size:${market_style.font.size.normal3};
        font-weight: 500;
        font-family: Noto Sans KR;
        line-height: 29px;
@@ -140,14 +141,14 @@ const CardDialog = styled(Modal)`
             margin-left: 52px;
             .header-title {
                 font-family: Noto Sans KR;
-                font-size: 20px;
+                font-size:${market_style.font.size.normal3};
                 color: #707070;
                 font-weight: 500;
                 line-height: 29px;
             }
             .header-edit-button {
                 font-family: Noto Sans KR;
-                font-size: 17px;
+                font-size:${market_style.font.size.small3};
                 color: #707070;
                 font-weight: 900;
                 line-height: 29px;
@@ -161,7 +162,7 @@ const CardDialog = styled(Modal)`
                     color: #FF0000;
                     padding-bottom: 1.5px;
                     border-bottom: 1.5px solid #FF0000;
-                    font-size: 20px;
+                    font-size:${market_style.font.size.normal3};
                     font-weight: 500;
                     font-family: Noto Sans KR;
                     text-align: left;
@@ -177,7 +178,7 @@ const CardDialog = styled(Modal)`
                     color: #707070;
                     padding-bottom: 1.5px;
                     border-bottom: 1.5px solid #707070;
-                    font-size: 20px;
+                    font-size:${market_style.font.size.normal3};
                     font-weight: 500;
                     font-family: Noto Sans KR;
                     text-align: left;
@@ -193,7 +194,7 @@ const CardDialog = styled(Modal)`
             padding-left: 52px;
             margin-top: 30px;
             .contents {
-                font-size: 20px;
+                font-size:${market_style.font.size.normal3};
                 color: #707070;
                 font-weight: 300;
                 font-family: Noto Sans KR;
@@ -203,7 +204,7 @@ const CardDialog = styled(Modal)`
                 width: max-content;
                 margin-left: auto;
                 margin-right: 5px;
-                font-size: 20px;
+                font-size:${market_style.font.size.normal3};
                 color: #707070;
                 font-weight: 300;
                 font-family: Noto Sans KR;
@@ -213,7 +214,7 @@ const CardDialog = styled(Modal)`
                 width: max-content;
                 margin-right: 75px;
                 color: #707070;
-                font-size: 17px;
+                font-size:${market_style.font.size.small3};
                 font-weight: 300;
                 font-family: Noto Sans KR;
                 line-height: 29px;
@@ -233,7 +234,7 @@ const EditCardHeaderContainer = styled.div`
        .edit-card-info {
            width: max-content;
            height: 29px;
-           font-size: 20px;
+           font-size:${market_style.font.size.normal3};
            font-weight: 500;
            font-family: Noto Sans KR;
            text-align: left;
@@ -248,7 +249,7 @@ const EditCardHeaderContainer = styled.div`
        .thumbnail-txt {
            width: 97px;
            height: 29px;
-           font-size: 20px;
+           font-size:${market_style.font.size.normal3};
            font-weight: 500;
            font-family: Noto Sans KR;
            text-align: left;
@@ -264,7 +265,7 @@ const EditCardHeaderContainer = styled.div`
        .title-txt {
            width: 97px;
            height: 29px;
-           font-size: 20px;
+           font-size:${market_style.font.size.normal3};
            font-weight: 500;
            font-family: Noto Sans KR;
            text-align: left;
@@ -283,7 +284,7 @@ const EditCardHeaderContainer = styled.div`
            width: 100%;
            border: none;
            background: transparent;
-           font-size: 20px;
+           font-size:${market_style.font.size.normal3};
            font-weight: 500;
            color: #707070;
            height: 100%;
@@ -297,7 +298,7 @@ const EditCardHeaderContainer = styled.div`
        .description-txt{
            width: 97px;
            height: 29px;
-           font-size: 20px;
+           font-size:${market_style.font.size.normal3};
            font-weight: 500;
            font-family: Noto Sans KR;
            text-align: left;
@@ -316,7 +317,7 @@ const EditCardHeaderContainer = styled.div`
            width: 100%;
            border: none;
            background: transparent;
-           font-size: 20px;
+           font-size:${market_style.font.size.normal3};
            font-weight: 500;
            color: #707070;
            height: 100%;
@@ -336,7 +337,7 @@ const EditCardHeaderContainer = styled.div`
            color: #FF0000;
            padding-bottom: 1.5px;
            border-bottom: 1.5px solid #FF0000;
-           font-size: 20px;
+           font-size:${market_style.font.size.normal3};
            font-weight: 500;
            font-family: Noto Sans KR;
            text-align: left;
@@ -352,7 +353,7 @@ const EditCardHeaderContainer = styled.div`
            color: #707070;
            padding-bottom: 1.5px;
            border-bottom: 1.5px solid #707070;
-           font-size: 20px;
+           font-size:${market_style.font.size.normal3};
            font-weight: 500;
            font-family: Noto Sans KR;
            text-align: left;

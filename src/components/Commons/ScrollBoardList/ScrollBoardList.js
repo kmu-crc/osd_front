@@ -3,7 +3,7 @@ import React, { Component } from "react";
 // import { Grid, Loader } from "semantic-ui-react";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
-
+import market_style from "market_style";
 // css styling
 const ScrollContainer = styled.div`
   width: 100%;
@@ -14,7 +14,7 @@ const NoPage = styled.div`
   justify-content:center;
   padding:50px;
   .text{
-    font-size:15px;
+    font-size:${market_style.font.size.samll1};
   }
 `
 
