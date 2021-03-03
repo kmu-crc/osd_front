@@ -450,12 +450,17 @@ class CardModal extends Component {
     // componentWillUnmount() {
     //     window.document.removeEventListener("scroll");
     // }
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.card !== this.props.card) {
-            // this.setState({ private: nextProps.card.private });
+    componentDidUpdate(prevProps) {
+        if(prevProps !== this.props.card){
             return true;
         }
-    };
+    }
+    //componentWillReceiveProps(nextProps) {
+    //    if (nextProps.card !== this.props.card) {
+    //        // this.setState({ private: nextProps.card.private });
+    //        return true;
+    //    }
+    //};
     handleUpdate = (obj) => {
         const modified = JSON.stringify(obj.content) !== JSON.stringify(obj.origin);
         this.setState({ isEdited: modified });
