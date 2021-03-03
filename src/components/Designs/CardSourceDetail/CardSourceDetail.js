@@ -1114,7 +1114,7 @@ class CardSourceDetail extends Component {
     let __code = result && result.code && result.code.replaceAll("\n", "<br/>");
     __code = __code && __code.replaceAll("   ", "&emsp;");
     let datalist = [];
-    const answer = result&&JSON.parse(result.answer);
+    const answer = result && JSON.parse(result.answer);
     // console.log("result",this.props);
     return (<div id="card-source-detail-root-node">
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
@@ -1212,7 +1212,7 @@ class CardSourceDetail extends Component {
                 </div>
                 {/* <div className="content_box" style={{ display: "flex", flexDirection: "column" }}> */}
 
-                  {/* <div className="name" style={{ cursor: "pointer" }}
+                {/* <div className="name" style={{ cursor: "pointer" }}
                     onClick={() => { this.setState({ mySource: !this.state.mySource }) }}
                   >{this.state.mySource == false ? "내가 제출한 소스보기∧" : "내가 제출한 소스보기∨"}</div>
                   {this.state.mySource == true ?
@@ -1234,7 +1234,7 @@ class CardSourceDetail extends Component {
                 {/* </div> */}
                 <div className="button-wrapper">
                   <div className="close"
-                    onClick={() => this.setState({ result: false, submit:false, loading: false })} >확인</div>
+                    onClick={() => this.setState({ result: false, submit: false, loading: false })} >확인</div>
                 </div>
               </SubmitResultModal> : null}
 
@@ -1361,7 +1361,7 @@ class CardSourceDetail extends Component {
                       }
                       )}
                     <CodingContent
-                      categoryType={this.props.DesignDetail&&this.props.DesignDetail.category_level3}
+                      categoryType={this.props.DesignDetail && this.props.DesignDetail.category_level3}
                       getValue={this.onAddCoding}
                       order={coding.length} />
                   </React.Fragment>
@@ -1446,6 +1446,7 @@ class CardSourceDetail extends Component {
                     <span >
                       <span className="LinkFileName">{item.file_name}</span>
                       <video
+                        key={item.content}
                         className="iconWrap"
                         width={`${window.innerWidth > 480 ? "640" : window.innerWidth - 55}`}
                         height={`${window.innerWidth > 480 ? "360" : (window.innerWidth - 55) * .55}`}
@@ -1454,7 +1455,7 @@ class CardSourceDetail extends Component {
                     </span>
                     : (item.type === "FILE" && item.extension === "pdf") ?
                       <React.Fragment>
-                        <PdfViewer pdf={item.content} height={true}/>
+                        <PdfViewer pdf={item.content} height={true} />
                       </React.Fragment>
 
                       : (item.type === "FILE" && item.data_type !== "image" && item.data_type !== "video") ?
@@ -1610,7 +1611,7 @@ class CardSourceDetail extends Component {
                                     if (permission === "LOG SUBMIT" || permission === "LOG") {
                                       this.setState({ item: JSON.parse(item.content), item_uid: item.uid, item_user: item.user_id, tab: item.user_id === this.props.userInfo.uid ? "code" : "log" });
                                       this.setState({ submit: true });
-                                      this.setState({coding:[]});
+                                      this.setState({ coding: [] });
                                     } else {
                                       await alert("해당문제의 제출 권한이 없습니다.");
                                     }
@@ -1709,7 +1710,7 @@ class CardSourceDetail extends Component {
                         item={item}
                         initClick={this.state.click}
                         getValue={(data) => {
-                          if(data!=null){
+                          if (data != null) {
                             this.onChangeValue(data, item.order)
                           }
                         }}
@@ -1917,7 +1918,7 @@ class CodingContent extends Component {
         this.setState({ initClick: false });
       }, 100);
     } else {
-      await this.setState({ type, order: this.props.order, content: "",name:`__main${this.props.order==0?"":this.props.order}.cpp` });
+      await this.setState({ type, order: this.props.order, content: "", name: `__main${this.props.order == 0 ? "" : this.props.order}.cpp` });
       this.returnData();
     }
   }
@@ -1946,7 +1947,7 @@ class CodingContent extends Component {
         </div>
 
         {this.state.type === "FILE" &&
-          <FileController accept={this.props.categoryType == "1"?".c, .cpp, .h":this.props.categoryType=="2"?".py":null} item={this.state} getValue={this.returnData} />}
+          <FileController accept={this.props.categoryType == "1" ? ".c, .cpp, .h" : this.props.categoryType == "2" ? ".py" : null} item={this.state} getValue={this.returnData} />}
 
       </ControllerWrap2>
     );
@@ -1995,7 +1996,7 @@ class SubmitLogContainer extends React.Component {
     this.setState({ loading: false });
   }
   render() {
-    console.log("-----------",this.props)
+    console.log("-----------", this.props)
     const { loading, MySubmitList } = this.state;
     const AddButton = () => {
       return (
@@ -2003,17 +2004,17 @@ class SubmitLogContainer extends React.Component {
       );
     }
     const data = MySubmitList && MySubmitList.length > 0 && MySubmitList.map((submit, index) => {
-    console.log(submit&&new Date(submit.create_date));
-    const create_Date = submit && new Date(submit.create_date); 
-    const timecheck = create_Date == null? null
-    :create_Date.getFullYear().toString().substr(2,2)+":"
-    +((create_Date.getMonth()+1)<10?"0"+(create_Date.getMonth()+1):(create_Date.getMonth()+1))+":"
-    +(create_Date.getDate()<10?"0"+create_Date.getDate():create_Date.getDate())+":"
-    +(create_Date.getHours()<10?"0"+create_Date.getHours():create_Date.getHours())+":"
-    +(create_Date.getMinutes()<10?"0"+create_Date.getMinutes():create_Date.getMinutes());
-    console.log(timecheck)
-    
-    const row = {
+      console.log(submit && new Date(submit.create_date));
+      const create_Date = submit && new Date(submit.create_date);
+      const timecheck = create_Date == null ? null
+        : create_Date.getFullYear().toString().substr(2, 2) + ":"
+        + ((create_Date.getMonth() + 1) < 10 ? "0" + (create_Date.getMonth() + 1) : (create_Date.getMonth() + 1)) + ":"
+        + (create_Date.getDate() < 10 ? "0" + create_Date.getDate() : create_Date.getDate()) + ":"
+        + (create_Date.getHours() < 10 ? "0" + create_Date.getHours() : create_Date.getHours()) + ":"
+        + (create_Date.getMinutes() < 10 ? "0" + create_Date.getMinutes() : create_Date.getMinutes());
+      console.log(timecheck)
+
+      const row = {
         "key": index,
         "result":
           submit.result === "S" ? "성공"
@@ -2025,10 +2026,10 @@ class SubmitLogContainer extends React.Component {
                       : submit.result === "E" ? "실패(서버에러)"
                         : submit.result === "P" ? "실패(문제에러)"
                           : "실패",
-        "message": submit.result=="S"?"성공": submit.message || "실패",
+        "message": submit.result == "S" ? "성공" : submit.message || "실패",
         // "time": submit.avg_time ? submit.avg_time + "초" : "",
         // "space": submit.avg_memory ? submit.avg_memory + "kb" : "",
-        "submit-time": timecheck+"",
+        "submit-time": timecheck + "",
         "code": submit.answer || "",
       }
       return row;
@@ -2036,7 +2037,7 @@ class SubmitLogContainer extends React.Component {
     const columns = [
       {
         title: "결과",
-        
+
         key: "message",
         width: 450,
       },
