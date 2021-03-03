@@ -5,9 +5,12 @@ import styled from "styled-components";
 
 // CSS STYLING
 const ScrollContainer = styled.div`
-// *{ border:1px solid red; }
+*{
+  // border:1px solid black;
+}
 `;
 const ListContainer = styled.div`
+  padding:0px;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -15,26 +18,24 @@ const ListContainer = styled.div`
   .item {
     flex: 0 0 180px;
     justify-content: space-around;
-    margin: 0px 15px 29px 0px;
+    margin: 0px 27px 29px 0px;
     padding: 0px;
-    // background: #F7F7F7;
-    // border: 1px solid #EFEFEF;
   }
+  .item_first_margin{margin:0px 27px 27px 0px}
+  .item_last_margin{margin:0px 0px 27px 0px}
   .designer {
     flex: 0 0 247px;
     justify-content: space-around;
-    margin: 0px 19px 35px 0px;
+    margin: 0px 29px 35px 0px;
     padding: 0px;
-    // background: #707070;
-    // border: 1px solid #FAFAFA;
   }
+  .designer_first_margin{margin:0px 29px 35px 0px}
+  .designer_last_margin{margin:0px 0px 35px 0px}
   .maker {
     flex: 0 0 247px;
     justify-content: space-around;
     margin: 0px 19px 35px 0px;
     padding: 0px;
-    // background: #707070;
-    // border: 1px solid #FAFAFA;
   }
   .gallery{
     flex: 0 0 180px;
@@ -91,7 +92,8 @@ class ScrollList extends Component {
             }>
             <ListContainer>
               {this.props.dataListAdded.map((content, index) => (
-                <div key={index} className={`${type}`}>
+                <div key={index} className={this.props.type == "item"?index%4==0?"item item_first_margin":index%4==3?"item item_last_margin":"item":
+                this.props.type == "designer"&&index%5==0?"designer designer_first_margin":index%5==4?"designer designer_last_margin":"designer"}>
                   <ListComponent data={content} type={type} confirm={this.props.confirm} handler={this.props.handler} />
                 </div>
               ))}

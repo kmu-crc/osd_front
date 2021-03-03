@@ -11,7 +11,7 @@ import Carousel from 'react-leaf-carousel';
 
 const SlideWrap = styled.div`
   min-width: 1366px;
-  height: 350px;
+  height: 310px;
   overflow: hidden;
   position: relative;
   & .slider-wrapper ul {

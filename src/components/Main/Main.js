@@ -18,7 +18,7 @@ const Head = styled.div`
   width: max-content;
   text-align: left;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 24px;
   font-family: Noto Sans KR;
   letter-spacing: 0;
   color: #060000;
@@ -26,6 +26,9 @@ const Head = styled.div`
 `;
 const TextWrapper = styled.div`
   padding-top: ${Margin}px;
+
+  margin-top:20px;
+  margin-bottom:40px;
 `;
 class Main extends Component {
   render() {
