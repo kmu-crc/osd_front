@@ -44,7 +44,7 @@ const DragHandler = styled.div`
         }
     }
 `;
-
+let bought = false;
 const Container = SortableContainer(({ children }) =>
     <ul style={{ margin: "0px", padding: "0px" }}>{children}</ul>);
 const HorizonDragHandle = SortableHandle(() =>
@@ -61,17 +61,17 @@ const margin = {
     marginTop: "25px", marginRight: "74px", marginBottom: "37px"
 };
 const SortableCard = SortableElement(({ disableReorder, editor, card, openCard, boardId, designId, userInfo }) => (
-    <ContentCard 
-    // onClick={() => openCard(card, card.order, boardId)}
-    onClick={async() =>
-        (card.private === 1)
-            ? (userInfo && (userInfo.uid === card.user_id || userInfo.uid === 77))
-                ? openCard(card, card.order, boardId)
-                : await alert("이 컨텐츠는 비공개입니다.\n컨텐츠 구매자만 열람할 수 있습니다.")
-            : openCard(card, card.order, boardId)
-        // : openCard(card, card.order, boardId)
-    }
-         id="contentcard" uid={card.uid} {...margin} card={card} designId={designId} >
+    <ContentCard
+        // onClick={() => openCard(card, card.order, boardId)}
+        onClick={async () =>
+            (card.private === 1)
+                ? (userInfo && (userInfo.uid === card.user_id || bought))
+                    ? openCard(card, card.order, boardId)
+                    : await alert("이 컨텐츠는 비공개입니다.\n컨텐츠 구매자만 열람할 수 있습니다.")
+                : openCard(card, card.order, boardId)
+            // : openCard(card, card.order, boardId)
+        }
+        id="contentcard" uid={card.uid} {...margin} card={card} designId={designId} >
         {editor && !disableReorder ? <VerticalDragHandle is_white={card.first_img} /> : null}
     </ContentCard>));
 
@@ -105,9 +105,9 @@ const SortableStep = SortableElement(({ disableReorder, reload, index, editStep,
                         designId={designId}
                         openCard={openCard}
                         reorder={reorder}
-                        disableReorder={disableReorder} 
+                        disableReorder={disableReorder}
                         userInfo={userInfo}
-                        />
+                    />
                 </div>
             </React.Fragment> : null}
 
@@ -157,7 +157,7 @@ class SortableDesignCards extends Component {
 
     render() {
         const { items } = this.state;
-        const { editor, designId, openCard, createCard, boardId,userInfo } = this.props;
+        const { editor, designId, openCard, createCard, boardId, userInfo } = this.props;
 
         return (<Container
             axis="y"
@@ -189,6 +189,9 @@ class SortableDesignSteps extends Component {
         if (oldIndex === newIndex) return;
         this.setState(({ items }) => ({ items: arrayMove(items, oldIndex, newIndex), }));
         this.props.reorder(this.state.items);
+    }
+    componentDidMount() {
+        bought = this.props.bought;
     }
     shouldComponentUpdate(nextProps, nextState) {
         if (nextProps.reload !== this.props.reload) {
