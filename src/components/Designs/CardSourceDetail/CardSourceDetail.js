@@ -1455,6 +1455,9 @@ class CardSourceDetail extends Component {
                     </span>
                     : (item.type === "FILE" && item.extension === "pdf") ?
                       <React.Fragment>
+                        <div style={{ fontSize: "1.25rem", color: "#707070", marginLeft: "auto", border: "1px solid transparent", width: "max-content" }}>
+                          <a href={item.content} ><i className="save icon large" />PDF다운로드</a>
+                        </div>
                         <PdfViewer pdf={item.content} height={true} />
                       </React.Fragment>
 
@@ -1587,7 +1590,13 @@ class CardSourceDetail extends Component {
                                   <div className="problemBox">
                                     <div className="board">
                                       {/* {item.content && IsJsonString(item.content) && JSON.parse(item.content).cotents && */}
-                                      {item.content && <PdfViewer pdf={JSON.parse(item.content).contents} />}
+                                      {item.content &&
+                                        <React.Fragment>
+                                          <div style={{ fontSize: "1.25rem", color: "#707070", marginLeft: "auto", border: "1px solid transparent", width: "max-content" }}>
+                                            <a href={item.content} ><i className="save icon large" />PDF다운로드</a>
+                                          </div>
+                                          <PdfViewer pdf={JSON.parse(item.content).contents} />
+                                        </React.Fragment>}
                                       {/* {item.content && JSON.parse(item.content).contents} */}
                                     </div>
                                   </div>
