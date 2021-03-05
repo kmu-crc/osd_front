@@ -358,7 +358,7 @@ class GroupNotice extends Component {
                 <div
                   className="new-notice"
                   onClick={() => { this.setState({ newNoticeDialog: true }) }}>
-                  새 공지사항 등록하기</div> : null}
+                  공지사항</div> : null}
             </div>
           </div>
 
