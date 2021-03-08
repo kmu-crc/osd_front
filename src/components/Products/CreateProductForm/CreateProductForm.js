@@ -17,6 +17,9 @@ import { StepCard, CreateStep, CreateCard, } from "components/GridEditor";
 import arrow from "source/arrow.svg";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import market_style from "market_style";
+
+
 const fashion = [
   { order: 0, title: "Ideation" },
   { order: 1, title: "Purpose" },
@@ -267,7 +270,7 @@ const DesignElement = styled.div`
   position: relative;
   cursor: pointer;
   color: white;
-  font-size: 20px;
+  font-size:${market_style.font.size.normal3};
   font-family: "Noto Sans KR";
   z-index: 700;
   width: 300px;
@@ -303,7 +306,7 @@ const DesignElement = styled.div`
     margin-left: 25px;
     margin-top: 201px;
     .design-title {
-      font-size: 20px;
+      font-size:${market_style.font.size.normal3};
       font-weight: 700;
       text-shadow:2px 2px 6px gray;
       display: flex;
@@ -315,7 +318,7 @@ const DesignElement = styled.div`
       border: 1px solid red;
       width: max-content;
       height: 25px;
-      font-size: 17px;
+      font-size:${market_style.font.size.small3};
       font-family: Noto Sans KR;
       text-shadow:2px 2px 6px gray;
       line-height: 25px;
@@ -323,7 +326,7 @@ const DesignElement = styled.div`
       // cursor: default;
     }
     .user-name {
-      font-size: 20px;
+      font-size:${market_style.font.size.normal3};
       font-weight: 300;
       text-shadow:2px 2px 6px gray;
       // cursor: default;
@@ -346,7 +349,7 @@ const DesignElement = styled.div`
     height: 22px;
     text-align: left;
     line-height: 40px;
-    font-size: 15px;
+    font-size:${market_style.font.size.small1};
     font-weight: 500;
     align-items: center;
   }
@@ -392,7 +395,7 @@ const MainBox = styled.div`
     width:170px;
     height:29px;
     font-family:Noto Sans KR, Medium;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     font-weight:500;
   }
   .contentsBox {
@@ -420,7 +423,7 @@ const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
     font-weight:500;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
   }
   width: 562px;
   height: max-content;
@@ -463,7 +466,7 @@ const FormBox = styled.div`
   *{
     // border: 1px solid blue;
 
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
   }
   
   width:${props => props.width || 939}px;
@@ -509,7 +512,7 @@ const FormBox = styled.div`
   }
 `;
 const DescirptionText = styled.div`
-  font-size:13px;
+font-size:${market_style.font.size.mini2};
   color:#707070;
 `;
 const InputText = styled.input`
@@ -517,7 +520,7 @@ const InputText = styled.input`
   height: 52px;
   border-radius: 26px;
   font-family: Noto Sans KR;
-  font-size: 20px;
+  font-size:${market_style.font.size.normal3};
   background-color: #E9E9E9;
   margin-right: 21px;
   outline: none;
@@ -530,7 +533,7 @@ const InputTextarea = styled.textarea`
   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
   border-radius:20px;
   font-family:Noto Sans KR;
-  font-size:20px;
+  font-size:${market_style.font.size.normal3};
   background-color:#E9E9E9;
   outline:none;
   border:0px;
@@ -559,14 +562,14 @@ const InfoContentChooseItemType = styled.div`
   margin-top: 76px;
   margin-left: auto;
   margin-right: auto;
-  font-size: 24px;
+  font-size:${market_style.font.size.giant1};
   color: #707070;
 `;
 const EditorWrapper = styled.div`
   .title {
     color: #707070;
     width: max-content;
-    font-size: 26px;
+    font-size:${market_style.font.size.giant3};
     font-weight: 300;
     margin-top: 25px;
     margin-bottom: 15px;
@@ -581,7 +584,7 @@ const ResetButtonWrapper = styled.div`
   margin-left: auto;
   margin-right: 25px;
   color: #707070;
-  font-size: 16px;
+  font-size:${market_style.font.size.small2};
   cursor: pointer;
   margin-top: 10px;
   margin-bottom: 20px;
@@ -798,7 +801,7 @@ const DesignTemplateSelector = styled.div`
     color: #707070;
     font-weight: 300;
     width: max-content;
-    font-size: 26px;
+    font-size:${market_style.font.size.giant3};
     margin-bottom: 15px;
     // padding: 10px 5px;
     // line-height: 2rem;
@@ -1005,7 +1008,7 @@ class ItemDesign extends Component {
 const NoInviteMemberBox = styled.div`
   margin-left: 167px;
   margin-top: 30px;
-  font-size: 20px;
+  font-size:${market_style.font.size.normal3};
   font-weight: 500;
   font-family: Noto Sans KR;
   color: #707070;

@@ -4,6 +4,7 @@ import DateFormat from "modules/DateFormat";
 import styled from "styled-components";
 import PxtoRem from "modules/PxtoRem";
 import { Icon } from 'semantic-ui-react'
+import market_style from "market_style";
 
 const CreateCardContainer = styled.div`
     width: 200px;
@@ -25,7 +26,7 @@ const CreateCardContainer = styled.div`
         height: 29px;
         color: #707070;
         font-family: Noto Sans KR;
-        font-size: 20px;
+        font-size:${market_style.font.size.normal3};
         text-align: center;
         line-height: 29px;
     }
@@ -52,7 +53,7 @@ const CreateStepContainer = styled.div`
         height: 29px;
         color: #707070;
         font-family: Noto Sans KR;
-        font-size: 20px;
+        font-size:${market_style.font.size.normal3};
         text-align: left;
         line-height: 29px;
     }
@@ -99,7 +100,7 @@ const StepCardStyle = styled.div`
         width: 178px;
         color: #707070;
         font-family: Noto Sans KR;
-        font-size: 20px;
+        font-size:${market_style.font.size.normal3};
         text-align: center;
         // line-height: 29px;
     }

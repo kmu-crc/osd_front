@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
-
+import market_style from "market_style";
 const FormStyle = styled.input`
     width: ${props => props.width}px;
     margin: 0;
@@ -10,7 +10,7 @@ const FormStyle = styled.input`
     height:43px;
     border-radius:20px;
     font-family:Noto Sans KR;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     background-color:#E9E9E9;
     outline:none;
     border:0px;

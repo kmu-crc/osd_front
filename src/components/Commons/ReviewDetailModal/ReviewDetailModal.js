@@ -6,7 +6,7 @@ import noimg from "source/noimg.png";
 import Star from "components/Commons/Star";
 import { Rating } from 'semantic-ui-react'
 import arrow from "source/rightarrow.svg";
-
+import market_style from "market_style";
 const AddPic = styled.div`
     min-width:${props=>props.width}px;
     min-height:${props=>props.height}px;
@@ -24,7 +24,7 @@ const AddPic = styled.div`
     justify-content:center;
     align-items:center;
     .text{
-        font-size:15px;
+        font-size:${market_style.font.size.samll1};
         color:white;
     }
 `
@@ -42,7 +42,7 @@ const CustomButton = styled.div`
     cursor:pointer;
     transform:rotate(${props=>props.rotate==null?0:props.rotate}deg);
     .text{
-        font-size:15px;
+        font-size:${market_style.font.size.samll1};
         color:white;
     }
 `
@@ -89,19 +89,19 @@ const WriteDialog=styled(Modal)`
         .left{
             display:flex;
             .nickName{
-                font-size:15px;
+                font-size:${market_style.font.size.samll1};
                 font-family:Noto Sans CJK KR, Regular;
                 margin-right:10px;
             }
             .productName{
-                font-size:15px;
+                font-size:${market_style.font.size.samll1};
                 font-family:Noto Sans CJK KR, Regular;
                 margin-left:10px;
             }
         }
         .right{
             .create_time{
-                font-size:15px;
+                font-size:${market_style.font.size.samll1};
                 font-family:Noto Sans CJK KR, Regular;
             }
         }
@@ -132,7 +132,7 @@ const WriteDialog=styled(Modal)`
         .comment{
             width:100%;
             font-family:Noto Sans CJK KR, Regular;
-            font-size:20px;
+            font-size:${market_style.font.size.normal3};
             font-weight:300;    
             line-height:20px;        
         }
@@ -180,19 +180,19 @@ const Dialog = styled(Modal)`
         .left{
             display:flex;
             .nickName{
-                font-size:15px;
+                font-size:${market_style.font.size.samll1};
                 font-family:Noto Sans CJK KR, Regular;
                 margin-right:10px;
             }
             .productName{
-                font-size:15px;
+                font-size:${market_style.font.size.samll1};
                 font-family:Noto Sans CJK KR, Regular;
                 margin-left:10px;
             }
         }
         .right{
             .create_time{
-                font-size:15px;
+                font-size:${market_style.font.size.samll1};
                 font-family:Noto Sans CJK KR, Regular;
             }
         }
@@ -233,7 +233,7 @@ const Dialog = styled(Modal)`
         .comment{
             width:100%;
             font-family:Noto Sans CJK KR, Regular;
-            font-size:20px;
+            font-size:${market_style.font.size.normal3};
             font-weight:300;   
             margin-top:16px;     
             line-height:29px;            

@@ -9,6 +9,7 @@ import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
 import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
 import FileIcon from "components/Commons/FileIcon";
 import category_icon from "source/category_icon.svg";
+import market_style from "market_style";
 
 
 const LocationList = [
@@ -52,7 +53,7 @@ const MainBox = styled.div`
     width:170px;
     height:29px;
     font-family:Noto Sans KR, Medium;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     font-weight:500;
     // margin-left:130px;
 
@@ -128,17 +129,17 @@ const FormBox = styled.div`
   }
  
   .file_label{
-    font-size:17px;
+    font-size:${market_style.font.size.small3};
     color:red;
   }
   ._black_{
-    font-size:17px;
+    font-size:${market_style.font.size.small3};
     color:black;
   }
   .label2{
     min-width:157px;
     height:29px;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     font-family:Noto Sans CJK KR, Regular;
     // color:#707070;
     margin-right:60px;
@@ -146,7 +147,7 @@ const FormBox = styled.div`
   .label{
     min-width:157px;
     height:max-content;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     font-family:Noto Sans CJK KR, Regular;
     color:#707070;
     margin-right:60px;
@@ -162,7 +163,7 @@ const FormBox = styled.div`
   }
   .textBox{
     font-family:Noto Sans CJK KR, Regular;
-    font-size:17px;
+    font-size:${market_style.font.size.small3};
     line-height:17px;
     display:flex;
   }
@@ -174,7 +175,7 @@ const InputTextarea = styled.textarea`
   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
   border-radius:20px;
   font-family:Noto Sans KR;
-  font-size:20px;
+  font-size:${market_style.font.size.normal3};
   background-color:#E9E9E9;
   outline:none;
   border:0px;
@@ -193,7 +194,7 @@ const InputText = styled.input.attrs({ type: "text" })`
   height:52px;
   border-radius:26px;
   font-family:Noto Sans KR;
-  font-size:20px;
+  font-size:${market_style.font.size.normal3};
   background-color:#E9E9E9;
   margin-right:21px;
   outline:none;
@@ -211,7 +212,7 @@ const TagPiece = styled.div`
     display: flex;
     justify-content: space-between;
     align-items:center;
-    font-size:15px;
+    font-size:${market_style.font.size.small1};
     font-family:Noto Sans CJK KR, Regular;
     margin-right:8px;
     .close {

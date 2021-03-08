@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "semantic-ui-react";
 import styled from "styled-components"
 import { confirmable, createConfirmation } from "react-confirm";
-
+import market_style from "market_style";
 const ModalBox = styled(Modal)`
     *{
         // border:1px solid black;
@@ -25,7 +25,7 @@ const ModalBox = styled(Modal)`
         align-items:center;
         padding:20px;
         .message{
-            font-size:20px;
+            font-size: ${market_style.font.size.normal3};
             font-weight:500;
             line-height:30px;
         }
@@ -65,7 +65,7 @@ const Button = styled.div`
     cursor:pointer;
     .text{
         font-family:Noto Sans KR;
-        font-size:20px;
+        font-size: ${market_style.font.size.normal3};
     }
 `
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { FormFile } from "./FormFile";
-
+import market_style from "market_style";
 const InputWrap = styled.div`
 // div{ border:1px solid red; };
   // position: relative;
@@ -29,7 +29,7 @@ const InputWrap = styled.div`
   .find{
     width:max-content;
     font-weight: 500;
-    font-size: 17px;
+    font-size: ${market_style.font.size.small3};
     border-bottom: 1.5px solid #FF0000;
     line-height: 25px;
     text-align: left;
@@ -41,7 +41,7 @@ const InputWrap = styled.div`
     height: 45px;
     margin-top: 11px;
     font-weight: 300;
-    font-size: 14px;
+    font-size: ${market_style.font.size.mini3};
     line-height: 20px;
     text-align: left;
     color: #707070;

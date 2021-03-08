@@ -97,7 +97,7 @@ const CommentContainer = styled.div`
   }
   & .ui.button.primary {
     background: ${StyleGuide.color.sub.bule.basic};
-    font-size: 12px;
+    font-size:${market_style.font.size.small1};
     &:hover {
       border: 0;
       background: ${StyleGuide.color.sub.bule.dark};

@@ -6,6 +6,7 @@ import Loading from "components/Commons/Loading";
 import { AddController, Controller } from "components/Commons/InputItem";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import market_style from "market_style";
 
 const ContentForm = async (data, oldData) => {
   let formData = {
@@ -52,7 +53,7 @@ const ViewContent = styled.div`
   }
   .LinkFileName {
     line-height: 70px;
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
   }
   .iconWrap {
     display: block;
@@ -95,7 +96,7 @@ const ButtonContainer = styled.div`
     border: none;
     border-bottom: 1px solid red;
     color: #FF0000;
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
     font-weight: 500;
     background: none;
     cursor: pointer;
@@ -112,7 +113,7 @@ const ButtonContainer = styled.div`
     padding-bottom: 1px;
     border-bottom: 1px solid red;
     color: #FF0000;
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
     font-weight: 500;
     background: none;
     cursor: pointer;
@@ -134,7 +135,7 @@ const EditorBottonWrapper = styled.div`
       padding: 7px;
       padding-bottom: 1px;
       color: #FF0000;
-      font-size: 20px;
+      font-size:${market_style.font.size.normal3};
       font-weight: 500;
       cursor: pointer;
       :hover{
@@ -150,7 +151,7 @@ const EditorBottonWrapper = styled.div`
       padding: 7px;
       padding-bottom: 1px;
       color: #707070;
-      font-size: 20px;
+      font-size:${market_style.font.size.normal3};
       font-weight: 500;
       cursor: pointer;
       :hover{
@@ -168,7 +169,7 @@ const PrivateContentWrapper = styled.div`
   border-radius: 15px;
   line-height: 35px;
   text-align: center;
-  font-size: 25px;
+  font-size:${market_style.font.size.giant2};
   color: #707070;
   background-color: #EFEFEF;
 `;

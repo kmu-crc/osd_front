@@ -13,6 +13,7 @@ import { Icon } from "semantic-ui-react";
 // import NumberFormat from "modules/NumberFormat";
 // import Item from "components/Items/Item/Item"
 import ArticleModal from "components/Commons/ArticleModal/ArticleModal";
+import market_style from "market_style";
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -78,14 +79,14 @@ const TextWrapper = styled.div`
   letter-spacing: 0;
   .nick {
     font-weight: 500;
-    font-size: 22px;
+    font-size:${market_style.font.size.big2};
     color: #000000;
     line-height: 33px;
   }
   .category {
     margin-top: 12px;
     font-weight: 300;
-    font-size: 15px;
+    font-size:${market_style.font.size.small1};
     line-height: 22px;
     color: #FF0000;
   }
@@ -103,7 +104,7 @@ const Counter = styled.div`
 
   .items {
     text-align: center;
-    font-size: 12px;
+    font-size:${market_style.font.size.small1};
     font-weight: 300;
     line-height: 18px;
   }
@@ -116,7 +117,7 @@ const Counter = styled.div`
   }
   .likes {
     text-align: left;
-    font-size: 12px;
+    font-size:${market_style.font.size.small1};
     font-weight: 500;
     line-height: 18px;
   }
@@ -142,7 +143,7 @@ const Introduction = styled.div`
       display:flex;
     }
     .title {
-      font-size: 19px;
+      font-size:${market_style.font.size.normal1};
       font-weight: 500;
       line-height: 28px;
       text-align: left;
@@ -151,7 +152,7 @@ const Introduction = styled.div`
       width: 100%;
       margin-top: 15px;
       margin-bottom:25px;
-      font-size: 15px;
+      font-size:${market_style.font.size.small1};
       font-weight: 300;
       line-weight: 27px;
       text-align: left;
@@ -274,7 +275,7 @@ const ItemInfo = styled.div`
   padding: 30px 60px 30px 60px;
 
   .title {
-    font-size: 19px;
+    font-size:${market_style.font.size.normal1};
     font-weight: 500;
     line-height: 28px;
     text-align: left;
@@ -287,7 +288,7 @@ const ItemInfo = styled.div`
     height: 86px;
     margin-top: 20px;
     margin-bottom: 34px;
-    font-size: 15px;
+    font-size:${market_style.font.size.small1};
     font-weight: 300;
     line-weight: 27px;
     text-align: left;
@@ -338,7 +339,7 @@ const AdditionalInfo = styled.div`
       position:relative;
 
       .title {
-        font-size: 19px;
+        font-size:${market_style.font.size.normal1};
         font-weight: 500;
         line-height: 28px;
         text-align: left;
@@ -351,7 +352,7 @@ const AdditionalInfo = styled.div`
         height: max-content;
         margin-top: 20px;
         margin-bottom: 34px;
-        font-size: 15px;
+        font-size:${market_style.font.size.small1};
         font-weight: 300;
         line-weight: 27px;
         text-align: left;
@@ -424,7 +425,7 @@ const MakerBoard = styled.div`
       }
       .title {
         color: #000000;
-        font-size: 19px;
+        font-size:${market_style.font.size.normal1};
         font-weight: 500;
         line-height: 28px;
         text-align: left;
@@ -432,7 +433,7 @@ const MakerBoard = styled.div`
       .list {
         // margin-top: 72px;
         font-weight: 300;
-        font-size: 19px;
+        font-size:${market_style.font.size.normal1};
         text-align: left;
         line-height: 27px;
         color: #000000;
@@ -476,7 +477,7 @@ const MakerBoard = styled.div`
         margin-top: 87px;
         margin-left: auto;
         margin-right: auto;
-        font-size: 20px;
+        font-size:${market_style.font.size.normal3};
         font-weight: 500;
         text-aglin: left;
         display: flex;
@@ -512,7 +513,7 @@ const Wrapper = styled.div`
 const ExpTable = styled.div`
     *{
       font-family:Noto Sans KR;
-      font-size:16px;
+      font-size:${market_style.font.size.small2};
     }
     width: ${props => props.width == null ? "100%" : props.width + "px"};
     height: ${props => props.height == null ? "max-content" : props.height + "px"};
@@ -639,8 +640,8 @@ justify-content:flex-end;
     padding:12px 39px 12px 39px;
 }
 .font{
-    font-size:20px;
-    color:white;
+  font-size:${market_style.font.size.normal3};
+  color:white;
 }
 `;
 

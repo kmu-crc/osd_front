@@ -6,6 +6,7 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import reply from "source/reply_.svg";
 import Cross from "components/Commons/Cross";
 import { Modal } from 'semantic-ui-react';
+import market_style from "market_style";
 
 const HRLine = styled.div`
     width:100%;
@@ -22,7 +23,7 @@ const Icon = styled.div`
 `
 const ReplyBox= styled.div`
 *{
-    font-size:17px;
+    font-size:${market_style.font.size.small3};
 }
     width:100%;
     height:61px;
@@ -65,7 +66,7 @@ const ReplyBox= styled.div`
 `
 const CommentDetail = styled.div`
     padding-left:170px;
-    font-size:15px;
+    font-size:${market_style.font.size.small1};
     background-color:#EFEFEF;
     padding-top:30px;
     padding-bottom:30px;
@@ -77,7 +78,7 @@ const Page = styled.div`
     margin-top: 35px;
     margin-left: auto;
     margin-right: auto;
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
     font-weight: 500;
     text-aglin: left;
     display: flex;
@@ -106,7 +107,7 @@ const ReplyForm = styled.textarea`
         background-color:#efefef;
         border:none;
         padding:20px;
-        font-size:17px;
+        font-size:${market_style.font.size.small3};
         white-space:pre;
 `
 const AnswerBox = styled.div`
@@ -124,7 +125,7 @@ const AnswerForm = styled.textarea`
         background-color:#efefef;
         border:none;
         padding:20px;
-        font-size:17px;
+        font-size:${market_style.font.size.small3};
         white-space:pre;
 `
 const QuestionButton = styled.div`
@@ -138,7 +139,7 @@ const QuestionButton = styled.div`
     color:red;
     .quest{
         font-weight:500;
-        font-size:20px
+        font-size:${market_style.font.size.normal3};
     }
     
 `
@@ -183,7 +184,7 @@ const Dialog = styled(Modal)`
     .wrapper{
         width:100%;
         .modal_comment{
-            font-size:17px;
+            font-size:${market_style.font.size.small3};
         }
     }
     `

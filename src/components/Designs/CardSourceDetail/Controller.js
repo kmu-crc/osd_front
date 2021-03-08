@@ -44,7 +44,7 @@ const EditBtn = styled.button`
   border-radius: 25px;
   line-height: 25px;
   box-sizing: border-box;
-  font-size: 12px;
+  font-size:${market_style.font.size.small1};
   background-color: ${StyleGuide.color.sub.bule.basic};
   color: white;
   text-align: center;

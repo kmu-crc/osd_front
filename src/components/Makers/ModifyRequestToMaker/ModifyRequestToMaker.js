@@ -8,6 +8,7 @@ import { FileUploadRequest } from "actions/Uploads";
 import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
 import category_icon from "source/category_icon.svg";
 import { alert } from "components/Commons/Alert/Alert";
+import market_style from "market_style";
 
 const CustomIcon=styled.div`
   width:${props => props.width}px;
@@ -51,7 +52,7 @@ const MainBox = styled.div`
     width:170px;
     height:29px;
     font-family:Noto Sans CJK KR, Medium;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     font-weight:500;
     margin-left:130px;
 
@@ -77,7 +78,7 @@ const FormBox = styled.div`
 
   font-family:Noto Sans KR;
   font-weight:500;
-  font-size:20px;
+  font-size:${market_style.font.size.normal3};
   width:100%;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
@@ -105,13 +106,13 @@ const FormBox = styled.div`
   }
   .label{
     font-family:Noto Sans CJK KR, Regular;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     min-width:157px;
     height:29px;
   }
   .text_small{
     font-family:Noto Sans CJK KR, Regular;
-    font-size:17px;
+    font-size:${market_style.font.size.small3};
   }
   .label_centering{
     text-align:center;
@@ -128,7 +129,7 @@ const FormBox = styled.div`
   }
   .information {
     color: red;
-    font-size: 16px;
+    font-size:${market_style.font.size.small2};
     margin-left: 10px;
   }
 `;
@@ -137,7 +138,7 @@ const InputText = styled.input.attrs({ type: "text" })`
   height:52px;
   border-radius:26px;
   font-family:Noto Sans KR;
-  font-size:20px;
+  font-size:${market_style.font.size.normal3};
   background-color:#E9E9E9;
   margin-right:21px;
   outline:none;
@@ -150,7 +151,7 @@ const InputTextarea = styled.textarea`
   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
   border-radius:20px;
   font-family:Noto Sans KR;
-  font-size:20px;
+  font-size:${market_style.font.size.normal3};
   background-color:#E9E9E9;
   outline:none;
   border:0px;

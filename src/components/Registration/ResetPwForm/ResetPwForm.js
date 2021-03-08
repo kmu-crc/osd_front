@@ -7,6 +7,7 @@ import Button from "components/Commons/Button";
 import ResetPwModal from "./ResetPwModal";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import market_style from "market_style";
 
 const Bg = styled.div`
   width: 100vw;
@@ -40,7 +41,7 @@ align-items:center;
       justify-content:center;
       align-items:center;
       .title{
-        font-size:20px;
+        font-size:${market_style.font.size.normal3};
         font-weight:700;
       }
       .explain{
@@ -52,7 +53,7 @@ align-items:center;
     }
     .row{
       *{
-        font-size:16px;
+        font-size:${market_style.font.size.small2};
       }
       display:flex;
       height:43px;

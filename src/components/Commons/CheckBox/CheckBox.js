@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import market_style from "market_style";
 
 const CheckboxContainer = styled.label`
     .control {
@@ -10,7 +11,7 @@ const CheckboxContainer = styled.label`
         margin-bottom: 5px;
         padding-top: 1px;
         cursor: pointer;
-        font-size: 16px;
+        font-size: ${market_style.font.size.small2};
     }
         .control input {
             position: absolute;

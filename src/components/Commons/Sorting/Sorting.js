@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-
+import market_style from "market_style";
 const Container = styled.div`
   font-family: Noto Sans KR;
   // width: 215px;
@@ -11,7 +11,7 @@ const Container = styled.div`
   cursor: default;
   .element {
     margin-left: 15px;
-    font-size: 12px;
+    font-size:${market_style.font.size.mini1};
     font-weight: 500;
     text-align: center;
     cursor:pointer;

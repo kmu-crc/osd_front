@@ -39,8 +39,8 @@ const ProductBox = styled.div`
                 
             }
             .review {
-                font-size: 12px;
-                :hover{
+              font-size:${market_style.font.size.small1};
+              :hover{
                     text-decoration: underline;
                 }
             }

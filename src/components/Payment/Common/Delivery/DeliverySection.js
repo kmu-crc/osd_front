@@ -56,7 +56,7 @@ margin-bottom:80px;
         display:flex;
         .inner_label{
             min-width:120px;
-            font-size:12pt;
+            font-size:${market_style.font.size.mini1};
             font-weight:500;
             padding:10px;     
             margin-right:80px;                   
@@ -80,7 +80,7 @@ margin-bottom:80px;
 const FormText = styled.input.attrs({ type: "text" })`
     width:${props => props.width}px;
     height:40px;
-    font-size:11pt;
+    font-size:${market_style.font.size.tiny3};
     color:#707070;
     outline:none;
     border:1px solid #dddddd;

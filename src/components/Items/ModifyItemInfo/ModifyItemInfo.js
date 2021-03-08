@@ -15,6 +15,7 @@ import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import _ from 'lodash';
+import market_style from "market_style";
 
 const ItemType = [
   { text: "디자인", value: 0 },
@@ -35,7 +36,7 @@ const MainBox = styled.div`
     width:170px;
     height:29px;
     font-family:Noto Sans KR, Medium;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     font-weight:500;
   }
   .contentsBox{
@@ -82,7 +83,7 @@ const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
     font-weight:500;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
   }
   width: 562px;
   height: max-content;
@@ -125,7 +126,7 @@ const Thumbnail = styled.div`
 `;
 const FormBox = styled.div`
   *{
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
   }
   width:${props => props.width || 939}px;
   height:${props => props.height || "max-content"};
@@ -155,7 +156,7 @@ const FormBox = styled.div`
   .label{
     font-family: Noto Sans KR;
     font-weight: 500;
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
     min-width:157px;
     height:29px;
   }
@@ -169,15 +170,15 @@ const FormBox = styled.div`
   }
 `;
 const DescirptionText = styled.div`
-  font-size:13px;
-  color:#707070;
+font-size:${market_style.font.size.mini2};
+color:#707070;
 `;
 const InputText = styled.input`
   width: ${props => props.width == null ? 100 + "%" : props.width + "px"};
   height: 43px;
   border-radius: 20px;
   font-family: Noto Sans KR;
-  font-size: 20px;
+  font-size:${market_style.font.size.normal3};
   background-color: #E9E9E9;
   margin-right: 21px;
   outline: none;
@@ -189,7 +190,7 @@ const InputTextarea = styled.textarea`
   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
   border-radius:20px;
   font-family:Noto Sans KR;
-  font-size:20px;
+  font-size:${market_style.font.size.normal3};
   font-weight:300;
   line-height:30px;
   background-color:#E9E9E9;
@@ -221,7 +222,7 @@ const InfoContentChooseItemType = styled.div`
   margin-top: 76px;
   margin-left: auto;
   margin-right: auto;
-  font-size: 24px;
+  font-size:${market_style.font.size.giant1};
   color: #707070;
 `;
 const DeleteMenu = styled.div`
@@ -267,7 +268,7 @@ const NaviMenu = styled.div`
 const NoInviteMemberBox = styled.div`
   margin-left: 167px;
   // margin-top: 30px;
-  font-size: 20px;
+  font-size:${market_style.font.size.normal3};
   font-weight: 500;
   font-family: Noto Sans KR;
   color: #707070;

@@ -60,7 +60,7 @@ const TextPart = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     color: ${StyleGuide.color.geyScale.scale7};
-    font-size: 16px;
+    font-size:${market_style.font.size.small2};
   }
   & .userName {
     line-height: 1.35;

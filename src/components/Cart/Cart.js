@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from "components/Commons/Button";
 // import noimg from "source/noimg.png";
 import cookie from 'react-cookies';
+import market_style from "market_style"
 
 const MainBox = styled.div`
     *{
@@ -110,7 +111,7 @@ const MainBox = styled.div`
         display:flex;
         justify-content:center;
         align-items:center;
-        font-size:18pt;
+        font-size:${market_style.font.size.normal1};
         border-right:1px solid #d6d6d6;
     }
     .calculate{
@@ -133,7 +134,7 @@ const MainBox = styled.div`
         display:flex;
         justify-content:center;
         align-items:center;
-        font-size:18pt;
+        font-size:${market_style.font.size.normal1};
     }
 }
 `

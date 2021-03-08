@@ -5,6 +5,7 @@ import DateFormat from "modules/DateFormat";
 import TextFormat from "modules/TextFormat";
 import Socket from "modules/socket";
 // import host from "config";
+import market_style from "market_style";
 
 // css styling
 const MsgContent = styled.div`
@@ -76,7 +77,7 @@ const MsgContent = styled.div`
     margin-left:10px;
     align-self: flex-end;
     color: #444;
-    font-size: 9pt;
+    font-size:${market_style.font.size.tiny1};
     
   }
 `;

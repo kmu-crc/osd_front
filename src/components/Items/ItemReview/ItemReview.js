@@ -8,6 +8,7 @@ import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import ReviewDetailModal from "components/Commons/ReviewDetailModal";
 import WriteReviewModal from "components/Commons/WriteReviewModal"
+import market_style from "market_style";
 
 const Reviews = styled.div`
   background: #FFFFFF;
@@ -20,12 +21,12 @@ const Reviews = styled.div`
     .wrapper{
         display:flex;
         .title{
-            font-size:20px;
+            font-size:${market_style.font.size.normal3};
             font-family:Noto Sans KR, Medium;
             margin-right:29px;
         }  
         .score{
-            font-size:15px;
+            font-size:${market_style.font.size.small1};
             font-family:Noto Sans KR, Light;
             font-weight:200;
         }    
@@ -78,7 +79,7 @@ const ReviewButton=styled.div`
   align-items:center;
   cursor:pointer;
   .text{
-      font-size:20px;
+    font-size:${market_style.font.size.normal3};
       color:red;
   }
 `
@@ -131,7 +132,7 @@ const Page = styled.div`
     margin-top: 45px;
     margin-left: auto;
     margin-right: auto;
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
     font-weight: 500;
     text-aglin: left;
     display: flex;
@@ -190,7 +191,7 @@ const ReviewPiece = styled.div`
                 display:flex;
                 .nickname{
                     font-family:Noto Sans CJK KR, Regular;
-                    font-size:15px;
+                    font-size:${market_style.font.size.small1};
                 }
                 .score{
                     margin-left:15px;
@@ -199,7 +200,7 @@ const ReviewPiece = styled.div`
             }
             .createTime{
                 font-family:Noto Sans CJK KR, Regular;
-                font-size:15px;
+                font-size:${market_style.font.size.small1};
             }
         }
     }
@@ -225,7 +226,7 @@ const CreateReview = styled.div`
         cursor:pointer;
     }
     .font{
-        font-size:15px;
+        font-size:${market_style.font.size.small1};
         color:white;
     }
 `

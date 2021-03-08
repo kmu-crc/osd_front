@@ -13,7 +13,7 @@ import TextFormat from "modules/TextFormat";
 const Groupli = styled.li`
   width: 100%;
   margin: 0 auto 2rem;
-  font-size: 13px;
+  font-size:${market_style.font.size.mini2};
   border-radius: 3px 3px 3px 3px;
   overflow: hidden;
   box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
@@ -44,7 +44,7 @@ const TextPart = styled.div`
     color: ${StyleGuide.color.geyScale.scale6};
   }
   & .title {
-    font-size: 16px;
+    font-size:${market_style.font.size.small2};
     font-weight: bold;
     line-height: 20px;
     height: 20px;
@@ -62,7 +62,7 @@ const Count = styled.div`
   color: ${StyleGuide.color.geyScale.scale6};
   border-top: 1px solid ${StyleGuide.color.geyScale.scale1};
   font-weight: 400;
-  font-size: 12px;
+  font-size:${market_style.font.size.small1};
   & div {
     float: left;
     padding-right: 10px;

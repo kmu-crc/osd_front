@@ -14,6 +14,7 @@ import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
 // import Button from "components/Commons/Button";
 // import NumberFormat from 'modules/NumberFormat';
 // import TextSlicer from 'modules/TextSlicer'
+import market_style from "market_style";
 
 // CSS STYLING
 const Container = styled.div`
@@ -157,7 +158,7 @@ const Chatting = styled.div`
     padding:25px;
     .nick {
       margin-left: 5px;
-      font-size: 16px;
+      font-size:${market_style.font.size.small2};
       font-weight: 500;
     }
     .circle {
@@ -228,7 +229,7 @@ const SendMessageTextarea = styled.div`
   width:95%;
   height:40px;
   min-height:40px;
-  font-size:13px;
+  font-size:${market_style.font.size.mini2};
   // font-weight:500;
   // color:#707070;
   text-align:left;

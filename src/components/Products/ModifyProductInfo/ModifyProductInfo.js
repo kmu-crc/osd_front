@@ -129,7 +129,7 @@ const ProductDescription = styled.div`
         padding: 5px;
         width: max-content;
         height: 30px;
-        font-size: 16px;
+        font-size:${market_style.font.size.small2};
         border: 1px solid #EFEFEF;
         &.giveaspace {
           margin-left: 15px;

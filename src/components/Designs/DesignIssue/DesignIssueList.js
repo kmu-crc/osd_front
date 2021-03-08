@@ -12,7 +12,7 @@ import Button from "components/Commons/Button";
 const IssueWrapper = styled(Grid)`
   position: relative;
   & .noData {
-    font-size: 14px;
+    font-size:${market_style.font.size.mini3};
     text-align: center;
   }
 `;
@@ -57,7 +57,7 @@ const List = styled.div`
   & li div {
     float: left;
     text-align: center;
-    font-size: 13px;
+    font-size:${market_style.font.size.mini2};
   }
   & li .order {
     width: 10%;
@@ -65,7 +65,7 @@ const List = styled.div`
   & li .title {
     width: 50%;
     text-align: left;
-    font-size: 14px;
+    font-size:${market_style.font.size.mini3};
     padding-left: 10px;
   }
   & li .user {
@@ -80,7 +80,7 @@ const List = styled.div`
   & li .flag {
     background-color: #0366d6;
     color: #fff;
-    font-size: 13px;
+    font-size:${market_style.font.size.mini2};
     margin-left: 10px;
   }
   & li .flag.done {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from "styled-components";
-// import StyleGuide from 'StyleGuide';
-// import { geturl } from 'config';
+import market_style from "market_style";
 
 const Container = styled.div`
   width:100%;
@@ -26,7 +25,7 @@ const CategoryItem =styled.div`
 `
 const CurrentCategory = styled.div`
   width: 180px;
-  font-size: 15px;
+  font-size: ${market_style.font.size.small1};
   font-weight: 500;
   text-align: left;
   line-height: 29px;
@@ -36,7 +35,7 @@ const CategoryMenu = styled.div`
   display: flex;
   justify-content:center;
   flex-direction: row;
-  font-size: 15px;
+  font-size: ${market_style.font.size.small1};;
   text-align: left;
   font-weight: 300;
   .element {

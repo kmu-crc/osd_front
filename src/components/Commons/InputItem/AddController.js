@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { FileController } from "components/Commons/InputItem/FileController";
-
+import market_style from "market_style";
 const ControllerWrap = styled.div`
   // padding: 15px 0;
   margin: 20px 0;
@@ -47,7 +47,7 @@ const NewController = styled.li`
   color: #FF0000;
   padding-bottom: 1.5px;
   border-bottom: 1.5px solid #FF0000;
-  font-size: 20px;
+  font-size: ${market_style.font.size.normal3};
   font-weight: 500;
   font-family: Noto Sans KR;
   text-align: center;

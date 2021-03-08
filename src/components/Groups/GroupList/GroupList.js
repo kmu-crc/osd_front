@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 
   & .Countgroup{
     padding: 5px 10px 5px 20px;
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
   }
 `;
 
@@ -39,7 +39,7 @@ const MenuContainer = styled(Grid)`
   }
   & .addGroup button{
     padding: 0.75em 2em;
-    font-size: 12px;
+    font-size:${market_style.font.size.small1};
     border: 1px solid #E72327;
     background-color: #E72327;
     border-radius: 2em;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import MainSlide from "./Slide";
 import ScrollTopDesignerContainer from "containers/Commons/ScrollTopDesignerContainer";
 import ScrollTopProductContainer from "containers/Commons/ScrollTopProductContainer";
-
+import market_style from "market_style";
 // CSS STYLE
 const Margin = 1 / 3 * 45;
 const MainContainer = styled.div`
@@ -18,7 +18,7 @@ const Head = styled.div`
   width: max-content;
   text-align: left;
   font-weight: 500;
-  font-size: 24px;
+  font-size: ${market_style.font.size.giant1};
   font-family: Noto Sans KR;
   letter-spacing: 0;
   color: #060000;

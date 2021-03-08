@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Validates from "../../../modules/Validates";
 import { Dropdown, Icon } from "semantic-ui-react";
 import styled from "styled-components";
-
+import market_style from "market_style";
 const checkValidate = async (value, validates) => {
   let next = true;
   let obj = {
@@ -53,7 +53,7 @@ const CheckBoxLabel = styled.label`
     font-family: "Icons";
     display: block;
     position: absolute;
-    font-size: 12px;
+    font-size: ${market_style.font.size.mini1};
     left: 4px;
     top: -1px;
   }

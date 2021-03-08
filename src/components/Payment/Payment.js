@@ -7,6 +7,8 @@ import ContentBox from "components/Commons/ContentBox";
 import NumberFormat from "modules/NumberFormat";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import market_style from "market_style";
+
 // import {confirmAlert} from "react-confirm-alert";
 // import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 
@@ -54,7 +56,7 @@ const Wrapper = styled(ContentBox)`
 const MainBox = styled.div`
     *{
         font-family:Noto Sans KR;
-        font-size:20px;
+        font-size:${market_style.font.size.normal3};
     }
     width:100%;
     display:flex;
@@ -76,7 +78,7 @@ const MainBox = styled.div`
 const HeaderBox = styled.div`
     *{
         font-family:Noto Sans KR;
-        font-size:15px;
+        font-size:${market_style.font.size.small1};
         font-weight:500;
         color:#000000;
     }
@@ -93,14 +95,14 @@ const HeaderBox = styled.div`
         padding-left:50px;
         .name{
             font-family:Noto Sans KR;
-            font-size:20px;
+            font-size:${market_style.font.size.normal3};
             font-weight:500;
             color:#060000;
             margin-bottom:24px;
         }
         .option{
             font-family:Noto Sans KR;
-            font-size:17px;
+            font-size:${market_style.font.size.small3};
             font-weight:300;
             color:#707070;
         }
@@ -134,7 +136,7 @@ const InfoBox = styled.div`
         min-width:138px;
         height:100%;
         font-family:Noto Sans KR;
-        font-size:20px;
+        font-size:${market_style.font.size.normal3};
         font-weight:500;
     }
     .contents{
@@ -146,11 +148,11 @@ const InfoBox = styled.div`
             width:136px;
             height:78px;
             .font_mini{
-                font-size:15px;
+                font-size:${market_style.font.size.small1};
                 margin-bottom:14px;
             }
             .font_big{
-                font-size:25px;
+                font-size:${market_style.font.size.giant2};
                 font-weight:500;
             }
         }
@@ -170,7 +172,7 @@ const InfoBox = styled.div`
 const Row = styled.div`
     *{
         font-family:Noto Sans KR;
-        font-size:20px;
+        font-size:${market_style.font.size.normal3};
     }
     width:100%;
     display:flex;
@@ -190,7 +192,7 @@ const Row = styled.div`
         margin-bottom:15px;
     }
     .font_small{
-        font-size:15px;
+        font-size:${market_style.font.size.small1};
         color:#707070;
     }
 `;

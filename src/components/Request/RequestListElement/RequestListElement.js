@@ -4,6 +4,8 @@ import styled from "styled-components";
 import profile from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
 import reicon from "source/re_.svg";
+import market_style from "market_style";
+
 // import { Icon } from "semantic-ui-react";
 // import StyleGuide from "StyleGuide";
 // import TextFormat from "modules/TextFormat";
@@ -26,7 +28,7 @@ display:${props=>props.isNon==true?"none":"block"}
 const ListElement = styled.div`
   margin: 0 auto 0.9rem;
   // margin-left: ${props => props.left || 0}px;
-  font-size: 15px;
+  font-size:${market_style.font.size.small1};
   border-radius: 3px 3px 3px 3px;
   overflow: hidden;
   box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);

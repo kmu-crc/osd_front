@@ -11,7 +11,7 @@ import AlarmContainer from "containers/Commons/AlarmContainer";
 import { alert } from "components/Commons/Alert/Alert";
 // import { confirm } from "components/Commons/Confirm/Confirm";
 import MarketLogo from "source/market_logo.png";
-
+import market_style from "market_style";
 const HeaderContainer = styled.ul`
   height:54px;
   padding:10px 20px 13px 20px;
@@ -40,7 +40,7 @@ const HeaderContainer = styled.ul`
 const HeaderItem = styled.li`
   min-width:max-content;
   height:max-content;
-  font-size:13px;
+  font-size: ${market_style.font.size.mini2};
   font-family:Noto Sans KR, Medium;
   font-weight:500;
   margin-right:20px;
@@ -106,7 +106,7 @@ const UserMenu = styled.div`
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
   color: #707070;
-  font-size: 20px;
+  font-size: ${market_style.font.size.normal3};
   font-weight: 500;
   overflow:hidden;
   .item {
@@ -130,7 +130,7 @@ const LoginBox = styled.div`
     background-color:red;
     margin-right:20px;
     ._text{
-      font-size:13px;
+      font-size: ${market_style.font.size.mini2};
       font-family:Noto Sans KR;
       font-weight:500;
       color:white;
@@ -140,7 +140,7 @@ const LoginBox = styled.div`
   .login_text{
     min-width:max-content;
     height:max-content;
-    font-size:13px;
+    font-size: ${market_style.font.size.tiny2};
     font-family:Noto Sans KR, Medium;
     font-weight:500;
     margin-left:20px;

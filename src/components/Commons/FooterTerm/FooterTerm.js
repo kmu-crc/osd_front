@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Header, Grid } from "semantic-ui-react";
 import StyleGuide from "StyleGuide"
 import FooterPara from "./FooterPara"
-
+import market_style from "market_style";
 const FromFieldCard = styled.div`
   width:100%;
   margin-left:180px;
@@ -29,7 +29,7 @@ const TabBox=styled.div`
 
   width:100%;
   height:29px;
-  font-size:20px;
+  font-size: ${market_style.font.size.normal3};
   display:flex;
   align-items:center;
   margin-bottom:66px;
@@ -48,7 +48,7 @@ const TabBox=styled.div`
 `
 const ContentBox=styled.div`
   margin-bottom:100px;
-  .font_small{font-size:15px;}
+  .font_small{ font-size: ${market_style.font.size.small1};}
   .font_bold{font-weight:700;}
   .font_light{font-family:Noto Sans CJK KR, Regular;}
   .indexBox{

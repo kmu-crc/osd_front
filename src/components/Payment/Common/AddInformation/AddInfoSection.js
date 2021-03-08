@@ -28,7 +28,7 @@ const SectionBox = styled.div`
         display:flex;
         .inner_label{
             min-width:120px;
-            font-size:12pt;
+            font-size:${market_style.font.size.mini1};
             font-weight:500;
             padding:10px;                        
         }
@@ -48,7 +48,7 @@ const SectionBox = styled.div`
 
 const FormTextarea = styled.input.attrs({type:"textarea"})`
     height:100px;
-    font-size:11pt;
+    font-size:${market_style.font.size.tiny3};
     color:#707070;
     outline:none;
     border:1px solid #dddddd;

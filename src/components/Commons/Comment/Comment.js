@@ -4,11 +4,13 @@ import noface from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+import market_style from "market_style";
+
 const CommentBox = styled.div`
     *{
         font-family: Noto Sans KR;
         font-weight: 500;
-        font-size: 16px;
+        font-size: ${market_style.font.size.small2};
         color: #707070;
     }
 `;
@@ -38,7 +40,7 @@ const CommentInner = styled.div`
         .nick {
             display: flex;
             flex-direction: row;
-            font-size: 18px;
+            font-size: ${market_style.font.size.normal1};
             font-weight: 500;
             .name {
                 width: max-content;
@@ -47,7 +49,7 @@ const CommentInner = styled.div`
                 margin-left: auto;
                 margin-right: 10px;
                 width: max-content;
-                font-size: 13px;
+                font-size: ${market_style.font.size.mini2};
                 font-weight: 500;
             };
         };
@@ -55,7 +57,7 @@ const CommentInner = styled.div`
             min-width: 120px;
             width: max-content;
             font-weight: 300;
-            font-size: 16px;
+            font-size: ${market_style.font.size.small2};
             max-width: 560px;
             background-color: white;
         };
@@ -68,14 +70,14 @@ const CommentInner = styled.div`
         .reply {
             width: max-content;
             height: 16px;
-            font-size: 14px;
+            font-size: ${market_style.font.size.mini3};
             font-weight: 500;
             margin-left: 5px;
             pointer: default;
         }
         .del {
             width: max-content;
-            font-size: 13px;
+            font-size: ${market_style.font.size.mini2};
             font-weight: 500;
             margin-left: 5px;
             color: red;
@@ -106,7 +108,7 @@ const CommentInputTextContainer = styled.div`
    .wrapper {
        margin-left: 24px;
         .writing {
-            font-size: 15px;
+            font-size: ${market_style.font.size.small1};
             line-height: 22px;
             color: #707070;
             font-weight: 500;
@@ -121,7 +123,7 @@ const CommentInputTextContainer = styled.div`
            border: none;
            resize: none;
            color: #707070;
-           font-size: 20px;
+           font-size: ${market_style.font.size.normal3};
            font-weight: 300;
            font-family: Noto Sans KR;
            line-height: 22px;
@@ -145,7 +147,7 @@ const CommentInputTextContainer = styled.div`
            border: none;
            resize: none;
            color: #707070;
-           font-size: 20px;
+           font-size: ${market_style.font.size.normal3};
            font-weight: 300;
            font-family: Noto Sans KR;
            line-height: 22px;
@@ -157,7 +159,7 @@ const CommentInputTextContainer = styled.div`
            width: max-content;
            height: 22px;
            margin-left: 18px;
-           font-size: 20px;
+           font-size: ${market_style.font.size.normal3};
            font-weight: 500;
            text-align: left;
            color: #707070;
@@ -168,7 +170,7 @@ const CommentInputTextContainer = styled.div`
            width: max-content;
            height: 22px;
            margin-left: 18px;
-           font-size: 20px;
+           font-size: ${market_style.font.size.normal3};
            font-weight: 300;
            text-align: left;
            color: #707070;

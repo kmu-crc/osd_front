@@ -17,8 +17,8 @@ const FilterBox = styled.div`
         }
     }
     .title {
-       font-size: 20px;
-       font-weight: bold; 
+        font-size:${market_style.font.size.normal3};
+        font-weight: bold; 
     }
     .list-box {
         margin: 0;
@@ -27,7 +27,7 @@ const FilterBox = styled.div`
         list-style: none;
     }
     .list-element {
-        font-size: 16px;
+        font-size:${market_style.font.size.small2};
         margin-top: 2px;
         label {
             margin-left: 5px;

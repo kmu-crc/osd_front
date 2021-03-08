@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
-
+import market_style from "market_style";
 const Button = styled.div`
     border:1px solid #EFEFEF;
     border-radius:5px;
@@ -40,7 +40,7 @@ const Button = styled.div`
                 align-items:center;
                 margin: 0 0 0.8rem 0;
                 color: rgba(0,0,0,0.5);
-                font-size: .92857143em;
+                font-size: ${market_style.font.size.tiny1};
                 font-weight: 700;
                 text-transform: none;
             }
@@ -54,7 +54,7 @@ const Button = styled.div`
         line-height: 1.21428571em;
         padding: 0.67857143em 1em;
         margin-top:5px;
-        font-size: 1em;
+        font-size: ${market_style.font.size.tiny2};
         background: #fff;
         border: 1px solid ${StyleGuide.color.geyScale.scale2};
         color: ${StyleGuide.color.geyScale.scale7};

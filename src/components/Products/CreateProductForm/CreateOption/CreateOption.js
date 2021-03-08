@@ -48,7 +48,7 @@ const MainBox = styled.div`
         }
         .innerbox_title_box{
             width:50%;
-            font-size:16pt;
+            font-size:${market_style.font.size.small2};
             font-weight:500;
         }
         .option_value_list{
@@ -71,7 +71,7 @@ const MainBox = styled.div`
         }
     }
     .mainbox_label{
-        font-size:20pt;
+        font-size:${market_style.font.size.normal3};
         font-weight:1000;
     }
     .mainbox{

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
-
+import market_style from "market_style";
 const InputWrap = styled.div`
   position: relative;
   margin-bottom: 2.5rem;
@@ -24,7 +24,7 @@ const Input = styled.textarea`
   -webkit-appearance: none;
   line-height: 1.21428571em;
   padding: 0.67857143em 1em;
-  font-size: 1em;
+  font-size: ${market_style.font.size.tiny2};
   background: #fff;
   border: 1px solid ${StyleGuide.color.geyScale.scale2};
   color: ${StyleGuide.color.geyScale.scale7};

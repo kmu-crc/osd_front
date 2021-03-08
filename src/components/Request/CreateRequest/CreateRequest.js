@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
+import market_style from "market_style";
 
 
 const Wrapper = styled(ContentBox)`
@@ -16,7 +17,7 @@ const MainBox = styled.div`
     width:170px;
     height:29px;
     font-family:Noto Sans KR, Medium;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     font-weight:500;
     margin-left:130px;
 
@@ -34,7 +35,7 @@ const RedButton = styled.div`
   width:290px;
   height:70px;
   font-family:Noto Sans KR;
-  font-size:20px;
+  font-size:${market_style.font.size.normal3};
   font-weight:500;
   color:white;
   display:flex;
@@ -51,7 +52,7 @@ const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
     font-weight:500;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
   }
   width:939px;
   box-shadow: 5px 5px 10px #00000029;
@@ -94,7 +95,7 @@ const Button = styled.div`
     background-color:${props => props.color == null ? "#111111" : props.color};
     border-radius:${props => props.borderRadius == null ? "0px" : props.borderRadius + "px"};
     font-family:Noto Sans KR;
-    font-size:20px;
+    font-size:${market_style.font.size.normal3};
     display:flex;
     justify-content:center;
     align-items:center;
@@ -109,7 +110,7 @@ const InputText = styled.input.attrs({ type: "text" })`
   height:43px;
   border-radius:20px;
   font-family:Noto Sans KR;
-  font-size:20px;
+  font-size:${market_style.font.size.normal3};
   background-color:#E9E9E9;
   margin-right:21px;
   outline:none;
@@ -120,7 +121,7 @@ const InputTextarea = styled.textarea`
   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
   border-radius:20px;
   font-family:Noto Sans KR;
-  font-size:20px;
+  font-size:${market_style.font.size.normal3};
   background-color:#E9E9E9;
   outline:none;
   border:0px;

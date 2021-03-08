@@ -4,7 +4,7 @@ import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import { Icon } from "semantic-ui-react";
 import { FormInput } from "./FormInput";
-
+import market_style from "market_style";
 const InputWrap = styled.div`
   position: relative;
   margin-bottom: 2.5rem;
@@ -67,7 +67,7 @@ const SearchBtn = styled.button`
   position: relative;
   z-index: 10;
   i.icon {
-    font-size: 1rem;
+    font-size: ${market_style.font.size.tiny2};
   }
 `;
 
@@ -147,7 +147,7 @@ const DeleteBtn = styled.button`
   background-color: transparent;
   border: 0;
   padding: 0;
-  font-size: 12px;
+  font-size: ${market_style.font.size.mini1};
   color: white;
   margin-left: 5px;
   i.icon {

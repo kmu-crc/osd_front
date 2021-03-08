@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-
+import market_style from "market_style";
 const EmbEditWrap = styled.div`
   width: 100%;
   border: 1px solid #F8FAFB;
@@ -16,7 +16,7 @@ const EmbEditWrap = styled.div`
 const EmbMenu = styled.div`
   height: 30px;
   line-height: 30px;
-  font-size: 1.3rem;
+  font-size: ${market_style.font.size.mini2};
   color: #292A2B;
   background-color: #F1F5F5;
   padding: 0 .5rem;
