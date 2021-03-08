@@ -524,7 +524,7 @@ class GroupNotice extends Component {
           <div
             className="new-notice"
             onClick={() => { this.setState({ newNoticeDialog: true }) }}>
-            <p style={{ color: "white" }}>새 공지사항 등록하기</p>
+            <p style={{ color: "white" }}>공지사항</p>
           </div> : null}
         {user_id === GroupDetail.user_id && hasProgrammingDesign && this.state.data == null ?
           <div
