@@ -996,7 +996,7 @@ class CardSourceDetail extends Component {
       .then(res => res.json())
       .then(res => {
         console.log(res);
-        if (res.sucess && res.owner) {
+        if (res.success && res.owner) {
           this.setState({ permission: "LOG" });
           return "LOG";
         }

@@ -768,15 +768,30 @@ export function GetGroupDetailRequest(id) {
       return response.json()
     }).then((data) => {
       if (!data) {
-        //console.log("no data")
+        console.log("no data")
         data = []
       }
       dispatch(GetGroupDetail(data))
+      return data;
     }).catch((error) => {
       console.error("err", error)
     })
   }
 }
+export function GetGroupMemberRequest(id) {
+  return new Promise((resolve) => {
+    fetch(`${host}/group/groupMember/${id}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
+    }).then(res => res.json()
+    ).then(data => resolve(data)
+    ).catch((error) => {
+      console.error("err", error)
+      resolve(null);
+    });
+  });
+};
+
 export function JoinGroupRequest(data, token, id) {
   return (dispatch) => {
     return fetch(`${host}/group/groupDetail/${id}/DesignJoinGroup`, {
@@ -1059,6 +1074,165 @@ export function GetGroupNoticeListRequest(group_id, page) {
     const url = `${host}/group/notice-list/${group_id}/${page}`;
     return fetch(url, {
       headers: { "Content-Type": "application/json" },
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(error => reject(error));
+  });
+};
+
+// GROUP BOARD
+export function CreateGroupBoardRequest(data, group_id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/board`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject);
+  });
+};
+export function GetGroupBoardRequest(group_id, page) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/board/${page}`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(error => reject(error));
+  });
+};
+export function UpdateGroupBoardRequest(data, group_id, board_id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/board/${board_id}`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "PATCH",
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject);
+  });
+};
+export function DeleteGroupBoardRequest(group_id, board_id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/board/${board_id}`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "DELETE"
+    })
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject);
+  });
+};
+// GROUP BOARD COMMENT
+export function CreateGroupBoardCommentRequest(data, group_id, board_id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/board/${board_id}/comment`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject);
+  });
+};
+export function GetBoardCommentRequest(group_id, board_id) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/board/${board_id}/comment`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject);
+  });
+};
+export function UpdateGroupBoardCommentRequest(data, group_id, board_id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/board/${board_id}/comment/${data.uid}`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "PATCH",
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject);
+  });
+};
+export function DeleteGroupBoardCommentRequest(id, group_id, board_id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/board/${board_id}/comment/${id}`;
+    return fetch(url, {
+      headers: { "ContentType": "application/json", "x-access-token": token },
+      method: "DELETE",
+    })
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject);
+  });
+};
+
+
+// 
+export function CheckInvitedUserRequest(id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${id}/video-chat/check-invited`;
+    fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(res => resolve(res))
+      .catch(error => reject(false));
+  });
+};
+export function InvitedUserRequest(id, token, data) {
+  return new Promise((resolve/*, reject*/) => {
+    const url = `${host}/group/${id}/video-chat/invite-user`;
+    console.log("dock:", url, { to_user_id: data });
+    fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "POST",
+      body: JSON.stringify({ to_user_id: data })
+    })
+      .then(res => res.json())
+      .then(res => resolve(res))
+      .catch(error => { throw error; });
+  });
+};
+export function CancelInvitedUserRequest(id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${id}/video-chat/cancel-invited-user`;
+    fetch(url, {
+      headers: { "x-access-token": token },
+      method: "POST",
+    })
+      .then(res => res.json())
+      .then(res => resolve(res))
+      .catch(error => reject(false));
+  });
+};
+export function GetPermissionCouldJoinVideoChatRequest(token, group_id) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/check-could-join-vchat`;
+    return fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token,
+      },
       method: "GET",
     })
       .then(res => res.json())

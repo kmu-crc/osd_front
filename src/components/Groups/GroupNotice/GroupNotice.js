@@ -4,9 +4,75 @@ import { Modal } from 'semantic-ui-react'
 import Cross from "components/Commons/Cross";
 import TextController from "components/Designs/CardSourceDetail/TextControllerPlus.js";
 import GroupNoticeListContainer from "containers/Groups/GroupNoticeListContainer";
+import GroupBoardListContainer from "containers/Groups/GroupBoardListContainer";
 import opendesign_style from "opendesign_style";
 import host from "config";
 import ExportExcelFile from "./ExportExcelFile";
+import {
+  CreateGroupBoardRequest,
+  UpdateGroupBoardRequest,
+  DeleteGroupBoardRequest,
+} from "redux/modules/group";
+import noface from "source/thumbnail.png";
+
+// import React, { Component } from 'react';
+// import styled from 'styled-components';
+import DateFormat from "modules/DateFormat";
+import {
+  GetBoardCommentRequest,
+  CreateGroupBoardCommentRequest,
+  UpdateGroupBoardCommentRequest,
+  DeleteGroupBoardCommentRequest,
+} from "redux/modules/group";
+
+class BoardCommentContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { comment: [], };
+  }
+  componentDidMount() {
+    const { group_id, board_id } = this.props;
+    console.log(group_id, board_id);
+    GetBoardCommentRequest(group_id, board_id)
+      .then(comment => {
+        console.log(comment);
+        this.setState({ comment: comment.data });
+      })
+      .catch(e => {
+        console.error(e);
+      });
+  }
+  comment = (data) => {
+    const { group_id, board_id, token } = this.props;
+    CreateGroupBoardCommentRequest(data, group_id, board_id, token)
+      .then(() => {
+        GetBoardCommentRequest(group_id, board_id);
+      });
+  }
+  removecomment = (id) => {
+    const { group_id, board_id, token } = this.props;
+    DeleteGroupBoardCommentRequest(id, group_id, board_id, token)
+      .then(() => {
+        GetBoardCommentRequest(group_id, board_id);
+      });
+  }
+  editcomment = (data) => {
+    const { group_id, board_id, token } = this.props;
+    UpdateGroupBoardCommentRequest(data, group_id, board_id, token)
+      .then(() => {
+        GetBoardCommentRequest(group_id, board_id);
+      })
+  }
+
+  render() {
+    const { comment } = this.state;
+    return (<div>
+      {comment && comment.length > 0
+        ? comment.map(item => <div key={item.uid}>{item.comment}</div>)
+        : ""}
+    </div>)
+  }
+}
 
 const Wrapper = styled.div`
   display: flex;
@@ -52,7 +118,7 @@ const NoticeModal = styled(Modal)`
 
       h2 {
         font-size: 20px;
-        width: 37px;
+        width: max-content;
         height: 29px;
         text-align: left;
         font: normal normal medium 20px/35px Noto Sans KR;
@@ -193,6 +259,10 @@ class GroupNotice extends Component {
       "notice-title": "",
       "notice-content": "",
       reloadnoticecontainer: 0,
+      // new-board
+      "board-title": "",
+      "board-content": "",
+      reloadboardcontainer: 0,
 
       // mode
       edit: "view", //"edit"
@@ -204,6 +274,7 @@ class GroupNotice extends Component {
     this.requestEditNotice = this.requestEditNotice.bind(this);
     this.requestDelNotice = this.requestDelNotice.bind(this);
     this.onChangeNoticeContent = this.onChangeNoticeContent.bind(this);
+    this.onChangeBoardContent = this.onChangeBoardContent.bind(this);
     this.getExportFile = this.getExportFile.bind(this);
   }
   componentDidUpdate(prevProps) {
@@ -213,6 +284,9 @@ class GroupNotice extends Component {
   }
   onChangeNoticeContent(data) {
     this.setState({ "notice-content": data.content });
+  }
+  onChangeBoardContent(data) {
+    this.setState({ "board-content": data.content });
   }
   getExportFile() {
     const url = `${host}/group/getSubmitStatus/${this.props.GroupDetail.uid}`;
@@ -330,11 +404,42 @@ class GroupNotice extends Component {
       "notice-content": ""
     })
   }
+  requestNewBoard() {
+    if (this.state["board-title"] === "") {
+      alert("글의 제목을 입력해주세요.");
+      return;
+    }
+    if (this.state["board-content"] === "") {
+      alert("글의 내용을 입력해주세요.");
+      return;
+    }
+    if (this.props.userInfo == null || this.props.token == null) {
+      return;
+    }
+    const obj = { user_id: this.props.userInfo.uid, title: this.state["board-title"], content: this.state["board-content"] };
+
+    CreateGroupBoardRequest(obj, this.props.id, this.props.token)
+      .then(() => {
+        this.setState({ reloadboardcontainer: (this.state.reloadboardcontainer + 1) % 100 });
+      })
+      .catch(() => {
+        alert("작성에 실패하였습니다.");
+      });
+
+    this.setState({
+      newBoardDialog: false,
+      boardDialog: true,
+      "board-title": "",
+      "board-content": ""
+    })
+  }
   componentDidUpdate(prevProps) {
     if (prevProps.lastest !== this.props.lastest) {
       return true;
     }
   }
+
+
   render() {
     const { lastest, count, GroupDetail, userInfo, hasProgrammingDesign } = this.props;
     const user_id = userInfo && userInfo.uid;
@@ -363,9 +468,10 @@ class GroupNotice extends Component {
           </div>
 
           <div className="body-container">
-            <GroupNoticeListContainer id={this.props.id} open={(detail) => {
-              this.setState({ noticeDetail: true, notice: detail })
-            }} reload={this.state.reloadnoticecontainer} />
+            <GroupNoticeListContainer
+              id={this.props.id} open={(detail) => {
+                this.setState({ noticeDetail: true, notice: detail })
+              }} reload={this.state.reloadnoticecontainer} />
           </div>
         </NoticeModal>
         : null}
@@ -500,6 +606,142 @@ class GroupNotice extends Component {
         </NoticeModal>
         : null}
 
+      {/** 
+      BOARD 
+      **/}
+      {this.state.boardDialog
+        ? <React.Fragment>
+          <NoticeModal
+            open={this.state.boardDialog}
+            onClose={() => this.setState({ boardDialog: false })}>
+
+            <div className="close-box" onClick={() => this.setState({ boardDialog: false })} >
+              <Cross angle={45} color={"#707070"} weight={2} width={14} height={14} />
+            </div>
+
+            <div className="header-txt">
+              <h2>그룹 게시판</h2>
+              <div className="left">
+                {this.props.userInfo ?
+                  <div
+                    className="new-notice"
+                    onClick={() => { this.setState({ newBoardDialog: true, boardDialog: false }) }}>
+                    글 작성
+                    </div> : null}
+              </div>
+            </div>
+
+            <div className="body-container">
+              <GroupBoardListContainer id={this.props.id} open={(detail) => {
+                this.setState({ boardDialog: false, boardDetail: true, board: detail })
+              }} reload={this.state.reloadboardcontainer} />
+            </div>
+          </NoticeModal>
+        </React.Fragment>
+        : null}
+
+      {this.state.boardDetail
+        ? <NoticeModal open={this.state.boardDetail} onClose={() => this.setState({ boardDialog: true, boardDetail: false })}>
+          <div className="close-box" onClick={() => this.setState({ boardDialog: true, noticeDetail: false })} >
+            <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
+          </div>
+
+          {/* {this.props.userInfo && (this.props.userInfo.uid === this.props.GroupDetail.user_id)
+            ? <div className="header-edit-button">
+              <React.Fragment>
+                <button
+                  className="edit-btn"
+                  onClick={() =>
+                    this.setState({
+                      editNoticeDialog: !this.state.editNoticeDialog,
+                      "notice-title": this.state.notice.title,
+                      "notice-content": this.state.notice.content,
+                      // title: .title,
+                      // content: .content
+                    })}>수정</button>
+
+                <button className="cancel-btn"
+                  onClick={() =>
+                    // alert(this.state.notice.uid)}
+                    this.requestDelNotice(this.state.notice.uid)}
+                >삭제</button>
+              </React.Fragment>
+            </div>
+            : null} */}
+          <Modal.Content>
+            <div>
+              <h2>{this.state.board.title}</h2>
+              <div style={{ display: "flex", flexDirection: "row", color: "#707070" }}>
+                <div style={{ height: "25px", lineHeight: "25px", textAlignment: "center", display: "flex", flexDirection: "row", }}>
+                  작성자:
+                  <div style={{ width: "25px", height: "25px", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPoision: "center center", background: `url(${this.state.board.thumbnail || noface})`, backgroundColor: "#707070", borderRadius: "100%", }} />
+                  {this.state.board.nick_name}
+                </div>
+                <div style={{ marginLeft: "auto", }}>
+                  {this.state.board.create_time === this.state.board.update_time
+                    ? `${DateFormat(this.state.board.create_time)}에 작성`
+                    : `${DateFormat(this.state.board.update_time)}에 편집`}
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div className="body-container">
+              <h4>내용</h4>
+              <div
+                style={{ color: "#707070", fontSize: "1rem", backgroundColor: "#FAFAFA", overflowY: "auto", minHeight: "35%", width: "95%", }}
+                dangerouslySetInnerHTML={{ __html: this.state.board.content }} />
+            </div>
+            <hr />
+            <div>
+              <h4>댓글</h4>
+              <div style={{ overflowY: "auto" }}>
+                <BoardCommentContainer
+                  token={this.props.token}
+                  group_id={this.props.id}
+                  board_id={this.state.board.uid} />
+              </div>
+            </div>
+          </Modal.Content>
+        </NoticeModal>
+        : null}
+
+      {this.state.newBoardDialog
+        ? <NoticeModal
+          open={this.state.newBoardDialog} onClose={() => this.setState({ newBoardDialog: false, boardDialog: true })}>
+          <div className="close-box" onClick={() => this.setState({ newBoardDialog: false, boardDialog: true })} >
+            <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
+          </div>
+          <div className="header-txt">
+            <p style={{ fontSize: "24px", fontWeight: "500", color: "#707070", fontFamily: "Noto Sans KR", }}>그룹 게시판 글 작성</p></div>
+          <Modal.Content>
+            <div className="body-container">
+              <div className="title-container">
+                <div>
+                  <h3 style={{ color: "#707070" }}>제목</h3>
+                </div>
+                <input
+                  type="text" className="inputText"
+                  value={this.state["board-title"]}
+                  onChange={event =>
+                    this.setState({ "board-title": event.target.value })} />
+              </div>
+              <div>
+                <TextController
+                  item={{ content: "" }}
+                  getValue={(data) =>
+                    this.onChangeBoardContent(data)} />
+              </div>
+            </div>
+            <div className="button-container">
+              <div className="submit" onClick={() => this.requestNewBoard()}>
+                등록</div>
+              <div className="cancel" onClick={() => this.setState({ "board-title": "", "board-content:": "", newBoardDialog: false, boardDialog: true })}>
+                취소</div>
+            </div>
+          </Modal.Content>
+        </NoticeModal>
+        : null}
+
       <Wrapper>
 
         {lastest ?
@@ -520,19 +762,31 @@ class GroupNotice extends Component {
           </React.Fragment>
           : null}
 
-        {user_id === GroupDetail.user_id ?
-          <div
+        {user_id === GroupDetail.user_id
+          ? <div
             className="new-notice"
             onClick={() => { this.setState({ newNoticeDialog: true }) }}>
             <p style={{ color: "white" }}>새 공지사항 등록하기</p>
-          </div> : null}
-        {user_id === GroupDetail.user_id && hasProgrammingDesign && this.state.data == null ?
-          <div
+          </div>
+          : null}
+
+        {user_id === GroupDetail.user_id && hasProgrammingDesign && this.state.data == null
+          ? <div
             className="new-notice"
             onClick={this.getExportFile}>
             <p style={{ color: "white" }}>제출현황 보기</p>
-          </div> : null}
-        {this.state.data ? <ExportExcelFile data={this.state.data} /> : null}
+          </div>
+          : null}
+
+        {this.state.data
+          ? <ExportExcelFile data={this.state.data} />
+          : null}
+
+        {<div
+          className="new-notice"
+          onClick={() => this.setState({ boardDialog: true })} >
+          <p style={{ color: "white" }}>게시판</p>
+        </div>}
       </Wrapper>
     </React.Fragment>
     )

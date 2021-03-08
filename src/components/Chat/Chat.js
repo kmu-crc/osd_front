@@ -426,7 +426,8 @@ const You = (data) => {
   </YouMessage>)
 };
 function isOpen(ws) { return ws.readyState === ws.OPEN }
-class Chat extends React.Component {
+
+export default class Chat extends React.Component {
   constructor(props) {
     super(props);
     // state
@@ -780,5 +781,3 @@ class Chat extends React.Component {
     </Chatting>);
   }
 }
-
-export default Chat;
