@@ -53,7 +53,7 @@ const BoardController = styled.button`
   transform: translateY(-50%);
   border-radius: 50%;
   line-height: 50px;
-  font-size: 20px;
+  font-size:${market_style.font.size.normal3};
   &.left {
     left: -60px;
   }

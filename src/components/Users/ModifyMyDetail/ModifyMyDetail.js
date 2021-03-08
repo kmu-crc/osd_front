@@ -11,9 +11,9 @@ import market_style from "market_style";
 
 const Wrapper = styled(ContentBox)`
   width:100%;
-  margin-top:60px;
-  margin-bottom: 100px;
   position: relative;
+  padding-left:54px;
+  padding-right:54px;
   z-index:3;
 `;
 const MainBox = styled.div`
@@ -22,25 +22,21 @@ const MainBox = styled.div`
     width:170px;
     height:29px;
     font-family:Noto Sans KR, Medium;
-    font-size:${market_style.font.size.normal3};
+    font-size:${market_style.font.size.normal1};
     font-weight:500;
   }
   .contentsBox{
     width:100%;
     display:flex;
     justify-content:flex-end;
-    padding-left: 10px;
-    padding-top: 13px;
-    margin-top:30px;
+    margin-top:15px;
   }
 `;
 const InputTextBox = styled.input`
   border:none;
   width: ${props => props.width || "100%"};
-  height:52px;
-  padding-left:20px;
-  padding-top:8px;
-  padding-bottom:10px;
+  height:30px;
+  padding:9px 20px;
   background-color:#E9E9E9;
   border-radius:26px;
   display:flex;
@@ -51,24 +47,26 @@ const InputTextBox = styled.input`
 const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
-    font-size:${market_style.font.size.normal3};
   }
-  width:562px;
-  height:540px;
+  width:300px;
+  height:300px;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
-  padding-left: 10px;
-  padding-top: 25px;
-  margin-right: 30px;
+  padding:24px 40px 24px 40px;
   .label{
     width:100%;
-    height:29px;
-    margin-left: 25px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:${market_style.font.size.small1}
+    color:black;
+    font-weight:500;
+    margin-bottom:10px;
   }
   .thumbnail{
     cursor:pointer;
-    width:256px;
-    height:256px;
+    width:220px;
+    height:220px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -80,8 +78,8 @@ const ThumbnailBox = styled.div`
 `;
 const Thumbnail = styled.div`
   cursor:pointer;
-  width:256px;
-  height:256px;
+  width:220px;
+  height:220px;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -89,24 +87,19 @@ const Thumbnail = styled.div`
   background-size: cover;
   background-position: center center;
   border-radius:50%;
-  margin-left:50px;
 `;
 const FormBox = styled.div`
   *{
     font-family:Noto Sans KR;
-    font-size:${market_style.font.size.normal3};
+    font-size:${market_style.font.size.small1};
   }
-  width:939px;
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px;
-  padding-left:59px;
-  padding-top:49px;
-
+  margin-left:102px;
+  margin-top:85px;
   .wrapper{
     width:100%;
     display:flex;
     align-items:center;
-    margin-bottom:70px;
+    margin-bottom:10px;
   }
   .wrapper_noflex{
     width:100%;
@@ -127,7 +120,7 @@ const FormBox = styled.div`
     display:flex;
   }
   .label{
-    min-width:157px;
+    min-width:136px;
     height:29px;
   }
   .label_centering{
@@ -267,10 +260,9 @@ class ModifyMyDetail extends Component {
           <div className="title">내 정보 수정</div>
           <div className="contentsBox">
             <ThumbnailBox>
+              <input hidden onChange={this.handleOnChangeThumbnail} id="file_" type="file" />
               <div className="label">썸네일 등록</div>
-              <Margin height={70} />
-              <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
-              <label htmlFor="file">
+              <label htmlFor="file_">
                 {this.state.thumbnail == null ?
                   <div className="thumbnail"><div>첨부</div></div>
                   :
@@ -278,14 +270,13 @@ class ModifyMyDetail extends Component {
                 }
               </label>
             </ThumbnailBox>
-            {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton> */}
             <FormBox>
 
               <div className="wrapper flex">
                 <div className="label">닉네임</div>
                 <InputTextBox
                   id="nickName"
-                  width={"250px"}
+                  width={"300px"}
                   value={this.state.nickName || ""}
                   placeholder="닉네임을 입력하세요."
                   onChange={this.onChangeValue} />
@@ -294,7 +285,7 @@ class ModifyMyDetail extends Component {
                 <div className="label">비밀번호</div>
                 <InputTextBox type="password"
                   id="password"
-                  width={"450px"}
+                  width={"300px"}
                   value={this.state.password || ""}
                   placeholder="비밀번호를 입력하세요."
                   onChange={this.onChangeValue} />
@@ -303,7 +294,7 @@ class ModifyMyDetail extends Component {
                 <div className="label">비밀번호 확인</div>
                 <InputTextBox
                   id="passwordCheck"
-                  width={"450px"}
+                  width={"300px"}
                   type="password"
                   value={this.state.passwordCheck || ""}
                   placeholder="비밀번호를 한번 더 입력하세요."
@@ -313,7 +304,7 @@ class ModifyMyDetail extends Component {
                 <div className="label">휴대폰</div>
                 <InputTextBox
                   id="phone"
-                  width={"450px"}
+                  width={"300px"}
                   value={this.state.phone || ""}
                   placeholder="휴대폰 번호를 입력하세요."
                   onChange={this.onChangePhone} />
@@ -324,7 +315,7 @@ class ModifyMyDetail extends Component {
 
           <div className="contentsBox">
             {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>적용</div></RedButton> */}
-            <RedButton disabled={!this.state.isModify} text="수정된 내용을 저장합니다." okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={this.state.isModify} />
+            {/* <RedButton disabled={!this.state.isModify} text="수정된 내용을 저장합니다." okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={this.state.isModify} /> */}
             {/* <GrayButton text={"수정된 내용이 저장되지 않습니다."} okText="확인" cancelText="취소" value={"취소하기"} onClick={this.onClickCancel} isConfirm={this.state.isModify} /> */}
           </div>
         </MainBox>

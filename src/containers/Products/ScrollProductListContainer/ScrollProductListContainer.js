@@ -3,8 +3,14 @@ import { connect } from "react-redux";
 import { GetDesignListRequest } from "actions/Design";
 import ScrollList from "components/Commons/ScrollList";
 import Item from "components/Items/Item";
+import Item_small from "components/Items/Item_small";
+import styled from "styled-components";
 // import Design from "components/Designs/Design";
-
+const Wrapper = styled.div`
+  width:100%;
+  display:flex;
+  // justify-content:center;
+`
 class ScrollDesignListContainer extends Component {
   componentWillMount() {
     this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
@@ -15,13 +21,16 @@ class ScrollDesignListContainer extends Component {
   render() {
     return (
       <React.Fragment>
+        <Wrapper>
         <ScrollList
           type="item"
+          isSmall={this.props.isSmall}
           getListRequest={this.getList}
-          ListComponent={Item}
+          ListComponent={this.props.isSmall==true?Item_small:Item}
           dataList={this.props.dataList}
           dataListAdded={this.props.dataListAdded}
           />
+          </Wrapper>
       </React.Fragment>
     );
   }

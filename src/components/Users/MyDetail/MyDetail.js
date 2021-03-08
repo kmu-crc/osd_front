@@ -34,114 +34,134 @@ const CustomIcon=styled.div`
   `
 
 const MainBox = styled.div`
-  width: 1790px;
-  height: 1959px;
-  margin-top: 10px;
+// *{
+//   border:1px solid black;
+// }
+  width: 1366px;
+  padding:0px 30px 0px 30px;
+  // height: 1959px;
+  margin-top: 37px;
   .header {
     width: 100%;
-    height: 372px;
-    margin-bottom: 94px;
+    margin-bottom: 20px;
     display: flex;
   }
   .contents {
     width: 100%;
-    height: 1493px;
+    height: max-content;
     display: flex;
   }
 `;
 const ProfileBox = styled.div`
-  width: 285px;
-  height: 372px;
-  border-radius: 20px;
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  box-shadow: 5px 5px 10px #00000029;
-
-  .fontBig{font-size:${market_style.font.size.normal2};}
-  .fontSmall{font-size:${market_style.font.size.mini2};}
-  .fontStyleNormal{font-family:Noto Sans KR; font-weight:500;}
-  .fontStyleLight{font-family:Noto Sans KR; font-weight:200;}
-  .red{color:red;}
-  .normal{color:#060000;}
+*{
+  // border:1px solid black;
+}
+    border: 1px solid transparent;
+    width: 240px;
+    height: 320px;
+    background: #FFFFFF;
+    box-shadow: 3px 3px 5px #4141411A;
+    border: 0.5px solid #B7B7B7;
+    border-radius: 20px;
+    padding:10px;
+    .fontNormal{font-size:${market_style.font.size.normal1};}
+    .fontSmall{font-size:${market_style.font.size.small1};}
+    .fontMini{font-size:${market_style.font.size.mini2};}
+    .fontStyleNormal{font-family:Noto Sans KR; font-weight:500;}
+    .fontStyleLight{font-family:Noto Sans KR; font-weight:200;}
+    .red{color:red;}
+    .normal{color:#060000;}
 
   .imageBox {
     width: 100%;
-    height: 236px;
+    height: max-content;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom:7px;
   }
   .LabelBox {
     width: 100%;
-    height: 28px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+  .marginTop1{
+    margin-top:2px;
+  }
+  .marginTop2{
+    margin-top:6px;
+  }
 `;
 const InformationBox = styled.div` 
+*{
+  // border:1px solid black;
+}
+    width: 1046px;
+    height: 320px;
+    box-shadow: 3px 3px 5px #0000001A;
+    border: 0.5px solid #B7B7B7;
+    border-radius: 20px;
+    margin-left:20px;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    padding:45px 65px 45px 65px;
     .fontDefault{
       font-size:${market_style.font.size.normal3};
     }
-    .fontBig{    font-size:${market_style.font.size.small3}}
+    .fontBig{font-size:${market_style.font.size.small1}}
     .fontStyleNormal{font-family:Noto Sans KR; font-weight:500;}
     .alignCenter{text-align:center;}
     .red{color:red;}
     .cursorPointer{cursor:pointer;}
     .displayFlex{display:flex;align-items:center;justify-content:center;}
     .marginRight{margin-right:10px;}
-
+    .marginBottom{margin-bottom:7px;}
     .design-clipart {
-      width: 129px;
-      height: 102px;
+      width: 88px;
+      height: 70px;
       margin-left: auto;
       margin-right: auto;
       background-image: url(${adddesigner});
       background-size: contain;
       background-position: center center;
       background-repeat:no-repeat;
-      margin-bottom:41px;
+      margin-bottom:34px;
 
     }
     .toolbox-clipart {
-      width: 73px;
-      height: 104px;
+      width: 50px;
+      height: 70px;
       margin-left: auto;
       margin-right: auto;
       background-image: url(${addmaker});
       background-size: contain;
       background-position: center center;
-          background-repeat:no-repeat;
-          margin-bottom:41px;
+      background-repeat:no-repeat;
+      margin-bottom:34px;
     }
     .verify-clipart {
-      width: 84px;
-      height: 99px;
+      width: 60px;
+      height: 70px;
       margin-left: auto;
       margin-right: auto;
       background-image: url(${confirmMe});
       background-size: contain;
       background-position: center center;
       background-repeat:no-repeat;
-      margin-bottom:41px;
+      margin-bottom:34px;
     }
-    width: 1389px;
-    height: 372px;
-    border-radius:20px;
-    box-shadow: 5px 5px 10px #00000029;
-    margin-left:117px;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    padding:58px 0px 58px 0px;
+
 
     .borderRight{
-      border-right:1px solid #d6d6d6;
+      border-right:2px solid #d6d6d6;
     }
     .grayBox{
       width:33%;
-      height:max-content;
+      height:230px;
       display:flex;
-      align-items:center;
+      align-items:space-between;
       justify-content:center;
       .wrap{
         width:max-content;
@@ -151,12 +171,11 @@ const InformationBox = styled.div`
       }
       .title{
         width:251px;
-        height:50px;
-        text-align:center;
+        height:54px;
         display:flex;
         justify-content:center;
         align-items:center;
-        margin-bottom:31px;
+        margin-bottom:34px;
       }
 
     }
@@ -165,13 +184,13 @@ const MenuBox = styled.div`
     *{
       color:#060000;
     }
-    width:285px;
+    min-width:240px;
     height:max-content;
-    border-radius:20px;
+    box-shadow: 3px 3px 5px #0000001A;
+    border: 0.5px solid #B7B7B7;
+    border-radius: 20px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow: 5px 5px 10px #00000029;
-    padding-top:35px;
-    padding-left:25px;
+    padding:30px 33px 30px 33px;
     padding-bottom:30px;
     .title_Label{
       width:100%;
@@ -184,31 +203,31 @@ const MenuBox = styled.div`
       font-weight:700;
     }
     .hrLine{
-      width:230px;
       border:0.5px solid #707070;
       opacity:0.2;
-      margin-bottom:25px;
+      margin-bottom:17.5px;
     }
 `;
 const MenuButton = styled.div`
   width:100%;
   height:20px;
-  font-size:${market_style.font.size.normal3};
+  font-size:${market_style.font.size.small1};
   font-family:Noto Sans KR;
-  font-weight:200;
-  margin-left:15px;
-  margin-bottom:30px;
+  font-weight:300;
   cursor:pointer;
+  margin-bottom:17.5px;
+  text-align:center;
   color:${props => props.fontColor == null ? "#060000" : props.fontColor};
 `;
 const BoardBox = styled.div`
-    width:1388px;
+    width:1046px;
     height:max-content;
-    min-height:900px;
+    // min-height:900px;
+    box-shadow: 3px 3px 5px #00000029;
+    border: 0.5px solid #B7B7B7;
     border-radius: 20px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow: 5px 5px 10px #00000029;
-    margin-left:117px;
+    margin-left:20px ;
     padding:50px;
     .flex{
       display:flex;
@@ -282,8 +301,8 @@ const BoardBox = styled.div`
       .more {}
 `;
 const Thumbnail = styled.div`
-    width:190px;
-    height:190px;
+    width:220px;
+    height:220px;
     border-radius:50%;
     background-image:url(${props => props.URL == null ? noimg : props.URL});
     background-repeat:norepeat;
@@ -311,7 +330,7 @@ class MyDetail extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { selectMenu: 10 }
+    this.state = { selectMenu: 9 }
     this.onClickMenu = this.onClickMenu.bind(this);
     this.onClickCreateDesigner = this.onClickCreateDesigner.bind(this);
     this.onClickCreateMaker = this.onClickCreateMaker.bind(this);
@@ -383,21 +402,23 @@ class MyDetail extends Component {
                 <Thumbnail URL={MyDetail.thumbnail == null ? noimg : MyDetail.thumbnail} />
                 {/* </label> */}
               </div>
-              <div className="LabelBox fontBig fontStyleNormal">{MyDetail.nick_name}</div>
-              {/* <div className="LabelBox fontSmall fontStyleLight red">카테고리</div> */}
-              <EmptyBox height={32} />
+              <div className="LabelBox fontNormal">{MyDetail.nick_name}</div>
+              <div className="LabelBox fontSmall fontStyleNormal red marginTop1">
+                {/* 카테고리 */}
+                &nbsp;
+              </div>
               <div className="LabelBox">
-                <span className="fontSmall normal fontStyleLight">{(MyDetail && MyDetail.count) || 0}개의 아이템 |</span>&nbsp;
+                <span className="fontMini normal fontStyleLight">{(MyDetail && MyDetail.count) || 0}개의 아이템 |</span>&nbsp;
                   <span className="red">♥</span>
-                <span className="fontSmall normal fontStyleNormal">{(MyDetail && MyDetail.like) || 0}</span>
+                <span className="fontMini normal fontStyleNormal">{(MyDetail && MyDetail.like) || 0}</span>
               </div>
             </ProfileBox>
             <InformationBox>
               <div className="grayBox borderRight">
                 <div className="wrap cursorPointer" onClick={this.onClickCreateDesigner} >
-                  <div className="title fontBig fontStyleNormal"><div>다양한 아이디어를 판매하세요!</div></div>
+                  <div className="title fontNormal fontStyleNormal"><div>다양한 아이디어를 판매하세요!</div></div>
                   <div className="design-clipart">&nbsp;</div>
-                  <div onClick={this.onClickCreateDesigner} ><div className="fontDefault alignCenter cursorPointer fontStyleNormal displayFlex">
+                  <div onClick={this.onClickCreateDesigner} ><div className="marginBottom fontNormal alignCenter cursorPointer fontStyleNormal displayFlex">
                     <div className="marginRight">디자이너 등록 / 관리</div>
                   <CustomIcon width="15" height="15" imgURL={category_icon}/>
                   </div></div>
@@ -405,9 +426,9 @@ class MyDetail extends Component {
               </div>
               <div className="grayBox borderRight">
                 <div className="wrap cursorPointer " onClick={this.onClickCreateMaker}>
-                  <div className="title fontBig fontStyleNormal"><div>제작 기술을 공유하고 <br />장소를 쉐어해보세요!</div></div>
+                  <div className="title fontNormal fontStyleNormal"><div>제작 기술을 공유하고 <br />장소를 쉐어해보세요!</div></div>
                   <div className="toolbox-clipart">&nbsp;</div>
-                  <div onClick={this.onClickCreateMaker}><div className="fontDefault alignCenter cursorPointer fontStyleNormal displayFlex">
+                  <div onClick={this.onClickCreateMaker}><div className="marginBottom fontNormal alignCenter cursorPointer fontStyleNormal displayFlex">
                     <div className="marginRight">메이커 등록 / 관리</div>                    
                     <CustomIcon width="15" height="15" imgURL={category_icon}/>
                   </div></div>
@@ -415,9 +436,9 @@ class MyDetail extends Component {
               </div>
               <div className="grayBox">
                 <div className="wrap cursorPointer">
-                  <div className="title fontBig fontStyleNormal"><div>본인인증을 통해 더욱 다양한 <br /> 혜택을 누려보세요!</div></div>
+                  <div className="title fontNormal fontStyleNormal"><div>본인인증을 통해 더욱 다양한 <br /> 혜택을 누려보세요!</div></div>
                   <div className="verify-clipart"></div>
-                  <div><div className="fontDefault alignCenter cursorPointer fontStyleNormal displayFlex">
+                  <div><div className="marginBottom fontNormal alignCenter cursorPointer fontStyleNormal displayFlex">
                     <div className="marginRight">본인 인증</div>
                     <CustomIcon width="15" height="15" imgURL={category_icon}/>
                   </div></div>

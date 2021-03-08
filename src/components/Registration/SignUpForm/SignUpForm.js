@@ -18,18 +18,19 @@ const MainBox = styled.div`
   *{
     font-family:Noto Sans KR,Medium;
     color:#060000;
+    // border:1px solid black;
   }
 
-  width:933px;
-  height:748px;
-  padding:32px;
+  width:806px;
+  height:496px;
+  padding:40px 205px 45px 205px;
   display:flex;
   justify-content:center;
   align-items:center;
 
   .contentsBox{
     width:498px;
-    height:100%;
+    height:max-content;
     display:flex;
     flex-direction:column;
 
@@ -38,24 +39,28 @@ const MainBox = styled.div`
       display:flex;
       justify-content:center;
       align-items:center;
+      margin-bottom:24px;
       .title{
-        font-size:${market_style.font.size.normal3};
+        font-size:${market_style.font.size.normal1};
         font-weight:500;
       }
     }
     
     .row{
       *{
-        font-size:${market_style.font.size.small1};
+        font-size:${market_style.font.size.mini2};
       }
       display:flex;
-      height:43px;
-      margin-bottom:19px;
+      height:max-content;
+      margin-bottom:15px;
       .label{
-        min-width:104px;
+        min-width:96px;
         font-weight:500;
         display:flex;
         align-items:center;
+      }
+      .font_small{
+        font-size:${market_style.font.size.tiny3};
       }
       .red_text{
         color:red;
@@ -66,15 +71,16 @@ const MainBox = styled.div`
         font-family:Noto Sans KR,Light
       }
       width:100%;
-      height:29px;
+      height:max-content;
       display:flex;
       .label2{
-        min-width:104px;
+        min-width:96px;
         height:100%;
         font-weight:200;
       }
       .content2{
         display:flex;
+        font-size:${market_style.font.size.tiny3};
       }
       .red_text{
         color:red;
@@ -96,12 +102,14 @@ const CustomButton = styled.div`
     border-radius:${props => props.borderRadius}px;
     background-color:${props => props.bgColor};
     color:${props => props.fontColor};
-    margin-top:26px;
+    font-size:18px;
+    margin-top:43px;
     display:flex;
     justify-content:center;
     align-items:center;
     opacity:1;
     cursor:pointer;
+    font-size:${market_style.font.size.mini2};
     &:hover{
       opacity:0.7;
     }
@@ -124,15 +132,15 @@ const CheckBox = styled.input.attrs({ type: "checkbox" })`
 `
 const InputTextBox = styled.input`
   border:none;
-  width:100%;
-  height:100%;
+  width:300px;
+  height:25px;
   padding-left:20px;
   background-color:#E9E9E9;
   border-radius:21px;
   display:flex;
   justify-content:center;
   outline:none;
-  
+  font-size:${market_style.font.size.tiny2};
   color:#060000;
 `
 
@@ -280,7 +288,6 @@ class SignUpForm extends Component {
         <MainBox>
           <div className="contentsBox">
             <div className="titleBox"><div className="title">회원 가입</div></div>
-            <CustomBox height={8} />
             <div className="row">
               <div className="label"><div>아이디</div></div>
               <InputTextBox
@@ -310,16 +317,16 @@ class SignUpForm extends Component {
                 onChange={this.onChangeName} />
             </div>
             <div className="row">
-              <div className="label"><div>휴대폰</div></div>
+              <div className="label"><div>휴대폰 번호</div></div>
               <InputTextBox
                 value={this.state.phone}
                 placeholder="휴대폰 번호를 입력하세요."
                 onChange={this.onChangePhone} />
             </div>
-            <CustomBox height={4} />
+            <CustomBox height={2} />
             <div className="row">
               <div className="label"><div className="red_text">이용약관</div></div>
-              <div className="label"><CheckBox onChange={this.onCheckAllOk} checked={this.state.checkAllOk} id="allOk" />전체동의</div>
+              <div className="label font_small"><CheckBox onChange={this.onCheckAllOk} checked={this.state.checkAllOk} id="allOk" />전체동의</div>
             </div>
             <div className="row2">
               <div className="label2" />
@@ -335,11 +342,11 @@ class SignUpForm extends Component {
             </div>
 
             <CustomButton onClick={this.onSubmit}
-              width={498}
-              height={43}
+              width={396}
+              height={30}
               bgColor={"#FF0000"}
-              borderRadius={21}
-              fontColor={"white"}>가입</CustomButton>
+              // borderRadius={21}
+              fontColor={"white"}>가입하기</CustomButton>
           </div>
         </MainBox>
       </React.Fragment>

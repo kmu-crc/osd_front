@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import MainSlide from "./Slide";
 import ScrollTopDesignerContainer from "containers/Commons/ScrollTopDesignerContainer";
 import ScrollTopProductContainer from "containers/Commons/ScrollTopProductContainer";
+import SliderContainer from "containers/Commons/SliderContainer";
 import market_style from "market_style";
 // CSS STYLE
 const Margin = 1 / 3 * 45;
@@ -14,28 +14,25 @@ const Wrapper = styled.div`
 const Head = styled.div`
   margin-left: auto;
   margin-right: auto;
-  margin-bottom:20px;
+  margin-bottom:10px;
+  margin-top:30px;
   width: max-content;
   text-align: left;
   font-weight: 500;
-  font-size: ${market_style.font.size.giant1};
+  font-size: ${market_style.font.size.normal1};
   font-family: Noto Sans KR;
   letter-spacing: 0;
   color: #060000;
   opacity: 1;
 `;
 const TextWrapper = styled.div`
-  padding-top: ${Margin}px;
-
-  margin-top:20px;
-  margin-bottom:40px;
 `;
 class Main extends Component {
   render() {
     return (<MainContainer>
 
       <Wrapper>
-        <MainSlide />
+        <SliderContainer />
       </Wrapper>
 
       <Wrapper>

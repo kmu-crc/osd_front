@@ -14,33 +14,27 @@ const ListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  // border: 2px dashed blue;
   .item {
     flex: 0 0 180px;
     justify-content: space-around;
-    margin: 0px 27px 29px 0px;
-    padding: 0px;
+    margin: ${props=>props.isSmall==true?"0px 20px 30px 0px":"0px 0px 29px 20px"};
   }
-  .item_first_margin{margin:0px 27px 27px 0px}
-  .item_last_margin{margin:0px 0px 27px 0px}
   .designer {
-    flex: 0 0 247px;
+    // flex: 0 0 247px;
     justify-content: space-around;
-    margin: 0px 29px 35px 0px;
+    margin: ${props=>props.isSmall==true?"0px 20px 30px 0px":"0px 0px 30px 28px"};
     padding: 0px;
   }
-  .designer_first_margin{margin:0px 29px 35px 0px}
-  .designer_last_margin{margin:0px 0px 35px 0px}
   .maker {
     flex: 0 0 247px;
     justify-content: space-around;
-    margin: 0px 19px 35px 0px;
+    margin: ${props=>props.isSmall==true?"0px 20px 30px 0px":"0px 0px 30px 28px"};
     padding: 0px;
   }
   .gallery{
     flex: 0 0 180px;
     justify-content: space-around;
-    margin: 0px 45px 45px 0px;
+    margin: 0px 0px 45px 20px;
     padding: 0px;
   }
 `;
@@ -51,9 +45,10 @@ const NoData = styled.div`
   justify-content:center;
   align-items:center;
   width: max-content;
-  padding: 15px;
+  padding: 57px 20px 57px 0px;
   text-align: center;
   font-size:${market_style.font.size.normal1};
+  color:red;
   font-family: Noto Sans KR;
   font-weight: 500;
   // border: 1px dashed gray;
@@ -90,17 +85,17 @@ class ScrollList extends Component {
               <Loader className="loading" active={false}
                 inline="centered" size="huge" key={0} />
             }>
-            <ListContainer>
+            <ListContainer isSmall={this.props.isSmall==null?false:true}>
               {this.props.dataListAdded.map((content, index) => (
-                <div key={index} className={this.props.type == "item"?index%4==0?"item item_first_margin":index%4==3?"item item_last_margin":"item":
-                this.props.type == "designer"&&index%5==0?"designer designer_first_margin":index%5==4?"designer designer_last_margin":"designer"}>
+                <div key={index} className={this.props.type == "item"?index%4==0?"item":index%4==3?"item":"item":
+                this.props.type == "designer"&&index%5==0?"designer":index%5==4?"designer":"designer"}>
                   <ListComponent data={content} type={type} confirm={this.props.confirm} handler={this.props.handler} />
                 </div>
               ))}
             </ListContainer>
           </InfiniteScroll>
         </ScrollContainer>
-        : <NoData><div>해당 항목 없음</div></NoData>
+        : <NoData><div>검색 결과 없음</div></NoData>
     );
   }
 }

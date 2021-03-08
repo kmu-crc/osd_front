@@ -220,7 +220,7 @@ export class InputCalendar extends Component {
     render() {
         return (
             <React.Fragment>
-                <div style={{display:"flex",alignItems:"center",fontSize:"17px"}}>
+                <div style={{display:"flex",alignItems:"center",fontSize:market_style.font.size.small3}}>
                 <FormBox>
                     <FormStyle
                         id="startDate"

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { GetMakerListRequest } from "actions/Maker";
 import ScrollList from "components/Commons/ScrollList";
 import Expert from "components/Experts/Expert";
+import Expert_small from "components/Experts/Expert_small";
 
 class ScrollMakerListContainer extends Component {
   componentWillMount() {
@@ -14,10 +15,11 @@ class ScrollMakerListContainer extends Component {
   render() {
     return (
       <ScrollList
+        isSmall={this.props.isSmall}
         getListRequest={this.getList}
         dataList={this.props.dataList}
         dataListAdded={this.props.dataListAdded}
-        ListComponent={Expert}
+        ListComponent={this.props.isSmall==true?Expert_small:Expert}
         type="maker" />
     );
   }
