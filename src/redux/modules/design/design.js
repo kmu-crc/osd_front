@@ -163,70 +163,33 @@ export function Design(state, action) {
         case DESIGN_NOT_FOUND:
             return update(state, { DesignDetail: { status: { $set: DESIGN_NOT_FOUND } }, })
         case GET_WAITING_LIST:
-            return update(state, {
-                WaitingList: { status: { $set: "WAITING" } }
-            })
+            return update(state, { WaitingList: { status: { $set: "WAITING" } } })
         case GET_WAITING_LIST_SUCCESS:
-            return update(state, {
-                status: { WaitingList: { $set: action.list } },
-                WaitingList: { status: { $set: "SUCCESS" } }
-            })
+            return update(state, { status: { WaitingList: { $set: action.list } }, WaitingList: { status: { $set: "SUCCESS" } } })
         case GET_WAITING_LIST_FAILURE:
-            return update(state, {
-                status: { WaitingList: { $set: action.list } },
-                WaitingList: { status: { $set: "FAILURE" } }
-            })
+            return update(state, { status: { WaitingList: { $set: action.list } }, WaitingList: { status: { $set: "FAILURE" } } })
         case GET_WAITING_TO_ACCEPT_LIST:
-            return update(state, {
-                WaitingToAcceptList: { status: { $set: "WAITING" } }
-            })
+            return update(state, { WaitingToAcceptList: { status: { $set: "WAITING" } } })
         case GET_WAITING_TO_ACCEPT_LIST_SUCCESS:
-            return update(state, {
-                status: { WaitingToAcceptList: { $set: action.list } },
-                WaitingToAcceptList: { status: { $set: "SUCCESS" } }
-            })
+            return update(state, { status: { WaitingToAcceptList: { $set: action.list } }, WaitingToAcceptList: { status: { $set: "SUCCESS" } } })
         case GET_WAITING_TO_ACCEPT_LIST_FAILURE:
-            return update(state, {
-                status: { WaitingToAcceptList: { $set: action.list } },
-                WaitingToAcceptList: { status: { $set: "FAILURE" } }
-            })
+            return update(state, { status: { WaitingToAcceptList: { $set: action.list } }, WaitingToAcceptList: { status: { $set: "FAILURE" } } })
         case UPDATE_DESIGN_INFO:
-            return update(state, {
-                UpdateDesignInfo: { status: { $set: "WATTING" } }
-            })
+            return update(state, { UpdateDesignInfo: { status: { $set: "WATTING" } } })
         case UPDATE_DESIGN_INFO_SUCCESS:
-            return update(state, {
-                UpdateDesignInfo: { status: { $set: "SUCCESS" } }
-            })
+            return update(state, { UpdateDesignInfo: { status: { $set: "SUCCESS" } } })
         case UPDATE_DESIGN_INFO_FAILURE:
-            return update(state, {
-                UpdateDesignInfo: { status: { $set: "FAILURE" } }
-            })
+            return update(state, { UpdateDesignInfo: { status: { $set: "FAILURE" } } })
         case GET_DESIGN_DETAIL:
-            return update(state, {
-                DesignDetail: { status: { $set: action.type } },
-                status: { DesignDetail: { $set: action.DesignDetail } }
-            })
+            return update(state, { DesignDetail: { status: { $set: action.type } }, status: { DesignDetail: { $set: action.DesignDetail } } })
         case DESIGN_DETAIL_RESET:
-            return update(state, {
-                status: { DesignDetail: { $set: action.DesignDetail } }
-            })
+            return update(state, { status: { DesignDetail: { $set: action.DesignDetail } } })
         case GET_DESIGN_COUNT:
-            return update(state, {
-                status: { Count: { $set: action.Count } }
-            })
+            return update(state, { status: { Count: { $set: action.Count } } })
         case GET_DESIGN_DETAIL_VIEW:
-            return update(state, {
-                status: {
-                    DesignDetailView: { $set: action.DesignDetailView }
-                }
-            });
+            return update(state, { status: { DesignDetailView: { $set: action.DesignDetailView } } });
         case DESIGN_DETAIL_VIEW_RESET:
-            return update(state, {
-                status: {
-                    DesignDetailView: { $set: action.DesignDetailView }
-                }
-            });
+            return update(state, { status: { DesignDetailView: { $set: action.DesignDetailView } } });
         default:
             return state
     }

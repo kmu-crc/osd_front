@@ -26,9 +26,10 @@ import { Worker } from '@react-pdf-viewer/core';
 import { PdfViewer } from "./PDFviewer";
 
 // FOR SUBMIT LIST
-import DateFormat from "modules/DateFormat";
 import Table from "rc-table";
-import { resolve } from "core-js/fn/promise";
+// import DateFormat from "modules/DateFormat";
+// import { resolve } from "core-js/fn/promise";
+
 
 
 /*
@@ -1107,6 +1108,7 @@ class CardSourceDetail extends Component {
   }
 
   render() {
+    console.log("codecode", this.props.code)
     const { edit, content, loading, submit, tab, item, result, coding, permission, item_uid, item_user } = this.state;
     // console.log("content:", content.find(item => item.type === "TEXT"));
     // console.log("result:", this.props, this.state)// && this.props.DesignDetail.category_level3 - 1);
@@ -1387,6 +1389,8 @@ class CardSourceDetail extends Component {
                   //   editorProps={{ $blockScrolling: true }} />
                   :
                   <SubmitLogContainer
+                    {...this.props}
+                    // SetViewCode={this.props.SetViewCode}
                     user_id={this.state.item_user}
                     content_id={item_uid}
                   />}
@@ -1593,7 +1597,7 @@ class CardSourceDetail extends Component {
                                       {item.content &&
                                         <React.Fragment>
                                           <div style={{ fontSize: "1.25rem", color: "#707070", marginLeft: "auto", border: "1px solid transparent", width: "max-content" }}>
-                                            <a href={item.content} ><i className="save icon large" />PDF다운로드</a>
+                                            <a href={JSON.parse(item.content).contents} ><i className="save icon large" />PDF다운로드</a>
                                           </div>
                                           <PdfViewer pdf={JSON.parse(item.content).contents} />
                                         </React.Fragment>}
@@ -1978,7 +1982,7 @@ class SubmitLogContainer extends React.Component {
   get_submit_list = (user, content) => {
     return new Promise((resolve, reject) => {
       const url = `${host}/design/problem/mySubmitList/${user}/${content}`;
-      console.log(url);
+      // console.log(url);
       fetch(url, {
         headers: { 'Content-Type': 'application/json' },
         method: "GET",
@@ -1986,7 +1990,7 @@ class SubmitLogContainer extends React.Component {
         .then(res =>
           res.json())
         .then(async res => {
-          console.log(res)
+          // console.log(res)
           await this.setState({ MySubmitList: res && res.MySubmitList || [] });
           resolve(true);
         })
@@ -1996,7 +2000,7 @@ class SubmitLogContainer extends React.Component {
   componentDidMount() {
     this.setState({ loading: true });
     const { user_id, content_id } = this.props;
-    console.log("submit log container : ", this.props);
+    // console.log("submit log container : ", this.props);
     if (user_id) {
       this.get_submit_list(user_id, content_id);
     } else {
@@ -2013,7 +2017,8 @@ class SubmitLogContainer extends React.Component {
       );
     }
     const data = MySubmitList && MySubmitList.length > 0 && MySubmitList.map((submit, index) => {
-      console.log(submit && new Date(submit.create_date));
+      // console.log(submit);
+
       const create_Date = submit && new Date(submit.create_date);
       const timecheck = create_Date == null ? null
         : create_Date.getFullYear().toString().substr(2, 2) + ":"
@@ -2021,21 +2026,27 @@ class SubmitLogContainer extends React.Component {
         + (create_Date.getDate() < 10 ? "0" + create_Date.getDate() : create_Date.getDate()) + ":"
         + (create_Date.getHours() < 10 ? "0" + create_Date.getHours() : create_Date.getHours()) + ":"
         + (create_Date.getMinutes() < 10 ? "0" + create_Date.getMinutes() : create_Date.getMinutes());
-      console.log(timecheck)
+
+      let result =
+        submit.result === "S" ? "성공"
+          : submit.result === "F" ? "실패"
+            : submit.result === "T" ? "실패(시간초과)"
+              : submit.result === "M" ? "실패(메모리초과)"
+                : submit.result === "C" ? "실패(컴파일에러)"
+                  : submit.result === "R" ? "실패(런타임에러)"
+                    : submit.result === "E" ? "실패(서버에러)"
+                      : submit.result === "P" ? "실패(문제에러)"
+                        : "실패"
+      result =
+        submit.result === "S"
+          ? result : result + ": " +
+          (submit.message && submit.message.slice(0, 512)) +
+          (submit.message && submit.message.lnegth > 512 ? "..." : "");
 
       const row = {
         "key": index,
-        "result":
-          submit.result === "S" ? "성공"
-            : submit.result === "F" ? "실패"
-              : submit.result === "T" ? "실패(시간초과)"
-                : submit.result === "M" ? "실패(메모리초과)"
-                  : submit.result === "C" ? "실패(컴파일에러)"
-                    : submit.result === "R" ? "실패(런타임에러)"
-                      : submit.result === "E" ? "실패(서버에러)"
-                        : submit.result === "P" ? "실패(문제에러)"
-                          : "실패",
-        "message": submit.result == "S" ? "성공" : submit.message || "실패",
+        "result": result,
+        // "message": submit.result == "S" ? "성공" : submit.message || "실패",
         // "time": submit.avg_time ? submit.avg_time + "초" : "",
         // "space": submit.avg_memory ? submit.avg_memory + "kb" : "",
         "submit-time": timecheck + "",
@@ -2044,61 +2055,19 @@ class SubmitLogContainer extends React.Component {
       return row;
     })
     const columns = [
+      { title: "결과", dataIndex: "result", key: "result", width: 650, },
+      // { title: "소요시간", dataIndex: "time", key: "time", width: 110, },
+      // { title: "사용용량", dataIndex: "space", key: "space", width: 110, },
+      { title: "제출시간", dataIndex: "submit-time", key: "submit-time", width: 110, },
       {
-        title: "결과",
-
-        key: "message",
-        width: 450,
-      },
-
-      // {
-      //   title: "소요시간",
-      //   dataIndex: "time",
-      //   key: "time",
-      //   width: 110,
-      // },
-      // {
-      //   title: "사용용량",
-      //   dataIndex: "space",
-      //   key: "space",
-      //   width: 110,
-      // },
-      {
-        title: "제출시간",
-        dataIndex: "submit-time",
-        key: "submit-time",
-        width: 110,
-      },
-      {
-        title: "내 코드",
-        dataIndex: "coding",
-        key: "coding",
-        width: 100,
+        title: "내 코드", dataIndex: "coding", key: "coding", width: 100,
         render: (text, row, index) => (
           <div
             style={{ cursor: "pointer" }}
             onClick={() => {
               const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=800,height=600,scrollbars=no`;
-              const answer = JSON.parse(row.code);
-              console.log(answer);
-              let str = "";
-              const list = answer && answer.length > 0 ? answer.map((item, index) => {
-                console.log(item);
-                str += '<React.Fragment><h3>' + item.file_name + '</h3><div>' + item.code + '</div></React.Fragment>'
-                // return(
-                // <React.Fragment>
-                // <div style={{width:"100%",backgroundColor:"#EFEFEF",padding:"5px"}}>{item.file_name}</div>
-                // <div style={{width:"100%",}} dangerouslySetInnerHTML={{ __html:'+row.code+'}}/>
-                // </React.Fragment>)
-              }) : null;
-              // const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
-              // const code_ = '<div dangerouslySetInnerHTML={{ __html:'+row.code+'}}></div>';
-              const code = window.open("", "_blank", options);
-              let replace1 = str.replaceAll("\n", "<br/>");
-              replace1 = replace1.replaceAll("/\n/g", "<br/>");
-              replace1 = replace1.replaceAll("   ", "&emsp;");
-              // console.log(replace1);
-              code.document.write(replace1);
+              localStorage.setItem("code", row.code);
+              const code = window.open("/codeview", "codeview", options);
             }}>
             소스보기
           </div>
@@ -2128,4 +2097,16 @@ class SubmitLogContainer extends React.Component {
     )
   }
 }
-//
+// //
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     SetViewCode: (code) => dispatch(SetViewCode(code))
+//   }
+// }
+// connect(
+//   // (state)=>{ }
+//   null
+//   ,
+//   mapDispatchToProps
+// )(SubmitLogContainer)

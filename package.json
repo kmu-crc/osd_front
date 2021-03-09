@@ -74,6 +74,7 @@
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "4.0.1",
     "protoo-client": "^4.0.4",
+    "query-string": "^6.14.1",
     "raw-loader": "3",
     "rc-table": "^7.12.3",
     "react": "^16.11.0",

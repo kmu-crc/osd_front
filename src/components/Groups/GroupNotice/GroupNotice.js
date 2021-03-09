@@ -766,12 +766,10 @@ class GroupNotice extends Component {
           ? <div
             className="new-notice"
             onClick={() => { this.setState({ newNoticeDialog: true }) }}>
-            <p style={{ color: "white" }}>새 공지사항 등록하기</p>
-          </div>
-          : null}
-
-        {user_id === GroupDetail.user_id && hasProgrammingDesign && this.state.data == null
-          ? <div
+            <p style={{ color: "white" }}>공지사항</p>
+          </div> : null}
+        {user_id === GroupDetail.user_id && hasProgrammingDesign && this.state.data == null ?
+          <div
             className="new-notice"
             onClick={this.getExportFile}>
             <p style={{ color: "white" }}>제출현황 보기</p>

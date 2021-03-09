@@ -26,7 +26,7 @@ export default function CheckAuth(Components) {
       }
       GetSession("opendesign_token").then(token => {
         this.props.CheckTokenRequest(token).then(data => {
-          console.log(data);
+          // console.log(data);
           if (data && data.info) {
             if (!data.info.isDetail||data.info.thumbnail==null) {
               if (this.props.location.pathname === "/insertUserDetail") {
