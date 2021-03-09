@@ -914,7 +914,7 @@ class GroupNotice extends Component {
           : null}
 
         {this.state.data
-          ? <ExportExcelFile data={this.state.data} />
+          ? <ExportExcelFile group={this.props.GroupDetail} data={this.state.data} />
           : null}
 
         {<div
