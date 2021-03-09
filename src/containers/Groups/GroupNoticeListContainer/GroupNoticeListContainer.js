@@ -196,7 +196,9 @@ class GroupListContainer extends Component {
                 <div className="date">{DateFormat(noti.create_time)}({DateFormat(noti.update_time)})</div>
               </div>)
             })
-            : <div className="no-notice"><i className="icon x"></i><p>등록된 공지사항이 없습니다.</p></div>}
+            : <div className="no-notice">
+              {/* <i className="icon x"></i> */}
+              <p>등록된 공지사항이 없습니다.</p></div>}
         </List>
 
         <Navi>

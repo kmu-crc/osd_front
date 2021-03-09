@@ -38,7 +38,7 @@ class CodeView extends React.Component {
                 </div>)
             }) : null}
 
-            <div onClick={() => window.close()} style={{ width: "max-content", margin: "auto", }}>
+            <div onClick={() => window.close()} style={{ cursor: "pointer", width: "max-content", margin: "auto", }}>
                 <p style={{ padding: "5px 13px", color: "white", borderRadius: "18px", backgroundColor: "red", }}>
                     닫기</p></div>
         </React.Fragment >)
