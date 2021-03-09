@@ -187,7 +187,7 @@ const YouMessage = styled.div`
   }
   
 `;
-// new styled
+// NEW STYLED
 const Shape = styled.div`
   background-image:url(${props => props.imgURL});
   background-position: center center;
@@ -425,9 +425,9 @@ const You = (data) => {
     </div>
   </YouMessage>)
 };
-function isOpen(ws) { return ws.readyState === ws.OPEN }
+function isOpen(ws) { return ws.readyState === ws.OPEN };
 
-export default class Chat extends React.Component {
+export default class ChatGroup extends React.Component {
   constructor(props) {
     super(props);
     // state
@@ -482,9 +482,9 @@ export default class Chat extends React.Component {
         this.setState({ chat: copy });
       });
       this.socket.on('chat', data => {
-        const thumbnail = this.props.DesignDetail.member &&
-          this.props.DesignDetail.member.find(mem => mem.user_id === data.user_id) &&
-          this.props.DesignDetail.member.find(mem => mem.user_id === data.user_id).thumbnail.s_img;
+        const thumbnail = this.props.group.member &&
+          this.props.group.member.find(mem => mem.user_id === data.user_id) &&
+          this.props.group.member.find(mem => mem.user_id === data.user_id).thumbnail.s_img;
         data.thumbnail = thumbnail;
         // console.log('on chat', data);
         const copy = [...this.state.chat];
@@ -544,7 +544,7 @@ export default class Chat extends React.Component {
         this.downloadTextFile(
           data.map(chat => {
             return `${chat.nick_name}(${chat.create_time}):\r\n${chat.message}\r\n`;
-          }), `chatlog-${this.props.DesignDetail.title}-${dformat}.txt`)
+          }), `chatlog-${this.props.group.title}-${dformat}.txt`)
       });
 
 
@@ -564,7 +564,7 @@ export default class Chat extends React.Component {
   requestChat() {
     try {
       if (isOpen(this.socket))
-        this.socket.emit('load', { page: this.state.page, design_id: this.props.id }, () => {
+        this.socket.emit('load', { page: this.state.page, group_id: this.props.id }, () => {
           console.log('request ', this.state.page);
         });
     } catch (e) {
@@ -587,7 +587,7 @@ export default class Chat extends React.Component {
   saveChatLog() {
     try {
       if (isOpen(this.socket))
-        this.socket.emit('save-chat', { design_id: this.props.DesignDetail.uid });
+        this.socket.emit('save-chat', { group_id: this.props.group.uid });
     } catch (e) {
       console.error(e);
     }
@@ -679,7 +679,7 @@ export default class Chat extends React.Component {
           {/* <Shape imgURL={exiticon} width={15} height={15} /> */}
           {/* </div> */}
           <div>
-            <div className="fontRed">{(this.props.DesignDetail && this.props.DesignDetail.title) || "디자인"}</div>
+            <div className="fontRed">{(this.props.group && this.props.group.title) || "디자인"}</div>
           </div>
           <div onClick={() => this.saveChatLog()} className="downloadButton displayflex Hcentering Vend">
             <Shape imgURL={downicon} width={25} height={25} />
@@ -780,4 +780,4 @@ export default class Chat extends React.Component {
 
     </Chatting>);
   }
-}
+};

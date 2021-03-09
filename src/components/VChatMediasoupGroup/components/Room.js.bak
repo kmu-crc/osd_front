@@ -1,0 +1,249 @@
+import React from 'react';
+// import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+// import ReactTooltip from 'react-tooltip';
+// import classnames from 'classnames';
+// import clipboardCopy from 'clipboard-copy';
+// import * as appPropTypes from './appPropTypes';
+// import { withRoomContext } from '../RoomContext';
+// import * as requestActions from '../redux/requestActions';
+//  import { Appear } from './transitions';
+import Me from './Me';
+import Peers from './Peers';
+//  import Stats from './Stats';
+import Notifications from './Notifications';
+//  import NetworkThrottle from './NetworkThrottle';
+import styled from "styled-components";
+import { geturl } from "config"
+
+
+const RoomContainer = styled.div`
+	position: relative;
+	width: 100%;
+	height: ${props => props.h}px;
+	background-color: black;
+	z-index: 101;
+`;
+const TopContainer = styled.div`
+  z-index: 101;
+	width: 100%;
+	height: 36px;
+	min-height: 36px;
+	// border: 1px solid red;
+  position: fixed; 
+	top: 0px;
+	display: flex;
+  flex-direction: rows;
+  justify-content: space-between;
+  background-color: #707070; // transparent;
+
+	margin-top: 13px;
+  padding-left: 25px;
+	padding-right: 16px;
+	
+	z-index: 300;
+
+  .btn {
+    cursor: pointer;
+    text-align: center;
+
+    &.chat {
+			width: max-content;
+      height: 35px;
+      border-radius: 36px;
+      background: rgba(125, 125, 125, 0.5);
+      padding: 8px 25px;
+    }
+    &.share {
+      width: max-content;
+      height: 35px;
+      border-radius: 36px;
+      background: rgba(125, 125, 125, 0.5);
+      padding: 8px 25px;
+    }
+    &.exit {
+      width: 64px;
+      height: 32px;
+      border-radius: 32px;
+      background: rgba(255, 0, 0, 1.0);
+      padding: 6px 12px;
+    }    
+  }
+  .txt {
+    color: rgba(255, 255, 255, 1.0);
+    width: max-content;
+  }
+`;
+const MiddleContainer = styled.div`
+  z-index: 100;
+	width: 100%;
+	height: 100%;
+	min-height: 250px;
+	color: white;
+	background-size: cover;
+	background-position: center center;
+	background-image: url(${props => props.bg.m_img});
+	background-repeat: no-repeat;
+	position: relative;
+	margin: auto;
+
+	.panel {
+		z-index: 100;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(255, 255, 255, 0.5);
+		opacity: .9;
+	}
+
+	video {
+		position: relative;
+		z-index: 103;
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}
+`;
+const BottomContainer = styled.div`
+	z-index: 101;
+	width: 100%;
+	height: 260px;
+	min-height: 260px;
+	// border: 1px solid red;
+  // background-color: transparent;
+	background-color: rgba(54, 69, 79, 0.25);
+	position: absolute; 
+	bottom: 0px; 
+	display: flex;
+	flex-direction: row;
+
+	.me {
+		width: 260px;
+		height: 260px;
+		// border:1px solid white;
+	}
+	.peers {
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+		// border:1px solid skyblue;
+
+		.count {
+			width: max-content;
+			margin-left: auto;	
+			margin-top: 1rem;
+			margin-right: 1rem;
+		}
+		.v-scroll {
+
+		}
+	}
+`;
+
+class Room extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = { h: window.innerHeight, shareState: "off", }
+	}
+	render() {
+		// const { roomClient, room, me, amActiveSpeaker, onRoomLinkCopy } = this.props;
+		console.log("Room:", this.state, this.props);
+
+		return (<RoomContainer h={this.state.h || window.innerHeight}>
+			{/* noti */}
+			<Notifications />
+
+			{/* top */}
+			<TopContainer>
+				<div className='btn chat' onClick={() => {
+					const url = geturl() + `/chat/${this.props.design.uid} `
+					const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`
+					window.open(url, "chat", options)
+				}}>
+					<span className='txt'>채팅</span>
+				</div>
+
+				<div className='btn share'
+					ref={ref => this.sharebtn = ref}
+				>
+					<span className='txt'>
+						{this.state.shareState === "on" ? "화면공유 종료" : "화면공유"}
+					</span>
+				</div>
+
+				<div className='btn exit' onClick={() => { window.open('', '_self').close() }}>
+					<span className='txt'>나가기</span>
+				</div>
+			</TopContainer>
+
+			{/* middle */}
+			<MiddleContainer bg={this.props.design.img}>
+				<div className="panel"></div>
+				<video
+					muted
+					autoPlay
+					loop="loop"
+					ref={(ref) => this.video = ref} />
+			</MiddleContainer>
+
+			{/* bottom */}
+			<BottomContainer>
+				<div className="me">
+					<Me
+						userInfo={this.props.userInfo}
+						sharebtn={this.sharebtn}
+						shareState={this.state.shareState}
+						share={(shareState) => this.setState({ shareState: shareState })}
+						clicked={stream => this.clickedview(stream)}
+						thumbnail={this.props.userInfo.thumbnail} />
+				</div>
+				<div className="peers">
+					<div>
+						<Peers
+							clicked={(stream) => this.clickedview(stream)}
+							member={this.props.design.member} />
+					</div>
+				</div>
+			</BottomContainer>
+
+		</RoomContainer>);
+	}
+	clickedview = (stream) => {
+		if (this.video && stream) {
+			stream.addEventListener('inactive', () => {
+				this.video.style.display = "none";
+			});
+			stream.addEventListener('active', () => {
+				this.video.style.display = "block";
+			})
+			this.video.srcObject = stream;
+		}
+	}
+	componentDidMount() {
+		// join
+		const { roomClient } = this.props;
+		roomClient.join();
+
+		// window size
+		this.setState({ h: window.innerHeight });
+		window.addEventListener("resize", () => {
+			this.setState({ h: window.innerHeight });
+		});
+	}
+	componentWillUnmount() {
+		window.removeEventListener("resize");
+	}
+}
+
+// Room.propTypes =
+// {
+// 	// roomClient: PropTypes.any.isRequired,
+// 	// room: appPropTypes.Room.isRequired,
+// 	// me: appPropTypes.Me.isRequired,
+// 	// amActiveSpeaker: PropTypes.bool.isRequired,
+// 	// onRoomLinkCopy: PropTypes.func.isRequired
+// };
+
+export default Room;

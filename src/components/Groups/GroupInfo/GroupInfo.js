@@ -15,6 +15,7 @@ import TextFormat from 'modules/TextFormat';
 import { alert } from "components/Commons/Alert/Alert";
 import opendesign_style from "opendesign_style";
 import { Icon } from 'semantic-ui-react'
+import { GetPermissionCouldJoinVideoChatRequest } from "redux/modules/group";
 
 import GroupNoticeContainer from "containers/Groups/GroupNoticeContainer";
 
@@ -496,7 +497,54 @@ const NormalIcon = styled.div`
     background-repeat: no-repeat;
     opacity: ${props => props.opacity};
 `;
-
+const ChatWrapper = styled.div`
+    // width: 100%;
+    position: absolute;
+    display: flex;
+    width: max-content;
+    // top: 0px;
+    right: 0%;
+    margin-left: auto;
+    margin-right: 10px;
+    margin-top: 10px;
+    
+    .notice {
+        position: relative;
+        cursor: pointer;
+        span {
+            position: absolute;
+            background-color: red;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            z-index: 1;
+            color: white;
+            font-weight: 500;
+            text-align: center;
+            font-size: 10px;
+        };
+    
+        .video-chat-icon {
+            opacity: 0.6;
+            background-size: cover;
+            width: 45px;
+            height: 45px;
+        };
+    
+        i {
+            text-align: center;
+            line-height: 36px;
+            font-size: 36px;
+            color: gray;
+            z-index: 0;
+        };
+        .text {
+            text-align: center;
+            font-size: 12px;
+            color: #707070;
+        };
+    }
+`;
 
 class GroupInfoComponent extends Component {
     constructor(props) {
@@ -524,6 +572,16 @@ class GroupInfoComponent extends Component {
     }
     componentDidMount() {
         window.addEventListener("resize", this.handleResize);
+    }
+    async componentDidUpdate(prevProp) {
+        if (prevProp.GroupDetail != this.props.GroupDetail && this.props.GroupDetail != null) {
+            if (this.props.GroupDetail != null && this.props.token != null) {
+                // console.log("group-detail", this.props.GroupDetail);
+                const couldJoinVChat = await GetPermissionCouldJoinVideoChatRequest(this.props.token, this.props.GroupDetail.uid);
+                // console.log("couldJoin:", couldJoinVChat);
+                this.setState({ couldJoinVChat: couldJoinVChat });
+            }
+        }
     }
     componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize);
@@ -566,6 +624,21 @@ class GroupInfoComponent extends Component {
         }
     }
 
+    openVideoChat = () => {
+        const url = geturl() + `/vchatg/${this.props.GroupDetail.uid}`
+        const options =
+            `toolbar=no,status=no,menubar=no,resizable=0,location=no,scrollbars=no,\\
+        top=0,left=0,width=${window.screen.width},height=${window.screen.height - 100}`;
+        this.vchatwindow = window.open(url, "vchat", options);
+    }
+
+    openChat = () => {
+        const url = geturl() + `/chatg/${this.props.GroupDetail.uid}`;
+        const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
+        this.chatwindow = window.open(url, "chat", options);
+    }
+
+
     render() {
         // console.log("=============GROUPINFO==========", this.props);
         const { like, GroupDetail, userInfo } = this.props;
@@ -573,9 +646,9 @@ class GroupInfoComponent extends Component {
         const user_id = userInfo && userInfo.uid;
         const isEditor = group_user_id === user_id;
         const { w, manager } = this.state;
+        const { couldJoinVChat } = this.state;
 
         return (<React.Fragment>
-
             {/*  */}
             {this.state.likeDialog
                 ? <PopupBox>
@@ -750,6 +823,26 @@ class GroupInfoComponent extends Component {
                         {/* <div className="txt">더보기</div> */}
                     </div>
                 </div>
+                {couldJoinVChat ?
+                    <ChatWrapper>
+                        <div
+                            className="notice"
+                            title="그룹 멤버들과 화상회의를 시작합니다."
+                            onClick={this.openVideoChat}>
+                            {this.state.liveVC ? <span>ON</span> : null}
+                            <div className="video-chat-icon"> <i className="video icon"></i> </div>
+                            <div className="text"> {"화상회의"} </div>
+                        </div>
+                        <div
+                            className="notice"
+                            title="그룹 멤버들과 채팅을 시작합니다."
+                            onClick={this.openChat}>
+                            {this.state.msg_cnt > 0 ? <span>{this.state.msg_cnt}</span> : null}
+                            <div className="video-chat-icon"> <i className="talk big icon"></i> </div>
+                            <div className="text"> 채팅 </div>
+                        </div>
+                    </ChatWrapper>
+                    : null}
             </MainBox>
         </React.Fragment >)
     }

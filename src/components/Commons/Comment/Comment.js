@@ -364,7 +364,7 @@ class Comment extends Component {
                     {/* replies of comment */}
                     {item.replies && item.replies.length > 0 && item.replies.map((repli, repli_index) => {
                         const repli_face = repli && repli.s_img !== null ? repli.s_img : noface
-                        return (<CommentInner className={repli.read === 0 ? "reply blinking" : "reply"} key={repli.uid + repli_index} face={repli_face} >
+                        return (<CommentInner className={repli.read === 0 ? "reply blinking" : "reply"} key={repli.nick_name + repli.uid + repli_index} face={repli_face} >
                             <div className="face" />
                             <div className="text-wrapper">
                                 <div className="nick">
@@ -405,13 +405,13 @@ class Comment extends Component {
             <CommentInputTextContainer face={myface}>
                 <div className="face" />
                 <div className="flex_Input">
-                <div className="wrapper">
-                    <textarea value={this_comment || ""} onChange={this.onChangeValue} name="this_comment" />
-                </div>
-                <div className="another-wrapper">
-                    <div className="submit" onClick={this.requestComment}>게시</div>
-                    <div className="cancel" onClick={this.undoComment}>취소</div>
-                </div>
+                    <div className="wrapper">
+                        <textarea value={this_comment || ""} onChange={this.onChangeValue} name="this_comment" />
+                    </div>
+                    <div className="another-wrapper">
+                        <div className="submit" onClick={this.requestComment}>게시</div>
+                        <div className="cancel" onClick={this.undoComment}>취소</div>
+                    </div>
                 </div>
             </CommentInputTextContainer>
         </CommentBox >)
