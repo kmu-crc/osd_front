@@ -1236,7 +1236,11 @@ class CardSourceDetail extends Component {
                 {/* </div> */}
                 <div className="button-wrapper">
                   <div className="close"
-                    onClick={() => this.setState({ result: false, submit: false, loading: false })} >확인</div>
+                    onClick={() => this.setState({
+                      result: false,
+                      submit: true,
+                      loading: false
+                    })} >확인</div>
                 </div>
               </SubmitResultModal> : null}
 
@@ -2039,9 +2043,10 @@ class SubmitLogContainer extends React.Component {
                         : "실패"
       result =
         submit.result === "S"
-          ? result : result + ": " +
+          ? result : result + ":" +
           (submit.message && submit.message.slice(0, 512)) +
           (submit.message && submit.message.lnegth > 512 ? "..." : "");
+      console.log(result, submit.message);
 
       const row = {
         "key": index,
