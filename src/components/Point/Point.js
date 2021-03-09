@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import DateFormat from "modules/DateFormat";
 import { Pagination } from 'semantic-ui-react'
 import { InputPriceNew } from "components/Commons/InputItem"
+import { AddPoint } from "components/Commons/InputItem"
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 
@@ -10,6 +11,9 @@ import $ from "jquery";
 import market_style from "market_style";
 
 const Wrapper = styled.div`
+*{
+  // border:1px solid black;
+}
   width: 100%;
   .title{
     width:100%;
@@ -19,19 +23,18 @@ const Wrapper = styled.div`
   }
   .tabBox{
     width:100%;
-    margin-bottom:30px;
-    font-size:${market_style.font.size.normal3};
-    font-family:Noto Sans CJK KR, Medium;
     display:flex;
-    .text_grey{color:#d6d6d6;cursor:pointer;}
-    .text_black{color:black;cursor:pointer;}
+    font-size:${market_style.font.size.normal1};
+    font-family:Noto Sans KR;
+    .text_grey{color:#d6d6d6;cursor:pointer;font-weight:500;}
+    .text_black{color:black;cursor:pointer;font-weight:500;}
     .text_light_grey{color:#efefef;}
-    .margin_left{margin-left:40px;}
+    .margin_left{margin-left:0px;}
     .margin_right{margin-right:20px;}
   }
 `;
 const PointContainer = styled.div`
-  width: 1200px;
+  width: 100%;
   margin-right: auto;
   margin-left: auto;
 `;
@@ -164,30 +167,28 @@ const PaymentBox = styled.div`
   }
   .hrLine{
     width:100%;
-    border:1px solid #efefef;
-    margin-top:30px;
-    margin-bottom:24px;
+    border:2px solid #efefef;
+    margin-top:16px;
+    margin-bottom:10px;
   }
   .mypoint{
     width:100%;
     text-align:right;
     font-family:Noto Sans CJK KR, Regular;
-    font-size:${market_style.font.size.small3};
+    font-size:${market_style.font.size.small1};
     color:red;
-    margin-bottom:75px;
+    margin-bottom:38px;
   }
   .input_title{
-    font-family:Noto Sans CJK KR, Medium;
-    font-size:${market_style.font.size.normal3};
-    margin-top:15px;
-    margin-right:36px;
+    font-family:Noto Sans KR;
+    font-size:${market_style.font.size.small1};
+    font-weight:500;
+    margin-right:30px;
   } 
   .input_flag{
     width:1px;
     height:20px;
-    margin-right:47px;
-    // margin-left:47px;
-    margin-top:15px;
+    margin-right:30px;
     border-right:1px solid #707070;
     font-size:${market_style.font.size.normal3};
   }
@@ -197,18 +198,19 @@ const PaymentBox = styled.div`
   .inputprice{
     width:100%;
     display:flex;
-    margin-bottom:132px;
+    align-items:center;
+    margin-bottom:73px;
   }
   .align_right{
     justify-content:flex-end;
     .button_red{
-      width:290px;
-      height:70px;
+      width:150px;
+      height:53px;
       display:flex;
       justify-content:center;
       align-items:center;
       color:white;
-      font-size:${market_style.font.size.giant2};
+      font-size:${market_style.font.size.normal1};
       background-color:red;
       cursor:pointer;
     }
@@ -216,33 +218,49 @@ const PaymentBox = styled.div`
   .addPrice{
     width:100%;
     display:flex;
-    margin-bottom:100px;
+    margin-bottom:7px;
+    .selectPayment{
+      display:flex;
+    }
     .buttonIcon{
       cursor:pointer;
-      width:208px;
-      height:74px;
+      width:130px;
+      height:46px;
       display:flex;
       justify-content:center;
       align-items:center;
-      margin-bottom:42px;
+      background: #E9E9E9 0% 0% no-repeat padding-box;
     }
     .redbtn{
       background-color:red;
       color:white;
-      font-size:${market_style.font.size.normal3};
+      font-size:${market_style.font.size.small1};
+      margin-right:20px;
     }
     .defaultbtn{
-      border:1px solid #707070;
       color:#707070;
-      font-size:${market_style.font.size.normal3};
+      font-size:${market_style.font.size.small1};
+      margin-right:20px;
+
     }
   }
 `
 const PointListBox = styled.div`
   width:100%;
+  .hrLine{
+    width:100%;
+    border:2px solid #efefef;
+    margin-top:16px;
+    margin-bottom:10px;
+  }
+  .hrLineDeep{
+    border: 2px solid var(--unnamed-color-afafaf);
+    border: 2px solid #AFAFAF;
+    opacity: 1;
+  }
   .content_box{
     width:100%;
-    height:525px;
+    height:max-content;
     // box-shadow: 5px 5px 10px #00000029;
     // border-radius: 20px;
     // padding:44px 55px 44px 55px;
@@ -250,14 +268,16 @@ const PointListBox = styled.div`
       display:flex;
       align-items:center;
       justify-content:center;
-      height:64px;
+      height:max-content;
       width:100%;
-      // margin-bottom:7px;
+      margin-top:28px;
+      margin-bottom:9px;
       ._title{
         width:100%;
         height:max-content;
-        font-family:Noto Sans CJK KR, Medium;
-        font-size:${market_style.font.size.small3};
+        font-family:Noto Sans KR;
+        color:black;
+        font-size:${market_style.font.size.small1};
         text-align:center;
         font-weight:500;
       }
@@ -266,18 +286,13 @@ const PointListBox = styled.div`
       width:100%;
       display:flex;
       align-items:center;
-      height:64px;
+      height:38px;
       .history{
         width:100%;
         font-family:Noto Sans CJK KR, Regular;
-        font-size:${market_style.font.size.small3};
+        font-size:${market_style.font.size.small1};
         text-align:center;
       }
-    }
-    .hrLine{
-      width:100%;
-      height:2px;
-      background-color:#afafaf;
     }
     .hrLineBottom{
       width:100%;
@@ -435,7 +450,7 @@ PointUp = async(type) => {
     
     return (<Wrapper>
       <PointContainer>
-        <div className="title"> 내 포인트 관리</div>
+        {/* <div className="title"> 내 포인트 관리</div> */}
         <div className="tabBox">
           {this.state.tab == 0 ?
             <React.Fragment>
@@ -469,21 +484,22 @@ PointUp = async(type) => {
             <React.Fragment>
               <PaymentBox>
                 <div className="hrLine" />
-                <div className="mypoint">보유 포인트 : {Won(Point || 0)}</div>
+                <div className="mypoint">보유 포인트 : {Won(Point || 0)} p</div>
+
                 <div className="inputprice">
-                  <div className="input_title">결제 금액</div><div className="input_flag" />
-                  <div><InputPriceNew name="price" getValue={this.getPriceValue} /></div>
+                  <div className="input_title">충전 금액</div><div className="input_flag" />
+                  <div><AddPoint name="price" getValue={this.getPriceValue} /></div>
                 </div>
+
                 <div className="addPrice">
                   <div className="input_title">충전 수단</div><div className="input_flag" />
-                  <div>
+                  <div className="selectPayment">
                     <div onClick={() => this.setState({ paymentType: 0 })} className={`buttonIcon ${this.state.paymentType == 0 ? "redbtn" : "defaultbtn"}`}>현금 결제</div>
                     <div onClick={() => this.setState({ paymentType: 1 })} className={`buttonIcon ${this.state.paymentType == 1 ? "redbtn" : "defaultbtn"}`}>신용카드 결제</div>
                     <div onClick={() => this.setState({ paymentType: 2 })} className={`buttonIcon ${this.state.paymentType == 2 ? "redbtn" : "defaultbtn"}`}>간편 결제</div>
                   </div>
                   <div></div>
                 </div>
-                <div className="hrLine" />
                 <div className="addPrice align_right">
                   <div onClick={() => this.PointUp("CLICK")} className="button_red">결제하기</div>
                 </div>
@@ -494,12 +510,11 @@ PointUp = async(type) => {
               <React.Fragment>
                 <PaymentBox>
                   <div className="hrLine" />
-                  <div className="mypoint">보유 포인트 : {Won(Point || 0)}</div>
-                  <div className="inputprice margin_top">
+                  <div className="mypoint">보유 포인트 : {Won(Point || 0)} p</div>
+                  <div className="inputprice">
                     <div className="input_title">전환 금액</div><div className="input_flag" />
-                    <div><InputPriceNew name="price" getValue={this.getPriceValue} /></div>
+                    <div><AddPoint name="price" getValue={this.getPriceValue} /></div>
                   </div>
-                  <div className="hrLine" />
                   <div className="addPrice align_right">
                     <div onClick={() => this.PointToMoney("CLICK")} className="button_red">전환하기</div>
                   </div>
@@ -507,13 +522,14 @@ PointUp = async(type) => {
               </React.Fragment>
               :
               <PointListBox>
+                <div className="hrLine" />
                 <div className="content_box">
                   <div className="titleBox">
                     <div className="_title">날짜</div>
                     <div className="_title">결제 금액</div>
                     <div className="_title">결제 수단</div>
                   </div>
-                  <div className="hrLine" />
+                  <div className="hrLineDeep" />
                   {HistoryCount ? (
                     History.map(histo => {
                       pagecount++;

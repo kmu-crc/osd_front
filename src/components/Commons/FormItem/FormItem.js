@@ -289,7 +289,7 @@ export class FormTextAreaRed extends Component {
     delete newProps.onChange;
     return (
       <div>
-        <div style={{color:"#555",fontSize:"9pt"}}>{this.state.preValue}</div>
+        <div style={{color:"#555",fontSize:market_style.font.size.tiny1}}>{this.state.preValue}</div>
         <textarea style={{
           width: "70%",
           outline: "none !important",

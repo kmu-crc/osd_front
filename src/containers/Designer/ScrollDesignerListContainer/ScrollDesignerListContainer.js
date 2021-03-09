@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { GetDesignerListRequest } from "actions/Designer";
 import ScrollList from "components/Commons/ScrollList";
 import Expert from "components/Experts/Expert";
+import Expert_small from "components/Experts/Expert_small";
 
 class ScrollDesignerListContainer extends Component {
   async componentDidMount() {
@@ -16,7 +17,8 @@ class ScrollDesignerListContainer extends Component {
   render() {
     return (
       <ScrollList getListRequest={this.getList}
-        ListComponent={Expert}
+        isSmall={this.props.isSmall}
+        ListComponent={this.props.isSmall==true?Expert_small:Expert}
         type="designer"
         dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
       />

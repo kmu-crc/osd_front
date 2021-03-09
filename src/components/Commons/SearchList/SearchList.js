@@ -8,13 +8,20 @@ import ScrollItemListContainer from "containers/Products/ScrollProductListContai
 import ScrollMakerListContainer from "containers/Maker/ScrollMakerListContainer";
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
 import { alert } from "components/Commons/Alert/Alert";
+import market_style from "market_style";
 // import { Grid } from "semantic-ui-react";
 // import { confirm } from "components/Commons/Confirm/Confirm";
 // css styling
 
+const MainBox = styled.div`
+// border:1px solid black;
+// *{
+//   border:1px solid blue;
+// }
+` 
 const Wrapper = styled.div`
-  width: 107%;
-  margin-bottom: 50px;
+  width: 102%;
+  padding:0px 213px;
   & ul {
     margin-top: 30px;
   }
@@ -24,82 +31,75 @@ const Wrapper = styled.div`
     margin-right: 25px;
   }
 `;
+const Content = styled.div`
 
-const Content = styled(ContentBox)`
-@media only screen and (max-width: 991px) and (min-width: 768px){
-  & .ui.grid>.row{
-    margin-left: 6.25% !important;
-  }
-  }
-`;
-
-//const MenuContainer = styled(Grid)`
-//  font-size: 1.2rem;
-//  & .sorting {
-//    text-align: right;
-//  }
-//  & .ui.default.dropdown:not(.button)>.text,
-//  & .ui.dropdown:not(.button)>.default.text {
-//    color: inherit;
-//  }
-//  &.ui.grid > .row {
-//    padding-top: 2rem;
-//    padding-bottom: 2rem;
-//  }
-//`;
-
+`
+// const Content = styled(ContentBox)`
+// @media only screen and (max-width: 991px) and (min-width: 768px){
+//   & .ui.grid>.row{
+//     margin-left: 6.25% !important;
+//   }
+//   }
+// `;
 const ImgWrapper = styled.div`
   width: 100%;
-  height: 160px;
-  position: relative;
+  height: max-content;
+  margin-bottom:7px;
+  // position: relative;
   // border-top: 1px solid rgba(0,0,0,0.2);
 `;
 
 const Title = styled.div`
   width: 100%;
-  position: absolute;
-  text-align: center;
-  top: 50%;
-  left: 0;
-  z-index: 2;
-  transform: translateY(-50%);
+  display:flex;
+  justify-content:center;
+  ._searchWrapper{
+    width:max-content;
+    position:relative;
+  }
   & input {
-    font-size: ${StyleGuide.font.size.heading1};
-    line-height: 50px;
-    border:none;
-    border-bottom: 2px solid #EFEFEF;
+    width:300px;
+    height:35px;
+    border:1px solid #707070;
+    border-radius:22px;
+    outline:none;
+    padding:8px 35px 8px 30px;
     text-align: left;
+    font-weight:700;
     vertical-align: middle;
     background-color: transparent;
     color: ${StyleGuide.color.geyScale.scale7};
-    padding: 10px;
-    padding-left: 20px;
-    outline:none;
     &::placeholder {
       color: ${StyleGuide.color.geyScale.scale3};
     }
   }
   & .searchBtn {
+    position:absolute;
+    right:5px;
+    top:7px;
     background: transparent;
-    border: none;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    border:none;
     &:focus {
       outline: 0;
     }
   }
   & .searchBtn .icon {
-    font-size: ${StyleGuide.font.size.heading2};
+    font-size: ${market_style.font.size.small3};
     color: ${StyleGuide.color.gey.basic};
   }
 `;
 
 const MenuWrap = styled.div`
+
   background-color: white;
-  margin-bottom: 30px;
-  // border-top: 1px solid rgba(0,0,0,0.2);
-  // box-shadow: 0 2px 2px 2px ${StyleGuide.color.geyScale.scale3};
+  margin-bottom: 15px;
+  padding:0px 213px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  .dropstyle{
+    height:max-content;
+  }
 `;
 
 const type = [
@@ -211,47 +211,43 @@ class SearchList extends Component {
         : this.props.type && this.props.type === "maker" ? "메이커"
           : "아이템"
     return (
-      <div>
+      <MainBox >
         <ImgWrapper>
           <Title>
+            <div className="_searchWrapper">
             <input id="searchInput"
               placeholder="검색어를 입력하세요"
               onChange={this.getSearchValue}
               onKeyDown={this.submitEnter}
             />
             <button onClick={this.onSearchSubmit} className="searchBtn">
-              <i aria-hidden="true" size="huge" className="search icon"></i>
+              <i aria-hidden="true" size="tiny" className="search icon"></i>
             </button>
+            </div>
           </Title>
         </ImgWrapper>
         <MenuWrap>
-          <Content>
-            <Wrapper>
-              <div style={{ fontSize: "20px" }}>
-                <Dropdown
+              <Dropdown
+                  className="dropstyle"
                   placeholder={typetext}
                   options={type}
                   onChange={this.typeChange} />
-              </div>
-
               <div className="left">
                 <Sorting
                   handleClick={this.sortChange}
                   placeholder={this.props.sort} />
               </div>
-            </Wrapper>
-          </Content>
         </MenuWrap>
         <Content>
           {this.state.rendering &&
             <Wrapper>
-              {this.props.type === "designer" ? <ScrollDesignerListContainer sort={this.props.sort} keyword={this.props.keyword} /> : null}
-              {this.props.type === "maker" ? <ScrollMakerListContainer sort={this.props.sort} keyword={this.props.keyword} /> : null}
-              {this.props.type === "item" ? <ScrollItemListContainer sort={this.props.sort} keyword={this.props.keyword} /> : null}
+              {this.props.type === "designer" ? <ScrollDesignerListContainer isSmall={true} sort={this.props.sort} keyword={this.props.keyword} /> : null}
+              {this.props.type === "maker" ? <ScrollMakerListContainer isSmall={true} sort={this.props.sort} keyword={this.props.keyword} /> : null}
+              {this.props.type === "item" ? <ScrollItemListContainer isSmall={true} sort={this.props.sort} keyword={this.props.keyword} /> : null}
             </Wrapper>
           }
         </Content>
-      </div>
+      </MainBox>
     )
   }
 }

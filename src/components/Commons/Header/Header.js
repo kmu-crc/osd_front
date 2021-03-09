@@ -12,9 +12,52 @@ import { alert } from "components/Commons/Alert/Alert";
 // import { confirm } from "components/Commons/Confirm/Confirm";
 import MarketLogo from "source/market_logo.png";
 import market_style from "market_style";
+
+const MainHeader = styled.div`
+  height:45px;
+  padding:0px 30px 0px 30px;
+  display: flex;
+  justify-content:space-between;
+  align-items:center;
+  .pointer{cursor:pointer;}
+  .left_menu{
+    width:200px;
+    .text{
+      font-family:Noto Sans KR;
+      font-size:${market_style.font.size.mini2};
+      font-weight:700;
+      color:black;
+    }
+  }
+  .center_menu{
+    width:450px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:black;
+    .menu_text{
+      font-size:${market_style.font.size.small1};
+      font-weight:500;
+    }
+  }
+  .right_menu{
+    width:200px;
+    display:flex;
+    justify-content:flex-end;
+
+    .red_text{
+      color:red;
+      font-size:${market_style.font.size.small1};
+      font-weight:500;
+    }
+  }
+`
 const HeaderContainer = styled.ul`
-  height:54px;
-  padding:10px 20px 13px 20px;
+*{
+  // border:1px solid black;
+}
+  height:45px;
+  padding:0px 30px 0px 30px;
   display: flex;
   align-items:center;
   .left_menu{
@@ -39,11 +82,13 @@ const HeaderContainer = styled.ul`
 
 const HeaderItem = styled.li`
   min-width:max-content;
-  height:max-content;
+  height:35px;
   font-size: ${market_style.font.size.mini2};
   font-family:Noto Sans KR, Medium;
   font-weight:500;
   margin-right:20px;
+  display:flex;
+  align-items:center;
   .logo_box{
     width:35px;
     height:35px;
@@ -101,12 +146,12 @@ const UserMenu = styled.div`
   height: max-content;
   width: 175px;
   pointer-events: auto;
-  margin-top: 45px;
+  margin-top: 150px;
   border-radius: 15px;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
   color: #707070;
-  font-size: ${market_style.font.size.normal3};
+  font-size: ${market_style.font.size.small3};
   font-weight: 500;
   overflow:hidden;
   .item {
@@ -140,7 +185,7 @@ const LoginBox = styled.div`
   .login_text{
     min-width:max-content;
     height:max-content;
-    font-size: ${market_style.font.size.tiny2};
+    font-size: ${market_style.font.size.mini2};
     font-family:Noto Sans KR, Medium;
     font-weight:500;
     margin-left:20px;
@@ -148,7 +193,7 @@ const LoginBox = styled.div`
   .iconBox{
     width:35px;
     height35px;
-    margin-right:30px;
+    margin-right:20px;
     cursor:pointer;
   }
 `
@@ -216,7 +261,7 @@ class Header extends Component {
     }
     console.log(searchtype);
 
-    window.location.href = `/search/${searchtype}/null/${this.state.keyword}`;
+    window.location.href = `/search/${searchtype}/name/${this.state.keyword}`;
   }
   getNews = () => {
     const url = `${host}/common/notice`;
@@ -271,7 +316,76 @@ class Header extends Component {
     const pattern_eng= /[a-zA-Z]/;
 
     // active alarm icon
-    return (<HeaderContainer>
+    return (
+    window.location.pathname === "/"||
+    window.location.pathname === "/signup"||
+    window.location.pathname === "/signin"?
+    <MainHeader>
+      <div className="left_menu">
+        <div className="text pointer"
+        onClick={()=>window.location.href="/"}
+        >OPENDESIGNWORLD</div>
+      </div>
+      <div className="center_menu">
+        <div className="menu_text pointer"
+         onClick={()=>{
+          window.location.href="/designer"
+        }}
+        >디자이너</div>
+        <div className="menu_text pointer"
+         onClick={()=>{
+          window.location.href="/maker"
+        }}
+        >메이커</div>
+        <div className="menu_text pointer"
+         onClick={()=>{
+          window.location.href="/product"
+        }}
+        >아이템</div>
+        <div className="menu_text pointer"
+         onClick={()=>{
+          window.location.href="/request/designer"
+        }}
+        >게시판</div>
+      </div>
+      <div className="right_menu">
+      {valid && userInfo?
+        <LoginBox>
+            <div className="iconBox" >
+              <AlarmContainer />
+            </div>
+
+            <div className="iconBox" onClick={this.onClickMessageIcon}>
+              <Icon className="grey envelope" size="large" />
+            </div>
+              <div onClick={async () => await this.setState({ active: !this.state.active })} style={{ display: "flex",alignItems:"center", flexDirection: "row", cursor: "pointer" }}>
+              <div  style={{ width: "23px", height: "23px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+              <div  style={{ width: "max-content", marginLeft: "5px",fontFamily:market_style.font.family,
+               fontSize:market_style.font.size.small1 }}>
+                <TextFormat txt={userInfo.nickName} chars={pattern_eng.test(userInfo.nickName)?6:3} />
+                </div>
+              {this.state.active ?
+                <UserMenu id="popmenu">
+                  <Link to={`/mypage`}>
+                    <div className="item" id="popmenu">내 정보</div>
+                  </Link>
+                  <div onClick={this.logout} className="item" id="popmenu">로그아웃</div>
+                </UserMenu>
+                : null}
+            </div>
+        </LoginBox>
+      :
+      <div className="red_text pointer"
+      onClick={()=>{
+        window.location.href="/signin"
+      }}
+      >로그인</div>
+      }
+      </div>
+      
+    </MainHeader>
+    :
+    <HeaderContainer>
       {/*  */}
       <div className="left_menu">
       <HeaderItem>
@@ -281,25 +395,37 @@ class Header extends Component {
       {/*  */}
       <HeaderItem>
         <Link id="designer"
-          to={`/designer`}
+          onClick={()=>{
+            window.location.href="/designer"
+          }}
+          // to={`/designer`}
           className={designerActive ? "active" : ""}>
           디자이너</Link>
       </HeaderItem>
       {/*  */}
       <HeaderItem>
-        <Link id="maker" to={`/maker`}
+        <Link id="maker" 
+            onClick={()=>{
+              window.location.href="/maker"
+            }}
           className={makerActive ? "active" : ""}>
           메이커</Link>
       </HeaderItem>
       {/*  */}
       <HeaderItem>
-        <Link id="product" to={`/product`}
+        <Link id="product" 
+           onClick={()=>{
+             window.location.href="/product"
+            }}
           className={itemActive ? "active" : ""}>
           아이템</Link>
       </HeaderItem>
       {/*  */}
       <HeaderItem>
-        <Link id="request" to={`/request/designer`}
+        <Link id="request" 
+           onClick={()=>{
+             window.location.href="/request/designer"
+            }}
           className={requestActive ? "active" : ""}>
           게시판
           </Link>
@@ -311,19 +437,15 @@ class Header extends Component {
         <HeaderItem className="search">
           <div className="search-icon-wrapper">
             <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
-            <Link to={`/search/${searchtype}/null/${this.state.keyword}`} id="searchLink">
+            <Link to={`/search/${searchtype}/name/${this.state.keyword}`} id="searchLink">
               <img alt="icon" src={Zoom} id="searchbox" className="search-icon" onClick={this.onClickSearch}/>
             </Link>
           </div>
         </HeaderItem>}
       </div>
-      {/*  */}
       <div className="right_menu">
-      {/* <HeaderItem className={`${location.indexOf("/search") !== -1 ? "left" : ""}`}> */}
         {valid && userInfo
           ? (<LoginBox>
-
-            {/* alarm container */}
             <div className="iconBox" >
               <AlarmContainer />
             </div>
@@ -333,8 +455,11 @@ class Header extends Component {
             </div>
             <div className="addItem" onClick={()=>{window.location.href="/createProduct"}}><div className="_text">아이템 등록</div></div>
             <div onClick={async () => await this.setState({ active: !this.state.active })} style={{ display: "flex",alignItems:"center", flexDirection: "row", cursor: "pointer" }}>
-              <div  style={{ width: "35px", height: "35px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
-              <div  style={{ width: "max-content", marginLeft: "15px", }}><TextFormat txt={userInfo.nickName} chars={pattern_eng.test(userInfo.nickName)?6:3} /></div>
+              <div  style={{ width: "23px", height: "23px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+              <div  style={{ width: "max-content", marginLeft: "5px",fontFamily:market_style.font.family,
+               fontSize:market_style.font.size.small1 }}>
+                <TextFormat txt={userInfo.nickName} chars={pattern_eng.test(userInfo.nickName)?6:3} />
+                </div>
               {this.state.active ?
                 <UserMenu id="popmenu">
                   <Link to={`/mypage`}>
@@ -348,15 +473,7 @@ class Header extends Component {
           : (<LoginBox>
                 <div className="login_text"><Link to={`/signin`}>로그인</Link></div>
             </LoginBox>)}
-      {/* </HeaderItem> */}
       </div>
-      {/* <HeaderItem className="cart">
-        <Link to={'/cart'}>
-          {this.props.cart ?
-            : null}
-          <i style={{ width: "29px", height: "29px" }} className="cart icon" />
-        </Link>
-      </HeaderItem> */}
     </HeaderContainer >)
   };
 };

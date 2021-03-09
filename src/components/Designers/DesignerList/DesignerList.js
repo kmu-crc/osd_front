@@ -9,6 +9,9 @@ import market_style from "market_style";
 
 // CSS STYLING
 const Wrapper = styled.div`
+*{
+  // border:1px solid black;
+}
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -17,7 +20,7 @@ const Wrapper = styled.div`
   }
 `;
 const Content = styled(ContentBox)`
-  margin-top: ${props => props.top}px;
+  // margin-top: ${props => props.top}px;
   width:100%;
   @media only screen and (max-width: 991px) and (min-width: 768px){
     & .ui.grid>.row{
@@ -27,28 +30,39 @@ const Content = styled(ContentBox)`
   background-color: ${props => props.bgcolor || "#FFFFFF"};
 `;
 const RequestButton = styled.div`
-  width: 150px;
+  width:max-content;
+  padding:3px 7px 3px 7px;
   color: #FF0000;
   font-family: Noto Sans KR;
-  font-size:${market_style.font.size.mini1};
+  font-size:${market_style.font.size.mini2};
+  border:1px solid red;
+  margin-right:20px;
   `;
 const Container = styled.div`
+  padding:0px 30px 0px 30px;
   ._wrapper{
+    margin-bottom:20px;
     display:flex;
     justify-content:space-between;
+    align-items:center;
     .category {
       width: 100%;
     }
     ._title{
+      width:200px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
       font-family:Noto Sans KR;
       font-weight:500;
       font-size:${market_style.font.size.normal1};
     }
     .sort {
-      width: max-content;
+      width: 300px;
     }
     .request {
-      width: max-content;
+      width: 300px;
+      display:flex;
     }
   }
 `;
@@ -93,7 +107,7 @@ class DesignerList extends Component {
     const { sort, category1, category2, cate1, cate2 } = this.props;
     return (<React.Fragment>
 
-      <Content top={30}>
+      <Content top={20}>
         <Container>
           <div className="category">
             <Category
@@ -104,9 +118,13 @@ class DesignerList extends Component {
               cate2={cate2}
               category1={category1} 
               category2={category2}
-              which="디자이너" /></div>
+              which="디자이너" />
+              </div>
           <div className="_wrapper">
                 <div className="request">
+                <RequestButton>
+                    <Link to={`/request/designer`}>디자이너 게시판</Link>
+                  </RequestButton>
                   <RequestButton>
                     <Link to={`/requestToDesigner/null`}>디자인 의뢰</Link>
                   </RequestButton>
@@ -119,7 +137,7 @@ class DesignerList extends Component {
         </Container>
       </Content>
 
-      <Content top={16}>
+      <Content top={20}>
         <Wrapper className="listWrap">
           {this.state.rendering &&
             <ScrollDesignerListContainer

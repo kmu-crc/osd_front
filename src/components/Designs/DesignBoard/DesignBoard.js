@@ -11,7 +11,7 @@ import TextFormat from "modules/TextFormat";
 // import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
-
+import market_style from "market_style";
 const CustomModal = styled(Modal)`
   border: "1px solid";
   border-color: ${StyleGuide.color.main.dark};
@@ -89,7 +89,7 @@ const Menu = styled.ul`
 
 const MenuItem = styled.li`
   box-sizing: border-box;
-  font-size: 9pt;
+  font-size:${market_style.font.size.tiny1};
   color: ${StyleGuide.color.geyScale.scale6};
   border-bottom: 1px solid ${StyleGuide.color.geyScale.scale3};
   &:last-child {
@@ -345,9 +345,9 @@ class DesignBoard extends Component {
                 <SortableComponent getCardList={this.handleGetCardList} items={cardList} />
               </div><br />
               <div align="right" style={{ right: "0px", paddingBottom: "5px", paddingRight: "5px" }}>
-                <button style={{ fontSize: "9pt", backgroundColor: "#E72327", borderColor: "#E72327", padding: "0.5em 1.7em", marginTop: "6px", color: "#FFF", border: "0px", borderRadius: "5px 5px 5px 5px", lineHeight: "25px", marginLeft: "3px", width: "65px" }}
+                <button style={{ fontSize: market_style.font.size.tiny1, backgroundColor: "#E72327", borderColor: "#E72327", padding: "0.5em 1.7em", marginTop: "6px", color: "#FFF", border: "0px", borderRadius: "5px 5px 5px 5px", lineHeight: "25px", marginLeft: "3px", width: "65px" }}
                   onClick={this.requestReSortCardList}>완료하기</button>
-                <button style={{ fontSize: "9pt", backgroundColor: "#FFF", borderColor: "#E72327", padding: "0.5em 1.7em", marginTop: "6px", color: "#666", borderStyle: "solid", borderWidth: "1px", borderRadius: "5px 5px 5px 5px", lineHeight: "25px", marginLeft: "3px", width: "65px" }}
+                <button style={{ fontSize: market_style.font.size.tiny1, backgroundColor: "#FFF", borderColor: "#E72327", padding: "0.5em 1.7em", marginTop: "6px", color: "#666", borderStyle: "solid", borderWidth: "1px", borderRadius: "5px 5px 5px 5px", lineHeight: "25px", marginLeft: "3px", width: "65px" }}
                   onClick={this.closeSortableModal}> 취소하기</button>
               </div>
             </Modal.Content>

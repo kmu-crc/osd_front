@@ -12,8 +12,8 @@ const Wrapper = styled.div`
     cursor:pointer;
   }
   border: 1px solid transparent;
-  width: 240px;
-  height: 310px;
+  width: 220px;
+  height: 295px;
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #4141411A;
   border: 0.5px solid #B7B7B7;
@@ -27,8 +27,8 @@ const Profile = styled.div`
   display:flex;
   justify-content:center;
   .profile_img{
-    min-width: 220px;
-    min-height: 220px;
+    min-width: 200px;
+    min-height: 200px;
     max-width: 220px;
     max-height: 220px;
     background: transparent;
@@ -49,12 +49,13 @@ const TextWrapper = styled.div`
   .nick {
     margin-top:7px;
     font-weight: 500;
-    font-size:${market_style.font.size.normal1};
+    font-size:${market_style.font.size.small1};
     color: #060000;
   }
   .category {
+    margin-top:2px;
     font-weight: 500;
-    font-size:${market_style.font.size.small1};
+    font-size:${market_style.font.size.mini2};
     color: #FF0000;
   }
 `;
@@ -63,7 +64,7 @@ const Counter = styled.div`
   flex-direction: row;
   width: max-content;
   margin-left: auto;
-  margin-top: 3px;
+  margin-top: 2px;
   margin-right: auto;
   font-family: Noto Sans KR;
   letter-spacing: 0;
@@ -100,7 +101,7 @@ const empty = {
   update_time: "2020-01-01T00:00:01.000Z",
 };
 
-class Expert extends Component {
+class Expert_small extends Component {
   constructor(props){
     super(props);
     this.onClickItem = this.onClickItem.bind(this);
@@ -141,4 +142,4 @@ class Expert extends Component {
   }
 }
 
-export default Expert;
+export default Expert_small;

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetTopExpertListRequest } from "actions/Commons/TopList";
 import ScrollList from "components/Commons/ScrollListHorizontal";
-import Expert from "components/Experts/Expert";
+import Expert_small from "components/Experts/Expert_small";
 import Loading from "components/Commons/Loading";
 
 class ScrollTopExpertContainer extends Component {
@@ -15,7 +15,7 @@ class ScrollTopExpertContainer extends Component {
     return (
       this.props.status === "INIT"
         ? <Loading />
-        : <ScrollList ListComponent={Expert} dataList={this.props.dataList.concat(this.props.dataList)} />
+        : <ScrollList ListComponent={Expert_small} dataList={this.props.dataList.concat(this.props.dataList)} />
     );
   }
 }

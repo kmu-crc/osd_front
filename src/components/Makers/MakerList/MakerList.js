@@ -7,9 +7,11 @@ import ContentBox from "components/Commons/ContentBox";
 import Category from "components/Commons/Category";
 import market_style from "market_style";
 
-
 // CSS STYLING
 const Wrapper = styled.div`
+*{
+  // border:1px solid black;
+}
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -18,8 +20,8 @@ const Wrapper = styled.div`
   }
 `;
 const Content = styled(ContentBox)`
-  margin-top: ${props => props.top}px;
-  width: 100%;
+  // margin-top: ${props => props.top}px;
+  width:100%;
   @media only screen and (max-width: 991px) and (min-width: 768px){
     & .ui.grid>.row{
       margin-left: 6.25% !important;
@@ -28,28 +30,39 @@ const Content = styled(ContentBox)`
   background-color: ${props => props.bgcolor || "#FFFFFF"};
 `;
 const RequestButton = styled.div`
-  width: 150px;
+  width:max-content;
+  padding:3px 7px 3px 7px;
   color: #FF0000;
   font-family: Noto Sans KR;
-  font-size:${market_style.font.size.mini1};
-`;
+  font-size:${market_style.font.size.mini2};
+  border:1px solid red;
+  margin-right:20px;
+  `;
 const Container = styled.div`
+  padding:0px 30px 0px 30px;
   ._wrapper{
+    margin-bottom:20px;
     display:flex;
     justify-content:space-between;
+    align-items:center;
     .category {
       width: 100%;
     }
     ._title{
+      width:200px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
       font-family:Noto Sans KR;
       font-weight:500;
       font-size:${market_style.font.size.normal1};
     }
     .sort {
-      width: max-content;
+      width: 300px;
     }
     .request {
-      width: max-content;
+      width: 300px;
+      display:flex;
     }
   }
 `;
@@ -107,6 +120,9 @@ class MakerList extends Component {
               which="메이커" /></div>
             <div className="_wrapper">
                 <div className="request">
+                <RequestButton>
+                    <Link to={`/request/maker`}>메이커 게시판</Link>
+                  </RequestButton>
                   <RequestButton>
                     <Link to={`/requestToMaker/null`}>제작 의뢰</Link>
                   </RequestButton>

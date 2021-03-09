@@ -15,38 +15,34 @@ const MainBox = styled.div`
     color:#060000;
   }
 
-  width:933px;
-  height:609px;
-  padding:28px;
+  width:806px;
+  height:496px;
+  padding:75px;
   display:flex;
-  justify-content:center;
-  align-items:center;
-
+  padding:89px 205px 108px 205px;
   .contentsBox{
-    width:498px;
-    height:100%;
+    width:396px;
     display:flex;
     flex-direction:column;
-
     .titleBox{
       width:100%;
       display:flex;
       justify-content:center;
       align-items:center;
       .title{
-        font-size:${market_style.font.size.normal3};
+        font-size:${market_style.font.size.small1};
         font-weight:700;
       }
     }
     .row{
       *{
-        font-size:${market_style.font.size.small2};
+        font-size:${market_style.font.size.mini2};
       }
       display:flex;
-      height:43px;
-      margin-bottom:19px;
+      height:25px;
+      margin-bottom:25px;
       .label{
-        min-width:104px;
+        min-width:96px;
         font-weight:500;
         display:flex;
         align-items:center;
@@ -55,6 +51,19 @@ const MainBox = styled.div`
         color:red;
         cursor:pointer;
       }
+      .vcenter{
+        height:100%;
+        align-items:center;
+      }
+      .alignRight{
+        justify-content:flex-end;
+      }
+    }
+    .margin_bottom1{
+      margin-bottom:15px;
+    }
+    .margin_bottom2{
+      margin-bottom:45px;
     }
     .spaceBetween{
       justify-content:space-between;
@@ -64,7 +73,7 @@ const MainBox = styled.div`
 `
 const InputTextBox = styled.input.attrs({ type: 'text' })`
   border:none;
-  width:100%;
+  width:300px;
   height:100%;
   padding-left:20px;
   background-color:#E9E9E9;
@@ -77,7 +86,7 @@ const InputTextBox = styled.input.attrs({ type: 'text' })`
 `
 const InputPasswordBox = styled.input.attrs({ type: 'password' })`
   border:none;
-  width:100%;
+  width:300px;
   height:100%;
   padding-left:20px;
   background-color:#E9E9E9;
@@ -112,13 +121,16 @@ const CheckBox = styled.input.attrs({ type: "checkbox" })`
   margin-right:11px;
 `
 const CustomBox = styled.div`
-  width:${props => props.width == null ? 100 : props.width}%;
-  height:${props => props.height == null ? 100 : props.height}%;
+  width:${props => props.width == null ? "max-content" : props.width}%;
+  height:${props => props.height == null ? "max-content" : props.height}%;
   display:flex;
+  align-items:center;
   margin-top:${props => props.marginTop == null ? 0 : props.marginTop}px;
   margin-bottom:${props => props.marginBottom == null ? 0 : props.marginBottom}px;
   margin-left:${props => props.marginLeft == null ? 0 : props.marginLeft}px;
   margin-right:${props => props.marginRight == null ? 0 : props.marginRight}px;
+  font-size:${market_style.font.size.tiny1};
+  font-weight:200;
 `
 
 class SignInForm extends Component {
@@ -193,6 +205,7 @@ class SignInForm extends Component {
         this.setState({err:false});
         return;
       } else {
+        // alert(window.history.go(-1));
         window.history.go(-1)
         // window.location.reload();
       }
@@ -232,8 +245,7 @@ class SignInForm extends Component {
         <form onSubmit={this.onSubmit}>
           <MainBox>
             <div className="contentsBox">
-              <div className="titleBox"><div className="title">로그인</div></div>
-              <CustomBox height={14.8} />
+              <div className="titleBox margin_bottom2"><div className="title">로그인</div></div>
               <div className="row">
                 <div className="label"><div>아이디</div></div>
                 <InputTextBox
@@ -251,19 +263,19 @@ class SignInForm extends Component {
                   onChange={this.onChangePassword} 
                   onKeyDown = {this.onKeyDownPass}/>
               </div>
-              <div className="row">
+              <div className="row margin_bottom2">
                 <div className="label" />
-                <CustomBox width={29} ><CheckBox checked={this.state.saveID} onChange={this.onCheckSaveID} id="saveID" />아이디 저장</CustomBox>
-                <CustomBox width={29}><CheckBox checked={this.state.saveLogin} onChange={this.onCheckSaveLogin} id="saveLogin" />로그인 저장</CustomBox>
+                <CustomBox ><CheckBox checked={this.state.saveID} onChange={this.onCheckSaveID} id="saveID" />아이디 저장</CustomBox>
+                <CustomBox marginLeft={50}><CheckBox checked={this.state.saveLogin} onChange={this.onCheckSaveLogin} id="saveLogin" />로그인 상태 유지</CustomBox>
               </div>
-              <div className="row">
-                <CustomButton onClick={this.onSubmit} width={498} height={43}
-                  bgColor={"#FF0000"} borderRadius={21} fontColor={"white"}>로그인</CustomButton>
+              <div className="row margin_bottom1">
+                <CustomButton onClick={this.onSubmit} width={498} height={30}
+                  bgColor={"#FF0000"} fontColor={"white"}>로그인</CustomButton>
               </div>
               <div className="row spaceBetween">
-                <CustomButton onClick={this.onClickSignUp} width={251} height={43}
-                  bgColor={"white"} borderRadius={21} borderColor={"red"} fontColor={"red"}>회원가입</CustomButton>
-                <div className="label red_text " onClick={()=>{window.location.href="/resetPW"}}>비밀번호 찾기</div>
+                <CustomButton onClick={this.onClickSignUp} width={198} height={30}
+                  bgColor={"white"} borderColor={"red"} fontColor={"red"}>회원가입</CustomButton>
+                <div className="label vcenter alignRight" onClick={()=>{window.location.href="/resetPW"}}><div className="red_text">비밀번호 찾기</div></div>
               </div>
             </div>
 

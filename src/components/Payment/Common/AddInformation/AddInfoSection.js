@@ -7,7 +7,7 @@ const SectionBox = styled.div`
 }
 .payment_content_label{
     width:100%;
-    font-size:16pt;
+    font-size:${market_style.font.size.small2};
     font-weight:1000;
     padding:10px;
 }

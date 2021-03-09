@@ -3,6 +3,8 @@ import styled from "styled-components";
 import market_style from "market_style";
 
 const Container = styled.div`
+  margin-top:10px;
+  margin-bottom:8px;
   width:100%;
   font-family: Noto Sans KR;
   cursor: default;
@@ -12,13 +14,19 @@ const Container = styled.div`
     height:22px;
   }
   .under {
-    margin-top: 5px;
-    margin-bottom:35px;
-    height:22px;
+    height:max-content;
   }
 `;
 const CategoryItem =styled.div`
   cursor:pointer;
+  font-size:${market_style.font.size.small1};
+  &:hover{
+    opacity:0.7;
+  }
+`
+const CategoryItem2 =styled.div`
+  cursor:pointer;
+  font-size:${market_style.font.size.mini2};
   &:hover{
     opacity:0.7;
   }
@@ -35,9 +43,12 @@ const CategoryMenu = styled.div`
   display: flex;
   justify-content:center;
   flex-direction: row;
-  font-size: ${market_style.font.size.small1};;
+  font-size: ${market_style.font.size.small1};
   text-align: left;
   font-weight: 300;
+  .font_small{
+    font-size:${market_style.font.size.tiny1};
+  }
   .element {
     margin-right: 10px;
   }
@@ -77,15 +88,17 @@ class Category extends Component {
                 key={i} className={`element ${cate.value === parseInt(cate1, 10) ? "active" : ""}`}>
                 {cate.text}</CategoryItem>)}
           </CategoryMenu></div>
-        <div className="under">
+          {cate1&&
+          <div className="under">
           <CategoryMenu className="fly">
-            {cate1 && category2 ? (
-              category2.map((cate, i) => cate.value !== 0 &&
-                <CategoryItem
-                  onClick={(e) => this.onChangeCategory2(e, cate.parent, cate.value)}
-                  key={i} className={`element ${cate.value === parseInt(cate2, 10) ? "active" : ""}`}>{cate.text}</CategoryItem>)) : null}
+          {cate1 && category2 ? (
+            category2.map((cate, i) => cate.value !== 0 &&
+              <CategoryItem2
+                onClick={(e) => this.onChangeCategory2(e, cate.parent, cate.value)}
+                key={i} className={`element ${cate.value === parseInt(cate2, 10) ? "active" : ""}`}>{cate.text}</CategoryItem2>)) : null}
           </CategoryMenu>
-        </div>
+          </div>
+          }
       </Container>
       // <CateColumn className="category"
       //   widescreen={this.props.widescreen ? this.props.widescreen : null}

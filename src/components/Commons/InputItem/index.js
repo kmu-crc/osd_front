@@ -12,3 +12,4 @@ export * from "./InputContent";
 export * from "./InputCalendar";
 export * from "./InputPriceNew";
 export * from "./InputFile";
+export * from "./AddPoint";

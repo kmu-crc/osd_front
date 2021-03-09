@@ -57,7 +57,7 @@ const AlarmDropDown = styled.ul`
   width: 320px;
   overflow-y: scroll;
   overflow-x: hidden;
-  top: 90px;
+  top: 50px;
   right: 255px;
   background-color: white;
   padding:10px;
@@ -317,9 +317,9 @@ export default class Alarm extends Component {
                           </div>
                           <div style={{height: "100%", display: "flex" }}>
                             <div style={{ verticalAlign: "middle", paddingLeft: "3px", display:"flex", flexDirection:"column",alignItems:"space-between",justifyContent:"space-between" }}>
-                              <div style={{ width: "100%", fontSize: "9pt" }}>{this.getMessageText(item)}</div>
+                              <div style={{ width: "100%", fontSize: market_style.font.size.tiny1 }}>{this.getMessageText(item)}</div>
                               <div style={{display: "flex" }}>
-                                <div style={{ fontSize: "9pt", color: "#960A0E" }}>{DateFormat(item.create_time)}</div>
+                                <div style={{ fontSize: market_style.font.size.tiny1, color: "#960A0E" }}>{DateFormat(item.create_time)}</div>
                               </div>
                             </div>
                             {/* { item.type=="ITEN_REQUEST_TO_DESIGNER"||

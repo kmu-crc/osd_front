@@ -9,6 +9,9 @@ import market_style from "market_style";
 
 // CSS STYLING
 const Wrapper = styled.div`
+*{
+  // border:1px solid black;
+}
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -17,8 +20,8 @@ const Wrapper = styled.div`
   }
 `;
 const Content = styled(ContentBox)`
-  margin-top: ${props => props.top}px;
-  width: 100%;
+  // margin-top: ${props => props.top}px;
+  width:100%;
   @media only screen and (max-width: 991px) and (min-width: 768px){
     & .ui.grid>.row{
       margin-left: 6.25% !important;
@@ -27,31 +30,43 @@ const Content = styled(ContentBox)`
   background-color: ${props => props.bgcolor || "#FFFFFF"};
 `;
 const RequestButton = styled.div`
-    width: 150px;
-    color: #FF0000;
-    font-family: Noto Sans KR;
-    font-size:${market_style.font.size.mini1};
-    `;
+  width:max-content;
+  padding:3px 7px 3px 7px;
+  color: #FF0000;
+  font-family: Noto Sans KR;
+  font-size:${market_style.font.size.mini2};
+  border:1px solid red;
+  margin-right:20px;
+  `;
 const Container = styled.div`
+  padding:0px 30px 0px 30px;
   ._wrapper{
+    margin-bottom:20px;
     display:flex;
     justify-content:space-between;
+    align-items:center;
     .category {
       width: 100%;
     }
     ._title{
+      width:200px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
       font-family:Noto Sans KR;
       font-weight:500;
       font-size:${market_style.font.size.normal1};
     }
     .sort {
-      width: max-content;
+      width: 300px;
     }
     .request {
-      width: max-content;
+      width: 300px;
+      display:flex;
     }
   }
 `;
+
 class ProductList extends Component {
   constructor(props) {
     super(props);
@@ -107,9 +122,11 @@ class ProductList extends Component {
           </div>
           <div className="_wrapper">
                 <div className="request">
+                {this.props.userInfo != null && (this.props.userInfo.isDesigner === 1 || this.props.userInfo.isMaker === 1) ?
                   <RequestButton>
-                  <Link to={`/createproduct`}>{this.props.userInfo != null && (this.props.userInfo.isDesigner === 1 || this.props.userInfo.isMaker === 1) ? "아이템 등록" : null}</Link>
+                  <Link to={`/createproduct`}>아이템 등록</Link>
                   </RequestButton>
+                  : null}
                 </div>
                 <div className="_title">아이템</div>
                 <div className="sort">

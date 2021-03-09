@@ -185,7 +185,7 @@ export const CreateCard = (props) => {
 export const TipDiv = (props) => {
     return (<div>
         <div style={{ color: "#FF0000" }}>TIP</div>
-        <div style={{ color: "#707070", fontSize: "17px", fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>{props.txt}</div>
+        <div style={{ color: "#707070", fontSize: market_style.font.size.small3, fontFamily: "Noto Sans KR", fontWeight: "300", textAlign: "left" }}>{props.txt}</div>
     </div>)
 }
 export const StepCard = (props) => {
@@ -214,25 +214,25 @@ export const ContentCard = (props) => {
                     </div>:null}
                     {/* <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(180deg, #000000 0%, #020202F7 16%, #FFFFFF26 100%)" }} /> */}
                     <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(-180deg, rgba(32,32,32, 0.5) 0%, rgba(255,255,255, 0) 50%)" }} />
-                    <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#FFFFFF", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
+                    <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: market_style.font.size.normal3, fontFamily: "Noto Sans KR", fontWeight: "500", color: "#FFFFFF", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
                         {props.card.title.slice(0, 10)}
                     </div>
                     {/* <div style={{ zIndex: "702", background: "transparent linear-gradient(270deg, #00000000 0%, #FFFFFFA1 13%, #FFFFFF 52%, #FFFFFF94 82%, #80808000 100%)", position: "absolute", width: "195px", height: "53px", fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "128px", marginLeft: "auto" }}> */}
                     {/* #EAEAEA */}
                     <AuthorBox>
-                        <div style={{ fontSize: "17px", fontWeight: "400" }}>{props.card.nick_name.slice(0, 10)}</div>
-                        <div style={{ fontSize: "15px", marginTop: "6px", fontWeight: "400" }}>{DateFormat(props.card.update_time)}</div>
+                        <div style={{ fontSize: market_style.font.size.small3, fontWeight: "400" }}>{props.card.nick_name.slice(0, 10)}</div>
+                        <div style={{ fontSize: market_style.font.size.small1, marginTop: "6px", fontWeight: "400" }}>{DateFormat(props.card.update_time)}</div>
                     </AuthorBox>
                 </React.Fragment> :
                 <React.Fragment>
-                    <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
+                    <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: market_style.font.size.normal3, fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
                         {props.card.title.slice(0, 10)}
                     </div>
                     <div style={{ zIndex: "702", position: "absolute", width: "195px", height: "53px", fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "128px", marginLeft: "auto" }}>
-                        <div style={{ fontSize: "17px" }}>
+                        <div style={{ fontSize: market_style.font.size.small3 }}>
                             {props.card.nick_name.slice(0, 10)}
                         </div>
-                        <div style={{ fontSize: "15px", marginTop: "6px" }}>
+                        <div style={{ fontSize: market_style.font.size.small1, marginTop: "6px" }}>
                             {DateFormat(props.card.update_time)}
                         </div>
                     </div>

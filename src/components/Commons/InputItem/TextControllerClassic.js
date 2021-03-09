@@ -5,18 +5,19 @@ import styled from "styled-components";
 import Editor from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
+import market_style from "market_style";
 
 const EditorWrapper = styled.div`
     margin-bottom: 5px;
     .copyright {
         width: max-content;
         margin-left: auto;
-        font-size: 0.8rem;
+        font-size: ${market_style.font.size.tiny1};
     }
     .editor {
         width:${props => props.width == null ? "100%" : props.width + "px"};
         height:${props => props.editheight == null ? "100%" : props.editheight + "px"};
-        font-size: 0.8rem;
+        font-size: ${market_style.font.size.tiny1};
     }
 `;
 export class TextControllerClassic extends Component {

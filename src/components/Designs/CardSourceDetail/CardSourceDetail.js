@@ -30,7 +30,7 @@ const ViewContent = styled.div`
   }
   .LinkFileName {
     line-height: 70px;
-    font-size: 20px;
+    font-size:${market_style.font.size.normal3};
   }
   .iconWrap {
     display: block;

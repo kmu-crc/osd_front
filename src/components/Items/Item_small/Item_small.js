@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   *{
     cursor:pointer;
   }
-  width: 310;
+  width: 300;
   height: 346px;
   padding:20px 15px;
   position: relative;
@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   cursor: pointer;
 `;
 const ItemPic = styled.div`
-  min-width: 280px;
+  min-width: 270px;
   min-height: 250px;
   max-width: 280px;
   max-height: 250px;
@@ -115,7 +115,7 @@ font-weight:100;
   color:red;
 `
 const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 };
-class Item extends Component {
+class Item_small extends Component {
   Keeper = () => {
     const item = this.props.data;
     if (item.uid) {
@@ -189,4 +189,4 @@ class Item extends Component {
   }
 }
 
-export default Item;
+export default Item_small;
