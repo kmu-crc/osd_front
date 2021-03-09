@@ -451,7 +451,7 @@ class CardModal extends Component {
     //     window.document.removeEventListener("scroll");
     // }
     componentDidUpdate(prevProps) {
-        if(prevProps !== this.props.card){
+        if (prevProps !== this.props.card) {
             return true;
         }
     }
@@ -751,44 +751,22 @@ class CardModal extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        userInfo: state.Authentication.status.userInfo,
-        token: state.Authentication.status.token,
-        detail: state.DesignCard.status.DesignDetailStepCard,
-    };
-};
+const mapStateToProps = state => ({
+    userInfo: state.Authentication.status.userInfo,
+    token: state.Authentication.status.token,
+    detail: state.DesignCard.status.DesignDetailStepCard,
+});
 
-const mapDispatchToProps = dispatch => {
-    return {
-        UpdateCardSourceRequest: (data, card_id, token) => {
-            return dispatch(UpdateCardSourceRequest(data, card_id, token));
-        },
-        UpdateCardTitleRequest: (data, token, id) => {
-            return dispatch(UpdateCardTitleRequest(data, token, id));
-        },
-        UpdateCardContentRequest: (data, token, id) => {
-            return dispatch(UpdateCardContentRequest(data, token, id));
-        },
-        UpdateCardImagesRequest: (data, token, id) => {
-            return dispatch(UpdateCardImagesRequest(data, token, id));
-        },
-        DeleteDesignCardRequest: (board_id, card_id, token) => {
-            return dispatch(DeleteDesignCardRequest(board_id, card_id, token));
-        },
-        GetDesignBoardRequest: (id) => {
-            return dispatch(GetDesignBoardRequest(id));
-        },
-        GetCardDetailRequest: id => {
-            return dispatch(GetCardDetailRequest(id));
-        },
-        UpdateDesignTime: (id, token) => {
-            return dispatch(UpdateDesignTime(id, token));
-        },
-        GetDesignDetailRequest: (id, token) => {
-            return dispatch(GetDesignDetailRequest(id, token));
-        },
-    };
-};
+const mapDispatchToProps = dispatch => ({
+    UpdateCardSourceRequest: (data, card_id, token) => dispatch(UpdateCardSourceRequest(data, card_id, token)),
+    UpdateCardTitleRequest: (data, token, id) => dispatch(UpdateCardTitleRequest(data, token, id)),
+    UpdateCardContentRequest: (data, token, id) => dispatch(UpdateCardContentRequest(data, token, id)),
+    UpdateCardImagesRequest: (data, token, id) => dispatch(UpdateCardImagesRequest(data, token, id)),
+    DeleteDesignCardRequest: (board_id, card_id, token) => dispatch(DeleteDesignCardRequest(board_id, card_id, token)),
+    GetDesignBoardRequest: (id) => dispatch(GetDesignBoardRequest(id)),
+    GetCardDetailRequest: id => dispatch(GetCardDetailRequest(id)),
+    UpdateDesignTime: (id, token) => dispatch(UpdateDesignTime(id, token)),
+    GetDesignDetailRequest: (id, token) => dispatch(GetDesignDetailRequest(id, token)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardModal);
