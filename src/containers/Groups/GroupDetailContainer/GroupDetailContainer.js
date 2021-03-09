@@ -12,7 +12,6 @@ import {
 
   //  // group-notice w/o redux 
   // GetLastestGroupNoticeRequest,
-
 } from "redux/modules/group";
 import GroupDetail from "components/Groups/GroupDetail";
 
@@ -53,19 +52,18 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetWaitingDesignRequest: (id, sort) => { return dispatch(GetWaitingDesignRequest(id, sort)) },
-    GetWaitingGroupRequest: (id, sort) => { return dispatch(GetWaitingGroupRequest(id, sort)) },
-    GetGroupDetailRequest: (id) => { return dispatch(GetGroupDetailRequest(id)) },
-    GetLikeGroupRequest: (id, token) => { return dispatch(GetLikeGroupRequest(id, token)) },
-    LikeGroupRequest: (id, token) => { return dispatch(LikeGroupRequest(id, token)) },
-    UnlikeGroupRequest: (id, token) => { return dispatch(UnlikeGroupRequest(id, token)) },
-    GetGroupCountRequest: (id) => { return dispatch(GetGroupCountRequest(id)) },
-    DesignInGroupClear: (data) => { return dispatch(DesignInGroupClear(data)) },
-    GroupInGroupClear: (data) => { return dispatch(GroupInGroupClear(data)) },
-    DeleteGroupRequest: (id, token) => { return dispatch(DeleteGroupRequest(id, token)) },
-    GetGroupInGroupRequest: (id, page, sort) => { return dispatch(GetGroupInGroupRequest(id, page, sort)) },
-    GetDesignInGroupRequest: (id, page, sort) => { return dispatch(GetDesignInGroupRequest(id, page, sort)) },
-
+    GetWaitingDesignRequest: (id, sort) => dispatch(GetWaitingDesignRequest(id, sort)),
+    GetWaitingGroupRequest: (id, sort) => dispatch(GetWaitingGroupRequest(id, sort)),
+    GetGroupDetailRequest: (id) => dispatch(GetGroupDetailRequest(id)),
+    GetLikeGroupRequest: (id, token) => dispatch(GetLikeGroupRequest(id, token)),
+    LikeGroupRequest: (id, token) => dispatch(LikeGroupRequest(id, token)),
+    UnlikeGroupRequest: (id, token) => dispatch(UnlikeGroupRequest(id, token)),
+    GetGroupCountRequest: (id) => dispatch(GetGroupCountRequest(id)),
+    DesignInGroupClear: (data) => dispatch(DesignInGroupClear(data)),
+    GroupInGroupClear: (data) => dispatch(GroupInGroupClear(data)),
+    DeleteGroupRequest: (id, token) => dispatch(DeleteGroupRequest(id, token)),
+    GetGroupInGroupRequest: (id, page, sort) => dispatch(GetGroupInGroupRequest(id, page, sort)),
+    GetDesignInGroupRequest: (id, page, sort) => dispatch(GetDesignInGroupRequest(id, page, sort)),
     // GetAllNoticeYourGroupRequest: (id) => dispatch(GetAllNoticeYourGroupRequest(id)),
     // GetGroupNoticeYouJoinedRequest: (id, user_id) => dispatch(GetGroupNoticeYouJoinedRequest(id, user_id)),
     // CreateGroupNoticeRequest: (id) => dispatch(CreateGroupNoticeRequest(id)),

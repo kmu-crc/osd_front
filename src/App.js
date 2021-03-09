@@ -27,8 +27,10 @@ import FooterPrivacy from "components/Commons/FooterPrivacy"
 import FooterPara from "components/Commons/FooterTerm"
 import Notice from "components/Header/Notice";
 import CheckAuth from "containers/Commons/CheckAuth";
-import VChat2Page from "pages/VChat2Page";
-import ChatPage from "pages/ChatPage";
+import VChatDesignPage from "pages/VChat2Page";
+import VChatGroupPage from "pages/VChatGroupPage";
+import ChatDesignPage from "pages/ChatPage";
+import ChatGroupPage from "pages/ChatGroupPage";
 import CodeViewPage from "pages/CodeViewPage";
 
 class App extends Component {
@@ -37,9 +39,12 @@ class App extends Component {
       <BrowserRouter>
         <Notice />
         <Switch>
-          {/* no client template ㅐ*/}
-          <Route path="/chat/:id" component={CheckAuth(ChatPage)} />
-          <Route path="/vchat2/:id" component={CheckAuth(VChat2Page)} />
+          
+          {/* no client template */}
+          <Route path="/chat/:id" component={CheckAuth(ChatDesignPage)} />
+          <Route path="/chatg/:id" component={CheckAuth(ChatGroupPage)} />
+          <Route path="/vchat2/:id" component={CheckAuth(VChatDesignPage)} />
+          <Route path="/vchatg/:id" component={CheckAuth(VChatGroupPage)} />
           <Route path="/codeview" component={CheckAuth(CodeViewPage)} />
 
           {/* GROUP A - main */}

@@ -43,19 +43,15 @@ class GroupNoticeContainer extends Component {
   }
 
   render() {
-    return (
-      <React.Fragment>
-        <GroupNotice
-          {...this.props}
-          {...this.state}
-          init={this.init}
+    return (<GroupNotice
+      {...this.props}
+      {...this.state}
+      init={this.init}
 
-          CreateGroupNoticeRequest={CreateGroupNoticeRequest}
-          UpdateGroupNoticeRequest={UpdateGroupNoticeRequest}
-          DeleteGroupNoticeRequest={DeleteGroupNoticeRequest}
-        />
-      </React.Fragment>
-    )
+      CreateGroupNoticeRequest={CreateGroupNoticeRequest}
+      UpdateGroupNoticeRequest={UpdateGroupNoticeRequest}
+      DeleteGroupNoticeRequest={DeleteGroupNoticeRequest}
+    />)
   }
 }
 
