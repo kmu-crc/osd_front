@@ -238,7 +238,7 @@ class GroupBoardListContainer extends Component {
               </div>)
             })
             : <div className="no-board">
-              <i className="icon x" style={{ color: "#707070" }}></i>
+              {/* <i className="icon x" style={{ color: "#707070" }}></i> */}
               <p style={{ fontSize: "1.5rem" }}>등록된 글이 없습니다.</p>
             </div>}
         </List>
