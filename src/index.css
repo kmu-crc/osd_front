@@ -67,7 +67,11 @@ a{
 .card-detail-scroll::-webkit-scrollbar-thumb {
   background: #707070 !important;
 }
-
+/* ck editor classic global */
+.ck-editor__editable {
+  min-height: 120px;
+  height: 120px;
+}
 /* .partical-scroll-none::-webkit-scrollbar {
   position: absolute;
   width: 0px;

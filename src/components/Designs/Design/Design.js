@@ -86,9 +86,9 @@ const DesignElement = styled.div`
       height: 25px;
       font-size: 17px;
       font-family: Noto Sans KR;
-      text-shadow:2px 2px 6px gray;
       line-height: 25px;
       text-align: right;
+      text-shadow:2px 2px 6px gray;
       // cursor: default;
     }
     .user-name {
@@ -119,6 +119,7 @@ const DesignElement = styled.div`
     font-size: 15px;
     font-weight: 500;
     align-items: center;
+    text-shadow:2px 2px 6px gray;
   }
   .view {
     z-index: 703;
@@ -197,7 +198,7 @@ class Design extends Component {
             <div style={{ textShadow: "1px 1px 2px #707070", fontWeight: "500", fontSize: "1.25rem", width: "200px" }}>
               <TextFormat tip txt={data.userName} width="100%" />
             </div>
-            <div style={{ fontSize: "1.15rem", width: "max-content" }}>
+            <div style={{ textShadow: "2px 2px 6px gray", fontSize: "1.15rem", width: "max-content" }}>
               {DateFormat(data.update_time)}
             </div>
           </div>
