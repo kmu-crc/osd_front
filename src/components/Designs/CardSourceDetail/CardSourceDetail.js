@@ -929,7 +929,7 @@ class CardSourceDetail extends Component {
       );
     }
     if (this.props.uid !== "new") {
-      console.log(formData);
+      // console.log(formData);
       if (this.props.handleSubmit) {
         await this.props.handleSubmit(formData);
       }
@@ -1017,7 +1017,7 @@ class CardSourceDetail extends Component {
     if (this.state.coding.length <= 0) return;
     let datalist = [];
     const arr = this.state.coding.map(async (item, index) => {
-      console.log(item);
+      // console.log(item);
       return new Promise((resolve, reject) => {
         let data = { type: item.type, content: "", file_name: "", order: index };
 
@@ -1108,7 +1108,7 @@ class CardSourceDetail extends Component {
   }
 
   render() {
-    console.log("codecode", this.props.code)
+    // console.log("codecode", this.props.code)
     const { edit, content, loading, submit, tab, item, result, coding, permission, item_uid, item_user } = this.state;
     // console.log("content:", content.find(item => item.type === "TEXT"));
     // console.log("result:", this.props, this.state)// && this.props.DesignDetail.category_level3 - 1);
@@ -1849,23 +1849,57 @@ const NewController = styled.li`
 `;
 const TableWrapper = styled.div`
   padding:10px;
-  .rc-table-thead{
-    .rc-table-cell{
-      padding:10px 5px;
-      font-size:20px;
-    }  
-  }
-  .rc-table-tbody{
-    .rc-table-row{
-      .rc-table-cell{
-        padding:10px 5px;
-        background-color:#FAFAFA;
-        font-size:14px;
-      }
-    }
-  }
   
 `
+const NewTable = styled.table`
+  width:100%;
+  .header_result{
+    padding:10px;
+    width:70%;
+    background-color:#efefef;
+  }
+  .header_time{
+    padding:10px;
+    width:20%;
+    background-color:#efefef;
+  }
+  .header_code{
+    padding:10px;
+    width:10%;
+    background-color:#efefef;
+  }
+  .result{
+    padding:10px;
+    background-color:white;
+  }
+  .time{
+    padding:10px;
+    background-color:white;
+  }
+  .code{
+    padding:10px;
+    background-color:white;
+  }
+`
+// const TableWrapper = styled.div`
+//   padding:10px;
+//   .rc-table-thead{
+//     .rc-table-cell{
+//       padding:10px 5px;
+//       font-size:20px;
+//     }  
+//   }
+//   .rc-table-tbody{
+//     .rc-table-row{
+//       .rc-table-cell{
+//         padding:10px 5px;
+//         background-color:#FAFAFA;
+//         font-size:14px;
+//       }
+//     }
+//   }
+  
+// `
 class AddContent extends Component {
   constructor(props) {
     super(props);
@@ -2013,7 +2047,7 @@ class SubmitLogContainer extends React.Component {
     this.setState({ loading: false });
   }
   render() {
-    console.log("-----------", this.props)
+    // console.log("-----------", this.props)
     const { loading, MySubmitList } = this.state;
     const AddButton = () => {
       return (
@@ -2043,10 +2077,10 @@ class SubmitLogContainer extends React.Component {
                         : "실패"
       result =
         submit.result === "S"
-          ? result : result + ":" +
+          ? result : result + ":<br/>" +
           (submit.message && submit.message.slice(0, 512)) +
           (submit.message && submit.message.lnegth > 512 ? "..." : "");
-      console.log(result, submit.message);
+      // console.log(result, submit.message);
 
       const row = {
         "key": index,
@@ -2054,16 +2088,14 @@ class SubmitLogContainer extends React.Component {
         // "message": submit.result == "S" ? "성공" : submit.message || "실패",
         // "time": submit.avg_time ? submit.avg_time + "초" : "",
         // "space": submit.avg_memory ? submit.avg_memory + "kb" : "",
-        "submit-time": timecheck + "",
+        "submit_time": timecheck + "",
         "code": submit.answer || "",
       }
       return row;
     })
     const columns = [
       { title: "결과", dataIndex: "result", key: "result", width: 650, },
-      // { title: "소요시간", dataIndex: "time", key: "time", width: 110, },
-      // { title: "사용용량", dataIndex: "space", key: "space", width: 110, },
-      { title: "제출시간", dataIndex: "submit-time", key: "submit-time", width: 110, },
+      { title: "제출시간", dataIndex: "submit_time", key: "submit_time", width: 110, },
       {
         title: "내 코드", dataIndex: "coding", key: "coding", width: 100,
         render: (text, row, index) => (
@@ -2080,18 +2112,53 @@ class SubmitLogContainer extends React.Component {
       }
     ]
 
+    // return (MySubmitList && MySubmitList.length > 0 ?
+    //   <TableWrapper>
+    //     <Table
+    //       columns={
+    //         columns
+    //       }
+    //       data={
+    //         data
+    //       }
+    //       tableLayout="auto"
+    //     />
+    //   </TableWrapper>
+    //   :
+    //   <div style={{ margin: "auto", marginTop: "25px", width: "max-content", fontFamily: "Noto Sans KR", fontSize: "1.25rem", textAlign: "center" }}>
+    //     {loading
+    //       ? "제출 이력을 가져오고 있습니다."
+    //       : "제출 이력이 없습니다."}
+    //   </div>
+    // )
     return (MySubmitList && MySubmitList.length > 0 ?
       <TableWrapper>
-        <Table
-          // {/* result message create_date avg_time avg_memory code */}
-          columns={
-            columns
-          }
-          data={
-            data
-          }
-          tableLayout="auto"
-        />
+    <NewTable>
+      <th className="header_result">결과</th>
+      <th className="header_time">제출시간</th>
+      <th className="header_code">내 코드</th>
+      {
+        data.map((item,index)=>{
+          return(
+            <tr>
+              <td className="result" dangerouslySetInnerHTML={{__html:item.result}}/>
+              <td className="time">{item.submit_time}</td>
+              <td className="code">
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=800,height=600,scrollbars=no`;
+                    localStorage.setItem("code", item.code);
+                    const code = window.open("/codeview", "codeview", options);
+                  }}>
+                  소스보기
+                </div>
+              </td>
+            </tr>
+          );
+        })
+      }
+    </NewTable>
       </TableWrapper>
       :
       <div style={{ margin: "auto", marginTop: "25px", width: "max-content", fontFamily: "Noto Sans KR", fontSize: "1.25rem", textAlign: "center" }}>
