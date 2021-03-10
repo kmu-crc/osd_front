@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  GetLastestGroupNoticeRequest, GetTotalCountGroupNoticeRequest,
-  CreateGroupNoticeRequest, UpdateGroupNoticeRequest, DeleteGroupNoticeRequest,
+  // GetLastestGroupNoticeRequest, GetTotalCountGroupNoticeRequest,
+  // CreateGroupNoticeRequest, UpdateGroupNoticeRequest, DeleteGroupNoticeRequest,
   checkHaveProgrammingDesign
 } from "redux/modules/group";
 import GroupNotice from "components/Groups/GroupNotice"
@@ -10,7 +10,7 @@ import GroupNotice from "components/Groups/GroupNotice"
 class GroupNoticeContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { count: 0, lastest: "", hasProgrammingDesign: false };
+    this.state = { /*count: 0, lastest: "",*/ hasProgrammingDesign: false };
     this.init = this.init.bind(this);
   }
 
@@ -18,24 +18,24 @@ class GroupNoticeContainer extends Component {
     this.init();
   }
   init() {
-    GetTotalCountGroupNoticeRequest(this.props.id)
-      .then(data => {
-        if (data.success) {
-          this.setState({ count: data.data });
-        }
-      })
-      .catch(err => {
-        console.error(err);
-      })
-    GetLastestGroupNoticeRequest(this.props.id)
-      .then(data => {
-        if (data.success) {
-          this.setState({ lastest: data.data });
-        }
-      })
-      .catch(err => {
-        console.error(err);
-      })
+    // GetTotalCountGroupNoticeRequest(this.props.id)
+    //   .then(data => {
+    //     if (data.success) {
+    //       this.setState({ count: data.data });
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   })
+    // GetLastestGroupNoticeRequest(this.props.id)
+    //   .then(data => {
+    //     if (data.success) {
+    //       this.setState({ lastest: data.data });
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   })
     checkHaveProgrammingDesign(this.props.id, this.props.token)
       .then(res => this.setState({ hasProgrammingDesign: res }))
       .catch(e => console.error(e));
@@ -43,14 +43,10 @@ class GroupNoticeContainer extends Component {
   }
 
   render() {
+    const { hasProgrammingDesign } = this.state;
     return (<GroupNotice
+      hasProgrammingDesign={hasProgrammingDesign}
       {...this.props}
-      {...this.state}
-      init={this.init}
-
-      CreateGroupNoticeRequest={CreateGroupNoticeRequest}
-      UpdateGroupNoticeRequest={UpdateGroupNoticeRequest}
-      DeleteGroupNoticeRequest={DeleteGroupNoticeRequest}
     />)
   }
 }

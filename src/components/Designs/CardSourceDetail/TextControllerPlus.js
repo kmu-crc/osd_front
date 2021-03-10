@@ -34,23 +34,20 @@ class TextControllerPlus extends Component {
     }
   }
   onSave = async () => {
-    let data = this.edit.editor&&this.edit.editor.getData()
+    let data = this.edit.editor && this.edit.editor.getData()
     await this.setState({ content: data })
     this.props.getValue(this.state)
   }
   render() {
-    const { item } = this.props;
-    // console.log("editor");
+    const { item, id, donotfocus } = this.props;
     return (
-      <div>
-        <CKEditor
-          autoFocus
-          ref={ref => (this.edit = ref)}
-          data={item.content}
-          onBlur={this.onSave}
-          onInit={editor => { editor.editing.view.focus(); }}
-          editor={ClassicEditor} />
-      </div>
+      <CKEditor
+        id={id}
+        ref={ref => (this.edit = ref)}
+        data={item.content}
+        onBlur={this.onSave}
+        onInit={editor => { donotfocus === false && editor.editing.view.focus(); }}
+        editor={ClassicEditor} />
     );
   }
 }

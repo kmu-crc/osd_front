@@ -28,6 +28,7 @@ const blinker = keyframes`
 `;
 const Comments = styled.div`
     margin-bottom: 20px;
+    min-height: 50px;
 `;
 const CommentInner = styled.div`
   display: flex;
@@ -54,9 +55,9 @@ const CommentInner = styled.div`
     .text-wrapper {
         margin-left: 10px;
         width: max-content;
-        min-width: 150px;
-        max-width: 473px;
-        height:40px;
+        // min-width: 150px;
+        // max-width: 473px;
+        // height:40px;
         .nick {
             display: flex;
             flex-direction: row;
@@ -74,13 +75,12 @@ const CommentInner = styled.div`
             };
         };
         .comment {
-            min-width: 120px;
-            width: max-content;
-            font-weight: 300;
-            font-size: 16px;
-            max-width: 560px;
-            // background-color: i;
-            margin-top:10px;
+            // min-width: 120px;
+            // width: max-content;
+            // font-weight: 300;
+            // font-size: 16px;
+            // max-width: 560px;
+            // margin-top: 5px;
         };
     };
 
@@ -335,7 +335,7 @@ class Comment extends Component {
 
     render() {
         const { reply, this_comment, this_reply } = this.state;
-        const { comments, my } = this.props;
+        const { comments, my, disabledReply, disabledBlink } = this.props;
         const myface = my && my.thumbnail && my.thumbnail.s_img !== null ? my.thumbnail.s_img : noface;
 
         return (<CommentBox>
@@ -343,7 +343,7 @@ class Comment extends Component {
                 const face = item && item.s_img ? item.s_img : noface;
                 return (<Comments key={item.nick_name + index}>
                     {/* comments */}
-                    <CommentInner face={face} className={item.read === 0 ? "blinking" : ""} >
+                    <CommentInner face={face} className={!disabledBlink && item.read === 0 ? "blinking" : ""} >
 
                         <div className="face" />
                         <div className="text-wrapper">
@@ -351,7 +351,7 @@ class Comment extends Component {
                                 <div className="name">{item.nick_name}</div>
                                 <div className="create-time">({DateFormat(item.create_time)})</div>
                                 <div className="button-wrapper">
-                                    {!reply && <div onClick={() => this.reply(item.uid)} className="reply">답글달기</div>}
+                                    {!disabledReply && !reply && <div onClick={() => this.reply(item.uid)} className="reply">답글달기</div>}
                                     {my && my.uid === item.user_id && <div onClick={() => this.removeComment(item.uid)} className="reply del">삭제하기</div>}
                                 </div>
                             </div>
@@ -364,7 +364,7 @@ class Comment extends Component {
                     {/* replies of comment */}
                     {item.replies && item.replies.length > 0 && item.replies.map((repli, repli_index) => {
                         const repli_face = repli && repli.s_img !== null ? repli.s_img : noface
-                        return (<CommentInner className={repli.read === 0 ? "reply blinking" : "reply"} key={repli.nick_name + repli.uid + repli_index} face={repli_face} >
+                        return (<CommentInner className={!disabledBlink && repli.read === 0 ? "reply blinking" : "reply"} key={repli.nick_name + repli.uid + repli_index} face={repli_face} >
                             <div className="face" />
                             <div className="text-wrapper">
                                 <div className="nick">
