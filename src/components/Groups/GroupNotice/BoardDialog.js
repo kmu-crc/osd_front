@@ -363,7 +363,7 @@ export default class BoardDialog extends Component {
                     {/* title & write-button */}
                     <div className="title">
                         <h2>그룹 게시판</h2>
-                        {mode === LIST
+                        {mode === LIST && userInfo != null
                             ? <div className="newbutton">
                                 <Button
                                     onClick={() => { this.setState({ mode: WRITE }) }}
