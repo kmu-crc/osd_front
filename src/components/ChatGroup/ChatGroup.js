@@ -461,7 +461,7 @@ export default class ChatGroup extends React.Component {
         this.serviceIP, {
         // path: '/webrtc',
         query: {
-          'roomNum': this.props.id,
+          'roomNum': -1 * this.props.id,
           'memberName': this.props.userInfo.nickName,
           'memberId': this.props.userInfo.uid,
           'thumbnail': this.props.userInfo.thumbnail.s_img
@@ -484,7 +484,7 @@ export default class ChatGroup extends React.Component {
       this.socket.on('chat', data => {
         const thumbnail = this.props.group.member &&
           this.props.group.member.find(mem => mem.user_id === data.user_id) &&
-          this.props.group.member.find(mem => mem.user_id === data.user_id).thumbnail.s_img;
+          this.props.group.member.find(mem => mem.user_id === data.user_id).s_img;
         data.thumbnail = thumbnail;
         // console.log('on chat', data);
         const copy = [...this.state.chat];
@@ -564,7 +564,7 @@ export default class ChatGroup extends React.Component {
   requestChat() {
     try {
       if (isOpen(this.socket))
-        this.socket.emit('load', { page: this.state.page, group_id: this.props.id }, () => {
+        this.socket.emit('load', { page: this.state.page, design_id: -1 * this.props.id }, () => {
           console.log('request ', this.state.page);
         });
     } catch (e) {

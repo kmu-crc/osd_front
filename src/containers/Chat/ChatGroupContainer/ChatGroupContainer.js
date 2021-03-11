@@ -25,7 +25,7 @@ class ChatGroupContainer extends Component {
         .then(data => {
 
           if (data && Object.entries(data).length === 0) {
-            this.close("디자인정보가 잘못되었습니다.");
+            this.close("그룹 정보가 잘못되었습니다.");
           }
 
           GetGroupMemberRequest(this.props.id)
