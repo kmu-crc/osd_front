@@ -48,21 +48,22 @@ export default class GroupNotice extends Component {
   closeBoardDialog = () => {
     this.setState({ board: false });
   }
-  getExportFile = () => {
+  getExportFile = async() => {
     this.props.loading(true);
      this.props.GetHaveGroupInDesignRequest(this.props.token,this.props.GroupDetail.uid)
-    .then((data)=>{
+    .then(async(data)=>{
         // let newData = data;
         // newData.forEach(element => {
         //   element.content = JSON.parse(element.content).name;
         // });
         console.log(data);
-        this.setState({ data: data.data.map((item,index)=>{
+        await this.setState({ data: data.data.map((item,index)=>{
           item.problem_name = JSON.parse(item.content).name;
           return item;
         }) });
         this.props.loading(false);
-        this.setState({ submitStatus: true });
+        await this.setState({ submitStatus: true });
+        setTimeout(()=>{this.setState({ submitStatus: false })},500);
     });
     // const url = `${host}/group/getSubmitStatus/${this.props.GroupDetail.uid}`;
     // fetch(url, {
@@ -114,10 +115,10 @@ export default class GroupNotice extends Component {
         <ButtonOSD onClick={() => this.setState({ notice: true })}>공지사항</ButtonOSD>
         <ButtonOSD onClick={() => this.setState({ board: true })}>게시판</ButtonOSD>
 
-        {/* {user_id === GroupDetail.user_id && hasProgrammingDesign */}
-          {/* ?  */}
+        {user_id === GroupDetail.user_id && hasProgrammingDesign
+          ?  
           <ButtonOSD onClick={this.getExportFile}>제출현황보기</ButtonOSD>
-          {/* : null} */}
+          : null} 
       </Wrapper>
 
     </React.Fragment>
