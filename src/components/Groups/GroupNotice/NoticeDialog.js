@@ -322,9 +322,9 @@ d      pagination
             })
     }
     render() {
-        const { open, close, group_id, user_id } = this.props;
+        const { open, close, group_id,group_owner_id, user_id } = this.props;
         const { mode, list, count, per, page, notice } = this.state;
-
+        console.log(this.props);
         return (
             <NoticeModalWrapper
                 /*closeIcon*/
@@ -340,7 +340,7 @@ d      pagination
                     {/* title & write-button */}
                     <div className="title">
                         <h2>공지사항</h2>
-                        {mode === LIST && user_id === group_id
+                        {mode === LIST && user_id === group_owner_id
                             ? <div className="newbutton">
                                 <Button
                                     onClick={() => { this.setState({ mode: WRITE }) }}
