@@ -740,7 +740,7 @@ class GroupInfoComponent extends Component {
                                     }} /></div>
 
                             <div className="bottom">
-                                {GroupDetail.uid ? <GroupNoticeContainer id={GroupDetail.uid} /> : ""}
+                                {GroupDetail.uid ? <GroupNoticeContainer loading={this.props.loading} id={GroupDetail.uid} /> : ""}
                             </div>
 
                         </div>

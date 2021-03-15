@@ -49,40 +49,47 @@ export default class GroupNotice extends Component {
     this.setState({ board: false });
   }
   getExportFile = () => {
-    const url = `${host}/group/getSubmitStatus/${this.props.GroupDetail.uid}`;
-    fetch(url, {
-      headers: { 'Content-Type': 'application/json', "x-access-token": this.props.token },
-      method: "GET",
-    })
-      .then(res => res.json())
-      .then(data => {
-        const newdata = data.data.map(content => {
-          content.problem_name = JSON.parse(content.content).name;
-          delete content.content;
-          content.submit_result = content.submit ? content.submit.result === "S" ? "성공" : "실패" : "미제출";
-          if (content.submit) {
-            const t = content.submit.create_date.split(/[- T Z :]/);
-            content.submit_date = `${t[0]}-${t[1]}-${t[2]} ${(parseInt(t[3], 10) + 9).toPrecision(2)}:${t[4]}:${t[5]}`;
-          } else {
-            content.submit_date = "미제출";
-          }
-          delete content.submit;
-          return content;
-        });
-        // console.log(newdata);
-        // // first sorting - design_id
-        // const sorted = newdata.sort((a, b) => (a.design_id > b.design_id) ? 1 : -1)
-        //   // second sorting - board_order
-        //   .sort((a, b) => (a.board_order > b.board_order) ? 1 : -1)
-        //   // third sorting - card_order
-        //   .sort((a, b) => (a.card_order > b.card_order) ? 1 : -1);
-        // console.log(sorted);
-        this.setState({ data: newdata });
+    this.props.loading(true);
+     this.props.GetHaveGroupInDesignRequest(this.props.token,this.props.GroupDetail.uid)
+    .then((data)=>{
+        // let newData = data;
+        // newData.forEach(element => {
+        //   element.content = JSON.parse(element.content).name;
+        // });
+        console.log(data);
+        this.setState({ data: data.data.map((item,index)=>{
+          item.problem_name = JSON.parse(item.content).name;
+          return item;
+        }) });
+        this.props.loading(false);
         this.setState({ submitStatus: true });
-      })
-      .catch(e => {
-        console.error(e);
-      })
+    });
+    // const url = `${host}/group/getSubmitStatus/${this.props.GroupDetail.uid}`;
+    // fetch(url, {
+    //   headers: { 'Content-Type': 'application/json', "x-access-token": this.props.token },
+    //   method: "GET",
+    // })
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     const newdata = data.data.map(content => {
+    //       content.problem_name = JSON.parse(content.content).name;
+    //       delete content.content;
+    //       content.submit_result = content.submit ? content.submit.result === "S" ? "성공" : "실패" : "미제출";
+    //       if (content.submit) {
+    //         const t = content.submit.create_date.split(/[- T Z :]/);
+    //         content.submit_date = `${t[0]}-${t[1]}-${t[2]} ${(parseInt(t[3], 10) + 9).toPrecision(2)}:${t[4]}:${t[5]}`;
+    //       } else {
+    //         content.submit_date = "미제출";
+    //       }
+    //       delete content.submit;
+    //       return content;
+    //     });
+    //     this.setState({ data: newdata });
+    //     this.setState({ submitStatus: true });
+    //   })
+    //   .catch(e => {
+    //     console.error(e);
+    //   })
   }
 
 
@@ -107,9 +114,10 @@ export default class GroupNotice extends Component {
         <ButtonOSD onClick={() => this.setState({ notice: true })}>공지사항</ButtonOSD>
         <ButtonOSD onClick={() => this.setState({ board: true })}>게시판</ButtonOSD>
 
-        {user_id === GroupDetail.user_id && hasProgrammingDesign
-          ? <ButtonOSD onClick={this.getExportFile}>제출현황보기</ButtonOSD>
-          : null}
+        {/* {user_id === GroupDetail.user_id && hasProgrammingDesign */}
+          {/* ?  */}
+          <ButtonOSD onClick={this.getExportFile}>제출현황보기</ButtonOSD>
+          {/* : null} */}
       </Wrapper>
 
     </React.Fragment>
