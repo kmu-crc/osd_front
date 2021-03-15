@@ -7,7 +7,7 @@ import Group from "components/Groups/Group";
 class MyGroupContainer extends Component {
   componentWillMount(){
     this.props.GetMyGroupListRequest(this.props.token, 0);
-  }
+x  }
 
   getList = (page) => {
     return this.props.GetMyGroupListRequest(this.props.token, page);

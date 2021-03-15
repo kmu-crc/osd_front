@@ -119,8 +119,8 @@ class GroupDetail extends Component {
     const { status, GroupDetail, DesignList, DesignListAdded, GroupList, GroupListAdded, Count } = this.props;
     const { currentTab, manager, reload, this_order } = this.state
     return (<React.Fragment>
-
-      <GroupInfo handleSwitchMode={this.switchMode} {...this.props} />
+      {this.state.loading ?<Loading />:null}
+      <GroupInfo handleSwitchMode={this.switchMode} {...this.props} loading={(status)=>this.setState({loading:status})}/>
       {manager ?
         <div style={{ marginTop: "32px" }}>
           <WaitingGroupContainer id={this.props.id} sort={this.props.sort} />

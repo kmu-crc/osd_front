@@ -64,6 +64,15 @@ const GET_GROUP_NOTICE_FAILURE = "GET_GROUP_NOTICE_FAILURE"
 const GET_GROUP_MY_NOTICE_SUCCESS = "GET_GROUP_MY_NOTICE_SUCCESS"
 const GET_GROUP_MY_NOTICE_FAILURE = "GET_GROUP_MY_NOTICE_FAILURE"
 
+// new 
+const GET_HAVE_GROUP_IN_DESIGN = "GET_HAVE_GROUP_IN_DESIGN"
+const GET_HAVE_GROUP_IN_DESIGN_SUCCESS = "GET_HAVE_GROUP_IN_DESIGN_SUCCESS"
+const GET_HAVE_GROUP_IN_DESIGN_FAILURE = "GET_HAVE_GROUP_IN_DESIGN_FAILURE"
+//new
+const GetHaveGroupInDesign = () => ({ type: GET_HAVE_GROUP_IN_DESIGN });
+const GetHaveGroupInDesignSuccess = data => ({ type: GET_HAVE_GROUP_IN_DESIGN_SUCCESS, success: true, data: data });
+const GetHaveGroupInDesignFailure = error => ({ type: GET_HAVE_GROUP_IN_DESIGN_FAILURE, success: false, error: error });
+
 
 const GetGroupDetail = (data) => ({ type: GET_GROUP_DETAIL, GroupDetail: data })
 const GetGroupCount = (data) => ({ type: GET_GROUP_COUNT, Count: data })
@@ -138,6 +147,7 @@ const initialState = {
   MyList: { status: "INIT" },
   CreateGroup: { status: "INIT" },
   GroupNotice: { status: "INIT" },
+  SubmitStatus:{status:"INIT"},
   status: {
     GroupDetail: [],
     Count: { like: 0, design: 0, group: 0 },
@@ -151,6 +161,7 @@ const initialState = {
     MyExistGroupList: [],
     GroupNotice: [],
     GroupMyNotice: [],
+    SubmitStatus:[],
   }
 }
 
@@ -451,6 +462,20 @@ export function Group(state, action) {
       return update(state, {
         status: { GroupMyNotice: { $set: [] }, }
       })
+
+      //new
+      case GET_HAVE_GROUP_IN_DESIGN:
+        return update(state, {
+          SubmitStatus: { status: { $set: "WAITING" } }
+        })
+      case GET_HAVE_GROUP_IN_DESIGN_SUCCESS:
+        return update(state, {
+          status: { SubmitStatus: { $set: action.data.data }, }
+        })
+      case GET_HAVE_GROUP_IN_DESIGN_FAILURE:
+        return update(state, {
+          status: { SubmitStatus: { $set: [] }, }
+        })
 
     default:
       return state
@@ -1240,3 +1265,35 @@ export function GetPermissionCouldJoinVideoChatRequest(token, group_id) {
       .catch(error => reject(error));
   });
 };
+
+/////// new
+export function GetHaveGroupInDesignRequest(token,group_id) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/getHaveGroupInDesign/${group_id}`;
+    return fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token,
+      },
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(error => reject(error));
+  });
+  // return (dispatch) => {
+  //   dispatch(GetHaveGroupInDesign())
+  //   return fetch(`${host}/group/getHaveGroupInDesign/${group_id}`, {
+  //     headers: { "Content-Type": "application/json", 'x-access-token': token },
+  //     method: "get"
+  //   }).then((response) => {
+  //     return response.json()
+  //   }).then((data) => {
+  //     dispatch(GetHaveGroupInDesignSuccess(data))
+  //     return data;
+  //   }).catch((error) => {
+  //     dispatch(GetHaveGroupInDesignFailure(error))
+  //     console.error("err", error)
+  //   })
+  // }
+}
