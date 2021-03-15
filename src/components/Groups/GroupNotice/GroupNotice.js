@@ -90,10 +90,10 @@ export default class GroupNotice extends Component {
     const { GroupDetail, userInfo, hasProgrammingDesign } = this.props;
     const { /*dialog*/notice, board, /**/submitStatus, data } = this.state;
     const user_id = userInfo && userInfo.uid;
-
+    console.log(this.props);
     return (<React.Fragment>
       {notice
-        ? <NoticeDialog user_id={user_id} token={this.props.token} group_id={GroupDetail.uid} open={notice} close={this.closeNoticeDialog} />
+        ? <NoticeDialog user_id={user_id} group_owner_id = {GroupDetail.user_id}  token={this.props.token} group_id={GroupDetail.uid} open={notice} close={this.closeNoticeDialog} />
         : null}
       {board
         ? <BoardDialog userInfo={userInfo} token={this.props.token} group_id={GroupDetail.uid} open={board} close={this.closeBoardDialog} />
