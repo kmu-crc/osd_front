@@ -12,7 +12,7 @@ const ButtonDiv = styled.div`
   font-weight: 500;
   padding: 10px 15px;
   border-radius: 5px;
-  margin-right: ${p => p.marginRight ? p.marginRight : "25px"};
+  margin-right: ${p => p.marginRight ? p.marginRight : "15px"};
   cursor: pointer;
   :hover {
     background-color: ${p => p.bgcolor_hover ? p.bgcolor_hover : "#CECECE"};
