@@ -1,3 +1,4 @@
+import opendesign_style from 'opendesign_style';
 import React from 'react';
 // import { connect } from 'react-redux';
 
@@ -27,21 +28,30 @@ class CodeView extends React.Component {
     }
     render() {
         const { code } = this.state;
-        return (<React.Fragment>
-            {code && code.length > 0 ? code.map((item, index) => {
-                console.log(item.code);
-                return (<div key={index}>
-                    <h3 style={{ marginTop: "25px", marginLeft: "25px" }}>{item.file_name}</h3>
-                    <div style={{ backgroundColor: "#EFEFEF", padding: "15px", margin: "25px", color: "#707070", fontSize: "1.25rem" }}>
-                        <pre>{item.code}</pre>
-                    </div>
-                </div>)
-            }) : null}
+        return (<div
+            style={{
+                // height: "100%", overflowY: "scroll"
+                position: "absolute", left: 0, top: 0,
+                width: "100%", height: "100%",
+                // backgroundColor: "yellow",
+                overflowY: "scroll",
+                padding: "25px",
+            }}>
+            {code && code.length > 0
+                ? code.map((item, index) => {
+                    return (<div key={index}>
+                        <h3 style={{ marginTop: "25px", marginLeft: "25px" }}>{item.file_name}</h3>
+                        <div style={{ backgroundColor: "#EFEFEF", padding: "15px", margin: "25px", color: "#707070", fontSize: "1.25rem" }}>
+                            <pre>{item.code}</pre>
+                        </div>
+                    </div>)
+                })
+                : null}
 
             <div onClick={() => window.close()} style={{ cursor: "pointer", width: "max-content", margin: "auto", }}>
                 <p style={{ padding: "5px 13px", color: "white", borderRadius: "18px", backgroundColor: "red", }}>
                     닫기</p></div>
-        </React.Fragment >)
+        </div>)
     }
 }
 class CodeViewContainer extends React.Component {
@@ -57,3 +67,5 @@ class CodeViewContainer extends React.Component {
 
 export default CodeViewContainer;
 // export default connect(mapStateToProps, null)(CodeViewContainer)
+
+

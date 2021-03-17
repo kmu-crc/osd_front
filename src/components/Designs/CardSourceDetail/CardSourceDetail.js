@@ -1898,7 +1898,7 @@ const NewTable = styled.table`
 //       }
 //     }
 //   }
-  
+
 // `
 class AddContent extends Component {
   constructor(props) {
@@ -2133,32 +2133,32 @@ class SubmitLogContainer extends React.Component {
     // )
     return (MySubmitList && MySubmitList.length > 0 ?
       <TableWrapper>
-    <NewTable>
-      <th className="header_result">결과</th>
-      <th className="header_time">제출시간</th>
-      <th className="header_code">내 코드</th>
-      {
-        data.map((item,index)=>{
-          return(
-            <tr>
-              <td className="result" dangerouslySetInnerHTML={{__html:item.result}}/>
-              <td className="time">{item.submit_time}</td>
-              <td className="code">
-                <div
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=800,height=600,scrollbars=no`;
-                    localStorage.setItem("code", item.code);
-                    const code = window.open("/codeview", "codeview", options);
-                  }}>
-                  소스보기
+        <NewTable>
+          <th className="header_result">결과</th>
+          <th className="header_time">제출시간</th>
+          <th className="header_code">내 코드</th>
+          {
+            data.map((item, index) => {
+              return (
+                <tr>
+                  <td className="result" dangerouslySetInnerHTML={{ __html: item.result }} />
+                  <td className="time">{item.submit_time}</td>
+                  <td className="code">
+                    <div
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=800,height=600,scrollbars=yes`;
+                        localStorage.setItem("code", item.code);
+                        const code = window.open("/codeview", "codeview", options);
+                      }}>
+                      소스보기
                 </div>
-              </td>
-            </tr>
-          );
-        })
-      }
-    </NewTable>
+                  </td>
+                </tr>
+              );
+            })
+          }
+        </NewTable>
       </TableWrapper>
       :
       <div style={{ margin: "auto", marginTop: "25px", width: "max-content", fontFamily: "Noto Sans KR", fontSize: "1.25rem", textAlign: "center" }}>
