@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { alert } from "components/Commons/Alert/Alert";
 import ButtonOSD from "./ButtonOSD";
 import NoticeDialog from "./NoticeDialog";
 import BoardDialog from "./BoardDialog";
 import ExportExcelFile from './ExportExcelFile';
-import host from "config";
+// import host from "config";
+// import { alert } from "components/Commons/Alert/Alert";
 
 const Wrapper = styled.div`
   display: flex;
@@ -48,50 +48,23 @@ export default class GroupNotice extends Component {
   closeBoardDialog = () => {
     this.setState({ board: false });
   }
-  getExportFile = async() => {
+  getExportFile = async () => {
     this.props.loading(true);
-     this.props.GetHaveGroupInDesignRequest(this.props.token,this.props.GroupDetail.uid)
-    .then(async(data)=>{
-        // let newData = data;
-        // newData.forEach(element => {
-        //   element.content = JSON.parse(element.content).name;
-        // });
+    this.props.GetHaveGroupInDesignRequest(this.props.token, this.props.GroupDetail.uid)
+      .then(async (data) => {
         console.log(data);
-        await this.setState({ data: data.data.map((item,index)=>{
-          item.problem_name = JSON.parse(item.content).name;
-          return item;
-        }) });
+        await this.setState({
+          data: data.data.map((item, index) => {
+            item.problem_name = JSON.parse(item.content).name;
+            return item;
+          })
+        });
         this.props.loading(false);
         await this.setState({ submitStatus: true });
-        setTimeout(()=>{this.setState({ submitStatus: false })},500);
-    });
-    // const url = `${host}/group/getSubmitStatus/${this.props.GroupDetail.uid}`;
-    // fetch(url, {
-    //   headers: { 'Content-Type': 'application/json', "x-access-token": this.props.token },
-    //   method: "GET",
-    // })
-    //   .then(res => res.json())
-    //   .then(data => {
-    //     const newdata = data.data.map(content => {
-    //       content.problem_name = JSON.parse(content.content).name;
-    //       delete content.content;
-    //       content.submit_result = content.submit ? content.submit.result === "S" ? "성공" : "실패" : "미제출";
-    //       if (content.submit) {
-    //         const t = content.submit.create_date.split(/[- T Z :]/);
-    //         content.submit_date = `${t[0]}-${t[1]}-${t[2]} ${(parseInt(t[3], 10) + 9).toPrecision(2)}:${t[4]}:${t[5]}`;
-    //       } else {
-    //         content.submit_date = "미제출";
-    //       }
-    //       delete content.submit;
-    //       return content;
-    //     });
-    //     this.setState({ data: newdata });
-    //     this.setState({ submitStatus: true });
-    //   })
-    //   .catch(e => {
-    //     console.error(e);
-    //   })
+        setTimeout(() => { this.setState({ submitStatus: false }) }, 500);
+      });
   }
+
 
 
   render() {
@@ -101,7 +74,7 @@ export default class GroupNotice extends Component {
     console.log(this.props);
     return (<React.Fragment>
       {notice
-        ? <NoticeDialog user_id={user_id} group_owner_id = {GroupDetail.user_id}  token={this.props.token} group_id={GroupDetail.uid} open={notice} close={this.closeNoticeDialog} />
+        ? <NoticeDialog user_id={user_id} group_owner_id={GroupDetail.user_id} token={this.props.token} group_id={GroupDetail.uid} open={notice} close={this.closeNoticeDialog} />
         : null}
       {board
         ? <BoardDialog userInfo={userInfo} token={this.props.token} group_id={GroupDetail.uid} open={board} close={this.closeBoardDialog} />
@@ -116,9 +89,8 @@ export default class GroupNotice extends Component {
         <ButtonOSD onClick={() => this.setState({ board: true })}>게시판</ButtonOSD>
 
         {user_id === GroupDetail.user_id && hasProgrammingDesign
-          ?  
-          <ButtonOSD onClick={this.getExportFile}>제출현황보기</ButtonOSD>
-          : null} 
+          ? <ButtonOSD onClick={this.getExportFile}>제출현황보기</ButtonOSD>
+          : null}
       </Wrapper>
 
     </React.Fragment>
