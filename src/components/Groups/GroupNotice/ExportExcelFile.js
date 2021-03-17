@@ -91,7 +91,7 @@ export default class ExportExcelFile extends React.Component {
                     obj = new Date(ts);
                     date = obj.toLocaleString("ko-KR", { timeZone: "Asia/Seoul" });
                 }
-                const cell = { [PN]: content ? content.submit_result === "성공" ? `성공(${date})` : "실패" : " - " };
+                const cell = { [PN]: content ? content.submit_result === "성공" ? `O(${date})` : "X" : " - " };
                 row = { ...row, ...cell };
             });
             return row;
