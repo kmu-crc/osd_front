@@ -175,6 +175,7 @@ const NoticeListWrapper = styled.div`
 
         :hover { 
             background-color: #EFEFEF; 
+            opacity:0.5; 
         }
         .num { 
             text-align: center; 
@@ -230,11 +231,10 @@ const NoticeReadWrapper = styled.div`
         min-height: 100px;
         overflow-y: auto;
     }
-    .comment {
+    .comment_ {
         background-color: #FAFAFA;
-        padding: 5px;
-        // min-height: 75px;
-        max-height: 150px;
+        padding: 15px;
+        max-height: 170px;
         overflow-y: auto;
     }
 `;
@@ -265,6 +265,22 @@ const NoticeWriteWrapper = styled.div`
     }
 `;
 
+const CloseButton = styled.div`
+  width: max-content;
+  height: 100%;
+  line-height: 1.25rem;
+  background-color: ${p => p.bgcolor ? p.bgcolor : "#DEDEDE"};
+  color: ${p => p.color ? p.color : "#707070"};
+  text-alignment: center;
+  font-size: 1.25rem;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  :hover {
+    background-color: ${p => p.bgcolor_hover ? p.bgcolor_hover : "#CECECE"};
+  }
+`;
 
 // CONSTANTS
 const LIST = 0;
@@ -368,8 +384,8 @@ export default class BoardDialog extends Component {
                                 <Button
                                     onClick={() => { this.setState({ mode: WRITE }) }}
                                     color={"white"}
-                                    bgcolor={"#AEAEAE"}
-                                    bgcolor_hover={"#CECECE"}
+                                    bgcolor={"#FF0000"}
+                                    bgcolor_hover={"#DD0000"}
                                     marginTop={"0px"}
                                     marginRight={"0px"}
                                 > 글쓰기</Button></div>
@@ -415,7 +431,7 @@ export default class BoardDialog extends Component {
                                     <div className="content">
                                         <div dangerouslySetInnerHTML={{ __html: board.content }} />
                                     </div>
-                                    <div className="comment">
+                                    <div className="comment_">
                                         <BoardCommentContainer
                                             token={token}
                                             userInfo={userInfo}
@@ -475,14 +491,15 @@ export default class BoardDialog extends Component {
                                 : null}
                         </div>
 
-                        <div style={{ display: "flex", flexDirection: "row", width: "max-content", marginLeft: "auto", marginRight: "10px" }}>
+                        <div style={{ display: "flex", flexDirection: "row", width: "max-content", marginLeft: "auto", marginRight: "10px", marginTop:"12px" }}>
                             {mode === WRITE
-                                ? <Button bgcolor="red" color="white" onClick={() => this.write()}>등록</Button>
+                                ? <Button 
+                                bgcolor="red" color="white" onClick={() => this.write()}>등록</Button>
                                 : null}
                             {mode === WRITE || mode === READ
                                 ? <Button onClick={() => this.setState({ mode: LIST, title: "", content: "", notice: null })}>목록으로</Button>
                                 : null}
-                            <Button onClick={() => close()}>닫기</Button>
+                            <CloseButton onClick={() => close()}>닫기</CloseButton>
                         </div>
                     </div>
 

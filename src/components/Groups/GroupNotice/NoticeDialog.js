@@ -165,7 +165,8 @@ const NoticeListWrapper = styled.div`
         border-bottom: 1px solid #EFEFEF;
 
         :hover { 
-            background-color: #EFEFEF; 
+            background-color: #EFEFEF;
+            opacity:0.5; 
         }
         .num { 
             text-align: center; 
@@ -242,7 +243,22 @@ const NoticeWriteWrapper = styled.div`
     }
 `;
 
-
+const CloseButton = styled.div`
+  width: max-content;
+  height: 100%;
+  line-height: 1.25rem;
+  background-color: ${p => p.bgcolor ? p.bgcolor : "#DEDEDE"};
+  color: ${p => p.color ? p.color : "#707070"};
+  text-alignment: center;
+  font-size: 1.25rem;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  :hover {
+    background-color: ${p => p.bgcolor_hover ? p.bgcolor_hover : "#CECECE"};
+  }
+`;
 // constants
 const LIST = 0;
 const READ = 1;
@@ -345,8 +361,8 @@ d      pagination
                                 <Button
                                     onClick={() => { this.setState({ mode: WRITE }) }}
                                     color={"white"}
-                                    bgcolor={"#AEAEAE"}
-                                    bgcolor_hover={"#CECECE"}
+                                    bgcolor={"#FF0000"}
+                                    bgcolor_hover={"#DD0000"}
                                     marginTop={"0px"}
                                     marginRight={"0px"}
                                 >공지사항 등록하기</Button></div>
@@ -442,14 +458,14 @@ d      pagination
                                 : null}
                         </div>
 
-                        <div style={{ display: "flex", flexDirection: "row", width: "max-content", marginLeft: "auto", marginRight: "10px" }}>
+                        <div style={{ display: "flex", flexDirection: "row", width: "max-content", marginTop:"10px", marginLeft: "auto", marginRight: "10px"}}>
                             {mode === WRITE
                                 ? <Button bgcolor="red" color="white" onClick={() => this.write()}>등록</Button>
                                 : null}
                             {mode === WRITE || mode === READ
                                 ? <Button onClick={() => this.setState({ mode: LIST, title: "", content: "", notice: null })}>목록으로</Button>
                                 : null}
-                            <Button onClick={() => close()}>닫기</Button>
+                            <CloseButton  onClick={() => close()}>닫기</CloseButton>
                         </div>
                     </div>
 
