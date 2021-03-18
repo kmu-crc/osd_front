@@ -1018,7 +1018,7 @@ class CardSourceDetail extends Component {
     let datalist = [];
     const arr = this.state.coding.map(async (item, index) => {
       // console.log(item);
-      return new Promise((resolve, reject) => {
+      return new Promise(async (resolve, reject) => {
         let data = { type: item.type, content: "", file_name: "", order: index };
 
         if (item.type == "TEXT") {
@@ -1026,15 +1026,37 @@ class CardSourceDetail extends Component {
           data.code = item.content;
           resolve(data);
         } else {
-          const fileReader = new FileReader();
-          fileReader.onloadend = () => {
-            const res = fileReader.result;
-            data.file_name = item.file[0].name;
-            data.code = res;
-            console.log(fileReader);
-            resolve(data);
-          }
-          fileReader.readAsText(item.file[0], "UTF-8")
+          // item.file[0];
+          let charset = "";
+          const formData = new FormData();
+          await formData.append('source', item.file[0]);
+          fetch(`${host}/upload/detect-encoding`, {
+            header: { 'Content-Type': 'multipart/form-data' },
+            method: "POST",
+            body: formData,
+          }).then(res => res.json())
+            .then(data => {
+              alert("!1");
+              if (data) {
+                charset = data.charset.encoding;
+              }
+              const fileReader = new FileReader();
+              fileReader.onloadend = () => {
+                const res = fileReader.result;
+                data.file_name = item.file[0].name;
+                data.code = res;
+                console.log(fileReader);
+                resolve(data);
+              }
+              console.log(charset)
+              fileReader.readAsText(item.file[0], charset)
+            })
+            .catch(err => {
+              alert("!");
+              reject(err)
+            });
+
+
         }
       }).then((data) => {
         datalist.push(data);
