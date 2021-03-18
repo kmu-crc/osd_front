@@ -37,16 +37,15 @@ class CodeView extends React.Component {
                 overflowY: "scroll",
                 padding: "25px",
             }}>
-            {code && code.length > 0
-                ? code.map((item, index) => {
-                    return (<div key={index}>
-                        <h3 style={{ marginTop: "25px", marginLeft: "25px" }}>{item.file_name}</h3>
-                        <div style={{ backgroundColor: "#EFEFEF", padding: "15px", margin: "25px", color: "#707070", fontSize: "1.25rem" }}>
-                            <pre>{item.code}</pre>
-                        </div>
-                    </div>)
-                })
-                : null}
+            {code && code.length > 0 ? code.map((item, index) => {
+                console.log(item.code);
+                return (<div style={{ minWidth: "max-content", maxWidth: "100%", padding: "25px" }} key={index}>
+                    <h3 style={{ marginLeft: "25px" }}>{item.file_name}</h3>
+                    <div style={{ backgroundColor: "#EFEFEF", padding: "15px", color: "#707070", fontSize: "1.25rem", }}>
+                        <pre style={{ minWidth: "max-content" }}>{item.code}</pre>
+                    </div>
+                </div>)
+            }) : null}
 
             <div onClick={() => window.close()} style={{ cursor: "pointer", width: "max-content", margin: "auto", }}>
                 <p style={{ padding: "5px 13px", color: "white", borderRadius: "18px", backgroundColor: "red", }}>
