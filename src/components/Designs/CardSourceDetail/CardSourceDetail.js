@@ -1036,7 +1036,7 @@ class CardSourceDetail extends Component {
             body: formData,
           }).then(res => res.json())
             .then(data => {
-              alert("!1");
+              // alert("!1");
               if (data) {
                 charset = data.charset.encoding;
               }
@@ -1045,14 +1045,14 @@ class CardSourceDetail extends Component {
                 const res = fileReader.result;
                 data.file_name = item.file[0].name;
                 data.code = res;
-                console.log(fileReader);
+                // console.log(fileReader);
                 resolve(data);
               }
-              console.log(charset)
+              // console.log(charset)
               fileReader.readAsText(item.file[0], charset)
             })
             .catch(err => {
-              alert("!");
+              // alert("!");
               reject(err)
             });
 
