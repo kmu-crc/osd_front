@@ -51,6 +51,7 @@ const ThumbnailBox = styled.div`
   width:300px;
   height:300px;
   box-shadow: 5px 5px 10px #00000029;
+  border:0.5px solid #eaeaea;
   border-radius: 20px;
   padding:24px 40px 24px 40px;
   .label{

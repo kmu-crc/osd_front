@@ -281,7 +281,7 @@ export default class MainSlide extends Component {
       <BannerBox>
         <div className="text_rgn">
           <div className="text_normal">오픈디자인월드에서 당신의 지식을 판매해보세요.</div>
-          <div className="red_button"> <Link to={`/createproduct`}>아이템 등록하기</Link></div>
+          <div className="red_button"> <Link to={`/createProduct`}>아이템 등록하기</Link></div>
           <div className="text_normal">오픈디자인월드에서 당신에게 맞는 아이디어를 찾아보세요.</div>
           <div className="">
             <HeaderItem className="search">

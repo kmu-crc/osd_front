@@ -6,7 +6,26 @@ import ScrollList from "components/Commons/ScrollList";
 import PaymentListElement from "containers/Payment/PaymentListElement";
 import styled from "styled-components";
 import market_style from "market_style";
+import { Pagination } from 'semantic-ui-react'
 
+const Board = styled.div`
+  margin:-20px -12px -20px -12px;
+  .title_{
+    font-family:Noto Sans KR;
+    font-size:18px;
+    color:black;
+  }
+  .hrline{
+    width:100%;
+    border:2px solid #EFEFEF;
+    margin-top:10px;
+    margin-bottom:10px;
+  }
+  .pagenation{
+    display:flex;
+    justify-content:center;
+  }
+`
 const ListElement = styled.div`
   width: 100%;
   margin: 0 auto 0.9rem;
@@ -21,30 +40,17 @@ const ListElement = styled.div`
   list-style: none;
   display: flex;
   fiex-direction: row;
-  .title{
-    min-width:67%;
-    display:flex;
-    align-items:center;
-    padding:5px;
-    // padding-left:15px;
-  }
-  .writer{
-    min-width:10%;
-    display:flex;
-    align-items:center;
-    padding:5px;
-    overflow:hidden;
-    // padding-left:15px;
-  }
-  .date{
-    min-width:20%;
-    align-items:center;
-    padding:5px;
-    // padding-left:15px;
-  }
 `;
 
 class MySalesContainer extends Component {
+  constructor(props)
+  {
+    super(props);
+    this.state = {
+      page:0,
+    }
+    this.goPage = this.goPage.bind(this);
+  }
   componentWillMount() {
     this.props.GetMySalesRequest(this.props.token, 0);
   }
@@ -52,26 +58,44 @@ class MySalesContainer extends Component {
   getList = (page) =>
     this.props.GetMySalesRequest(this.props.token, page);
 
-
+  goPage = async (pagenum) => {
+      await this.setState({ page:pagenum });
+      this.props.GetMySalesRequest(this.props.token, pagenum);
+  };
   render() {
-    console.log(this.props);
+    const { page } = this.state;
+    const lastPage = parseInt(this.props.allPage / 10, 10);
     return (
-      <React.Fragment>
-      <ListElement>
-            {/* no.    <div style={{ marginRight: "15px" }}>번호</div> */}
-            {/* title   */}<div className="title">판매 아이템</div>
-            {/* writer  */}<div className="writer">구매자</div>
-            {/* date    */}<div className="date">판매일</div>
-            {/* {/* view    <div style={{ marginRight: "15px" }}>조회수</div> */}
-            {/* {/* like    <div style={{ marginRight: "15px" }}>좋아요</div> */}
-      </ListElement>
+      <Board>
+      <div className="title_">판매 아이템</div>
+      <div className="hrline"/>
       <ScrollBoardList
       total={this.props.Count}
       dataList={this.props.dataList}
       getListRequest={this.getList}
       ListComponent={PaymentListElement}
     />
-    </React.Fragment>
+    {
+    lastPage==0?null:
+    <div className="pagenation">
+    <Pagination
+      activePage={page + 1}
+      boundaryRange={0}
+      defaultActivePage={1}
+      ellipsisItem={null}
+      firstItem={null}
+      lastItem={null}
+      siblingRange={1}
+      totalPages={lastPage + 1}
+      // pointing
+      secondary
+      onPageChange={(event, { activePage }) => {
+        this.goPage(activePage - 1);
+      }}
+    />
+    </div>
+    }
+    </Board>
     );
   }
 }

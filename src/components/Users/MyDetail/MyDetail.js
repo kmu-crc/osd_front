@@ -61,7 +61,7 @@ const ProfileBox = styled.div`
     height: 320px;
     background: #FFFFFF;
     box-shadow: 3px 3px 5px #4141411A;
-    border: 0.5px solid #B7B7B7;
+    border: 0.5px solid #EAEAEA;
     border-radius: 20px;
     padding:10px;
     .fontNormal{font-size:${market_style.font.size.normal1};}
@@ -100,7 +100,7 @@ const InformationBox = styled.div`
     width: 1046px;
     height: 320px;
     box-shadow: 3px 3px 5px #0000001A;
-    border: 0.5px solid #B7B7B7;
+    border: 0.5px solid #EAEAEA;
     border-radius: 20px;
     margin-left:20px;
     display:flex;
@@ -187,11 +187,12 @@ const MenuBox = styled.div`
     min-width:240px;
     height:max-content;
     box-shadow: 3px 3px 5px #0000001A;
-    border: 0.5px solid #B7B7B7;
+    border: 0.5px solid #EAEAEA;
     border-radius: 20px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     padding:30px 33px 30px 33px;
     padding-bottom:30px;
+    margin-bottom:50px;
     .title_Label{
       width:100%;
       height:20px;
@@ -224,11 +225,13 @@ const BoardBox = styled.div`
     height:max-content;
     // min-height:900px;
     box-shadow: 3px 3px 5px #00000029;
-    border: 0.5px solid #B7B7B7;
+    border: 0.5px solid #EAEAEA;
     border-radius: 20px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     margin-left:20px ;
+    margin-bottom:50px;
     padding:50px;
+  
     .flex{
       display:flex;
     }
@@ -486,26 +489,26 @@ class MyDetail extends Component {
               {selectMenu === 10 ? <MyPointStatusContainer /> : null}
               {selectMenu === 9 ? <ModifyMyDetailContainer /> : null}
               {selectMenu === 0 ?
-                <MyPaymentContainer id={this.props.userInfo.uid} /> : null}
+                <MyPaymentContainer allPage={MyDetail&&MyDetail.allCount&&MyDetail.allCount.payment_count}  id={this.props.userInfo.uid} /> : null}
               {selectMenu === 8 ?
-                <MyRequestItemContainer id={this.props.userInfo.uid} /> : null}
+                <MyRequestItemContainer allPage={MyDetail&&MyDetail.allCount&&MyDetail.allCount.itemRequest_count} id={this.props.userInfo.uid} /> : null}
               {selectMenu === 7 ?
-                <UploadItemContainer id={this.props.userInfo.uid} /> : null}
+                <UploadItemContainer allPage={MyDetail&&MyDetail.allCount&&MyDetail.allCount.registerItem_count} id={this.props.userInfo.uid} /> : null}
               {selectMenu === 1 &&
-                <LikeInItemContainer id={this.props.userInfo.uid} />}
+                <LikeInItemContainer allPage={MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeItem_count} id={this.props.userInfo.uid} />}
               {selectMenu === 2 &&
-                <LikeInDesignerContainer id={this.props.userInfo.uid} />}
+                <LikeInDesignerContainer allPage={MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeDesigner_count} id={this.props.userInfo.uid} />}
               {selectMenu === 3 &&
-                <LikeInMakerContainer id={this.props.userInfo.uid} />}
+                <LikeInMakerContainer allPage={MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeMaker_count} id={this.props.userInfo.uid} />}
               {selectMenu === 4 &&
                 <MyProjectItemContainer id={this.props.userInfo.uid} />}
               {selectMenu === 5 &&
-                <MyUploadDesignReqBoardContainer id={this.props.userInfo.uid} />}
+                <MyUploadDesignReqBoardContainer allPage={MyDetail&&MyDetail.allCount&&MyDetail.allCount.requestDesigner_count} id={this.props.userInfo.uid} />}
               {selectMenu === 6 &&
-                <MyUploadMakerReqBoardContainer id={this.props.userInfo.uid} />
+                <MyUploadMakerReqBoardContainer allPage={MyDetail&&MyDetail.allCount&&MyDetail.allCount.requestDesigner_count} id={this.props.userInfo.uid} />
               }
               {selectMenu === 11 &&
-                <MySalesContainer id={this.props.userInfo.uid} />
+                <MySalesContainer allPage = {MyDetail&&MyDetail.allCount&&MyDetail.allCount.saleItem_count} id={this.props.userInfo.uid} />
               }
             </BoardBox>
           </div>

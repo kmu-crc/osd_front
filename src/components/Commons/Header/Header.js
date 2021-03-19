@@ -142,11 +142,9 @@ const HeaderItem = styled.li`
 
 const UserMenu = styled.div`
   z-index: 999;
-  position: absolute;
   height: max-content;
-  width: 175px;
+  width: 155px;
   pointer-events: auto;
-  margin-top: 150px;
   border-radius: 15px;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
@@ -154,6 +152,9 @@ const UserMenu = styled.div`
   font-size: ${market_style.font.size.small3};
   font-weight: 500;
   overflow:hidden;
+  position: absolute;
+  top:30px;
+  right:0px;
   .item {
     border:1px solid #EFEFEF;
     padding:10px;
@@ -170,6 +171,7 @@ const UserMenu = styled.div`
 const LoginBox = styled.div`
   display:flex;
   align-items:center;
+  position:relative;
   .addItem{
     padding:3px 10px;
     background-color:red;
@@ -358,7 +360,7 @@ class Header extends Component {
             <div className="iconBox" onClick={this.onClickMessageIcon}>
               <Icon className="grey envelope" size="large" />
             </div>
-              <div onClick={async () => await this.setState({ active: !this.state.active })} style={{ display: "flex",alignItems:"center", flexDirection: "row", cursor: "pointer" }}>
+              <div onClick={async () => await this.setState({ active: !this.state.active })} style={{ display: "flex", position:"relative",alignItems:"center", flexDirection: "row", cursor: "pointer" }}>
               <div  style={{ width: "23px", height: "23px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
               <div  style={{ width: "max-content", marginLeft: "5px",fontFamily:market_style.font.family,
                fontSize:market_style.font.size.small1 }}>

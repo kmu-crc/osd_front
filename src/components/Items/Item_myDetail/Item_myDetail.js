@@ -78,20 +78,17 @@ const NumberWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items:center;
+  justify-content:space-between;
   margin-top:6px;
   .price {
     font-weight: 500;
-    font-size:${market_style.font.size.mini1};
+    font-size:${market_style.font.size.mini2};
     text-align: left;
   }
-  .score {
-    margin-left: auto;
-    display: flex;
-    flex-direction: row;
-    vertical-align: middle;
-    font-weight: 300;
-    font-size:${market_style.font.size.small1};
-    text-align: left;
+  .date {
+    color:red;
+    font-size:${market_style.font.size.mini2};
+    text-align: right;
   }
   .avg{
     font-weight: 300;
@@ -115,7 +112,7 @@ font-weight:100;
   color:red;
 `
 const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 };
-class Item_small extends Component {
+class Item_myDetail extends Component {
   Keeper = () => {
     const item = this.props.data;
     if (item.uid) {
@@ -142,51 +139,27 @@ class Item_small extends Component {
       </div>)
     }
     return (
-      // const ItemContent = () =>
       <Wrapper onClick={this.Keeper}>
-        {/* picture */}
         <ItemPic img={img} />
-        {/* text */}
         <TextWrapper>
           <div className="title"><TextFormat txt={item.title} /></div>
           <div className="author">
-            <TextFormat txt={item.userName} />
-            {/* <div className="date">{date}</div> */}
+            <TextFormat txt={item.nick_name||item.userName} />
           </div>
         </TextWrapper>
-        {/* numbers */}
-        {/* <TypeWrapper>
-        <TypeText>
-          {item.type===0?"디자인":null}
-          {item.type===1?"프로젝트":null}
-          {item.type===2?"기술자문/상담":null}
-          {item.type===3?"경험":null}
-          {item.type===4?"정보/데이터":null}
-          {item.type===5?"아이디어/노하우":null}
-          {item.type===6?"지적재산권":null}
-          {item.type===7?"제작품":null}
-        </TypeText>
-        </TypeWrapper> */}
         <NumberWrapper>
           <div className="price">{PointFormat(item.price / (parseInt(item.price)>9999?10000:1000) || 0)}{parseInt(item.price)>9999?"만 point":" point"}</div>
-          <div className="score">
-            {/* {Star(item.score + 0.5)}({NumberFormat(item.reviews)}) */}
-            <RenderingStar/>
+          <div className="date">
+            {date}
           </div>
         </NumberWrapper>
         {item.custom && item.isPurchased === 0 ?
           <PrivateLabel onClick={() => this.props.confirm(item.payment_id)}>
             <div>구매확인</div>
           </PrivateLabel> : null}
-        {/* {item.private ? <PrivateLabel>비공개</PrivateLabel> : null} */}
       </Wrapper>
-      // item.uid ?
-      // <NavLink to={"/productDetail/" + item.uid}>
-      // <ItemContent />
-      // </NavLink>
-      // : <ItemContent />
     )
   }
 }
 
-export default Item_small;
+export default Item_myDetail;

@@ -1,10 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetLikeInItemRequest } from "actions/Product";
-import ScrollList from "components/Commons/ScrollList";
-import Item from "components/Items/Item";
+import PagingList from "components/Commons/PagingList";
+import Item_myDetail from "components/Items/Item_myDetail";
+import styled from "styled-components";
+import { Pagination } from 'semantic-ui-react'
 
+const Board = styled.div`
+  margin:-20px -50px -20px -50px;
+  .title_{
+    font-family:Noto Sans KR;
+    margin-left:38px;
+    font-size:18px;
+    color:black;
+    margin-bottom:20px;
+  }
+  .pagenation{
+    display:flex;
+    justify-content:center;
+  }
+`
 class LikeInItemContainer extends Component {
+  constructor(props)
+  {
+    super(props);
+    this.state = {
+      page:0,
+    }
+    this.goPage = this.goPage.bind(this);
+  }
   componentWillMount() {
     this.props.GetLikeInItemRequest(this.props.id, 0);
   }
@@ -12,27 +36,44 @@ class LikeInItemContainer extends Component {
   getList = (page) => {
     return this.props.GetLikeInItemRequest(this.props.id, page);
   }
-
+  goPage = async (pagenum) => {
+    await this.setState({ page:pagenum });
+    this.props.GetLikeInItemRequest(this.props.id, pagenum);
+  };
   render() {
     console.log("test-----",this.props);
+    const { page } = this.state;
+    const lastPage = parseInt(this.props.allPage / 6, 10);
     return(
-      <div>
-        <ScrollList getListRequest={this.getList}
-                    type="item"
-                    ListComponent={Item}
+      <Board>
+      <div className="title_">관심 아이템</div>
+      <PagingList getListRequest={this.getList}
+                    type="sales"
+                    ListComponent={Item_myDetail}
                     dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
                     mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom"/>
-      {/* <ScrollList
-          type="item"
-          getListRequest={this.getList}
-          ListComponent={Item}
-          dataList={this.props.dataList}
-          dataListAdded={this.props.dataListAdded}
-          /> */}
-                    
-      </div>
+        {
+        lastPage==0?null:
+        <div className="pagenation">
+        <Pagination
+          activePage={page + 1}
+          boundaryRange={0}
+          defaultActivePage={1}
+          ellipsisItem={null}
+          firstItem={null}
+          lastItem={null}
+          siblingRange={1}
+          totalPages={lastPage + 1}
+          // pointing
+          secondary
+          onPageChange={(event, { activePage }) => {
+            this.goPage(activePage - 1);
+          }}
+        />
+        </div>
+        }
+      </Board>
 
-      
     );
   }
 }

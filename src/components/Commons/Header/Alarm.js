@@ -126,20 +126,23 @@ const AlarmItem = styled.li`
 const RedCircle = styled.div`
   // line-height: 12px;
   // text-align: center;
+  min-width:15px;
+  min-height:15px;
+  max-width:15px;
+  max-height:15px;
   color: #FFF;
   font-size: 6px;
-  min-width: 18px;
-  max-width: 18px;
-  min-height: 18px;
-  max-height:18px;
   background: #F00;
-  border-radius: 55%;
-  padding:3px 1px;
+  border-radius: 50%;
+  padding:3px 3px;
   displat:flex;
   justify-content:center;
   align-items:center;
   margin-left:20px;
   position:absolute;
+  .text__{
+    
+  }
 `;
 
 export default class Alarm extends Component {
@@ -242,7 +245,7 @@ export default class Alarm extends Component {
         {/* {this.props.children} */}
         {unread > 0 ?
           <RedCircle>
-            <div style={{ width: "4", height: "12px" }}>{NumberFormat(unread)}</div>
+            <div className="text__">{NumberFormat(unread)}</div>
           </RedCircle> : null}
         <Icon className="grey alarm" size="large" />
 

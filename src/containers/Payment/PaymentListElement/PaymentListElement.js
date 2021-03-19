@@ -12,75 +12,35 @@ import market_style from "market_style";
 
 // CSS STYLING
 const ListElement = styled.div`
-  margin: 0 auto 0.9rem;
-  // margin-left: ${props => props.left || 0}px;
-  font-size:${market_style.font.size.small1};
-  border-radius: 3px 3px 3px 3px;
-  overflow: hidden;
-  box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
-  background-color: #fff;
-  text-align: left;
-  box-sizing: border-box;
-  padding: 10px;
-  list-style: none;
-  display: flex;
-  fiex-direction: row;
-  cursor: default;
-  // width:100%;
-  .non-status-box{
-    margin-left:5px;
-  }
-  .status-box{
-    min-width: 80px;
-    line-height: 15px;
-    font-family: Noto Sans KR;
-    font-weight: 500;
-    padding: 7px 15px 7px 15px;
-    border-radius: 15px;
-    margin-right: 10px;
-    display:flex;
-    justify-content:center;
-    align-itmes:center;
-    &.request {
-      background: hotpink;
-      color: white;
-    }
-    &.response {
-      // margin-left: 5px;
-      background: blue;
-      color: white;
-    }
-    &.completed {
-      background: gray;
-      color: white;
-    }
-  }
+  width:100%;
+  height:38px;
+  border:1px solid #EFEFEF;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  padding-left:50px;
+  padding-right:50px;
   .title_{
-    min-width:67%;
-    display:flex;
-    align-items:center;
-    padding:5px;
-    cursor:pointer;
+    width:80%;
+    font-family:Noto Sans KR,Bold;
+    font-size:15px;
   }
-  .writer{
-    min-width:10%;
+  .writer_{
+    width:15%;
+    margin-right:5%;
+    font-family:Noto Sans KR,Medium;
+    font-size:13px;
     display:flex;
-    align-items:center;
-    padding:5px;
-    overflow:hidden;
-    cursor:pointer;
   }
   .date{
-    min-width:20%;
-    display:flex;
-    align-items:center;
-    padding:5px;
-    overflow:hidden;
+    width:5%;
+    font-family:Noto Sans KR,Medium;
+    font-size:13px;
   }
 `;
 const ThumbnailWriter = styled.div`
-  width: 35px;
-  height: 35px;
+  width: 23px;
+  height: 23px;
   border-radius: 50%;
   box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
   background-size: contain;
@@ -102,12 +62,12 @@ class PaymentListElement extends Component {
           </NavLink>
           {
             item.status==="response"?
-            <div className="writer">
+            <div className="writer_">
               <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.s_img} /></div>
               <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
           </div>
           :
-          <div className="writer">
+          <div className="writer_">
             <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.s_img} /></div>
             <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
           </div>

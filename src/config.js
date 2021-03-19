@@ -1,4 +1,4 @@
-let host = 'http://203.246.113.131:5000';
+let host = 'http://market.opensrcdesign.com/api/';
 var frontend = window.location.href.split("/")[0] + "//" + window.location.href.split("/")[2];
 
 if (process.env.REACT_APP_TYPE === "local") {

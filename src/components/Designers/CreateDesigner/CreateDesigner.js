@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { Icon } from "semantic-ui-react";
 import { Dropdown } from "semantic-ui-react"
-import { InputTagNew } from "components/Commons/InputItem/InputTagNew";
+import { InputTag } from "components/Commons/InputItem/InputTag";
 import noimg from "source/noimg.png";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { alert } from "components/Commons/Alert/Alert";
@@ -29,22 +29,24 @@ const LocationList = [
 ];
 
 const MainBox = styled.div`
-// *{
-//   border:1px solid black;
-// }
+*{
+  // border:1px solid black;
+  color:black;
+}
   width:100%;
+  padding:0px 183px 0px 183px;
   .title{
-    width:170px;
-    height:29px;
-    font-family:Noto Sans KR, Medium;
-    font-size:${market_style.font.size.normal3};
+    width:100%;
+    display:flex;
+    justify-content:center;
+    font-family:Noto Sans KR, Bold;
+    font-size:${market_style.font.size.small1};
     font-weight:500;
   }
     .contentsBox{
+      margin-top:20px;
       width:100%;
       display:flex;
-      padding-left:130px;
-      padding-top:36px;
     }
     .centering{
       padding-right:130px;
@@ -56,35 +58,42 @@ const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
     font-weight:500;
-    font-size:${market_style.font.size.normal3};
+    font-size:${market_style.font.size.small1};
+    color:#707070;
   }
-  width:562px;
-  height:540px;
+  width:300px;
+  height:329px;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
-  padding-left:42px;
-  padding-top:54px;
-  margin-right:63px;
+  padding:30px 40px 37px 40px;
+  margin-right:20px;
+  border: 0.5px solid #EAEAEA;
+
   .label{
     width:100%;
-    height:29px;
+    display:flex;
+    justify-content:center;
+    margin-bottom:20px;
+  }
+  .wrapper_thumb{
+    width:max-content;
+    height:max-content;
   }
   .thumbnail{
     cursor:pointer;
-    width:256px;
-    height:256px;
+    width:220px;
+    height:220px;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:#E9E9E9;
+    background:#EEEEEE;
     border-radius:50%;
-    margin-left:110px;
   }
 `;
 const Thumbnail = styled.div`
   cursor:pointer;
-  width:256px;
-  height:256px;
+  width:220px;
+  height:220px;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -92,64 +101,77 @@ const Thumbnail = styled.div`
   background-size: cover;
   background-position: center center;
   border-radius:50%;
-  margin-left:110px;
 `;
 const ExperienceBox = styled.div`
-    width:1560px;
+    width:940px;
     box-shadow: 5px 5px 10px #00000029;
+    border: 0.5px solid #EAEAEA;
     border-radius: 20px;
-    padding-left:59px;
-    padding-top:49px;
-    padding:50px;
-    .title{
+    padding:20px 30px 20px 30px;
+    .title_{
       width:100%;
-      font-size:${market_style.font.size.normal3};
+      font-size:${market_style.font.size.normal1};
       font-weight:500;
-      margin-bottom:15px;
+      margin-bottom:10px;
     }
+
     .wrapper{
       width:100%;
     }
     .labelBox{
       width:100%;
       display:flex;
-      padding-bottom:20px;
-      border-bottom:1px solid #E6E6E6;
-      margin-bottom:20px;
-
+      border-top:2px solid #EFEFEF;
+      border-bottom:2px solid #EFEFEF;
+      padding:10px 2px;
+      margin-bottom:5px;
       .number_label{
-        width:10%;
+        width:120px;
+        font-size:${market_style.font.size.mini2};
       }
       .text_label{
-        width:30%;
+        width:263px;
+        font-size:${market_style.font.size.mini2};
+      }
+      .last_label{
+        width:230px;
       }
     }
     .careerBox{
       display:flex;
-      margin-bottom:10px;
+      padding:5px 2px;
       .number_wrapper{
-        width:10%;
+        width:120px;
+        font-weight:500;
+        font-size:${market_style.font.size.small1};
       }
       .text_wrapper{
-        width:30%;
+        width:263px;
+      }
+      .last_margin{
+        width:230px;
       }
     }
 `
 const FormBox = styled.div`
   *{
-    font-size:${market_style.font.size.normal3};
+    font-size:${market_style.font.size.small1};
   }
-  width:939px;
+  width:620px;
+  height:max-content;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
-  padding-left:59px;
-  padding-top:49px;
+  padding:34px 54px 34px 54px;
+  border: 0.5px solid #EAEAEA;
 
   .wrapper{
     width:100%;
     display:flex;
     align-items:center;
-    margin-bottom:50px;
+    margin-bottom:20px;
+  }
+  .last_margin{
+    margin-bottom:0px;
   }
   .wrapper_noflex{
     width:100%;
@@ -163,6 +185,7 @@ const FormBox = styled.div`
   }
   .flex{
     display:flex;
+    align-items:flex-start;
   }
   .innerWraper{
     width:100%;
@@ -170,10 +193,12 @@ const FormBox = styled.div`
     display:flex;
   }
   .label{
+    width:141px;
+    font-size:${market_style.font.size.small1};
     font-family:Noto Sans KR;
     font-weight:500;
+    color:black;
     min-width:157px;
-    height:29px;
   }
   .label_centering{
     text-align:center;
@@ -190,24 +215,23 @@ const Button = styled.div`
     height:${props => props.height == null ? 100 + "%" : props.height + "px"};
     background-color:white;
     font-family:Noto Sans KR;
-    font-size:${market_style.font.size.normal3};
+    font-size:${market_style.font.size.small1};
     display:flex;
     align-items:center;
     cursor:pointer;
     margin-left:${props => props.margin == null ? 0 + "px" : props.margin + "px"};
     .label{
-      margin-left:60px;
+      margin-left:10px;
     }
     
 `;
 const InputText = styled.input.attrs({ type: "text" })`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:43px;
-  border-radius:20px;
+  height:31px;
+  border-radius:10px;
   font-family:Noto Sans KR;
-  font-size:${market_style.font.size.normal3};
+  font-size:${market_style.font.size.mini2};
   background-color:#E9E9E9;
-  margin-right:21px;
   outline:none;
   border:0px;
   padding: 0.67857143em 1em;
@@ -216,9 +240,9 @@ const InputText = styled.input.attrs({ type: "text" })`
 const InputTextarea = styled.textarea`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
-  border-radius:20px;
+  border-radius:10px;
   font-family:Noto Sans KR;
-  font-size:${market_style.font.size.normal3};
+  font-size:${market_style.font.size.mini2};
   background-color:#E9E9E9;
   outline:none;
   border:0px;
@@ -233,11 +257,20 @@ const Margin = styled.div`
   height:${props => props.height == null ? 100 + "%" : props.height + "px"}
 `;
 const DropBox = styled(Dropdown)`
-    min-width:200px !important;
+    min-width:133px !important;
+    min-height:31px !important;
+    max-height:31px !important;   
+    display:flex !important;
+    align-items:center !important; 
     background-color:#E9E9E9 !important;
     margin-right:10px;
-
-    border-radius:20px !important;
+    font-size:${market_style.font.size.small1};
+    border-radius:10px !important;
+    .icon{
+      width:max-content !important;
+      height:max-content !important;
+      padding:6px !important;
+    }
 `;
 
 class CreateDesigner extends Component {
@@ -408,10 +441,9 @@ class CreateDesigner extends Component {
           <div className="title">디자이너 등록</div>
           <div className="contentsBox">
             <ThumbnailBox>
-              <div className="label">썸네일 등록<sup style={{color:"red"}}>*</sup></div>
-              <Margin height={70} />
+              <div className="label">프로필 썸네일<sup style={{color:"red"}}>*</sup></div>
               <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
-              <label htmlFor="file">
+              <label className="wrapper_thumb" htmlFor="file">
                 {this.state.thumbnail == null ?
                   <div className="thumbnail"><div>첨부</div></div>
                   :
@@ -429,7 +461,7 @@ class CreateDesigner extends Component {
 
               <div className="wrapper flex">
                 <div className="label">설명</div>
-                <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={483} height={99} />
+                <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={372} height={67} />
               </div>
 
               <div className="wrapper flex">
@@ -441,11 +473,11 @@ class CreateDesigner extends Component {
               <div className="wrapper flex">
                 <div className="label">태그</div>
                 <div>
-                  <InputTagNew taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
+                  <InputTag taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={372} />
                 </div>
               </div>
 
-              <div className="wrapper flex">
+              <div className="wrapper last_margin flex">
                 <div className="label">위치</div>
                 {/* <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} /> */}
                 <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
@@ -472,13 +504,14 @@ class CreateDesigner extends Component {
           </div>
           <div className="contentsBox">
             <ExperienceBox>
-              <div className="title">경험</div>
+              <div className="title_">경험</div>
               <div className="labelBox">
                 <div className="number_label">번호</div>
                 <div className="text_label">업무</div>
                 <div className="text_label">기간</div>
-                <div className="text_label">내용</div>
+                <div className="last_label">내용</div>
               </div>
+              
               <div className="wrapper_noflex ">
                 {this.state.career.map((item, index) => {
                   console.log("career", item)
@@ -487,25 +520,25 @@ class CreateDesigner extends Component {
                   );
                 })}
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
-                <Button /*onClick={this.onSubmit}*/ width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
-                  <Icon name="plus" /><div className="label">경험 추가</div>
+                <Button /*onClick={this.onSubmit}*/ width={250} height={30} onClick={this.onClickAddCareer}>
+                  <Icon name="plus" size='tiny' color='red' /><div className="label">경험 추가</div>
                 </Button>
               </div>
             </ExperienceBox>
           </div>
-          <div className="contentsBox centering">
+          <div className="contentsBox">
             {/* <Link to={{
               pathname: `/createProduct/redirected`,
               state: { keep: this.state }
             }}>
-              <RedButton value={"아이템 등록"} isConfirm={false} />
+              <RedButton value={"아이템썸 등록"} isConfirm={false} />
             </Link> */}
             {/* </div>
           <div className="contentsBox"> */}
             {/* {this.state.getready ? */}
-            <RedButton text={"디자이너를 등록합니다."} okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
+            <RedButton width={150} height={30} fontSize={market_style.font.size.small1} text={"디자이너를 등록합니다."} okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
             {/*}  : <GrayButton value={"등록"} onClick={() => alert("아이템을 등록해야 진행할 수 있습니다.")} isConfirm={false}></GrayButton>}*/}
-            <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.location.href = "/mypage" }} isConfirm={false}></GrayButton>
+            <GrayButton width={150} height={30} fontSize={market_style.font.size.small1} text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.location.href = "/mypage" }} isConfirm={false}></GrayButton>
           </div>
         </MainBox>
       </React.Fragment>
@@ -575,13 +608,13 @@ class CreateCareer extends Component {
         <div className="careerBox">
           <div className="number_wrapper">{leadingZeros(this.props.number, 2)}</div>
           <div className="text_wrapper">
-            <InputText value={this.state.task} onChange={this.onChangeTask} width={370} />
+            <InputText value={this.state.task} onChange={this.onChangeTask} width={230} />
           </div>
           <div className="text_wrapper">
-            <InputText value={this.state.during} onChange={this.onChangeDuring} width={370} />
+            <InputText value={this.state.during} onChange={this.onChangeDuring} width={230} />
           </div>
-          <div className="text_wrapper">
-            <InputText value={this.state.explain} onChange={this.onChangeExplain} width={370} />
+          <div className="text_wrapper last_margin">
+            <InputText value={this.state.explain} onChange={this.onChangeExplain} width={230} />
           </div>
         </div>
       </React.Fragment>

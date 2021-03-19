@@ -34,7 +34,7 @@ const ListContainer = styled.div`
   .gallery{
     flex: 0 0 180px;
     justify-content: space-around;
-    margin: 0px 20px 20px 0px;
+    margin: 0px 0px 45px 20px;
     padding: 0px;
   }
   .sales{
@@ -64,7 +64,7 @@ const NoData = styled.div`
   // border: 1px dashed gray;
 `;
 
-class ScrollList extends Component {
+class PagingList extends Component {
   state = { hasMore: true, loading: false };
   getLoadData = page => {
     this.props.getListRequest &&
@@ -86,27 +86,20 @@ class ScrollList extends Component {
     const { ListComponent, type } = this.props;
     console.log(this.props.type);
     return (
-      this.props.dataListAdded &&
-        this.props.dataListAdded.length > 0 ?
+      this.props.dataList &&
+        this.props.dataList.length > 0 ?
         <ScrollContainer>
-          <InfiniteScroll id={this.props.scrollId || "infi-scroll"} threshold={100} pageStart={0}
-            loadMore={this.getLoadData} hasMore={this.state.hasMore}
-            loader={
-              <Loader className="loading" active={false}
-                inline="centered" size="huge" key={0} />
-            }>
             <ListContainer isSmall={this.props.isSmall==null?false:true}>
-              {this.props.dataListAdded.map((content, index) => (
+              {this.props.dataList.map((content, index) => (
                 <div key={index} className={this.props.type}>
                   <ListComponent data={content} type={type} confirm={this.props.confirm} handler={this.props.handler} />
                 </div>
               ))}
             </ListContainer>
-          </InfiniteScroll>
         </ScrollContainer>
         : <NoData><div>검색 결과 없음</div></NoData>
     );
   }
 }
 
-export default ScrollList;
+export default PagingList;

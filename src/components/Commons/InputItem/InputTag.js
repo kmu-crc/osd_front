@@ -2,21 +2,24 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import StyleGuide from "StyleGuide";
 import market_style from "market_style";
-const FormStyle = styled.input`
+
+const FormStyle = styled.input.attrs({type:"text"})`
     width: ${props => props.width}px;
+
     margin: 0;
     -webkit-appearance: none;
     padding: 0.67857143em 1em;
-    height:43px;
-    border-radius:20px;
-    font-family:Noto Sans KR;
-    font-size:${market_style.font.size.normal3};
+    height:31px;
+    border-radius:10px;
     background-color:#E9E9E9;
     outline:none;
     border:0px;
     transition: color 0.1s ease, border-color 0.1s ease;
+    font-weight:300;
     &::placeholder {
         color: ${StyleGuide.color.geyScale.scale5};
+        font-family:Noto Sans CJK KR, Regular;
+        font-size:${market_style.font.size.mini2};
     }
     &:focus {
         &::placeholder {
@@ -35,28 +38,30 @@ const FormStyle = styled.input`
 `;
 const TagList = styled.div`
     width: 100%;
+    height:max-content;
     display: flex;
-    padding: 10px;
     flex-wrap: wrap;
 `;
 const TagPiece = styled.div`
-    width: max-content;
-    min-width: 30px;
-    background-color: #EFEFEF;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    color: #707070;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 15px;
+    width:max-content;
+    min-width:30px;
+    max-height:21px;
+    border:1px solid #707070;
+    border-radius:15px;
+    padding: 11px 10px 11px 10px;
     display: flex;
     justify-content: space-between;
+    align-items:center;
+    font-size:${market_style.font.size.mini2};
+    font-family:Noto Sans CJK KR, Regular;
+    margin-right:8px;
+    margin-top:5px;
     .close {
+        color:#707070;
         margin-left: 10px;
         width: max-content;
         height: max-content;
-        padding: 0px 2px;
+        padding: 2px 2px 7px 2px;
         cursor:pointer;
     }
 `;
@@ -125,7 +130,7 @@ export class InputTag extends Component {
         }
     }
     returnData = async e => {
-        console.log(this.state.tag);
+        // console.log(this.state.tag);
         this.props.getValue && await this.props.getValue(this.state.tag);
     }
     init = async () => {
@@ -183,7 +188,7 @@ export class InputTag extends Component {
             return (
                 item===""?
                 null:
-                <TagPiece key={index}>
+                <TagPiece style={{fontWeight:"300"}} key={index}>
                     {item}
                     <div id={index} onClick={this.onDeleteTag} className="close">x</div>
                 </TagPiece>

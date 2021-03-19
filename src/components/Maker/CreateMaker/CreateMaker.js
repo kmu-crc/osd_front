@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Icon } from "semantic-ui-react";
 import noimg from "source/noimg.png";
 import { Dropdown } from "semantic-ui-react"
-import { InputTagNew } from "components/Commons/InputItem/InputTagNew"
+import { InputTag } from "components/Commons/InputItem/InputTag"
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { alert } from "components/Commons/Alert/Alert";
 import { Confirm } from "components/Commons/Confirm/Confirm";
@@ -28,58 +28,71 @@ const LocationList = [
   { value: 15, text: "제한없음" },
 ];
 const MainBox = styled.div`
+*{
+  // border:1px solid black;
+  color:black;
+}
   width:100%;
+  padding:0px 183px 0px 183px;
   .title{
-    width:170px;
-    height:29px;
-    font-family:Noto Sans KR, Medium;
-    font-size:${market_style.font.size.normal3};
-    font-weight:500;
-  }
-  .contentsBox{
     width:100%;
     display:flex;
-    padding-left:130px;
-    padding-top:36px;
-  }
-  .centering{
-    padding-right:130px;
     justify-content:center;
+    font-family:Noto Sans KR, Bold;
+    font-size:${market_style.font.size.small1};
+    font-weight:500;
   }
-`
+    .contentsBox{
+      margin-top:20px;
+      width:100%;
+      display:flex;
+    }
+    .centering{
+      padding-right:130px;
+      justify-content:center;
+    }
+`;
 
 const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
     font-weight:500;
-    font-size:${market_style.font.size.normal3};
+    font-size:${market_style.font.size.small1};
+    color:#707070;
   }
-  width:562px;
-  height:540px;
+  width:300px;
+  height:329px;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
-  padding-left:42px;
-  padding-top:54px;
-  margin-right:63px;
+  padding:30px 40px 37px 40px;
+  margin-right:20px;
+  border: 0.5px solid #EAEAEA;
+
   .label{
     width:100%;
-    height:29px;
+    display:flex;
+    justify-content:center;
+    margin-bottom:20px;
+  }
+  .wrapper_thumb{
+    width:max-content;
+    height:max-content;
   }
   .thumbnail{
-    width:256px;
-    height:256px;
+    cursor:pointer;
+    width:220px;
+    height:220px;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:#E9E9E9;
+    background:#EEEEEE;
     border-radius:50%;
-    margin-left:110px;
   }
-`
+`;
 const Thumbnail = styled.div`
   cursor:pointer;
-  width:256px;
-  height:256px;
+  width:220px;
+  height:220px;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -87,25 +100,77 @@ const Thumbnail = styled.div`
   background-size: cover;
   background-position: center center;
   border-radius:50%;
-  margin-left:110px;
-`
+`;
+const ExperienceBox = styled.div`
+    width:940px;
+    box-shadow: 5px 5px 10px #00000029;
+    border: 0.5px solid #EAEAEA;
+    border-radius: 20px;
+    padding:20px 30px 20px 30px;
+    .title_{
+      width:100%;
+      font-size:${market_style.font.size.normal1};
+      font-weight:500;
+      margin-bottom:10px;
+    }
 
+    .wrapper{
+      width:100%;
+    }
+    .labelBox{
+      width:100%;
+      display:flex;
+      border-top:2px solid #EFEFEF;
+      border-bottom:2px solid #EFEFEF;
+      padding:10px 2px;
+      margin-bottom:5px;
+      .number_label{
+        width:120px;
+        font-size:${market_style.font.size.mini2};
+      }
+      .text_label{
+        width:263px;
+        font-size:${market_style.font.size.mini2};
+      }
+      .last_label{
+        width:230px;
+      }
+    }
+    .careerBox{
+      display:flex;
+      padding:5px 2px;
+      .number_wrapper{
+        width:120px;
+        font-weight:500;
+        font-size:${market_style.font.size.small1};
+      }
+      .text_wrapper{
+        width:263px;
+      }
+      .last_margin{
+        width:230px;
+      }
+    }
+`
 const FormBox = styled.div`
   *{
-    font-size:${market_style.font.size.normal3};
-
+    font-size:${market_style.font.size.small1};
   }
-  width:939px;
+  width:620px;
+  height:max-content;
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
-  padding-left:59px;
-  padding-top:49px;
+  padding:34px 54px 34px 54px;
+  border: 0.5px solid #EAEAEA;
 
   .wrapper{
     width:100%;
     display:flex;
     align-items:center;
-    margin-bottom:70px;
+    margin-bottom:20px;
+  }
+  .last_margin{
+    margin-bottom:0px;
   }
   .wrapper_noflex{
     width:100%;
@@ -119,6 +184,7 @@ const FormBox = styled.div`
   }
   .flex{
     display:flex;
+    align-items:flex-start;
   }
   .innerWraper{
     width:100%;
@@ -126,10 +192,12 @@ const FormBox = styled.div`
     display:flex;
   }
   .label{
+    width:141px;
+    font-size:${market_style.font.size.small1};
     font-family:Noto Sans KR;
     font-weight:500;
+    color:black;
     min-width:157px;
-    height:29px;
   }
   .label_centering{
     text-align:center;
@@ -140,100 +208,276 @@ const FormBox = styled.div`
     color:#707070;
   }
 
-`
-const ExperienceBox = styled.div`
-    width:1560px;
-    box-shadow: 5px 5px 10px #00000029;
-    border-radius: 20px;
-    padding-left:59px;
-    padding-top:49px;
-    padding:50px;
-    .title{
-      width:100%;
-      font-size:${market_style.font.size.normal3};
-      font-weight:500;
-      margin-bottom:15px;
-    }
-    .wrapper{
-      width:100%;
-    }
-    .labelBox{
-      width:100%;
-      display:flex;
-      padding-bottom:20px;
-      border-bottom:1px solid #E6E6E6;
-      margin-bottom:20px;
-
-      .number_label{
-        width:10%;
-      }
-      .text_label{
-        width:30%;
-      }
-    }
-    .careerBox{
-      display:flex;
-      margin-bottom:10px;
-      .number_wrapper{
-        width:10%;
-      }
-      .text_wrapper{
-        width:30%;
-      }
-    }
-`
+`;
 const Button = styled.div`
     width:${props => props.width == null ? 100 + "%" : props.width + "px"};
     height:${props => props.height == null ? 100 + "%" : props.height + "px"};
     background-color:white;
     font-family:Noto Sans KR;
-    font-size:${market_style.font.size.normal3};
+    font-size:${market_style.font.size.small1};
     display:flex;
     align-items:center;
+    cursor:pointer;
     margin-left:${props => props.margin == null ? 0 + "px" : props.margin + "px"};
     .label{
-      margin-left:60px;
+      margin-left:10px;
     }
-    cursor:pointer;
     
-`
+`;
 const InputText = styled.input.attrs({ type: "text" })`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:43px;
-  border-radius:20px;
+  height:31px;
+  border-radius:10px;
   font-family:Noto Sans KR;
-  font-size:${market_style.font.size.normal3};
+  font-size:${market_style.font.size.mini2};
   background-color:#E9E9E9;
-  margin-right:21px;
   outline:none;
   border:0px;
   padding: 0.67857143em 1em;
   font-weight:300;
-`
+`;
 const InputTextarea = styled.textarea`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
-  border-radius:20px;
+  border-radius:10px;
   font-family:Noto Sans KR;
-  font-size:${market_style.font.size.normal3};
+  font-size:${market_style.font.size.mini2};
   background-color:#E9E9E9;
   outline:none;
   border:0px;
   readonly;
+  resize:none;
   padding: 0.67857143em 1em;
   font-weight:300;
-`
+
+`;
 const Margin = styled.div`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:${props => props.height == null ? 100 + "%" : props.height + "px"}
-`
+`;
 const DropBox = styled(Dropdown)`
-    min-width:200px !important;
+    min-width:133px !important;
+    min-height:31px !important;
+    max-height:31px !important;   
+    display:flex !important;
+    align-items:center !important; 
     background-color:#E9E9E9 !important;
     margin-right:10px;
+    font-size:${market_style.font.size.small1};
+    border-radius:10px !important;
+    .icon{
+      width:max-content !important;
+      height:max-content !important;
+      padding:6px !important;
+    }
+`;
+// const MainBox = styled.div`
+//   width:100%;
+//   .title{
+//     width:170px;
+//     height:29px;
+//     font-family:Noto Sans KR, Medium;
+//     font-size:${market_style.font.size.normal3};
+//     font-weight:500;
+//   }
+//   .contentsBox{
+//     width:100%;
+//     display:flex;
+//     padding-left:130px;
+//     padding-top:36px;
+//   }
+//   .centering{
+//     padding-right:130px;
+//     justify-content:center;
+//   }
+// `
 
-    border-radius:20px !important;
-`
+// const ThumbnailBox = styled.div`
+//   *{
+//     font-family:Noto Sans KR;
+//     font-weight:500;
+//     font-size:${market_style.font.size.normal3};
+//   }
+//   width:562px;
+//   height:540px;
+//   box-shadow: 5px 5px 10px #00000029;
+//   border-radius: 20px;
+//   padding-left:42px;
+//   padding-top:54px;
+//   margin-right:63px;
+//   .label{
+//     width:100%;
+//     height:29px;
+//   }
+//   .thumbnail{
+//     width:256px;
+//     height:256px;
+//     display:flex;
+//     justify-content:center;
+//     align-items:center;
+//     background:#E9E9E9;
+//     border-radius:50%;
+//     margin-left:110px;
+//   }
+// `
+// const Thumbnail = styled.div`
+//   cursor:pointer;
+//   width:256px;
+//   height:256px;
+//   display:flex;
+//   justify-content:center;
+//   align-items:center;
+//   background-image: ${props => `url(${props.imageURL == null ? noimg : props.imageURL})`};
+//   background-size: cover;
+//   background-position: center center;
+//   border-radius:50%;
+//   margin-left:110px;
+// `
+
+// const FormBox = styled.div`
+//   *{
+//     font-size:${market_style.font.size.normal3};
+
+//   }
+//   width:939px;
+//   box-shadow: 5px 5px 10px #00000029;
+//   border-radius: 20px;
+//   padding-left:59px;
+//   padding-top:49px;
+
+//   .wrapper{
+//     width:100%;
+//     display:flex;
+//     align-items:center;
+//     margin-bottom:70px;
+//   }
+//   .wrapper_noflex{
+//     width:100%;
+//     margin-bottom:70px;
+//   }
+//   .margin_zero{
+//     margin:0px;
+//   }
+//   .margin_bottom{
+//     margin-bottom:30px;
+//   }
+//   .flex{
+//     display:flex;
+//   }
+//   .innerWraper{
+//     width:100%;
+//     margin-bottom:26px;
+//     display:flex;
+//   }
+//   .label{
+//     font-family:Noto Sans KR;
+//     font-weight:500;
+//     min-width:157px;
+//     height:29px;
+//   }
+//   .label_centering{
+//     text-align:center;
+//   }
+//   .index{
+//     width:30px;
+//     height:30px;
+//     color:#707070;
+//   }
+
+// `
+// const ExperienceBox = styled.div`
+//     width:1560px;
+//     box-shadow: 5px 5px 10px #00000029;
+//     border-radius: 20px;
+//     padding-left:59px;
+//     padding-top:49px;
+//     padding:50px;
+//     .title{
+//       width:100%;
+//       font-size:${market_style.font.size.normal3};
+//       font-weight:500;
+//       margin-bottom:15px;
+//     }
+//     .wrapper{
+//       width:100%;
+//     }
+//     .labelBox{
+//       width:100%;
+//       display:flex;
+//       padding-bottom:20px;
+//       border-bottom:1px solid #E6E6E6;
+//       margin-bottom:20px;
+
+//       .number_label{
+//         width:10%;
+//       }
+//       .text_label{
+//         width:30%;
+//       }
+//     }
+//     .careerBox{
+//       display:flex;
+//       margin-bottom:10px;
+//       .number_wrapper{
+//         width:10%;
+//       }
+//       .text_wrapper{
+//         width:30%;
+//       }
+//     }
+// `
+// const Button = styled.div`
+//     width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+//     height:${props => props.height == null ? 100 + "%" : props.height + "px"};
+//     background-color:white;
+//     font-family:Noto Sans KR;
+//     font-size:${market_style.font.size.normal3};
+//     display:flex;
+//     align-items:center;
+//     margin-left:${props => props.margin == null ? 0 + "px" : props.margin + "px"};
+//     .label{
+//       margin-left:60px;
+//     }
+//     cursor:pointer;
+    
+// `
+// const InputText = styled.input.attrs({ type: "text" })`
+//   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+//   height:43px;
+//   border-radius:20px;
+//   font-family:Noto Sans KR;
+//   font-size:${market_style.font.size.normal3};
+//   background-color:#E9E9E9;
+//   margin-right:21px;
+//   outline:none;
+//   border:0px;
+//   padding: 0.67857143em 1em;
+//   font-weight:300;
+// `
+// const InputTextarea = styled.textarea`
+//   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+//   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
+//   border-radius:20px;
+//   font-family:Noto Sans KR;
+//   font-size:${market_style.font.size.normal3};
+//   background-color:#E9E9E9;
+//   outline:none;
+//   border:0px;
+//   readonly;
+//   padding: 0.67857143em 1em;
+//   font-weight:300;
+// `
+// const Margin = styled.div`
+//   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+//   height:${props => props.height == null ? 100 + "%" : props.height + "px"}
+// `
+// const DropBox = styled(Dropdown)`
+//     min-width:200px !important;
+//     background-color:#E9E9E9 !important;
+//     margin-right:10px;
+
+//     border-radius:20px !important;
+// `
 
 class CreateMaker extends Component {
   constructor(props) {
@@ -440,7 +684,6 @@ class CreateMaker extends Component {
           <div className="contentsBox">
             <ThumbnailBox>
               <div className="label">썸네일 등록<sup style={{color:"red"}}>*</sup></div>
-              <Margin height={70} />
               <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
               <label htmlFor="file">
                 {this.state.thumbnail == null ?
@@ -460,7 +703,7 @@ class CreateMaker extends Component {
 
               <div className="wrapper flex">
                 <div className="label">설명</div>
-                <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={483} height={99} />
+                <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={327} height={67} />
               </div>
 
               <div className="wrapper flex">
@@ -472,7 +715,7 @@ class CreateMaker extends Component {
               <div className="wrapper flex">
                 <div className="label">태그</div>
                 <div>
-                  <InputTagNew taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
+                  <InputTag taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={327} />
                 </div>
               </div>
 
@@ -500,14 +743,14 @@ class CreateMaker extends Component {
               <div className="wrapper flex">
                 <div className="label">보유장비</div>
                 <div>
-                  <InputTagNew taglist={this.state.equipment} getValue={this.handleAddEquipment} placeholder="보유장비를 입력하고 [enter]키를 누르세요" width={483} />
+                  <InputTag taglist={this.state.equipment} getValue={this.handleAddEquipment} placeholder="보유장비를 입력하고 [enter]키를 누르세요" width={327} />
                 </div>
               </div>
 
               <div className="wrapper flex">
                 <div className="label">보유기술</div>
                 <div>
-                  <InputTagNew taglist={this.state.technique} getValue={this.handleAddTechnique} placeholder="보유장비 입력하고 [enter]키를 누르세요" width={483} />
+                  <InputTag taglist={this.state.technique} getValue={this.handleAddTechnique} placeholder="보유장비 입력하고 [enter]키를 누르세요" width={327} />
                 </div>
               </div>
 
@@ -518,7 +761,7 @@ class CreateMaker extends Component {
 
           <div className="contentsBox">
             <ExperienceBox>
-              <div className="title">경험</div>
+              <div className="title_">경험</div>
               <div className="labelBox">
                 <div className="number_label">번호</div>
                 <div className="text_label">업무</div>
@@ -533,15 +776,15 @@ class CreateMaker extends Component {
                   );
                 })}
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
-                <Button /*onClick={this.onSubmit}*/ width={250} height={30} margin={157} onClick={this.onClickAddCareer}>
-                  <Icon name="plus" /><div className="label">경험 추가</div>
+                <Button /*onClick={this.onSubmit}*/ width={250} height={30} onClick={this.onClickAddCareer}>
+                  <Icon name="plus" size='tiny' color='red' /><div className="label">경험 추가</div>
                 </Button>
               </div>
             </ExperienceBox>
           </div>
-          <div className="contentsBox centering">
-            <RedButton text={"메이커를 등록합니다."} okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
-            <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.location.href = "/mypage" }} isConfirm={false}></GrayButton>
+          <div className="contentsBox">
+            <RedButton width={150} height={30} fontSize={market_style.font.size.small1} text={"메이커를 등록합니다."} okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
+            <GrayButton width={150} height={30} fontSize={market_style.font.size.small1} text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.location.href = "/mypage" }} isConfirm={false}></GrayButton>
           </div>
         </MainBox>
       </React.Fragment>
@@ -611,13 +854,13 @@ class CreateCareer extends Component {
         <div className="careerBox">
           <div className="number_wrapper">{leadingZeros(this.props.number, 2)}</div>
           <div className="text_wrapper">
-            <InputText value={this.state.task} onChange={this.onChangeTask} width={370} />
+            <InputText value={this.state.task} onChange={this.onChangeTask} width={230} />
           </div>
           <div className="text_wrapper">
-            <InputText value={this.state.during} onChange={this.onChangeDuring} width={370} />
+            <InputText value={this.state.during} onChange={this.onChangeDuring} width={230} />
           </div>
           <div className="text_wrapper">
-            <InputText value={this.state.explain} onChange={this.onChangeExplain} width={370} />
+            <InputText value={this.state.explain} onChange={this.onChangeExplain} width={230} />
           </div>
         </div>
       </React.Fragment>

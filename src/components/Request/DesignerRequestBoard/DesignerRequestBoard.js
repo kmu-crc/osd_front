@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ScrollBoardList from "components/Commons/ScrollBoardList";
-import RequestElement from "components/Request/RequestListElement";
+import RequestMyDetailElement from "components/Request/RequestMyDetailElement";
 import styled from "styled-components";
 import ContentBox from "components/Commons/ContentBox";
 import market_style from "market_style";
@@ -102,16 +102,14 @@ export default class DesignerRequestBoard extends Component {
     render() {
         return (<React.Fragment>
             <Content top={0}>
-                <ListElement>
-                    {/* title   */}<div className="title_">제목</div>
-                    {/* writer  */}<div className="writer">글쓴이</div>
-                    {/* date    */}<div className="date">작성일</div>
-                </ListElement>
+                {/* <ListElement> */}
+                    {/* <div className="title_">제목</div>
+                    <div className="writer">글쓴이</div>
+                    <div className="date">작성일</div> */}
+                {/* </ListElement> */}
                 <Wrapper className="listWrap">
-                    {/* {this.state.rendering ? */}
-                    <ScrollBoardList getListRequest={this.getList} ListComponent={RequestElement} dataList={this.props.dataList} total={this.props.Count}
+                    <ScrollBoardList getListRequest={this.getList} ListComponent={RequestMyDetailElement} dataList={this.props.dataList} total={this.props.Count}
                         mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} />
-                     {/* : null} */}
                 </Wrapper>
             </Content>
         </React.Fragment>)
