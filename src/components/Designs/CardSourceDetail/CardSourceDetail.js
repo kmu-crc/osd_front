@@ -1043,7 +1043,7 @@ class CardSourceDetail extends Component {
                 const res = fileReader.result;
                 data.file_name = item.file[0].name;
                 data.code = res;
-                resolve(data);
+                resolve(data)
               }
               fileReader.readAsText(item.file[0], charset || "UTF-8");
             })
