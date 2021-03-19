@@ -8,19 +8,20 @@ import { options } from "components/Commons/InputItem/AlertConfirm"
 import market_style from "market_style";
 
 const StyleButton = styled.div`
-  width:290px;
-  height:70px;
+  width:${props=>props.width==null?"290px":props.width+"px"};
+  height:${props=>props.height==null?"70px":props.height+"px"};
   display:flex;
   justify-content:center;
   align-items:center;
   background-color:${props => props.disabled == false || props.disabled == null ? "red" : "#A0A0A0"};
   border:${props => props.disabled == false || props.disabled == null ? "1px solid red" : "1px solid gray"};
   cursor:pointer;
-  margin-right:30px;
+  margin-right:20px;
   .text{
     color:${props => props.disabled == false || props.disabled == null ? "white" : "white"};
-    font-family:Noto Sans CJK KR, Regular;
-    font-size: ${market_style.font.size.giant2};
+    font-family:Noto Sans KR;
+    font-weight:400;
+    font-size: ${props=>props.fontSize==null?market_style.font.size.giant2:props.fontSize+"px"};
 }
   &:hover{
       opacity:90%;
@@ -52,7 +53,7 @@ export class RedButton extends Component {
         // console.log("disabled:", this.props.disabled);
         return (
             <React.Fragment>
-                <StyleButton disabled={this.props.disabled} onClick={this.onClickButton}>
+                <StyleButton width={this.props.width} height={this.props.height} fontSize={this.props.fontSize} disabled={this.props.disabled} onClick={this.onClickButton}>
                     <div className="text">{this.props.value}</div>
                 </StyleButton>
             </React.Fragment>

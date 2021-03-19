@@ -6,18 +6,19 @@ import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
 const StyleButton = styled.div`
-  width:290px;
-  height:70px;
+    width:${props=>props.width==null?"290px":props.width+"px"};
+    height:${props=>props.height==null?"70px":props.height+"px"};
   display:flex;
   justify-content:center;
   align-items:center;
   cursor:pointer;
-  margin-right:30px;
-  border:1px solid black;
+  margin-right:20px;
+  background-color:#707070;
   .text{
-    color:black;
-    font-family:Noto Sans CJK KR, Regular;
-    font-size: ${market_style.font.size.giant3};
+    color:white;
+    font-weight:400;
+    font-family:Noto Sans KR;
+    font-size: ${props=>props.fontSize==null?market_style.font.size.giant2:props.fontSize+"px"};
 }
   &:hover{
       opacity:90%;
@@ -45,7 +46,7 @@ export class GrayButton extends Component {
     render() {
         return (
             <React.Fragment>
-                <StyleButton onClick={this.onClickButton}>
+                <StyleButton width={this.props.width} height={this.props.height} fontSize={this.props.fontSize} onClick={this.onClickButton}>
                     <div className="text">{this.props.value}</div>
                 </StyleButton>
             </React.Fragment>

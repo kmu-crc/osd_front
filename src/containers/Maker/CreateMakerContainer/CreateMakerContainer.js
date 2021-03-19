@@ -42,11 +42,11 @@ import { InsertMakerDetailRequest } from "actions/Users/UserInfo";
 //  }
 //`;
 const Wrapper = styled(ContentBox)`
-    width:100%;
-    margin-top:60px;
-    margin-bottom: 100px;
-    position: relative;
-    z-index:3;
+  width:100%;
+  margin-top:25px;
+  margin-bottom: 100px;
+  position: relative;
+  z-index:3;
 `;
 
 class CreateMakerContainer extends Component {

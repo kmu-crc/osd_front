@@ -20,7 +20,7 @@ const SignUpCard = styled.div`
         position: relative;
         z-index: 2;
         box-shadow: 3px 3px 5px #00000029;
-        border: 0.5px solid #B7B7B7;
+        border: 0.5px solid #EAEAEA;
         border-radius: 20px;
         background: #FFFFFF 0% 0% no-repeat padding-box;
 `;

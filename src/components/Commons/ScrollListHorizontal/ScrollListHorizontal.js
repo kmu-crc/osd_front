@@ -182,9 +182,9 @@ const SliderBox = styled.div`
     .left_gradient{
       position:absolute;
       left:0px;
-      width:52px;
+      width:111px;
       height:338px;
-      padding:158px 80px 30px 9px;
+      padding:143px 68px 124px 30px;
       background: transparent linear-gradient(-90deg, #FFFFFF00 0%, #FFFFFFC3 73%, #FFFFFF 100%) 0% 0% no-repeat padding-box;
       .arrow{
         z-index:999;
@@ -199,9 +199,9 @@ const SliderBox = styled.div`
     .right_gradient{
       position:absolute;
       right:0px;
-      width:52px;
+      width:111px;
       height:300px;
-      padding:158px 30px 80px 9px;
+      padding:143px 30px 124px 68px;
       background: transparent linear-gradient(90deg, #FFFFFF00 0%, #FFFFFFC3 70%, #FFFFFF 100%) 0% 0% no-repeat padding-box;
       .arrow{
         z-index:999;

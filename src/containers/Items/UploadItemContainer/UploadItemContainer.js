@@ -1,10 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyUploadItemRequest } from "actions/Item";
-import Item from "components/Items/Item";
-import ScrollList from "components/Commons/ScrollList";
+import Item_myDetail from "components/Items/Item_myDetail";
+import PagingList from "components/Commons/PagingList";
+import styled from "styled-components";
+import { Pagination } from 'semantic-ui-react'
 
+const Board = styled.div`
+  margin:-20px -50px -20px -50px;
+  .title_{
+    font-family:Noto Sans KR;
+    margin-left:38px;
+    font-size:18px;
+    color:black;
+    margin-bottom:20px;
+  }
+  .pagenation{
+    display:flex;
+    justify-content:center;
+  }
+`
 class UploadItemContainer extends Component {
+  constructor(props)
+  {
+    super(props);
+    this.state = {
+      page:0,
+    }
+    this.goPage = this.goPage.bind(this);
+  }
   componentWillMount() {
     this.props.GetMyUploadItemRequest(this.props.id, this.props.token, 0);
   }
@@ -13,14 +37,44 @@ class UploadItemContainer extends Component {
     this.props.GetMyUploadItemRequest(this.props.id, this.props.token, page);
 
 
+  goPage = async (pagenum) => {
+      await this.setState({ page:pagenum });
+      this.props.GetMyUploadItemRequest(this.props.id,this.props.token, pagenum);
+  };
   render() {
+    const { page } = this.state;
+    const lastPage = parseInt(this.props.allPage / 6, 10);
+    console.log(this.props);
     return (
-      <ScrollList
+      <Board>
+      <div className="title_">등록 아이템</div>
+      <PagingList
         getListRequest={this.getList}
-        ListComponent={Item}
-        type="item"
+        ListComponent={Item_myDetail}
+        type="sales"
         dataList={this.props.dataList}
         dataListAdded={this.props.dataListAdded} />
+        {
+        lastPage==0?null:
+        <div className="pagenation">
+        <Pagination
+          activePage={page + 1}
+          boundaryRange={0}
+          defaultActivePage={1}
+          ellipsisItem={null}
+          firstItem={null}
+          lastItem={null}
+          siblingRange={1}
+          totalPages={lastPage + 1}
+          // pointing
+          secondary
+          onPageChange={(event, { activePage }) => {
+            this.goPage(activePage - 1);
+          }}
+        />
+        </div>
+        }
+      </Board>
     );
   }
 }
