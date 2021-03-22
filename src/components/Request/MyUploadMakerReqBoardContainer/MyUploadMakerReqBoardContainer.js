@@ -41,7 +41,7 @@ class MyUploadMakerReqBoardContainer extends Component {
     const lastPage = parseInt(this.props.allPage / 10, 10);
     return (
       <Board>
-      <div className="title__">디자인 의뢰</div>
+      <div className="title__">제작 의뢰</div>
       <DesignerRequestBoard getList={this.getList} {...this.props} />
       {
         lastPage==0?null:

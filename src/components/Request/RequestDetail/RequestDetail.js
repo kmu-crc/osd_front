@@ -246,6 +246,7 @@ class Detail extends Component {
 
     }
   }
+
   render() {
     const { Detail, MyDetail, } = this.props;
     if (Detail == null || Detail === []) return (<Loading />);
@@ -544,6 +545,19 @@ class Detail extends Component {
                 <div className="btnbox">
                 <div className="_box">
                   <RedButton value={"응답 수정"} onClick={()=>window.location.href=`/${Detail.type=="designer"?'modifyResponseToDesignerReq':'modifyResponseToMakerReq'}/${this.props.id}`} isConfirm={false} />
+                </div>
+                </div>
+              </ButtonWrapper>
+              :
+              null
+              }
+                            {
+                this.props.userInfo&& this.props.Detail&&this.props.isPurchased == false&&
+                this.props.userInfo.uid == this.props.Detail.client_id?
+                <ButtonWrapper>
+                <div className="btnbox">
+                <div className="_box">
+                  <RedButton value={"의뢰 구입"} onClick={this.props.purchase}/>
                 </div>
                 </div>
               </ButtonWrapper>
