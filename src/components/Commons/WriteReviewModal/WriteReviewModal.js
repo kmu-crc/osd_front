@@ -115,11 +115,13 @@ const WriteDialog=styled(Modal)`
         .headerbox{
             display:flex;
             .mainImg{
+                border:0.5px solid #eaeaea;
                 width:97px;
                 height:97px;
                 background-image: url(${props => props.img});
-                background-size:cover;
-                background-color:#EFEFEF;
+                background-size: contain;
+                background-repeat:no-repeat;
+                background-position: center center;
                 margin-right:20px;
             }
             .explainBox{
