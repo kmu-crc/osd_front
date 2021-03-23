@@ -871,21 +871,27 @@ class CardSourceDetail extends Component {
 
     let formData = { updateContent: [], newContent: [], deleteContent: [] }
 
+    console.log("DEBUG", newContent, oldContent);
     // get updatecontent
     //order
     newContent.forEach(item => {
       oldContent.forEach(old => {
         if (old.uid === item.uid) {
-          if (old.order !== item.order) {
-            formData.updateContent.push(newContent[old.order]);
-            formData.updateContent.push(item);
-          }
+          // if (old.order !== item.order) {
+          //   formData.updateContent.push(newContent[old.order]);
+          //   formData.updateContent.push(item);
+          // }
           if (old.content !== item.content) {
             formData.updateContent.push(item);
           }
         }
       })
     });
+    oldContent.forEach((item, index) => {
+      if (item.order != index) {
+        formData.updateContent.push(item);
+      }
+    })
 
     // get newcontent
     newContent.forEach(item => {
