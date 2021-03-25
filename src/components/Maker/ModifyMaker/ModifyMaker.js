@@ -161,12 +161,18 @@ const FormBox = styled.div`
     font-size:${market_style.font.size.small1};
   }
   width:620px;
-  height:max-content;
+  height:328px;
+
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
-  padding:34px 54px 34px 54px;
+  padding:30px 30px 30px 30px;
   border: 0.5px solid #EAEAEA;
-
+  .FormBoxScroll{
+    width:100%;
+    height:100%;
+    overflow-Y:auto;
+    overflow-X:hidden;
+  }
   .wrapper{
     width:100%;
     display:flex;
@@ -304,6 +310,12 @@ const SubBox = styled.div`
     }
     .wrapper{
       width:100%;
+    }
+    .hrline{
+      border:2px solid #efefef;
+    }
+    .marginBottom{
+      margin-bottom:10px;
     }
     .labelBox{
       width:100%;
@@ -646,7 +658,7 @@ class ModifyMaker extends Component {
               </ThumbnailBox>
               {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton> */}
               <FormBox>
-
+                <div className="FormBoxScroll">
                 <div className="wrapper flex">
                   <div className="label">닉네임<sup style={{color:"red"}}>*</sup></div>
                   {this.props.userInfo.nickName}
@@ -654,7 +666,7 @@ class ModifyMaker extends Component {
 
                 <div className="wrapper flex">
                   <div className="label">설명</div>
-                  <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={483} height={67} />
+                  <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={372} height={67} />
                 </div>
 
                 <div className="wrapper flex">
@@ -705,12 +717,12 @@ class ModifyMaker extends Component {
                     <InputTag taglist={this.state.technique} getValue={this.handleAddTechnique} placeholder="보유장비 입력하고 [enter]키를 누르세요" width={372} />
                   </div>
                 </div>
-
+                </div>
               </FormBox>
             </div>
             <div className="contentsBox">
-              <SubBox>
-                <div className="title">경험</div>
+              <ExperienceBox>
+                <div className="title_">경험</div>
                 <div className="labelBox">
                   <div className="number_label">번호</div>
                   <div className="text_label">업무</div>
@@ -729,7 +741,7 @@ class ModifyMaker extends Component {
                   <Icon name="plus" size='tiny' color='red' /><div className="label">경험 추가</div>
                   </Button>
                 </div>
-              </SubBox>
+              </ExperienceBox>
             </div>
             <div className="contentsBox">
               <SubBox>
@@ -737,6 +749,7 @@ class ModifyMaker extends Component {
                   <div className="title">갤러리</div>
                   <div className="title redText" onClick={()=>this.handleShowModal(true)}>갤러리 등록</div>
                 </div>
+                <div className="wrapper hrline marginBottom" />
                 <div className="contensts">
                   {<HaveInGalleryContainer handlerIsGalleryModify={this.handlerIsGalleryModify} id={this.props.id} isModify={true} />}
                 </div>

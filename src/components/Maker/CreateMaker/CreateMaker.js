@@ -153,16 +153,22 @@ const ExperienceBox = styled.div`
     }
 `
 const FormBox = styled.div`
-  *{
-    font-size:${market_style.font.size.small1};
-  }
-  width:620px;
-  height:max-content;
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px;
-  padding:34px 54px 34px 54px;
-  border: 0.5px solid #EAEAEA;
+    *{
+      font-size:${market_style.font.size.small1};
+    }
+    width:620px;
+    height:328px;
 
+    box-shadow: 5px 5px 10px #00000029;
+    border-radius: 20px;
+    padding:30px 30px 30px 30px;
+    border: 0.5px solid #EAEAEA;
+    .FormBoxScroll{
+      width:100%;
+      height:100%;
+      overflow-Y:auto;
+      overflow-X:hidden;
+    }
   .wrapper{
     width:100%;
     display:flex;
@@ -695,7 +701,7 @@ class CreateMaker extends Component {
             </ThumbnailBox>
             {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton> */}
             <FormBox>
-
+              <div className="FormBoxScroll">
               <div className="wrapper flex">
                 <div className="label">닉네임<sup style={{color:"red"}}>*</sup></div>
                 {this.props.userInfo.nickName}
@@ -753,7 +759,7 @@ class CreateMaker extends Component {
                   <InputTag taglist={this.state.technique} getValue={this.handleAddTechnique} placeholder="보유장비 입력하고 [enter]키를 누르세요" width={327} />
                 </div>
               </div>
-
+              </div>
             </FormBox>
 
 

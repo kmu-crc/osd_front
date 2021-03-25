@@ -12,8 +12,8 @@ const Container = styled.div`
   cursor: default;
   .element {
     margin-left: 15px;
-    font-size:${market_style.font.size.mini2};
-    font-weight: 500;
+    font-size:${market_style.font.size.small1};
+    font-weight: 300;
     text-align: center;
     cursor:pointer;
   }

@@ -15,11 +15,11 @@ import market_style from "market_style";
 
 
 const MainBox = styled.div`
-  *{
-    font-family:Noto Sans KR,Medium;
-    color:#060000;
-    // border:1px solid black;
-  }
+  // *{
+  //   font-family:Noto Sans KR,Medium;
+  //   color:#060000;
+  //   // border:1px solid black;
+  // }
 
   width:806px;
   height:496px;
@@ -42,25 +42,25 @@ const MainBox = styled.div`
       margin-bottom:24px;
       .title{
         font-size:${market_style.font.size.normal1};
-        font-weight:500;
+        font-weight:700;
+        color:black;
       }
     }
     
     .row{
-      *{
-        font-size:${market_style.font.size.mini2};
-      }
       display:flex;
       height:max-content;
       margin-bottom:15px;
       .label{
+        font-size:${market_style.font.size.mini2};
+        color:black;
         min-width:96px;
         font-weight:500;
         display:flex;
         align-items:center;
       }
       .font_small{
-        font-size:${market_style.font.size.tiny3};
+        font-size:${market_style.font.size.tiny2};
       }
       .red_text{
         color:red;
@@ -105,11 +105,12 @@ const CustomButton = styled.div`
     font-size:18px;
     margin-top:43px;
     display:flex;
+    padding-top:2px;
     justify-content:center;
     align-items:center;
     opacity:1;
     cursor:pointer;
-    font-size:${market_style.font.size.mini2};
+    font-size:${market_style.font.size.small1};
     &:hover{
       opacity:0.7;
     }
@@ -140,8 +141,8 @@ const InputTextBox = styled.input`
   display:flex;
   justify-content:center;
   outline:none;
-  font-size:${market_style.font.size.tiny2};
   color:#060000;
+  font-size:${props=>props.fontSize == null? market_style.font.size.mini2:props.fontSize};
 `
 
 class SignUpForm extends Component {
@@ -291,6 +292,7 @@ class SignUpForm extends Component {
             <div className="row">
               <div className="label"><div>아이디</div></div>
               <InputTextBox
+                fontSize={market_style.font.size.tiny1}
                 placeholder="아이디를 입력하세요."
                 value={this.state.email}
                 onChange={this.onChangeID} />
@@ -298,6 +300,7 @@ class SignUpForm extends Component {
             <div className="row">
               <div className="label"><div>비밀번호</div></div>
               <InputTextBox type="password"
+                fontSize={market_style.font.size.tiny1}
                 value={this.state.password}
                 placeholder="비밀번호를 입력하세요."
                 onChange={this.onChangePassword} />
@@ -305,6 +308,7 @@ class SignUpForm extends Component {
             <div className="row">
               <div className="label"><div>비밀번호 확인</div></div>
               <InputTextBox type="password"
+                fontSize={market_style.font.size.tiny1}
                 value={this.state.passwordCheck}
                 placeholder="비밀번호를 한번 더 입력하세요."
                 onChange={this.onChangePasswordCheck} />
@@ -312,6 +316,7 @@ class SignUpForm extends Component {
             <div className="row">
               <div className="label"><div>이름</div></div>
               <InputTextBox
+                fontSize={market_style.font.size.tiny1}
                 value={this.state.name}
                 placeholder="이름을 입력하세요."
                 onChange={this.onChangeName} />
@@ -319,6 +324,7 @@ class SignUpForm extends Component {
             <div className="row">
               <div className="label"><div>휴대폰 번호</div></div>
               <InputTextBox
+                fontSize={market_style.font.size.tiny1}
                 value={this.state.phone}
                 placeholder="휴대폰 번호를 입력하세요."
                 onChange={this.onChangePhone} />
@@ -330,15 +336,15 @@ class SignUpForm extends Component {
             </div>
             <div className="row2">
               <div className="label2" />
-              <div className="content2"><CheckBox onChange={this.onCheckTerms} checked={this.state.checkTerms} id="terms" />이용약관 (필수)</div>
+              <div className="content2 font_small"><CheckBox onChange={this.onCheckTerms} checked={this.state.checkTerms} id="terms" />이용약관 (필수)</div>
             </div>
             <div className="row2">
               <div className="label2" />
-              <div className="content2"><CheckBox onChange={this.onCheckPersonalInfoEsscential} checked={this.state.checkPersonalInfo_ess} id="personalInfoEss" />개인정보 수집 및 이용 (필수)</div>
+              <div className="content2 font_small"><CheckBox onChange={this.onCheckPersonalInfoEsscential} checked={this.state.checkPersonalInfo_ess} id="personalInfoEss" />개인정보 수집 및 이용 (필수)</div>
             </div>
             <div className="row2">
               <div className="label2" />
-              <div className="content2"><CheckBox onChange={this.onCheckPersonalInfoChoice} checked={this.state.checkPersonal_choice} id="personalInfoChoice" />개인정보 수집 및 이용&nbsp;<div className="red_text">(선택)</div></div>
+              <div className="content2 font_small"><CheckBox onChange={this.onCheckPersonalInfoChoice} checked={this.state.checkPersonal_choice} id="personalInfoChoice" />개인정보 수집 및 이용&nbsp;<div className="red_text">(선택)</div></div>
             </div>
 
             <CustomButton onClick={this.onSubmit}

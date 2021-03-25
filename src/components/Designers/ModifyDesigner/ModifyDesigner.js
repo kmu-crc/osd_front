@@ -159,12 +159,18 @@ const FormBox = styled.div`
     font-size:${market_style.font.size.small1};
   }
   width:620px;
-  height:max-content;
+  height:328px;
+
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
-  padding:34px 54px 34px 54px;
+  padding:30px 30px 30px 30px;
   border: 0.5px solid #EAEAEA;
-
+  .FormBoxScroll{
+    width:100%;
+    height:100%;
+    overflow-Y:auto;
+    overflow-X:hidden;
+  }
   .wrapper{
     width:100%;
     display:flex;
@@ -299,6 +305,12 @@ const SubBox = styled.div`
     }
     .contensts{
       width:100%;
+    }
+    .hrline{
+      border:2px solid #efefef;
+    }
+    .marginBottom{
+      margin-bottom:10px;
     }
     .wrapper{
       width:100%;
@@ -805,8 +817,7 @@ class ModifyDesigner extends Component {
             </ThumbnailBox>
             {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton> */}
             <FormBox>
-
-
+              <div className="FormBoxScroll">
               <div className="wrapper flex">
                 <div className="label">닉네임<sup style={{color:"red"}}>*</sup></div>
                 {this.props.userInfo.nickName}
@@ -836,6 +847,7 @@ class ModifyDesigner extends Component {
                 <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
                   selection options={LocationList} placeholder="시/도"
                   onChange={this.onChangeLocation} />
+              </div>
               </div>
             </FormBox>
 
@@ -869,6 +881,7 @@ class ModifyDesigner extends Component {
                 <div className="title">갤러리</div>
                 <div className="title redText" onClick={this.handleShowModal}>갤러리 등록</div>
               </div>
+              <div className="wrapper hrline marginBottom" />
               <div className="contensts">
                 {<HaveInGalleryContainer handlerIsGalleryModify={this.handlerIsGalleryModify} id={this.props.id} isModify={true} />}
               </div>

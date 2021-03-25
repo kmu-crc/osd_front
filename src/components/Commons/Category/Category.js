@@ -19,14 +19,15 @@ const Container = styled.div`
 `;
 const CategoryItem =styled.div`
   cursor:pointer;
-  font-size:${market_style.font.size.small1};
+  font-size:${market_style.font.size.normal1};
   &:hover{
     opacity:0.7;
   }
 `
 const CategoryItem2 =styled.div`
+  margin-top:3px;
   cursor:pointer;
-  font-size:${market_style.font.size.mini2};
+  font-size:${market_style.font.size.small1};
   &:hover{
     opacity:0.7;
   }

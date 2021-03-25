@@ -10,9 +10,10 @@ import market_style from "market_style";
 // import { Icon } from "semantic-ui-react";
 // import { InputTag } from "components/Commons/InputItem/InputTag";
 // import { confirm } from "components/Commons/Confirm/Confirm";
+
 const MainBox = styled.div`
   width:100%;
-  padding:30px;
+  height:100%;
   .titleBox{
     display:flex;
     justify-content:space-between;
@@ -22,16 +23,21 @@ const MainBox = styled.div`
   }
   .title{
     width:max-content;
-    height:29px;
     font-family:Noto Sans KR, Medium;
-    font-size:${market_style.font.size.normal3};
+    font-size:${market_style.font.size.normal1};
     font-weight:500;
+    color:black;
+  }
+  .hrline{
+    width:100%;
+    border:2px solid #EFEFEF;
+    margin-top:10px;
   }
     .contentBox{
       width:100%;
       display:flex;
       justify-content:center;
-      padding-top:36px;
+      margin-top:20px;
     }
 
 `;
@@ -40,59 +46,60 @@ const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
     font-weight:500;
-    font-size:${market_style.font.size.normal3};
   }
-  width:562px;
-  height:540px;
-  box-shadow: 5px 5px 10px #00000029;
+  box-shadow: 3px 3px 5px #0000001A;
+  border:1px solid #eaeaea;
   border-radius: 20px;
-  padding-left:42px;
-  padding-top:54px;
-  margin-right:63px;
+  padding:24px 18px 34px 18px;
+  margin-right:20px;
   .label{
-    width:100%;
-    height:29px;
-  }
-  .thumbnail{
-    cursor:pointer;
-    width:256px;
-    height:256px;
     display:flex;
     justify-content:center;
-    align-items:center;
-    background:#E9E9E9;
-    border-radius:50%;
-    margin-left:110px;
+    width:100%;
+    font-size:${market_style.font.size.small1};
+    margin-bottom:20px;
   }
 `;
 const Thumbnail = styled.div`
   cursor:pointer;
-  width:256px;
-  height:256px;
+  width:264px;
+  height:229px;
   display:flex;
   justify-content:center;
   align-items:center;
-  background-image: ${props => `url(${props.imageURL == null ? noimg : props.imageURL})`};
+  background-color:#efefef;
+  background-image: ${props => `url(${props.imageURL == null ? null : props.imageURL})`};
   background-size: cover;
   background-position: center center;
-  border-radius:50%;
-  margin-left:110px;
+  .label{
+    width:max-content;
+    height:max-content;
+    font-size:${market_style.font.size.small1};
+    color:#707070;
+    font-weight:400;
+  }
 `;
 const FormBox = styled.div`
-  *{
-    font-size:${market_style.font.size.normal3};
-  }
-  width:939px;
-  box-shadow: 5px 5px 10px #00000029;
+  width:521px;
+  height:329px;
+  box-shadow: 3px 3px 5px #0000001A;
+  border:1px solid #eaeaea;
   border-radius: 20px;
-  padding-left:59px;
-  padding-top:49px;
-
+  padding:33px;
+  .board{
+    width:100%;
+    height:102%;
+    overflow-Y:auto;
+    overflow-X:hidden;
+  }
   .wrapper{
     width:100%;
     display:flex;
     align-items:center;
-    margin-bottom:50px;
+    margin-bottom:20px;
+  }
+  .alignTop{
+    align-items:flex-start;
   }
   .wrapper_noflex{
     width:100%;
@@ -115,8 +122,9 @@ const FormBox = styled.div`
   .label{
     font-family:Noto Sans KR;
     font-weight:500;
-    min-width:157px;
-    height:29px;
+    font-size:${market_style.font.size.small1};
+    min-width:104px;
+    
   }
   .label_centering{
     text-align:center;
@@ -128,14 +136,13 @@ const FormBox = styled.div`
   }
 
 `;
-const InputText =  styled.input.attrs({ type: "text" })`
+const InputText = styled.input.attrs({ type: "text" })`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:43px;
-  border-radius:20px;
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
+  border-radius:10px;
   font-family:Noto Sans KR;
-  font-size:${market_style.font.size.normal3};
+  font-size:${market_style.font.size.mini2};
   background-color:#E9E9E9;
-  margin-right:21px;
   outline:none;
   border:0px;
   padding: 0.67857143em 1em;
@@ -144,9 +151,9 @@ const InputText =  styled.input.attrs({ type: "text" })`
 const InputTextarea = styled.textarea`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
-  border-radius:20px;
+  border-radius:10px;
   font-family:Noto Sans KR;
-  font-size:${market_style.font.size.normal3};
+  font-size:${market_style.font.size.mini2};
   background-color:#E9E9E9;
   outline:none;
   border:0px;
@@ -158,7 +165,11 @@ const InputTextarea = styled.textarea`
 const TagPiece = styled.div`
     width: max-content;
     min-width: 30px;
+    max-width:200px;
+    height:31px;
+    
     background-color: #EFEFEF;
+    margin-top:5px;
     margin-right: 5px;
     margin-bottom: 5px;
     color: #707070;
@@ -168,6 +179,12 @@ const TagPiece = styled.div`
     border-radius: 15px;
     display: flex;
     justify-content: space-between;
+    .label{
+      width:100%;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
     .close {
         margin-left: 10px;
         width: max-content;
@@ -181,18 +198,19 @@ const Margin = styled.div`
   height:${props => props.height == null ? 100 + "%" : props.height + "px"}
 `;
 const DropBox = styled(Dropdown)`
-    min-width:200px !important;
+    min-width:133px !important;
+    min-height:31px !important;
     background-color:#E9E9E9 !important;
     margin-right:10px;
 
-    border-radius:20px !important;
+    border-radius:10px !important;
 `;
 const TagList = styled.div`
     width: 100%;
     display: flex;
-    padding: 10px;
     flex-wrap: wrap;
 `;
+
 class ModifyGroup extends Component {
   constructor(props) {
     super(props);
@@ -306,6 +324,8 @@ class ModifyGroup extends Component {
         if (result === "DETELE_GROUP_SUCCESS") {
           console.log(this.props.id);
           this.props.GetHaveInGalleryRequest(this.props.userInfo.uid, 0);
+          this.props.handlerIsGalleryModify();
+          this.props.handleShowModal(false);
         } else {
           await alert("다시 시도해주세요");
         }
@@ -427,14 +447,13 @@ class ModifyGroup extends Component {
         {this.props.keep ? "redirected" : null}
 
         <MainBox>
-          <div className="titleBox">
+          {/* <div className="titleBox">
             <div className="title">갤러리 수정</div>
             <div className="title pointer" onClick={this.onClickClose}>x</div>
-          </div>
+          </div> */}
           <div className="contentBox">
             <ThumbnailBox>
-              <div className="label">썸네일 등록</div>
-              <Margin height={70} />
+            <div className="label">갤러리 썸네일</div>
               <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
               <label htmlFor="file">
                 {this.state.thumbnail == null ?
@@ -450,11 +469,11 @@ class ModifyGroup extends Component {
             <FormBox>
               <div className="wrapper flex">
                 <div className="label">이름</div>
-                <InputText type="text" onChange={this.onChangeTitle} value={this.state.title||''} placeholder="이름을 입력해주세요" width={483} height={99} />
+                <InputText type="text" onChange={this.onChangeTitle} value={this.state.title||''} placeholder="이름을 입력해주세요" width={345} height={31} />
               </div>
               <div className="wrapper flex">
                 <div className="label">설명</div>
-                <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={483} height={330} />
+                <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={345} height={154} />
               </div>
               <div className="wrapper flex">
                 <div className="label">아이템</div>
@@ -466,9 +485,9 @@ class ModifyGroup extends Component {
             </FormBox>
           </div>
           <div className="contentBox">
-            <RedButton  text={"수정된 내용을 저장합니다."} value={"저장하기"} disabled={!this.state.isModify} okText="확인" cancelText="취소" onClick={this.onSubmit} isConfirm={false} />
-            <GrayButton text={"수정된 내용이 저장되지 않습니다."} value={"취소하기"} okText="확인" cancelText="취소"  onClick={this.onClickClose} isConfirm={true} />
-            <GrayButton text={"갤러리를 삭제합니다."} value={"삭제하기"} okText="확인" cancelText="취소"  onClick={this.onDelete} isConfirm={true} />
+            <RedButton width={150} height={30} fontSize={15}  text={"수정된 내용을 저장합니다."} value={"저장하기"} disabled={!this.state.isModify} okText="확인" cancelText="취소" onClick={this.onSubmit} isConfirm={false} />
+            <GrayButton isWhite={true} width={150} height={30} fontSize={15} text={"수정된 내용이 저장되지 않습니다."} value={"취소하기"} okText="확인" cancelText="취소"  onClick={this.onClickClose} isConfirm={true} />
+            <GrayButton isWhite={true} width={150} height={30} fontSize={15} text={"갤러리를 삭제합니다."} value={"삭제하기"} okText="확인" cancelText="취소"  onClick={this.onDelete} isConfirm={true} />
           </div>
         </MainBox>
       </React.Fragment>

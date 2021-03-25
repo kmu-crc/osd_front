@@ -154,16 +154,22 @@ const ExperienceBox = styled.div`
     }
 `
 const FormBox = styled.div`
-  *{
-    font-size:${market_style.font.size.small1};
-  }
-  width:620px;
-  height:max-content;
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px;
-  padding:34px 54px 34px 54px;
-  border: 0.5px solid #EAEAEA;
+    *{
+      font-size:${market_style.font.size.small1};
+    }
+    width:620px;
+    height:328px;
 
+    box-shadow: 5px 5px 10px #00000029;
+    border-radius: 20px;
+    padding:30px 30px 30px 30px;
+    border: 0.5px solid #EAEAEA;
+    .FormBoxScroll{
+      width:100%;
+      height:100%;
+      overflow-Y:auto;
+      overflow-X:hidden;
+    }
   .wrapper{
     width:100%;
     display:flex;
@@ -453,7 +459,7 @@ class CreateDesigner extends Component {
             </ThumbnailBox>
 
             <FormBox>
-
+              <div className="FormBoxScroll">
               <div className="wrapper flex">
                 <div className="label">닉네임<sup style={{color:"red"}}>*</sup></div>
                 {this.props.userInfo.nickName}
@@ -497,7 +503,7 @@ class CreateDesigner extends Component {
                   <Icon name="plus" /><div className="label">경력 추가하기</div>
                 </Button> */}
               {/* </div> */}
-
+              </div>
             </FormBox>
 
 
@@ -540,6 +546,7 @@ class CreateDesigner extends Component {
             {/*}  : <GrayButton value={"등록"} onClick={() => alert("아이템을 등록해야 진행할 수 있습니다.")} isConfirm={false}></GrayButton>}*/}
             <GrayButton width={150} height={30} fontSize={market_style.font.size.small1} text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.location.href = "/mypage" }} isConfirm={false}></GrayButton>
           </div>
+          
         </MainBox>
       </React.Fragment>
     );

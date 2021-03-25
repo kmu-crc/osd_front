@@ -19,10 +19,31 @@ const Wrapper = styled.div`
     margin-left: auto;
   }
 `;
+const TitleBox = styled.div`
+  margin-top: ${props => props.top || 15}px;
+  margin-bottom: ${props => props.bottom || 0}px;
+  width: 100%; 
+  display:flex;
+  justify-content:space-between;
+  ._title{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Noto Sans KR;
+    font-weight:500;
+    font-size:${market_style.font.size.normal3};
+    color:black;
+  }
+  .sort{
+    width:300px;
+  }
+`
 const Content = styled(ContentBox)`
   margin-top: ${props => props.top || 15}px;
   margin-bottom: ${props => props.bottom || 0}px;
   width: 100%; 
+
   @media only screen and (max-width: 991px) and (min-width: 768px){
     & .ui.grid>.row{
       margin-left: 6.25% !important;
@@ -37,15 +58,17 @@ const TabContainer = styled.div`
   cursor: default;
   display: flex;
   flex-direction: row;
-  font-size:${market_style.font.size.normal3};
-  font-weight: 500;
+  justify-content:center;
+  font-size:${market_style.font.size.normal1};
+  font-weight: 300;
   font-family: Noto Sans KR;
   line-height: 29px;
+  color:black;
   .element {
     margin-right: 25px;
   }
   .active {
-    color: #FF0000;
+    font-weight:500;
   }
 `;
 const CategoryItem = styled.div`
@@ -160,28 +183,27 @@ const WriteNormalArticleModal = styled(Modal)`
 `;
 const CreateNormalArticleButton = styled.div`
     width:100%;
-    height:30px;
     margin-bottom:10px;
     display:flex;
     justify-content:flex-end;
     .button{
-        width:max-content;
-        height:max-content;
+        width:150px;
+        height:30px;
         display:flex;
         justify-content:center;
         align-items:center;
         background-color:red;
         cursor:pointer;
-        padding:12px 39px 12px 39px;
+        padding:4px 39px 4px 39px;
     }
     .font{
-      font-size:${market_style.font.size.normal3};
+      font-size:${market_style.font.size.small1};
       color:white;
     }
 `;
 const Container = styled.div`
   display: flex;
-  justify-content:space-between;
+  justify-content:center;
   .categoy {
     width: max-content;
   }
@@ -194,36 +216,26 @@ const Container = styled.div`
   }
 `;
 const ListElement = styled.div`
-  width: 100%;
-  height:55px;
-  margin: 0 auto 0.9rem;
-  font-size:${market_style.font.size.mini2};
-  border-radius: 3px 3px 3px 3px;
-  overflow: hidden;
-  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
-  background-color: #FFFFFF;
-  text-align: left;
-  box-sizing: border-box;
-  padding: 10px;
-  list-style: none;
-  display: flex;
-  fiex-direction: row;
+  width:100%;
+  height:36px;
+  border: 1px solid #eaeaea;
+  margin-top:10px;
+  padding:6px 54px 6px 54px;
+  display:flex;
   .title{
-    min-width:77%;
+    min-width:83%;
     display:flex;
     align-items:center;
     font-size:${market_style.font.size.small1};
-    padding-left:65px;
   }
   .writer{
-    min-width:10%;
+    min-width:12%;
     display:flex;
-    justify-content:center;
     align-items:center;
     font-size:${market_style.font.size.small1};
   }
   .date{
-    min-width:10%;
+    min-width:3%;
     display:flex; 
     justify-content:center;
     align-items:center;
@@ -319,7 +331,7 @@ class RequestList extends Component {
     const { write } = this.state;
     return (
       <React.Fragment>
-        <Content top={58}>
+        <Content top={0}>
           <TabContainer>
             <CategoryItem className={type === "designer" ? "element active" : "element"} onClick={() => this.changeType("designer")}>디자이너</CategoryItem>
             <CategoryItem className={type === "maker" ? "element active" : "element"} onClick={() => this.changeType("maker")}>메이커</CategoryItem>
@@ -329,7 +341,7 @@ class RequestList extends Component {
         </Content>
 
 
-        <Content top={58}>
+        <Content top={3}>
           <Container>
             <div className="category">
               <Category
@@ -340,7 +352,7 @@ class RequestList extends Component {
                 cate2={cate2}
                 category1={category1}
                 category2={category2}
-                which="게시판" /></div>
+                which="아이템" /></div>
             {/* <div className="sort">
               <Sorting handleClick={this.sortChange} placeholder={sort} />
             </div> */}
@@ -361,8 +373,14 @@ class RequestList extends Component {
           </Container>
         </Content>
 
-
-        <Content top={50}>
+        <TitleBox top={0}>
+          <div className="sort"/>
+          <div className="_title">게시판</div>
+          <div className="sort">
+                    <Sorting handleClick={this.sortChange} placeholder={sort} />
+          </div>
+        </TitleBox>
+        <Content top={17}>
           <ListElement>
             {/* no.    <div style={{ marginRight: "15px" }}>번호</div> */}
             {/* title   */}<div className="title">제목</div>
@@ -378,7 +396,7 @@ class RequestList extends Component {
         </Content>
 
 
-        <Content top={25} bottom={75}>
+        <Content top={20} bottom={75}>
           {write ?
                       <ArticleModal
                       write={this.state.write}
