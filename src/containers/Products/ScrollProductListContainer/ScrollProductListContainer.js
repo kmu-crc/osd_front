@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   width:100%;
   display:flex;
   // justify-content:center;
+  padding-left:${props=>props.isSearch==null?"0px":"10px"};
 `
 class ScrollDesignListContainer extends Component {
   componentWillMount() {
@@ -21,7 +22,7 @@ class ScrollDesignListContainer extends Component {
   render() {
     return (
       <React.Fragment>
-        <Wrapper>
+        <Wrapper isSearch={this.props.isSearch}>
         <ScrollList
           type="item"
           isSmall={this.props.isSmall}

@@ -5,13 +5,13 @@ import host from "config";
 export function SignInRequest(data) {
   return (dispatch) => {
     dispatch(SignIn());
-
     return fetch(`${host}/users/signIn`, { headers: { "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
       .then(function (res) {
         console.log("res", res);
         return res.json();
       })
       .then(function (res) {
+        console.log(res);
         if (res.isMember && res.isPassword) {
           console.log(res);
           SetSession("market", res.token);

@@ -49,13 +49,13 @@ const TextWrapper = styled.div`
   .nick {
     margin-top:7px;
     font-weight: 500;
-    font-size:${market_style.font.size.small1};
+    font-size:${market_style.font.size.normal1};
     color: #060000;
   }
   .category {
     margin-top:2px;
     font-weight: 500;
-    font-size:${market_style.font.size.mini2};
+    font-size:${market_style.font.size.small1};
     color: #FF0000;
   }
 `;

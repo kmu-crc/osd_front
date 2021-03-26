@@ -31,12 +31,15 @@ const Content = styled(ContentBox)`
 `;
 const RequestButton = styled.div`
   width:max-content;
-  padding:3px 7px 3px 7px;
+  padding:2px 7px 3px 7px;
   color: #FF0000;
   font-family: Noto Sans KR;
   font-size:${market_style.font.size.mini2};
   border:1px solid red;
   margin-right:20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   `;
 const Container = styled.div`
   padding:0px 30px 0px 30px;
@@ -55,7 +58,7 @@ const Container = styled.div`
       align-items:center;
       font-family:Noto Sans KR;
       font-weight:500;
-      font-size:${market_style.font.size.normal1};
+      font-size:${market_style.font.size.normal3};
     }
     .sort {
       width: 300px;
@@ -120,12 +123,17 @@ class MakerList extends Component {
               which="메이커" /></div>
             <div className="_wrapper">
                 <div className="request">
-                <RequestButton>
+                  <RequestButton>
                     <Link to={`/request/maker`}>메이커 게시판</Link>
                   </RequestButton>
+                  {
+                  this.props.userInfo != null ?  
                   <RequestButton>
                     <Link to={`/requestToMaker/null`}>제작 의뢰</Link>
                   </RequestButton>
+                  :
+                  null
+                  }
                 </div>
                 <div className="_title">메이커</div>
                 <div className="sort">

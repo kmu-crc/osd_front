@@ -6,7 +6,7 @@ import Open_img from "source/design_bg.jpg";
 import Easy_img from "source/easy_bg2.jpg";
 import Together_img from "source/together_bg.jpg";
 import market_style from "market_style";
-import Banner_new from "source/banner_new.png";
+import Banner_new from "source/banner210324_new.png";
 import { Link } from "react-router-dom";
 import Zoom from "source/baseline_search_black_48dp.png";
 
@@ -268,7 +268,7 @@ export default class MainSlide extends Component {
     }
     console.log(searchtype);
 
-    window.location.href = `/search/${searchtype}/name/${this.state.keyword}`;
+    window.location.href = `/search/${searchtype}/update/${this.state.keyword}`;
   }
   render() {
     const location = window.location.pathname;
@@ -279,7 +279,7 @@ export default class MainSlide extends Component {
     const searchtype = designerActive ? "designer" : makerActive ? "maker" : itemActive ? "item" : null;
     return (
       <BannerBox>
-        <div className="text_rgn">
+        {/* <div className="text_rgn">
           <div className="text_normal">오픈디자인월드에서 당신의 지식을 판매해보세요.</div>
           <div className="red_button"> <Link to={`/createProduct`}>아이템 등록하기</Link></div>
           <div className="text_normal">오픈디자인월드에서 당신에게 맞는 아이디어를 찾아보세요.</div>
@@ -293,7 +293,7 @@ export default class MainSlide extends Component {
               </div>
             </HeaderItem>
           </div>
-        </div>
+        </div> */}
       </BannerBox>
       // <SlideWrap>
       //   <Carousel

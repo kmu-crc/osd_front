@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import profile from "source/thumbnail.png";
 import DateFormat from "modules/DateFormat";
-import reicon from "source/re_.svg";
+import reicon from "source/arrow_rere.png";
 import market_style from "market_style";
 
 // import { Icon } from "semantic-ui-react";
@@ -19,49 +19,41 @@ background-image:url(${props=>props.imgURL});
 background-repeat: no-repeat;
 background-size: contain;
 padding:${props => props.padding}px;
-margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
-margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
+margin-right:${props=>props.marginRight==null?"10":props.marginRight}px;
+margin-left:${props=>props.marginLeft==null?"0":props.marginLeft}px;
 display:${props=>props.isNon==true?"none":"block"}
 `
 
 // CSS STYLING
 const ListElement = styled.div`
-  margin: 0 auto 0.9rem;
-  // margin-left: ${props => props.left || 0}px;
-  font-size:${market_style.font.size.small1};
-  border-radius: 3px 3px 3px 3px;
-  overflow: hidden;
-  box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
-  background-color: #fff;
-  text-align: left;
-  box-sizing: border-box;
-  padding: 10px;
-  list-style: none;
-  display: flex;
-  fiex-direction: row;
-  cursor: default;
-  // width:100%;
+  width:100%;
+  height:36px;
+  border: 1px solid #eaeaea;
+  margin-top:10px;
+  padding:6px 54px 6px 54px;
+  display:flex;
   .non-status-box{
     margin-left:5px;
   }
+  .status-box_wrapper{
+    display:flex;
+    width:158px;
+  }
   .status-box{
-    min-width: 80px;
-    line-height: 15px;
-    font-family: Noto Sans KR;
-    font-weight: 500;
-    padding: 7px 15px 7px 15px;
-    border-radius: 15px;
-    margin-right: 10px;
+    width:max-content;
+    padding:3px 18px 2px 18px;
     display:flex;
     justify-content:center;
-    align-itmes:center;
+    align-items:center;
+    border-radius:18px;
+    font-size:${market_style.font.size.mini2};
     &.request {
       background: red;
       color: white;
     }
     &.response {
       // margin-left: 5px;
-      border:1px solid #363636;
+      border:1px solid #FF0000;
       color: #363636;
     }
     &.completed {
@@ -70,32 +62,32 @@ const ListElement = styled.div`
     }
   }
   .title_{
-    min-width:77%;
+    min-width:83%;
     display:flex;
     align-items:center;
     padding:5px;
-    padding-left:27px;
+    font-weight:700;
+    color:black;
+    font-size:${market_style.font.size.small1};
     .text{
       cursor:pointer;
     }
   }
   .writer{
-    min-width:10%;
+    min-width:12%;
     display:flex;
-    justify-content:center;
     align-items:center;
     overflow:hidden;
   }
   .response_{
-    min-width:10%;
+    min-width:12%;
     display:flex;
-    justify-content:center;
     align-items:center;
     overflow:hidden;
     cursor:pointer;
   }
   .date{
-    min-width:10%;
+    min-width:3%;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -104,8 +96,8 @@ const ListElement = styled.div`
   }
 `;
 const ThumbnailWriter = styled.div`
-  width: 35px;
-  height: 35px;
+  width: 23px;
+  height: 23px;
   border-radius: 50%;
   box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
   background-size: contain;
@@ -122,23 +114,20 @@ class DesignerBoardElement extends Component {
     console.log(userLink);
     return (
       <React.Fragment>
-      {/* // <NavLink to={"/requestDetail/" + item.uid}> */}
         <ListElement left={item.status === "response" ? 25 : 0}>
-        <NavLink  className="title_" style={{  display: "flex", flexDirection: "row" }} to={"/requestDetail/" + item.uid}>
-          {/* <div className="title_" style={{  display: "flex", flexDirection: "row" }}> */}
+            <NavLink  className="title_" style={{  display: "flex", flexDirection: "row" }} to={"/requestDetail/" + item.uid}>
             {item.completed === 1 && item.status === "request" ?
-              <div className="status-box completed" >완료</div> : null}
-              
+              <div className="status-box_wrapper"><div className="status-box completed" >완료</div></div> : null}
             {item.status === "normal"
               ? <div className="non-status-box"/>
-              // <div className="status-box"></div>
               : item.status === "request"
-                ? <div className="status-box request">{item.type === 'maker' ? '제작' : '디자인'} 의뢰</div>
+                ? <div className="status-box_wrapper"><div className="status-box request">{item.type === 'maker' ? '제작' : '디자인'} 의뢰</div></div>
                 : item.status === "response" ?
                   <React.Fragment>
+                  <div className="status-box_wrapper">
                   <CustomIcon width={25} height={25} imgURL={reicon}/>
-                  <div className="status-box response">
-                    {item.type === 'maker' ? '제작' : '디자인'} 응답</div> 
+                    <div className="status-box response">
+                    {item.type === 'maker' ? '제작' : '디자인'} 응답</div></div>
                   </React.Fragment>: ""}
                   
                   <div className="text">{item.title || "글 제목"}</div>

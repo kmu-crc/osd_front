@@ -30,14 +30,12 @@ const MainBox = styled.div`
       justify-content:center;
       align-items:center;
       .title{
-        font-size:${market_style.font.size.small1};
+        font-size:${market_style.font.size.normal1};
         font-weight:700;
+        color:black;
       }
     }
     .row{
-      *{
-        font-size:${market_style.font.size.mini2};
-      }
       display:flex;
       height:25px;
       margin-bottom:25px;
@@ -46,10 +44,12 @@ const MainBox = styled.div`
         font-weight:500;
         display:flex;
         align-items:center;
+        font-size:${market_style.font.size.small1};
       }
       .red_text{
         color:red;
         cursor:pointer;
+        font-size:${market_style.font.size.small1};
       }
       .vcenter{
         height:100%;
@@ -63,7 +63,7 @@ const MainBox = styled.div`
       margin-bottom:15px;
     }
     .margin_bottom2{
-      margin-bottom:45px;
+      margin-bottom:44px;
     }
     .spaceBetween{
       justify-content:space-between;
@@ -74,14 +74,14 @@ const MainBox = styled.div`
 const InputTextBox = styled.input.attrs({ type: 'text' })`
   border:none;
   width:300px;
-  height:100%;
+  height:25px;
   padding-left:20px;
   background-color:#E9E9E9;
   border-radius:21px;
   display:flex;
   justify-content:center;
   outline:none;
-  
+  font-size:${market_style.font.size.tiny2};
   color:#060000;
 `
 const InputPasswordBox = styled.input.attrs({ type: 'password' })`
@@ -94,7 +94,7 @@ const InputPasswordBox = styled.input.attrs({ type: 'password' })`
   display:flex;
   justify-content:center;
   outline:none;
-  
+  font-size:${market_style.font.size.tiny2};
   color:#060000;
 `
 const CustomButton = styled.div`
@@ -125,6 +125,7 @@ const CustomBox = styled.div`
   height:${props => props.height == null ? "max-content" : props.height}%;
   display:flex;
   align-items:center;
+  font-size:${props=>props.fontSize == null? market_style.font.size.mini2:props.fontSize};
   margin-top:${props => props.marginTop == null ? 0 : props.marginTop}px;
   margin-bottom:${props => props.marginBottom == null ? 0 : props.marginBottom}px;
   margin-left:${props => props.marginLeft == null ? 0 : props.marginLeft}px;
@@ -265,8 +266,8 @@ class SignInForm extends Component {
               </div>
               <div className="row margin_bottom2">
                 <div className="label" />
-                <CustomBox ><CheckBox checked={this.state.saveID} onChange={this.onCheckSaveID} id="saveID" />아이디 저장</CustomBox>
-                <CustomBox marginLeft={50}><CheckBox checked={this.state.saveLogin} onChange={this.onCheckSaveLogin} id="saveLogin" />로그인 상태 유지</CustomBox>
+                <CustomBox fontSize={market_style.font.size.tiny2}><CheckBox checked={this.state.saveID} onChange={this.onCheckSaveID} id="saveID" />아이디 저장</CustomBox>
+                <CustomBox fontSize={market_style.font.size.tiny2} marginLeft={50}><CheckBox checked={this.state.saveLogin} onChange={this.onCheckSaveLogin} id="saveLogin" />로그인 상태 유지</CustomBox>
               </div>
               <div className="row margin_bottom1">
                 <CustomButton onClick={this.onSubmit} width={498} height={30}

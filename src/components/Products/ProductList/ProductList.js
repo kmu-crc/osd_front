@@ -12,6 +12,7 @@ const Wrapper = styled.div`
 *{
   // border:1px solid black;
 }
+  margin-left:10px;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -31,7 +32,7 @@ const Content = styled(ContentBox)`
 `;
 const RequestButton = styled.div`
   width:max-content;
-  padding:3px 7px 3px 7px;
+  padding:2px 7px 3px 7px;
   color: #FF0000;
   font-family: Noto Sans KR;
   font-size:${market_style.font.size.mini2};
@@ -55,7 +56,7 @@ const Container = styled.div`
       align-items:center;
       font-family:Noto Sans KR;
       font-weight:500;
-      font-size:${market_style.font.size.normal1};
+      font-size:${market_style.font.size.normal3};
     }
     .sort {
       width: 300px;

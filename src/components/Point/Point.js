@@ -199,13 +199,13 @@ const PaymentBox = styled.div`
     width:100%;
     display:flex;
     align-items:center;
-    margin-bottom:73px;
+    margin-bottom:50px;
   }
   .align_right{
     justify-content:flex-end;
     .button_red{
       width:150px;
-      height:53px;
+      height:40px;
       display:flex;
       justify-content:center;
       align-items:center;

@@ -10,160 +10,160 @@ import Carousel from 'react-leaf-carousel';
 import market_style from "market_style";
 import arrow_new from "source/arrow_new.png";
 
-const SlideWrap = styled.div`
-  min-width: 1366px;
-  height: 310px;
-  overflow: hidden;
-  position: relative;
-  margin-bottom:15px;
-  & .slider-wrapper ul {
-    display: flex;
-  }
-  & .slider-wrapper li {
-    min-width: 100%;
-    height: 350px;
-    overflow: hidden;
-    position: relative;
-    flex-direction: column;
-    flex-flow: column;
-  }
-  & .carousel.carousel-slider .control-arrow {
-    z-index: 10;
-    top: 50%;
-    position: absolute;
-    color: #fff;
-    font-size:${market_style.font.size.giant3};
-    width: 80px;
-    height: 80px;
-    background: transparent;
-    border: none;
-    margin-top: -40px;
-    &:before {
-      margin: 0 5px;
-      display: inline-block;
-      border-top: 8px solid transparent;
-      border-bottom: 8px solid transparent;
-      content: "";
-    }
-  }
-  & .carousel .control-next.control-arrow {
-    right: 0;
-    &:before {
-      border-left: 8px solid #fff;
-    }
-  }
-  & .carousel .control-prev.control-arrow {
-    left: 0;
-    &:before {
-      border-right: 8px solid #fff;
-    }
-  }
-  & .carousel .control-dots {
-    position: absolute;
-    bottom: 0;
-    margin: 10px 0;
-    text-align: center;
-    width: 1366px;
-    & li {
-      box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
-      background: #fff;
-      border-radius: 50%;
-      width: 8px;
-      height: 8px;
-      cursor: pointer;
-      display: inline-block;
-      margin: 0 8px;
-      transition: opacity 0.25s ease-in;
-      opacity: 0.3;
-    }
-    & .dot.selected,
-    & .dot:hover {
-      opacity: 1;
-    }
-  }
-  .InfiniteCarouselFrame{
-    & ul{
-    }
-  }
-`;
-const Slide = styled.div`
-  width: max-content;
-  height: 350px;
-  & > span {
-    font-size: ${StyleGuide.font.size.heading1};
-    position: absolute;
-    font-weight: bold;
-    color: #fff;
-    top: 20%;
-    left: 15%;
-  }
-  &.open {
-    background-image: url(${Open_img});
-    background-size: cover;
-    background-position-y: 40%;
-  }
-  &.easy {
-    background-image: url(${Easy_img});
-    background-size: cover;
-    background-position: 0 80%;
-  }
-  &.together {
-    background-image: url(${Together_img});
-    background-size: cover;
-    background-position: 0 20%;
-  }
-  &.guide {
-    background: #6ddb99; /* Old browsers */
-    background: -moz-linear-gradient(
-      top,
-      #6ddb99 0%,
-      #45b291 100%
-    ); /* FF3.6-15 */
-    background: -webkit-linear-gradient(
-      top,
-      #6ddb99 0%,
-      #45b291 100%
-    ); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(
-      to bottom,
-      #6ddb99 0%,
-      #45b291 100%
-    ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  }
-`;
-// CSS STYLE
-const ScrollContainer = styled.div`
-  padding: 5px 10px 10px 5px;
-  height: 330px;
-  display: flex;
-  overflow-x: scroll;
-  ::-webkit-scrollbar { display: none; };
-  .arrow {
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    display: none;
-    margin-top: 125px;
-    border-radius: 50%;
-    background: #EFEFEF;
-    border: 1px solid #EEEEEE;
-    &.left {
-      padding-top: 4px;
-      margin-left: 7px;
-    }
-    &.right {
-      padding-top: 4px;
-      margin-left: ${1790 - 30}px;
-    }
-  }
-  :hover {
-    .arrow {
-      display: block;
-    }
-  }
-`;
+// const SlideWrap = styled.div`
+//   min-width: 1366px;
+//   height: 310px;
+//   overflow: hidden;
+//   position: relative;
+//   margin-bottom:15px;
+//   & .slider-wrapper ul {
+//     display: flex;
+//   }
+//   & .slider-wrapper li {
+//     min-width: 100%;
+//     height: 350px;
+//     overflow: hidden;
+//     position: relative;
+//     flex-direction: column;
+//     flex-flow: column;
+//   }
+//   & .carousel.carousel-slider .control-arrow {
+//     z-index: 10;
+//     top: 50%;
+//     position: absolute;
+//     color: #fff;
+//     font-size:${market_style.font.size.giant3};
+//     width: 80px;
+//     height: 80px;
+//     background: transparent;
+//     border: none;
+//     margin-top: -40px;
+//     &:before {
+//       margin: 0 5px;
+//       display: inline-block;
+//       border-top: 8px solid transparent;
+//       border-bottom: 8px solid transparent;
+//       content: "";
+//     }
+//   }
+//   & .carousel .control-next.control-arrow {
+//     right: 0;
+//     &:before {
+//       border-left: 8px solid #fff;
+//     }
+//   }
+//   & .carousel .control-prev.control-arrow {
+//     left: 0;
+//     &:before {
+//       border-right: 8px solid #fff;
+//     }
+//   }
+//   & .carousel .control-dots {
+//     position: absolute;
+//     bottom: 0;
+//     margin: 10px 0;
+//     text-align: center;
+//     width: 1366px;
+//     & li {
+//       box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+//       background: #fff;
+//       border-radius: 50%;
+//       width: 8px;
+//       height: 8px;
+//       cursor: pointer;
+//       display: inline-block;
+//       margin: 0 8px;
+//       transition: opacity 0.25s ease-in;
+//       opacity: 0.3;
+//     }
+//     & .dot.selected,
+//     & .dot:hover {
+//       opacity: 1;
+//     }
+//   }
+//   .InfiniteCarouselFrame{
+//     & ul{
+//     }
+//   }
+// `;
+// const Slide = styled.div`
+//   width: max-content;
+//   height: 350px;
+//   & > span {
+//     font-size: ${StyleGuide.font.size.heading1};
+//     position: absolute;
+//     font-weight: bold;
+//     color: #fff;
+//     top: 20%;
+//     left: 15%;
+//   }
+//   &.open {
+//     background-image: url(${Open_img});
+//     background-size: cover;
+//     background-position-y: 40%;
+//   }
+//   &.easy {
+//     background-image: url(${Easy_img});
+//     background-size: cover;
+//     background-position: 0 80%;
+//   }
+//   &.together {
+//     background-image: url(${Together_img});
+//     background-size: cover;
+//     background-position: 0 20%;
+//   }
+//   &.guide {
+//     background: #6ddb99; /* Old browsers */
+//     background: -moz-linear-gradient(
+//       top,
+//       #6ddb99 0%,
+//       #45b291 100%
+//     ); /* FF3.6-15 */
+//     background: -webkit-linear-gradient(
+//       top,
+//       #6ddb99 0%,
+//       #45b291 100%
+//     ); /* Chrome10-25,Safari5.1-6 */
+//     background: linear-gradient(
+//       to bottom,
+//       #6ddb99 0%,
+//       #45b291 100%
+//     ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+//   }
+// `;
+// const ScrollContainer = styled.div`
+//   padding: 5px 10px 10px 5px;
+//   height: 330px;
+//   display: flex;
+//   overflow-x: scroll;
+//   ::-webkit-scrollbar { display: none; };
+//   .arrow {
+//     position: absolute;
+//     width: 35px;
+//     height: 35px;
+//     display: none;
+//     margin-top: 125px;
+//     border-radius: 50%;
+//     background: #EFEFEF;
+//     border: 1px solid #EEEEEE;
+//     &.left {
+//       padding-top: 4px;
+//       margin-left: 7px;
+//     }
+//     &.right {
+//       padding-top: 4px;
+//       margin-left: ${1790 - 30}px;
+//     }
+//   }
+//   :hover {
+//     .arrow {
+//       display: block;
+//     }
+//   }
+// `;
 const SliderBox = styled.div`
-  width:100%;
+  width:98%;
+  margin-left:30px;
   height:300px;
   overflow:hidden;
   position:relative;

@@ -12,7 +12,10 @@ const ScrollBox = styled.div`
 
 class HaveInGalleryContainer extends Component {
   componentWillMount() {
-    this.props.GetHaveInGalleryRequest(this.props.id, 0);
+    this.props.GetHaveInGalleryRequest(this.props.id, 0)
+    .then(()=>{
+      this.props.handleHaveGallery&&this.props.handleHaveGallery(this.props.dataList&&this.props.dataList.length>0?true:false);
+    })
   }
 
   getList = (page) => {

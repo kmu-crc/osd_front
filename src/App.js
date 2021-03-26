@@ -106,7 +106,7 @@ class App extends Component {
             {/* ETC */}
             <Route path="/signup" component={SignUpPage} />
             <Route path="/signin" component={SignInPage} />
-            <Route path="/myPage/:type?/:type2?" component={RequiresAuth(MyDetailPage)} />
+            <Route path="/myPage/:index?" component={RequiresAuth(MyDetailPage)} />
             <Route path="/myModify" component={RequiresAuth(MyDetailModifyPage)} />
             <Route path="/Term/:page" component={FooterPage} />
             <Route path="/Privacy/:page" component={FooterPage} />

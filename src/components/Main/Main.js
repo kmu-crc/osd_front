@@ -15,11 +15,11 @@ const Head = styled.div`
   margin-left: auto;
   margin-right: auto;
   margin-bottom:10px;
-  margin-top:30px;
+  margin-top:${props=>props.marginTop+"px"};
   width: max-content;
   text-align: left;
   font-weight: 500;
-  font-size: ${market_style.font.size.normal1};
+  font-size: ${market_style.font.size.normal3};
   font-family: Noto Sans KR;
   letter-spacing: 0;
   color: #060000;
@@ -37,14 +37,14 @@ class Main extends Component {
 
       <Wrapper>
         <TextWrapper>
-          <Head>인기 디자이너 | 메이커</Head>
+          <Head marginTop={30}>인기 디자이너 | 메이커</Head>
         </TextWrapper>
         <ScrollTopDesignerContainer />
       </Wrapper>
 
       <Wrapper>
         <TextWrapper>
-          <Head>인기 아이템</Head>
+          <Head marginTop={30}>인기 아이템</Head>
         </TextWrapper>
         <ScrollTopProductContainer />
       </Wrapper>
