@@ -309,8 +309,8 @@ class NewCardModal extends Component {
         loading: false, scroll: false, edit: false, title: "", description: "", hook: false,
         content: [],
     };
-    handleCancel = async(obj) => {
-        if (obj.length > 0 || this.state.title !== "" || this.state.content !== "") {
+    handleCancel = async (obj) => {
+        if ((obj != null && typeof obj === "object" && obj.length > 0) || this.state.title !== "" || this.state.content !== "") {
             if (!await confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
                 return;
             }

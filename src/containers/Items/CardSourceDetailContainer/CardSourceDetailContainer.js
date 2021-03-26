@@ -14,13 +14,14 @@ class CardSourceDetailContainer extends Component {
   }
   render() {
     return (
-      <CardSourceDetail {...this.props} handlerModifyContent={()=>this.props.handlerModifyContent} upDateRequest={this.props.UpdateItemContentsRequest} />
+      <CardSourceDetail {...this.props} handlerModifyContent={() => this.props.handlerModifyContent} upDateRequest={this.props.UpdateItemContentsRequest} />
     );
   }
 }
 
 
 const mapStateToProps = (state) => ({
+  userInfo: state.Authentication.status.userInfo,
   token: state.Authentication.status.token,
   content: state.ItemContent.status.content,
   ItemDetail: state.ItemDetail.status.ItemDetail,

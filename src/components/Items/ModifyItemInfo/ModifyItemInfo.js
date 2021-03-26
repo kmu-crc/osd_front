@@ -302,8 +302,8 @@ class ModifyItemInfo extends Component {
       additional: null, content: [], steps: [], type: "blog", private: 0,
 
       //ui 
+      tab: "contents", //debug
       // tab: "basic",
-      tab: "basic",
       alone: false,
       ismodified: false,
     };
