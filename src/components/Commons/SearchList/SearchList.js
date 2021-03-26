@@ -21,11 +21,12 @@ const MainBox = styled.div`
 ` 
 const Wrapper = styled.div`
   width: 102%;
-  padding:0px 213px;
+  padding:${props=>props.marginType=="item"?"0px 213px 0px 170px":"0px 213px 0px 213px"};
+  margin-left:${props=>props.marginType=="item"?"15px":"0px"};
   & ul {
     margin-top: 30px;
   }
-  display: flex;
+  display: flex;  
   .left{
     margin-left: auto;
     margin-right: 25px;
@@ -181,7 +182,7 @@ class SearchList extends Component {
       }
       console.log(searchtype);
   
-      window.location.href = `/search/${searchtype}/null/${this.state.keyword}`;
+      window.location.href = `/search/${searchtype}/update/${this.state.keyword}`;
   
     }
   }
@@ -210,6 +211,7 @@ class SearchList extends Component {
       this.props.type && this.props.type === "designer" ? "디자이너"
         : this.props.type && this.props.type === "maker" ? "메이커"
           : "아이템"
+    console.log(this.props.sort);
     return (
       <MainBox >
         <ImgWrapper>
@@ -240,10 +242,10 @@ class SearchList extends Component {
         </MenuWrap>
         <Content>
           {this.state.rendering &&
-            <Wrapper>
+            <Wrapper marginType={this.props.type}>
               {this.props.type === "designer" ? <ScrollDesignerListContainer isSmall={true} sort={this.props.sort} keyword={this.props.keyword} /> : null}
               {this.props.type === "maker" ? <ScrollMakerListContainer isSmall={true} sort={this.props.sort} keyword={this.props.keyword} /> : null}
-              {this.props.type === "item" ? <ScrollItemListContainer isSmall={true} sort={this.props.sort} keyword={this.props.keyword} /> : null}
+              {this.props.type === "item" ? <ScrollItemListContainer isSearch={true} isSmall={true} sort={this.props.sort} keyword={this.props.keyword} /> : null}
             </Wrapper>
           }
         </Content>

@@ -12,48 +12,42 @@ import ContentBox from "components/Commons/ContentBox";
 // import mainSlide from "source/mainSlide.jpg";
 // import Modal from 'react-awesome-modal';
 import {Modal} from 'semantic-ui-react';
-//const ImgWrapper = styled.div`
-//  background-image: url(${mainSlide});
-//  background-position: center;
-//  background-size: cover;
-//  width: 100%;
-//  height: 200px;
-//  position: relative;
-//  &::after {
-//    position: absolute;
-//    top: 0;
-//    left: 0;
-//    display: block;
-//    content: "";
-//    width: 100%;
-//    height: 100%;
-//    background-color: rgba(0, 0, 0, 0.6);
-//    z-index: 1;
-//  }
-//`;
-//
-//const Title = styled.div`
-//  width: 100%;
-//  color: white;
-//  position: absolute;
-//  text-align: center;
-//  top: 40%;
-//  left: 0;
-//  z-index: 2;
-//  transform: translateY(-50%);
-//  h1 {
-//    color: ${StyleGuide.color.geyScale.scale0};
-//    font-size: ${StyleGuide.font.size.heading2};
-//    font-weight: bold;
-//  }
-//`;
+import market_style from "market_style";
 
-const Wrapper = styled(ContentBox)`
-  width:100%;
+
+
+const GalleryModal = styled(Modal)`
+  width:940px !important;
+  padding:0px 0px 0px 25px !important; 
   position: relative;
   z-index:3;
+  border-radius:20px !important;
+  
+  .titleBox{
+    display:flex;
+    justify-content:space-between;
+  }
+  .title{
+    width:max-content;
+    font-family:Noto Sans KR, Medium;
+    font-size:${market_style.font.size.normal1};
+    font-weight:500;
+    color:black;
+  }
+  .pointer{
+    cursor:pointer;
+  }
+  .hrline{
+    width:100%;
+    border:2px solid #EFEFEF;
+    margin-top:10px;
+  }
+  .content{
+    border-radius:20px !important;
+    width:max-content !important;
+    height:max-content !important;
+  }
 `
-
 class ModifyGroupInfoContainer extends Component {
 
   constructor(props){
@@ -81,11 +75,16 @@ class ModifyGroupInfoContainer extends Component {
 
   render() {
     return(
-      <Modal style={{width:"max-content"}} open={this.props.open}>
-        <Wrapper>
+      <GalleryModal open={this.props.open}>
+        <GalleryModal.Content>
+        <div className="titleBox">
+            <div className="title">갤러리 등록</div>
+            {/* <div className="title pointer" onClick={()=>{this.handleShowModal(false)}}>x</div> */}
+            </div>
+            <div className="hrline"/>
           <ModifyGorup  handleShowModal={this.handleShowModal} handlerIsGalleryModify={this.props.handlerIsGalleryModify}   {...this.props}  />
-        </Wrapper>
-      </Modal>
+          </GalleryModal.Content>
+      </GalleryModal>
     );
   }
 }

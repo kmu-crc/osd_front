@@ -83,10 +83,10 @@ const HeaderContainer = styled.ul`
 const HeaderItem = styled.li`
   min-width:max-content;
   height:35px;
-  font-size: ${market_style.font.size.mini2};
+  font-size: ${market_style.font.size.small1};
   font-family:Noto Sans KR, Medium;
   font-weight:500;
-  margin-right:20px;
+  margin-right:15px;
   display:flex;
   align-items:center;
   .logo_box{
@@ -95,6 +95,7 @@ const HeaderItem = styled.li`
     background-image:url(${MarketLogo});
     background-size:contain;
     cursor:pointer;
+    margin-right:5px;
   }
   .non_margin{
     margin:0px;
@@ -173,9 +174,13 @@ const LoginBox = styled.div`
   align-items:center;
   position:relative;
   .addItem{
-    padding:3px 10px;
+    width:100px;
     background-color:red;
     margin-right:20px;
+    padding:1px 0px 3px 0px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
     ._text{
       font-size: ${market_style.font.size.mini2};
       font-family:Noto Sans KR;
@@ -187,10 +192,11 @@ const LoginBox = styled.div`
   .login_text{
     min-width:max-content;
     height:max-content;
-    font-size: ${market_style.font.size.mini2};
+    font-size: ${market_style.font.size.small1};
     font-family:Noto Sans KR, Medium;
     font-weight:500;
     margin-left:20px;
+    color:red;
   }
   .iconBox{
     width:35px;
@@ -263,7 +269,7 @@ class Header extends Component {
     }
     console.log(searchtype);
 
-    window.location.href = `/search/${searchtype}/name/${this.state.keyword}`;
+    window.location.href = `/search/${searchtype}/update/${this.state.keyword}`;
   }
   getNews = () => {
     const url = `${host}/common/notice`;
@@ -319,74 +325,74 @@ class Header extends Component {
 
     // active alarm icon
     return (
-    window.location.pathname === "/"||
-    window.location.pathname === "/signup"||
-    window.location.pathname === "/signin"?
-    <MainHeader>
-      <div className="left_menu">
-        <div className="text pointer"
-        onClick={()=>window.location.href="/"}
-        >OPENDESIGNWORLD</div>
-      </div>
-      <div className="center_menu">
-        <div className="menu_text pointer"
-         onClick={()=>{
-          window.location.href="/designer"
-        }}
-        >디자이너</div>
-        <div className="menu_text pointer"
-         onClick={()=>{
-          window.location.href="/maker"
-        }}
-        >메이커</div>
-        <div className="menu_text pointer"
-         onClick={()=>{
-          window.location.href="/product"
-        }}
-        >아이템</div>
-        <div className="menu_text pointer"
-         onClick={()=>{
-          window.location.href="/request/designer"
-        }}
-        >게시판</div>
-      </div>
-      <div className="right_menu">
-      {valid && userInfo?
-        <LoginBox>
-            <div className="iconBox" >
-              <AlarmContainer />
-            </div>
+    // window.location.pathname === "/"||
+    // window.location.pathname === "/signup"||
+    // window.location.pathname === "/signin"?
+    // <MainHeader>
+    //   <div className="left_menu">
+    //     <div className="text pointer"
+    //     onClick={()=>window.location.href="/"}
+    //     >OPENDESIGNWORLD</div>
+    //   </div>
+    //   <div className="center_menu">
+    //     <div className="menu_text pointer"
+    //      onClick={()=>{
+    //       window.location.href="/designer"
+    //     }}
+    //     >디자이너</div>
+    //     <div className="menu_text pointer"
+    //      onClick={()=>{
+    //       window.location.href="/maker"
+    //     }}
+    //     >메이커</div>
+    //     <div className="menu_text pointer"
+    //      onClick={()=>{
+    //       window.location.href="/product"
+    //     }}
+    //     >아이템</div>
+    //     <div className="menu_text pointer"
+    //      onClick={()=>{
+    //       window.location.href="/request/designer"
+    //     }}
+    //     >게시판</div>
+    //   </div>
+    //   <div className="right_menu">
+    //   {valid && userInfo?
+    //     <LoginBox>
+    //         <div className="iconBox" >
+    //           <AlarmContainer />
+    //         </div>
 
-            <div className="iconBox" onClick={this.onClickMessageIcon}>
-              <Icon className="grey envelope" size="large" />
-            </div>
-              <div onClick={async () => await this.setState({ active: !this.state.active })} style={{ display: "flex", position:"relative",alignItems:"center", flexDirection: "row", cursor: "pointer" }}>
-              <div  style={{ width: "23px", height: "23px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
-              <div  style={{ width: "max-content", marginLeft: "5px",fontFamily:market_style.font.family,
-               fontSize:market_style.font.size.small1 }}>
-                <TextFormat txt={userInfo.nickName} chars={pattern_eng.test(userInfo.nickName)?6:3} />
-                </div>
-              {this.state.active ?
-                <UserMenu id="popmenu">
-                  <Link to={`/mypage`}>
-                    <div className="item" id="popmenu">내 정보</div>
-                  </Link>
-                  <div onClick={this.logout} className="item" id="popmenu">로그아웃</div>
-                </UserMenu>
-                : null}
-            </div>
-        </LoginBox>
-      :
-      <div className="red_text pointer"
-      onClick={()=>{
-        window.location.href="/signin"
-      }}
-      >로그인</div>
-      }
-      </div>
+    //         <div className="iconBox" onClick={this.onClickMessageIcon}>
+    //           <Icon className="grey envelope" size="large" />
+    //         </div>
+    //           <div onClick={async () => await this.setState({ active: !this.state.active })} style={{ display: "flex", position:"relative",alignItems:"center", flexDirection: "row", cursor: "pointer" }}>
+    //           <div  style={{ width: "23px", height: "23px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+    //           <div  style={{ width: "max-content", marginLeft: "5px",fontFamily:market_style.font.family,
+    //            fontSize:market_style.font.size.small1 }}>
+    //             <TextFormat txt={userInfo.nickName} chars={pattern_eng.test(userInfo.nickName)?6:3} />
+    //             </div>
+    //           {this.state.active ?
+    //             <UserMenu id="popmenu">
+    //               <Link to={`/mypage`}>
+    //                 <div className="item" id="popmenu">내 정보</div>
+    //               </Link>
+    //               <div onClick={this.logout} className="item" id="popmenu">로그아웃</div>
+    //             </UserMenu>
+    //             : null}
+    //         </div>
+    //     </LoginBox>
+    //   :
+    //   <div className="red_text pointer"
+    //   onClick={()=>{
+    //     window.location.href="/signin"
+    //   }}
+    //   >로그인</div>
+    //   }
+    //   </div>
       
-    </MainHeader>
-    :
+    // </MainHeader>
+    // :
     <HeaderContainer>
       {/*  */}
       <div className="left_menu">
@@ -439,7 +445,7 @@ class Header extends Component {
         <HeaderItem className="search">
           <div className="search-icon-wrapper">
             <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
-            <Link to={`/search/${searchtype}/name/${this.state.keyword}`} id="searchLink">
+            <Link to={`/search/${searchtype}/update/${this.state.keyword}`} id="searchLink">
               <img alt="icon" src={Zoom} id="searchbox" className="search-icon" onClick={this.onClickSearch}/>
             </Link>
           </div>

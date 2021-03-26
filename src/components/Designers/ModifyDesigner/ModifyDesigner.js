@@ -140,6 +140,7 @@ const ExperienceBox = styled.div`
     }
     .careerBox{
       display:flex;
+      align-items:center;
       padding:5px 2px;
       .number_wrapper{
         width:120px;
@@ -152,6 +153,9 @@ const ExperienceBox = styled.div`
       .last_margin{
         width:230px;
       }
+      .close{
+        cursor:pointer;
+      }
     }
 `
 const FormBox = styled.div`
@@ -159,12 +163,18 @@ const FormBox = styled.div`
     font-size:${market_style.font.size.small1};
   }
   width:620px;
-  height:max-content;
+  height:328px;
+
   box-shadow: 5px 5px 10px #00000029;
   border-radius: 20px;
-  padding:34px 54px 34px 54px;
+  padding:30px 30px 30px 30px;
   border: 0.5px solid #EAEAEA;
-
+  .FormBoxScroll{
+    width:100%;
+    height:100%;
+    overflow-Y:auto;
+    overflow-X:hidden;
+  }
   .wrapper{
     width:100%;
     display:flex;
@@ -300,6 +310,12 @@ const SubBox = styled.div`
     .contensts{
       width:100%;
     }
+    .hrline{
+      border:2px solid #efefef;
+    }
+    .marginBottom{
+      margin-bottom:10px;
+    }
     .wrapper{
       width:100%;
     }
@@ -319,12 +335,21 @@ const SubBox = styled.div`
     }
     .careerBox{
       display:flex;
-      margin-bottom:10px;
+      align-items:center;
+      padding:5px 2px;
       .number_wrapper{
-        width:10%;
+        width:120px;
+        font-weight:500;
+        font-size:${market_style.font.size.small1};
       }
       .text_wrapper{
-        width:30%;
+        width:263px;
+      }
+      .last_margin{
+        width:230px;
+      }
+      .close{
+        cursor:pointer;
       }
     }
 `
@@ -560,13 +585,15 @@ class ModifyDesigner extends Component {
       category_level1: -1, category_level2: -1,
       location: "",
       explain: "", tag: [],
-      career: [{ number: 0, task: "", explain: "", during: "" }],
+      // career: [{ number: 0, task: "", explain: "", during: "" }],
+      career:[],
       galleryModify:false,isModify:false,
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
     this.onChangeCareer = this.onChangeCareer.bind(this);
     this.onClickAddCareer = this.onClickAddCareer.bind(this);
+    this.onDeleteCareer = this.onDeleteCareer.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.onChangeExplain = this.onChangeExplain.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
@@ -667,6 +694,18 @@ class ModifyDesigner extends Component {
       career: this.state.career.concat({ number: this.state.career.length, task: "", explain: "", during: "" }),
     });
     this.checkModify();
+  }
+  async onDeleteCareer(value){
+
+    const number = value;
+    let copy = [...this.state.career];
+    await copy.splice(number,1);
+    copy&&copy.map(async(item,index)=>{
+      item.number=index;
+      console.log(index);
+    });
+    console.log(copy);
+    await this.setState({career:copy});
   }
   onChangeExplain(event) {
     this.setState({ explain: event.target.value })
@@ -805,8 +844,7 @@ class ModifyDesigner extends Component {
             </ThumbnailBox>
             {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>등록하기</div></RedButton> */}
             <FormBox>
-
-
+              <div className="FormBoxScroll">
               <div className="wrapper flex">
                 <div className="label">닉네임<sup style={{color:"red"}}>*</sup></div>
                 {this.props.userInfo.nickName}
@@ -837,6 +875,7 @@ class ModifyDesigner extends Component {
                   selection options={LocationList} placeholder="시/도"
                   onChange={this.onChangeLocation} />
               </div>
+              </div>
             </FormBox>
 
           </div>
@@ -853,7 +892,7 @@ class ModifyDesigner extends Component {
                 {this.state.career.map((item, index) => {
                   // console.log("career", item)
                   return (
-                    <CreateCareer item={item} number={Number(item.number) + 1} onChangeCareer={this.onChangeCareer} key={index} />
+                    <CreateCareer item={item} number={Number(item.number) + 1} onChangeCareer={this.onChangeCareer} onDeleteCareer={(index)=>this.onDeleteCareer(index)} key={index} />
                   );
                 })}
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
@@ -869,6 +908,7 @@ class ModifyDesigner extends Component {
                 <div className="title">갤러리</div>
                 <div className="title redText" onClick={this.handleShowModal}>갤러리 등록</div>
               </div>
+              <div className="wrapper hrline marginBottom" />
               <div className="contensts">
                 {<HaveInGalleryContainer handlerIsGalleryModify={this.handlerIsGalleryModify} id={this.props.id} isModify={true} />}
               </div>
@@ -894,6 +934,7 @@ class CreateCareer extends Component {
     this.onChangeTask = this.onChangeTask.bind(this);
     this.onChangeExplain = this.onChangeExplain.bind(this);
     this.onChangeDuring = this.onChangeDuring.bind(this);
+    this.onDeleteAll = this.onDeleteAll.bind(this);
   }
   componentDidMount() {
 
@@ -926,7 +967,11 @@ class CreateCareer extends Component {
     this.setState({ during: event.target.value, })
     this.props.onChangeCareer(this.props.number - 1, this.state.task, this.state.explain, event.target.value);
   }
-
+  onDeleteAll(event){
+    let number = this.props.number-1;
+    if(number<0)return;
+    this.props.onDeleteCareer(number);
+  }
 
   render() {
     const leadingZeros = (n, digits) => { //0채우는 함수
@@ -954,6 +999,7 @@ class CreateCareer extends Component {
           <div className="text_wrapper">
             <InputText value={this.state.explain} onChange={this.onChangeExplain} width={230} />
           </div>
+          <div className="close" onClick={this.onDeleteAll}>x</div>
         </div>
       </React.Fragment>
     );

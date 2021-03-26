@@ -11,44 +11,47 @@ import noimg from "source/noimg.png";
 import ModifyGroupInfoContainer from "containers/Groups/ModifyGroupInfoContainer/ModifyGroupInfoContainer"
 import market_style from "market_style";
 
+
 const Wrapper = styled.div`
   *{
     cursor:pointer;
   }
   position: relative;
-  box-shadow: 5px 5px 10px #00000029;
-  
-  width: 247px;
-  height: 247px;
-//   height: 335px;
-  background: transparent;//#FFFFFF;
+  box-shadow: 3px 3px 5px #4141411A;
+  border:1px solid #eaeaea;
+  width: 200px;
+  height: 200px;
+  background: transparent;
   border-radius:20px;
   overflow:hidden;
   font-family: Noto Sans KR;
   cursor: pointer;
+  padding:13px;
 `;
 const ItemPic = styled.div`
-  width: 247px;
-  height: 206px;
+  width: 175;
+  height: 152px;
   background: transparent;
   background-image: url(${props => props.img});
   background-size: cover;
   background-position: center center
 `;
 const TextWrapper = styled.div`
-  margin-top: 8px;
+  margin-top: 3px;
   width: 100%;
-  padding-left:10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   .title {
     font-weight: 500;
-    font-size:${market_style.font.size.small3};
+    font-size:${market_style.font.size.mini2};
     text-align: left;
     line-height: 25px;
   }
   .author {
     margin-top: 8px;
     font-weight: 300;
-    font-size:${market_style.font.size.small1};
+    font-size:${market_style.font.size.mini2};
     text-align: left;
     line-height: 18px;
   }

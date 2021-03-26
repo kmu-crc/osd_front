@@ -661,6 +661,7 @@ class MakerDetail extends Component {
       reviewdetail: false, detail: null,
       create_time:"",
       update_time:"",
+      haveGallery:true,
     };
     this.onClickRequest = this.onClickRequest.bind(this);
     this.onClickisLike = this.onClickisLike.bind(this);
@@ -819,27 +820,36 @@ class MakerDetail extends Component {
             {/** 상세소개*/}
 
           </div>
-
+          {
+          this.state.experience&&
+          this.state.experience.split("/")&&
+          ((this.state.experience.split("/").length>0&&this.state.experience.split("/")[0]=="0,,,")||
+          this.state.experience.split("/").length<=0)
+          ?
+          null
+          :
           <AdditionalInfo width={1523} height={280} mTop={60}>
-            <div className="title margin_bottom">제작 경험</div>
-            <div className="wrapItem">
-            <ExpTable>
-              <div className="header">
-                <div className="th">업무</div>
-                <div className="th">내용</div>
-                <div className="th">기간</div>
-              </div>
-              {
-                this.state.experience && this.state.experience.split("/").map((item, index) =>
-                  <div className="row" key={index}>
-                    {item.split(",").map((element, subIndex) =>
-                      subIndex > 0 ? <div className="td" key={subIndex}>{element}</div> : null
-                    )}
-                  </div>)
-              }
-            </ExpTable>
-              </div>
+          <div className="title margin_bottom">제작 경험</div>
+          <div className="wrapItem">
+          <ExpTable>
+            <div className="header">
+              <div className="th">업무</div>
+              <div className="th">내용</div>
+              <div className="th">기간</div>
+            </div>
+            {
+              this.state.experience && this.state.experience.split("/").map((item, index) =>
+                <div className="row" key={index}>
+                  {item.split(",").map((element, subIndex) =>
+                    subIndex > 0 ? <div className="td" key={subIndex}>{element}</div> : null
+                  )}
+                </div>)
+            }
+          </ExpTable>
+            </div>
           </AdditionalInfo>
+          }
+
 
           {/**보유아이템 */}
           <ItemInfo width={1523} height={491} mTop={60}>
@@ -852,13 +862,17 @@ class MakerDetail extends Component {
           </ItemInfo>
 
           {/* 갤러리 */}
-
-          <ItemInfo width={1523} height={491} mTop={60}>
-          <div className="title">갤러리</div>
-          <div className="wrapGallery">
-            {<HaveInGalleryContainer id={this.props.id} isModify={false} />}
-          </div>
-        </ItemInfo>
+          {
+            this.state.haveGallery==true?
+            <ItemInfo width={1523} height={491} mTop={60}>
+            <div className="title">갤러리</div>
+            <div className="wrapGallery">
+              {<HaveInGalleryContainer id={this.props.id} handleHaveGallery={(result)=>{this.setState({haveGallery:result})}} isModify={false} />}
+            </div>
+            </ItemInfo>
+            :
+            null
+          }
 
           {/* 리뷰 */}
           <AdditionalInfo width={1523} height={280} mTop={60}>

@@ -4,6 +4,7 @@ import { GetMyDesignerRequestListRequest } from "actions/Request";
 import DesignerRequestBoard from "components/Request/DesignerRequestBoard";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
+import market_style from "market_style";
 
 const Board = styled.div`
   margin:-20px 0px -20px 0px;
@@ -18,6 +19,34 @@ const Board = styled.div`
     justify-content:center;
   }
 `
+const ListElement = styled.div`
+  width:100%;
+  height:36px;
+  border: 1px solid #eaeaea;
+  margin-top:10px;
+  padding:6px 54px 6px 54px;
+  display:flex;
+  margin-bottom:10px;
+  .title{
+    min-width:75%;
+    display:flex;
+    align-items:center;
+    font-size:${market_style.font.size.small1};
+  }
+  .writer{
+    min-width:21%;
+    display:flex;
+    align-items:center;
+    font-size:${market_style.font.size.small1};
+  }
+  .date{
+    min-width:5%;
+    display:flex; 
+    justify-content:center;
+    align-items:center;
+    font-size:${market_style.font.size.small1};
+    }
+`;
 class MyUploadDesignReqBoardContainer extends Component {
   constructor(props)
   {
@@ -42,6 +71,14 @@ class MyUploadDesignReqBoardContainer extends Component {
     return (
       <Board>
       <div className="title__">디자인 의뢰</div>
+      <ListElement>
+            {/* no.    <div style={{ marginRight: "15px" }}>번호</div> */}
+            {/* title   */}<div className="title">제목</div>
+            {/* writer  */}<div className="writer">글쓴이</div>
+            {/* date    */}<div className="date">작성일</div>
+            {/* {/* view    <div style={{ marginRight: "15px" }}>조회수</div> */}
+            {/* {/* like    <div style={{ marginRight: "15px" }}>좋아요</div> */}
+        </ListElement>
       <DesignerRequestBoard getList={this.getList} {...this.props} />
         {
           lastPage==0?null:

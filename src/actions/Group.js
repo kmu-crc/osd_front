@@ -655,11 +655,12 @@ export function CreateNewGroupRequest(data, token) {
       method: "POST",
       body: JSON.stringify(data)
     }).then((response) => {
+      console.log(response);
       return response.json();
     })
-      .then((res) => {
-        console.log("createnewgroupreq");
-        return res&&dispatch(CreateNewGroupSuccess(res.id));
+      .then((response) => {
+        console.log("createnewgroupreq",response);
+        return response&&dispatch(CreateNewGroupSuccess(response.id));
       }).catch((error) => {
         dispatch(CreateGroupFailure());
         console.log(error);
