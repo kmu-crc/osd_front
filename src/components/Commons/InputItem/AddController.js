@@ -72,10 +72,14 @@ export class AddController extends Component {
       setTimeout(() => {
         this.setState({ initClick: false });
       }, 100);
-    } else {
-      await this.setState({ type, order: this.props.order, content: "" });
-      this.returnData();
     }
+    if (type === "TEXT") {
+      await this.setState({ type, order: this.props.order, content: "" });
+    }
+    if (type === "PROBLEM") {
+      await this.setState({ type, order: this.props.order, content: "", notyet: true });
+    }
+    this.returnData();
   }
 
   returnData = async (data) => {
@@ -92,6 +96,7 @@ export class AddController extends Component {
         <div className="innerBox" >
           {this.props.onlytext ? null : <NewController onClick={() => this.addContent("FILE")} className="first" width="max-content" height="29px">파일 등록</NewController>}
           {this.props.onlyfile ? null : <NewController onClick={() => this.addContent("TEXT")} width="max-content" height="29px">텍스트 입력</NewController>}
+          {this.props.isProgramming ? <NewController onClick={() => this.addContent("PROBLEM")} widht="max-content" height="29px">문제 등록</NewController> : null}
         </div>
         {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
       </ControllerWrap>
