@@ -138,6 +138,7 @@ const ExperienceBox = styled.div`
     }
     .careerBox{
       display:flex;
+      align-items:center;
       padding:5px 2px;
       .number_wrapper{
         width:120px;
@@ -149,6 +150,9 @@ const ExperienceBox = styled.div`
       }
       .last_margin{
         width:230px;
+      }
+      .close{
+        cursor:pointer;
       }
     }
 `
@@ -493,12 +497,14 @@ class CreateMaker extends Component {
       thumbnail: null, thumbnail_name: null,
       category_level1: -1, category_level2: -1, location: null,
       explain: "", tag: [], equipment: [], technique: [],
-      career: [{ number: 0, task: "", explain: "", during: "" }],
+      // career: [{ number: 0, task: "", explain: "", during: "" }],
+      career:[],
     }
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
     this.onChangeCareer = this.onChangeCareer.bind(this);
     this.onClickAddCareer = this.onClickAddCareer.bind(this);
+    this.onDeleteCareer = this.onDeleteCareer.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.onChangeExplain = this.onChangeExplain.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
@@ -537,6 +543,18 @@ class CreateMaker extends Component {
     this.setState({
       career: this.state.career.concat({ number: this.state.career.length, task: "", explain: "", during: "" }),
     })
+  }
+  async onDeleteCareer(value){
+
+    const number = value;
+    let copy = [...this.state.career];
+    await copy.splice(number,1);
+    copy&&copy.map(async(item,index)=>{
+      item.number=index;
+      console.log(index);
+    });
+    console.log(copy);
+    await this.setState({career:copy});
   }
   onChangeExplain(event) {
     this.setState({ explain: event.target.value })
@@ -778,7 +796,7 @@ class CreateMaker extends Component {
                 {this.state.career.map((item, index) => {
                   console.log("career", item)
                   return (
-                    <CreateCareer item={item} number={(item.number) + 1} onChangeCareer={this.onChangeCareer} key={index} />
+                    <CreateCareer item={item} number={(item.number) + 1} onChangeCareer={this.onChangeCareer} onDeleteCareer={(index)=>this.onDeleteCareer(index)} key={index} />
                   );
                 })}
                 {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
@@ -809,6 +827,7 @@ class CreateCareer extends Component {
     this.onChangeTask = this.onChangeTask.bind(this);
     this.onChangeExplain = this.onChangeExplain.bind(this);
     this.onChangeDuring = this.onChangeDuring.bind(this);
+    this.onDeleteAll = this.onDeleteAll.bind(this);
   }
   componentDidMount() {
 
@@ -840,6 +859,10 @@ class CreateCareer extends Component {
     this.setState({ during: event.target.value, })
     this.props.onChangeCareer(this.props.number - 1, this.state.task, this.state.explain, event.target.value);
   }
+  onDeleteAll(event){
+    let number = this.props.number-1;
+    if(number<0)return;
+    this.props.onDeleteCareer(number);  }
 
 
   render() {
@@ -868,6 +891,7 @@ class CreateCareer extends Component {
           <div className="text_wrapper">
             <InputText value={this.state.explain} onChange={this.onChangeExplain} width={230} />
           </div>
+          <div className="close" onClick={this.onDeleteAll}>x</div>
         </div>
       </React.Fragment>
     );

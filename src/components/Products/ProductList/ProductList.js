@@ -12,6 +12,7 @@ const Wrapper = styled.div`
 *{
   // border:1px solid black;
 }
+  margin-left:10px;
   width: 100%;
   display: flex;
   flex-direction: row;

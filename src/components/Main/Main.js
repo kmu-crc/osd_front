@@ -37,7 +37,7 @@ class Main extends Component {
 
       <Wrapper>
         <TextWrapper>
-          <Head marginTop={20}>인기 디자이너 | 메이커</Head>
+          <Head marginTop={30}>인기 디자이너 | 메이커</Head>
         </TextWrapper>
         <ScrollTopDesignerContainer />
       </Wrapper>

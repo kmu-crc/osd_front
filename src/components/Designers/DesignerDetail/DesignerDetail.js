@@ -640,6 +640,7 @@ class DesignerDetail extends Component {
       create_time:"",
       update_time:"",
       content:"",
+      haveGallery:true,
     };
     this.onClickRequest = this.onClickRequest.bind(this);
     this.onClickisLike = this.onClickisLike.bind(this);
@@ -825,29 +826,43 @@ class DesignerDetail extends Component {
         </AdditionalInfo> */}
       </div>
       {/* 경험 */}
-      <AdditionalInfo width={1523} height={290} mTop={60}>
+      {
+        (this.state.career&&this.state.career.length>0
+        &&
+        (this.state.career[0].number=="0"
+        &&this.state.career[0].task==""
+        &&this.state.career[0].explain==""
+        &&this.state.career[0].during==""))
+        ||this.state.career&&this.state.career.length<=0
+        ?
+        null:
+        <AdditionalInfo width={1523} height={290} mTop={60}>
+          {
+                    console.log(this.state.career)
+
+          }
         <div className="title margin_bottom">디자인 경험</div>
         <div className="wrapItem">
         <ExpTable>
           <div className="header">
             <div className="th">업무</div>
-            <div className="th">기간</div>
             <div className="th">내용</div>
+            <div className="th">기간</div>
           </div>
           {this.state.career.map((item, index) => {
             return (
               <div className="row" key={index}>
                 <div className="td">{item.task}</div>
-                <div className="td">{item.during}</div>
                 <div className="td">{item.explain}</div>
+                <div className="td">{item.during}</div>
               </div>
             );
           })}
         </ExpTable>
         </div>
-       
-
       </AdditionalInfo>
+      }
+
 
       {/**보유아이템 */}
       <ItemInfo width={1523} height={490} mTop={60}>
@@ -859,13 +874,16 @@ class DesignerDetail extends Component {
       </ItemInfo>
 
       {/**갤러리 아이템 */}
+      {
+        this.state.haveGallery==true?
       <ItemInfo width={1523} height={491} mTop={60}>
-        <div className="title">갤러리</div>
-        <div className="wrapGallery">
-          {<HaveInGalleryContainer id={this.props.id} isModify={false} />}
-        </div>
-
+      <div className="title">갤러리</div>
+      <div className="wrapGallery">
+        {<HaveInGalleryContainer handleHaveGallery={(result)=>{this.setState({haveGallery:result})}} id={this.props.id} isModify={false} />}
+      </div>
       </ItemInfo>
+      :null
+      }
 
       {/* 리뷰 */}
       {/*  */}
