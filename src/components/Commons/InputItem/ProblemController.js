@@ -893,7 +893,7 @@ export class ProblemController extends Component {
               </div>
               <div className="coding-area">
                 <div className="tab">
-                  {item.user_id === this.props.userInfo.uid ?
+                  {item.user_id === (this.props.userInfo && this.props.userInfo.uid) ?
                     <div
                       onClick={() => this.setState({ tab: "code" })}
                       className={`label ${tab === "code" ? "active" : ""}`}
@@ -1020,7 +1020,9 @@ export class ProblemController extends Component {
               </div>
             </ProblemBox>
             <SelectBox>
-              <div className="selecticon" onClick={() => this.setState({ submit: !this.state.submit })}>답안 제출하기</div>
+              {(this.props.userInfo && this.userInfo.uid) === item.user_id &&
+                <div className="selecticon" onClick={() => this.setState({ submit: !this.state.submit })}>답안 제출하기</div>
+              }
             </SelectBox>
           </Viewer>
           : null}
