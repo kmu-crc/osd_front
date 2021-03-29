@@ -7,6 +7,9 @@ import ContentBox from "components/Commons/ContentBox";
 import Category from "components/Commons/Category";
 import market_style from "market_style";
 
+// debug 
+import host from "config";
+
 // CSS STYLING
 const Wrapper = styled.div`
 *{
@@ -68,83 +71,78 @@ const Container = styled.div`
   }
 `;
 
-class ProductList extends Component {
+export default class ProductList extends Component {
   constructor(props) {
     super(props);
-    this.state = { rendering: true };
+    this.handleCate1 = this.handleCate1.bind(this);
+    this.handleCate2 = this.handleCate2.bind(this);
+    this.handleCate3 = this.handleCate3.bind(this);
+    this.resetCate = this.resetCate.bind(this);
+    this.sortChange = this.sortChange.bind(this);
   }
-  componentDidMount() {
-    this.props.GetProductTotalCountRequest(this.props.cate1, this.props.cate2);
+  handleCate1 = (value) => {
+    const { sort } = this.props;
+    this.props.history.push(`/product/${sort}/${value}`);
   }
-  changeState = async () => {
-    await this.setState({ rendering: false });
-    await this.setState({ rendering: true });
+  handleCate2 = (parent, value) => {
+    const { sort, } = this.props;
+    this.props.history.push(`/product/${sort}/${parent}/${value}`);
   }
-  cate1Change = (value) => {
-    this.props.history.replace(`/product/${this.props.sort}/${value}/null`);
-    this.props.GetProductTotalCountRequest(value, null);
-    this.changeState();
+  handleCate3 = (parent, value) => {
+    const { sort, cate1, } = this.props;
+    this.props.history.push(`/product/${sort}/${cate1}/${parent}/${value}`);
   }
-  cate2Change = (cate1, value) => {
-    if (cate1 && this.props.cate1 !== cate1) {
-      this.props.history.replace(`/product/${this.props.sort}/${cate1}/${value}`);
-    } else {
-      this.props.history.replace(`/product/${this.props.sort}/${this.props.cate1}/${value}`);
-    }
-    this.props.GetProductTotalCountRequest(this.props.cate1, value);
-    this.changeState();
-  }
-  sortChange = (e, { value }) => {
-    this.props.history.replace(`/product/${value}/${this.props.cate1}/${this.props.cate2}`);
-    this.changeState();
-  }
-
   resetCate = () => {
-    this.props.history.replace(`/product/${this.props.sort}`);
-    this.changeState();
+    this.props.history.push(`/product/${this.props.sort}`);
+  }
+  sortChange = (_, { value }) => {
+    const { cate1, cate2, cate3 } = this.props;
+    this.props.history.push(`/product/${value}/${cate1}/${cate2}/${cate3}`);
   }
   render() {
-    const { sort, category1, category2, cate1, cate2 } = this.props;
-    // console.log(this.props);
+    const { category1, category2, category3 } = this.props;
+    const { cate1, cate2, cate3 } = this.props;
+    const { sort } = this.props;
 
     return (<React.Fragment>
       <Content top={30}>
         <Container>
           <div className="category">
-            <Category
-              handleCate2={this.cate2Change}
-              handleCate1={this.cate1Change}
+            <Category // which="아이템" 
+              handleCate1={this.handleCate1}
+              handleCate2={this.handleCate2}
+              handleCate3={this.handleCate3}
               resetCate={this.resetCate}
               cate1={cate1}
               cate2={cate2}
+              cate3={cate3}
               category1={category1}
               category2={category2}
-              which="아이템" />
+              category3={category3}
+            />
           </div>
           <div className="_wrapper">
-                <div className="request">
-                {this.props.userInfo != null && (this.props.userInfo.isDesigner === 1 || this.props.userInfo.isMaker === 1) ?
-                  <RequestButton>
+            <div className="request">
+              {this.props.userInfo != null && (this.props.userInfo.isDesigner === 1 || this.props.userInfo.isMaker === 1) ?
+                <RequestButton>
                   <Link to={`/createproduct`}>아이템 등록</Link>
-                  </RequestButton>
-                  : null}
-                </div>
-                <div className="_title">아이템</div>
-                <div className="sort">
-                  <Sorting handleClick={this.sortChange} placeholder={sort} />
-                </div>
+                </RequestButton>
+                : null}
+            </div>
+            <div className="_title">아이템</div>
+            <div className="sort">
+              <Sorting handleClick={this.sortChange} placeholder={sort} />
+            </div>
           </div>
         </Container>
       </Content>
 
       <Content top={16}>
         <Wrapper className="listWrap">
-          {this.state.rendering &&
-            <ScrollProductListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}
+          <ScrollProductListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />
         </Wrapper>
       </Content>
+
     </React.Fragment>);
   }
 }
-
-export default ProductList;
