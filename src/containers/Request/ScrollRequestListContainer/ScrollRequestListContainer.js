@@ -5,12 +5,17 @@ import ScrollBoardList from "components/Commons/ScrollBoardList";
 import RequestElement from "components/Request/RequestListElement";
 
 class ScrollRequestListContainer extends Component {
-  componentWillMount() {
-    this.props.GetRequestListRequest(this.props.type, 0, this.props.cate1, this.props.cate2, this.props.sort, this.props.keyword);
+  componentDidUpdate(prevProps) {
+    if (this.props.type !== prevProps.type || this.props.sort !== prevProps.sort || this.props.cate1 !== prevProps.cate1 || this.props.cate2 !== prevProps.cate2 || this.props.cate3 !== prevProps.cate3 || this.props.keyword !== prevProps.keyword) {
+      this.getList(0);
+    }
   }
-  getList = (page) =>
-    this.props.GetRequestListRequest(this.props.type, page, this.props.cate1, this.props.cate2, this.props.sort, this.props.keyword);
-
+  componentWillMount() {
+    this.getList(0);
+  }
+  getList = (page) => {
+    return this.props.GetRequestListRequest(this.props.type, page, this.props.cate1, this.props.cate2, this.props.cate3, this.props.sort, this.props.keyword);
+  }
 
   render() {
     return (
@@ -29,8 +34,8 @@ const mapStateToProps = (state) => ({
   Count: state.RequestList.status.Total,
 });
 const mapDispatchToProps = (dispatch) => ({
-  GetRequestListRequest: (type, page, cate1, cate2, sort, keyword) =>
-    dispatch(GetRequestListRequest(type, page, cate1, cate2, sort, keyword)),
+  GetRequestListRequest: (type, page, cate1, cate2, cate3, sort, keyword) =>
+    dispatch(GetRequestListRequest(type, page, cate1, cate2, cate3, sort, keyword)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScrollRequestListContainer);

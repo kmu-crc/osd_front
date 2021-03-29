@@ -70,89 +70,85 @@ const Container = styled.div`
   }
 `;
 const target = `maker`;
-class MakerList extends Component {
+export default class MakerList extends Component {
   constructor(props) {
     super(props);
-    this.state = { rendering: true, };
+    this.handleCate1 = this.handleCate1.bind(this);
+    this.handleCate2 = this.handleCate2.bind(this);
+    this.handleCate3 = this.handleCate3.bind(this);
+    this.resetCate = this.resetCate.bind(this);
+    this.sortChange = this.sortChange.bind(this);
   }
-  componentDidMount() {
-    // this.props.GetMakerTotalCountRequest(this.props.cate1, this.props.cate2);
+  handleCate1 = (value) => {
+    const { sort } = this.props;
+    this.props.history.push(`/${target}/${sort}/${value}`);
   }
-  changeState = async () => {
-    await this.setState({ rendering: false });
-    await this.setState({ rendering: true });
+  handleCate2 = (parent, value) => {
+    const { sort, } = this.props;
+    this.props.history.push(`/${target}/${sort}/${parent}/${value}`);
   }
-  cate1Change = (value) => {
-    this.props.history.replace(`/${target}/${this.props.sort}/${value}/null`);
-    // this.props.GetMakerTotalCountRequest(value, null);
-    this.changeState();
-  }
-  cate2Change = (cate1, value) => {
-    if (cate1 && this.props.cate1 !== cate1) {
-      this.props.history.replace(`/${target}/${this.props.sort}/${cate1}/${value}`);
-    } else {
-      this.props.history.replace(`/${target}/${this.props.sort}/${this.props.cate1}/${value}`);
-    }
-    // this.props.GetMakerTotalCountRequest(this.props.cate1, value);
-    this.changeState();
-  }
-  sortChange = (e, { value }) => {
-    this.props.history.replace(`/${target}/${value}/${this.props.cate1}/${this.props.cate2}`);
-    this.changeState();
+  handleCate3 = (parent, value) => {
+    const { sort, cate1, } = this.props;
+    this.props.history.push(`/${target}/${sort}/${cate1}/${parent}/${value}`);
   }
   resetCate = () => {
-    this.props.history.replace(`/${target}/${this.props.sort}`);
-    this.changeState();
+    this.props.history.push(`/${target}/${this.props.sort}`);
+  }
+  sortChange = (_, { value }) => {
+    const { cate1, cate2, cate3 } = this.props;
+    this.props.history.push(`/${target}/${value}/${cate1}/${cate2}/${cate3}`);
   }
 
   render() {
-    const { sort, category1, category2, cate1, cate2 } = this.props;
+    const { category1, category2, category3 } = this.props;
+    const { cate1, cate2, cate3 } = this.props;
+    const { sort } = this.props;
+
     return (<React.Fragment>
 
       <Content top={30}>
         <Container>
           <div className="category">
-            <Category
-              handleCate2={this.cate2Change}
-              handleCate1={this.cate1Change}
+            <Category // which="메이커"
+              handleCate1={this.handleCate1}
+              handleCate2={this.handleCate2}
+              handleCate3={this.handleCate3}
               resetCate={this.resetCate}
               cate1={cate1}
               cate2={cate2}
+              cate3={cate3}
               category1={category1}
               category2={category2}
-              which="메이커" /></div>
-            <div className="_wrapper">
-                <div className="request">
-                  <RequestButton>
-                    <Link to={`/request/maker`}>메이커 게시판</Link>
-                  </RequestButton>
-                  {
-                  this.props.userInfo != null ?  
+              category3={category3}
+            />
+          </div>
+          <div className="_wrapper">
+            <div className="request">
+              <RequestButton>
+                <Link to={`/request/maker`}>메이커 게시판</Link>
+              </RequestButton>
+              {
+                this.props.userInfo != null ?
                   <RequestButton>
                     <Link to={`/requestToMaker/null`}>제작 의뢰</Link>
                   </RequestButton>
                   :
                   null
-                  }
-                </div>
-                <div className="_title">메이커</div>
-                <div className="sort">
-                  <Sorting handleClick={this.sortChange} placeholder={sort} />
-                </div>
+              }
+            </div>
+            <div className="_title">메이커</div>
+            <div className="sort">
+              <Sorting handleClick={this.sortChange} placeholder={sort} />
+            </div>
           </div>
         </Container>
       </Content>
 
       <Content top={16}>
         <Wrapper className="listWrap">
-          {this.state.rendering &&
-            <ScrollMakerListContainer
-              sort={sort} cate1={cate1} cate2={cate2}
-              history={this.props.history} />}
+          <ScrollMakerListContainer sort={sort} cate1={cate1} cate2={cate2} cate3={cate3} history={this.props.history} />
         </Wrapper>
       </Content>
     </React.Fragment>);
   }
 }
-
-export default MakerList;

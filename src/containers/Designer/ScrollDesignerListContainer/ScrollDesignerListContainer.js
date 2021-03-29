@@ -6,19 +6,24 @@ import Expert from "components/Experts/Expert";
 import Expert_small from "components/Experts/Expert_small";
 
 class ScrollDesignerListContainer extends Component {
-  async componentDidMount() {
-    await this.props.GetDesignerListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
+  componentDidUpdate(prevProps) {
+    if (this.props.sort !== prevProps.sort || this.props.cate1 !== prevProps.cate1 || this.props.cate2 !== prevProps.cate2 || this.props.cate3 !== prevProps.cate3 || this.props.keyword !== prevProps.keyword) {
+      this.getList(0);
+    }
   }
-
+  componentWillMount() {
+    this.getList(0);
+  }
   getList = (page) => {
-    return this.props.GetDesignerListRequest(page, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword);
+    return this.props.GetDesignerListRequest(page, this.props.sort, this.props.cate1, this.props.cate2, this.props.cate3, this.props.keyword);
   }
 
   render() {
     return (
-      <ScrollList getListRequest={this.getList}
+      <ScrollList
+        getListRequest={this.getList}
         isSmall={this.props.isSmall}
-        ListComponent={this.props.isSmall==true?Expert_small:Expert}
+        ListComponent={this.props.isSmall == true ? Expert_small : Expert}
         type="designer"
         dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
       />
@@ -35,8 +40,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetDesignerListRequest: (page, sort, categoryLevel1, categoryLevel2, keyword) => {
-      return dispatch(GetDesignerListRequest(page, sort, categoryLevel1, categoryLevel2, keyword))
+    GetDesignerListRequest: (page, sort, categoryLevel1, categoryLevel2, categoryLevel3, keyword) => {
+      return dispatch(GetDesignerListRequest(page, sort, categoryLevel1, categoryLevel2, categoryLevel3, keyword))
     }
   };
 };

@@ -21,7 +21,7 @@ const CreateRequestSuccess = res => ({ type: types.CREATE_REQUEST_SUCCESS, id: r
 const CreateRequestFail = error => ({ type: types.CREATE_REQUEST_FAIL, success: error.success });
 
 
-export const UpdateRequestRequest = (id,data, token) => {
+export const UpdateRequestRequest = (id, data, token) => {
   return dispatch => {
     dispatch(UpdateRequest());
     const url = `${host}/request/update/${id}`;
@@ -39,7 +39,7 @@ const UpdateRequest = () => ({ type: types.UPDATE_REQUEST });
 const UpdateRequestSuccess = res => ({ type: types.UPDATE_REQUEST_SUCCESS, id: res.id, success: res.success });
 const UpdateRequestFail = error => ({ type: types.UPDATE_REQUEST_FAIL, success: error.success });
 
-export const DeleteRequestRequest = (id,token) => {
+export const DeleteRequestRequest = (id, token) => {
   return dispatch => {
     dispatch(DeleteRequest());
     const url = `${host}/request/delete/${id}`;
@@ -58,9 +58,9 @@ const DeleteRequestSuccess = res => ({ type: types.DELETE_REQUEST_SUCCESS, id: r
 const DeleteRequestFail = error => ({ type: types.DELETE_REQUEST_FAIL, success: error.success });
 
 // type page cate1 cate2 sort keyword
-export const GetRequestListRequest = (type, page, cate1, cate2, sort, keyword) => {
+export const GetRequestListRequest = (type, page, cate1, cate2, cate3, sort, keyword) => {
   return dispatch => {
-    const url = `${host}/request/list/${type}/${page}/${cate1}/${cate2}/${sort}/${keyword}`
+    const url = `${host}/request/list/${type}/${page}/${cate1}/${cate2}/${cate3}/${sort}/${keyword}`
     console.log(url);
     return fetch(url, {
       headers: { "Content-Type": "application/json" },
@@ -93,7 +93,7 @@ const RequestTotalCountFail = () => ({ type: types.GET_REQUEST_TOTAL_COUNT_FAIL,
 
 export const GetRequestDetailRequest = (id) => {
   return dispatch => {
-    const url =  `${host}/request/detail/${id}`;
+    const url = `${host}/request/detail/${id}`;
     return fetch(url, {
       headers: { "Content-Type": "application/json" }, method: "GET"
     })
@@ -131,7 +131,7 @@ export const GetMyDesignerRequestListRequest = (id, page) => {
       method: "GET"
     })
       .then(res => res.json())
-      .then(data =>{ console.log(data);dispatch(GetMyDesignerRequestList(data || []))})
+      .then(data => { console.log(data); dispatch(GetMyDesignerRequestList(data || [])) })
       .catch(err => dispatch(MyDesignerRequestListFail()))
   }
 };

@@ -139,7 +139,7 @@ export default class ProductList extends Component {
 
       <Content top={16}>
         <Wrapper className="listWrap">
-          <ScrollProductListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />
+          <ScrollProductListContainer sort={sort} cate1={cate1} cate2={cate2} cate3={cate3} history={this.props.history} />
         </Wrapper>
       </Content>
 
