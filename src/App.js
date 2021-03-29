@@ -63,14 +63,14 @@ class App extends Component {
             <Route path="/footerPara" component={FooterPara} />
             {/* DESIGNER */}
 
-            <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
+            <Route path="/designer/:sorting?/:cate1?/:cate2?/:cate3?" component={DesignerListPage} />
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
             <Route path="/designerModify" component={ModifyDesignerPage} />
             <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/createDesigner/redirected" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/modifyDesigner/:id" component={RequiresAuth(ModifyDesignerPage)} />
             {/* MAKER */}
-            <Route path="/maker/:sorting?/:cate1?/:cate2?" component={MakerListPage} />
+            <Route path="/maker/:sorting?/:cate1?/:cate2?/:cate3?" component={MakerListPage} />
             <Route path="/makerDetail/:id/:type?" component={MakerDetailPage} />
             <Route path="/createMaker" component={RequiresAuth(CreateMakerPage)} />
             <Route path="/modifyMaker/:id" component={ModifyMakerPage} />
@@ -89,7 +89,7 @@ class App extends Component {
             <Route path="/requestDetail/:id" component={RequestDetailPage} />
             {/* <Route path="/requestDesigner/:sorting?/:cate1?/:cate2?" component={RequestListPage} />  */}
             {/* <Route path="/requestMaker/:sorting?/:cate1?/:cate2?" component={RequestListPage} /> */}
-            <Route path="/request/:type/:page?/:cate1?/:cate2?/:sort?/:keyword?" component={RequestListPage} />
+            <Route path="/request/:type/:cate1?/:cate2?/:cate3?/:sort?/:keyword?" component={RequestListPage} />
             <Route path="/requestToDesigner/:id" component={RequiresAuth(RequiresPayUser(requestDesignerPage))} />
             <Route path="/requestToMaker/:id" component={RequiresAuth(RequiresPayUser(requestMakerPage))} />
             <Route path="/ModifyrequestToDesigner/:id" component={RequiresAuth(RequiresPayUser(ModifyrequestDesignerPage))} />

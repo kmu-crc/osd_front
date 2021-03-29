@@ -68,12 +68,12 @@ class Category extends Component {
   }
   onChangeCategory2 = async (e, cate1, value) => {
     e.stopPropagation();
-    console.log("onChangeCategory", cate1, value);
+    // console.log("onChangeCategory", cate1, value);
     await this.props.handleCate2(cate1, value);
   };
   onChangeCategory3 = async (e, cate2, value) => {
     e.stopPropagation();
-    console.log("onChangeCategory", cate2, value);
+    // console.log("onChangeCategory", cate2, value);
     await this.props.handleCate3(cate2, value);
   };
   resetCate = () => {
