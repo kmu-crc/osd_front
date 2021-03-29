@@ -16,14 +16,15 @@ const mapStateToProps = (state) => {
     userInfo: state.Authentication.status.userInfo,
     category1: state.CategoryAll.status.category1,
     category2: state.CategoryAll.status.category2,
+    category3: state.CategoryAll.status.category3,
     Count: state.ProductList.status.Count
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetProductListRequest: (page, sort, cate1, cate2) => dispatch(GetProductListRequest(page, sort, cate1, cate2)),
-    GetProductTotalCountRequest: (cate1, cate2) => dispatch(GetProductTotalCountRequest(cate1, cate2))
+    GetProductListRequest: (page, sort, cate1, cate2, cate3) => dispatch(GetProductListRequest(page, sort, cate1, cate2, cate3)),
+    GetProductTotalCountRequest: (cate1, cate2, cate3) => dispatch(GetProductTotalCountRequest(cate1, cate2, cate3))
   };
 };
 
