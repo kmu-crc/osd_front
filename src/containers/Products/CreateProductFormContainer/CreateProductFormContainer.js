@@ -6,16 +6,7 @@ import { CreateDesignRequest } from "actions/Products/CreateProduct";
 import { SearchMemberRequest } from "actions/Commons/Search";
 
 class CreateProductFormContainer extends Component {
-  componentDidMount() {
-    console.log("designer:", this.props, this.props.keep == null);
-    if (this.props.keep == null) {
-      // if (this.props.userInfo.isDesigner === 0 || this.props.userInfo.isMaker === 0) {
-      //   alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.");
-      //   this.props.history.push("/myPage");
-      //   ;
-      // }
-    }
-  }
+  /*componentDidMount() { console.log("designer:", this.props, this.props.keep == null); if (this.props.keep == null) { // if (this.props.userInfo.isDesigner === 0 || this.props.userInfo.isMaker === 0) { //   alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요."); //   this.props.history.push("/myPage"); //   ; // } } }*/
 
   render() {
     return (
@@ -33,7 +24,8 @@ const mapStateToProps = (state) => ({
   members: state.Search.status.members,
   userInfo: state.Authentication.status.userInfo,
   category1: state.CategoryAll.status.category1,
-  category2: state.CategoryAll.status.category2
+  category2: state.CategoryAll.status.category2,
+  category3: state.CategoryAll.status.category3,
 });
 
 const mapDispatchToProps = (dispatch) => ({
