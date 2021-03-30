@@ -1,4 +1,4 @@
-import opendesign_style from 'opendesign_style';
+// import opendesign_style from 'opendesign_style';
 import React from 'react';
 // import { connect } from 'react-redux';
 

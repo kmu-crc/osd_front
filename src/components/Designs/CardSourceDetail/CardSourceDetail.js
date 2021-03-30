@@ -476,6 +476,12 @@ const ViewContent = styled.div`
   &:hover .goEdit {
     display: block;
   }
+  .mouse-on{
+    :hover {
+      color: #0000FF;
+      opacity: .75;
+    }
+  }
 `;
 const ButtonContainer = styled.div`
   // margin-bottom: 35px;
@@ -1128,6 +1134,7 @@ class CardSourceDetail extends Component {
     console.log(permission);
   }
 
+
   render() {
     // console.log("codecode", this.props.code)
     const { edit, content, loading, submit, tab, item, result, coding, permission, item_uid, item_user } = this.state;
@@ -1484,8 +1491,14 @@ class CardSourceDetail extends Component {
                     </span>
                     : (item.type === "FILE" && item.extension === "pdf") ?
                       <React.Fragment>
-                        <div style={{ fontSize: "1.25rem", color: "#707070", marginLeft: "auto", border: "1px solid transparent", width: "max-content" }}>
-                          <a href={item.content} ><i className="save icon large" />PDF다운로드</a>
+                        <div style={{ display: "flex", flexDirection: "flex-end" }}>
+                          <div style={{ cursor: "pointer", fontSize: "1.25rem", color: "#707070", marginLeft: "auto", border: "1px solid transparent", width: "max-content" }}>
+                            <a onClick={() => { const options = `toolbar=no,status=no,menubar=no,location=no,top=10,left=10,width=${parseInt(window.screen.width * .75, 10)},height=${parseInt(window.screen.height * .75, 10)}`; localStorage.setItem("pdf", item.content); window.open("/pdfview", "pdfview", options); }}>
+                              <i className="file pdf outline icon large" />새창으로열기</a>
+                          </div>
+                          <div style={{ fontSize: "1.25rem", color: "#707070", marginLeft: "25px", border: "1px solid transparent", width: "max-content" }}>
+                            <a href={item.content} ><i className="save icon large" />PDF다운로드</a>
+                          </div>
                         </div>
                         <PdfViewer pdf={item.content} height={true} />
                       </React.Fragment>
@@ -1621,8 +1634,14 @@ class CardSourceDetail extends Component {
                                       {/* {item.content && IsJsonString(item.content) && JSON.parse(item.content).cotents && */}
                                       {item.content &&
                                         <React.Fragment>
-                                          <div style={{ fontSize: "1.25rem", color: "#707070", marginLeft: "auto", border: "1px solid transparent", width: "max-content" }}>
-                                            <a href={JSON.parse(item.content).contents} ><i className="save icon large" />PDF다운로드</a>
+                                          <div style={{ display: "flex", flexDirection: "flex-end" }}>
+                                            <div style={{ cursor: "pointer", fontSize: "1.25rem", color: "#707070", marginLeft: "auto", border: "1px solid transparent", width: "max-content" }}>
+                                              <a onClick={() => { const options = `toolbar=no,status=no,menubar=no,location=no,top=10,left=10,width=${parseInt(window.screen.width * .75, 10)},height=${parseInt(window.screen.height * .75, 10)}`; localStorage.setItem("pdf", JSON.parse(item.content).contents); window.open("/pdfview", "pdfview", options); }}>
+                                                <i className="file pdf outline icon large" />새창으로열기</a>
+                                            </div>
+                                            <div style={{ fontSize: "1.25rem", color: "#707070", marginLeft: "25px", border: "1px solid transparent", width: "max-content" }}>
+                                              <a href={JSON.parse(item.content).contents} ><i className="save icon large" />PDF다운로드</a>
+                                            </div>
                                           </div>
                                           <PdfViewer pdf={JSON.parse(item.content).contents} />
                                         </React.Fragment>}

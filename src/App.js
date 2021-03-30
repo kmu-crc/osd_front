@@ -32,6 +32,7 @@ import VChatGroupPage from "pages/VChatGroupPage";
 import ChatDesignPage from "pages/ChatPage";
 import ChatGroupPage from "pages/ChatGroupPage";
 import CodeViewPage from "pages/CodeViewPage";
+import PdfViewPage from "pages/PdfViewPage";
 
 class App extends Component {
   render() {
@@ -46,6 +47,7 @@ class App extends Component {
           <Route path="/vchat2/:id" component={CheckAuth(VChatDesignPage)} />
           <Route path="/vchatg/:id" component={CheckAuth(VChatGroupPage)} />
           <Route path="/codeview" component={CheckAuth(CodeViewPage)} />
+          <Route path="/pdfview" component={CheckAuth(PdfViewPage)} />
 
           {/* GROUP A - main */}
           <Route exact path="/" component={MainPage} />
