@@ -24,22 +24,29 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
 
 const Wrapper = styled.div`
-  // * { border: 1px solid red; };
-  margin-top: 50px;
-  margin-bottom:50px;
-  .line { 
-    display: flex; 
-  };
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  .profileBox{
+    width:940px;
+    display:flex;
+    box-shadow: 3px 3px 5px #0000001A;
+    border:1px solid #eaeaea;
+    border-radius:20px;
+    padding:30px 40px;
+  }
   .flex-align-column {
     flex-direction: column;
   };
 `;
 const ItemImages = styled.div`
-  width: 600px;
-  height: 600px;
-  // margin-left: 25px; 
+  max-width: 354px;
+  max-height: 354px;
+  min-width: 354px;
+  min-height: 354px;
   .main-image {
-    border: 1px solid #EFEFEF;
     overflow-x: auto;
     width: 100%;
     height: 100%; 
@@ -47,7 +54,6 @@ const ItemImages = styled.div`
     background-size: contain;
     background-position: center center;
     background-repeat:no-repeat;
-    border-radius: 20px;
   }
   .sub-images {
     margin-top: 30px;
@@ -63,39 +69,35 @@ const ItemImages = styled.div`
   }
 `;
 const ItemInfo = styled.div`
-  // border:1px solid black;
   position: relative;
-  margin-left: 50px;
-  width: 948px;
-  height: 600px;
+  margin-left: 45px;
   font-family: Noto Sans KR;
   background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px; 
-  // padding: 20px 35px 10px 15px;
-  padding:35px;
-  // *{ border: 1px solid red; };
+  width:100%;
+  .flex{display:flex;}
+  .spaceBetween{justify-content:space-between;align-items:center;}
   .title {
-    font-size:${market_style.font.size.big3};
-    // line-height: 50px;
+    font-size:${market_style.font.size.normal1};
     text-align: left;
     color: #000000;
+    font-weight:500;
   }
   .expert {
-    margin-top: 19px;
     position:relative;
+    display:flex;
+    align-items:center;
     .who {
-      width: 34px;
-      height: 34px;
+      width: 23px;
+      height: 23px;
       border-radius: 50%;
       background-size: cover;
       background-position: center center;
       background-image: url(${props => props.face});
-      margin-right: 26px;
+      margin-right: 5px;
     }
     .nick{
       cursor:pointer;
-      font-size:${market_style.font.size.small3};
+      font-size:${market_style.font.size.mini2};
       font-weight: 300;
       line-height: 29px;
       color: #060000;
@@ -117,15 +119,14 @@ const ItemInfo = styled.div`
     }
   }
   .price-and-score {
-    margin-left: auto;
-    margin-right: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
     font-weight: 500;
-    font-size:${market_style.font.size.normal3};
-    line-height: 29px;
-    text-align: left;
-    color: #060000;
+    font-size:${market_style.font.size.small1};
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    .price{
+      margin-right:10px;
+    }
   }
   .options {
     margin-top: 50px;
@@ -152,33 +153,31 @@ const ItemInfo = styled.div`
     }
   }
   .bottom {
-    width: max-content;
-    position: absolute;
-    right: 35px;
-    bottom: 15px;
+    width:100%;
+    display:flex;
+    justify-content:flex-end;
+    margin-top:30px;
   };
   .buttons {
     cursor: pointer;
     .button { 
-      width: 213px;
-      height: 70px;
+      width: 150px;
+      height: 30px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      margin-left:20px;
       .text{
-        width: max-content;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 15px;
-        line-height: 37px;
-        font-size:${market_style.font.size.giant2};
+        font-size:${market_style.font.size.small1};
         font-weight: 500;
       }
       &.first { 
         color: #FFFFFF; 
         background: #FF0000; 
-        margin-right: 27px; 
       }
       &.second {
         border: 1px solid red;
-        color: #FF0000;
+        color: #707070;
         background: #FFFFFF; 
         &.active{
           color: #FFFFFF;
@@ -191,9 +190,10 @@ const ItemInfo = styled.div`
 `;
 const Introduction = styled.div`
   position: relative;
-  height: 250px;
+  height: 237px;
   opacity: 1;
   font-family: Noto Sans KR;
+  margin-top:15px;
   .wrapItem{
     width:100%;
     height:100%;
@@ -202,15 +202,14 @@ const Introduction = styled.div`
       display:flex;
     }
     .title {
-      margin-top: 10px;
-      font-size:${market_style.font.size.normal1};
+      font-size:${market_style.font.size.small1};
       font-weight: 500;
-      line-height: 28px;
       text-align: left;
+      margin-top:15px;
     }
     .text {
       width: 100%;
-      margin-top: 15px;
+      margin-top: 5px;
       margin-bottom:29px;
       font-size:${market_style.font.size.small1};
       font-weight: 300;
@@ -275,42 +274,39 @@ const CoverGrident = styled.div`
   background:${props => props.isGradient ? "linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255,1.0))" : null};
 `
 const Review = styled.div`
-height:max-content;
-width: 1600px;
-padding:26px 42px 26px 42px;
-box-shadow: 5px 5px 10px #00000029;
-background: #ffffff;
+width: 940px;
+height:200px;
+padding:20px 30px;
+box-shadow: 3px 3px 5px #0000001A;
+border:1px solid #eaeaea;
 border-radius: 20px;
+background: #ffffff;
 .hrLine{
   width:100%;
-  height:2px;
-  background-color:#d6d6d6;
-  margin-top:26px;
-}
-.header{
-  display:flex;
-  .title{
-    font-family:Noto Sans CJK KR, Medium;
-    font-size:${market_style.font.size.normal3};
-    margin-right:29px;
-  }
-  
+  border:2px solid #efefef;
 }
 `
 const QuestionBoard = styled.div`
-// *{border: 1px solid red;}
-  width: 1600px;
-  // height: ${props => props.height};
+  width: 940px;
   background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
+  box-shadow: 3px 3px 5px #0000001A;
+  border:1px solid #eaeaea;
+  margin-bottom:50px;
   border-radius: 20px;
-  padding: 30px 50px 20px 50px;
+  padding:20px 30px;
   font-family: Noto Sans KR;
   position:relative;
-  .title{
-    font-family:Noto Sans CJK KR, Medium;
-    font-size:${market_style.font.size.normal3};
-    margin-right:29px;
+  .title {
+    font-size:${market_style.font.size.normal1};
+    font-weight: 500;
+    text-align: left;
+  }
+  .hrline{
+    width:100%;
+    border:1px solid #efefef;
+  }
+  .margin_bottom{
+    margin-bottom:10px;
   }
 `
 const Board = styled.div`
@@ -376,22 +372,29 @@ const Board = styled.div`
 `;
 const Content = styled.div`
   width: ${props => props.width || 1094}px;
-  height: ${props => props.height};
+  height: max-content;
   background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
+  box-shadow: 3px 3px 5px #0000001A;
+  padding:20px 30px;
+  border:1px solid #eaeaea;
   border-radius: 20px;
-  opacity: 1;
-  padding: 50px 20px 20px 50px;
   font-family: Noto Sans KR;
   color: #000000;
   font-weight: 300;
-  font-size:${market_style.font.size.normal1};
-  line-height: 28px;
+  font-size:${market_style.font.size.small1};
   text-align: left;
   position:relative;
+  overflow:hidden;
   .title {
+    font-size:${market_style.font.size.normal1};
     font-weight: 500;
-    margin-bottom: 12px;
+  }
+  .hrline{
+    width:100%;
+    border:1px solid #efefef;
+  }
+  .margin_bottom{
+    margin-bottom:10px;
   }
   .element {
     margin-top: 22px;
@@ -434,14 +437,8 @@ const Content = styled.div`
     }
   }
   .detail_board{
-    // border:1px solid black;
-    width:1570px;
-    border-radius: 20px;
-    padding: 15px 35px;
+    width:100%;
     height:max-content;
-    // border:1px solid black;
-    // overflow:scroll;
-    // scroll-y:hidden;
   }
 `;
 const ExpandingButton = styled.div`
@@ -583,7 +580,7 @@ class ItemDetail extends Component {
     // ,window.document.getElementById("detail_board")&&window.document.getElementById("detail_board").scrollHeight)
 
     const RenderStar = () => {
-      return <Rating size="massive" name="score" icon='star' defaultRating={parseInt(score, 10)} maxRating={5} disabled />
+      return <Rating size="small" name="score" icon='star' defaultRating={parseInt(score, 10)} maxRating={5} disabled />
     }
     const MemberListBox = () => {
       return (
@@ -615,26 +612,27 @@ class ItemDetail extends Component {
 
         <Wrapper>
           {/* thumbnail and item-info */}
-          <div className="line">
+          <div className="profileBox">
             <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg}>
               <div className="main-image" />
             </ItemImages>
 
             <ItemInfo face={item.who || who}>
               <div className="flex-align-column line">
-
+                <div className="flex spaceBetween">
                 <div className="title">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
-                <div className="expert line">
-                  {(this.props.userInfo && item.members && item.members.length > 0 && this.state.isShowmember)
+                <div className="expert">
+                  {/* {(this.props.userInfo && item.members && item.members.length > 0 && this.state.isShowmember)
                     ? <MemberListBox />
-                    : null}
+                    : null} */}
                   <div className="who" />
                   <div className="nick" onClick={() => this.setState({ isShowmember: !this.state.isShowmember })}>{item.userName}
                     {this.props.userInfo && item.members && item.members.length > 0
                       ?
                       `외 ${item.members.length}명` : null}
                   </div>
-                </div>
+                  </div>
+                  </div>
 
 
                 <Introduction id="Introduction">
@@ -670,34 +668,14 @@ class ItemDetail extends Component {
                   </div>
                 </Introduction>
 
-                <div className="expert line">
                   <div className="price-and-score line">
-                    <div className="price" style={{ marginRight: "35px" }}>
+                    <div className="price">
                       {PointFormat(item.price / (item.price>9999?10000:1) || 0)}{item.price>9999?"만":""} point</div>
-                    <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
-                      {/* {Star(item.score, 28)}({item.total || 0}) */}
-                      {/* <Rating name="score" icon='star' defaultRating={parseInt(score,10)} maxRating={5} disabled /> */}
                       <RenderStar />
-                    </div>
                   </div>
-                </div>
-
-                {/* 
-                <div className="options">
-                { / * {item.options.map(opt => <Options key={opt} data={opt} />)} * / }
-                <div className="combo-wrapper line">
-                <div className="text">모양</div>
-                <div className="box WIDTH360"></div>
-                </div>
-                <div className="combo-wrapper line">
-                <div className="text">수량</div>
-                <div className="box WIDTH178"></div>
-                </div>
-                </div>
-            */}
 
                 <div className="bottom">
-                  <div className="buttons line">
+                  <div className="buttons flex">
                     {item.user_id === (this.props.userInfo && this.props.userInfo.uid) ?
                       <div onClick={this.modifyThisItem} className="button first">
                         <div>
@@ -722,8 +700,6 @@ class ItemDetail extends Component {
                           }
                           }>
                           <div>
-                            {/* <div onClick={_ => this.buyThisItem(_, item)} > */}
-
                             <div className="text">아이템 구입</div>
                           </div>
                         </Link>
@@ -744,20 +720,18 @@ class ItemDetail extends Component {
           </div>
 
           {/* item-contents */}
-          <div style={{ marginTop: "35px" }}>
+          <div style={{ marginTop: "20px" }}>
             <Content
               id="contents_rgn"
-              style={{ marginTop: "15px",overflow: "hidden"}}
-              // height={expandingContent ? "100%" : "400px"}
-              width={1600}>
-              <div className="title">아이템 상세내용</div>
+              width={940}>
+              <div className="title margin_bottom">아이템 상세내용</div>
+              <div className="hrline margin_bottom"/>
               {item && item.upload_type === "blog"
                 ? <div className="detail_board" id="detail_board">
                   <CardSourceDetailContainer
                     bought={item.bought}
                     isCancel
                     cardId={item.cardId}
-                  // edit={item.user_id === (this.props.userInfo && this.props.userInfo.uid)}
                   />
                 </div>
                 : null}
@@ -771,21 +745,11 @@ class ItemDetail extends Component {
                   />
                 </div>
                 : null}
-              {/* {isWrapperContent&&<CoverGrident isGradient={!expandingContent}/>} */}
             </Content>
-            {/* {isWrapperContent&&
-           <ExpandingButton width={1600}>
-              <div onClick={() => this.setState({ expandingContent: !expandingContent })} className="button">
-                <div className="font">
-                  {expandingContent ? "▲ 접기" : "▼ 펼쳐보기"}
-                </div>
-              </div>
-            </ExpandingButton>
-           }  */}
           </div>
 
           {/* review and board */}
-          <div style={{ marginTop: "35px" }}>
+          <div style={{ marginTop: "20px" }}>
             <Review>
               <ItemReviewContainer
                 user_id={item.user_id}
@@ -793,38 +757,15 @@ class ItemDetail extends Component {
                 handler={detail => this.setState({ reviewdetail: true, detail: detail })}
                 isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} />
             </Review>
-
-            {
-              this.state.isexpandingReview &&
-              <ExpandingButton width={1600}>
-                <div onClick={() => this.setState({ expandingReview: !expandingReview })} className="button">
-                  <div className="font">
-                    {/* {expandingReview ? "▲접기" : "▼펼쳐보기"} */}
-                  </div>
-                </div>
-              </ExpandingButton>
-            }
-
           </div>
 
 
-          <div style={{ marginTop: "35px" }}>
-            <QuestionBoard style={{ marginTop: "15px", overflow: "hidden" }} height={expandingBoard ? "100%" : "250px"}>
-              <div className="title">게시판</div>
+          <div style={{ marginTop: "20px" }}>
+            <QuestionBoard>
+            <div className="title margin_bottom">게시판</div>
+              <div className="hrline margin_bottom"/>
               <ItemQuestionContainer user_id={item.user_id} isExpanding={(result) => { this.setState({ isexpandingBoard: result }) }} />
-              {/* {!this.state.isexpandingBoard && <CoverGrident isGradient={!expandingBoard} />} */}
             </QuestionBoard>
-            {/* {!this.state.isexpandingBoard &&
-
-              <ExpandingButton width={1600}>
-                <div onClick={() => this.setState({ expandingBoard: !expandingBoard })} className="button">
-                  <div className="font">
-                    {expandingBoard ? "▲접기" : "▼펼쳐보기"}
-                  </div>
-                </div>
-              </ExpandingButton>
-            } */}
-
           </div>
 
         </Wrapper>

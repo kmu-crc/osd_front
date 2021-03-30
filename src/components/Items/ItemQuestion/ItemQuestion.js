@@ -100,7 +100,7 @@ const Page = styled.div`
 //`
 const ReplyForm = styled.textarea`
         width:100%;
-        height:80px;
+        height:60px;
         outline:none;
         resize:none;
         border-radius:10px;
@@ -134,12 +134,12 @@ const QuestionButton = styled.div`
     justify-content:center;
     align-items:center;
     border:1px solid red;
-    margin-left:13px;
+    margin-left:20px;
     cursor:pointer;
     color:red;
     .quest{
         font-weight:500;
-        font-size:${market_style.font.size.normal3};
+        font-size:${market_style.font.size.small1};
     }
     
 `
@@ -315,7 +315,7 @@ class ItemQuestion extends Component {
         const Question = (props) => {
             return (
                 <React.Fragment>
-                    <HRLine height={1}/>
+                   
                 
                 <ReplyBox >
                     {props.is_question==true?<div className="number">{props.numbering}</div>:null}
@@ -346,7 +346,9 @@ class ItemQuestion extends Component {
                                 +(new Date(props.create_time).getDate()<10?'0'+new Date(props.create_time).getDate():new Date(props.create_time).getDate())
                             }
                     </div>
+                    
                 </ReplyBox>
+                <HRLine height={1}/>
                 {
                             this.state.open_id==props.uid?
                             <React.Fragment>
@@ -362,7 +364,7 @@ class ItemQuestion extends Component {
 
             {master ?
                 null
-                : <div className="line" style={{ marginTop: "34px", }}>
+                : <div style={{ marginTop: "5px",display:"flex" }}>
                     {/* <div className="input-wrapper"> */}
                         <ReplyForm
                             id="this_comment"
@@ -374,7 +376,7 @@ class ItemQuestion extends Component {
                     <QuestionButton onClick={this.requestQuestion} >
                         <div className="quest" >문의</div></QuestionButton>
                 </div>}
-            <HRLine height={2} marginTop={25}/>
+            {/* <HRLine height={2} marginTop={25}/> */}
             <div>
                 {question && question.length > 0 ?
                     question.map((item, index) =>{
@@ -405,7 +407,6 @@ class ItemQuestion extends Component {
                                         <div className="text" id="answer" >답변</div></QuestionButton>
                                 </AnswerBox> : null}
                             </div>)}) : null}
-                            <HRLine height={1} marginTop={0}/>
             </div>
             {total>10?
             <Page>

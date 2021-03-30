@@ -37,20 +37,18 @@ const LocationList = [
 // CSS STYLING
 
 const Expert = styled.div`
-  margin-right: ${prop => prop.mRight}px;
-  border: 1px solid transparent;
-  width: 468px;
-  height: 491px;
+  width: 300px;
+  height: 374px;
+  margin-right:20px;
+  padding:20px 40px 15px 40px;
+  border:1px solid #eaeaea;
   background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
+  box-shadow: 3px 3px 5px #0000001A;
   border-radius: 20px;
 `;
 const Profile = styled.div`
-
-  width: 227px;
-  height: 228px;
-  margin-top: 18px;
-  margin-left: 122px;
+  width: 220px;
+  height: 220px;
   background: transparent;
   background-image: url(${props => props.face});
   border-radius: 50%;
@@ -59,9 +57,8 @@ const Profile = styled.div`
 `;
 const LikeWrapper = styled.div`
   width:100%;
+  font-size:${market_style.font.size.small1};
   text-align:center;
-  margin-top:20px;
-  font-size:30px;
   cursor:pointer;
   .unlike{
     color:#ff0000;
@@ -72,97 +69,80 @@ const LikeWrapper = styled.div`
   }
 `;
 const TextWrapper = styled.div`
-  margin-top: 27px;
-  margin-left: auto;
-  margin-right: auto;
-  width: max-content;
+  width:100%;
   font-family: Noto Sans KR;
   text-align: center;
   letter-spacing: 0;
+  margin-top:10px;
   .nick {
     font-weight: 500;
-    font-size:${market_style.font.size.big2};
-    color: #000000;
-    line-height: 33px;
+    font-size:${market_style.font.size.small1};
+    color: black;
   }
   .category {
-    margin-top: 12px;
     font-weight: 300;
-    font-size:${market_style.font.size.small1};
+    font-size:${market_style.font.size.mini2};
+    margin-top: 5px;
     line-height: 22px;
-    color: #FF0000;
+    color: red;
   }
   .create_time{
-    font-size:${market_style.font.size.small1};
-    font-weight:200;
-    font-family:Noto Sans CJK KR,Light;
-    margin-top:4px;
+    font-weight:300;
+    font-size:${market_style.font.size.mini2};
+    color:#707070;
   }
 `;
 const Counter = styled.div`
-  margin-top: 44px;
+  margin-top: 5px;
   display: flex;
-  flex-direction: row;
-  width: max-content;
-  margin-left: auto;
-  margin-right: auto;
-  font-family: Noto Sans KR;
+  justify-content:center;
+  width: 100%;
   letter-spacing: 0;
   color: #000000;
+  font-size:${market_style.font.size.mini2};
 
   .items {
     text-align: center;
-    font-size:${market_style.font.size.mini1};
     font-weight: 300;
-    line-height: 18px;
   }
   .v-line {
-    margin-left: 10.5px;
-    margin-right: 10.5px;
-    width: 0px;
-    height: 16px;
-    border: 0.5px solid #707070;
+    font-size:${market_style.font.size.tiny1};
   }
   .likes {
-    text-align: left;
-    font-size:${market_style.font.size.mini1};
-    font-weight: 500;
-    line-height: 18px;
+    font-weight: 300;
   }
 `;
 const Introduction = styled.div`
-  margin-right: ${prop => prop.mRight}px;
+  width:620px;
+  height:374px;
   position:relative;
-  width: 982px;
-  height: 491px;
   background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
+  box-shadow: 3px 3px 5px #0000001A;
+  border:1px solid #eaeaea;
   border-radius: 20px;
-  opacity: 1;
-  padding: 62px 59px 61px 60px;
+  padding: 40px 50px;
   font-family: Noto Sans KR;
   .wrapItem{
     width:100%;
     height:100%;
     overflow: auto;
     .title {
-      font-size:${market_style.font.size.normal2};
+      font-size:${market_style.font.size.normal1};
       font-weight: 500;
-      line-height: 28px;
-      text-align: left;
     }
     .text {
       width: 100%;
-      margin-top: 15px;
-      margin-bottom:25px;
+      margin-top: 5px;
       font-size:${market_style.font.size.small1};
       font-weight: 300;
-      line-weight: 27px;
-      text-align: left;
+      margin-bottom:25px;
       overflow: hidden;
     }
     .flex{
       display:flex;
+    }
+    .flexWrap{
+      flex-wrap:wrap
     }
     .gradient_box{
       position:absolute;
@@ -188,136 +168,62 @@ const Introduction = styled.div`
 
 
 `;
-//const RequestBoard = styled.div`
-//  margin-right: ${prop => prop.mRight}px;
-//  width: ${prop => prop.large ? 1094 : 566}px;
-//  height: ${prop => prop.large ? 1168 : 491}px;
-//  background: #FFFFFF;
-//  box-shadow: 5px 5px 10px #00000029;
-//  border-radius: 20px;
-//  opacity: 1;
-//  padding: 62px 65px 35px 60px;
-//  font-family: Noto Sans KR;
-//  .line {
-//    display: flex;
-//    flex-direction: row;
-//    .title {
-//      font-weight: 500;
-//      font-size: 19px;
-//      text-align: left;
-//      line-height: 27px;
-//      letter-spacing: 0;
-//      color: #000000;
-//      opacity: 1;
-//    }
-//    .button {
-//      margin-left: auto;
-//      font-weight: 500;
-//      font-size: 19px;
-//      text-align: left;
-//      line-height: 27px;
-//      letter-spacing: 0;
-//      color: #FF0000;
-//      opacity: 1;
-//      cursor: default;
-//    }
-//  }
-//  .board {
-//    margin-top: 42px;
-//    width: 441px;
-//    .lement {
-//      font-size: 15px;
-//      text-align: left;
-//      line-height: 20px;
-//      color: #707070;
-//      letter-spacing: 0;
-//      opacity: 1;
-//      margin-top: 12px;
-//    }
-//  }
-//`;
 const ItemInfo = styled.div`
-  margin-right: ${prop => prop.mRight}px;
   margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
   width: ${props => props.width == null ? "468px" : props.width + "px"};
   height: ${props => props.height == null ? "491px" : props.height + "px"};
   background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
+  box-shadow: 3px 3px 5px #0000001A;
   border-radius: 20px;
+  border:1px solid #eaeaea;
   opacity: 1;
   font-family: Noto Sans KR;
-  padding: 30px 60px 30px 60px;
+  padding: 20px 30px 20px 30px;;
 
   .title {
-    font-size:${market_style.font.size.normal2};
+    font-size:${market_style.font.size.normal1};
     font-weight: 500;
-    line-height: 28px;
     text-align: left;
+  }
+  .hrline{
+    width:100%;
+    border:2px solid #efefef;
   }
   .margin_bottom{
     margin-bottom:10px;
   }
-  .text {
-    width: 371px;
-    height: 86px;
-    margin-top: 20px;
-    margin-bottom: 34px;
-    font-size:${market_style.font.size.small1};
-    font-weight: 300;
-    line-weight: 27px;
-    text-align: left;
-    // overflow: auto;
-    overflow:scroll-y;
-  }
   .wrapItem{
-    max-width:100%;
-    max-height:390px;
-    margin-top:30px;
     width:100%;
-    height:max-content;
-    overflow:hidden;
-    overflow:auto;
-    overflow-y:overlay;
+    height:230px;
     display:flex;
   }
 
   .wrapGallery{
-    max-width:100%;
-    max-height:300px;
-    margin-top:30px;
     width:100%;
-    height:max-content;
-    overflow:auto;
-    overflow-y:overlay;
+    height:210px;
     display:flex;
-  }
-  &:hover{
-    .wrapItem{
-      overflow:auto;
-      overflow-y:overlay;
-    }
   }
 `;
 const AdditionalInfo = styled.div`
-  margin-right: ${prop => prop.mRight}px;
   margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
   width: ${props => props.width == null ? "468px" : props.width + "px"};
   height: ${props => props.height == null ? "491px" : props.height + "px"};
   background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
+  box-shadow: 3px 3px 5px #0000001A;
   border-radius: 20px;
+  border:1px solid #eaeaea;
   opacity: 1;
-  // padding: 90px 43px 161px 54px;
-  // padding: 62px 59px 61px 60px;
-  padding: 30px 60px 30px 60px;
-
+  padding:20px 30px;
   font-family: Noto Sans KR;
   
   .title {
-    font-size:${market_style.font.size.normal2};
+    font-size:${market_style.font.size.normal1};
     font-weight: 500;
-    line-height: 28px;
     text-align: left;
+  }
+  .hrline{
+    width:100%;
+    border:2px solid #efefef;
   }
   .margin_bottom{
     margin-bottom:10px;
@@ -335,39 +241,39 @@ const AdditionalInfo = styled.div`
     // overflow: auto;
   }
   .reviewItem{
-    margin-top:30px;
     width:100%;
-    max-height:200px;
-    overflow:hidden;
-    overflow-y:auto;
+    height:113px;
     display:flex;
   }
   .wrapItem{
+    width:100%;
     max-width:100%;
     max-height:85%;
-    margin-top:30px;
-    width:100%;
-    // height:max-content;
     display:flex;
     overflow:hidden;
     overflow-y:auto;
     }
-  // &:hover{
-  //   .wrapItem{
-  //     verflow:auto;
-  //   }
-  // }
 `;
 const DesignerBoard = styled.div`
-  width: 1523px;
-  height: max-content;
+  width: ${props => props.width == null ? "468px" : props.width + "px"};
+  margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
+  margin-bottom:50px;
   background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
+  box-shadow: 3px 3px 5px #0000001A;
   border-radius: 20px;
+  border:1px solid #eaeaea;
   opacity: 1;
+  padding:20px 30px;
   font-family: Noto Sans KR;
-  padding: 90px 60px 30px 60px;
-  margin-bottom:100px;
+  .flex{
+    display:flex;
+    justify-content:flex-end;
+  }
+  .headerWrapper{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+  }
   .alignRight{
     display:flex;
     justify-content:flex-end;
@@ -376,26 +282,28 @@ const DesignerBoard = styled.div`
       cursor:pointer;
     }
   }
+  ._title {
+    width:max-content;
+    color: #000000;
+    font-size:${market_style.font.size.normal1};
+    font-weight: 500;
+  };
   .redText{
     color:red;
-    margin:20px;
   }
-  .title {
-    color: #000000;
-    font-size:${market_style.font.size.normal2};
-    font-weight: 500;
-    line-height: 28px;
-    text-align: left;
-  };
 
+  .hrline{
+    width:100%;
+    border:2px solid #efefef;
+  }
+  .margin_bottom{
+    margin-bottom:10px;
+  }
   .list {
-    // margin-top: 72px;
     font-weight: 300;
-    font-size:${market_style.font.size.small1};
+    font-size:${market_style.font.size.mini2};
     text-align: left;
-    line-height: 27px;
     color: #000000;
-
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -460,7 +368,7 @@ const Wrapper = styled.div`
   display:flex;
   align-items:center;
   flex-direction:column;
-  margin-top: 60px;
+  margin-top: 20px;
   // *{border:1px solid red;};
   .contents_box{
     width:max-content;
@@ -470,23 +378,24 @@ const Wrapper = styled.div`
 const ExpTable = styled.div`
     *{
       font-family:Noto Sans KR;
-      font-size:${market_style.font.size.small2};
+      font-size:${market_style.font.size.mini2};
     }
     width: ${props => props.width == null ? "100%" : props.width + "px"};
     height: ${props => props.height == null ? "max-content" : props.height + "px"};
     margin-left: ${props => props.mLeft == null ? "0px" : props.mLeft + "px"}px;
     margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
+    
     .row{
       width:100%;
-      height:29px;
       display:flex;
-      margin-bottom:10px;
+      margin-top:10px;
     }
     .header{
       width:100%;
-      height:29px;
       display:flex;
-      margin-bottom:5px;
+      padding:5px 0px;
+      border-top:2px solid #efefef;
+      border-bottom:2px solid #efefef;
     }
     .th{
       width:33%;
@@ -499,18 +408,6 @@ const ExpTable = styled.div`
       font-weight:200;
     }
 `;
-
-// const Thumbnail = styled.div`
-// cursor:pointer;
-// width:150px;
-// height:150px;
-// display:flex;
-// justify-content:center;
-// align-items:center;
-// background-image: ${props => `url(${props.imageURL == null ? noimg : props.imageURL})`};
-// background-size: cover;
-// background-position: center center;
-// `;
 const TitleForm = styled.input`
   padding: 10px;
   resize: none;
@@ -529,51 +426,18 @@ const CommentForm = styled.textarea`
   outline:none;
   border-radius:10px;
 `
-const WriteReview = styled.div`
-  margin-bottom:10px;
-  .form{
-      width:100%;
-      padding:10px;
-  }
-  .contents{
-      display:flex;
-      justify-content:space-between;
-      padding-left:10px;
-      padding-right:10px;
-      .score{
-
-      }
-      .buttonBox{
-          .button{
-              width:100px;
-              padding:10px;
-              border-radius:20px;
-              background-color:#707070;
-              display:flex;
-              justify-content:center;
-              align-items:center;
-              cursor:pointer;
-              .text{
-                  color:white;
-              }
-          }
-
-      }
-  }
-`;
 const TagPiece = styled.div`
     width: max-content;
-    min-width: 30px;
+    min-width: max-content;
     background-color: #EFEFEF;
-    margin-right: 5px;
-    margin-bottom: 5px;
+    margin-right: 8px;
+    margin-top: 5px;
     color: #707070;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding:3px 11px 4px 11px;
     border-radius: 15px;
     display: flex;
     justify-content: space-between;
+    font-size:${market_style.font.size.mini2}px;
     .close {
         margin-left: 10px;
         width: max-content;
@@ -581,48 +445,43 @@ const TagPiece = styled.div`
         padding: 0px 2px;
     }
 `;
-const CreateReview = styled.div`
+const CreateRequest = styled.div`
 width:100%;
 height:30px;
-margin-bottom:10px;
 display:flex;
 justify-content:flex-end;
+margin-top:10px;
+
 .button{
-    width:max-content;
-    height:max-content;
+    width:150px;
+    height:30px;
     display:flex;
     justify-content:center;
     align-items:center;
     background-color:red;
     cursor:pointer;
-    padding:12px 39px 12px 39px;
+    margin-left:20px;
+    .font{
+      font-size:${market_style.font.size.small1};
+      color:white;
+    }
 }
-.font{
-  font-size:${market_style.font.size.normal3};
-  color:white;
+.button_reverse{
+  width:150px;
+  height:30px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border:1px solid red;
+  cursor:pointer;
+  margin-left:20px;
+  .font{
+    font-size:${market_style.font.size.small1};
+    color:#707070;
+  }
 }
+
 `;
-
-// const review = {
-// average_score: 4,
-// review: [{
-// thumbnail: noimg,
-// nick_name: "닉네임",
-// explain: "리뷰입니다",
-// score: 5,
-// }, {
-// thumbnail: noimg,
-// nick_name: "닉네임",
-// explain: "리뷰입니다",
-// score: 5,
-// }, {
-// thumbnail: noimg,
-// nick_name: "닉네임",
-// explain: "리뷰입니다",
-// score: 5,
-// }],
-// };
-
 
 class DesignerDetail extends Component {
   constructor(props) {
@@ -759,7 +618,7 @@ class DesignerDetail extends Component {
       <div className="contents_box" />
       <div style={{ display: "flex" }}>
         {/* Designer */}
-        <Expert mRight={60}>
+        <Expert>
           {/* Profile */}
           <Profile face={this.state.thumbnail} />
           {/* Text */}
@@ -782,7 +641,8 @@ class DesignerDetail extends Component {
           {/* Counter */}
           <Counter>
             <div className="items">
-              {itemCount || 0}개의 아이템</div>
+              {itemCount || 0}개의 아이템 |</div>
+              &nbsp;&nbsp;
             <div className="v-line" />
             <div className="likes">{/**/}
               <Icon className="heart" size="small" color="red" />{likeCount || 0}</div>
@@ -805,7 +665,7 @@ class DesignerDetail extends Component {
             {/* <div className="title">카테고리</div>
             <div className="text">{categoryName || "전체"}</div> */}
             <div className="title">태그</div>
-            <div className="text flex">
+            <div className="text flex flexWrap">
               {
                 this.state.tag.map((item, index) => {
                   return (
@@ -836,7 +696,7 @@ class DesignerDetail extends Component {
         ||this.state.career&&this.state.career.length<=0
         ?
         null:
-        <AdditionalInfo width={1523} height={290} mTop={60}>
+        <AdditionalInfo width={940} height={202} mTop={20}>
           {
                     console.log(this.state.career)
 
@@ -851,13 +711,16 @@ class DesignerDetail extends Component {
           </div>
           {this.state.career.map((item, index) => {
             return (
+              <React.Fragment>
               <div className="row" key={index}>
                 <div className="td">{item.task}</div>
                 <div className="td">{item.explain}</div>
                 <div className="td">{item.during}</div>
               </div>
+              </React.Fragment>
             );
           })}
+          
         </ExpTable>
         </div>
       </AdditionalInfo>
@@ -865,8 +728,9 @@ class DesignerDetail extends Component {
 
 
       {/**보유아이템 */}
-      <ItemInfo width={1523} height={490} mTop={60}>
-        <div className="title">디자인 아이템</div>
+      <ItemInfo width={940} height={310} mTop={20}>
+        <div className="title margin_bottom">디자인 아이템</div>
+        <div className="hrline margin_bottom"/>
         <div className="wrapItem">
           {<HaveInItemContainer id={this.props.id} />}
         </div>
@@ -876,10 +740,12 @@ class DesignerDetail extends Component {
       {/**갤러리 아이템 */}
       {
         this.state.haveGallery==true?
-      <ItemInfo width={1523} height={491} mTop={60}>
-      <div className="title">갤러리</div>
+      <ItemInfo width={940} height={288} mTop={20}>
+      <div className="title margin_bottom">갤러리</div>
+      <div className="hrline margin_bottom"/>
       <div className="wrapGallery">
         {<HaveInGalleryContainer handleHaveGallery={(result)=>{this.setState({haveGallery:result})}} id={this.props.id} isModify={false} />}
+
       </div>
       </ItemInfo>
       :null
@@ -887,9 +753,10 @@ class DesignerDetail extends Component {
 
       {/* 리뷰 */}
       {/*  */}
-      <AdditionalInfo width={1523} height={290} mTop={60}>
+      <AdditionalInfo width={940} height={200} mTop={20}>
           <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
-        <div className="wrapItem" style={{ flexDirection: "column" }}>
+          <div className="hrline margin_bottom"/>
+          <div className="reviewItem">
           <div>
             <DesignerReviewContainer
               id={parseInt(this.props.id, 10)}
@@ -900,12 +767,14 @@ class DesignerDetail extends Component {
       {/*리뷰자세히*/}
       {this.state.reviewdetail ? <ReviewDetailModal open={this.state.reviewdetail} close={() => this.setState({ reviewdetail: false })} detail={this.state.detail} /> : null}
 
-      <div style={{ marginTop: "61px", display: "flex", flexDirection: "row" }}>
-        <DesignerBoard>
-          <div className="title" style={{marginBottom:"20px"}}>디자이너 게시판</div>
-          <div className="title">
-            {this.props.userInfo&&this.props.DesignerViewDetail&&this.props.DesignerViewDetail.user_id!==this.props.userInfo.uid?<div className="redText alignRight" ><div className="link" onClick={this.onClickRequest}>디자인 의뢰</div></div>:null}
+        <DesignerBoard width={940} height={200} mTop={20}>
+          <div className="headerWrapper margin_bottom">
+            <div className="_title">디자이너 게시판</div>
+            {/* <div className="_title redText">
+              {this.props.userInfo&&this.props.DesignerViewDetail&&this.props.DesignerViewDetail.user_id!==this.props.userInfo.uid?<div className="link" onClick={this.onClickRequest}>디자인 의뢰</div>:null}
+            </div> */}
           </div>
+          <div className="hrline margin_bottom"/>
           <div className="list">
             <DesignerRequestBoardContainer id={parseInt(this.props.id, 10)} />
           </div>
@@ -916,39 +785,18 @@ class DesignerDetail extends Component {
               handlerModal = {(write)=>{this.setState({write:write})}}
               createNoneRequest={(title,content)=>this.createNoneRequest(title,content)}
             />
-            // <WriteReview>
-            //   <div className="form">
-            //     제목:
-            //     <TitleForm
-            //       value={this.state.title || ""}
-            //       onChange={event => this.setState({ [event.target.name]: event.target.value })}
-            //       name="title"
-            //     />
-            //     내용:
-            //     <CommentForm
-            //       value={this.state.comment || ""}
-            //       onChange={event => this.setState({ [event.target.name]: event.target.value })}
-            //       name="comment"
-            //     />
-            //   </div>
-            //   <div className="contents">
-            //     <div className="buttonBox">
-            //       <div className="button" onClick={this.createNoneRequest} >
-            //         <div className="text" >작성하기</div>
-            //       </div>
-            //     </div>
-            //   </div>
-            // </WriteReview>
             :
             this.props.userInfo==null?null:
-            <CreateReview onClick={() => this.setState({ write: true,content:"" })}>
-              <div className="button">
-                <div className="font">게시글 작성</div>
+            <CreateRequest>
+              <div className="button_reverse" onClick={this.onClickRequest}>
+                <div className="font">디자인 의뢰</div>
               </div>
-            </CreateReview>
+              <div className="button" onClick={() => this.setState({ write: true,content:"" })}>
+                <div className="font" >게시글 작성</div>
+              </div>
+            </CreateRequest>
           }
         </DesignerBoard>
-      </div>
 
     </Wrapper>);
   }

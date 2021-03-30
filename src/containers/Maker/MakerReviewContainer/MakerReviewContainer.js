@@ -6,16 +6,9 @@ import Review from "components/Items/Review";
 import styled from "styled-components";
 
 const ReviewBox = styled.div`
-    width: 100%;
+    min-width:103%;
     height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    overflow-y: scroll;
-    overflow-y: overlay;
-    &:hover {
-      overflow-y: scroll;
-      overflow-y: overlay;
-    }
+    overflow:${props=>props.isScroll?"overlay":"hidden"};
 `;
 
 class MakerReviewContainer extends Component {
@@ -27,7 +20,9 @@ class MakerReviewContainer extends Component {
 
   render() {
     return (
-      <ReviewBox>
+      <ReviewBox
+      isScroll={this.props.dataListAdded.length>2?true:false}
+      >
         <ScrollList
           handler={this.props.handler}
           scrollId={"review-scroller"}

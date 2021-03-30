@@ -46,53 +46,30 @@ const Content = styled(ContentBox)`
 //  }
 //`;
 const ListElement = styled.div`
-  width: 100%;
-  margin: 0 auto 0.9rem;
-  font-size:${market_style.font.size.mini2};
-  border-radius: 3px 3px 3px 3px;
-  overflow: hidden;
-  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
-  background-color: #FFFFFF;
-  text-align: left;
-  box-sizing: border-box;
-  padding: 10px;
-  list-style: none;
-  display: flex;
-  fiex-direction: row;
-  .title_{
-    min-width:67%;
+  width:100%;
+  height:36px;
+  border: 1px solid #eaeaea;
+  padding:6px 54px 6px 54px;
+  display:flex;
+  .title{
+    min-width:83%;
     display:flex;
     align-items:center;
-    padding:5px;
+    font-size:${market_style.font.size.mini2};
   }
   .writer{
-    min-width:10%;
+    min-width:12%;
     display:flex;
     align-items:center;
-    padding:5px;
-    overflow:hidden;
+    font-size:${market_style.font.size.mini2};
   }
   .date{
-    min-width:20%;
+    min-width:3%;
+    display:flex; 
+    justify-content:center;
     align-items:center;
-    padding:5px;
-  }
-  // .title{
-  //   min-width:70%;
-  //   padding:5px;
-  // }
-  // .writer{
-  //   min-width:10%;
-  //   padding:5px;
-  //   display:flex;
-  //   // justify-content:center;
-  // }
-  // .date{
-  //   min-width:20%;
-  //   padding:5px;
-  //   display:flex;
-  //   // justify-content:center;
-  // }
+    font-size:${market_style.font.size.mini2};
+    }
 `;
 
 export default class MakerRequestBoard extends Component {
@@ -103,9 +80,9 @@ export default class MakerRequestBoard extends Component {
         return (<React.Fragment>
             <Content>
                 <ListElement>
-                    {/* title   */}<div className="title_">제목</div>
-                    {/* writer  */}<div className="writer">글쓴이</div>
-                    {/* date    */}<div className="date">작성일</div>
+                    <div className="title">제목</div>
+                    <div className="writer">글쓴이</div>
+                    <div className="date">작성일</div>
                 </ListElement>
                 <Wrapper className="listWrap">
                     {/* {this.state.rendering ? */}

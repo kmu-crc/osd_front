@@ -9,21 +9,23 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import ReviewDetailModal from "components/Commons/ReviewDetailModal";
 import WriteReviewModal from "components/Commons/WriteReviewModal"
 import market_style from "market_style";
+import ReviewPic from "components/Items/Review";
 
 const Reviews = styled.div`
   background: #FFFFFF;
-  opacity: 1;
-  padding: 10px;
-  .header{
+  width:100%;
+  .headerWrapper{
       display:flex;
       align-items:center;
       justify-content:space-between;
+      border-bottom:2px solid #efefef;
+      padding-bottom:10px;
+      margin-bottom:10px;
     .wrapper{
         display:flex;
-        .title{
-            font-size:${market_style.font.size.normal3};
-            font-family:Noto Sans KR, Medium;
-            margin-right:29px;
+        .title_{
+            font-size:${market_style.font.size.normal1};
+            font-weight: 500;
         }  
         .score{
             font-size:${market_style.font.size.small1};
@@ -31,18 +33,19 @@ const Reviews = styled.div`
             font-weight:200;
         }    
     }
-    .button{
-
-    }
   }
   .hrLine{
-      width:100%;
-      height:2px;
-      background-color:#d6d6d6;
-      margin-top:19px;
-      margin-bottom:17px;
-  }
+    width:100%;
+    height:2px;
+    border:2px solid #EFEFEF;
+    }
+    margin_bottom{
+        margin-bottom:10px;
+    }
   .reviewContent{
+    width:103%;
+    height:113px;
+    overflow-Y:${props=>props.isScroll?"overlay":"hidden"};
     display:flex;
     flex-wrap:wrap;
     .piece{
@@ -61,72 +64,21 @@ const Reviews = styled.div`
     }
   }
 `;
-const ReviewForm = styled.textarea`
-  padding:10px;
-  resize:none;
-  width:100%;
-  height:100px;
-  border:1px solid #E6E6E6;
-  outline:none;
-  border-radius:10px;
-`
+
 const ReviewButton=styled.div`
-  width:110px;
-  height:43px;
+  width:150px;
+  height:30px;
   border:1px solid red;
   display:flex;
   justify-content:center;
   align-items:center;
   cursor:pointer;
   .text{
-    font-size:${market_style.font.size.normal3};
-      color:red;
+    font-size:${market_style.font.size.small1};
+      color:#707070;
   }
 `
-//const ScoreForm = styled.input.attrs({ type: "number" })`
-//        min-width:50px;
-//        height:100%;
-//        outline:none;
-//        border:1px solid #E6E6E6;
-//        border-radius:10px;
-//`
-const WriteReview = styled.div`
-// *{
-//     border:1px solid black;
-// }
-  margin-bottom:10px;
-  .form{
-      width:100%;
-      padding:10px;
-  }
-  .contents{
-      display:flex;
-      justify-content:space-between;
-      padding-left:10px;
-      padding-right:10px;
-      .score{
-        // display:flex;
-        // align-items:flex-end;
-      }
-      .buttonBox{
-          .button{
-              width:100px;
-              padding:10px;
-              border-radius:20px;
-              background-color:#707070;
-              display:flex;
-              justify-content:center;
-              align-items:center;
-              cursor:pointer;
-              .text{
-                  color:white;
-              }
-          }
 
-      }
-  }
-
-`
 const Page = styled.div`
     width: max-content;
     margin-top: 45px;
@@ -164,13 +116,13 @@ const ReviewPiece = styled.div`
     display:flex;
     border-radius:20px;
     .pics{
-        min-width: 80px;
-        min-height: 80px;
+        min-width: 130px;
+        min-height: 113px;
         max-width: 80px;
         max-height: 80px;
         border: 1px solid #E6E6E6;
         margin-right: 20px;
-        background-color: white;
+        background-color: #eaeaea;
         background-image: url(${props => props.img});
         background-size: cover;
         background-repeat: none;
@@ -230,7 +182,42 @@ const CreateReview = styled.div`
         color:white;
     }
 `
-
+const Wrapper = styled.div`
+  width:430px;
+  height:113px;
+  display:flex;
+  color:#707070;
+  font-size:${market_style.font.size.mini2};
+  margin-right:20px;
+  margin-bottom:20px;
+  .content{
+    width:100%;
+    height:100%;
+    margin-left:10px;
+    .row{
+      width: max-content;
+      margin-bottom: 15x;
+    }
+    .text_{
+      margin-bottom: 10px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      word-wrap:break-word;
+    }
+  }
+  cursor:pointer;
+  :hover{ background-color: #EFEFEF;}
+`;
+const Thumbnail = styled.div`
+  min-width:130px;
+  min-height:113px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background-image: ${props => `url(${props.imageURL == null ? noimg : props.imageURL})`};
+  background-size: cover;
+  background-position: center center;
+`;
 class ItemReview extends Component {
     constructor(props) {
         super(props);
@@ -363,33 +350,44 @@ class ItemReview extends Component {
         const Review = (props) => {
             console.log(props)
             const thumbnail_list = props.thumbnail!=null?props.thumbnail.split(","):[];
+            const RenderingStar = ()=>{
+                return <Rating name="score" size="tiny" icon='star' defaultRating={parseInt(props.score,10)||0} maxRating={5} disabled/>
+              }
             return (
-                <ReviewPiece onClick={() => {this.setState({detail:props,reviewDetail:true})}} img={thumbnail_list[0] || noimg}>
-                    {thumbnail_list.length<=0?null:<div className="pics" />}
-                    <div className="_contents">
-                        <div className="header">
-                            <div className="leftbox">
-                                <div className="nickname">{props.nick_name}</div>
-                                <div className="score">
-                                    <Rating name="score" icon='star' defaultRating={parseInt(props.score,10)||0} maxRating={5} disabled />
-                                </div>
-                            </div>
-                        <div className="createTime">
-                            {
-                                    new Date(props.create_time).getFullYear()+"."
-                                +((new Date(props.create_time).getMonth()+1)<10?'0'+(new Date(props.create_time).getMonth()+1):(new Date(props.create_time).getMonth()+1))+"."
-                                +(new Date(props.create_tㅔime).getDate()<10?'0'+new Date(props.create_time).getDate():new Date(props.create_time).getDate())
-                            }
-                        </div>
-                        </div>
-                        <div className="comment">
-                            {props.comment && props.comment.slice(0, 100)}
-                            {props.comment && props.comment.length > 100 ? "..." : ""}</div>
-                    </div>
-                </ReviewPiece>
+                <Wrapper onClick={() => this.props.handler(props)} onClick={() => {this.setState({detail:props,reviewDetail:true})}} img={thumbnail_list[0] || noimg}>
+                <Thumbnail imageURL={props.m_img} />
+                <div className="content">
+                  <div className="row"><RenderingStar/></div>
+                  <div className="row">{props.nick_name}</div>
+                  <div className="text_">{props.comment && props.comment.slice(0, 64)}{props.comment && props.comment.length > 64 ? "..." : ""}</div>
+                </div>
+                </Wrapper>
+                // <ReviewPiece onClick={() => {this.setState({detail:props,reviewDetail:true})}} img={thumbnail_list[0] || noimg}>
+                //     {thumbnail_list.length<=0?null:<div className="pics" />}
+                //     <div className="_contents">
+                //         <div className="header">
+                //             <div className="leftbox">
+                //                 <div className="nickname">{props.nick_name}</div>
+                //                 <div className="score">
+                //                     <Rating name="score" icon='star' defaultRating={parseInt(props.score,10)||0} maxRating={5} disabled />
+                //                 </div>
+                //             </div>
+                //         <div className="createTime">
+                //             {
+                //                     new Date(props.create_time).getFullYear()+"."
+                //                 +((new Date(props.create_time).getMonth()+1)<10?'0'+(new Date(props.create_time).getMonth()+1):(new Date(props.create_time).getMonth()+1))+"."
+                //                 +(new Date(props.create_tㅔime).getDate()<10?'0'+new Date(props.create_time).getDate():new Date(props.create_time).getDate())
+                //             }
+                //         </div>
+                //         </div>
+                //         <div className="comment">
+                //             {props.comment && props.comment.slice(0, 100)}
+                //             {props.comment && props.comment.length > 100 ? "..." : ""}</div>
+                //     </div>
+                // </ReviewPiece>
             )
         }
-        console.log(this.props);
+        console.log("==========",this.state,this.props);
         return (<React.Fragment>
             <ReviewDetailModal 
                 open={this.state.reviewDetail}
@@ -405,13 +403,12 @@ class ItemReview extends Component {
                 {...this.props}
             />
             {/* <WriteReviewModal open={this.state.writeReview} close={() => this.setState({ writeReview: false })}/> */}
-            <Reviews>
-                <div className="header">
+            <Reviews isScroll={review.length>2?true:false}>
+                <div className="headerWrapper">
                     <div className="wrapper">
-                        <div className="title">리뷰</div>
-                        <div className="score">총점(리뷰수):<TotalScore/>({total})</div>
+                        <div className="title_">리뷰({total})</div>
+                        {/* <div className="score">총점(리뷰수):<TotalScore/>({total})</div> */}
                     </div>
-                    <div className="button">
                         {
                             !master ?
                             payment && payment.length > 0 ?
@@ -423,25 +420,20 @@ class ItemReview extends Component {
                             :
                             null
                         }
-                    </div>
                 </div>
-                <div className="hrLine"/>
-
-
                 <div className="reviewContent">
                     {review && review.length > 0 ?
                         review.map((item, index) =>{
                             reviewCount++;
-                            const styleinfo = reviewCount%2==1?"piece marginInfo":"piece";
                             return(
-                            <div  className={styleinfo} key={index}>
+                            <React.Fragment>
                                 <Review
                                     {...item}
                                     key={index}
                                     itsmine={item.user_id === (userInfo && userInfo.uid)}
                                     is_review={item.sort_in_group === 0}
                                 />
-                                {reply && item.uid === this.state.targetId ?
+                                {/* {reply && item.uid === this.state.targetId ?
                                     <div className="line" style={{ marginTop: "34px", }}>
                                         <div className="input-wrapper">
                                             <textarea
@@ -452,8 +444,8 @@ class ItemReview extends Component {
                                         </div>
                                         <div className="button" onClick={() => this.requestAnswer(item)} >
                                             <div className="text" >답변</div></div>
-                                    </div> : null}
-                                </div>)}) : <div className="blank">작성된 리뷰가 없습니다.</div>}
+                                    </div> : null} */}
+                                </React.Fragment>)}) : <div className="blank">작성된 리뷰가 없습니다.</div>}
                 </div>
                 {total>10?
                 <Page>

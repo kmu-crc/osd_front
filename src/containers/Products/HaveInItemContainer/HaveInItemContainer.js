@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetHaveInItemRequest } from "actions/Product";
 import ScrollList from "components/Commons/ScrollList";
-import Item from "components/Items/Item";
+import Item_mini from "components/Items/Item_mini";
 import styled from "styled-components";
 const ScrollBox = styled.div`
-    width: 100%;
+    min-width:103%;
     height: 100%;
+
+    overflow:${props=>props.isScroll?"overlay":"hidden"};
 `;
 class HaveInItemContainer extends Component {
   componentWillMount() {
@@ -20,10 +22,13 @@ class HaveInItemContainer extends Component {
   render() {
     console.log("test-----",this.props);
     return(
-      <ScrollBox>
+      <ScrollBox
+      isScroll={this.props.dataListAdded.length>4?true:false}
+      >
         <ScrollList
-          cols={6} type="item" getListRequest={this.getList} ListComponent={Item}
-          dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />       
+          cols={8} type="item" getListRequest={this.getList} ListComponent={Item_mini}
+          isMini={true} dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />       
+        
       </ScrollBox>
 
       

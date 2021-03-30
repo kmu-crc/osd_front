@@ -78,6 +78,7 @@ const ListElement = styled.div`
     display:flex;
     align-items:center;
     overflow:hidden;
+    font-size:${market_style.font.size.mini2};
   }
   .response_{
     min-width:12%;
@@ -87,12 +88,13 @@ const ListElement = styled.div`
     cursor:pointer;
   }
   .date{
-    min-width:3%;
+    min-width:max-content;
     display:flex;
     justify-content:center;
     align-items:center;
     padding:5px;
     overflow:hidden;
+    font-size:${market_style.font.size.mini2};
   }
 `;
 const ThumbnailWriter = styled.div`
