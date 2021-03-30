@@ -1673,7 +1673,7 @@ class CardSourceDetail extends Component {
                                               <a href={JSON.parse(item.content).contents} ><i className="save icon large" />PDF다운로드</a>
                                             </div>
                                           </div>
-                                          <PdfViewer pdf={JSON.parse(item.content).contents} />
+                                          <PdfViewer pdf={JSON.parse(item.content).contents} height={true} />
                                         </React.Fragment>}
                                       {/* {item.content && JSON.parse(item.content).contents} */}
                                     </div>
