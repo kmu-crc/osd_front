@@ -64,6 +64,7 @@ const initialState = {
     WaitingList: { status: 'INIT' },
     WaitingToAcceptList: { status: 'INIT' },
     status: {
+        PDFURL: "",
         Message: "", list: null, like: false, new_design_id: null,
         WaitingList: [], WaitingToAcceptList: [],
         DesignDetail: [], DesignDetailView: [], DesignForked: [],
@@ -130,66 +131,36 @@ export function Design(state, action) {
         state = initialState
 
     switch (action.type) {
-        case FORK_DESIGN:
-            return update(state, { status: { DesignForked: { $set: "WAIT_FORK" } } })
-        case FORK_DESIGN_SUCCESS:
-            return update(state, { status: { DesignForked: { $set: "SUCCESS_FORK" }, new_design_id: { $set: action.new_design_id }, Message: { $set: action.message } } })
-        case FORK_DESIGN_FAILURE:
-            return update(state, { status: { DesignForked: { $set: "FAILURE_FORK" } } })
-        case FORK_DESIGN_LIST:
-            return update(state, { status: { DesignForked: { $set: "WAIT_FORK_LIST" } } })
-        case FORK_DESIGN_LIST_SUCCESS:
-            return update(state, { status: { DesignForked: { $set: "SUCCESS_FORK_LIST" }, list: { $set: action.list }, Message: { $set: action.message } } })
-        case FORK_DESIGN_LIST_FAILURE:
-            return update(state, { status: { DesignForked: { $set: "FAILURE_FORK_LIST" } } })
-        case GET_LIKE_DESIGN:
-            return update(state, { LikeDesign: { status: { $set: "WATTING" } } });
-        case GET_LIKE_DESIGN_SUCCESS:
-            return update(state, { LikeDesign: { status: { $set: "SUCCESS" } }, status: { like: { $set: action.like } } });
-        case GET_LIKE_DESIGN_FAILURE:
-            return update(state, { LikeDesign: { status: { $set: "FAILURE" } }, status: { like: { $set: action.like } } });
-        case LIKE_DESIGN:
-            return update(state, { LikeDesign: { status: { $set: "WATING" } } });
-        case LIKE_DESIGN_SUCCESS:
-            return update(state, { LikeDesign: { status: { $set: "SUCCESS" } } });
-        case LIKE_DESIGN_FAILURE:
-            return update(state, { LikeDesign: { status: { $set: "FAILURE" } } });
-        case UNLIKE_DESIGN:
-            return update(state, { LikeDesign: { status: { $set: "WATING" } } });
-        case UNLIKE_DESIGN_SUCCESS:
-            return update(state, { LikeDesign: { status: { $set: "SUCCESS" } } });
-        case UNLIKE_DESIGN_FAILURE:
-            return update(state, { LikeDesign: { status: { $set: "FAILURE" } } });
-        case DESIGN_NOT_FOUND:
-            return update(state, { DesignDetail: { status: { $set: DESIGN_NOT_FOUND } }, })
-        case GET_WAITING_LIST:
-            return update(state, { WaitingList: { status: { $set: "WAITING" } } })
-        case GET_WAITING_LIST_SUCCESS:
-            return update(state, { status: { WaitingList: { $set: action.list } }, WaitingList: { status: { $set: "SUCCESS" } } })
-        case GET_WAITING_LIST_FAILURE:
-            return update(state, { status: { WaitingList: { $set: action.list } }, WaitingList: { status: { $set: "FAILURE" } } })
-        case GET_WAITING_TO_ACCEPT_LIST:
-            return update(state, { WaitingToAcceptList: { status: { $set: "WAITING" } } })
-        case GET_WAITING_TO_ACCEPT_LIST_SUCCESS:
-            return update(state, { status: { WaitingToAcceptList: { $set: action.list } }, WaitingToAcceptList: { status: { $set: "SUCCESS" } } })
-        case GET_WAITING_TO_ACCEPT_LIST_FAILURE:
-            return update(state, { status: { WaitingToAcceptList: { $set: action.list } }, WaitingToAcceptList: { status: { $set: "FAILURE" } } })
-        case UPDATE_DESIGN_INFO:
-            return update(state, { UpdateDesignInfo: { status: { $set: "WATTING" } } })
-        case UPDATE_DESIGN_INFO_SUCCESS:
-            return update(state, { UpdateDesignInfo: { status: { $set: "SUCCESS" } } })
-        case UPDATE_DESIGN_INFO_FAILURE:
-            return update(state, { UpdateDesignInfo: { status: { $set: "FAILURE" } } })
-        case GET_DESIGN_DETAIL:
-            return update(state, { DesignDetail: { status: { $set: action.type } }, status: { DesignDetail: { $set: action.DesignDetail } } })
-        case DESIGN_DETAIL_RESET:
-            return update(state, { status: { DesignDetail: { $set: action.DesignDetail } } })
-        case GET_DESIGN_COUNT:
-            return update(state, { status: { Count: { $set: action.Count } } })
-        case GET_DESIGN_DETAIL_VIEW:
-            return update(state, { status: { DesignDetailView: { $set: action.DesignDetailView } } });
-        case DESIGN_DETAIL_VIEW_RESET:
-            return update(state, { status: { DesignDetailView: { $set: action.DesignDetailView } } });
+        case FORK_DESIGN: return update(state, { status: { DesignForked: { $set: "WAIT_FORK" } } })
+        case FORK_DESIGN_SUCCESS: return update(state, { status: { DesignForked: { $set: "SUCCESS_FORK" }, new_design_id: { $set: action.new_design_id }, Message: { $set: action.message } } })
+        case FORK_DESIGN_FAILURE: return update(state, { status: { DesignForked: { $set: "FAILURE_FORK" } } })
+        case FORK_DESIGN_LIST: return update(state, { status: { DesignForked: { $set: "WAIT_FORK_LIST" } } })
+        case FORK_DESIGN_LIST_SUCCESS: return update(state, { status: { DesignForked: { $set: "SUCCESS_FORK_LIST" }, list: { $set: action.list }, Message: { $set: action.message } } })
+        case FORK_DESIGN_LIST_FAILURE: return update(state, { status: { DesignForked: { $set: "FAILURE_FORK_LIST" } } })
+        case GET_LIKE_DESIGN: return update(state, { LikeDesign: { status: { $set: "WATTING" } } });
+        case GET_LIKE_DESIGN_SUCCESS: return update(state, { LikeDesign: { status: { $set: "SUCCESS" } }, status: { like: { $set: action.like } } });
+        case GET_LIKE_DESIGN_FAILURE: return update(state, { LikeDesign: { status: { $set: "FAILURE" } }, status: { like: { $set: action.like } } });
+        case LIKE_DESIGN: return update(state, { LikeDesign: { status: { $set: "WATING" } } });
+        case LIKE_DESIGN_SUCCESS: return update(state, { LikeDesign: { status: { $set: "SUCCESS" } } });
+        case LIKE_DESIGN_FAILURE: return update(state, { LikeDesign: { status: { $set: "FAILURE" } } });
+        case UNLIKE_DESIGN: return update(state, { LikeDesign: { status: { $set: "WATING" } } });
+        case UNLIKE_DESIGN_SUCCESS: return update(state, { LikeDesign: { status: { $set: "SUCCESS" } } });
+        case UNLIKE_DESIGN_FAILURE: return update(state, { LikeDesign: { status: { $set: "FAILURE" } } });
+        case DESIGN_NOT_FOUND: return update(state, { DesignDetail: { status: { $set: DESIGN_NOT_FOUND } }, })
+        case GET_WAITING_LIST: return update(state, { WaitingList: { status: { $set: "WAITING" } } })
+        case GET_WAITING_LIST_SUCCESS: return update(state, { status: { WaitingList: { $set: action.list } }, WaitingList: { status: { $set: "SUCCESS" } } })
+        case GET_WAITING_LIST_FAILURE: return update(state, { status: { WaitingList: { $set: action.list } }, WaitingList: { status: { $set: "FAILURE" } } })
+        case GET_WAITING_TO_ACCEPT_LIST: return update(state, { WaitingToAcceptList: { status: { $set: "WAITING" } } })
+        case GET_WAITING_TO_ACCEPT_LIST_SUCCESS: return update(state, { status: { WaitingToAcceptList: { $set: action.list } }, WaitingToAcceptList: { status: { $set: "SUCCESS" } } })
+        case GET_WAITING_TO_ACCEPT_LIST_FAILURE: return update(state, { status: { WaitingToAcceptList: { $set: action.list } }, WaitingToAcceptList: { status: { $set: "FAILURE" } } })
+        case UPDATE_DESIGN_INFO: return update(state, { UpdateDesignInfo: { status: { $set: "WATTING" } } })
+        case UPDATE_DESIGN_INFO_SUCCESS: return update(state, { UpdateDesignInfo: { status: { $set: "SUCCESS" } } })
+        case UPDATE_DESIGN_INFO_FAILURE: return update(state, { UpdateDesignInfo: { status: { $set: "FAILURE" } } })
+        case GET_DESIGN_DETAIL: return update(state, { DesignDetail: { status: { $set: action.type } }, status: { DesignDetail: { $set: action.DesignDetail } } })
+        case DESIGN_DETAIL_RESET: return update(state, { status: { DesignDetail: { $set: action.DesignDetail } } })
+        case GET_DESIGN_COUNT: return update(state, { status: { Count: { $set: action.Count } } })
+        case GET_DESIGN_DETAIL_VIEW: return update(state, { status: { DesignDetailView: { $set: action.DesignDetailView } } });
+        case DESIGN_DETAIL_VIEW_RESET: return update(state, { status: { DesignDetailView: { $set: action.DesignDetailView } } });
         default:
             return state
     }

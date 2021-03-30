@@ -8,6 +8,7 @@ class CardSourceDetailContainer extends Component {
     await this.props.GetDesignDetailRequest(this.props.design_id, this.props.token);
   }
   render() {
+    console.log(this.props.PDFURL);
     return (
       <CardSourceDetail {...this.props} upDateRequest={this.props.UpdateDesignSourceRequest} />
     );
@@ -23,6 +24,7 @@ const mapStateToProps = (state) => {
     editStatus: state.DesignCard.DesignSourceEdit.status,
     userInfo: state.Authentication.status.userInfo,
     DesignDetail: state.Design.status.DesignDetail,
+    PDFURL: state.Design.status.PDFURL,
   };
 };
 
