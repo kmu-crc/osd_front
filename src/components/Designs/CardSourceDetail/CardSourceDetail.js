@@ -1633,6 +1633,36 @@ class CardSourceDetail extends Component {
                                       내용</div>
                                   </div>
                                   <div className="problemBox">
+                                    <div
+                                      onClick={async () => {
+                                        // console.log("user_id", this.props.userInfo.uid, item.user_id);
+                                        // if (this.props.userInfo && (this.props.userInfo.uid === item.user_id)) {
+                                        if (permission === "LOG SUBMIT" || permission === "LOG") {
+                                          this.setState({ item: JSON.parse(item.content), item_uid: item.uid, item_user: item.user_id, tab: item.user_id === this.props.userInfo.uid ? "code" : "log" });
+                                          this.setState({ submit: true });
+                                          this.setState({ coding: [] });
+                                        } else {
+                                          await alert("해당문제의 제출 권한이 없습니다.");
+                                        }
+                                      }}
+                                      style={{
+                                        width: "max-content",
+                                        margin: "auto",
+                                        cursor: "pointer"
+                                      }}>
+
+
+                                      <p
+                                        style={{
+                                          padding: "5px 13px",
+                                          color: "white",
+                                          borderRadius: "18px",
+                                          backgroundColor:
+                                            permission == "LOG" || permission === "LOG SUBMIT" ? "red" : "gray",
+                                        }}>
+                                        답안 제출하기
+                                </p>
+                                    </div>
                                     <div className="board">
                                       {/* {item.content && IsJsonString(item.content) && JSON.parse(item.content).cotents && */}
                                       {item.content &&
@@ -1646,7 +1676,7 @@ class CardSourceDetail extends Component {
                                               <a href={JSON.parse(item.content).contents} ><i className="save icon large" />PDF다운로드</a>
                                             </div>
                                           </div>
-                                          <PdfViewer pdf={JSON.parse(item.content).contents} />
+                                          <PdfViewer pdf={JSON.parse(item.content).contents} height={true} />
                                         </React.Fragment>}
                                       {/* {item.content && JSON.parse(item.content).contents} */}
                                     </div>
