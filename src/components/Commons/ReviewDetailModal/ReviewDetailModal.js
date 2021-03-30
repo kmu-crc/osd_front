@@ -292,6 +292,7 @@ class ReviewDetailModal extends Component {
                         {thumbnail_list.length>0?<div id="pic_list" className="pic_list">
                             {
                                 thumbnail_list.map((item,index)=>{
+                                    console.log("this.props",item);
                                     return(<AddPic key={index} width={378} height={384} img={item} marginRight={34}/>);
                                 })
                             }

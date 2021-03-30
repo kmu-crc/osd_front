@@ -33,21 +33,22 @@ const LocationList = [
   { value: 14, text: "제주도" },
   { value: 15, text: "제한없음" },
 ];
+
 // CSS STYLING
+
 const Expert = styled.div`
-  margin-right: ${prop => prop.mRight}px;
-  border: 1px solid transparent;
-  width: 468px;
-  height: 491px;
+  width: 300px;
+  height: 374px;
+  margin-right:20px;
+  padding:20px 40px 15px 40px;
+  border:1px solid #eaeaea;
   background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
+  box-shadow: 3px 3px 5px #0000001A;
   border-radius: 20px;
 `;
 const Profile = styled.div`
-  width: 227px;
-  height: 228px;
-  margin-top: 18px;
-  margin-left: 122px;
+  width: 220px;
+  height: 220px;
   background: transparent;
   background-image: url(${props => props.face});
   border-radius: 50%;
@@ -56,9 +57,8 @@ const Profile = styled.div`
 `;
 const LikeWrapper = styled.div`
   width:100%;
+  font-size:${market_style.font.size.small1};
   text-align:center;
-  margin-top:20px;
-  font-size:30px;
   cursor:pointer;
   .unlike{
     color:#ff0000;
@@ -67,97 +67,82 @@ const LikeWrapper = styled.div`
   .like{
     color:#ff0000;
   }
-}
-`
+`;
 const TextWrapper = styled.div`
-  margin-top: 27px;
-  margin-left: auto;
-  margin-right: auto;
-  width: max-content;
+  width:100%;
   font-family: Noto Sans KR;
   text-align: center;
   letter-spacing: 0;
+  margin-top:10px;
   .nick {
     font-weight: 500;
-    font-size:${market_style.font.size.big2};
-    color: #000000;
-    line-height: 33px;
+    font-size:${market_style.font.size.small1};
+    color: black;
   }
   .category {
-    margin-top: 12px;
     font-weight: 300;
-    font-size:${market_style.font.size.small1};
+    font-size:${market_style.font.size.mini2};
+    margin-top: 5px;
     line-height: 22px;
-    color: #FF0000;
+    color: red;
+  }
+  .create_time{
+    font-weight:300;
+    font-size:${market_style.font.size.mini2};
+    color:#707070;
   }
 `;
 const Counter = styled.div`
-  margin-top: 76px;
+  margin-top: 5px;
   display: flex;
-  flex-direction: row;
-  width: max-content;
-  margin-left: auto;
-  margin-right: auto;
-  font-family: Noto Sans KR;
+  justify-content:center;
+  width: 100%;
   letter-spacing: 0;
   color: #000000;
+  font-size:${market_style.font.size.mini2};
 
   .items {
     text-align: center;
-    font-size:${market_style.font.size.small1};
     font-weight: 300;
-    line-height: 18px;
   }
   .v-line {
-    margin-left: 10.5px;
-    margin-right: 10.5px;
-    width: 0px;
-    height: 16px;
-    border: 0.5px solid #707070;
+    font-size:${market_style.font.size.tiny1};
   }
   .likes {
-    text-align: left;
-    font-size:${market_style.font.size.small1};
-    font-weight: 500;
-    line-height: 18px;
+    font-weight: 300;
   }
 `;
-
 const Introduction = styled.div`
-  margin-right: ${prop => prop.mRight}px;
+  width:620px;
+  height:374px;
   position:relative;
-  width: 982px;
-  height: 491px;
   background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
+  box-shadow: 3px 3px 5px #0000001A;
+  border:1px solid #eaeaea;
   border-radius: 20px;
-  opacity: 1;
-  padding: 62px 59px 61px 60px;
+  padding: 40px 50px;
   font-family: Noto Sans KR;
   .wrapItem{
     width:100%;
     height:100%;
-    overflow:hidden;
-    overflow-y:auto;
-    .flex{
-      display:flex;
-    }
+    overflow: auto;
     .title {
       font-size:${market_style.font.size.normal1};
       font-weight: 500;
-      line-height: 28px;
-      text-align: left;
     }
     .text {
       width: 100%;
-      margin-top: 15px;
-      margin-bottom:25px;
+      margin-top: 5px;
       font-size:${market_style.font.size.small1};
       font-weight: 300;
-      line-weight: 27px;
-      text-align: left;
-      // overflow: hidden;
-      // overflow-y:scroll;
+      margin-bottom:25px;
+      overflow: hidden;
+    }
+    .flex{
+      display:flex;
+    }
+    .flexWrap{
+      flex-wrap:wrap
     }
     .gradient_box{
       position:absolute;
@@ -173,10 +158,9 @@ const Introduction = styled.div`
       background:linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255,01.0));
     }
   }
+  
+
   // &:hover{
-  //   .gradient_box{
-  //     display:none;
-  //   }
   //   .wrapItem {
   //     overflow: auto;
   //   }
@@ -184,101 +168,62 @@ const Introduction = styled.div`
 
 
 `;
-//const ReviewBox = styled.div`
-//    width:100%;
-//    height:150px;
-//    display:flex;
-//    flex-wrap:wrap;
-//    overflow:hidden;
-//    overflow-y:scroll;
-//    overflow-y:overlay;
-//    .review{
-//      min-width:650px;
-//      height:150px;
-//      margin-right:50px;
-//      margin-bottom:50px;
-//      display:flex;
-//      .content{
-//        width:100%;
-//        height:100%;
-//        padding:30px;
-//        .row{
-//          width:max-content;
-//          margin-bottom:15px;
-//        }
-//      }
-//    }
-//    // &:hover{
-//    //   overflow:auto;
-//    //   overflow-y:overlay;
-//
-//    // }
-//`
-//const RequestBoard = styled.div`
-//  margin-right: ${prop => prop.mRight}px;
-//  width: ${prop => prop.large ? 1094 : 566}px;
-//  height: ${prop => prop.large ? 1168 : 491}px;
-//  background: #FFFFFF;
-//  box-shadow: 5px 5px 10px #00000029;
-//  border-radius: 20px;
-//  opacity: 1;
-//  padding: 62px 65px 35px 60px;
-//  font-family: Noto Sans KR;
-//  .line {
-//    display: flex;
-//    flex-direction: row;
-//    .title {
-//      font-weight: 500;
-//      font-size: 19px;
-//      text-align: left;
-//      line-height: 27px;
-//      letter-spacing: 0;
-//      color: #000000;
-//      opacity: 1;
-//    }
-//    .button {
-//      margin-left: auto;
-//      font-weight: 500;
-//      font-size: 19px;
-//      text-align: left;
-//      line-height: 27px;
-//      letter-spacing: 0;
-//      color: #FF0000;
-//      opacity: 1;
-//      cursor: default;
-//    }
-//  }
-//  .board {
-//    margin-top: 42px;
-//    width: 441px;
-//    .lement {
-//      font-size: 15px;
-//      text-align: left;
-//      line-height: 20px;
-//      color: #707070;
-//      letter-spacing: 0;
-//      opacity: 1;
-//      margin-top: 12px;
-//    }
-//  }
-//`;
 const ItemInfo = styled.div`
-  margin-right: ${prop => prop.mRight}px;
   margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
   width: ${props => props.width == null ? "468px" : props.width + "px"};
   height: ${props => props.height == null ? "491px" : props.height + "px"};
   background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
+  box-shadow: 3px 3px 5px #0000001A;
   border-radius: 20px;
+  border:1px solid #eaeaea;
   opacity: 1;
   font-family: Noto Sans KR;
-  padding: 30px 60px 30px 60px;
+  padding: 20px 30px 20px 30px;;
 
   .title {
     font-size:${market_style.font.size.normal1};
     font-weight: 500;
-    line-height: 28px;
     text-align: left;
+  }
+  .hrline{
+    width:100%;
+    border:2px solid #efefef;
+  }
+  .margin_bottom{
+    margin-bottom:10px;
+  }
+  .wrapItem{
+    width:100%;
+    height:230px;
+    display:flex;
+  }
+
+  .wrapGallery{
+    width:100%;
+    height:210px;
+    display:flex;
+  }
+`;
+const AdditionalInfo = styled.div`
+  margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
+  width: ${props => props.width == null ? "468px" : props.width + "px"};
+  height: ${props => props.height == null ? "491px" : props.height + "px"};
+  background: #FFFFFF;
+  box-shadow: 3px 3px 5px #0000001A;
+  border-radius: 20px;
+  border:1px solid #eaeaea;
+  opacity: 1;
+  padding:20px 30px;
+  font-family: Noto Sans KR;
+  
+  .title {
+    font-size:${market_style.font.size.normal1};
+    font-weight: 500;
+    text-align: left;
+  }
+  .hrline{
+    width:100%;
+    border:2px solid #efefef;
   }
   .margin_bottom{
     margin-bottom:10px;
@@ -292,287 +237,173 @@ const ItemInfo = styled.div`
     font-weight: 300;
     line-weight: 27px;
     text-align: left;
+    overflow-y:scroll;
     // overflow: auto;
-    overflow:scroll-y;
+  }
+  .reviewItem{
+    width:100%;
+    height:113px;
+    display:flex;
   }
   .wrapItem{
-    max-width:100%;
-    max-height:390px;
-    margin-top:30px;
     width:100%;
-    height:max-content;
+    max-width:100%;
+    max-height:85%;
+    display:flex;
     overflow:hidden;
-    overflow:auto;
-    overflow-y:overlay;
-    display:flex;
-  }
-
-  .wrapGallery{
-    max-width:100%;
-    max-height:300px;
-    margin-top:30px;
-    width:100%;
-    height:max-content;
-    overflow:auto;
-    overflow-y:overlay;
-    display:flex;
-  }
-  &:hover{
-    .wrapItem{
-      overflow:auto;
-      overflow-y:overlay;
+    overflow-y:auto;
     }
-  }
-`;
-const AdditionalInfo = styled.div`
-      margin-right: ${prop => prop.mRight}px;
-      margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
-      width: ${props => props.width == null ? "468px" : props.width + "px"};
-      height: ${props => props.height == null ? "491px" : props.height + "px"};
-      background: #FFFFFF;
-      box-shadow: 5px 5px 10px #00000029;
-      border-radius: 20px;
-      opacity: 1;
-      // padding: 90px 43px 161px 54px;
-      padding: 30px 60px 30px 60px;
-      font-family: Noto Sans KR;
-      position:relative;
-
-      .title {
-        font-size:${market_style.font.size.normal1};
-        font-weight: 500;
-        line-height: 28px;
-        text-align: left;
-      }
-      .margin_bottom{
-        margin-bottom:10px;
-      }
-      .text {
-        width: 100%;
-        height: max-content;
-        margin-top: 20px;
-        margin-bottom: 34px;
-        font-size:${market_style.font.size.small1};
-        font-weight: 300;
-        line-weight: 27px;
-        text-align: left;
-        word-wrap:break-word;        
-      }
-      .flex{
-        display:flex;
-      }
-      .wrapText{
-        width:100%;
-        height:100%;
-        overflow:hidden;
-      }
-      .wrapItem{
-        max-width:100%;
-        max-height:85%;
-        margin-top:30px;
-        width:100%;
-        // height:max-content;
-        display:flex;
-        overflow:hidden;
-        overflow-y:auto;
-        }
-      .gradient_box{
-        position:absolute;
-        left:0px;
-        top:0px;
-        width:100%;
-        height:100%;
-        display:flex;
-        justify-content:center;
-        align-items:flex-end;
-        padding:10px;
-        border-radius: 20px;
-        background:linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255,01.0));
-      }
-      &:hover{
-        .gradient_box{
-          display:none;
-        }
-        .wrapItem{
-          overflow:auto;
-        }
-        .wrapText{
-          overflow:auto;
-        }
-      }
 `;
 const MakerBoard = styled.div`
-     width: 1523px;
-      height: max-content;
-      background: #FFFFFF;
-      box-shadow: 5px 5px 10px #00000029;
-      border-radius: 20px;
-      opacity: 1;
-      font-family: Noto Sans KR;
-      padding: 90px 60px 30px 60px;
-      margin-bottom:100px;
-      .alignRight{
-        display:flex;
-        justify-content:flex-end;
-        .link{
-          width:max-content;
-          cursor:pointer;
-        }
+  width: ${props => props.width == null ? "468px" : props.width + "px"};
+  margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
+  margin-bottom:50px;
+  background: #FFFFFF;
+  box-shadow: 3px 3px 5px #0000001A;
+  border-radius: 20px;
+  border:1px solid #eaeaea;
+  opacity: 1;
+  padding:20px 30px;
+  font-family: Noto Sans KR;
+  .headerWrapper{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+  }
+  .alignRight{
+    display:flex;
+    justify-content:flex-end;
+    .link{
+      width:max-content;
+      cursor:pointer;
+    }
+  }
+  ._title {
+    width:max-content;
+    color: #000000;
+    font-size:${market_style.font.size.normal1};
+    font-weight: 500;
+  };
+  .redText{
+    color:red;
+  }
+
+  .hrline{
+    width:100%;
+    border:2px solid #efefef;
+  }
+  .margin_bottom{
+    margin-bottom:10px;
+  }
+  .list {
+    font-weight: 300;
+    font-size:${market_style.font.size.mini2};
+    text-align: left;
+    color: #000000;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    .line {
+      width:1300px;
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 37px;
+      .title_text{
+        width:750px;
+        height:29px;
+        overflow:hidden;
+        margin-right:130px;
       }
-      .redText{
-        color:red;
-        margin:20px;
+      .sub_text{
+        margin-left:70px;
       }
-      .title {
-        color: #000000;
-        font-size:${market_style.font.size.normal1};
-        font-weight: 500;
-        line-height: 28px;
-        text-align: left;
-      };
-      .list {
-        // margin-top: 72px;
-        font-weight: 300;
-        font-size:${market_style.font.size.normal1};
-        text-align: left;
-        line-height: 27px;
-        color: #000000;
+    }
+    .circle {
+      width: 80px;
+      height: 29px;
+      margin-right: 13px;
+      border-radius: 16px;
+      font-size:6px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:5px;
+      &.red1 { background: #FF0000; };
+      &.red2 { background: #FFC0C0; };
+      &.red3 { background: #FF6868; };
+      &.red4 { background: #FFD6D6; };
+    };
+  };
+  .page {
+    width: max-content;
+    margin-top: 87px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size:${market_style.font.size.normal3};
+    font-weight: 500;
+    text-aglin: left;
+    display: flex;
+    flex-direction: row;
+    line-height: 27px;
+    color: #707070;
+    .number{
+      margin-right: 10px;
+    }
+    .this{
+      color: red;
+    }
     
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        .line {
-          width:1300px;
-          display: flex;
-          flex-direction: row;
-          margin-bottom: 37px;
-          .title_text{
-            width:750px;
-            height:29px;
-            overflow:hidden;
-            margin-right:130px;
-          }
-          .sub_text{
-            margin-left:70px;
-          }
-        }
-        .circle {
-          width: 80px;
-          height: 29px;
-          margin-right: 13px;
-          border-radius: 16px;
-          font-size:6px;
-          display:flex;
-          justify-content:center;
-          align-items:center;
-          padding:5px;
-          &.red1 { background: #FF0000; };
-          &.red2 { background: #FFC0C0; };
-          &.red3 { background: #FF6868; };
-          &.red4 { background: #FFD6D6; };
-        };
-      };
-      .page {
-        width: max-content;
-        margin-top: 87px;
-        margin-left: auto;
-        margin-right: auto;
-        font-size:${market_style.font.size.normal3};
-        font-weight: 500;
-        text-aglin: left;
-        display: flex;
-        flex-direction: row;
-        line-height: 27px;
-        color: #707070;
-        .number{
-          margin-right: 10px;
-        }
-        .this{
-          color: red;
-        }
-        
-        .another {}
-        .more {}
-      };
-    `;
+    .another {}
+    .more {}
+  };
+`;
 const Wrapper = styled.div`
 // *{
 //   border:1px solid black;
 // }
-    display:flex;
-    align-items:center;
-    flex-direction:column;
-    margin-top: 60px;
-    // *{border:1px solid red;};
-    .contents_box{
-      width:max-content;
-      height:max-content;
-    }
+  display:flex;
+  align-items:center;
+  flex-direction:column;
+  margin-top: 20px;
+  // *{border:1px solid red;};
+  .contents_box{
+    width:max-content;
+    height:max-content;
+  }
 `;
-
 const ExpTable = styled.div`
     *{
       font-family:Noto Sans KR;
-      font-size:${market_style.font.size.small2};
+      font-size:${market_style.font.size.mini2};
     }
     width: ${props => props.width == null ? "100%" : props.width + "px"};
     height: ${props => props.height == null ? "max-content" : props.height + "px"};
     margin-left: ${props => props.mLeft == null ? "0px" : props.mLeft + "px"}px;
     margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
+    
     .row{
       width:100%;
-      height:29px;
       display:flex;
-      margin-bottom:10px;
+      margin-top:10px;
     }
     .header{
       width:100%;
-      height:29px;
       display:flex;
-      margin-bottom:5px;
+      padding:5px 0px;
+      border-top:2px solid #efefef;
+      border-bottom:2px solid #efefef;
     }
     .th{
       width:33%;
       height:100%;
-      font-weight:500;
+      font-weight:400;
     }
     .td{
       width:33%;
       height:100%;
-      font-weight:300;
-    }
-`
-const TagPiece = styled.div`
-    width: max-content;
-    min-width: 30px;
-    background-color: #EFEFEF;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    color: #707070;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    .close {
-        margin-left: 10px;
-        width: max-content;
-        height: max-content;
-        padding: 0px 2px;
+      font-weight:200;
     }
 `;
-// const Thumbnail = styled.div`
-// cursor:pointer;
-// width:150px;
-// height:150px;
-// display:flex;
-// justify-content:center;
-// align-items:center;
-// background-image: ${props => `url(${props.imageURL == null ? noimg : props.imageURL})`};
-// background-size: cover;
-// background-position: center center;
-// `
 const TitleForm = styled.input`
   padding: 10px;
   resize: none;
@@ -591,59 +422,64 @@ const CommentForm = styled.textarea`
   outline:none;
   border-radius:10px;
 `
-const WriteReview = styled.div`
-  margin-bottom:10px;
-  .form{
-      width:100%;
-      padding:10px;
-  }
-  .contents{
-      display:flex;
-      justify-content:space-between;
-      padding-left:10px;
-      padding-right:10px;
-      .score{
-
-      }
-      .buttonBox{
-          .button{
-              width:100px;
-              padding:10px;
-              border-radius:20px;
-              background-color:#707070;
-              display:flex;
-              justify-content:center;
-              align-items:center;
-              cursor:pointer;
-              .text{
-                  color:white;
-              }
-          }
-
-      }
-  }
+const TagPiece = styled.div`
+    width: max-content;
+    min-width: max-content;
+    background-color: #EFEFEF;
+    margin-right: 8px;
+    margin-top: 5px;
+    color: #707070;
+    padding:3px 11px 4px 11px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size:${market_style.font.size.mini2}px;
+    .close {
+        margin-left: 10px;
+        width: max-content;
+        height: max-content;
+        padding: 0px 2px;
+    }
 `;
-const CreateReview = styled.div`
+const CreateRequest = styled.div`
 width:100%;
 height:30px;
-margin-bottom:10px;
 display:flex;
 justify-content:flex-end;
+margin-top:10px;
+
 .button{
-    width:max-content;
-    height:max-content;
+    width:150px;
+    height:30px;
     display:flex;
     justify-content:center;
     align-items:center;
     background-color:red;
     cursor:pointer;
-    padding:12px 39px 12px 39px;
+    margin-left:20px;
+    .font{
+      font-size:${market_style.font.size.small1};
+      color:white;
+    }
 }
-.font{
-  font-size:${market_style.font.size.normal3};
-  color:white;
+.button_reverse{
+  width:150px;
+  height:30px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border:1px solid red;
+  cursor:pointer;
+  margin-left:20px;
+  .font{
+    font-size:${market_style.font.size.small1};
+    color:#707070;
+  }
 }
+
 `;
+
+
 
 class MakerDetail extends Component {
   constructor(props) {
@@ -745,10 +581,13 @@ class MakerDetail extends Component {
               <Profile face={this.state.image} />
               {/* Text */}
               <TextWrapper>
-                <div className="nick"><TextFormat txt={this.state.nick_name || "이름없음"} chars={32} /></div>
+                <div className="nick"><TextFormat txt={this.state.nick_name} chars={32} /></div>
+                <div className="create_time">
+                    {new Date(this.state.create_time).getFullYear()+"년"
+                    +(new Date(this.state.create_time).getMonth()+1)+"월"
+                    +(new Date(this.state.create_time).getDate())+"일 등록"}</div>
                 <div className="category"><TextFormat txt={categoryName || "전체"} chars={32} /></div>
               </TextWrapper>
-
               <LikeWrapper>
                 {this.state.isLike === false ?
                   <div onClick={this.onClickisLike} className="unlike">♡</div>
@@ -760,7 +599,7 @@ class MakerDetail extends Component {
               {/* Counter */}
               <Counter>
                 <div className="items">
-                  {itemCount || 0}개의 아이템</div>
+                  {itemCount || 0}개의 아이템 |</div>&nbsp;&nbsp;
                 <div className="v-line" />
                 <div className="likes">{/*♥*/}
                   <Icon className="heart" size="small" color="red" />{likeCount || 0}</div>
@@ -772,16 +611,16 @@ class MakerDetail extends Component {
               <div className="wrapItem">
                 <div className="title">
                   <TextFormat txt={this.state.nick_name} chars={32} />
-                  <span className="text">
+                  {/* <span className="text">
                   {new Date(this.state.create_time).getFullYear()+"년"
                   +(new Date(this.state.create_time).getMonth()+1)+"월"
-                  +(new Date(this.state.create_time).getDate())+"일 등록"}</span>
+                  +(new Date(this.state.create_time).getDate())+"일 등록"}</span> */}
               </div>
                 <div className="text">{this.state.description}</div>
                 <div className="title">위치</div>
                 <div className="text">{Location}</div>
                 <div className="title">태그</div>
-                <div className="text flex">
+                <div className="text flex flexWrap">
                   {
                     typeof this.state.tag === "string"
                       ? this.state.tag.split(",").map((item, index) =>
@@ -791,7 +630,7 @@ class MakerDetail extends Component {
                   }
                 </div>
                 <div className="title">보유기술</div>
-                <div className="text flex">
+                <div className="text flex flexWrap">
                   {
                     this.state.technique.map((item, index) => {
                       return (
@@ -803,7 +642,7 @@ class MakerDetail extends Component {
                   }
                 </div>
                 <div className="title">보유장비</div>
-                <div className="text flex">
+                <div className="text flex flexWrap">
                   {
                     this.state.equipment.map((item, index) => {
                       return (
@@ -828,7 +667,7 @@ class MakerDetail extends Component {
           ?
           null
           :
-          <AdditionalInfo width={1523} height={280} mTop={60}>
+          <AdditionalInfo width={940} height={202} mTop={20}>
           <div className="title margin_bottom">제작 경험</div>
           <div className="wrapItem">
           <ExpTable>
@@ -852,8 +691,9 @@ class MakerDetail extends Component {
 
 
           {/**보유아이템 */}
-          <ItemInfo width={1523} height={491} mTop={60}>
-            <div className="title">제작 아이템</div>
+          <ItemInfo width={940} height={310} mTop={20}>
+            <div className="title margin_bottom">제작 아이템</div>
+            <div className="hrline margin_bottom"/>
             <div className="wrapItem">
               {
                 <HaveInItemContainer id={this.props.id} />
@@ -864,8 +704,9 @@ class MakerDetail extends Component {
           {/* 갤러리 */}
           {
             this.state.haveGallery==true?
-            <ItemInfo width={1523} height={491} mTop={60}>
-            <div className="title">갤러리</div>
+            <ItemInfo width={940} height={288} mTop={20}>
+            <div className="title margin_bottom">갤러리</div>
+            <div className="hrline margin_bottom"/>
             <div className="wrapGallery">
               {<HaveInGalleryContainer id={this.props.id} handleHaveGallery={(result)=>{this.setState({haveGallery:result})}} isModify={false} />}
             </div>
@@ -875,9 +716,10 @@ class MakerDetail extends Component {
           }
 
           {/* 리뷰 */}
-          <AdditionalInfo width={1523} height={280} mTop={60}>
+          <AdditionalInfo width={940} height={200} mTop={20}>
             <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
-            <div className="wrapItem" style={{ flexDirection: "column" }}>
+            <div className="hrline margin_bottom"/>
+            <div className="reviewItem">
             <MakerReviewContainer
               id={parseInt(this.props.id, 10)}
               handler={detail => this.setState({ reviewdetail: true, detail: detail })} />
@@ -887,11 +729,14 @@ class MakerDetail extends Component {
           {this.state.reviewdetail ? <ReviewDetailModal open={this.state.reviewdetail} close={() => this.setState({ reviewdetail: false })} detail={this.state.detail} /> : null}
 
           <div style={{ marginTop: "61px", display: "flex", flexDirection: "row" }}>
-            <MakerBoard>
-              <div className="title" style={{marginBottom:"20px"}}>메이커 게시판</div>
-              <div className="title">
+            <MakerBoard width={940} height={200} mTop={20}>
+            <div className="headerWrapper margin_bottom">
+              <div className="_title">메이커 게시판</div>
+              {/* <div className="_title redText">
                 {this.props.userInfo&&this.props.MakerViewDetail&&this.props.MakerViewDetail.user_id !== this.props.userInfo.uid ? <div className="redText alignRight"><div className="link" onClick={this.onClickRequest}>제작 의뢰</div></div>:null}
-              </div>
+              </div> */}
+            </div>
+            <div className="hrline margin_bottom"/>
               <div className="list">
                 <MakerRequestBoardContainer id={parseInt(this.props.id, 10)} />
               </div>
@@ -901,32 +746,16 @@ class MakerDetail extends Component {
                   handlerModal = {(write)=>{this.setState({write:write})}}
                   createNoneRequest={(title,content)=>this.createNoneRequest(title,content)}
                 />
-                // <WriteReview>
-                //   <div className="form">
-                //     제목:
-                // <TitleForm
-                //       onChange={event => this.setState({ [event.target.name]: event.target.value })}
-                //       value={this.state.title || ""} name="title" />
-                // 내용:
-                // <CommentForm
-                //       onChange={event => this.setState({ [event.target.name]: event.target.value })}
-                //       value={this.state.comment || ""} name="comment" />
-                //   </div>
-                //   <div className="contents">
-                //     <div className="buttonBox">
-                //       <div className="button" onClick={this.createNoneRequest} >
-                //         <div className="text" >작성하기</div>
-                //       </div>
-                //     </div>
-                //   </div>
-                // </WriteReview>
                 :
                 this.props.userInfo==null?null:
-                <CreateReview onClick={() => this.setState({ write: true })}>
-                  <div className="button">
-                    <div className="font">게시글 작성</div>
-                  </div>
-                </CreateReview>
+                <CreateRequest>
+                <div className="button_reverse" onClick={this.onClickRequest}>
+                  <div className="font">제작 의뢰</div>
+                </div>
+                <div className="button" onClick={() => this.setState({ write: true,content:"" })}>
+                  <div className="font" >게시글 작성</div>
+                </div>
+              </CreateRequest>
               }
             </MakerBoard>
           </div>

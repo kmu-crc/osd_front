@@ -235,7 +235,7 @@ const ListElement = styled.div`
     font-size:${market_style.font.size.small1};
   }
   .date{
-    min-width:3%;
+    width:max-content;
     display:flex; 
     justify-content:center;
     align-items:center;

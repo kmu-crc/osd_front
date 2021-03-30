@@ -6,17 +6,9 @@ import Review from "components/Items/Review";
 import styled from "styled-components";
 
 const ReviewBox = styled.div`
-    width: 100%;
+    min-width:103%;
     height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    overflow: hidden;
-    overflow: auto;
-    overflow-y: overlay;
-    &:hover {
-      overflow: auto;
-      overflow-y: overlay;
-    }
+    overflow:${props=>props.isScroll?"overlay":"hidden"};
 `;
 class DesignerReviewContainer extends Component {
 
@@ -27,9 +19,12 @@ class DesignerReviewContainer extends Component {
     this.props.GetDesignerReviewListRequest(this.props.id, page);
 
   render() {
+      console.log(this.props,"---");
     return (
         // 리뷰목록
-        <ReviewBox>
+        <ReviewBox
+        isScroll={this.props.dataListAdded.length>2?true:false}
+        >
           <ScrollList
             handler={this.props.handler}
             scrollId={"review-scroller"}

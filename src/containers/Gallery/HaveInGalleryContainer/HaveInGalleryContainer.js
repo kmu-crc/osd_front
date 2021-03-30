@@ -6,8 +6,9 @@ import Gallery from "components/Gallery/Gallery/Gallery";
 import ModifyGallery from "components/Gallery/ModifyGallery/ModifyGallery";
 import styled from "styled-components";
 const ScrollBox = styled.div`
-    width: 100%;
+    min-width:103%;
     height: 100%;
+    overflow:${props=>props.isScroll?"overlay":"hidden"};
 `;
 
 class HaveInGalleryContainer extends Component {
@@ -25,9 +26,11 @@ class HaveInGalleryContainer extends Component {
   render() {
     // console.log(this.props.handlerIsGalleryModify);
     return (
-      <ScrollBox>
+      <ScrollBox
+      isScroll={this.props.dataListAdded.length>4?true:false}
+      >
         <ScrollList
-          cols={6} type="gallery" getListRequest={this.getList} ListComponent={this.props.isModify === true ? ModifyGallery : Gallery}
+          cols={8} type="gallery" getListRequest={this.getList} ListComponent={this.props.isModify === true ? ModifyGallery : Gallery}
           dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} handler={this.props.handlerIsGalleryModify} />
       </ScrollBox>
 

@@ -265,14 +265,18 @@ class WriteReviewModal extends Component {
 
         // let list = [];
         const list = await Promise.all(this.state.thumbnail.map(async(item,index)=>{
+            console.log(item);
             if(item.indexOf("https://s3")==-1){
                     const file = this.state.files[index];
                     const s3path = await FileUploadRequest([file]);
+                    console.log(s3path);
                     return s3path.path;
             }else{
                     return item;
             }
         }));
+
+        // return;
         this.props.requestReview(this.props.payment_id,this.state.comment,this.state.score,list.join());
         // if(this.state.thumbnail&&this.state.thumbnail.length>0){
         //     new Promise((resolve)=>{this.state.thumbnail.forEach(async(item,index)=>{
