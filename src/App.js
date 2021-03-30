@@ -46,6 +46,7 @@ import FooterPrivacy from "components/Commons/FooterPrivacy"
 import FooterPara from "components/Commons/FooterTerm"
 // TEMPLATE //
 import ClientTemplate from 'templates/ClientTemplate';
+import CodeViewPage from "pages/CodeViewPage";
 
 class App extends Component {
   componentDidMount() {
@@ -124,6 +125,8 @@ class App extends Component {
             {/* NOT FOUND */}
             <Route component={() => <div style={{ width: "100%", fontSize: "36px" }}>페이지를 찾을 수 없습니다.</div>} />
 
+
+            <Route path="/codeview" component={CheckAuth(CodeViewPage)} />
           </Switch>
         </ClientTemplate>
       </BrowserRouter>);
