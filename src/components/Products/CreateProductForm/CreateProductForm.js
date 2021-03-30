@@ -510,6 +510,10 @@ const FormBox = styled.div`
     height:30px;
     color:#707070;
   }
+  .remove-margin{
+    // margin-top: 10px;
+    margin-bottom: 10px;
+  }
 `;
 const DescirptionText = styled.div`
 font-size:${market_style.font.size.mini2};
@@ -589,16 +593,17 @@ const ResetButtonWrapper = styled.div`
   margin-top: 10px;
   margin-bottom: 20px;
 `;
+
 class CreateProductForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       // send data - basic
-      category_level1: -1, category_level2: -1,
+      category_level1: -1, category_level2: -1, category_level3: -1,
       title: "",
       thumbnail: null, thumbnail_name: null,
-      tag: [], category1: null, category2: null,
-      itemType: -1,
+      tag: [], category1: null, category2: null, category3: null,
+      itemType: -1, is_problem: false,
       // send data - additional
       additional: null, content: [], steps: [], type: "blog", private: 0,
     };
@@ -610,6 +615,7 @@ class CreateProductForm extends Component {
     this.onHandleReturnedTags = this.onHandleReturnedTags.bind(this);
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
+    this.onClickCategorylevel3 = this.onClickCategorylevel3.bind(this);
   };
 
   onSubmit(event) {
@@ -619,7 +625,8 @@ class CreateProductForm extends Component {
       // basic
       title: this.state.title,
       files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name }],
-      tag: this.state.tag, category1: this.state.category_level1, category2: this.state.category_level2,
+      tag: this.state.tag, category1: this.state.category_level1, category2: this.state.category_level2, category3: this.state.category_level3,
+      is_problem: this.state.is_problem === true ? 1 : 0,
       itemType: this.state.itemType,
       // additional
       additional: this.state.additional, content: this.state.content, step: this.state.steps,
@@ -627,7 +634,7 @@ class CreateProductForm extends Component {
     };
     // console.log("sent:", data);
     // return;
-    data.additional.description = data.additional.description.replace(/(?:\r\n|\r|\n)/g,'<br />');
+    data.additional.description = data && data.additional && data.additional.description && data.additional.description.replace(/(?:\r\n|\r|\n)/g, '<br />');
 
     this.props.CreateDesignRequest(data, this.props.token)
       .then(async result => {
@@ -643,13 +650,15 @@ class CreateProductForm extends Component {
         await alert("오류내용:" + error.message);
       });
   };
-
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: value });
   };
   async onClickCategorylevel2(event, { value }) {
     await this.setState({ category_level2: value });
   };
+  async onClickCategorylevel3(event, { value }) {
+    await this.setState({ category_level3: value });
+  }
   onClickItemType(_, { value }) {
     this.setState({ itemType: { value }.value, additional: null, type: { value }.value === 1 ? "project" : "blog" });
   };
@@ -692,7 +701,7 @@ class CreateProductForm extends Component {
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
-
+    const category3 = (this.state.category_level1 && this.state.category_level2 && this.props.category3 && this.props.category3.filter(item => item.parent === this.state.category_level2)) || [{ text: "_", value: -1 }];
     const { /* edit, */ itemType } = this.state;
     const Mandatory = () => <span className="font_red" title="필수사항입니다.">*</span>
 
@@ -723,12 +732,24 @@ class CreateProductForm extends Component {
               <InputText width={370} name="title" value={this.state.title || ""} onChange={this.onChangeValue} />
             </div>
 
-            <div className="wrapper flex ">
+            <div className={"wrapper flex " + `${parseInt(this.state.category_level2, 10) === 42 ? "remove-margin" : ""}`}>
               <div className="label">카테고리<Mandatory /></div>
               <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
               <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
             </div>
-
+            {parseInt(this.state.category_level2, 10) === 42 ? <React.Fragment>
+              <div className="wrapper flex ">
+                <div className="label"></div>
+                <DropBox id="category_level3" value={this.state.category_level3} selection options={category3} placeholder="언어선택" onChange={this.onClickCategorylevel3} />
+                <div style={{ marginTop: "15px" }}>
+                  <CheckBox2 onChange={() => this.setState({ is_problem: !this.state.is_problem, })} checked={this.state.is_problem} />
+                </div>
+                <div style={{ marginTop: "15px" }}>
+                  <div className="textLabel">문제등록기능을 사용합니다.</div>
+                </div>
+              </div>
+            </React.Fragment>
+              : null}
             <div className="wrapper flex">
               <div className="label">태그</div>
               <div>
@@ -784,7 +805,7 @@ class CreateProductForm extends Component {
             </Link>
             : <RedButton text="아이템을 등록합니다." okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
           }
-          <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={async() => {
+          <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={async () => {
             if (await confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
               window.history.back();
             }
@@ -868,98 +889,98 @@ class ItemTypeForm extends Component {
     return (
       <MainBox>
         <div className="contentsBox centering directionColumn">
-        <FormBox boxShadow={true} width={1570}>
-          <div className="contentWrap">
-            {itemType === 0 ? <ItemDesign return={this.onHandleAdditional} /> : null}
-            {itemType === 1 ? <ItemProject return={this.onHandleAdditional} /> : null}
-            {itemType === 2 ? <ItemConsulting return={this.onHandleAdditional} /> : null}
-            {itemType === 3 ? <ItemExperience return={this.onHandleAdditional} /> : null}
-            {itemType === 4 ? <ItemInfoData return={this.onHandleAdditional} /> : null}
-            {itemType === 5 ? <ItemIdea return={this.onHandleAdditional} /> : null}
-            {itemType === 6 ? <ItemPatent return={this.onHandleAdditional} /> : null}
-            {itemType === 7 ? <ItemProduct return={this.onHandleAdditional} /> : null}
+          <FormBox boxShadow={true} width={1570}>
+            <div className="contentWrap">
+              {itemType === 0 ? <ItemDesign return={this.onHandleAdditional} /> : null}
+              {itemType === 1 ? <ItemProject return={this.onHandleAdditional} /> : null}
+              {itemType === 2 ? <ItemConsulting return={this.onHandleAdditional} /> : null}
+              {itemType === 3 ? <ItemExperience return={this.onHandleAdditional} /> : null}
+              {itemType === 4 ? <ItemInfoData return={this.onHandleAdditional} /> : null}
+              {itemType === 5 ? <ItemIdea return={this.onHandleAdditional} /> : null}
+              {itemType === 6 ? <ItemPatent return={this.onHandleAdditional} /> : null}
+              {itemType === 7 ? <ItemProduct return={this.onHandleAdditional} /> : null}
 
-          </div>
-        </FormBox>
+            </div>
+          </FormBox>
 
-        <FormBox boxShadow={true} width={1570} marginTop={25}>
-          <ResetButtonWrapper
-            onClick={async () => {
-              await this.setState({
-                additional: null,
-                content: [],
-                steps: [],
-                type: this.props.itemType === 1 ? "project" : "blog",
-                template: null,
-                is_project: 0,
-                reset: (++this.state.reset) % 10,
-              });
-              this.returnState();
-            }}>
-            작업 취소<i className="undo icon" />
-          </ResetButtonWrapper>
-          {this.state.type === "blog" ?
-            // <div className="contentWrap">
-            <InputContent
-              reset={this.state.reset}
-              projectable={true}
-              content={content}
-              toProject={this.toProject}
-              returnState={this.onHandleContent} />
-            // </div>
-            :
-            // {/* 로컬 그리드 에디터 - */}
-            <React.Fragment>
-              <div className="contentsBox centering">
-                <DesignTemplateSelector>
-                  <div className="title">
-                    템플릿을 선택하시면 보다 편하게 작업을 시작하실 수 있습니다!
+          <FormBox boxShadow={true} width={1570} marginTop={25}>
+            <ResetButtonWrapper
+              onClick={async () => {
+                await this.setState({
+                  additional: null,
+                  content: [],
+                  steps: [],
+                  type: this.props.itemType === 1 ? "project" : "blog",
+                  template: null,
+                  is_project: 0,
+                  reset: (++this.state.reset) % 10,
+                });
+                this.returnState();
+              }}>
+              작업 취소<i className="undo icon" />
+            </ResetButtonWrapper>
+            {this.state.type === "blog" ?
+              // <div className="contentWrap">
+              <InputContent
+                reset={this.state.reset}
+                projectable={true}
+                content={content}
+                toProject={this.toProject}
+                returnState={this.onHandleContent} />
+              // </div>
+              :
+              // {/* 로컬 그리드 에디터 - */}
+              <React.Fragment>
+                <div className="contentsBox centering">
+                  <DesignTemplateSelector>
+                    <div className="title">
+                      템플릿을 선택하시면 보다 편하게 작업을 시작하실 수 있습니다!
                   </div>
-                  <div className="template-wrapper">
-                    {template &&
-                      template.length > 0 &&
-                      template.map(item =>
-                        <label
-                          className="element"
-                          key={item.type}
-                          onClick={
-                            async () => {
-                              await this.setState({ template: item.type })
-                            }}>
-                          {item.text}
-                          <DesignElement ><img alt="" src={item.img} /></DesignElement>
-                        </label>
-                      )}
-                  </div>
-                </DesignTemplateSelector>
-                {/* 
+                    <div className="template-wrapper">
+                      {template &&
+                        template.length > 0 &&
+                        template.map(item =>
+                          <label
+                            className="element"
+                            key={item.type}
+                            onClick={
+                              async () => {
+                                await this.setState({ template: item.type })
+                              }}>
+                            {item.text}
+                            <DesignElement ><img alt="" src={item.img} /></DesignElement>
+                          </label>
+                        )}
+                    </div>
+                  </DesignTemplateSelector>
+                  {/* 
                   <LocalGridEditor
                     userInfo={this.props.userInfo}
                     content={steps}
                     returnContent={this.onHandleGrid}
                     editor={true} />
                 */}
-              </div>
-              <div className="contentsBox centering">
-                <EditorWrapper>
-                  <div className="editor">
-                    <TemplateGridEditor
-                      reset={this.state.reset}
-                      selected={
-                        content => {
-                          this.setState({ steps: content, type: "project", is_project: 1 });
-                          this.returnState();
-                        }}
-                      type={this.state.template} />
+                </div>
+                <div className="contentsBox centering">
+                  <EditorWrapper>
+                    <div className="editor">
+                      <TemplateGridEditor
+                        reset={this.state.reset}
+                        selected={
+                          content => {
+                            this.setState({ steps: content, type: "project", is_project: 1 });
+                            this.returnState();
+                          }}
+                        type={this.state.template} />
+                    </div>
+                    <div className="title">
+                      선택하신 템플릿으로 시작하시고 싶으시다면 아래에 등록 버튼을 클릭해주세요.
                   </div>
-                  <div className="title">
-                    선택하신 템플릿으로 시작하시고 싶으시다면 아래에 등록 버튼을 클릭해주세요.
-                  </div>
-                </EditorWrapper>
-              </div>
-            </React.Fragment>}
+                  </EditorWrapper>
+                </div>
+              </React.Fragment>}
 
-        </FormBox>
+          </FormBox>
         </div>
       </MainBox >);
   }
@@ -1035,9 +1056,9 @@ class ItemProject extends Component {
     this.returnState();
   }
   async onHandleChange(event) {
-    let text= event.target.value;
-    if(text!=""){
-      text.replaceAll("\n","<br/>");
+    let text = event.target.value;
+    if (text != "") {
+      text.replaceAll("\n", "<br/>");
     }
     await this.setState({ [event.target.name]: text });
     this.returnState();

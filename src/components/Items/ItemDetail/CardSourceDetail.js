@@ -392,7 +392,7 @@ class CardSourceDetail extends Component {
                   />)}
 
                 <AddController
-                  isProgramming={this.props.ItemDetail.category_level2 === 1}
+                  isProgramming={this.props.ItemDetail.is_problem === 1}
                   mode={this.props.mode}
                   name="addBasic" type="INIT"
                   order={content.length > 0 ? content.length : 0}

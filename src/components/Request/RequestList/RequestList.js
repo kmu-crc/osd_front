@@ -283,8 +283,8 @@ class RequestList extends Component {
     this.props.history.push(`/${target}/${type}/${cate1}/${cate2}/${cate3}/${value}/${keyword}`);
   }
   typeChange = (type) => {
-    const { cate1, cate2, cate3, sort, keyword } = this.props;
-    this.props.history.push(`/${target}/${type}/${cate1}/${cate2}/${cate3}/${sort}/${keyword}`);
+    const { sort, keyword } = this.props;
+    this.props.history.push(`/${target}/${type}/null/null/null/${sort}/${keyword}`);
   }
   createNoneRequest = (title, content) => {
     const data = {
