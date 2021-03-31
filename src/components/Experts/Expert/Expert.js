@@ -40,14 +40,18 @@ const Profile = styled.div`
   }
 `;
 const TextWrapper = styled.div`
-  margin-left: auto;
-  margin-right: auto;
-  width: max-content;
-  font-family: Noto Sans KR;
-  text-align: center;
-  letter-spacing: 0;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
   .nick {
-    margin-top:7px;
+    text-align:center;
+    width:100%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    padding:5px 0px;
+    font-weight: 500;
     font-weight: 500;
     font-size:${market_style.font.size.normal1};
     color: #060000;
@@ -125,7 +129,7 @@ class Expert extends Component {
         </Profile>
         {/* text */}
         <TextWrapper>
-          <div className="nick"><TextFormat txt={expert.nick_name} chars={32} /></div>
+          <div className="nick">{expert.nick_name}</div>
           <div className="category"><TextFormat txt={expert.categoryName || "전체"} chars={32} /></div>
         </TextWrapper>
         {/* counter */}

@@ -5,7 +5,10 @@ import { GetExpertDesignerViewDetailRequest } from "actions/Expert";
 import { LikeDesignerRequest, UnlikeDesignerRequest, GetLikeDesignerRequest } from "actions/Designer";
 import { CreateRequestRequest, GetDesignerRequestListRequest } from "actions/Request";
 import { GetTotalCountDesignerReviewRequest } from "actions/Review";
-
+import styled from "styled-components";
+const Wrapper = styled.div`
+  margin:20px 30px
+`
 class DesignerDetailContainer extends Component {
   componentWillMount() {
     this.props.GetExpertDesignerViewDetailRequest(this.props.id)
@@ -13,7 +16,11 @@ class DesignerDetailContainer extends Component {
       .then(this.props.GetTotalCountDesignerReviewRequest(this.props.id))
   }
   render() {
-    return (<DesignerDetail {...this.props} />);
+    return (
+    <Wrapper>
+    <DesignerDetail {...this.props} />
+    </Wrapper>
+    );
   }
 }
 

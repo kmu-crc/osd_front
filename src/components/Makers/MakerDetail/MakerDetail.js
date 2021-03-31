@@ -15,6 +15,7 @@ import { Icon } from "semantic-ui-react";
 import ArticleModal from "components/Commons/ArticleModal/ArticleModal";
 import market_style from "market_style";
 
+
 const LocationList = [
   { value: 0, text: "서울특별시" },
   { value: 1, text: "부산광역시" },
@@ -35,98 +36,119 @@ const LocationList = [
 ];
 
 // CSS STYLING
-
+const Wrapper = styled.div`
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  .row_wrapper{
+  }
+  .flex{
+    display:flex;
+  }
+`;
 const Expert = styled.div`
   width: 300px;
-  height: 374px;
+  height: 439px;
   margin-right:20px;
-  padding:20px 40px 15px 40px;
-  border:1px solid #eaeaea;
+  padding:20px 25px;
   background: #FFFFFF;
-  box-shadow: 3px 3px 5px #0000001A;
   border-radius: 20px;
+  border:1px solid #eaeaea;
+  box-shadow: 3px 3px 5px #0000001A;
+
+  .profile_Wrapper{
+    width:100%;
+    font-family: Noto Sans KR;
+    text-align:center;
+    .nick {
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      padding:10px 0px 10px 0px;
+      font-weight: 500;
+      font-size:${market_style.font.size.normal1};
+      color: black;
+      margin-top:0px 40px 0px 40px;
+    }
+    .category {
+      font-weight: 300;
+      font-size:${market_style.font.size.small1};
+      margin-top: 5px;
+      line-height: 22px;
+      color: red;
+    }
+    .create_time{
+      font-weight:300;
+      font-size:${market_style.font.size.mini2};
+      color:#707070;
+    }
+  }
+
+  .like_Wrapper{
+    width:100%;
+    font-size:${market_style.font.size.small1};
+    text-align:center;
+    cursor:pointer;
+    margin-top:5px;
+    .unlike{
+      color:#ff0000;
+      font-weight:200;
+    }
+    .like{
+      color:#ff0000;
+    }
+  }
+
+  .counter_wrapper{
+    margin-top: 10px;
+    display: flex;
+    justify-content:center;
+    width: 100%;
+    letter-spacing: 0;
+    color: #000000;
+    font-size:${market_style.font.size.mini2};
+  
+    .items {
+      text-align: center;
+      font-weight: 300;
+    }
+    .v-line {
+      font-size:${market_style.font.size.mini2};
+    }
+    .likes {
+      font-weight: 300;
+    }
+  }
 `;
 const Profile = styled.div`
-  width: 220px;
-  height: 220px;
+  width: 250px;
+  height: 250px;
   background: transparent;
   background-image: url(${props => props.face});
   border-radius: 50%;
   background-size: cover;
   background-position: center center;
 `;
-const LikeWrapper = styled.div`
-  width:100%;
-  font-size:${market_style.font.size.small1};
-  text-align:center;
-  cursor:pointer;
-  .unlike{
-    color:#ff0000;
-    font-weight:200;
-  }
-  .like{
-    color:#ff0000;
-  }
-`;
-const TextWrapper = styled.div`
-  width:100%;
-  font-family: Noto Sans KR;
-  text-align: center;
-  letter-spacing: 0;
-  margin-top:10px;
-  .nick {
-    font-weight: 500;
-    font-size:${market_style.font.size.small1};
-    color: black;
-  }
-  .category {
-    font-weight: 300;
-    font-size:${market_style.font.size.mini2};
-    margin-top: 5px;
-    line-height: 22px;
-    color: red;
-  }
-  .create_time{
-    font-weight:300;
-    font-size:${market_style.font.size.mini2};
-    color:#707070;
-  }
-`;
-const Counter = styled.div`
-  margin-top: 5px;
-  display: flex;
-  justify-content:center;
-  width: 100%;
-  letter-spacing: 0;
-  color: #000000;
-  font-size:${market_style.font.size.mini2};
 
-  .items {
-    text-align: center;
-    font-weight: 300;
-  }
-  .v-line {
-    font-size:${market_style.font.size.tiny1};
-  }
-  .likes {
-    font-weight: 300;
-  }
-`;
 const Introduction = styled.div`
-  width:620px;
-  height:374px;
-  position:relative;
+  width:100%;
+  height:439px;
+  padding: 40px 60px;
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #0000001A;
   border:1px solid #eaeaea;
   border-radius: 20px;
-  padding: 40px 50px;
   font-family: Noto Sans KR;
+  position:relative;
   .wrapItem{
     width:100%;
     height:100%;
     overflow: auto;
     .title {
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      padding:5px 0px 5px 0px;
       font-size:${market_style.font.size.normal1};
       font-weight: 500;
     }
@@ -158,32 +180,23 @@ const Introduction = styled.div`
       background:linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255,01.0));
     }
   }
-  
-
-  // &:hover{
-  //   .wrapItem {
-  //     overflow: auto;
-  //   }
-  // }
-
-
 `;
 const ItemInfo = styled.div`
   margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
-  width: ${props => props.width == null ? "468px" : props.width + "px"};
-  height: ${props => props.height == null ? "491px" : props.height + "px"};
+  width: ${props => props.width == null ? "100%" : props.width + "px"};
+  height: ${props => props.height == null ? "100%" : props.height + "px"};
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #0000001A;
   border-radius: 20px;
   border:1px solid #eaeaea;
   opacity: 1;
   font-family: Noto Sans KR;
-  padding: 20px 30px 20px 30px;;
+  padding: 10px 25px 20px 25px;
 
   .title {
     font-size:${market_style.font.size.normal1};
     font-weight: 500;
-    text-align: left;
+    text-align: center;
   }
   .hrline{
     width:100%;
@@ -194,32 +207,36 @@ const ItemInfo = styled.div`
   }
   .wrapItem{
     width:100%;
-    height:230px;
+    height:90%;
     display:flex;
+    overflow-x:hidden;
+    overflow-y:overlay;
   }
 
   .wrapGallery{
     width:100%;
-    height:210px;
+    height:90%;
     display:flex;
+    overflow-x:hidden;
+    overflow-y:overlay;
   }
 `;
 const AdditionalInfo = styled.div`
   margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
-  width: ${props => props.width == null ? "468px" : props.width + "px"};
-  height: ${props => props.height == null ? "491px" : props.height + "px"};
+  width: ${props => props.width == null ? "100%" : props.width + "px"};
+  height: ${props => props.height == null ? "100%" : props.height + "px"};
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #0000001A;
   border-radius: 20px;
   border:1px solid #eaeaea;
   opacity: 1;
-  padding:20px 30px;
+  padding:10px 25px 15px 25px;
   font-family: Noto Sans KR;
   
   .title {
     font-size:${market_style.font.size.normal1};
     font-weight: 500;
-    text-align: left;
+    text-align: center;
   }
   .hrline{
     width:100%;
@@ -238,24 +255,24 @@ const AdditionalInfo = styled.div`
     line-weight: 27px;
     text-align: left;
     overflow-y:scroll;
-    // overflow: auto;
   }
   .reviewItem{
     width:100%;
-    height:113px;
+    height:80%;
     display:flex;
+    overflow:hidden;
+    overflow-y:auto;
   }
   .wrapItem{
     width:100%;
-    max-width:100%;
-    max-height:85%;
+    height:80%;
     display:flex;
     overflow:hidden;
     overflow-y:auto;
     }
 `;
 const MakerBoard = styled.div`
-  width: ${props => props.width == null ? "468px" : props.width + "px"};
+  width: ${props => props.width == null ? "100%" : props.width + "px"};
   margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
   margin-bottom:50px;
   background: #FFFFFF;
@@ -265,6 +282,10 @@ const MakerBoard = styled.div`
   opacity: 1;
   padding:20px 30px;
   font-family: Noto Sans KR;
+  .flex{
+    display:flex;
+    justify-content:flex-end;
+  }
   .headerWrapper{
     width:100%;
     display:flex;
@@ -279,10 +300,11 @@ const MakerBoard = styled.div`
     }
   }
   ._title {
-    width:max-content;
+    width:100%;
     color: #000000;
     font-size:${market_style.font.size.normal1};
     font-weight: 500;
+    text-align:center;
   };
   .redText{
     color:red;
@@ -357,27 +379,14 @@ const MakerBoard = styled.div`
     .more {}
   };
 `;
-const Wrapper = styled.div`
-// *{
-//   border:1px solid black;
-// }
-  display:flex;
-  align-items:center;
-  flex-direction:column;
-  margin-top: 20px;
-  // *{border:1px solid red;};
-  .contents_box{
-    width:max-content;
-    height:max-content;
-  }
-`;
+
 const ExpTable = styled.div`
     *{
       font-family:Noto Sans KR;
       font-size:${market_style.font.size.mini2};
     }
     width: ${props => props.width == null ? "100%" : props.width + "px"};
-    height: ${props => props.height == null ? "max-content" : props.height + "px"};
+    height: ${props => props.height == null ? "100%" : props.height + "px"};
     margin-left: ${props => props.mLeft == null ? "0px" : props.mLeft + "px"}px;
     margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
     
@@ -397,11 +406,17 @@ const ExpTable = styled.div`
       width:33%;
       height:100%;
       font-weight:400;
+      text-align:center;
+      color:#707070;
+      font-size:${market_style.font.size.small1};
     }
     .td{
       width:33%;
       height:100%;
-      font-weight:200;
+      font-weight:300;
+      text-align:center;
+      font-size:${market_style.font.size.small1};
+      color:#000000;
     }
 `;
 const TitleForm = styled.input`
@@ -478,9 +493,6 @@ margin-top:10px;
 }
 
 `;
-
-
-
 class MakerDetail extends Component {
   constructor(props) {
     super(props);
@@ -574,47 +586,45 @@ class MakerDetail extends Component {
     return (
       this.props.MakerViewDetail ?
         <Wrapper>
-          <div style={{ display: "flex", flexDirection: "row" }}>
+          <div className="row_wrapper flex">
             {/* Designer */}
-            <Expert mRight={60}>
+            <Expert>
               {/* Profile */}
               <Profile face={this.state.image} />
               {/* Text */}
-              <TextWrapper>
-                <div className="nick"><TextFormat txt={this.state.nick_name} chars={32} /></div>
-                <div className="create_time">
+              <div className="profile_Wrapper">
+                    <div className="nick">
+                    {this.state.nick_name}
+                    </div>                
+                    <div className="create_time">
                     {new Date(this.state.create_time).getFullYear()+"년"
                     +(new Date(this.state.create_time).getMonth()+1)+"월"
                     +(new Date(this.state.create_time).getDate())+"일 등록"}</div>
-                <div className="category"><TextFormat txt={categoryName || "전체"} chars={32} /></div>
-              </TextWrapper>
-              <LikeWrapper>
+                    <div className="category"><TextFormat txt={categoryName || "전체"} chars={32} /></div>
+              </div>
+              <div className="like_Wrapper">
                 {this.state.isLike === false ?
                   <div onClick={this.onClickisLike} className="unlike">♡</div>
                   :
                   <div onClick={this.onClickisLike} className="like">♥</div>
                 }
                 {/* ♥ */}
-              </LikeWrapper>
+              </div>
               {/* Counter */}
-              <Counter>
+              <div className="counter_wrapper">
                 <div className="items">
                   {itemCount || 0}개의 아이템 |</div>&nbsp;&nbsp;
                 <div className="v-line" />
                 <div className="likes">{/*♥*/}
                   <Icon className="heart" size="small" color="red" />{likeCount || 0}</div>
-              </Counter>
+              </div>
             </Expert>
 
             {/* Introduction */}
             <Introduction>
               <div className="wrapItem">
                 <div className="title">
-                  <TextFormat txt={this.state.nick_name} chars={32} />
-                  {/* <span className="text">
-                  {new Date(this.state.create_time).getFullYear()+"년"
-                  +(new Date(this.state.create_time).getMonth()+1)+"월"
-                  +(new Date(this.state.create_time).getDate())+"일 등록"}</span> */}
+                  {this.state.nick_name}
               </div>
                 <div className="text">{this.state.description}</div>
                 <div className="title">위치</div>
@@ -667,7 +677,7 @@ class MakerDetail extends Component {
           ?
           null
           :
-          <AdditionalInfo width={940} height={202} mTop={20}>
+          <AdditionalInfo height={190} mTop={20}>
           <div className="title margin_bottom">제작 경험</div>
           <div className="wrapItem">
           <ExpTable>
@@ -691,20 +701,18 @@ class MakerDetail extends Component {
 
 
           {/**보유아이템 */}
-          <ItemInfo width={940} height={310} mTop={20}>
-            <div className="title margin_bottom">제작 아이템</div>
+          <ItemInfo height={414} mTop={20}>
+            <div className="title margin_bottom">디자인 아이템</div>
             <div className="hrline margin_bottom"/>
             <div className="wrapItem">
-              {
-                <HaveInItemContainer id={this.props.id} />
-              }
-            </div>
+          {<HaveInItemContainer id={this.props.id} />}
+        </div>
           </ItemInfo>
 
           {/* 갤러리 */}
           {
             this.state.haveGallery==true?
-            <ItemInfo width={940} height={288} mTop={20}>
+            <ItemInfo height={379} mTop={20}>
             <div className="title margin_bottom">갤러리</div>
             <div className="hrline margin_bottom"/>
             <div className="wrapGallery">
@@ -716,7 +724,7 @@ class MakerDetail extends Component {
           }
 
           {/* 리뷰 */}
-          <AdditionalInfo width={940} height={200} mTop={20}>
+          <AdditionalInfo height={191} mTop={20}>
             <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
             <div className="hrline margin_bottom"/>
             <div className="reviewItem">
@@ -728,13 +736,9 @@ class MakerDetail extends Component {
           {/* 리뷰자세히 모달*/}
           {this.state.reviewdetail ? <ReviewDetailModal open={this.state.reviewdetail} close={() => this.setState({ reviewdetail: false })} detail={this.state.detail} /> : null}
 
-          <div style={{ marginTop: "61px", display: "flex", flexDirection: "row" }}>
-            <MakerBoard width={940} height={200} mTop={20}>
+            <MakerBoard mTop={20}>
             <div className="headerWrapper margin_bottom">
               <div className="_title">메이커 게시판</div>
-              {/* <div className="_title redText">
-                {this.props.userInfo&&this.props.MakerViewDetail&&this.props.MakerViewDetail.user_id !== this.props.userInfo.uid ? <div className="redText alignRight"><div className="link" onClick={this.onClickRequest}>제작 의뢰</div></div>:null}
-              </div> */}
             </div>
             <div className="hrline margin_bottom"/>
               <div className="list">
@@ -758,7 +762,6 @@ class MakerDetail extends Component {
               </CreateRequest>
               }
             </MakerBoard>
-          </div>
         </Wrapper>
         : <div>LOADING Maybe...</div>);
   }

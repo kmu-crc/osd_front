@@ -5,7 +5,10 @@ import { GetExpertMakerViewDetailRequest } from "actions/Expert";
 import { LikeMakerRequest, UnlikeMakerRequest, GetLikeMakerRequest } from "actions/Maker";
 import { CreateRequestRequest, GetMakerRequestListRequest } from "actions/Request";
 import { GetTotalCountMakerReviewRequest } from "actions/Review";
-
+import styled from "styled-components";
+const Wrapper = styled.div`
+  margin:20px 30px
+`
 class MakerDetailContainer extends Component {
   componentWillMount() {
     this.props.GetExpertMakerViewDetailRequest(this.props.id)
@@ -13,7 +16,11 @@ class MakerDetailContainer extends Component {
       .then(this.props.GetTotalCountMakerReviewRequest(this.props.id));
   }
   render() {
-    return (<MakerDetail {...this.props} />);
+    return (
+    <Wrapper>
+    <MakerDetail {...this.props} />
+    </Wrapper>
+    );
   }
 }
 
