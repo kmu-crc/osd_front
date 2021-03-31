@@ -594,6 +594,19 @@ export function UpdateDesignTime(id, token) {
             });
     }
 }
+export function UpdateDesignCardTime(id, token) {
+    const url = `${host}/design/updateDesignCardTime/${id}`;
+    return dispatch => {
+        dispatch(UpdateDesignInfo());
+        return fetch(url, {
+            headers: { "x-access-token": token, "Content-Type": "application/json" },
+            method: "POST"
+        })
+            .then(res => res.json())
+            .then(res => dispatch(UpdateDesignInfoSuccess(res)))
+            .catch(err => dispatch(UpdateDesignInfoFailure(err)));
+    }
+}
 export function DeleteDesignRequest(id, token) {
     return (dispatch) => {
         dispatch(DeleteDesign());
