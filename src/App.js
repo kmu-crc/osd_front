@@ -47,7 +47,7 @@ class App extends Component {
           <Route path="/vchat2/:id" component={CheckAuth(VChatDesignPage)} />
           <Route path="/vchatg/:id" component={CheckAuth(VChatGroupPage)} />
           <Route path="/codeview" component={CheckAuth(CodeViewPage)} />
-          <Route path="/pdfview" component={CheckAuth(PdfViewPage)} />
+          <Route path="/pdfview/:uri" component={CheckAuth(PdfViewPage)} />
 
           {/* GROUP A - main */}
           <Route exact path="/" component={MainPage} />
