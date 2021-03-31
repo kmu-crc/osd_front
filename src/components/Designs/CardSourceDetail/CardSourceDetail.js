@@ -14,22 +14,21 @@ import { Modal, Dropdown } from "semantic-ui-react";
 import 'react-medium-image-zoom/dist/styles.css';
 import Cross from "components/Commons/Cross";
 import host from "config";
-import { geturl } from "config"
+// import { geturl } from "config"
+import { Encrypt } from "components/Commons/EncryptDecrypt";
 
 // FOR EDITOR
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-github";
-
 import { Worker } from '@react-pdf-viewer/core';
 import { PdfViewer } from "./PDFviewer";
 
 // FOR SUBMIT LIST
-import Table from "rc-table";
+// import Table from "rc-table";
 // import DateFormat from "modules/DateFormat";
 // import { resolve } from "core-js/fn/promise";
-
 
 
 /*
@@ -1493,8 +1492,8 @@ class CardSourceDetail extends Component {
                       <React.Fragment>
                         <div style={{ display: "flex", flexDirection: "flex-end" }}>
                           <div style={{ cursor: "pointer", fontSize: "1.25rem", color: "#707070", marginLeft: "auto", border: "1px solid transparent", width: "max-content" }}>
-                            <a onClick={() => { const options = `toolbar=no,status=no,menubar=no,location=no,top=10,left=10,width=${parseInt(window.screen.width * .75, 10)},height=${parseInt(window.screen.height * .75, 10)}`; localStorage.setItem("pdf", item.content); window.open("/pdfview", "pdfview", options); }}>
-                              <i className="file pdf outline icon large" />새창으로열기</a>
+                            <a onClick={() => window.open(`/pdfview/${item.content}`, "_blank", null)}>
+                              <i className="file pdf outline icon large" />새탭으로열기</a>
                           </div>
                           <div style={{ fontSize: "1.25rem", color: "#707070", marginLeft: "25px", border: "1px solid transparent", width: "max-content" }}>
                             <a href={item.content} ><i className="save icon large" />PDF다운로드</a>
@@ -1630,44 +1629,14 @@ class CardSourceDetail extends Component {
                                       내용</div>
                                   </div>
                                   <div className="problemBox">
-                                    <div
-                                      onClick={async () => {
-                                        // console.log("user_id", this.props.userInfo.uid, item.user_id);
-                                        // if (this.props.userInfo && (this.props.userInfo.uid === item.user_id)) {
-                                        if (permission === "LOG SUBMIT" || permission === "LOG") {
-                                          this.setState({ item: JSON.parse(item.content), item_uid: item.uid, item_user: item.user_id, tab: item.user_id === this.props.userInfo.uid ? "code" : "log" });
-                                          this.setState({ submit: true });
-                                          this.setState({ coding: [] });
-                                        } else {
-                                          await alert("해당문제의 제출 권한이 없습니다.");
-                                        }
-                                      }}
-                                      style={{
-                                        width: "max-content",
-                                        margin: "auto",
-                                        cursor: "pointer"
-                                      }}>
-
-
-                                      <p
-                                        style={{
-                                          padding: "5px 13px",
-                                          color: "white",
-                                          borderRadius: "18px",
-                                          backgroundColor:
-                                            permission == "LOG" || permission === "LOG SUBMIT" ? "red" : "gray",
-                                        }}>
-                                        답안 제출하기
-                                </p>
-                                    </div>
                                     <div className="board">
                                       {/* {item.content && IsJsonString(item.content) && JSON.parse(item.content).cotents && */}
                                       {item.content &&
                                         <React.Fragment>
                                           <div style={{ display: "flex", flexDirection: "flex-end" }}>
                                             <div style={{ cursor: "pointer", fontSize: "1.25rem", color: "#707070", marginLeft: "auto", border: "1px solid transparent", width: "max-content" }}>
-                                              <a onClick={() => { const options = `toolbar=no,status=no,menubar=no,location=no,top=10,left=10,width=${parseInt(window.screen.width * .75, 10)},height=${parseInt(window.screen.height * .75, 10)}`; localStorage.setItem("pdf", JSON.parse(item.content).contents); window.open("/pdfview", "pdfview", options); }}>
-                                                <i className="file pdf outline icon large" />새창으로열기</a>
+                                              <a onClick={() => window.open(window.open(`/pdfview/${Encrypt(JSON.parse(item.content).contents, "opendesign")}`, "_blank", null))}>
+                                                <i className="file pdf outline icon large" />새탭으로열기</a>
                                             </div>
                                             <div style={{ fontSize: "1.25rem", color: "#707070", marginLeft: "25px", border: "1px solid transparent", width: "max-content" }}>
                                               <a href={JSON.parse(item.content).contents} ><i className="save icon large" />PDF다운로드</a>
