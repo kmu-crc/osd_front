@@ -1494,7 +1494,7 @@ class CardSourceDetail extends Component {
                       <React.Fragment>
                         <div style={{ display: "flex", flexDirection: "flex-end" }}>
                           <div style={{ cursor: "pointer", fontSize: "1.25rem", color: "#707070", marginLeft: "auto", border: "1px solid transparent", width: "max-content" }}>
-                            <a onClick={() => window.open(`/pdfview/${item.content}`, "_blank", null)}>
+                            <a onClick={() => window.open(`/pdfview/${Encrypt(item.content, "opendesign")}`, "_blank", null)}>
                               <i className="file pdf outline icon large" />새탭으로열기</a>
                           </div>
                           <div style={{ fontSize: "1.25rem", color: "#707070", marginLeft: "25px", border: "1px solid transparent", width: "max-content" }}>
