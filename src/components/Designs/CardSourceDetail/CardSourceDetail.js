@@ -1097,6 +1097,8 @@ class CardSourceDetail extends Component {
         }).then(res => res.json())
           .then(res => {
             if (res.success) {
+              this.props.UpdateDesignCardTime(this.state.item_uid, this.props.token);
+              this.props.UpdateDesignTime(this.props.DesignDetail.uid, this.props.token);
               const check = () => {
                 this.setState({ loading: true, });
                 fetch(`${host}/design/problem/result-request2/${res.id}`, {
