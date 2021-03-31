@@ -126,7 +126,7 @@ class App extends Component {
             <Route component={() => <div style={{ width: "100%", fontSize: "36px" }}>페이지를 찾을 수 없습니다.</div>} />
 
 
-            <Route path="/codeview" component={CheckAuth(CodeViewPage)} />
+            <Route path="/codeview" component={RequiresAuth(CodeViewPage)} />
           </Switch>
         </ClientTemplate>
       </BrowserRouter>);
