@@ -64,6 +64,9 @@ const ProfileBox = styled.div`
     border: 0.5px solid #EAEAEA;
     border-radius: 20px;
     padding:10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
     .fontNormal{font-size:${market_style.font.size.normal1};}
     .fontSmall{font-size:${market_style.font.size.small1};}
     .fontMini{font-size:${market_style.font.size.mini2};}
@@ -71,6 +74,18 @@ const ProfileBox = styled.div`
     .fontStyleLight{font-family:Noto Sans KR; font-weight:200;}
     .red{color:red;}
     .normal{color:#060000;}
+    .nickName{
+      text-align:center;
+      width:80%;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      padding:5px 0px;
+      font-weight: 500;
+      font-weight: 500;
+      font-size:${market_style.font.size.normal1};
+      color: #060000;
+    }
 
   .imageBox {
     width: 100%;
@@ -405,7 +420,7 @@ class MyDetail extends Component {
                 <Thumbnail URL={MyDetail.thumbnail == null ? noimg : MyDetail.thumbnail} />
                 {/* </label> */}
               </div>
-              <div className="LabelBox fontNormal">{MyDetail.nick_name}</div>
+              <div className=" nickName">{MyDetail.nick_name}</div>
               <div className="LabelBox fontSmall fontStyleNormal red marginTop1">
                 {/* 카테고리 */}
                 &nbsp;

@@ -482,7 +482,6 @@ margin-top:10px;
   display:flex;
   justify-content:center;
   align-items:center;
-  border:1px solid red;
   cursor:pointer;
   margin-left:20px;
   .font{

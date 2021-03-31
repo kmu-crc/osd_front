@@ -24,27 +24,33 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
 
 const Wrapper = styled.div`
+
   width:100%;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   .profileBox{
-    width:940px;
+    width:100%;
+    
     display:flex;
     box-shadow: 3px 3px 5px #0000001A;
     border:1px solid #eaeaea;
     border-radius:20px;
-    padding:30px 40px;
+    padding:30px 45px;
   }
   .flex-align-column {
     flex-direction: column;
   };
+  .row{
+    width:100%;
+    margin-top:20px;
+  }
 `;
 const ItemImages = styled.div`
-  max-width: 354px;
+  max-width: 396px;
   max-height: 354px;
-  min-width: 354px;
+  min-width: 396px;
   min-height: 354px;
   .main-image {
     overflow-x: auto;
@@ -69,6 +75,7 @@ const ItemImages = styled.div`
   }
 `;
 const ItemInfo = styled.div`
+
   position: relative;
   margin-left: 45px;
   font-family: Noto Sans KR;
@@ -81,6 +88,9 @@ const ItemInfo = styled.div`
     text-align: left;
     color: #000000;
     font-weight:500;
+  }
+  .marginBottom{
+    margin-bottom:10px;
   }
   .expert {
     position:relative;
@@ -103,7 +113,7 @@ const ItemInfo = styled.div`
       color: #060000;
     }
    .text {
-     background-color: #FAFAFA;
+    background-color: #FAFAFA;
     margin-top: 29px;
     height: 200px;
     width: 100%;
@@ -128,35 +138,35 @@ const ItemInfo = styled.div`
       margin-right:10px;
     }
   }
-  .options {
-    margin-top: 50px;
-    .text {
-      width: max-content;
-      text-align: left;
-      font-weight: 500;
-      font-size:${market_style.font.size.normal3};
-      line-height: 29px;
-      letter-spacing: 0;
-      color: #000000;
-      opacity: 1;
-    }
-    .combo-wrapper {
-      margin-bottom: 28px;
-      .box {
-        border-radius: 21px;
-        background-color: #E9E9E9;
-        height: 43px;
-        margin-left: 41px;
-      }
-      .WIDTH360 { width: 360px; }
-      .WIDTH178 { width: 178px; }
-    }
-  }
+  // .options {
+  //   margin-top: 50px;
+  //   .text {
+  //     width: max-content;
+  //     text-align: left;
+  //     font-weight: 500;
+  //     font-size:${market_style.font.size.normal3};
+  //     line-height: 29px;
+  //     letter-spacing: 0;
+  //     color: #000000;
+  //     opacity: 1;
+  //   }
+  //   .combo-wrapper {
+  //     margin-bottom: 28px;
+  //     .box {
+  //       border-radius: 21px;
+  //       background-color: #E9E9E9;
+  //       height: 43px;
+  //       margin-left: 41px;
+  //     }
+  //     .WIDTH360 { width: 360px; }
+  //     .WIDTH178 { width: 178px; }
+  //   }
+  // }
   .bottom {
     width:100%;
     display:flex;
     justify-content:flex-end;
-    margin-top:30px;
+    margin-top:20px;
   };
   .buttons {
     cursor: pointer;
@@ -193,7 +203,7 @@ const Introduction = styled.div`
   height: 237px;
   opacity: 1;
   font-family: Noto Sans KR;
-  margin-top:15px;
+  margin-top:20px;
   .wrapItem{
     width:100%;
     height:100%;
@@ -205,12 +215,11 @@ const Introduction = styled.div`
       font-size:${market_style.font.size.small1};
       font-weight: 500;
       text-align: left;
-      margin-top:15px;
     }
     .text {
       width: 100%;
-      margin-top: 5px;
-      margin-bottom:29px;
+      margin-top: 10px;
+      margin-bottom:25px;
       font-size:${market_style.font.size.small1};
       font-weight: 300;
       line-weight: 27px;
@@ -274,7 +283,7 @@ const CoverGrident = styled.div`
   background:${props => props.isGradient ? "linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255,1.0))" : null};
 `
 const Review = styled.div`
-width: 940px;
+width: 100%;
 height:200px;
 padding:20px 30px;
 box-shadow: 3px 3px 5px #0000001A;
@@ -287,7 +296,7 @@ background: #ffffff;
 }
 `
 const QuestionBoard = styled.div`
-  width: 940px;
+  width: 100%;
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #0000001A;
   border:1px solid #eaeaea;
@@ -371,7 +380,7 @@ const Board = styled.div`
   }
 `;
 const Content = styled.div`
-  width: ${props => props.width || 1094}px;
+  width: ${props => props.width==null?"100%" : props.width+"px"};
   height: max-content;
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #0000001A;
@@ -652,8 +661,8 @@ class ItemDetail extends Component {
                       {item.type === 6 ? "지적재산권" : null}
                       {item.type === 7 ? "제작품" : null}
                     </div>
-                    <div className="title">태그</div>
-                    <div className="text flex">
+                    <div className="title marginBottom">태그</div>
+                    <div className="flex">
                       {
                         tag.indexOf(",") == -1 ? null : tag.split(",").map((item, index) => {
                           return (
@@ -664,7 +673,7 @@ class ItemDetail extends Component {
                         })
                       }
                     </div>
-                    <div className="gradient_box" ></div>
+                    {/* <div className="gradient_box" ></div> */}
                   </div>
                 </Introduction>
 
@@ -720,10 +729,9 @@ class ItemDetail extends Component {
           </div>
 
           {/* item-contents */}
-          <div style={{ marginTop: "20px" }}>
+          <div className="row">
             <Content
-              id="contents_rgn"
-              width={940}>
+              id="contents_rgn">
               <div className="title margin_bottom">아이템 상세내용</div>
               <div className="hrline margin_bottom"/>
               {item && item.upload_type === "blog"
@@ -749,7 +757,7 @@ class ItemDetail extends Component {
           </div>
 
           {/* review and board */}
-          <div style={{ marginTop: "20px" }}>
+          <div className="row">
             <Review>
               <ItemReviewContainer
                 user_id={item.user_id}
@@ -760,7 +768,7 @@ class ItemDetail extends Component {
           </div>
 
 
-          <div style={{ marginTop: "20px" }}>
+          <div className="row">
             <QuestionBoard>
             <div className="title margin_bottom">게시판</div>
               <div className="hrline margin_bottom"/>

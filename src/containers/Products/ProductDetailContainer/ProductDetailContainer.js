@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 import ItemDetail from "components/Items/ItemDetail";
 import Loading from "components/Commons/Loading";
 import {
-  // GetProductDetailRequest,
   GetProductCountRequest, GetLikeProductRequest,
   UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest, addCartRequest,GetDidYouBuyItRequest
 } from "actions/Product";
@@ -13,7 +12,11 @@ import { GetItemDetailRequest } from "actions/Item";
 import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 import { GetMyPointRequest, } from "actions/Point";
 import { alert } from "components/Commons/Alert/Alert";
-// import { confirm } from "components/Commons/Confirm/Confirm";
+import styled from "styled-components";
+const Wrapper = styled.div`
+  margin:20px 30px
+`
+
 class ProductDetailContainer extends Component {
   constructor(props) {
     super(props);
@@ -62,7 +65,9 @@ class ProductDetailContainer extends Component {
     return this.props.ItemDetail ?
       this.props.ItemDetail.private === 1 && !yours ?
         this.ThisIsPrivateItem() :
-        <ItemDetail purchase={this.Payment} itemId={this.props.ItemDetail["item-id"]} item={this.props.ItemDetail} {...this.props} />
+        <Wrapper>
+          <ItemDetail purchase={this.Payment} itemId={this.props.ItemDetail["item-id"]} item={this.props.ItemDetail} {...this.props} />
+        </Wrapper>
       : <Loading />
   }
 }
