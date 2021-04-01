@@ -43,17 +43,16 @@ const RightWhitePane = styled.div`
 
 `;
 const Arrow = styled.div`
-    width: 17px;
-    height: 48px;
+    width: 6px;
+    height: 30px;
     position: absolute;
-    top: ${props => props.gap + 65}px;
+    top: ${props => props.top + 6}px;
     left: ${props => props.left}px;
     right: ${props => props.right}px;
     z-index: 831;
     border: none;
     background-image: url(${arrow});
     background-size: cover;
-    background-position: 50%;
     transform: rotate(${props => props.angle});
     opacity: 0.9;
     cursor:pointer;
@@ -63,30 +62,26 @@ const Arrow = styled.div`
     cursor: pointer;
     @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) 
     and (max-width : ${1024}px) { 
-        top: ${props => props.gap}px;
+        top: ${props => props.top}px;
     }
     @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
     and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
         top:110px;
-        // top: ${props => props.gap}px;
+        // top: ${props => props.top}px;
     }
 `;
 const GridEditorWrapper = styled.div`
     display: flex;
-    margin-left:32px;
-    margin-bottom: 75px;
-    padding:20px;
-    padding-right:50px;
     width: ${window.innerWidth < osdcss.resolutions.LargeMaxWidth
         ? window.innerWidth
         : osdcss.resolutions.LargeMaxWidth}; 
     .Editor{
-        padding-left:10px;
-        padding-right: 250px;
         overflow: hidden;
-        white-space: nowrap;
         display: flex;
-        margin-top: 30px;
+        white-space: nowrap;
+        // padding-left:10px;
+        // padding-right: 250px;
+        // margin-top: 30px;
     }
     @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
     and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
@@ -94,11 +89,22 @@ const GridEditorWrapper = styled.div`
     }
 `;
 const Wrapper = styled.div`
+    height: 100%;
+    width: 1256px;
     position: relative;
-    // border:1px solid black;
-    // width:100%;
+    overflow: hidden;
+    // overflow-x: hidden;
+    :hover {
+        overflow-y: auto;
+    }
+    ::-webkit-scrollbar {
+        position: absolute;
+        width: 3.9px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(112, 112, 112, 0.45) !important;
+    }
 `;
-
 
 class GridEditor extends Component {
     constructor(props) {
@@ -309,99 +315,100 @@ class GridEditor extends Component {
         const steps = ItemStep;
         // console.log("----=================dfasdfdfd",userInfo);
 
-        return (
-            <Wrapper>
-                {itemId ?
-                    <React.Fragment>
-                        {left ? <LeftWhitePane
-                            width={100} height={h}
-                            background="transparent linear-gradient(0deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
-                            <Arrow angle="0deg" top={10} gap={0} left={0} onClick={this.ScrollLeft} />
-                        </LeftWhitePane> : null}
+        return (<Wrapper>
+            {itemId ?
+                <React.Fragment>
+                    {left ?
+                        // <LeftWhitePane width={43} height={h} background="transparent linear-gradient(0deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
+                        <Arrow angle="0deg" top={0} gap={0} left={3} onClick={this.ScrollLeft} />
+                        // </LeftWhitePane>
+                        : null}
 
-                        {right ? <RightWhitePane
-                            width={100} height={h} right={0}
-                            background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
-                            <Arrow angle="180deg" top={20} gap={0} right={50} onClick={this.ScrollRight} />
-                        </RightWhitePane> : null}
+                    {right ?
+                        // <RightWhitePane width={43} height={h} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
+                        <Arrow angle="180deg" top={0} gap={0} right={3} onClick={this.ScrollRight} />
+                        // </RightWhitePane> 
+                        : null}
 
-                        {editor && newcard ?
-                            <NewCardModal
-                                // boardId={boardId}
-                                // order={steps.length}
-                                isTeam={editor}
-                                itemId={this.props.itemId}
-                                open={newcard}
-                                row={row}
-                                return={this.handleReturn}
-                                close={() => this.setState({ newcard: false })}
-                            /> : null}
+                    {editor && newcard ?
+                        <NewCardModal
+                            // boardId={boardId}
+                            // order={steps.length}
+                            isTeam={editor}
+                            itemId={this.props.itemId}
+                            open={newcard}
+                            row={row}
+                            return={this.handleReturn}
+                            close={() => this.setState({ newcard: false })}
+                        /> : null}
 
-                        {card ?
-                            <CardModal
-                                bought={this.props.bought}
-                                open={card} close={() => this.setState({ card: false })}
-                                edit={editor} //userInfo && (userInfo.uid === cardDetail.user_id)}
-                                card={cardDetail}
-                                isTeam={editor}
-                                // title={title}
-                                boardId={boardId}
-                                itemId={itemId}
-                            /> : null}
+                    {card ?
+                        <CardModal
+                            bought={this.props.bought}
+                            open={card} close={() => this.setState({ card: false })}
+                            edit={editor} //userInfo && (userInfo.uid === cardDetail.user_id)}
+                            card={cardDetail}
+                            isTeam={editor}
+                            // title={title}
+                            boardId={boardId}
+                            itemId={itemId}
+                        /> : null}
 
-                        {editor && newstep ?
-                            <NewStepModal
-                                {...this.props}
-                                steps={steps}
-                                open={newstep}
-                                newStep={this.NewStep}
-                                close={this.CloseNewStep}
-                            /> : null}
+                    {editor && newstep ?
+                        <NewStepModal
+                            {...this.props}
+                            steps={steps}
+                            open={newstep}
+                            newStep={this.NewStep}
+                            close={this.CloseNewStep}
+                        /> : null}
 
-                        {editor && editstep ?
-                            <EditStepModal
-                                open={editstep}
-                                title={title}
-                                where={where}
-                                steps={steps}
-                                RemoveStep={this.RemoveStep}
-                                EditStep={this.EditStep}
-                                close={this.CloseEditStep}
-                            /> : null}
+                    {editor && editstep ?
+                        <EditStepModal
+                            open={editstep}
+                            title={title}
+                            where={where}
+                            steps={steps}
+                            RemoveStep={this.RemoveStep}
+                            EditStep={this.EditStep}
+                            close={this.CloseEditStep}
+                        /> : null}
 
-                        <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
-                            <GridEditorWrapper ref={this.grid}>
-                                <div style={{ width: window.innerWidth + "px" }} className="Editor" ref={this.temp}>
-                                    {/* ------------단계 ------------*/}
-                                    {steps && steps.length > 0 ?
-                                        <SortableDesignSteps
-                                            bought={this.props.bought}
-                                            editStep={this.OpenEditStep}
-                                            item_id={this.props.item.uid}
-                                            editor={editor ? true : false}
-                                            items={steps}
-                                            cardReorder={this.requestCardReorder}
-                                            createCard={this.createNewCard}
-                                            openCard={this.openCard}
-                                            reorder={this.requestReorder}
-                                            userInfo={userInfo}
-                                        /> : null}
-                                    {editor ?
-                                        <div style={{ display: "flex" }}>
-                                            <CreateStep
-                                                userInfo={this.props.userInfo}
-                                                onClick={this.OpenNewStep}
-                                                step={"단계"} />
-                                            <div style={{ width: "300px" }}>&nbsp;</div>
-                                        </div> : null}
-                                </div>
-                            </GridEditorWrapper>
-                        </ReactHeight>
-                    </React.Fragment>
-                    : <div>FAILED TO LOAD DATA :( <br />
+                    {/* <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}> */}
+                    <GridEditorWrapper ref={this.grid}>
+                        <div style={{ width: window.innerWidth + "px" }} className="Editor" ref={this.temp}>
+                            {/* ------------단계 ------------*/}
+                            {steps && steps.length > 0 ?
+                                <SortableDesignSteps
+                                    bought={this.props.bought}
+                                    editStep={this.OpenEditStep}
+                                    item_id={this.props.item.uid}
+                                    editor={editor ? true : false}
+                                    items={steps}
+                                    cardReorder={this.requestCardReorder}
+                                    createCard={this.createNewCard}
+                                    openCard={this.openCard}
+                                    reorder={this.requestReorder}
+                                    userInfo={userInfo}
+                                /> : null}
+                            {editor ?
+                                <div style={{ display: "flex" }}>
+                                    <CreateStep
+                                        userInfo={this.props.userInfo}
+                                        onClick={this.OpenNewStep}
+                                        step={"단계"} />
+                                    <div style={{ width: "300px" }}>&nbsp;</div>
+                                </div> : null}
+                        </div>
+                    </GridEditorWrapper>
+                    {/* </ReactHeight> */}
+                </React.Fragment>
+
+
+                : <div>FAILED TO LOAD DATA :( <br />
                     PLEASE, REFRESH THIS PAGE... :)</div>
-                }
-            </Wrapper>)
+            }
+        </Wrapper>)
     }
 }
 

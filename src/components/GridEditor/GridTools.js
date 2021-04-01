@@ -7,8 +7,8 @@ import { Icon } from 'semantic-ui-react'
 import market_style from "market_style";
 
 const CreateCardContainer = styled.div`
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     margin-right: ${props => props.marginRight}px;
     border-radius: 15px; 
     background-clip: padding-box; 
@@ -16,44 +16,47 @@ const CreateCardContainer = styled.div`
     cursor: pointer;
     
     .cross-wrapper {
+        width: max-content;
         position: relative;
-        margin-top: 38.58px;
-        margin-left: 66.59px;
+        margin: auto;
+        margin-top: 35px;
     }
     .text {
+        width: 100%;
+        padding: 5px;
         opacity: ${props => props.disabled ? "0.5" : "1.0"};
-        margin-top: 32.23px;
+        margin-top: 10px;
         height: 29px;
         color: #707070;
         font-family: Noto Sans KR;
-        font-size:${market_style.font.size.normal3};
+        font-size:${market_style.font.size.small1};
         text-align: center;
-        line-height: 29px;
+        line-height: 15px;
     }
 `;
 const CreateStepContainer = styled.div`
     position: relative;
     display: flex;
-    width: 200px;
-    height: 77px;
-    border-radius: 15px;
+    width: 150px;
+    height: 40px;
+    border-radius: 10px;
     background-clip: padding-box;
     margin-right: ${props => props.marginRight}px;
-    border: 2px solid rgba(112,112,112, 0.5);
+    border: 1px solid rgba(112,112,112, 0.5);
     cursor: pointer;
     .close-box{
         poistion: relative;
-        margin-top: 22.5px;
-        margin-left: 19.5px;
-        margin-right: 15px;
+        margin-top: 9px;
+        margin-left: 9px;
     }
     .create-button{
         opacity: ${props => props.disabled}; 
-        margin-top: 23px;
+        margin-top: 2px;
+        margin-left: 10px;
         height: 29px;
         color: #707070;
         font-family: Noto Sans KR;
-        font-size:${market_style.font.size.normal3};
+        font-size:${market_style.font.size.small1};
         text-align: left;
         line-height: 29px;
     }
@@ -79,30 +82,45 @@ const CreateStepContainer = styled.div`
 //     </div>)
 // }
 const StepCardStyle = styled.div`
+
+    // width: 200px;
+    // height: 77px;
+    // border-radius: 15px;
+    // border: 2px solid #707070;
+
     position: relative;
     cursor: pointer;
     display: flex;
     justify-content:center;
     align-items:center;
-    width: 200px;
-    height: 77px;
-    border-radius: 15px;
-    border: 2px solid #707070;
+    width: 150px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid #B7B7B7;
+
     margin-top: ${props => props.marginTop}px;
     margin-left: ${props => props.marginLeft}px;
     margin-right: ${props => props.marginRight}px;
     margin-bottom: ${props => props.marginBottom}px;
-    background-clip: padding-box;
-    background-color: white;
+
+    background: #FFFFFF 0% 0% no-repeat padding-box; // background-clip: padding-box; // background-color: white;
     overflow:hidden;
+
+    padding: 9px;
+
     .text-area{
-        height: 29px;
-        width: 178px;
-        color: #707070;
-        font-family: Noto Sans KR;
-        font-size:${market_style.font.size.normal3};
+        width: 100%;
+        font-size:${market_style.font.size.small1}; //-> 15px;
+        line-height: 22px;
+        font-familiy: Noto Sans KR;
         text-align: center;
-        // line-height: 29px;
+        letter-spacing: 0px;
+        color: #707070;
+        opacity: 1;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
     :hover{
         .icon-area{
@@ -122,12 +140,17 @@ const CardContainer = styled.div`
     // z-index: 700;
     z-index:1;
     cursor: pointer;
-    width: ${PxtoRem(200)};
-    height: ${PxtoRem(200)};
-    border-radius: 15px;
+    // width: ${PxtoRem(200)};
+    // height: ${PxtoRem(200)};
+    width: ${PxtoRem(150)};
+    height: ${PxtoRem(150)};
     overflow:hidden;
-    border: 2px solid rgba(112, 112, 112, 1);
-    background-color: rgba(112, 112, 112, .15);
+    // border-radius: 15px;
+    // border: 2px solid rgba(112, 112, 112, 1);
+    // background-color: rgba(112, 112, 112, .15);
+    background-color: #E9E9E9;
+    border-radius: 10px;
+    opacity: 1;
     margin-top:${props => props.marginTop};
     margin-left:${props => props.marginLeft};
     margin-right:${props => props.marginRight};
@@ -171,14 +194,14 @@ const AuthorBox = styled.div`
 export const CreateStep = (props) => {
     return (<CreateStepContainer marginRight={props.marginRight} disabled={props.disabled ? 0.5 : 1.0} onClick={props.onClick}>
         <div className="close-box">
-            <Cross angle={90} width={33} height={33} disabled={false} /></div>
+            <Cross angle={90} width={20} height={20} disabled={false} /></div>
         <div className="create-button">{props.step} 생성하기</div>
     </CreateStepContainer>)
 }
 export const CreateCard = (props) => {
     return (<CreateCardContainer marginRight={props.marginRight} onClick={props.onClick} disabled={props.disabled}>
         <div className="cross-wrapper" >
-            <Cross angle={90} width={66.68} height={66.68} disabled={false} /></div>
+            <Cross angle={90} width={20} height={20} disabled={false} /></div>
         <div className="text">컨텐츠 등록하기</div>
     </CreateCardContainer>)
 }
@@ -207,14 +230,16 @@ export const ContentCard = (props) => {
             <div className="icon-area">{props.children}</div>
             {props.card.thumbnail ?
                 <React.Fragment>
-                    {props.card.private==true?<div style={{margin:"5px",border:"1px solid red",paddingLeft:"2px",paddingBottom:"2px",
-                                width:"30px",height:"30px",borderRadius:"50%",backgroundColor:"white",display:"flex",position:"absolute",zIndex:"999",
-                                justifyContent:"center",alignItems:"center"}}>
-                        <Icon name="lock" size="small" color="red"/>
-                    </div>:null}
+                    {props.card.private == true ? <div style={{
+                        margin: "5px", border: "1px solid red", paddingLeft: "2px", paddingBottom: "2px",
+                        width: "30px", height: "30px", borderRadius: "50%", backgroundColor: "white", display: "flex", position: "absolute", zIndex: "999",
+                        justifyContent: "center", alignItems: "center"
+                    }}>
+                        <Icon name="lock" size="small" color="red" />
+                    </div> : null}
                     {/* <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(180deg, #000000 0%, #020202F7 16%, #FFFFFF26 100%)" }} /> */}
                     <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(-180deg, rgba(32,32,32, 0.5) 0%, rgba(255,255,255, 0) 50%)" }} />
-                    <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: market_style.font.size.normal3, fontFamily: "Noto Sans KR", fontWeight: "500", color: "#FFFFFF", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
+                    <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: market_style.font.size.small3, fontFamily: "Noto Sans KR", fontWeight: "700", color: "#707070", textAlign: "center", lineHeight: "22px", marginTop: "15px", marginLeft: "10px" }}>
                         {props.card.title.slice(0, 10)}
                     </div>
                     {/* <div style={{ zIndex: "702", background: "transparent linear-gradient(270deg, #00000000 0%, #FFFFFFA1 13%, #FFFFFF 52%, #FFFFFF94 82%, #80808000 100%)", position: "absolute", width: "195px", height: "53px", fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "128px", marginLeft: "auto" }}> */}
@@ -225,11 +250,42 @@ export const ContentCard = (props) => {
                     </AuthorBox>
                 </React.Fragment> :
                 <React.Fragment>
-                    <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: market_style.font.size.normal3, fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
-                        {props.card.title.slice(0, 10)}
+                    <div style={{
+                        zIndex: "702",
+                        position: "absolute",
+                        width: "130px",
+                        height: "45px",
+                        left: "9px",
+                        fontSize: market_style.font.size.small3,
+                        fontFamily: "Noto Sans KR",
+                        fontWeight: "500",
+                        color: "#707070",
+                        textAlign: "center",
+                        lineHeight: "40px",
+                        marginTop: "10px",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                    }}
+                        title={props.card.title}
+                    >
+                        {props.card.title}
+                        {/* .slice(0, 10)} */}
                     </div>
-                    <div style={{ zIndex: "702", position: "absolute", width: "195px", height: "53px", fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "128px", marginLeft: "auto" }}>
-                        <div style={{ fontSize: market_style.font.size.small3 }}>
+                    <div style={{
+                        zIndex: "702",
+                        position: "absolute",
+                        top: "80px",
+                        left: "9px",
+                        width: "130px",
+                        height: "53px",
+                        fontFamily: "Noto Sans KR",
+                        fontWeight: "300",
+                        color: "#707070",
+                        textAlign: "center",
+                    }}
+                        title={props.card.nick_name + "(" + DateFormat(props.card.update_time) + ")"}>
+                        <div style={{ fontSize: market_style.font.size.small2 }}>
                             {props.card.nick_name.slice(0, 10)}
                         </div>
                         <div style={{ fontSize: market_style.font.size.small1, marginTop: "6px" }}>

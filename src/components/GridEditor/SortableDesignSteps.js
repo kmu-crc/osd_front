@@ -8,7 +8,7 @@ const AsBelowArrow = styled.div`
     margin-left: ${props => props.marginLeft + "px" || "0px"};
     margin-top: ${props => props.marginTop + "px" || "0px"};
     width: ${props => props.percent * 100}px;
-    height: ${props => props.percent * 65}px;
+    height: ${props => props.percent * 50}px;
     background: #707070 0% 0% no-repeat padding-box;
     opacity: ${props => props.opacity};
     border-top: ${props => props.percent * 65}px solid ${props => props.color || "#707070"};
@@ -18,8 +18,8 @@ const AsBelowArrow = styled.div`
 `;
 const DragHandler = styled.div`
     position: absolute;
-    margin-left: 150px;
-    margin-top: 30px;
+    margin-left: 125px;
+    margin-top: 25px;
     z-index: 800;
     .wrapper {
         display: flex;
@@ -49,16 +49,16 @@ const Container = SortableContainer(({ children }) =>
     <ul style={{ margin: "0px", padding: "0px" }}>{children}</ul>);
 const HorizonDragHandle = SortableHandle(() =>
     <div style={{ display: "flex" }}>
-        <AsBelowArrow color="#FF0000" angle={90} percent={.21} marginRight={7} />
+        <AsBelowArrow color="#FF0000" angle={90} percent={.21} marginRight={0} />
         <AsBelowArrow color="#FF0000" angle={-90} percent={.21} />
     </div>)
 const VerticalDragHandle = SortableHandle(({ is_white }) =>
     <div>
         <AsBelowArrow color={is_white ? "#FFFFFF" : "#FF0000"} opacity={is_white ? 1 : 0.5} angle={180} percent={.21} />
-        <AsBelowArrow color={is_white ? "#FFFFFF" : "#FF0000"} opacity={is_white ? 1 : 0.5} angle={0} percent={.21} marginTop={7} />
+        <AsBelowArrow color={is_white ? "#FFFFFF" : "#FF0000"} opacity={is_white ? 1 : 0.5} angle={0} percent={.21} marginTop={0} />
     </div>)
 const margin = {
-    marginTop: "25px", marginRight: "74px", marginBottom: "37px"
+    marginTop: "10px", marginRight: "20px", marginBottom: "15px"
 };
 const SortableCard = SortableElement(({ disableReorder, editor, card, openCard, boardId, designId, userInfo }) => (
     <ContentCard
@@ -88,12 +88,12 @@ const SortableStep = SortableElement(({ disableReorder, reload, index, editStep,
             title={step.title}
             uid={step.uid}
             id="stepcard"
-            marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} />
+            marginTop={0} marginRight={20} marginBottom={0} marginLeft={0} />
 
         {step.cards && step.cards.length > 0 ?
             <React.Fragment>
-                <div style={{ marginTop: "25px" }}>
-                    <AsBelowArrow angle={0} percent={.25} marginTop={0} marginRight={0} marginBottom={0} marginLeft={85} />
+                <div style={{ marginTop: "10px" }}>
+                    <AsBelowArrow angle={0} percent={.2} marginTop={0} marginRight={0} marginBottom={0} marginLeft={65} />
                 </div>
                 <div>
                     <SortableDesignCards
@@ -113,14 +113,14 @@ const SortableStep = SortableElement(({ disableReorder, reload, index, editStep,
 
         {editor ?
             <React.Fragment>
-                <div style={{ marginTop: "25px" }}>
-                    <AsBelowArrow angle={0} percent={.25} marginTop={0} marginRight={0} marginBottom={0} marginLeft={85} />
-                </div>
-                <div style={{ marginTop: "25px" }}>
+                {/* <div style={{ marginTop: "10px" }}>
+                    <AsBelowArrow angle={0} percent={.2} marginTop={0} marginRight={0} marginBottom={0} marginLeft={65} />
+                </div> */}
+                <div style={{ marginTop: "10px" }}>
                     <CreateCard
                         onClick={() => createCard({ order: (step && step.cards) ? step.cards.length : 0, id: boardId })}
                         title={""} step={"카드 "}
-                        marginTop={0} marginRight={74} marginBottom={0} marginLeft={0} />
+                        marginTop={0} marginRight={20} marginBottom={0} marginLeft={0} />
                 </div>
             </React.Fragment> : null}
     </div>));
