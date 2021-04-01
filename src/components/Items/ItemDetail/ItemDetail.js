@@ -646,193 +646,26 @@ class ItemDetail extends Component {
     }
     return item ?
       <React.Fragment>
-        {/* {(this.props.userInfo && item.members && item.members.length > 1)
-          ? <ConnectedMemberContainer id={this.props.itemId} members={item.members} userInfo={this.props.userInfo} />
-          : null} */}
 
-        <Wrapper>
-          {/* thumbnail and item-info */}
-          <div className="profileBox">
-            <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg}>
-              <div className="main-image" />
-            </ItemImages>
-
-            <ItemInfo face={item.who || who}>
-              <div className="flex-align-column line">
-                <div className="flex spaceBetween">
-                <div className="title">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
-                <div className="expert">
-                  {/* {(this.props.userInfo && item.members && item.members.length > 0 && this.state.isShowmember)
-                    ? <MemberListBox />
-                    : null} */}
-                  <div className="who" />
-                  <div className="nick" onClick={() => this.setState({ isShowmember: !this.state.isShowmember })}>{item.userName}
-                    {this.props.userInfo && item.members && item.members.length > 0
-                      ?
-                      `외 ${item.members.length}명` : null}
-                  </div>
-                  </div>
-                  </div>
-
-
-                <Introduction id="Introduction">
-                  <div className="wrapItem">
-                    <div className="title">설명</div>
-                    <div id="itemDescription" className="text"
-                      dangerouslySetInnerHTML={{ __html: `${item.description || ""}` }}
-                    />
-                    <div className="title">유형</div>
-                    <div className="text flex">
-                      {item.type === 0 ? "디자인" : null}
-                      {item.type === 1 ? "프로젝트" : null}
-                      {item.type === 2 ? "기술자문/상담" : null}
-                      {item.type === 3 ? "경험" : null}
-                      {item.type === 4 ? "정보/데이터" : null}
-                      {item.type === 5 ? "아이디어/노하우" : null}
-                      {item.type === 6 ? "지적재산권" : null}
-                      {item.type === 7 ? "제작품" : null}
-                    </div>
-                    <div className="title">태그</div>
-                    <div className="text flex">
-                      {
-                        tag.indexOf(",") == -1 ? null : tag.split(",").map((item, index) => {
-                          return (
-                            <TagPiece key={index}>
-                              {item}
-                            </TagPiece>
-                          );
-                        })
-                      }
-                    </div>
-                    <div className="gradient_box" ></div>
-                  </div>
-                </Introduction>
-
-                  <div className="price-and-score line">
-                    <div className="price">
-                      {PointFormat(item.price / (item.price>9999?10000:1) || 0)}{item.price>9999?"만":""} point</div>
-                    <div className="price" style={{ marginRight: "35px" }}>
-                      {PointFormat(item.price / (item.price > 9999 ? 10000 : 1) || 0)}{item.price > 9999 ? "만" : ""} point</div>
-                    <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
-                      {/* {Star(item.score, 28)}({item.total || 0}) */}
-                      {/* <Rating name="score" icon='star' defaultRating={parseInt(score,10)} maxRating={5} disabled /> */}
-                      <RenderStar />
-                  </div>
-
-                <div className="bottom">
-                  <div className="buttons flex">
-                    {item.user_id === (this.props.userInfo && this.props.userInfo.uid) ?
-                      <div onClick={this.modifyThisItem} className="button first">
-                        <div>
-                          <div className="text">아이템 수정/삭제</div>
-                        </div>
-                      </div>
-                      :
-
-                      <div className="button first">
-                        <Link
-                          onClick={async (e) => {
-                            return this.props.isbuy > 0 ?
-                              await confirm("이미 구매하신 이력이 존재합니다. 계속 진행하겠습니까?") ? null : window.history.go(-1)
-                              : null
-                          }}
-                          to={{
-                            pathname: `/payment`, state: {
-                              item: this.props.item,
-                              custom: null,
-                              options: null
-                            }
-                          }
-                          }>
-                          <div>
-                            <div className="text">아이템 구입</div>
-                          </div>
-                        </Link>
-                      </div>
-                    }
-                    {this.props.ItemDetail && this.props.userInfo &&
-                      this.props.ItemDetail.user_id == this.props.userInfo.uid ? null : this.state.isLike === false ?
-                      <div className="button second" onClick={this.onClickLike}>
-                        <div className="text">관심항목추가</div></div>
-                      :
-                      <div className="button second active" onClick={this.onClickLike}>
-                        <div className="text">관심항목</div></div>}
-                  </div>
-                </div>
-              </div>
-            </ItemInfo>
-
+        {/* item-contents */}
+        <ItemContents>
+          <div className="header">
+            <div className="title">아이템 상세내용</div>
           </div>
 
-          {/* item-contents */}
-          <div style={{ marginTop: "35px" }}>
+          <div className="editor-wrapper ">
+            {item && item.upload_type === "blog"
+              ? <div style={{ overflow: "auto", height: "100%", }}>
+                <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} />
+              </div>
+              : null}
 
-            {/* item-contents ----------------------------------------------------------------------------- */}
-            <ItemContents>
-              <div className="header">
-                <div className="title">아이템 상세내용</div>
-              </div>
-              {/* ----------------------------------------------------------------------------------------- */}
-              <div className="editor-wrapper ">
-                {item && item.upload_type === "project"
-                  ? <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} />
-                  : null}
-              </div>
-            </ItemContents>
-            {/* ------------------------------------------------------------------------------------------- */}
-            {/* <Content
-              id="contents_rgn"
-              style={{ marginTop: "15px", overflow: "hidden" }}
-              // height={expandingContent ? "100%" : "400px"}
-              width={1600}>
-              <div className="title">아이템 상세내용</div>
-              {item && item.upload_type === "blog" ? <div className="detail_board" id="detail_board"> <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} /> </div> : null}
-              {item && item.upload_type === "project" ?  <div className="detail_board" id="detail_board"> <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} /> </div> : null}
-            </Content>
-              {/ * {isWrapperContent&&<CoverGrident isGradient={!expandingContent}/>} * /}
-            </Content> */}
-            {/* {isWrapperContent&&
-           <ExpandingButton width={1600}>
-              <div onClick={() => this.setState({ expandingContent: !expandingContent })} className="button">
-                <div className="font">
-                  {expandingContent ? "▲ 접기" : "▼ 펼쳐보기"}
-                </div>
-              </div>
-            </ExpandingButton>
-           }  */}
+            {item && item.upload_type === "project"
+              ? <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} />
+              : null}
           </div>
 
-          {/* review and board */}
-          <div style={{ marginTop: "20px" }}>
-            <Review>
-              <ItemReviewContainer
-                user_id={item.user_id}
-                detail={this.state.detail}
-                handler={detail => this.setState({ reviewdetail: true, detail: detail })}
-                isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} />
-            </Review>
-          </div>
-
-
-          <div style={{ marginTop: "20px" }}>
-            <QuestionBoard>
-            <div className="title margin_bottom">게시판</div>
-              <div className="hrline margin_bottom"/>
-              <ItemQuestionContainer user_id={item.user_id} isExpanding={(result) => { this.setState({ isexpandingBoard: result }) }} />
-            </QuestionBoard>
-            {/* {!this.state.isexpandingBoard &&
-              <ExpandingButton width={1600}>
-                <div onClick={() => this.setState({ expandingBoard: !expandingBoard })} className="button">
-                  <div className="font">
-                    {expandingBoard ? "▲접기" : "▼펼쳐보기"}
-                  </div>
-                </div>
-              </ExpandingButton>
-            } */}
-          </div>
-
-
-        </Wrapper>
+        </ItemContents>
       </React.Fragment>
       :
       <div>아이템정보를 가져오고 있습니다.</div>
