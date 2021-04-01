@@ -502,6 +502,46 @@ const PeerBox = styled.div`
   }
 `
 
+// debug
+const ItemContents = styled.div`
+  // *{ border: 1px solid blue; }
+  width: 1306px;
+  height: 477px;
+  background: #FFFFFF;
+  box-shadow: 3px 3px 5px #0000001A;
+  border: 0.25px solid #B7B7B7;
+  border-radius: 20px;
+  opacity: 1;
+  padding: 20px 25px;
+  margin-left: 30px;
+
+  .header {
+    padding-bottom: 10px;
+    border-bottom: 2px solid #EFEFEF; 
+    .title {
+      margin: auto;
+      // margin-top: 10px;
+      width: max-content;
+      line-height: 27px;
+      font-size: 18px;
+      color: #000000;
+      font-family: Noto Sans KR;
+      font-weight: Medium;
+      letter-spacing: 0px;
+    }
+  }
+  .editor-wrapper {
+    :hover {
+      opacity: 0.95;
+    }
+    width: 100%;
+    height: 405px;
+    padding-top: 15px;
+    word-wrap: break-word;
+    overflow: hidden;
+  }
+`;
+
 class ItemDetail extends Component {
   constructor(props) {
     super(props);
@@ -538,7 +578,7 @@ class ItemDetail extends Component {
       this.props.LikeProductRequest(this.props.id, this.props.token)
   };
   async buyThisItem(event) {
-    if (!await confirm(`${this.props.item.price / (this.props.item.price>9999?10000:1)}${this.props.item.price>9999?"만":""} point가 결제됩니다.`)) {
+    if (!await confirm(`${this.props.item.price / (this.props.item.price > 9999 ? 10000 : 1)}${this.props.item.price > 9999 ? "만" : ""} point가 결제됩니다.`)) {
       event.preventDefault();
     } else {
       this.props.item.price > this.props.Point ? this.gotoChargePoint() : this.purchaseThisItem()
@@ -671,6 +711,11 @@ class ItemDetail extends Component {
                   <div className="price-and-score line">
                     <div className="price">
                       {PointFormat(item.price / (item.price>9999?10000:1) || 0)}{item.price>9999?"만":""} point</div>
+                    <div className="price" style={{ marginRight: "35px" }}>
+                      {PointFormat(item.price / (item.price > 9999 ? 10000 : 1) || 0)}{item.price > 9999 ? "만" : ""} point</div>
+                    <div className="score line" style={{ marginLeft: "auto", marginRight: "15px" }}>
+                      {/* {Star(item.score, 28)}({item.total || 0}) */}
+                      {/* <Rating name="score" icon='star' defaultRating={parseInt(score,10)} maxRating={5} disabled /> */}
                       <RenderStar />
                   </div>
 
@@ -707,11 +752,11 @@ class ItemDetail extends Component {
                     }
                     {this.props.ItemDetail && this.props.userInfo &&
                       this.props.ItemDetail.user_id == this.props.userInfo.uid ? null : this.state.isLike === false ?
-                        <div className="button second" onClick={this.onClickLike}>
-                          <div className="text">관심항목추가</div></div>
-                        :
-                        <div className="button second active" onClick={this.onClickLike}>
-                          <div className="text">관심항목</div></div>}
+                      <div className="button second" onClick={this.onClickLike}>
+                        <div className="text">관심항목추가</div></div>
+                      :
+                      <div className="button second active" onClick={this.onClickLike}>
+                        <div className="text">관심항목</div></div>}
                   </div>
                 </div>
               </div>
@@ -720,32 +765,41 @@ class ItemDetail extends Component {
           </div>
 
           {/* item-contents */}
-          <div style={{ marginTop: "20px" }}>
-            <Content
+          <div style={{ marginTop: "35px" }}>
+
+            {/* item-contents ----------------------------------------------------------------------------- */}
+            <ItemContents>
+              <div className="header">
+                <div className="title">아이템 상세내용</div>
+              </div>
+              {/* ----------------------------------------------------------------------------------------- */}
+              <div className="editor-wrapper ">
+                {item && item.upload_type === "project"
+                  ? <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} />
+                  : null}
+              </div>
+            </ItemContents>
+            {/* ------------------------------------------------------------------------------------------- */}
+            {/* <Content
               id="contents_rgn"
-              width={940}>
-              <div className="title margin_bottom">아이템 상세내용</div>
-              <div className="hrline margin_bottom"/>
-              {item && item.upload_type === "blog"
-                ? <div className="detail_board" id="detail_board">
-                  <CardSourceDetailContainer
-                    bought={item.bought}
-                    isCancel
-                    cardId={item.cardId}
-                  />
-                </div>
-                : null}
-              {item && item.upload_type === "project"
-                ?
-                <div className="detail_board" id="detail_board">
-                  <ItemStepContainer
-                    item={item}
-                    id={item["item-id"]}
-                    bought={item.bought}
-                  />
-                </div>
-                : null}
+              style={{ marginTop: "15px", overflow: "hidden" }}
+              // height={expandingContent ? "100%" : "400px"}
+              width={1600}>
+              <div className="title">아이템 상세내용</div>
+              {item && item.upload_type === "blog" ? <div className="detail_board" id="detail_board"> <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} /> </div> : null}
+              {item && item.upload_type === "project" ?  <div className="detail_board" id="detail_board"> <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} /> </div> : null}
             </Content>
+              {/ * {isWrapperContent&&<CoverGrident isGradient={!expandingContent}/>} * /}
+            </Content> */}
+            {/* {isWrapperContent&&
+           <ExpandingButton width={1600}>
+              <div onClick={() => this.setState({ expandingContent: !expandingContent })} className="button">
+                <div className="font">
+                  {expandingContent ? "▲ 접기" : "▼ 펼쳐보기"}
+                </div>
+              </div>
+            </ExpandingButton>
+           }  */}
           </div>
 
           {/* review and board */}
@@ -766,7 +820,17 @@ class ItemDetail extends Component {
               <div className="hrline margin_bottom"/>
               <ItemQuestionContainer user_id={item.user_id} isExpanding={(result) => { this.setState({ isexpandingBoard: result }) }} />
             </QuestionBoard>
+            {/* {!this.state.isexpandingBoard &&
+              <ExpandingButton width={1600}>
+                <div onClick={() => this.setState({ expandingBoard: !expandingBoard })} className="button">
+                  <div className="font">
+                    {expandingBoard ? "▲접기" : "▼펼쳐보기"}
+                  </div>
+                </div>
+              </ExpandingButton>
+            } */}
           </div>
+
 
         </Wrapper>
       </React.Fragment>
