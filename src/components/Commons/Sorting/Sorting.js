@@ -19,6 +19,7 @@ const Container = styled.div`
   }
   .active {
     color: #FF0000;
+    font-weight:500;
   }
 `;
 

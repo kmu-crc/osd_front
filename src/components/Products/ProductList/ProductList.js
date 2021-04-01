@@ -42,7 +42,7 @@ const RequestButton = styled.div`
 const Container = styled.div`
   padding:0px 30px 0px 30px;
   ._wrapper{
-    margin-bottom:20px;
+    margin-bottom:15px;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -50,6 +50,7 @@ const Container = styled.div`
       width: 100%;
     }
     ._title{
+      color:black;
       width:200px;
       display:flex;
       justify-content:center;
@@ -137,7 +138,7 @@ class ProductList extends Component {
         </Container>
       </Content>
 
-      <Content top={16}>
+      <Content>
         <Wrapper className="listWrap">
           {this.state.rendering &&
             <ScrollProductListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}

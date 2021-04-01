@@ -113,6 +113,9 @@ const FormBox = styled.div`
   .flex{
     display:flex;
   }
+  .column{
+    flex-direction:column;
+  }
   .innerWraper{
     width:100%;
     margin-bottom:26px;
@@ -189,6 +192,7 @@ const TagPiece = styled.div`
         width: max-content;
         height: max-content;
         padding: 0px 2px;
+        cursor:pointer;
     }
 `;
 
@@ -201,7 +205,7 @@ const DropBox = styled(Dropdown)`
     min-height:31px !important;
     background-color:#E9E9E9 !important;
     margin-right:10px;
-
+    z-index:999;
     border-radius:10px !important;
 `;
 const TagList = styled.div`
@@ -214,7 +218,7 @@ class CreateGroup extends Component {
     super(props);
     this.state = {
       selectItemList:[],
-      title:null, thumbnail: null, thumbnail_name: null, explain: "",
+      title:null, thumbnail: null, thumbnail_name: null, explain: "",dropList:[],
     }
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.onChangeExplain = this.onChangeExplain.bind(this);
@@ -235,6 +239,13 @@ class CreateGroup extends Component {
     if(this.props.open !== nextProps.open){
       this.setState({open:nextProps.open})
     }
+    // if(this.props.dataList!=nextProps.dataList){
+    //   let count = 0;
+    //   const itemList = nextProps.dataList.length<0?{value:0,text:"없음"}:nextProps.dataList.map((item,index)=>{
+    //     return({value:count++,text:item.title,key:item.uid});
+    //   });
+    //   this.setState({dropList:itemList});
+    // }
   }
 
   onChangeExplain(event) {
@@ -298,18 +309,28 @@ class CreateGroup extends Component {
       });
   };
   onSelectItem(event,{value}){
-    console.log({value});
     this.setState({selectItemList:this.state.selectItemList.concat({value:this.props.dataList[{value}.value].uid,number:{value}.value})});
-    // this.setState({selectItemList:this.state.selectItemList.concat({value:{value}.value,text:{value}.text})});
+    return;
+    console.log(this.state.dropList);
+    let copy = [...this.state.dropList];
+    copy.splice(value,copy.length==0?-1:1);
+    // list.slice(0, deleteIdx).concat(this.state.selectItemList.slice(parseInt(deleteIdx, 10) + 1, length)
+    this.setState({dropList:copy,selectItemList:this.state.selectItemList.concat({value:this.props.dataList[{value}.value].uid,number:{value}.value})});
   }
   onDeleteTag = async (event) => {
     const deleteIdx = event.target.id;
     const length = this.state.selectItemList.length;
+    // const uid = this.state.selectItemList[deleteIdx].uid;
+    // console.log(uid);
     let list = [];
     list = list.concat(this.state.selectItemList);
     this.setState({
       selectItemList: list.slice(0, deleteIdx).concat(this.state.selectItemList.slice(parseInt(deleteIdx, 10) + 1, length))
     });
+
+    // const itemList = this.props.dataList.length<0?{value:0,text:"없음"}:this.props.dataList.map((item,index)=>{
+    //   return({value:count++,text:item.title,key:item.uid});
+    // });
   }
   onClickClose(event){
     this.props.handleShowModal(false);
@@ -321,7 +342,6 @@ class CreateGroup extends Component {
       return({value:count++,text:item.title,key:item.uid});
     })
     // console.log(itemList);
-
     const TagBox = this.state.selectItemList.map((item, index) => {
       return (
           <TagPiece key={index}>

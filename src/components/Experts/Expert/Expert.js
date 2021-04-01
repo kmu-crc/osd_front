@@ -45,18 +45,19 @@ const TextWrapper = styled.div`
   flex-direction:column;
   align-items:center;
   .nick {
+    margin-top:5px;
     text-align:center;
     width:100%;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
-    padding:5px 0px;
-    font-weight: 500;
+    // padding:2px 0px;
     font-weight: 500;
     font-size:${market_style.font.size.normal1};
     color: #060000;
   }
   .category {
+    margin-top:2px;
     font-weight: 500;
     font-size:${market_style.font.size.small1};
     color: #FF0000;
@@ -67,7 +68,7 @@ const Counter = styled.div`
   flex-direction: row;
   width: max-content;
   margin-left: auto;
-  margin-top: 3px;
+  margin-top: 2px;
   margin-right: auto;
   font-family: Noto Sans KR;
   letter-spacing: 0;

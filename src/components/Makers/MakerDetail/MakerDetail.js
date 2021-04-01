@@ -61,10 +61,11 @@ const Expert = styled.div`
     font-family: Noto Sans KR;
     text-align:center;
     .nick {
+      margin-top:10px;
       overflow:hidden;
       text-overflow:ellipsis;
       white-space:nowrap;
-      padding:10px 0px 10px 0px;
+      padding:0px 0px 5px 0px;
       font-weight: 500;
       font-size:${market_style.font.size.normal1};
       color: black;
@@ -73,14 +74,14 @@ const Expert = styled.div`
     .category {
       font-weight: 300;
       font-size:${market_style.font.size.small1};
-      margin-top: 5px;
-      line-height: 22px;
+      margin-top: 10px;
       color: red;
     }
     .create_time{
       font-weight:300;
       font-size:${market_style.font.size.mini2};
       color:#707070;
+      margin-top:10px;
     }
   }
 
@@ -148,9 +149,10 @@ const Introduction = styled.div`
       overflow:hidden;
       text-overflow:ellipsis;
       white-space:nowrap;
-      padding:5px 0px 5px 0px;
+      padding:0px 0px 5px 0px;
       font-size:${market_style.font.size.normal1};
       font-weight: 500;
+      color:black;
     }
     .text {
       width: 100%;
@@ -159,6 +161,7 @@ const Introduction = styled.div`
       font-weight: 300;
       margin-bottom:25px;
       overflow: hidden;
+      color:black;
     }
     .flex{
       display:flex;
@@ -200,7 +203,7 @@ const ItemInfo = styled.div`
   }
   .hrline{
     width:100%;
-    border:2px solid #efefef;
+    border:1px solid #efefef;
   }
   .margin_bottom{
     margin-bottom:10px;
@@ -240,7 +243,7 @@ const AdditionalInfo = styled.div`
   }
   .hrline{
     width:100%;
-    border:2px solid #efefef;
+    border:1px solid #efefef;
   }
   .margin_bottom{
     margin-bottom:10px;
@@ -280,7 +283,7 @@ const MakerBoard = styled.div`
   border-radius: 20px;
   border:1px solid #eaeaea;
   opacity: 1;
-  padding:20px 30px;
+  padding:10px 25px;
   font-family: Noto Sans KR;
   .flex{
     display:flex;
@@ -312,7 +315,7 @@ const MakerBoard = styled.div`
 
   .hrline{
     width:100%;
-    border:2px solid #efefef;
+    border:1px solid #efefef;
   }
   .margin_bottom{
     margin-bottom:10px;
@@ -478,12 +481,12 @@ margin-top:10px;
     }
 }
 .button_reverse{
+  border:1px solid red;
   width:150px;
   height:30px;
   display:flex;
   justify-content:center;
   align-items:center;
-  border:1px solid red;
   cursor:pointer;
   margin-left:20px;
   .font{

@@ -114,6 +114,9 @@ const FormBox = styled.div`
   .flex{
     display:flex;
   }
+  .column{
+    flex-direction:column;
+  }
   .innerWraper{
     width:100%;
     margin-bottom:26px;
@@ -467,20 +470,25 @@ class ModifyGroup extends Component {
 
             {/* <div className="contentsBox"> */}
             <FormBox>
-              <div className="wrapper flex">
+            <div className="board">
+            <div className="wrapper flex">
                 <div className="label">이름</div>
-                <InputText type="text" onChange={this.onChangeTitle} value={this.state.title||''} placeholder="이름을 입력해주세요" width={345} height={31} />
+                <InputText onChange={this.onChangeTitle} value={this.state.title} placeholder="이름을 입력해주세요" width={345} height={31} />
               </div>
-              <div className="wrapper flex">
+              <div className="wrapper flex alignTop">
                 <div className="label">설명</div>
                 <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={345} height={154} />
               </div>
-              <div className="wrapper flex">
+              <div className="wrapper flex margin_zero">
                 <div className="label">아이템</div>
-                <DropBox onChange={this.onSelectItem} id="itemDropBox" selection options={itemList} />
+                <DropBox onChange={this.onSelectItem} id="itemDropBox" selection options={itemList}/>
+              </div>
+              <div className="wrapper flex margin_zero">
+                <div className="label"/>
                 <TagList>
-                  {TagBox}
+                      {TagBox}
                 </TagList>
+              </div>
               </div>
             </FormBox>
           </div>

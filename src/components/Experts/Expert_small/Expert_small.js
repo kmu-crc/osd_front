@@ -45,6 +45,7 @@ const TextWrapper = styled.div`
   flex-direction:column;
   align-items:center;
   .nick {
+    margin-top:7px;
     text-align:center;
     width:100%;
     overflow:hidden;
@@ -57,7 +58,6 @@ const TextWrapper = styled.div`
     color: #060000;
   }
   .category {
-    margin-top:2px;
     font-weight: 500;
     font-size:${market_style.font.size.small1};
     color: #FF0000;

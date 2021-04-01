@@ -4,8 +4,7 @@ import StyleGuide from "StyleGuide";
 import market_style from "market_style";
 
 const FormStyle = styled.input.attrs({type:"text"})`
-    width: ${props => props.width}px;
-
+    width: ${props => props.width==null?"100%":props.width+"px"};
     margin: 0;
     -webkit-appearance: none;
     padding: 0.67857143em 1em;
@@ -210,10 +209,10 @@ export class InputTag extends Component {
             );
         }
         return (
-            <React.Fragment>
+            <div style={{width:"100%"}}>
 
                 <FormStyle
-                    width={this.props.width == null ? "100" : this.props.width}
+                    width={this.props.width == null ? null : this.props.width}
                     placeholder={this.props.placeholder}
                     onKeyDown={this.onEnterKeyDown}
                     onChange={this.onChangeValue}
@@ -224,7 +223,7 @@ export class InputTag extends Component {
                     {TagBox}
                 </TagList>
 
-            </React.Fragment>
+            </div>
         );
     }
 }

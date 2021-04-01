@@ -20,8 +20,8 @@ const Wrapper = styled.div`
   }
 `;
 const TitleBox = styled.div`
-  margin-top: ${props => props.top || 15}px;
-  margin-bottom: ${props => props.bottom || 0}px;
+  margin-top: ${props => props.top == null?"0px":props.top}px;
+  margin-bottom: ${props => props.bottom==null?"0px":props.bottom}px;
   width: 100%; 
   display:flex;
   justify-content:space-between;
@@ -31,7 +31,7 @@ const TitleBox = styled.div`
     justify-content:center;
     align-items:center;
     font-family:Noto Sans KR;
-    font-weight:500;
+    font-weight:600;
     font-size:${market_style.font.size.normal3};
     color:black;
   }
@@ -40,8 +40,8 @@ const TitleBox = styled.div`
   }
 `
 const Content = styled(ContentBox)`
-  margin-top: ${props => props.top || 15}px;
-  margin-bottom: ${props => props.bottom || 0}px;
+  margin-top: ${props => props.top == null?"0px":props.top}px;
+  margin-bottom: ${props => props.bottom==null?"0px":props.bottom}px;
   width: 100%; 
 
   @media only screen and (max-width: 991px) and (min-width: 768px){
@@ -62,7 +62,6 @@ const TabContainer = styled.div`
   font-size:${market_style.font.size.normal1};
   font-weight: 300;
   font-family: Noto Sans KR;
-  line-height: 29px;
   color:black;
   .element {
     margin-right: 25px;
@@ -226,20 +225,20 @@ const ListElement = styled.div`
     min-width:83%;
     display:flex;
     align-items:center;
-    font-size:${market_style.font.size.small1};
+    font-size:${market_style.font.size.mini2};
   }
   .writer{
-    min-width:12%;
+    min-width:14%;
     display:flex;
     align-items:center;
-    font-size:${market_style.font.size.small1};
+    font-size:${market_style.font.size.mini2};
   }
   .date{
     width:max-content;
     display:flex; 
     justify-content:center;
     align-items:center;
-    font-size:${market_style.font.size.small1};
+    font-size:${market_style.font.size.mini2};
     }
 `;
 
@@ -331,7 +330,7 @@ class RequestList extends Component {
     const { write } = this.state;
     return (
       <React.Fragment>
-        <Content top={0}>
+        <Content top={15}>
           <TabContainer>
             <CategoryItem className={type === "designer" ? "element active" : "element"} onClick={() => this.changeType("designer")}>디자이너</CategoryItem>
             <CategoryItem className={type === "maker" ? "element active" : "element"} onClick={() => this.changeType("maker")}>메이커</CategoryItem>
@@ -341,10 +340,12 @@ class RequestList extends Component {
         </Content>
 
 
-        <Content top={3}>
+        <Content>
           <Container>
             <div className="category">
               <Category
+                firstFontSize = {market_style.font.size.small1}
+                secondFontSize = {market_style.font.size.mini2}
                 handleCate2={this.cate2Change}
                 handleCate1={this.cate1Change}
                 resetCate={this.resetCate}

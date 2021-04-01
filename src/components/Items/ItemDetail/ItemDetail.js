@@ -87,7 +87,7 @@ const ItemInfo = styled.div`
     font-size:${market_style.font.size.normal1};
     text-align: left;
     color: #000000;
-    font-weight:500;
+    font-weight:600;
   }
   .marginBottom{
     margin-bottom:10px;
@@ -107,7 +107,7 @@ const ItemInfo = styled.div`
     }
     .nick{
       cursor:pointer;
-      font-size:${market_style.font.size.mini2};
+      font-size:${market_style.font.size.small1};
       font-weight: 300;
       line-height: 29px;
       color: #060000;
@@ -285,7 +285,7 @@ const CoverGrident = styled.div`
 const Review = styled.div`
 width: 100%;
 height:200px;
-padding:20px 30px;
+padding:10px 25px;
 box-shadow: 3px 3px 5px #0000001A;
 border:1px solid #eaeaea;
 border-radius: 20px;
@@ -302,13 +302,14 @@ const QuestionBoard = styled.div`
   border:1px solid #eaeaea;
   margin-bottom:50px;
   border-radius: 20px;
-  padding:20px 30px;
+  padding:10px 25px;
   font-family: Noto Sans KR;
   position:relative;
   .title {
+    width:100%;
     font-size:${market_style.font.size.normal1};
     font-weight: 500;
-    text-align: left;
+    text-align: center;
   }
   .hrline{
     width:100%;
@@ -384,7 +385,7 @@ const Content = styled.div`
   height: max-content;
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #0000001A;
-  padding:20px 30px;
+  padding:10px 25px;
   border:1px solid #eaeaea;
   border-radius: 20px;
   font-family: Noto Sans KR;
@@ -395,6 +396,8 @@ const Content = styled.div`
   position:relative;
   overflow:hidden;
   .title {
+    width:100%;
+    text-align:center;
     font-size:${market_style.font.size.normal1};
     font-weight: 500;
   }

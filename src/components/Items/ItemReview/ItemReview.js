@@ -21,9 +21,14 @@ const Reviews = styled.div`
       border-bottom:2px solid #efefef;
       padding-bottom:10px;
       margin-bottom:10px;
-    .wrapper{
+      .blankBox{
+        width:150px;
+       }
+      .wrapper{
         display:flex;
+
         .title_{
+            text-align:center;
             font-size:${market_style.font.size.normal1};
             font-weight: 500;
         }  
@@ -379,6 +384,7 @@ class ItemReview extends Component {
             {/* <WriteReviewModal open={this.state.writeReview} close={() => this.setState({ writeReview: false })}/> */}
             <Reviews isScroll={review.length>2?true:false}>
                 <div className="headerWrapper">
+                    <div className="blankBox"/>
                     <div className="wrapper">
                         <div className="title_">리뷰({total})</div>
                         {/* <div className="score">총점(리뷰수):<TotalScore/>({total})</div> */}

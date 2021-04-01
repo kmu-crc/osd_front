@@ -62,7 +62,7 @@ const TextWrapper = styled.div`
     display: flex;
     justify-content:flex-end;
     color:#707070;
-    font-weight: 300;
+    font-weight: 400;
     font-size:${market_style.font.size.small1};
     line-height: 18px;
   }

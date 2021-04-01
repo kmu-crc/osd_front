@@ -54,7 +54,7 @@ const TextWrapper = styled.div`
     width:170px;
     color:#000000;
     font-weight: 500;
-    font-size:${market_style.font.size.small1};
+    font-size:${market_style.font.size.normal1};
     text-align: left;
   }
   .author {
@@ -62,8 +62,8 @@ const TextWrapper = styled.div`
     display: flex;
     justify-content:flex-end;
     color:#707070;
-    font-weight: 300;
-    font-size:${market_style.font.size.mini2};
+    font-weight: 400;
+    font-size:${market_style.font.size.small1};
     line-height: 18px;
   }
 `;
@@ -81,7 +81,7 @@ const NumberWrapper = styled.div`
   margin-top:6px;
   .price {
     font-weight: 500;
-    font-size:${market_style.font.size.mini1};
+    font-size:${market_style.font.size.small1};
     text-align: left;
   }
   .score {

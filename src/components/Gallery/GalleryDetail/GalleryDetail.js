@@ -116,7 +116,7 @@ class GalleryDetail extends Component {
                     </div>
                 </AdditionalInfo>
             </div>   
-            <ScrollInfo mTop={20}>
+            <ScrollInfo mTop={15}>
                 <ItemInGalleryContainer id={this.props.id}/>
             </ScrollInfo>
         </Wrapper>

@@ -6,7 +6,7 @@ import Item_mini from "components/Items/Item_mini";
 import styled from "styled-components";
 const Wrapper = styled.div`
   width:100%;
-  height:100%;
+  height:101%;
   overflow-y:${props=>props.isScroll?"overlay":"hidden"};
   overflow-x:hidden;
 `
