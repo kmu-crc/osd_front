@@ -19,41 +19,39 @@ const Wrapper = styled.div`
   position: relative;
   box-shadow: 3px 3px 5px #4141411A;
   border:1px solid #eaeaea;
-  width: 200px;
-  height: 200px;
+  width: 294px;
+  height: 300px;
   background: transparent;
   border-radius:20px;
   overflow:hidden;
   font-family: Noto Sans KR;
   cursor: pointer;
-  padding:13px;
+  padding:20px 14px 10px 14px;
 `;
 const ItemPic = styled.div`
-  width: 175;
-  height: 152px;
+  width: 100%;
+  height: 236px;
   background: transparent;
   background-image: url(${props => props.img});
   background-size: cover;
   background-position: center center
 `;
 const TextWrapper = styled.div`
-  margin-top: 3px;
+  margin-top: 10px;
   width: 100%;
   display:flex;
   justify-content:center;
   align-items:center;
   .title {
     font-weight: 500;
-    font-size:${market_style.font.size.mini2};
+    font-size:${market_style.font.size.small1};
     text-align: left;
-    line-height: 25px;
   }
   .author {
     margin-top: 8px;
     font-weight: 300;
-    font-size:${market_style.font.size.mini2};
+    font-size:${market_style.font.size.small1};
     text-align: left;
-    line-height: 18px;
   }
 `;
 const empty = { thumbnail: '', group_id: null, user_id: null, nick_name: "", title: '로딩중...', description: '로딩중...' };

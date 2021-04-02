@@ -43,12 +43,12 @@ const MainBox = styled.div`
     font-weight:500;
   }
     .contentsBox{
+
       margin-top:15px;
       width:100%;
       display:flex;
     }
     .centering{
-      padding-right:130px;
       justify-content:center;
     }
     .marginTop{
@@ -105,7 +105,7 @@ const Thumbnail = styled.div`
 `;
 const ExperienceBox = styled.div`
     width:100%;
-    box-shadow: 5px 5px 10px #00000029;
+    box-shadow: 3px 3px 5px #0000001A;
     border-radius: 20px;
     border: 0.5px solid #EAEAEA;
     padding:20px 30px 20px 30px;

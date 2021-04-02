@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Dropdown } from "semantic-ui-react";
 import CheckBox2 from "components/Commons/CheckBox";
 import { LocalGridEditor } from "components/GridEditor/LocalGridEditor";
-import { AddController, InputContent, Controller, InputTagNew, /*ThumbnailList,*/ RadioType } from "components/Commons/InputItem";
+import { AddController, InputContent, Controller, InputTag, /*ThumbnailList,*/ RadioType } from "components/Commons/InputItem";
 import SearchDesignMemberContainer from "containers/Commons/SearchMemberContainer";
 import { InputPriceNew } from "components/Commons/InputItem/InputPriceNew";
 import Loading from "components/Commons/Loading";
@@ -386,27 +386,30 @@ const DesignElement = styled.div`
   .fork-count {
     z-index: 703;
     margin-right: 0px;
-    // cursor: default;
+    // cursor: defㅅault;
   }
 `;
 const MainBox = styled.div`
   width:100%;
   .title{
-    width:170px;
-    height:29px;
+    width:100%;
+    text-align:center;
     font-family:Noto Sans KR, Medium;
     font-size:${market_style.font.size.normal3};
     font-weight:500;
+    color:black;
+    margin-bottom:15px;
   }
   .contentsBox {
     display: flex;
     width: 100%;
-    padding-top: 36px;
-    padding-left: 30px;
   }
   .centering{
     padding-right:30px;
     justify-content:center; 
+  }
+  .marginTop{
+    margin-top:20px; 
   }
   .directionColumn{
     align-items:center;
@@ -422,24 +425,20 @@ const MainBox = styled.div`
 const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
-    font-weight:500;
-    font-size:${market_style.font.size.normal3};
   }
-  width: 562px;
-  height: max-content;
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px;
-  padding-top: 54px;
-  margin-right: 63px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
+  width:270px;
+  height:302px;
+  padding:20px;
+  margin-right:20px;
+  box-shadow: 3px 3px 5px #0000001A;
+  border:1px solid #eaeaea;
+  border-radius:20px;
   .label{
     width:100%;
-    height:29px;
-    padding-left:42px;
-
+    text-align:center;
+    font-weight:500;
+    font-size:${market_style.font.size.small1};
+    margin-bottom:10px;
   }
   .wrapper{
     width:100%;
@@ -449,8 +448,8 @@ const ThumbnailBox = styled.div`
   }
 `;
 const Thumbnail = styled.div`
-  width: ${props => props.width == null ? 100 : props.width}px;
-  height: ${props => props.height == null ? 100 : props.height}px;
+  width: ${props => props.width == null ? "230px" : props.width+"px"};
+  height: ${props => props.height == null ? "230px" : props.height+"px"};
   margin-bottom: ${props => props.marginBottom == null ? 0 : props.marginBottom}px;
   background: #E9E9E9;
   border: ${props => props.img ? "1px solid #E9E9E9" : "none"};
@@ -462,28 +461,41 @@ const Thumbnail = styled.div`
   align-items: center;
   cursor:pointer;
 `;
-const FormBox = styled.div`
-  *{
-    // border: 1px solid blue;
 
-    font-size:${market_style.font.size.normal3};
-  }
-  
-  width:${props => props.width || 939}px;
-  height:${props => props.height || "max-content"};
+const FormBox = styled.div`
+  width:${props => props.width != null ? props.width+"px" : "100%"};
+  height:${props => props.height != null ? props.height+"px" : "max-content"};
   box-shadow: ${props => props.boxShadow == null ? "" : "5px 5px 10px #00000029"};
-  border-radius: 20px;
-  padding: 20px;
   margin-top: ${props => props.marginTop || 0}px;
   margin-bottom: ${props => props.marginBottom || 0}px;
-  
+  border-radius: 20px;
+  padding: ${props=>props.padding==null?"30px 50px":props.padding};
+  border:1px solid #eaeaea;
+  .FormBoxScroll{
+    padding:0px 15px 0px 0px;
+    width:100%;
+    height:100%;
+    overflow-Y:auto;
+    overflow-X:hidden;
+  }
+  .maxWidth{
+    width:100%;
+  }
   .contentWrap{
-    border-radius: 20px;
-    padding: 49px 59px 49px 59px;
+  }
+  .Vcentering{
+    align-items:center;
+  }
+  .inputBox{
+    width:330px;
+    height:max-content;
   }
   .wrapper{
     width:100%;
-    margin-bottom:50px;
+    height:max-content;
+  }
+  .margin_bottom{
+    margin-bottom:20px;
   }
   .margin_zero{
     margin:0px;
@@ -497,10 +509,10 @@ const FormBox = styled.div`
     display:flex;
   }
   .label{
+    width:141px;
     font-family: Noto Sans KR;
     font-weight: 500;
     min-width:157px;
-    height:29px;
   }
   .label_centering{
     text-align:center;
@@ -515,25 +527,24 @@ const DescirptionText = styled.div`
 font-size:${market_style.font.size.mini2};
   color:#707070;
 `;
-const InputText = styled.input`
-  width: ${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height: 52px;
-  border-radius: 26px;
-  font-family: Noto Sans KR;
-  font-size:${market_style.font.size.normal3};
-  background-color: #E9E9E9;
-  margin-right: 21px;
-  outline: none;
-  border: 0px;
+const InputText = styled.input.attrs({ type: "text" })`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:31px;
+  border-radius:10px;
+  font-family:Noto Sans KR;
+  font-size:${market_style.font.size.mini2};
+  background-color:#E9E9E9;
+  outline:none;
+  border:0px;
   padding: 0.67857143em 1em;
   font-weight:300;
 `;
 const InputTextarea = styled.textarea`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
-  border-radius:20px;
+  border-radius:10px;
   font-family:Noto Sans KR;
-  font-size:${market_style.font.size.normal3};
+  font-size:${market_style.font.size.mini2};
   background-color:#E9E9E9;
   outline:none;
   border:0px;
@@ -541,16 +552,24 @@ const InputTextarea = styled.textarea`
   resize:none;
   padding: 0.67857143em 1em;
   font-weight:300;
+
 `;
 const DropBox = styled(Dropdown)`
-  min-width:200px !important;
-  background-color: #E9E9E9 !important;
-  margin-right: 10px;
-  border-radius: 20px !important;
-`;
-const Margin = styled.div`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
+    width:160px;
+    min-width:100px !important;
+    min-height:31px !important;
+    max-height:31px !important;   
+    display:flex !important;
+    align-items:center !important; 
+    background-color:#E9E9E9 !important;
+    margin-right:10px;
+    font-size:${market_style.font.size.small1};
+    border-radius:10px !important;
+    .icon{
+      width:max-content !important;
+      height:max-content !important;
+      padding:6px !important;
+    }
 `;
 const InfoContentChooseItemType = styled.div`
   border: 1px dashed gray;
@@ -562,14 +581,15 @@ const InfoContentChooseItemType = styled.div`
   margin-top: 76px;
   margin-left: auto;
   margin-right: auto;
-  font-size:${market_style.font.size.giant1};
+  font-size:${market_style.font.size.normal3};
   color: #707070;
 `;
 const EditorWrapper = styled.div`
   .title {
+    width: 100%;
+    text-align:center;
     color: #707070;
-    width: max-content;
-    font-size:${market_style.font.size.giant3};
+    font-size:${market_style.font.size.normal1};
     font-weight: 300;
     margin-top: 25px;
     margin-bottom: 15px;
@@ -582,12 +602,10 @@ const EditorWrapper = styled.div`
 const ResetButtonWrapper = styled.div`
   width: max-content;
   margin-left: auto;
-  margin-right: 25px;
   color: #707070;
-  font-size:${market_style.font.size.small2};
+  font-size:${market_style.font.size.small1};
   cursor: pointer;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 class CreateProductForm extends Component {
   constructor(props) {
@@ -706,33 +724,31 @@ class CreateProductForm extends Component {
       <div className="contentsBox centering">
         <ThumbnailBox>
           <div className="label">썸네일 이미지 등록<Mandatory /></div>
-          <Margin height={50} />
           <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/*" />
           <label htmlFor="file">
-            <Thumbnail img={this.state.thumbnail} width={334} height={334}>
+            <Thumbnail img={this.state.thumbnail}>
               {this.state.thumbnail ? null : <div>첨부</div>}
             </Thumbnail>
           </label>
-          <Margin height={75} />
         </ThumbnailBox>
 
-        <FormBox height="550px" boxShadow={true}>
-          <div className="contentWrap">
-            <div className="wrapper flex">
+        <FormBox height={302} marginBottom={20} boxShadow={true}>
+          <div className="FormBoxScroll">
+            <div className="wrapper margin_bottom flex">
               <div className="label">제목<Mandatory /></div>
-              <InputText width={370} name="title" value={this.state.title || ""} onChange={this.onChangeValue} />
+              <InputText placeholder="제목을 입력하세요" width={330} name="title" value={this.state.title || ""} onChange={this.onChangeValue} />
             </div>
 
-            <div className="wrapper flex ">
+            <div className="wrapper margin_bottom flex ">
               <div className="label">카테고리<Mandatory /></div>
               <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
               <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
             </div>
 
-            <div className="wrapper flex">
+            <div className="wrapper margin_bottom flex">
               <div className="label">태그</div>
-              <div>
-                <InputTagNew width={370} getValue={this.onHandleReturnedTags} />
+              <div className="maxWidth">
+                <InputTag placeholder="태그를 입력하고 [enter]키를 누르세요" width={330} getValue={this.onHandleReturnedTags} />
               </div>
             </div>
 
@@ -740,7 +756,6 @@ class CreateProductForm extends Component {
               <div className="label">아이템 유형<span className="font_red">*</span></div>
               <DropBox selection options={ItemType} placeholder="아이템 유형" onChange={this.onClickItemType} />
             </div>
-
           </div>
         </FormBox>
 
@@ -761,7 +776,7 @@ class CreateProductForm extends Component {
 
       {/* 버튼 */}
       {itemType > -1 ? (
-        <div className="contentsBox centering">
+        <div className="contentsBox centering marginTop">
           {this.props.keep ?
             <Link to={{
               pathname: `/createdesigner/redirected`, state: {
@@ -780,11 +795,11 @@ class CreateProductForm extends Component {
                 }
               }
             }}>
-              <RedButton value={"디자인 등록 계속"} isConfirm={false} />
+              <RedButton width={150} height={30} fontSize={market_style.font.size.small1} value={"디자인 등록 계속"} isConfirm={false} />
             </Link>
-            : <RedButton text="아이템을 등록합니다." okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
+            : <RedButton width={150} height={30} fontSize={market_style.font.size.small1} text="아이템을 등록합니다." okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
           }
-          <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={async() => {
+          <GrayButton width={150} height={30} fontSize={market_style.font.size.small1} text={"취소하시겠습니까?"} value={"취소하기"} onClick={async() => {
             if (await confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
               window.history.back();
             }
@@ -798,18 +813,15 @@ export default CreateProductForm;
 
 const DesignTemplateSelector = styled.div`
   .title {
+    width:100%;
+    text-align:center;
     color: #707070;
     font-weight: 300;
-    width: max-content;
-    font-size:${market_style.font.size.giant3};
+    font-size:${market_style.font.size.normal1};
     margin-bottom: 15px;
-    // padding: 10px 5px;
-    // line-height: 2rem;
   }
   .template-wrapper {
-    // width: 450px;
     display: flex;
-    // flex-direction: row;
     overflow: auto;
   }
   .element {
@@ -866,9 +878,9 @@ class ItemTypeForm extends Component {
     // console.log(this.state, this.props);
 
     return (
-      <MainBox>
-        <div className="contentsBox centering directionColumn">
-        <FormBox boxShadow={true} width={1570}>
+        <React.Fragment>
+        <div style={{width:"100%"}}>
+        <FormBox boxShadow={true}>
           <div className="contentWrap">
             {itemType === 0 ? <ItemDesign return={this.onHandleAdditional} /> : null}
             {itemType === 1 ? <ItemProject return={this.onHandleAdditional} /> : null}
@@ -882,7 +894,7 @@ class ItemTypeForm extends Component {
           </div>
         </FormBox>
 
-        <FormBox boxShadow={true} width={1570} marginTop={25}>
+        <FormBox padding={"10px 50px 16px 50px"} boxShadow={true} marginTop={20}>
           <ResetButtonWrapper
             onClick={async () => {
               await this.setState({
@@ -896,7 +908,8 @@ class ItemTypeForm extends Component {
               });
               this.returnState();
             }}>
-            작업 취소<i className="undo icon" />
+            <i className="undo icon" />
+            작업 취소
           </ResetButtonWrapper>
           {this.state.type === "blog" ?
             // <div className="contentWrap">
@@ -958,18 +971,18 @@ class ItemTypeForm extends Component {
                 </EditorWrapper>
               </div>
             </React.Fragment>}
-
         </FormBox>
         </div>
-      </MainBox >);
+        </React.Fragment>
+        );
   }
 };
 class Field extends Component {
   render() {
     const { title } = this.props;
     return (
-      <div className="wrapper flex">
-        <div className="label">{title}</div>
+      <div className={`wrapper flex ${this.props.isMargin==false?null:"margin_bottom"} ${this.props.isCentering==null?null:"Vcentering"}`}>
+        <div className={`label`}>{title}</div>
         {this.props.children}
       </div>)
   }
@@ -997,8 +1010,8 @@ class ItemDesign extends Component {
     return (
       <React.Fragment>
         <Field title="설명">
-          <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
-        <Field title="구입 비용">
+          <InputTextarea placeholder="설명을 입력하세요" onChange={this.onHandleChange} name="description" height={60} /></Field>
+        <Field isMargin={false} isCentering={true} title="구입 비용">
           <InputPriceNew name="price" getValue={this.getPriceValue} />
           {/* <InputText onChange={this.onHandleChange} name="price" width={370} /> */}
         </Field>
@@ -1055,18 +1068,20 @@ class ItemProject extends Component {
     return (
       <React.Fragment>
         <Field title="설명">
-          <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
+          <InputTextarea placeholder="설명을 입력하세요" onChange={this.onHandleChange} name="description" height={60} /></Field>
         <Field title="팀원 초대">
+          <div className="inputBox">
           {this.state.alone ? undefined : <SearchDesignMemberContainer className="searchRect" onChangeMembers={this.changeMembers} />}
+          </div>
           {/* LEAVE ME ALONE */}
-          <NoInviteMemberBox>
+          {/* <NoInviteMemberBox>
             <CheckBox2 onChange={() => this.setState({ alone: !this.state.alone, members: [] })} checked={this.state.alone} />
             <span className="textLabel">멤버를 초대하지 않습니다.</span>
-          </NoInviteMemberBox>
+          </NoInviteMemberBox> */}
         </Field>
-        <Field title="공개">
+        <Field title="내용 공개 여부">
           <RadioType return={this.onHandleReturn} default={this.state["public"]} name="public" Options={["예", "아니오"]} /></Field>
-        <Field title="구입 비용">
+        <Field isMargin={false} isCentering={true} title="구입 비용">
           <InputPriceNew name="price" getValue={this.getPriceValue} />
         </Field>
       </React.Fragment>)
@@ -1102,13 +1117,13 @@ class ItemConsulting extends Component {
     return (
       <React.Fragment>
         <Field title="설명">
-          <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
+          <InputTextarea placeholder="설명을 입력하세요" onChange={this.onHandleChange} name="description" height={60} /></Field>
         {/* <Field title="자문/상담 방법"> 온라인 */}
         {/* <RadioType checked={1} return={this.onHandleReturn} name="contact-method" Options={typeOnOff} /> */}
         {/* </Field> */}
         <Field title="내용 공개 여부">
           <RadioType return={this.onHandleReturn} default={this.state["public"]} name="public" Options={["예", "아니오"]} /></Field>
-        <Field title="자문/상담 비용">
+        <Field isMargin={false} isCentering={true} title="자문/상담 비용">
           <InputPriceNew placeholder="시간당" name="price" getValue={this.getPriceValue} />
         </Field>
       </React.Fragment>)
@@ -1138,8 +1153,8 @@ class ItemExperience extends Component {
     return (
       <React.Fragment>
         <Field title="설명">
-          <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
-        <Field title="구입 비용">
+          <InputTextarea placeholder="설명을 입력하세요" onChange={this.onHandleChange} name="description" height={60} /></Field>
+        <Field isMargin={false} isCentering={true} title="구입 비용">
           <InputPriceNew name="price" getValue={this.getPriceValue} />
         </Field>
       </React.Fragment>)
@@ -1170,8 +1185,8 @@ class ItemInfoData extends Component {
     return (
       <React.Fragment>
         <Field title="설명">
-          <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
-        <Field title="구입 비용">
+          <InputTextarea placeholder="설명을 입력하세요" onChange={this.onHandleChange} name="description" height={60} /></Field>
+        <Field isMargin={false} isCentering={true} title="구입 비용">
           <InputPriceNew name="price" getValue={this.getPriceValue} />
           {/* <InputText onChange={this.onHandleChange} name="price" width={370} /> */}
         </Field>
@@ -1202,8 +1217,8 @@ class ItemIdea extends Component {
     return (
       <React.Fragment>
         <Field title="설명">
-          <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
-        <Field title="구입 비용">
+          <InputTextarea placeholder="설명을 입력하세요" onChange={this.onHandleChange} name="description" height={60} /></Field>
+        <Field isMargin={false} isCentering={true} title="구입 비용">
           <InputPriceNew name="price" getValue={this.getPriceValue} />
         </Field>
       </React.Fragment>)
@@ -1262,7 +1277,7 @@ class ItemPatent extends Component {
     return (
       <React.Fragment>
         <Field title="설명">
-          <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
+          <InputTextarea placeholder="설명을 입력하세요" onChange={this.onHandleChange} name="description" height={60} /></Field>
 
         <Field title="내용">
           <div style={{ display: "flex", flexDirection: "column" }}>
@@ -1277,7 +1292,7 @@ class ItemPatent extends Component {
         <Field title="판매 방식 선택">
           <RadioType return={this.onHandleReturn} default={this.state["selling-type"]} name="selling-type" Options={["양도", "독점 사용권", "일반 사용권"]} /></Field>
 
-        <Field title="구입 비용">
+        <Field isMargin={false} isCentering={true} title="구입 비용">
           <InputPriceNew name="price" getValue={this.getPriceValue} />
         </Field>
 
@@ -1312,14 +1327,14 @@ class ItemProduct extends Component {
     return (
       <React.Fragment>
         <Field title="설명">
-          <InputTextarea onChange={this.onHandleChange} name="description" width={483} height={99} /></Field>
+          <InputTextarea placeholder="설명을 입력하세요" onChange={this.onHandleChange} name="description" height={60} /></Field>
 
         {/* <Field title="상세 이미지">
           <div style={{ display: "flex", flexDirection: "column" }}>
             <ThumbnailList return={this.onHandleImageList} width={650} />
             <Context >(이미지 최대 10장 업로드 가능)</Context></div></Field> */}
 
-        <Field title="구입 비용">
+        <Field isMargin={false} isCentering={true} title="구입 비용">
           <InputPriceNew name="price" getValue={this.getPriceValue} />
         </Field>
 

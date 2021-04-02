@@ -136,7 +136,7 @@ export class FormInput extends Component {
     return (
       <div>
         <input
-        style={{outline:"none",backgroundColor:"#e9e9e9",border:"none",borderRadius:"26px",height:"52px",width:"450px",paddingLeft:"20px"}}
+        style={{ width:"100%",height:"31px",outline:"none",backgroundColor:"#e9e9e9",border:"none",borderRadius:"26px",paddingLeft:"20px"}}
         status={this.state.status} {...newProps} type={type} name={name} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
         {this.state.status == null ? <span>{this.state.message}</span> : null}
       </div>

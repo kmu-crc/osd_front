@@ -12,7 +12,6 @@ const FormBox = styled.div`
     .formwrapper{
         display:flex;
         align-items:center;
-        // margin-bottom:27px;
     }
     .buttonbox{
         display:flex;
@@ -20,17 +19,16 @@ const FormBox = styled.div`
 `
 const FormStyle = styled.input.attrs({ type: "number" })`
     width: ${props => props.width}px;
-    height:52px;
-    padding: 0.67857143em 1em;
+    height:31px;
     margin-right:5px;
-    text-align:right;
-    margin-bottom:27px;
+    text-align:center;
     border:0px;
     border-radius:26px;
     outline:none;
     font-family:Noto Sans CJK KR,Regular;
-    font-size:${market_style.font.size.small3};
+    font-size:${market_style.font.size.small1};
     background-color:#EFEFEF;
+    padding-left:20px;
     -webkit-appearance: none;
     transition: color 0.1s ease, border-color 0.1s ease;
     &::placeholder {
@@ -52,8 +50,8 @@ const FormStyle = styled.input.attrs({ type: "number" })`
     }
 `;
 const Button = styled.div`
-    width:85px;
-    height:46px;
+    width:70px;
+    height:35px;
     display:flex;
     border:1px solid #707070;
     justify-content:center;
@@ -61,7 +59,7 @@ const Button = styled.div`
     margin-right:12px;
     cursor:pointer;
     .text{
-        font-size:${market_style.font.size.small3};
+        font-size:${market_style.font.size.small1};
         color:#707070;
     }
 `
@@ -110,7 +108,7 @@ export class InputPriceNew extends Component {
                     <div className="formwrapper">
                     <FormStyle
                         id="price"
-                        width={this.props.width == null ? "208" : this.props.width}
+                        width={this.props.width == null ? "130" : this.props.width}
                         placeholder={this.props.placeholder}
                         value={this.state.price || 0}
                         onChange={this.onChangePrice}

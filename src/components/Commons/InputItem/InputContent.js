@@ -109,10 +109,8 @@ export class InputContent extends Component {
 }
 
 const ControllerWrap = styled.div`
-  // margin: 20px 0;
   position: relative;
   text-align: center;
-
   border: 1px dashed ${StyleGuide.color.geyScale.scale6};
   & .initWrap {
     & > ul {
@@ -132,7 +130,7 @@ const ControllerWrap = styled.div`
   }
   .innerBox {
     display: flex;
-    height: 45px;
+    height: 35px;
     align-items: center;
     justify-content: center;
     list-style: none;
@@ -140,25 +138,18 @@ const ControllerWrap = styled.div`
 `;
 const NewController = styled.li`
   width: max-content;
-  height: 29px;
   color: #FF0000;
-  margin-left: 75px;
+  margin-left: 70px;
   &.first {
     margin-left: 0px;
   }
   &.complecated {
     display: flex;
     flex-direction: row;
-    .txt{
-      // border-bottom: 1.5px solid #FF0000;
-    }
-  }
-  &.txt{
-    // border-bottom: 1.5px solid #FF0000;
   }
   line-height: 29px;
   padding-bottom: 1.5px;
-  font-size: ${market_style.font.size.normal3};
+  font-size: ${market_style.font.size.small1};
   font-weight: 500;
   font-family: Noto Sans KR;
   text-align: center;
