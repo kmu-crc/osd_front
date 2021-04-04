@@ -1,181 +1,128 @@
-import React, { Component } from "react";
-import styled from 'styled-components';
 import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
-import { InputTagNew,InputFile,InputPriceNew,InputCalendar } from "components/Commons/InputItem"
+import { InputTagNew, InputFile, InputPriceNew, InputCalendar } from "components/Commons/InputItem"
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
 import { FileUploadRequest } from "actions/Uploads";
 import category_icon from "source/category_icon.svg";
-import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
 
-const CustomIcon=styled.div`
-  width:${props => props.width}px;
-  height:${props => props.height}px;
-  background-image:url(${props=>props.imgURL});
-  background-repeat: no-repeat;
-  background-size: contain;
-  padding:${props => props.padding}px;
-  margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
-  margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
-  display:${props=>props.isNon==true?"none":"block"}
-`
-const LocationList = [
-  { value: 0, text: "서울특별시" },
-  { value: 1, text: "부산광역시" },
-  { value: 2, text: "대구광역시" },
-  { value: 3, text: "인천광역시" },
-  { value: 4, text: "광주광역시" },
-  { value: 5, text: "대전광역시" },
-  { value: 6, text: "울산광역시" },
-  { value: 7, text: "경기도" },
-  { value: 8, text: "강원도" },
-  { value: 9, text: "충청북도" },
-  { value: 10, text: "충청남도" },
-  { value: 11, text: "전라북도" },
-  { value: 12, text: "경상북도" },
-  { value: 13, text: "경상남도" },
-  { value: 14, text: "제주도" },
-  { value: 15, text: "제한없음" },
-];
+import React, { Component } from "react";
+import styled from 'styled-components';
+import { alert } from "components/Commons/Alert/Alert";
 
-const Wrapper = styled(ContentBox)`
+const Wrapper = styled.div`
+  *{ border: 1px solid #AEAEAE; }
   width: 100%;
-  margin-top: 60px;
-  margin-bottom: 100px;
-  z-index: 3;
-`;
-const MainBox = styled.div`
-  width:100%;
-  .title{
-    width:170px;
-    height:29px;
-    font-family:Noto Sans CJK KR, Medium;
-    font-size:${market_style.font.size.normal3};
-    font-weight:500;
-    margin-left:130px;
+  padding: 0px 30px;
+  font-family: Noto Sans KR;
 
+  .title {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    .text {
+      width: max-content;
+      margin: auto;
+      font: normal normal bold 20px/29px Noto Sans KR;
+      letter-spacing: 0px;
+      color: #000000;
+      text-align: center;
+    }
   }
-  .contentsBox{
+  .form {
+    width: 1306px;
+    min-height: 554px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 3px 3px 5px #0000001A;
+    border: 0.25px solid #B7B7B7;
+    border-radius: 20px;
+    padding: 40px 150px;
+
+    .row {
+      display: flex;
+      flex-direction: row;
+
+      .label {
+        height: 22px;
+        width: 185px;
+        text-align: left;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+
+        text-align: left;
+        font: normal normal medium 15px/22px Noto Sans KR;
+        letter-spacing: 0px;
+        color: #707070;
+        span { font-weight: bold;color: #FF0000;}
+      }
+
+      .content {
+        width: 100%;
+        max-width: 820px;
+        height: 22px;
+        margin-bottom: 31px;
+        // margin-left: 94px;
+
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+
+        text-align: left;
+        font: normal normal normal 15px/22px Noto Sans KR;
+        letter-spacing: 0px;
+        color: #000000;
+      }
+    }
+  }
+
+  .bottom {
+    width: 100%;
+    height: 30px;
+    margin-top: 20px;
     position: relative;
-    width:100%;
-    display:flex;
-    padding:36px 130px 36px 136px;
-  }
-  .centering_{
-    width:100%;
-    display:flex;
-    padding:36px 130px 36px 136px;
-    justify-content:center;
-    margin-bottom:30px;
+    display: flex;
 
-  }
+    button {
+      width: 150px;
+      height: 30px;
+      border: none;
+      text-align: center;
+      text-decoration: none;
+      text-align: center;
+      letter-spacing: 0px;
+      :first-child {
+        margin-right: 20px;
+      }
+      font: normal normal bold 15px/22px Noto Sans KR;
+      color: #FFFFFF;
+    }
 
-`;
+    .apply {
+      margin-left: auto;
+      background: #FF0000 0% 0% no-repeat padding-box; /* Green - #4CAF50; */
+    }
 
-const FormBox = styled.div`
-
-  font-family:Noto Sans KR;
-  font-weight:500;
-  font-size:${market_style.font.size.normal3};
-  width:100%;
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px;
-  padding-left:59px;
-  padding-right:59px;
-  padding-top:49px;
-
-  .wrapper{
-    width:100%;
-    margin-bottom:70px;
-  }
-  .margin_zero{
-    margin:0px;
-  }
-  .flex{
-    display:flex;
-  }
-  .centering{
-    align-items:center;
-  }
-  .innerWraper{
-    width:100%;
-    margin-bottom:26px;
-    display:flex;
-  }
-  .label{
-    font-family:Noto Sans CJK KR, Regular;
-    font-size:${market_style.font.size.normal3};
-    min-width:157px;
-    height:29px;
-  }
-  .text_small{
-    font-family:Noto Sans CJK KR, Regular;
-    font-size:${market_style.font.size.small3};
-  }
-  .label_centering{
-    text-align:center;
-  }
-  .index{
-    width:30px;
-    height:30px;
-    color:#707070;
-  }
-  .faded-text {
-    border-radius: 15px;
-    background-color: #EAEAEA;
-    padding: 15px 15px;
-  }
-  .information {
-    color: red;
-    font-size:${market_style.font.size.small2};
-    margin-left: 10px;
+    .cancel {
+      margin-right: auto;
+      border: none;
+      background: #707070 0% 0% no-repeat padding-box;
+    }
   }
 `;
 const InputText = styled.input.attrs({ type: "text" })`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:52px;
-  border-radius:26px;
-  font-family:Noto Sans KR;
-  font-size:${market_style.font.size.normal3};
-  background-color:#E9E9E9;
-  margin-right:21px;
-  outline:none;
-  border:0px;
+  width: ${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height: 52px;
+  border-radius: 26px;
+  font-family: Noto Sans KR;
+  font-size: ${market_style.font.size.normal3};
+  background-color: #E9E9E9;
+  margin-right: 21px;
+  outline: none;
+  border: 0px;
   padding: 0.67857143em 1em;
-
 `;
-const InputTextarea = styled.textarea`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
-  border-radius:20px;
-  font-family:Noto Sans KR;
-  font-size:${market_style.font.size.normal3};
-  background-color:#E9E9E9;
-  outline:none;
-  border:0px;
-  readonly;
-  padding: 0.67857143em 1em;
-
-`;
-const DropBox = styled(Dropdown)`
-    min-width:254px !important;
-    min-height:52px !important;
-    background-color:#E9E9E9 !important;
-    margin-right:10px;
-
-    border-radius:26px !important;
-`;
-const HRLine = styled.div`
-    width:93%;
-    height:3px;
-    background-color:#E9E9E9;
-    margin-top:35px;
-    margin-bottom:35px;
-`;
-
 class RequestToDesigner extends Component {
   constructor(props) {
     super(props);
@@ -281,13 +228,12 @@ class RequestToDesigner extends Component {
       tag: tag.slice(),
     });
   }
-  async onFileChange(file){
+  async onFileChange(file) {
     this.setState({
       file_url: file.file_url,
       filename: file.filename,
     });
   }
-
   async onSubmit() {
     const data = {
       type: "designer",
@@ -310,8 +256,8 @@ class RequestToDesigner extends Component {
       filename: this.state.filename,
     }
     /////예외처리/////
-    if(this.state.title==""){await alert("의뢰 제목을 입력해주세요");return;}
-    else if(this.state.content==""){await alert("의뢰 내용을 입력해주세요");return;}
+    if (this.state.title == "") { await alert("의뢰 제목을 입력해주세요"); return; }
+    else if (this.state.content == "") { await alert("의뢰 내용을 입력해주세요"); return; }
     ///////////////
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
@@ -328,128 +274,32 @@ class RequestToDesigner extends Component {
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
-    const Mandatory = () => <span style={{color:"red"}} title="필수사항입니다.">*</span>
+    const Mandatory = () => <span style={{ color: "red" }} title="필수사항입니다.">*</span>
 
-    return (
-      <React.Fragment>
-        <Wrapper>
-          <MainBox>
-            <div className="title">디자인 의뢰</div>
-            <div className="contentsBox">
-              <FormBox>
+    console.log(this.props);
+    const { userInfo } = this.props;
 
-                <div className="wrapper flex centering" >
-                  <div className="label">의뢰자</div>
-                  <div className="text_small">{this.props.userInfo.nickName || null}</div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">제목<Mandatory/></div>
-                  <InputText onChange={this.onChangeTitle} value={this.state.title} width={533} />
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">카테고리</div>
-                  <DropBox id="category_level1"
-                    value={this.state.category_level1}
-                    selection
-                    options={category1}
-                    placeholder="대분류"
-                    onChange={this.onClickCategorylevel1} />
-                    <CustomIcon width="25" height="25" imgURL={category_icon} marginRight="21" marginLeft="21"/>
-                  <DropBox id="category_level2"
-                    value={this.state.category_level2}
-                    selection
-                    options={category2}
-                    placeholder="소분류"
-                    onChange={this.onClickCategorylevel2} />
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">태그</div>
-                  <div>
-                    <InputTagNew getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
-                  </div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">의뢰 내용<Mandatory/></div>
-                  {/* <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} /> */}
-                  <TextControllerClassic
-                    item={{ content: this.state.content, height: 500 }}
-                    name={"comment"}
-                    getValue={this.onChangeContent}
-                    width="820"
-                    editheight="770"
-                  // initClick={this.state.click}
-                  // deleteItem={this.deleteItem}
-                  />
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">파일 등록</div>
-                  <InputFile width={533} getValue={this.onFileChange}/>
-                  {/* <div className="faded-text" >
-                    <input
-                      type="file"
-                      name="source"
-                      ref={ref => (this.input = ref)}
-                      onChange={this.onFileChange}
-                      accept=".pdf" />
-                  </div>
-                  <div className="information">
-                    * pdf파일만 등록이 가능합니다.
-                      </div> */}
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label ">희망 비용</div>
-                  <InputPriceNew name="price" getValue={this.getPriceValue} />
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label ">기간</div>
-                  <InputCalendar
-                    startDate={this.state.startDate}
-                    endDate={this.state.endDate}
-                    name="calendar"
-                    getStartDateValue={this.getStartDateValue}
-                    getEndDateValue={this.getEndDateValue}
-                    getDayDateValue={this.getDayDateValue} />
-                </div>
-
-                <HRLine />
-                <div className="wrapper flex centering">
-                  <div className="label">디자이너 위치</div>
-                  {/* <InputText onChange={this.onChangeLocation} value={this.state.location} width={483} /> */}
-                  {/* <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} /> */}
-                  <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
-                    selection options={LocationList} placeholder="시/도"
-                    onChange={this.onChangeLocation} />
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">디자인 소유권</div>
-                  <DropBox id="designerOwnership" selection options={[{ text: "구매자", value: 0 }, { text: "디자이너", value: 1 }]}
-                    onChange={this.onChangeOwnership} value={this.state.ownership} placeholder="선택" />
-                </div>
-
-                {/* <div className="wrapper flex centering">
-                  <div className="label">오프라인 상담</div>
-                  <DropBox id="offline" selection options={[{ text: "가능", value: 0 }, { text: "불가능", value: 1 }]}
-                    onChange={this.onChangeOffline} value={this.state.offline} placeholder="선택" />
-                </div> */}
-
-              </FormBox>
-            </div>
-            <div className="centering_">
-              <RedButton text="의뢰를 등록합니다." okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
-            </div>
-          </MainBox>
-        </Wrapper>
-      </React.Fragment>
-    );
+    return (<Wrapper>
+      <div className="title">
+        <p className="text">
+          디자인 의뢰
+        </p>
+      </div>
+      <div className="form">
+        <div className="row">
+          <div className="label">의뢰자</div>
+          <div className="content">{userInfo.nickName}{userInfo.nickName}{userInfo.nickName}{userInfo.nickName}{userInfo.nickName}</div>
+        </div>
+        <div className="row">
+          <div className="label">제목<Mandatory /></div>
+          <div className="contents"><InputText onChange={this.onChangeTitle} value={this.state.title} width={820} /></div>
+        </div>
+      </div>
+      <div className="bottom">
+        <button className="apply">등록하기</button>
+        <button className="cancel">취소하기</button>
+      </div>
+    </Wrapper>);
   };
 }
 export default RequestToDesigner;

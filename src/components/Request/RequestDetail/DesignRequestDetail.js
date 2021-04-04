@@ -171,6 +171,8 @@ const DesignRequestDetailWrapper = styled.div`
 
 export const DesignRequestDetail = (props) => {
     const { nick_name, title, category_level1, category_level2, tag, content, price, file_url, filename, start_date, end_date, location, ownership, } = props;
+    console.log(props);
+
     return (<DesignRequestDetailWrapper>
         <div className="title">
             <p className="text">
@@ -222,7 +224,7 @@ export const DesignRequestDetail = (props) => {
         </div>
 
         <div className="bottom">
-            <button className="reply">의뢰응답</button>
+            <button onClick={() => props.onClick()} className="reply">의뢰응답</button>
             <button className="back"> {"<"} 목록으로</button>
         </div>
 

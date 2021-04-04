@@ -181,7 +181,7 @@ const DesignResponseDetailWrapper = styled.div`
 
 export const DesignResponseDetail = (props) => {
   console.log(props);
-  const { request, nick_name, content, filename, file_url, price, category_level1, category_level2, start_date, end_date } = props;
+  const { request, client_name, nick_name, content, filename, file_url, price, category_level1, category_level2, start_date, end_date } = props;
   // amount: null, category_level1: 2, category_level2: 1, category_level3: null, client_id: 22, completed: 0, content: "<p style="color:red">의뢰내용입니다.<br/> 이 사이트의 버그를<br/> 
   // 찾아서 고쳐주실 수 있을까요???<br/>버<br/>그<br/>버<br/>그<br/>버<br/>그<br/>버<br/>그<br/><br/></p>", create_time: "2021-03-17T03:23:51.000Z", end_date: "2021-03-17", expert_id: null, 
   // file_url: "", filename: "", group_id: 57, location: "15", offline_consultation: "0", ownership: "1", personal: null, price: 0, resale: null, sort_in_group: 0, start_date: "2021-03-17", 
@@ -199,7 +199,7 @@ export const DesignResponseDetail = (props) => {
       <div className="form">
         <div className="row">
           <div className="label">의뢰자</div>
-          <div className="content">{request.nick_name || "이름없음"}</div>
+          <div className="content">{client_name || "이름없음"}</div>
         </div>
         <div className="row">
           <div className="label">제목</div>
@@ -268,7 +268,21 @@ export const DesignResponseDetail = (props) => {
 
     {/*  */}
     <div className="bottom">
-      <button className="reply">의뢰응답</button>
+      {/* this.props.userInfo && this.props.Detail && this.props.isPurchased == false &&
+        this.props.userInfo.uid == this.props.Detail.client_id ?
+        <ButtonWrapper>
+          <div className="btnbox">
+            <div className="_box">
+              <RedButton value={"의뢰 구입"} onClick={this.props.purchase} />
+            </div>
+          </div>
+        </ButtonWrapper> */}
+      {props.userInfo &&
+        // props.Detail &&
+        props.isPurchased === false &&
+        props.userInfo.uid === props.client_id ?
+        <button onClick={() => props.onClick()} className="reply">의뢰구입</button> : null}
+
       <button className="back"> {"<"} 목록으로</button>
     </div>
 

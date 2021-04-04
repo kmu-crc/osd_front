@@ -9,7 +9,6 @@ export default class Detail extends Component {
     this.onClickResponse = this.onClickResponse.bind(this);
   }
   onClickResponse() {
-    console.log(this.props);
     if (this.props.Detail.status === "request") {
       // console.log(this.props.Detail.type == "designer_req");
       if (this.props.Detail.type === "designer_req" || this.props.Detail.type === "designer") {
@@ -20,12 +19,12 @@ export default class Detail extends Component {
       }
     }
     else if (this.props.Detail.status === "response") {
-
+      alert("미구현");
     }
   }
 
   render() {
-    const { Detail, MyDetail, } = this.props;
+    const { Detail, MyDetail, userInfo } = this.props;
     if (Detail == null || Detail.length === 0) return (<Loading />);
 
     // const TypeText = Detail.type === "maker" ? "제작" : "디자인";
@@ -38,15 +37,19 @@ export default class Detail extends Component {
 
       {/* DESIGN REQUEST DETAIL */}
       {Detail.type === "designer" && Detail.status === "request"
-        ? <DesignRequestDetail {...Detail} category_level1={category_level1} category_level2={category_level2} />
+        ? <DesignRequestDetail {...Detail} onClick={() => this.onClickResponse()} category_level1={category_level1} category_level2={category_level2} />
         : null}
 
       {/* DESIGN RESPONSE DETAIL */}
       {Detail.type === "designer" && Detail.status === "response"
-        ? <DesignResponseDetail {...Detail} category_level1={category_level1} category_level2={category_level2} />
+        ? <DesignResponseDetail {...Detail} onClick={() => this.onClickResponse()} userInfo={userInfo} isPurchased={this.props.isPurchased} category_level1={category_level1} category_level2={category_level2} />
         : null}
 
       {/* MAKER REQUEST DETAIL */}
+
+      {/* MAKER RESPONSE DETAIL */}
+
+      {/* NORMAL DETAIL */}
 
 
     </React.Fragment>);
