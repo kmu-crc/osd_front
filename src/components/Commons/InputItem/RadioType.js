@@ -7,15 +7,22 @@ const FormStyle = styled.div`
     width: 100%;
     height: max-content;
     display: flex;
-
+    
     .contentBox{
+        display:flex;
         width: max-content;
         height: max-content;
         margin-right: 50px;
     }
+    .radioWrapper{
+        display:flex;
+        align-items:center;
+        margin-right:10px;
+    }
     .radio {
-        width: 20px;
-        height: 20px;
+        margin:0px !important;
+        width: 15px;
+        height: 15px;
     }
 `;
 
@@ -34,15 +41,15 @@ export class RadioType extends Component {
                 <FormStyle>
                     {this.props.Options.map((item, key) =>
                         (<div key={key} className="contentBox">
-                            <label >
+                            <label className="radioWrapper">
                                 <input
                                     className="radio"
                                     type="radio"
                                     name={this.props.name}
                                     checked={item === this.props.default}
                                     onChange={_ => this.onHandleClicked(_, item)} />
-                                {item}
                             </label>
+                                <div>{item}</div>
                         </div>))}
                 </FormStyle>
             </React.Fragment>

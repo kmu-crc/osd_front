@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   }
 `;
 const Content = styled(ContentBox)`
-  // margin-top: ${props => props.top}px;
+  margin-top: ${props => props.top}px;
   width:100%;
   @media only screen and (max-width: 991px) and (min-width: 768px){
     & .ui.grid>.row{
@@ -52,12 +52,13 @@ const Container = styled.div`
       width: 100%;
     }
     ._title{
+      color:black;
       width:200px;
       display:flex;
       justify-content:center;
       align-items:center;
       font-family:Noto Sans KR;
-      font-weight:500;
+      font-weight:600;
       font-size:${market_style.font.size.normal3};
     }
     .sort {
@@ -103,7 +104,7 @@ export default class DesignerList extends Component {
     const { category1, category2, category3 } = this.props;
     const { cate1, cate2, cate3 } = this.props;
     const { sort } = this.props;
-
+    
     return (<React.Fragment>
       <Content top={20}>
         <Container>
@@ -143,7 +144,7 @@ export default class DesignerList extends Component {
         </Container>
       </Content>
 
-      <Content top={20}>
+      <Content>
         <Wrapper className="listWrap">
           <ScrollDesignerListContainer sort={sort} cate1={cate1} cate2={cate2} cate3={cate3} history={this.props.history} />
         </Wrapper>

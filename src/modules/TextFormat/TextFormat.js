@@ -8,7 +8,7 @@ class TextFormat extends Component {
         return (
             <div title={txt} style={lines ?
                 /* multi-lines*/{ cursor: this.props.cursor?"defailt":"pointer", overflow: "hidden", textOverflow: "ellipsis", display: "-webkit-box", WebkitLineClamp: lines, WebkitBoxOrient: "vertical", wordWrap: "break-word" }
-                /* single-line*/ : { cursor: this.props.cursor?"defailt":"pointer", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                /* single-line*/ : { cursor: this.props.cursor?"defailt":"pointer", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",padding:"5px 0px" }}>
                 {chars ? (txt && txt.length <= chars ? txt : txt && txt.slice(0, chars) + "...") : txt}
             </div>
         )

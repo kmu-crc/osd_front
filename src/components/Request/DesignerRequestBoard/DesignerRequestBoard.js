@@ -51,6 +51,7 @@ const ListElement = styled.div`
   border: 1px solid #eaeaea;
   padding:6px 54px 6px 54px;
   display:flex;
+  margin-bottom:10px;
   .title{
     min-width:83%;
     display:flex;
@@ -79,11 +80,15 @@ export default class DesignerRequestBoard extends Component {
     render() {
         return (<React.Fragment>
             <Content top={0}>
+                {
+                this.props.dataList.length >0?
                 <ListElement>
-                    <div className="title">제목</div>
-                    <div className="writer">글쓴이</div>
-                    <div className="date">작성일</div>
+                <div className="title">제목</div>
+                <div className="writer">글쓴이</div>
+                <div className="date">작성일</div>
                 </ListElement>
+                :null
+                }
                 <Wrapper className="listWrap">
                     <ScrollBoardList getListRequest={this.getList} ListComponent={RequestMyDetailElement} dataList={this.props.dataList} total={this.props.Count}
                         mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} />

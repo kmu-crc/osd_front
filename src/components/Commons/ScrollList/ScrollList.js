@@ -18,7 +18,7 @@ const ListContainer = styled.div`
     flex: 0 0 180px;
     justify-content: space-around;
     margin: ${props=>props.isSmall==true?"0px 20px 30px 0px":
-              props.isMini==true?"0px 26px 25px 0px":"0px 0px 29px 20px"};
+              props.isMini==true?"0px 23px 30px 0px":"0px 0px 35px 22px"};
   }
   .designer{
     // flex: 0 0 247px;
@@ -98,9 +98,11 @@ class ScrollList extends Component {
             }>
             <ListContainer isSmall={this.props.isSmall==null?false:true} isMini={this.props.isMini==null?false:true}>
               {this.props.dataListAdded.map((content, index) => (
+                <React.Fragment>
                 <div key={index} className={this.props.type}>
                   <ListComponent data={content} type={type} confirm={this.props.confirm} handler={this.props.handler} />
                 </div>
+                </React.Fragment>
               ))}
             </ListContainer>
           </InfiniteScroll>

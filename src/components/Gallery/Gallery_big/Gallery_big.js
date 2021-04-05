@@ -8,9 +8,7 @@ import TextFormat from 'modules/TextFormat';
 import noimg from "source/noimg.png";
 // import { geturl } from 'config';
 // import { NavLink } from "react-router-dom";
-import ModifyGroupInfoContainer from "containers/Groups/ModifyGroupInfoContainer/ModifyGroupInfoContainer"
 import market_style from "market_style";
-
 
 const Wrapper = styled.div`
   *{
@@ -55,40 +53,28 @@ const TextWrapper = styled.div`
   }
 `;
 const empty = { thumbnail: '', group_id: null, user_id: null, nick_name: "", title: '로딩중...', description: '로딩중...' };
-class ModifyGallery extends Component {
+class Gallery_big extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      open: false,
-    }
     this.onClickCard = this.onClickCard.bind(this);
-    this.handleShowModal = this.handleShowModal.bind(this);
   }
   onClickCard(event) {
-    console.log(this.state.open);
-    this.setState({ open: true })
+    window.location.href = "/galleryDetail/" + this.props.data.uid;
   }
-  handleShowModal(value) {
-    this.setState({ open: false })
-  }
-
   render() {
-    // console.log(this.props.handler);
+
     const item = this.props.data || empty;
     return (
-      <React.Fragment>
-        {this.state.open ? <ModifyGroupInfoContainer handlerIsGalleryModify={this.props.handler} handleShowModal={this.handleShowModal} id={this.props.data.uid} open={this.state.open} /> : null}
-        <Wrapper onClick={this.onClickCard}>
-          {/* picture */}
-          <ItemPic img={(item && item.thumbnail) || noimg} />
-          {/* text */}
-          <TextWrapper>
-            <div className="title"><TextFormat txt={item.title || "...로딩중"} /></div>
-          </TextWrapper>
-        </Wrapper>
-      </React.Fragment>
+      <Wrapper onClick={this.onClickCard}>
+        {/* picture */}
+        <ItemPic img={(item && item.thumbnail) || noimg} />
+        {/* text */}
+        <TextWrapper>
+          <div className="title"><TextFormat txt={item.title || "...로딩중"} /></div>
+        </TextWrapper>
+      </Wrapper>
     )
   }
 }
 
-export default ModifyGallery;
+export default Gallery_big;

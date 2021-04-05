@@ -27,6 +27,8 @@ const MemberWrap = styled.div`
 `
 
 const SearchWrap = styled.div`
+  width:100%;
+  height:100%;
   position: relative;
   .form_item{
     outline:none;
@@ -42,6 +44,8 @@ const MemberList = styled.ul`
   box-sizing: border-box;
   border: 1px solid #181818;
   border-radius: 3px;
+  background-color:white;
+  position:absolute;
 `
 
 const MemberListItem = styled.li`
@@ -50,22 +54,37 @@ const MemberListItem = styled.li`
   border: 1px solid #181818;
   border-radius: 3px;
   margin-bottom: 5px;
+  background-color:#efefef;
+  cursor:pointer;
+  &:hover{
+    backgroun-color:#eaeaea;
+  }
 `
 
 class SearchMember extends Component {
-  state = {
-    member: [],
-    open: false
+  constructor(props){
+    super(props);
+    this.state = {
+      member:[],open:false,
+    }; 
+    this.onClickEvent  = this.onClickEvent.bind(this);
   }
-
   componentDidMount() {
     if (this.props.originalMember) {
       this.setState({
         member: this.props.originalMember
       });
     }
+      window.addEventListener("click", this.onClickEvent, false);
   }
-
+  componentWillUnmount(){
+      window.removeEventListener("click", this.onClickEvent, true);
+  }
+  onClickEvent(event){
+     if(event.target.id!="thisRgn"){
+      this.setState({open:false});
+     }
+  }
   getValue = (value) => {
     console.log("get:", value);
     this.setState({ open: true });
@@ -117,11 +136,11 @@ class SearchMember extends Component {
   }
   render() {
     return (
-      <SearchWrap>
-        <FormInput className="form_item" type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue} />
-        <MemberList style={this.state.open ? { display: "block" } : { display: "none" }}>
+      <SearchWrap id="thisRgn">
+        <FormInput id="thisRgn" className="form_item" type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue} />
+        <MemberList id="thisRgn" style={this.state.open ? { display: "block" } : { display: "none" }}>
           {this.props.members && this.props.members.map((item, index) => {
-            return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item)}>{item.email}</MemberListItem>);
+            return (<MemberListItem id="thisRgn" key={`member${index}`} onClick={() => this.addMember(item)}>{item.email}</MemberListItem>);
           })}
         </MemberList>
         <MemberWrap>

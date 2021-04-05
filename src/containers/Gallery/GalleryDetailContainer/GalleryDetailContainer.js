@@ -3,14 +3,19 @@ import { connect } from 'react-redux';
 import { GetGalleryDetailRequest } from "actions/Gallery";
 // import GroupDetail from "components/Groups/GroupDetail";
 import GalleryDetail from "components/Gallery/GalleryDetail/GalleryDetail";
-
+import styled from "styled-components";
+const Wrapper = styled.div`
+  margin:20px 30px
+`
 class GalleryDetailContainer extends Component {
   componentDidMount(){
     this.props.GetGalleryDetailRequest(this.props.id)
   }
   render() {
     return(
+      <Wrapper>
       <GalleryDetail {...this.props}/>
+      </Wrapper>
     );
   }
 }

@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetGalleryListDetailRequest } from "actions/Gallery";
 import ScrollList from "components/Commons/ScrollList";
-import Item from "components/Items/Item";
+import Item_mini from "components/Items/Item_mini";
+import styled from "styled-components";
+const Wrapper = styled.div`
+  width:100%;
+  overflow-y:${props=>props.isScroll?"overlay":"hidden"};
+  overflow-x:hidden;
+`
 
 class ItemInGalleryContainer extends Component {
   componentWillMount() {
@@ -16,11 +22,12 @@ class ItemInGalleryContainer extends Component {
   render() {
     console.log(this.props);
     return(
-      <div>
+      <Wrapper isScroll={this.props.dataListAdded.length>4?true:false}>
         <ScrollList
-          cols={6} type="item" getListRequest={this.getList} ListComponent={Item}
+          
+          cols={6} type="item" getListRequest={this.getList} ListComponent={Item_mini}
           dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />
-      </div>
+      </Wrapper>
 
       
     );

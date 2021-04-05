@@ -8,6 +8,7 @@ import styled from "styled-components";
 const ReviewBox = styled.div`
     min-width:103%;
     height: 100%;
+
     overflow:${props=>props.isScroll?"overlay":"hidden"};
 `;
 class DesignerReviewContainer extends Component {
@@ -19,7 +20,6 @@ class DesignerReviewContainer extends Component {
     this.props.GetDesignerReviewListRequest(this.props.id, page);
 
   render() {
-      console.log(this.props,"---");
     return (
         // 리뷰목록
         <ReviewBox

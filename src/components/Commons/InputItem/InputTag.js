@@ -4,8 +4,7 @@ import StyleGuide from "StyleGuide";
 import market_style from "market_style";
 
 const FormStyle = styled.input.attrs({type:"text"})`
-    width: ${props => props.width}px;
-
+    width: ${props => props.width==null?"100%":props.width+"px"};
     margin: 0;
     -webkit-appearance: none;
     padding: 0.67857143em 1em;
@@ -45,17 +44,17 @@ const TagList = styled.div`
 const TagPiece = styled.div`
     width:max-content;
     min-width:30px;
-    max-height:21px;
-    border:1px solid #707070;
-    border-radius:15px;
-    padding: 11px 10px 11px 10px;
+    background-color:#E9E9E96A;
+    border-radius:10px;
+    padding: 0px 12px;
     display: flex;
     justify-content: space-between;
     align-items:center;
-    font-size:${market_style.font.size.mini2};
+    font-size:${market_style.font.size.small1};
     font-family:Noto Sans CJK KR, Regular;
     margin-right:8px;
-    margin-top:5px;
+    margin-top:10px;
+    color:#707070;
     .close {
         color:#707070;
         margin-left: 10px;
@@ -210,10 +209,10 @@ export class InputTag extends Component {
             );
         }
         return (
-            <React.Fragment>
+            <div style={{width:"100%"}}>
 
                 <FormStyle
-                    width={this.props.width == null ? "100" : this.props.width}
+                    width={this.props.width == null ? null : this.props.width}
                     placeholder={this.props.placeholder}
                     onKeyDown={this.onEnterKeyDown}
                     onChange={this.onChangeValue}
@@ -224,7 +223,7 @@ export class InputTag extends Component {
                     {TagBox}
                 </TagList>
 
-            </React.Fragment>
+            </div>
         );
     }
 }
