@@ -5,7 +5,8 @@ import Notice from "components/Commons/Header/Notice";
 import Footer from "components/Commons/Footer/Footer"
 
 const Container = styled.div`
-  margin-left: 65px;
+  // margin-left: 65px;
+  margin: auto;
   background: #FFFFFF;
   padding-bottom:30px;
   @media only screen and (max-width: 1366px){

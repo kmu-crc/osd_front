@@ -6,6 +6,7 @@ import { GetThisPurchasedRequest, UpdatePaymentRequest, CreateItemPaymentRequest
 import bg from "source/design_bg.jpg";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
+
 class RequestDetailContainer extends Component {
   constructor(props) {
     super(props);

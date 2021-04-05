@@ -1,27 +1,173 @@
+import { Dropdown } from "semantic-ui-react"
+import category_icon from "source/category_icon.svg";
+import { CustomIcon } from "components/Commons/ArrowIcon";
+import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
+import { InputTagNew, InputFile, InputPriceNew, InputCalendar } from "components/Commons/InputItem"
+
 import React, { Component } from "react";
 import styled from 'styled-components';
-import ContentBox from "components/Commons/ContentBox";
-import { Dropdown } from "semantic-ui-react"
-import { InputTagNew,InputFile,InputPriceNew,InputCalendar } from "components/Commons/InputItem"
-import { RedButton, GrayButton } from "components/Commons/CustomButton"
-import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
-import { FileUploadRequest } from "actions/Uploads";
-import category_icon from "source/category_icon.svg";
 import { alert } from "components/Commons/Alert/Alert";
-import { confirm } from "components/Commons/Confirm/Confirm";
-import market_style from "market_style";
 
-const CustomIcon=styled.div`
-  width:${props => props.width}px;
-  height:${props => props.height}px;
-  background-image:url(${props=>props.imgURL});
-  background-repeat: no-repeat;
-  background-size: contain;
-  padding:${props => props.padding}px;
-  margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
-  margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
-  display:${props=>props.isNon==true?"none":"block"}
-`
+// import { RedButton, GrayButton } from "components/Commons/CustomButton"
+// import market_style from "market_style";
+// import { FileUploadRequest } from "actions/Uploads";
+// import ContentBox from "components/Commons/ContentBox";
+// import { confirm } from "components/Commons/Confirm/Confirm";
+
+const Wrapper = styled.div`
+  padding-top: 15px;
+  
+  .header {
+    width: 100%;
+
+    .title {
+      width: max-content;
+      margin: auto;
+
+      .text {
+        text-align: center;
+        font: normal normal bold 20px/29px Noto Sans KR;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+      }
+    }
+  }
+
+  .form {
+    margin: auto;
+    margin-top: 15px;
+    width: 1306px;
+    // min-height: 1221px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 3px 3px 5px #0000001A;
+    border: 0.25px solid #B7B7B7;
+    border-radius: 20px;
+    padding: 50px 150px;
+    padding-bottom: 50px;
+
+    .row {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 30px;
+      :last-child {
+        margin-bottom: 0px;
+      }
+      .label { 
+        width: 186px;
+        height: 22px;
+        text-align: left;
+        font: normal normal bold 15px/22px Noto Sans KR;
+        letter-spacing: 0px;
+        color: #707070;
+      }
+      .content { 
+        width: 100%;
+        min-width: 820px;
+        min-height: 22px;
+
+        text-align: left;
+        font: normal normal normal 15px/22px Noto Sans KR;
+        letter-spacing: 0px;
+        color: #000000;
+
+        .title-input {
+          width: 100%;
+          min-width: 820px;
+          height: 31px;
+          background: #E9E9E9 0% 0% no-repeat padding-box;
+          border-radius: 10px;
+          border: none;
+
+          text-align: left;
+          font: normal normal 300 13px/19px Noto Sans KR;
+          letter-spacing: 0px;
+          color: #000; //#707070;
+          padding: 3px 0px 0px 11px;
+        }
+      }
+    }
+  }
+
+  .bottom {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    width: 100%;
+
+    .buttons {
+      margin: auto;
+      width: max-content;
+    }
+    button {
+      width: 150px;
+      height: 30px;
+      border: none;
+
+      .text {
+        margin: auto;
+        width: max-content;
+        text-align: center;
+        font: normal normal bold 15px/22px Noto Sans KR;
+        letter-spacing: 0px;
+        color: #FFFFFF;
+        opacity: 1;
+      }
+      &.ok {
+        background: #FF0000 0% 0% no-repeat padding-box;
+        &.disabled {
+          background: #707070 0% 0% no-repeat padding-box;
+        }
+      }
+      &.cancel {
+        background: #707070 0% 0% no-repeat padding-box;
+      }
+      opacity: 1;
+      :first-child {
+        margin-right: 20px;
+      }
+    }
+  }
+
+  .flexing-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .hr {
+    margin-top: 30px;
+    margin-bottom: 29px;
+    width: 1006px;
+    height: 2px;
+    border: 2px solid #EFEFEF;
+  }
+`;
+const DropBox = styled(Dropdown)`
+  width: 180px !important;
+  height: 31px !important;
+  border-radius: 10px !important;
+  background-color:#E9E9E9 !important;
+  border: none;
+
+  .text {
+    margin: 4px 0px 0px 22px;
+    font: normal normal normal 15px/22px Noto Sans KR;
+    letter-spacing: 0px !important;
+    color: #000000 !important;
+  }
+
+  .icon {
+    padding: 5px !important;
+  }
+
+  &.ui, &.selection, &.dropdown {
+    min-height: 31px !important;
+    height: 31px !important;
+    padding: 0px !important;
+    // background-color: blue !important;
+  }
+`;
 const LocationList = [
   { value: 0, text: "서울특별시" },
   { value: 1, text: "부산광역시" },
@@ -41,140 +187,6 @@ const LocationList = [
   { value: 15, text: "제한없음" },
 ];
 
-const Wrapper = styled(ContentBox)`
-  width: 100%;
-  margin-top: 60px;
-  margin-bottom: 100px;
-  z-index: 3;
-`;
-const MainBox = styled.div`
-  width:100%;
-  .title{
-    width:170px;
-    height:29px;
-    font-family:Noto Sans CJK KR, Medium;
-    font-size:${market_style.font.size.normal3};
-    font-weight:500;
-    margin-left:130px;
-
-  }
-  .contentsBox{
-    position: relative;
-    width:100%;
-    display:flex;
-    padding:36px 130px 36px 136px;
-  }
-  .centering_{
-    width:100%;
-    display:flex;
-    padding:36px 130px 36px 136px;
-    justify-content:center;
-    margin-bottom:30px;
-
-  }
-
-`;
-
-const FormBox = styled.div`
-
-  font-family:Noto Sans KR;
-  font-weight:500;
-  font-size:${market_style.font.size.normal3};
-  width:100%;
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px;
-  padding-left:59px;
-  padding-right:59px;
-  padding-top:49px;
-
-  .wrapper{
-    width:100%;
-    margin-bottom:70px;
-  }
-  .margin_zero{
-    margin:0px;
-  }
-  .flex{
-    display:flex;
-  }
-  .centering{
-    align-items:center;
-  }
-  .innerWraper{
-    width:100%;
-    margin-bottom:26px;
-    display:flex;
-  }
-  .label{
-    font-family:Noto Sans CJK KR, Regular;
-    font-size:${market_style.font.size.normal3};
-    min-width:157px;
-    height:29px;
-  }
-  .text_small{
-    font-family:Noto Sans CJK KR, Regular;
-    font-size:${market_style.font.size.small3};
-  }
-  .label_centering{
-    text-align:center;
-  }
-  .index{
-    width:30px;
-    height:30px;
-    color:#707070;
-  }
-  .faded-text {
-    border-radius: 15px;
-    background-color: #EAEAEA;
-    padding: 15px 15px;
-  }
-  .information {
-    color: red;
-    font-size:${market_style.font.size.small2};
-    margin-left: 10px;
-  }
-`;
-const InputText = styled.input.attrs({ type: "text" })`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:52px;
-  border-radius:26px;
-  font-family:Noto Sans KR;
-  font-size:${market_style.font.size.normal3};
-  background-color:#E9E9E9;
-  margin-right:21px;
-  outline:none;
-  border:0px;
-  padding: 0.67857143em 1em;
-
-`;
-const InputTextarea = styled.textarea`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
-  border-radius:20px;
-  font-family:Noto Sans KR;
-  font-size:${market_style.font.size.normal3};
-  background-color:#E9E9E9;
-  outline:none;
-  border:0px;
-  readonly;
-  padding: 0.67857143em 1em;
-
-`;
-const DropBox = styled(Dropdown)`
-    min-width:254px !important;
-    min-height:52px !important;
-    background-color:#E9E9E9 !important;
-    margin-right:10px;
-
-    border-radius:26px !important;
-`;
-const HRLine = styled.div`
-    width:93%;
-    height:3px;
-    background-color:#E9E9E9;
-    margin-top:35px;
-    margin-bottom:35px;
-`;
 
 class RequestToDesigner extends Component {
   constructor(props) {
@@ -213,81 +225,22 @@ class RequestToDesigner extends Component {
     this.getDayDateValue = this.getDayDateValue.bind(this);
     this.onFileChange = this.onFileChange.bind(this);
   }
-  async onClickCategorylevel1(event, { value }) {
-    await this.setState({ category_level1: { value }.value });
-  }
-  async onClickCategorylevel2(event, { value }) {
-    await this.setState({ category_level2: { value }.value });
-  }
-  onClickItemType(event, { value }) {
-    this.setState({ itemType: { value }.value });
-  }
-  onChangeTitle(event) {
-    this.setState({
-      title: event.target.value,
-    })
-  }
-  async getPriceValue(value) {
-    await this.setState({
-      price: value
-    });
-  }
-  async getStartDateValue(value) {
-    // await console.log("startDate",value);
-    await this.setState({ startDate: value });
-  }
-  async getEndDateValue(value) {
-    // await console.log("endDate",value);
-    await this.setState({ endDate: value });
-  }
-  async getDayDateValue(value) {
-    await this.setState({ dayDate: value })
-  }
-  getTagValue(data) {
-    this.setState({
-      tag: data.slice(),
-    })
-  }
-  onChangePrice(event) {
-    this.setState({
-      price: event.target.value,
-    })
-  }
-  onChangeLocation(event, { value }) {
-    this.setState({
-      location: { value }.value
-    });
-  }
-  async onChangeContent(data) {
-    await this.setState({
-      content: data.content
-    });
-    // this.setState({
-    //   content: event.target.value,
-    // })
-  }
-  onChangeOwnership(event, { value }) {
-    this.setState({
-      ownership: { value }.value,
-    })
-  }
-  onChangeOffline(event, { value }) {
-    this.setState({
-      offline: { value }.value,
-    })
-  }
-  handleAddTag(tag) {
-    this.setState({
-      tag: tag.slice(),
-    });
-  }
-  async onFileChange(file){
-    this.setState({
-      file_url: file.file_url,
-      filename: file.filename,
-    });
-  }
-
+  async onClickCategorylevel1(event, { value }) { await this.setState({ category_level1: { value }.value }); }
+  async onClickCategorylevel2(event, { value }) { await this.setState({ category_level2: { value }.value }); }
+  onClickItemType(event, { value }) { this.setState({ itemType: { value }.value }); }
+  onChangeTitle(event) { this.setState({ title: event.target.value, }) }
+  async getPriceValue(value) { await this.setState({ price: value }); }
+  async getStartDateValue(value) { await this.setState({ startDate: value }); }
+  async getEndDateValue(value) { await this.setState({ endDate: value }); }
+  async getDayDateValue(value) { await this.setState({ dayDate: value }) }
+  getTagValue(data) { this.setState({ tag: data.slice(), }) }
+  onChangePrice(event) { this.setState({ price: event.target.value, }) }
+  onChangeLocation(event, { value }) { this.setState({ location: { value }.value }); }
+  async onChangeContent(data) { await this.setState({ content: data.content }); }
+  onChangeOwnership(event, { value }) { this.setState({ ownership: { value }.value, }) }
+  onChangeOffline(event, { value }) { this.setState({ offline: { value }.value, }) }
+  handleAddTag(tag) { this.setState({ tag: tag.slice(), }); }
+  async onFileChange(file) { this.setState({ file_url: file.file_url, filename: file.filename, }); }
   async onSubmit() {
     const data = {
       type: "designer",
@@ -310,8 +263,8 @@ class RequestToDesigner extends Component {
       filename: this.state.filename,
     }
     /////예외처리/////
-    if(this.state.title==""){await alert("의뢰 제목을 입력해주세요");return;}
-    else if(this.state.content==""){await alert("의뢰 내용을 입력해주세요");return;}
+    if (this.state.title == "") { await alert("의뢰 제목을 입력해주세요"); return; }
+    else if (this.state.content == "") { await alert("의뢰 내용을 입력해주세요"); return; }
     ///////////////
     this.props.CreateRequestRequest(data, this.props.token)
       .then(res => {
@@ -328,128 +281,125 @@ class RequestToDesigner extends Component {
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
-    const Mandatory = () => <span style={{color:"red"}} title="필수사항입니다.">*</span>
+    const Mandatory = () => <span style={{ color: "red" }} title="필수사항입니다.">*</span>
 
-    return (
-      <React.Fragment>
-        <Wrapper>
-          <MainBox>
-            <div className="title">디자인 의뢰</div>
-            <div className="contentsBox">
-              <FormBox>
+    console.log(this.props);
+    const { userInfo } = this.props;
 
-                <div className="wrapper flex centering" >
-                  <div className="label">의뢰자</div>
-                  <div className="text_small">{this.props.userInfo.nickName || null}</div>
-                </div>
+    return (<Wrapper>
+      {/* header */}
+      <div className="header">
+        <div className="title">
+          <div className="text">디자인 의뢰</div>
+        </div>
+      </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">제목<Mandatory/></div>
-                  <InputText onChange={this.onChangeTitle} value={this.state.title} width={533} />
-                </div>
+      {/* form */}
+      <div className="form">
+        <div className="row">
+          <div className="label">의뢰자</div>
+          <div className="content">{userInfo.nickName}</div>
+        </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">카테고리</div>
-                  <DropBox id="category_level1"
-                    value={this.state.category_level1}
-                    selection
-                    options={category1}
-                    placeholder="대분류"
-                    onChange={this.onClickCategorylevel1} />
-                    <CustomIcon width="25" height="25" imgURL={category_icon} marginRight="21" marginLeft="21"/>
-                  <DropBox id="category_level2"
-                    value={this.state.category_level2}
-                    selection
-                    options={category2}
-                    placeholder="소분류"
-                    onChange={this.onClickCategorylevel2} />
-                </div>
+        <div className="row">
+          <div className="label">제목<Mandatory /></div>
+          <div className="content"><input onChange={this.onChangeTitle} className="title-input" placeholder="제목을 입력하세요." /></div>
+        </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">태그</div>
-                  <div>
-                    <InputTagNew getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
-                  </div>
-                </div>
+        <div className="row">
+          <div className="label">카테고리</div>
+          <div className="content flexing-row">
+            <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
+            <CustomIcon width="5" height="10" marginRight="20" marginLeft="20" imgURL={category_icon} />
+            <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
+          </div>
+        </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">의뢰 내용<Mandatory/></div>
-                  {/* <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} /> */}
-                  <TextControllerClassic
-                    item={{ content: this.state.content, height: 500 }}
-                    name={"comment"}
-                    getValue={this.onChangeContent}
-                    width="820"
-                    editheight="770"
-                  // initClick={this.state.click}
-                  // deleteItem={this.deleteItem}
-                  />
-                </div>
+        <div className="row">
+          <div className="label">태그</div>
+          <div className="content">
+            <InputTagNew getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
+          </div>
+        </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">파일 등록</div>
-                  <InputFile width={533} getValue={this.onFileChange}/>
-                  {/* <div className="faded-text" >
-                    <input
-                      type="file"
-                      name="source"
-                      ref={ref => (this.input = ref)}
-                      onChange={this.onFileChange}
-                      accept=".pdf" />
-                  </div>
-                  <div className="information">
-                    * pdf파일만 등록이 가능합니다.
-                      </div> */}
-                </div>
+        <div className="row">
+          <div className="label">의뢰 내용<Mandatory /></div>
+          <div className="content">
+            <TextControllerClassic
+              item={{ content: this.state.content, /*height: 388*/ }}
+              name={"comment"}
+              getValue={this.onChangeContent}
+              // width="820"
+              editheight="388"
+              marginBottom="0"
+              border="1px solid #707070"
+            // initClick={this.state.click}
+            // deleteItem={this.deleteItem}
+            />
+          </div>
+        </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label ">희망 비용</div>
-                  <InputPriceNew name="price" getValue={this.getPriceValue} />
-                </div>
+        <div className="row">
+          <div className="label">파일 등록</div>
+          <div className="content">
+            <InputFile width={533} getValue={this.onFileChange} accept="pdf" />
+          </div>
+        </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label ">기간</div>
-                  <InputCalendar
-                    startDate={this.state.startDate}
-                    endDate={this.state.endDate}
-                    name="calendar"
-                    getStartDateValue={this.getStartDateValue}
-                    getEndDateValue={this.getEndDateValue}
-                    getDayDateValue={this.getDayDateValue} />
-                </div>
+        <div className="row">
+          <div className="label">희망 비용</div>
+          <div className="content">
+            <InputPriceNew name="price" getValue={this.getPriceValue} />
+          </div>
+        </div>
 
-                <HRLine />
-                <div className="wrapper flex centering">
-                  <div className="label">디자이너 위치</div>
-                  {/* <InputText onChange={this.onChangeLocation} value={this.state.location} width={483} /> */}
-                  {/* <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} /> */}
-                  <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
-                    selection options={LocationList} placeholder="시/도"
-                    onChange={this.onChangeLocation} />
-                </div>
+        <div className="row">
+          <div className="label ">기간</div>
+          <div className="content">
+            <InputCalendar
+              startDate={this.state.startDate}
+              endDate={this.state.endDate}
+              name="calendar"
+              getStartDateValue={this.getStartDateValue}
+              getEndDateValue={this.getEndDateValue}
+              getDayDateValue={this.getDayDateValue} />
+          </div>
+        </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">디자인 소유권</div>
-                  <DropBox id="designerOwnership" selection options={[{ text: "구매자", value: 0 }, { text: "디자이너", value: 1 }]}
-                    onChange={this.onChangeOwnership} value={this.state.ownership} placeholder="선택" />
-                </div>
+        <div className="hr"></div>
 
-                {/* <div className="wrapper flex centering">
-                  <div className="label">오프라인 상담</div>
-                  <DropBox id="offline" selection options={[{ text: "가능", value: 0 }, { text: "불가능", value: 1 }]}
-                    onChange={this.onChangeOffline} value={this.state.offline} placeholder="선택" />
-                </div> */}
+        <div className="row">
+          <div className="label">디자이너 위치</div>
+          <div className="content">
+            <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
+              selection options={LocationList} placeholder="시/도"
+              onChange={this.onChangeLocation} />
+          </div>
+        </div>
 
-              </FormBox>
-            </div>
-            <div className="centering_">
-              <RedButton text="의뢰를 등록합니다." okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
-              <GrayButton text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
-            </div>
-          </MainBox>
-        </Wrapper>
-      </React.Fragment>
-    );
+        <div className="row">
+          <div className="label">디자인 소유권</div>
+          <div className="content">
+            <DropBox id="designerOwnership" selection options={[{ text: "구매자", value: 0 }, { text: "디자이너", value: 1 }]}
+              onChange={this.onChangeOwnership} value={this.state.ownership} placeholder="선택" />
+          </div>
+        </div>
+      </div>
+
+
+      {/* bottom */}
+      <div className="bottom">
+        <div className="buttons">
+          <button onClick={this.onSubmit} className="ok">
+            <div className="text">등록하기</div>
+          </button>
+          <button onClick={() => { window.history.back() }} className="cancel">
+            <div className="text">취소하기</div>
+          </button>
+        </div>
+      </div>
+
+    </Wrapper >);
   };
 }
 export default RequestToDesigner;
