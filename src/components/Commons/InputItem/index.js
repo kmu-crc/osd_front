@@ -13,3 +13,5 @@ export * from "./InputCalendar";
 export * from "./InputPriceNew";
 export * from "./InputFile";
 export * from "./AddPoint";
+export * from "./ProblemController";
+export * from "./CodingAddContent";

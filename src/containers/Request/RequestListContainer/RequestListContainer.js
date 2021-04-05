@@ -15,11 +15,12 @@ const mapStateToProps = (state) => ({
   userInfo: state.Authentication.status.userInfo,
   category1: state.CategoryAll.status.category1,
   category2: state.CategoryAll.status.category2,
+  category3: state.CategoryAll.status.category3,
 });
 const mapDispatchToProps = (dispatch) => ({
   CreateRequestRequest: (data, token) => dispatch(CreateRequestRequest(data, token)),
-  GetRequestListRequest: (type, page, cate1, cate2, sort, keyword) => dispatch(GetRequestListRequest(type, page, cate1, cate2, sort, keyword)),
-  GetRequestTotalCountRequest: (category1, category2) => dispatch(GetRequestTotalCountRequest(category1, category2))
+  GetRequestListRequest: (type, page, cate1, cate2, cate3, sort, keyword) => dispatch(GetRequestListRequest(type, page, cate1, cate2, cate3, sort, keyword)),
+  GetRequestTotalCountRequest: (category1, category2, category3) => dispatch(GetRequestTotalCountRequest(category1, category2, category3))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RequestListContainer);

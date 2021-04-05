@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 // REDUX //
 import { GetCategoryAllRequest } from "actions/Categorys";
 // MARKET //
-import ProductListPage, { ProductDetailPage,ProductPurchasePage } from "pages/ProductPage";
+import ProductListPage, { ProductDetailPage, ProductPurchasePage } from "pages/ProductPage";
 import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage";
 import MakerListPage, { MakerDetailPage } from "pages/MakerPage";
 import CreateProductPage from "pages/CreateProductPage";
@@ -46,6 +46,7 @@ import FooterPrivacy from "components/Commons/FooterPrivacy"
 import FooterPara from "components/Commons/FooterTerm"
 // TEMPLATE //
 import ClientTemplate from 'templates/ClientTemplate';
+import CodeViewPage from "pages/CodeViewPage";
 
 class App extends Component {
   componentDidMount() {
@@ -63,14 +64,14 @@ class App extends Component {
             <Route path="/footerPara" component={FooterPara} />
             {/* DESIGNER */}
 
-            <Route path="/designer/:sorting?/:cate1?/:cate2?" component={DesignerListPage} />
+            <Route path="/designer/:sorting?/:cate1?/:cate2?/:cate3?" component={DesignerListPage} />
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
             <Route path="/designerModify" component={ModifyDesignerPage} />
             <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/createDesigner/redirected" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/modifyDesigner/:id" component={RequiresAuth(ModifyDesignerPage)} />
             {/* MAKER */}
-            <Route path="/maker/:sorting?/:cate1?/:cate2?" component={MakerListPage} />
+            <Route path="/maker/:sorting?/:cate1?/:cate2?/:cate3?" component={MakerListPage} />
             <Route path="/makerDetail/:id/:type?" component={MakerDetailPage} />
             <Route path="/createMaker" component={RequiresAuth(CreateMakerPage)} />
             <Route path="/modifyMaker/:id" component={ModifyMakerPage} />
@@ -80,7 +81,7 @@ class App extends Component {
             {/* <Route path="/createProduct" component={RequiresAuth(CreateProductPage)} /> */}
             <Route path="/productModify/:id" component={RequiresAuth(RequiresPayUser(ModifyItemPage))} />
             <Route path="/productDetail/:id" component={ProductDetailPage} />
-            <Route path="/product/:sorting?/:cate1?/:cate2?" component={ProductListPage} />
+            <Route path="/product/:sorting?/:cate1?/:cate2?/:cate3?" component={ProductListPage} />
             {/*PURCHASE*/}
             <Route path="/productPurchase/:id/:payment" component={ProductPurchasePage} />
 
@@ -89,7 +90,7 @@ class App extends Component {
             <Route path="/requestDetail/:id" component={RequestDetailPage} />
             {/* <Route path="/requestDesigner/:sorting?/:cate1?/:cate2?" component={RequestListPage} />  */}
             {/* <Route path="/requestMaker/:sorting?/:cate1?/:cate2?" component={RequestListPage} /> */}
-            <Route path="/request/:type/:page?/:cate1?/:cate2?/:sort?/:keyword?" component={RequestListPage} />
+            <Route path="/request/:type/:cate1?/:cate2?/:cate3?/:sort?/:keyword?" component={RequestListPage} />
             <Route path="/requestToDesigner/:id" component={RequiresAuth(RequiresPayUser(requestDesignerPage))} />
             <Route path="/requestToMaker/:id" component={RequiresAuth(RequiresPayUser(requestMakerPage))} />
             <Route path="/ModifyrequestToDesigner/:id" component={RequiresAuth(RequiresPayUser(ModifyrequestDesignerPage))} />
@@ -124,6 +125,8 @@ class App extends Component {
             {/* NOT FOUND */}
             <Route component={() => <div style={{ width: "100%", fontSize: "36px" }}>페이지를 찾을 수 없습니다.</div>} />
 
+
+            <Route path="/codeview" component={RequiresAuth(CodeViewPage)} />
           </Switch>
         </ClientTemplate>
       </BrowserRouter>);
@@ -134,5 +137,5 @@ class App extends Component {
 const mapDispatchToProps = (dispatch) => ({
   GetCategoryAllRequest: () => dispatch(GetCategoryAllRequest())
 });
- 
+
 export default connect(null, mapDispatchToProps)(App);

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Loader } from "semantic-ui-react";
+import { Loader, Dimmer, } from "semantic-ui-react";
 import styled from "styled-components";
 
-const DimmerContainer = styled.div`
+const DimmerContainer = styled(Dimmer)`
   & .ui.loader {
     position: fixed;
     &.ui.dimmer::before {
@@ -13,12 +13,20 @@ const DimmerContainer = styled.div`
     }
   }
 `;
+const TextWrapper = styled.p`
+    color: #707070;
+    font-size: 24px;
+    font-weight: 500;
+    font-family: Noto Sans KR;
+`;
 
 class Loading extends Component {
-  render(){
-    return(
-      <DimmerContainer>
-        <Loader size="huge" active/>
+  render() {
+    return (
+      <DimmerContainer active>
+        <Loader size="huge" active>
+          <TextWrapper>{this.props.msg || "데이터를 가져오고 있습니다."}</TextWrapper>
+        </Loader>
       </DimmerContainer>
     );
   }

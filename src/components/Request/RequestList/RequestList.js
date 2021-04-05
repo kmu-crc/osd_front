@@ -241,11 +241,10 @@ const ListElement = styled.div`
     font-size:${market_style.font.size.mini2};
     }
 `;
-
+const target = `request`;
 class RequestList extends Component {
   constructor(props) {
     super(props);
-    this.onChangValue=this.onChangValue.bind(this);
     this.state = {
       rendering: true,
       path: "request",
@@ -253,42 +252,40 @@ class RequestList extends Component {
       title: "",
       comment: "",
     };
+    this.handleCate1 = this.handleCate1.bind(this);
+    this.handleCate2 = this.handleCate2.bind(this);
+    this.handleCate3 = this.handleCate3.bind(this);
+    this.resetCate = this.resetCate.bind(this);
+    this.sortChange = this.sortChange.bind(this);
+    this.typeChange = this.typeChange.bind(this);
+    this.createNoneRequest = this.createNoneRequest.bind(this);
+    // this.onChangeValue = this.onChangeValue.bind(this);
   }
-  changeState = async () => {
-    await this.setState({ rendering: false });
-    await this.setState({ rendering: true });
+  handleCate1 = (value) => {
+    const { type, cate2, cate3, sort, keyword } = this.props;
+    this.props.history.push(`/${target}/${type}/${value}/${cate2}/${cate3}/${sort}/${keyword}`);
   }
-  cate1Change = (value) => {
-    const path = `/${this.state.path}/${this.props.type}/0/${value}/null/${this.props.sort}/null`;
-    this.props.history.replace(path);
-    // type, page, cate1, cate2, sort, keyword
-    this.props.GetRequestTotalCountRequest(value, null);
-    this.changeState();
+  handleCate2 = (parent, value) => {
+    const { type, cate3, sort, keyword } = this.props;
+    this.props.history.push(`/${target}/${type}/${parent}/${value}/${cate3}/${sort}/${keyword}`);
   }
-  cate2Change = (cate1, value) => {
-    if (cate1 && this.props.cate1 !== cate1) {
-      const path = `/${this.state.path}/${this.props.type}/0/${cate1}/${value}/${this.props.sort}/null`;
-      this.props.history.replace(path);
-    } else {
-      const path = `/${this.state.path}/${this.props.type}/0/${this.props.cate1}/${value}/${this.props.sort}/null`;
-      this.props.history.replace(path);
-    }
-    this.props.GetRequestTotalCountRequest(this.props.cate1, value);
-    this.changeState();
-  }
-  sortChange = (e, { value }) => {
-    const path = `/${this.state.path}/${this.props.type}/0/${this.props.cate1}/${this.props.cate2}/${value}/null`;
-    this.props.history.replace(path);
-    this.changeState();
+  handleCate3 = (parent, value) => {
+    const { type, cate1, sort, keyword } = this.props;
+    this.props.history.push(`/${target}/${type}/${cate1}/${parent}/${value}/${sort}/${keyword}`);
   }
   resetCate = () => {
-    this.props.history.replace(`/${this.state.path}/${this.props.type}`);
-    this.changeState();
+    const { type, sort, keyword } = this.props;
+    this.props.history.push(`/${target}/${type}/null/null/null/${sort}/${keyword}`);
   }
-  changeType = (type) => {
-    window.location.href = `/request/${type}`;
-  };
-  createNoneRequest = (title,content) => {
+  sortChange = (_, { value }) => {
+    const { type, cate1, cate2, cate3, keyword } = this.props;
+    this.props.history.push(`/${target}/${type}/${cate1}/${cate2}/${cate3}/${value}/${keyword}`);
+  }
+  typeChange = (type) => {
+    const { sort, keyword } = this.props;
+    this.props.history.push(`/${target}/${type}/null/null/null/${sort}/${keyword}`);
+  }
+  createNoneRequest = (title, content) => {
     const data = {
       type: this.props.type,
       status: "normal",
@@ -311,31 +308,23 @@ class RequestList extends Component {
       })
       .catch(err => console.log("에러발생" + err));
   }
-  async onChangValue(data) {
-    console.log(data);
-    // let copyContent = data;
-    // const copyData = { ...data };
-    // for (let item of copyContent) {
-    //     if (item.order === copyData.order) {
-    //         item.content = data.content
-    //     }
-    // }
-    await this.setState({ content: data.content });
-    // this.returnState();
-};
+  // async onChangeValue(data) { //   await this.setState({ content: data.content }); // };
 
   render() {
-    const { type, sort, category1, category2, cate1, cate2 } = this.props;
-    // console.log(category1, category2, cate1, cate2, sort);
+    const { category1, category2, category3 } = this.props;
+    const { cate1, cate2, cate3 } = this.props;
+    const { sort, type } = this.props;
+
     const { write } = this.state;
+
     return (
       <React.Fragment>
         <Content top={15}>
           <TabContainer>
-            <CategoryItem className={type === "designer" ? "element active" : "element"} onClick={() => this.changeType("designer")}>디자이너</CategoryItem>
-            <CategoryItem className={type === "maker" ? "element active" : "element"} onClick={() => this.changeType("maker")}>메이커</CategoryItem>
-            <CategoryItem className={type === "item" ? "element active" : "element"} onClick={() => this.changeType("item")}>아이템</CategoryItem>
-            <CategoryItem className={type === "normal" ? "element active" : "element"} onClick={() => this.changeType("normal")}>일반</CategoryItem>
+            <CategoryItem className={type === "designer" ? "element active" : "element"} onClick={() => this.typeChange("designer")}>디자이너</CategoryItem>
+            <CategoryItem className={type === "maker" ? "element active" : "element"} onClick={() => this.typeChange("maker")}>메이커</CategoryItem>
+            <CategoryItem className={type === "item" ? "element active" : "element"} onClick={() => this.typeChange("item")}>아이템</CategoryItem>
+            <CategoryItem className={type === "normal" ? "element active" : "element"} onClick={() => this.typeChange("normal")}>일반</CategoryItem>
           </TabContainer>
         </Content>
 
@@ -343,42 +332,33 @@ class RequestList extends Component {
         <Content>
           <Container>
             <div className="category">
-              <Category
+              <Category // which="게시판" 
                 firstFontSize = {market_style.font.size.small1}
                 secondFontSize = {market_style.font.size.mini2}
-                handleCate2={this.cate2Change}
-                handleCate1={this.cate1Change}
+                handleCate1={this.handleCate1}
+                handleCate2={this.handleCate2}
+                handleCate3={this.handleCate3}
                 resetCate={this.resetCate}
                 cate1={cate1}
                 cate2={cate2}
+                cate3={cate3}
                 category1={category1}
                 category2={category2}
-                which="아이템" /></div>
-            {/* <div className="sort">
-              <Sorting handleClick={this.sortChange} placeholder={sort} />
-            </div> */}
-
+                category3={category3}
+              />
+            </div>
+            {/* <div className="sort"> <Sorting handleClick={this.sortChange} placeholder={sort} /> </div> */}
             {/* <div className="request" style={{ marginLeft: "auto" }}> */}
-            {/* {type !== "normal" && type !== "item" ?
-                type === "designer" ?
-                  <RequestButton>
-                    <Link to={`/requestToDesigner/null`}>디자인 의뢰</Link>
-                  </RequestButton>
-                  :
-                  type === "maker" ?
-                    <RequestButton>
-                      <Link to={`/requestToMaker/null`}>제작 의뢰</Link>
-                    </RequestButton> : null
-                : null} */}
+            {/* {type !== "normal" && type !== "item" ? type === "designer" ? <RequestButton> <Link to={`/requestToDesigner/null`}>디자인 의뢰</Link> </RequestButton> : type === "maker" ? <RequestButton> <Link to={`/requestToMaker/null`}>제작 의뢰</Link> </RequestButton> : null : null} */}
             {/* </div> */}
           </Container>
         </Content>
 
         <TitleBox top={0}>
-          <div className="sort"/>
+          <div className="sort" />
           <div className="_title">게시판</div>
           <div className="sort">
-                    <Sorting handleClick={this.sortChange} placeholder={sort} />
+            <Sorting handleClick={this.sortChange} placeholder={sort} />
           </div>
         </TitleBox>
         <Content top={17}>
@@ -391,62 +371,27 @@ class RequestList extends Component {
             {/* {/* like    <div style={{ marginRight: "15px" }}>좋아요</div> */}
           </ListElement>
           <Wrapper className="listWrap">
-            {this.state.rendering &&
-              <ScrollRequestListContainer type={type} sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}
+            <ScrollRequestListContainer type={type} sort={sort} cate1={cate1} cate2={cate2} cate3={cate3} history={this.props.history} />
           </Wrapper>
         </Content>
 
 
         <Content top={20} bottom={75}>
           {write ?
-                      <ArticleModal
-                      write={this.state.write}
-                      handlerModal = {(write)=>{this.setState({write:write})}}
-                      createNoneRequest={(title,content)=>this.createNoneRequest(title,content)}
-                    />
-            // <WriteNormalArticleModal open={write} onClose={() => this.setState({ write: false, title: "", comment: "" })}>
-            //   <div className="close-box" onClick={() => this.setState({ write: false, title: "", comment: "" })}>
-            //     <Cross style={{cursor:"pointer"}} angle={45} color={"#000000"} weight={3} width={15} height={15} />
-            //   </div>
-            //   <div className="form align_item_center">
-            //     <div className="title_label">제목</div>
-            //      <TitleForm
-            //       value={this.state.title || ""}
-            //       onChange={event => this.setState({ [event.target.name]: event.target.value })}
-            //       name="title"
-            //     />
-            //     </div>
-            //     <div className="form form_height">
-            //     <div className="title_label ">내용</div>
-            //     <TextControllerClassic
-            //       item={{content:this.state.content}}
-            //       name={"comment"}
-            //       getValue={this.onChangValue}
-            //       width="750"
-            //       editheight="240"
-                  // initClick={this.state.click}
-                  // deleteItem={this.deleteItem}
-                // />
-                /* { <CommentForm
-                  value={this.state.comment || ""}
-                  onChange={event => this.setState({ [event.target.name]: event.target.value })}
-                  name="comment"
-                /> */
-            //     }</div>
-            //   <div className="form redButtonBox">
-            //       <div className="redButton" onClick={this.createNoneRequest} >
-            //         <div className="btnText" >작성하기</div>
-            //       </div>
-            //   </div>
-            // </WriteNormalArticleModal>
+            <ArticleModal
+              write={this.state.write}
+              handlerModal={(write) => { this.setState({ write: write }) }}
+              createNoneRequest={(title, content) => this.createNoneRequest(title, content)}
+            /> /*<WriteNormalArticleModal open={write} onClose={() => this.setState({ write: false, title: "", comment: "" })}> <div className="close-box" onClick={() => this.setState({ write: false, title: "", comment: "" })}> <Cross style={{cursor:"pointer"}} angle={45} color={"#000000"} weight={3} width={15} height={15} /> </div> <div className="form align_item_center"> <div className="title_label">제목</div> <TitleForm value={this.state.title || ""} onChange={event => this.setState({ [event.target.name]: event.target.value })} name="title" /> </div> <div className="form form_height"> <div className="title_label ">내용</div> <TextControllerClassic item={{content:this.state.content}} name={"comment"} getValue={this.onChangValue} width="750" editheight="240" initClick={this.state.click} deleteItem={this.deleteItem} /> <CommentForm value={this.state.comment || ""} onChange={event => this.setState({ [event.target.name]: event.target.value })} name="comment" /> </div> <div className="form redButtonBox"> <div className="redButton" onClick={this.createNoneRequest} > <div className="btnText" >작성하기</div> </div> </div> </WriteNormalArticleModal>*/
             :
-            this.props.userInfo==null?null:
-            <CreateNormalArticleButton onClick={() => {
-              this.setState({ write: true,content:"" })}}>
-              <div className="button">
-                <div className="font">게시글 작성</div>
-              </div>
-            </CreateNormalArticleButton>
+            this.props.userInfo == null ? null :
+              <CreateNormalArticleButton onClick={() => {
+                this.setState({ write: true, content: "" })
+              }}>
+                <div className="button">
+                  <div className="font">게시글 작성</div>
+                </div>
+              </CreateNormalArticleButton>
           }
         </Content>
 

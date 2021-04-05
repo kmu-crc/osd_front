@@ -7,7 +7,8 @@ const initialState = {
   },
   status: {
     category1: [],
-    category2: []
+    category2: [],
+    category3: [],
   }
 };
 
@@ -29,7 +30,8 @@ export function CategoryAll(state, action) {
         },
         status: {
           category1: { $set: action.category1 },
-          category2: { $set: action.category2 }
+          category2: { $set: action.category2 },
+          category3: { $set: action.category3 }
         }
       });
     case types.GET_CATEGORY_ALL_FAILURE:

@@ -17,14 +17,14 @@ const Container = styled.div`
     height:max-content;
   }
 `;
-const CategoryItem =styled.div`
+const CategoryItem = styled.div`
   cursor:pointer;
   font-size:${props=>props.firstFontSize==null?market_style.font.size.normal1:props.firstFontSize};
   &:hover{
     opacity:0.7;
   }
 `
-const CategoryItem2 =styled.div`
+const CategoryItem2 = styled.div`
   margin-top:3px;
   cursor:pointer;
   font-size:${props=>props.secondFontSize==null?market_style.font.size.small1:props.secondFontSize};
@@ -68,16 +68,27 @@ class Category extends Component {
   }
   onChangeCategory2 = async (e, cate1, value) => {
     e.stopPropagation();
-    console.log("onChangeCategory",cate1,value);
+    // console.log("onChangeCategory", cate1, value);
     await this.props.handleCate2(cate1, value);
+  };
+  onChangeCategory3 = async (e, cate2, value) => {
+    e.stopPropagation();
+    // console.log("onChangeCategory", cate2, value);
+    await this.props.handleCate3(cate2, value);
   };
   resetCate = () => {
     this.props.resetCate();
   }
+  componentDidUpdate(prevProps) {
+    return (this.props.cate1 !== prevProps.cate1 || this.props.cate2 !== prevProps.cate2 || this.props.cate3 !== prevProps.cate3);
+  }
 
   render() {
-    const { category1, cate1, cate2 } = this.props;
+    const { category1, cate1, cate2, cate3 } = this.props;
     const category2 = cate1 && this.props.category2 && this.props.category2.filter(item => item.parent === parseInt(cate1, 10));
+    const category3 = cate1 && cate2 && this.props.category3 && this.props.category3.filter(item => item.parent === parseInt(cate2, 10));
+    console.log(cate1, cate2, this.props.category3, cate1 && cate2 && this.props.category3.filter(item => item.parent === parseInt(cate2, 10)));
+
     return (
       <Container>
         <div className="over">
@@ -90,18 +101,26 @@ class Category extends Component {
                 key={i} className={`element ${cate.value === parseInt(cate1, 10) ? "active" : ""}`}>
                 {cate.text}</CategoryItem>)}
           </CategoryMenu></div>
-          {cate1&&
+        {cate1 &&
           <div className="under">
-          <CategoryMenu className="fly">
-          {cate1 && category2 ? (
-            category2.map((cate, i) => cate.value !== 0 &&
-              <CategoryItem2
-                secondFontSize = {this.props.secondFontSize}
-                onClick={(e) => this.onChangeCategory2(e, cate.parent, cate.value)}
-                key={i} className={`element ${cate.value === parseInt(cate2, 10) ? "active" : ""}`}>{cate.text}</CategoryItem2>)) : null}
-          </CategoryMenu>
-          </div>
-          }
+            <CategoryMenu className="fly">
+              {cate1 && category2 ? (
+                category2.map((cate, i) => cate.value !== 0 &&
+                  <CategoryItem2
+                    onClick={(e) => this.onChangeCategory2(e, cate.parent, cate.value)}
+                    key={i} className={`element ${cate.value === parseInt(cate2, 10) ? "active" : ""}`}>{cate.text}</CategoryItem2>)) : null}
+            </CategoryMenu>
+          </div>}
+        {cate1 && cate2 &&
+          <div className="under">
+            <CategoryMenu className="fly">
+              {cate1 && cate2 && category3 ? (
+                category3.map((cate, i) => cate.value !== 0 &&
+                  <CategoryItem2
+                    onClick={(e) => this.onChangeCategory3(e, cate.parent, cate.value)}
+                    key={i} className={`element ${cate.value === parseInt(cate3, 10) ? "active" : ""}`}>{cate.text}</CategoryItem2>)) : null}
+            </CategoryMenu>
+          </div>}
       </Container>
       // <CateColumn className="category"
       //   widescreen={this.props.widescreen ? this.props.widescreen : null}

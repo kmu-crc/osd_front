@@ -65,7 +65,7 @@ const SliderBox = styled.div`
 class ScrollListHorizontal extends Component {
   constructor(props) {
     super(props);
-    this.state = { L_handler:false,R_handler:true,hasMore: true, loading: false, scrollOffset: 500 };
+    this.state = { L_handler: false, R_handler: true, hasMore: true, loading: false, scrollOffset: 500 };
     this.onClickArrow = this.onClickArrow.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
   };
@@ -73,19 +73,19 @@ class ScrollListHorizontal extends Component {
     window.removeEventListener("scroll", this.handleScroll, true);
   }
   componentDidMount() {
-      window.addEventListener("scroll", this.handleScroll, true);
+    window.addEventListener("scroll", this.handleScroll, true);
   }
   async handleScroll(event) {
 
-    if(event.target.id=="wrapper_top"){
-      console.log(document.getElementById("wrapper_top").scrollLeft,document.getElementById("wrapper_top").scrollWidth-1366);
-      document.getElementById("wrapper_top").scrollLeft>5?await this.setState({L_handler:true}):await this.setState({L_handler:false});
-      document.getElementById("wrapper_top").scrollLeft<document.getElementById("wrapper_top").scrollWidth-1366
-      ?await this.setState({R_handler:true}):await this.setState({R_handler:false});
+    if (event.target.id == "wrapper_top") {
+      console.log(document.getElementById("wrapper_top").scrollLeft, document.getElementById("wrapper_top").scrollWidth - 1366);
+      document.getElementById("wrapper_top").scrollLeft > 5 ? await this.setState({ L_handler: true }) : await this.setState({ L_handler: false });
+      document.getElementById("wrapper_top").scrollLeft < document.getElementById("wrapper_top").scrollWidth - 1366
+        ? await this.setState({ R_handler: true }) : await this.setState({ R_handler: false });
     }
   }
-  onClickArrow=async (far)=>{
-    document.getElementById("wrapper_top").scrollLeft+=far;
+  onClickArrow = async (far) => {
+    document.getElementById("wrapper_top").scrollLeft += far;
   }
   render() {
     const { ListComponent } = this.props;
@@ -93,69 +93,69 @@ class ScrollListHorizontal extends Component {
     return (
       <SliderBox>
         {
-          this.state.L_handler?
-          <div className="left_gradient">
-            <div className="arrow" onClick={()=>this.onClickArrow(-1000)}></div>
-          </div>
-          :null
+          this.state.L_handler ?
+            <div className="left_gradient">
+              <div className="arrow" onClick={() => this.onClickArrow(-1000)}></div>
+            </div>
+            : null
         }
         {
-          this.state.R_handler?
-          <div className="right_gradient">
-            <div className="arrow" onClick={()=>this.onClickArrow(1000)}></div>
-          </div>
-          :null
+          this.state.R_handler ?
+            <div className="right_gradient">
+              <div className="arrow" onClick={() => this.onClickArrow(1000)}></div>
+            </div>
+            : null
         }
 
 
-        
+
 
         <div id="wrapper_top" className="wrapper_top">
-        {
-          List.map((item,index)=>{
-            return(
-            <div className="item">
-              <ListComponent data={item} />
-            </div>
-            )
-          })
-        }
+          {
+            List.map((item, index) => {
+              return (
+                <div className="item" key={index}>
+                  <ListComponent data={item} />
+                </div>
+              )
+            })
+          }
         </div>
       </SliderBox>
-  //     <SlideWrap id="content">
-  //       <Carousel
-  //       autoCycle={false}
-  //       breakpoints={[
-  //     {
-  //       breakpoint: 500,
-  //       settings: {
-  //         slidesToShow: 1,
-  //         slidesToScroll: 1,
-  //       },
-  //     },
-  //     {
-  //       breakpoint: 768,
-  //       settings: {
-  //         slidesToShow: 1,
-  //         slidesToScroll: 1,
-  //       },
-  //     },
-  //   ]}
-  //   showSides={true}
-  //   sidesOpacity={.5}
-  //   sideSize={-0.5}
-  //   slidesToScroll={4}
-  //   slidesToShow={6}
-  //   scrollOnDevice={true}
-  //   cycleInterval={6000}
-  // >
-  //       {List.length ? List.map((item, index) =>
-  //       <Slide key={index}>
-  //           <ListComponent data={item} />
-  //       </Slide>) : (
-  //           <div style={{ marginLeft: "auto", marginRight: "auto" }}>노 데이타!</div>)}
-  //           </Carousel>
-  //     </SlideWrap>
+      //     <SlideWrap id="content">
+      //       <Carousel
+      //       autoCycle={false}
+      //       breakpoints={[
+      //     {
+      //       breakpoint: 500,
+      //       settings: {
+      //         slidesToShow: 1,
+      //         slidesToScroll: 1,
+      //       },
+      //     },
+      //     {
+      //       breakpoint: 768,
+      //       settings: {
+      //         slidesToShow: 1,
+      //         slidesToScroll: 1,
+      //       },
+      //     },
+      //   ]}
+      //   showSides={true}
+      //   sidesOpacity={.5}
+      //   sideSize={-0.5}
+      //   slidesToScroll={4}
+      //   slidesToShow={6}
+      //   scrollOnDevice={true}
+      //   cycleInterval={6000}
+      // >
+      //       {List.length ? List.map((item, index) =>
+      //       <Slide key={index}>
+      //           <ListComponent data={item} />
+      //       </Slide>) : (
+      //           <div style={{ marginLeft: "auto", marginRight: "auto" }}>노 데이타!</div>)}
+      //           </Carousel>
+      //     </SlideWrap>
     );
   }
 }

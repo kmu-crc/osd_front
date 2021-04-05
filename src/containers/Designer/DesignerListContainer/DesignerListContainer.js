@@ -16,6 +16,7 @@ const mapStateToProps = (state) => {
     userInfo: state.Authentication.status.userInfo,
     category1: state.CategoryAll.status.category1,
     category2: state.CategoryAll.status.category2,
+    category3: state.CategoryAll.status.category3,
     Count: state.DesignerList.status.Count
   };
 };

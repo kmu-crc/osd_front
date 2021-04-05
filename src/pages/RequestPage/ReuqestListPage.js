@@ -9,6 +9,7 @@ class RequestListPage extends Component {
         sort={this.props.match.params.sort ? this.props.match.params.sort : "update"}
         cate1={this.props.match.params.cate1 ? this.props.match.params.cate1 : null}
         cate2={this.props.match.params.cate2 ? this.props.match.params.cate2 : null}
+        cate3={this.props.match.params.cate3 ? this.props.match.params.cate3 : null}
         keyword={this.props.match.params.keyword ? this.props.match.params.keyword : null}
         history={this.props.history}
       />
