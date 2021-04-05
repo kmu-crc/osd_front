@@ -521,6 +521,44 @@ const PeerBox = styled.div`
     margin:5px;
   }
 `
+// debug
+const ItemContents = styled.div`
+  // *{ border: 1px solid blue; }
+  width: 1306px;
+  height: 477px;
+  background: #FFFFFF;
+  box-shadow: 3px 3px 5px #0000001A;
+  border: 0.25px solid #eaeaea;
+  border-radius: 20px;
+  opacity: 1;
+  padding: 20px 25px;
+
+  .header {
+    padding-bottom: 10px;
+    border-bottom: 2px solid #EFEFEF; 
+    .title {
+      margin: auto;
+      // margin-top: 10px;
+      width: max-content;
+      line-height: 27px;
+      font-size: 18px;
+      color: #000000;
+      font-family: Noto Sans KR;
+      font-weight: Medium;
+      letter-spacing: 0px;
+    }
+  }
+  .editor-wrapper {
+    :hover {
+      opacity: 0.95;
+    }
+    width: 100%;
+    height: 405px;
+    padding-top: 15px;
+    word-wrap: break-word;
+    overflow: hidden;
+  }
+`;
 
 class ItemDetail extends Component {
   constructor(props) {
@@ -741,30 +779,24 @@ class ItemDetail extends Component {
 
           {/* item-contents */}
           <div className="row">
-            <Content
-              id="contents_rgn">
-              <div className="title margin_bottom">아이템 상세내용</div>
-              <div className="hrline margin_bottom"/>
-              {item && item.upload_type === "blog"
-                ? <div className="detail_board" id="detail_board">
-                  <CardSourceDetailContainer
-                    bought={item.bought}
-                    isCancel
-                    cardId={item.cardId}
-                  />
-                </div>
-                : null}
-              {item && item.upload_type === "project"
-                ?
-                <div className="detail_board" id="detail_board">
-                  <ItemStepContainer
-                    item={item}
-                    id={item["item-id"]}
-                    bought={item.bought}
-                  />
-                </div>
-                : null}
-            </Content>
+              <ItemContents>
+              <div className="header">
+                <div className="title">아이템 상세내용</div>
+              </div>
+
+              <div className="editor-wrapper ">
+                {item && item.upload_type === "blog"
+                  ? <div style={{ overflow: "auto", height: "100%", }}>
+                    <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} />
+                  </div>
+                  : null}
+
+                {item && item.upload_type === "project"
+                  ? <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} />
+                  : null}
+              </div>
+
+            </ItemContents>
           </div>
 
           {/* review and board */}
