@@ -735,7 +735,7 @@ class CreateProductForm extends Component {
       {/* 공통/기본입력사항 */}
       <div className="contentsBox centering">
         <ThumbnailBox>
-          <div className="label">썸네일 이미지 등록<Mandatory /></div>
+          <div className="label">썸네일 이미지<Mandatory /></div>
           <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/*" />
           <label htmlFor="file">
             <Thumbnail img={this.state.thumbnail}>
@@ -745,32 +745,28 @@ class CreateProductForm extends Component {
         </ThumbnailBox>
 
         <FormBox height={302} marginBottom={20} boxShadow={true}>
-          <div className="FormBoxScroll">
+            <div className="FormBoxScroll">
             <div className="wrapper margin_bottom flex">
               <div className="label">제목<Mandatory /></div>
               <InputText placeholder="제목을 입력하세요" width={330} name="title" value={this.state.title || ""} onChange={this.onChangeValue} />
             </div>
-
-            <div className={"wrapper flex " + `${parseInt(this.state.category_level2, 10) === 42 ? "remove-margin" : ""}`}>
+            <div className={"margin_bottom flex " + `${parseInt(this.state.category_level2, 10) === 42 ? "remove-margin" : ""}`}>
               <div className="label">카테고리<Mandatory /></div>
               <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
               <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
-            </div>
 
-            {parseInt(this.state.category_level2, 10) === 42 ? <React.Fragment>
-              <div className="wrapper flex ">
-                <div className="label"></div>
+
+            {parseInt(this.state.category_level2, 10) === 42 ? 
+            <React.Fragment>
                 <DropBox id="category_level3" value={this.state.category_level3} selection options={category3} placeholder="언어선택" onChange={this.onClickCategorylevel3} />
-                <div style={{ marginTop: "15px" }}>
+                  <div style={{disply:"flex",alignItems:"center"}}>
                   <CheckBox2 onChange={() => this.setState({ is_problem: !this.state.is_problem, })} checked={this.state.is_problem} />
-                </div>
-                <div style={{ marginTop: "15px" }}>
-                  <div className="textLabel">문제등록기능을 사용합니다.</div>
-                </div>
-              </div>
+                  <div style={{marginLeft:"30px"}}>문제 등록기능을 사용합니다.</div>
+                  </div>
             </React.Fragment>
               : null}
-            <div className="wrapper flex">
+            </div>
+            <div className="wrapper margin_bottom flex">
               <div className="label">태그</div>
               <div className="maxWidth">
                 <InputTag placeholder="태그를 입력하고 [enter]키를 누르세요" width={330} getValue={this.onHandleReturnedTags} />
@@ -787,7 +783,7 @@ class CreateProductForm extends Component {
       </div>
 
       {/* 아이템 상세정보 입력 폼 */}
-      <div className="contentsBox centering">
+      <div className="contentsBox">
         {itemType > -1 ?
           <ItemTypeForm
             returnState={obj => this.setState({ additional: obj.additional, content: obj.content, steps: obj.steps, type: obj.type })}
@@ -906,7 +902,7 @@ class ItemTypeForm extends Component {
 
       <MainBox>
         <div className="contentsBox centering directionColumn">
-          <FormBox boxShadow={true} width={1570}>
+          <FormBox boxShadow={true} >
             <div className="contentWrap">
               {itemType === 0 ? <ItemDesign return={this.onHandleAdditional} /> : null}
               {itemType === 1 ? <ItemProject return={this.onHandleAdditional} /> : null}
@@ -919,7 +915,7 @@ class ItemTypeForm extends Component {
             </div>
           </FormBox>
 
-          <FormBox boxShadow={true} width={1570} marginTop={25}>
+          <FormBox boxShadow={true} marginTop={25}>
             <ResetButtonWrapper
               onClick={async () => {
                 await this.setState({
@@ -998,7 +994,7 @@ class ItemTypeForm extends Component {
 
           </FormBox>
         </div>
-        </React.Fragment>
+        </MainBox>
         );
   }
 };
@@ -1051,7 +1047,7 @@ const NoInviteMemberBox = styled.div`
   font-family: Noto Sans KR;
   color: #707070;
   .textLabel {
-    margin-left: 35px;
+    margin-left: 55px;
     vertical-align: top;
   }
 `;

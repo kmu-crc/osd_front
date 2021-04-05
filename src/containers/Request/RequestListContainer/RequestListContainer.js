@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CreateRequestRequest, GetRequestListRequest, GetRequestTotalCountRequest } from "actions/Request";
 import RequestList from "components/Request/RequestList";
+import styled from "styled-components";
 
+const Wrapper = styled.div`
+  padding:0px 30px;
+`
 
 class RequestListContainer extends Component {
   render() {
-    return (<RequestList {...this.props} />);
+    return (
+    <Wrapper>
+    <RequestList {...this.props} />
+    </Wrapper>
+    );
   }
 };
 
