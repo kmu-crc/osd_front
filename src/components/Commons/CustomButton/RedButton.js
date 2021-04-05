@@ -8,21 +8,28 @@ import { options } from "components/Commons/InputItem/AlertConfirm"
 import market_style from "market_style";
 
 const StyleButton = styled.div`
-  width:${props=>props.width==null?"290px":props.width+"px"};
-  height:${props=>props.height==null?"70px":props.height+"px"};
+  width:${props => props.width == null ? "290px" : props.width + "px"};
+  height:${props => props.height == null ? "70px" : props.height + "px"};
   display:flex;
   justify-content:center;
   align-items:center;
   background-color:${props => props.disabled == false || props.disabled == null ? "red" : "#A0A0A0"};
   border:${props => props.disabled == false || props.disabled == null ? "1px solid red" : "1px solid gray"};
   cursor:pointer;
-  margin-right:${props=>props.marginRight == null ? "20px":props.marginRight+"px"};
+  margin-right:${props => props.marginRight == null ? "20px" : props.marginRight + "px"};
   .text{
-    color:${props => props.disabled == false || props.disabled == null ? "white" : "white"};
-    font-family:Noto Sans KR;
-    font-weight:400;
-    font-size: ${props=>props.fontSize==null?market_style.font.size.giant2:props.fontSize+"px"};
-}
+    margin: auto;
+    width: max-content;
+    text-align: center;
+    font: normal normal bold 15px/22px Noto Sans KR;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1
+    // color:${props => props.disabled == false || props.disabled == null ? "white" : "white"};
+    // font-family:Noto Sans KR;
+    // font-weight:400;
+    // font-size: ${props => props.fontSize == null ? market_style.font.size.giant2 : props.fontSize + "px"};
+  }
   &:hover{
       opacity:90%;
   }

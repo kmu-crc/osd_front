@@ -40,11 +40,136 @@ const CustomIcon = styled.div`
   margin-left:${props => props.marginLeft == null ? "13" : props.marginLeft}px;
   display:${props => props.isNon == true ? "none" : "block"}
 `
-const Wrapper = styled(ContentBox)`
-  width: 100%;
-  margin-top: 60px;
-  margin-bottom: 100px;
-  z-index: 3;
+const Wrapper = styled.div`
+  padding-top: 15px;
+  // *{border: 1px solid blue;}
+  
+  .header {
+    width: 100%;
+
+    .title {
+      width: max-content;
+      margin: auto;
+
+      .text {
+        text-align: center;
+        font: normal normal bold 20px/29px Noto Sans KR;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+      }
+    }
+  }
+
+  .form {
+    margin: auto;
+    margin-top: 15px;
+    width: 1306px;
+    // min-height: 1221px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 3px 3px 5px #0000001A;
+    border: 1px solid #EAEAEA;
+    border-radius: 20px;
+    padding: 50px 150px;
+    padding-bottom: 50px;
+
+    .row {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 30px;
+      :last-child {
+        margin-bottom: 0px;
+      }
+      .label { 
+        width: 186px;
+        height: 22px;
+        text-align: left;
+        font: normal normal bold 15px/22px Noto Sans KR;
+        letter-spacing: 0px;
+        color: #707070;
+      }
+      .content { 
+        width: 100%;
+        min-width: 820px;
+        min-height: 22px;
+
+        text-align: left;
+        font: normal normal normal 15px/22px Noto Sans KR;
+        letter-spacing: 0px;
+        color: #000000;
+
+        .title-input {
+          width: 100%;
+          min-width: 820px;
+          height: 31px;
+          background: #E9E9E9 0% 0% no-repeat padding-box;
+          border-radius: 10px;
+          border: none;
+
+          text-align: left;
+          font: normal normal 300 13px/19px Noto Sans KR;
+          letter-spacing: 0px;
+          color: #000; //#707070;
+          padding: 3px 0px 0px 11px;
+        }
+      }
+    }
+  }
+
+  .bottom {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    width: 100%;
+
+    .buttons {
+      margin: auto;
+      width: max-content;
+      display: flex;
+    }
+    button {
+      width: 150px;
+      height: 30px;
+      border: none;
+
+      .text {
+        margin: auto;
+        width: max-content;
+        text-align: center;
+        font: normal normal bold 15px/22px Noto Sans KR;
+        letter-spacing: 0px;
+        color: #FFFFFF;
+        opacity: 1;
+      }
+      &.ok {
+        background: #FF0000 0% 0% no-repeat padding-box;
+        &.disabled {
+          background: #707070 0% 0% no-repeat padding-box;
+        }
+      }
+      &.cancel {
+        background: #707070 0% 0% no-repeat padding-box;
+      }
+      opacity: 1;
+      :first-child {
+        margin-right: 20px;
+      }
+    }
+  }
+
+  .flexing-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .hr {
+    margin-top: 30px;
+    margin-bottom: 29px;
+    width: 1006px;
+    height: 2px;
+    border: 1px solid #EFEFEF;
+  }
 `;
 const MainBox = styled.div`
   width:100%;
@@ -146,12 +271,29 @@ const InputText = styled.input.attrs({ type: "text" })`
 
 `;
 const DropBox = styled(Dropdown)`
-    min-width:254px !important;
-    min-height:52px !important;
-    background-color:#E9E9E9 !important;
-    margin-right:10px;
+  width: 180px !important;
+  height: 31px !important;
+  border-radius: 10px !important;
+  background-color:#E9E9E9 !important;
+  border: none;
 
-    border-radius:26px !important;
+  .text {
+    margin: 4px 0px 0px 22px;
+    font: normal normal normal 15px/22px Noto Sans KR;
+    letter-spacing: 0px !important;
+    color: #000000 !important;
+  }
+
+  .icon {
+    padding: 5px !important;
+  }
+
+  &.ui, &.selection, &.dropdown {
+    min-height: 31px !important;
+    height: 31px !important;
+    padding: 0px !important;
+    // background-color: blue !important;
+  }
 `;
 const HRLine = styled.div`
     width:93%;
@@ -309,132 +451,118 @@ class RequestToMaker extends Component {
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
     const Mandatory = () => <span style={{ color: "red" }} title="필수사항입니다.">*</span>
     return (
-      <React.Fragment>
-        <Wrapper>
-          <MainBox>
-            <div className="title">제작 의뢰</div>
-            <div className="contentsBox">
-              <FormBox>
+      <Wrapper>
+        {/* header */}
+        <div className="header">
+          <div className="title">
+            <div className="text">제작 의뢰</div>
+          </div>
+        </div>
 
-                <div className="wrapper flex centering" >
-                  <div className="label">의뢰자</div>
-                  <div>{this.props.userInfo.nickName || null}</div>
-                </div>
+        {/* form */}
+        <div className="form">
+          <div className="row">
+            <div className="label">의뢰자</div>
+            <div className="content">{this.props.userInfo.nickName}</div>
+          </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">제목<Mandatory /></div>
-                  <InputText onChange={this.onChangeTitle} value={this.state.title} width={483} />
-                </div>
+          <div className="row">
+            <div className="label">제목<Mandatory /></div>
+            <div className="content"><input onChange={this.onChangeTitle} className="title-input" placeholder="제목을 입력하세요." /></div>
+          </div>
 
-                <div className="wrapper flex centering">
-                  <div className="label">카테고리</div>
-                  <DropBox id="category_level1"
-                    value={this.state.category_level1}
-                    selection
-                    options={category1}
-                    placeholder="대분류"
-                    onChange={this.onClickCategorylevel1} />
-                  <CustomIcon width="25" height="25" imgURL={category_icon} marginRight="21" marginLeft="21" />
-                  <DropBox id="category_level2"
-                    value={this.state.category_level2}
-                    selection
-                    options={category2}
-                    placeholder="소분류"
-                    onChange={this.onClickCategorylevel2} />
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">태그</div>
-                  <div>
-                    <InputTagNew getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
-                  </div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">의뢰 내용<Mandatory /></div>
-                  {/* <InputTextarea onChange={this.onChangeContent} value={this.state.content} width={551} height={344} /> */}
-                  <TextControllerClassic
-                    item={{ content: this.state.content, height: 500 }}
-                    name={"comment"}
-                    getValue={this.onChangeContent}
-                    width="820"
-                    editheight="770"
-                  />
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">파일 등록</div>
-                  <InputFile width={533} getValue={this.onFileChange} />
-                  {/* <div className="faded-text" >
-                    <input
-                      type="file"
-                      name="source"
-                      ref={ref => (this.input = ref)}
-                      onChange={this.onFileChange}
-                      accept=".pdf" />
-                  </div>
-                  <div className="information">
-                    * pdf파일만 등록이 가능합니다.
-                      </div> */}
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label ">희망 비용</div>
-                  <InputPriceNew name="price" getValue={this.getPriceValue} />
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label ">기간</div>
-                  <InputCalendar startDate={this.state.startDate} endDate={this.state.endDate} name="calendar"
-                    getStartDateValue={this.getStartDateValue} getEndDateValue={this.getEndDateValue} getDayDateValue={this.getDayDateValue} />
-                </div>
-
-                <HRLine />
-                <div className="wrapper flex centering">
-                  <div className="label">수량</div>
-                  <InputText onChange={this.onChangeAmount} value={this.state.amount} width={80} />
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">메이커 위치</div>
-                  {/* <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} /> */}
-                  <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
-                    selection options={LocationList} placeholder="시/도"
-                    onChange={this.onChangeLocation} />
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">메이커 재판매</div>
-                  <DropBox id="resale" selection options={[{ text: "가능", value: 0 }, { text: "불가능", value: 1 }]}
-                    onChange={this.onChangeResale} value={this.state.resale} placeholder="선택" />
-                </div>
-
-                {/* <div className="wrapper flex centering">
-                  <div className="label">오프라인 상담</div>
-                  <DropBox id="offline" selection options={[{ text: "가능", value: 0 }, { text: "불가능", value: 1 }]}
-                    onChange={this.onChangeOffline} value={this.state.offline} placeholder="선택" />
-                </div> */}
-
-              </FormBox>
+          <div className="row">
+            <div className="label">카테고리</div>
+            <div className="content flexing-row">
+              <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
+              <CustomIcon width="5" height="10" marginRight="20" marginLeft="20" imgURL={category_icon} />
+              <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
             </div>
-            <div className="centering_">
-              <RedButton
-                text={"의뢰를 등록합니다."}
-                okText="등록"
-                cancelText="취소"
-                value={"등록하기"}
-                onClick={this.onSubmit}
-                
-                isConfirm={true} />
-              <GrayButton
-                text={"취소하시겠습니까?"}
-                value={"취소하기"}
-                onClick={() => { window.history.back() }}
-                isConfirm={true} />
+          </div>
+
+          <div className="row">
+            <div className="label">태그</div>
+            <div className="content">
+              <InputTagNew getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
             </div>
-          </MainBox>
-        </Wrapper>
-      </React.Fragment>
+          </div>
+
+          <div className="row">
+            <div className="label">의뢰 내용<Mandatory /></div>
+            <div className="content">
+              <TextControllerClassic
+                item={{ content: this.state.content, /*height: 388*/ }}
+                name={"comment"}
+                getValue={this.onChangeContent}
+                // width="820"
+                editheight="388"
+                marginBottom="0"
+                border="1px solid #707070"
+              // initClick={this.state.click}
+              // deleteItem={this.deleteItem}
+              />
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="label">파일 등록</div>
+            <div className="content">
+              <InputFile width={533} getValue={this.onFileChange} accept="pdf" />
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="label">희망 비용</div>
+            <div className="content">
+              <InputPriceNew name="price" getValue={this.getPriceValue} />
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="label ">기간</div>
+            <div className="content">
+              <InputCalendar
+                startDate={this.state.startDate}
+                endDate={this.state.endDate}
+                name="calendar"
+                getStartDateValue={this.getStartDateValue}
+                getEndDateValue={this.getEndDateValue}
+                getDayDateValue={this.getDayDateValue} />
+            </div>
+          </div>
+
+          <div className="hr"></div>
+
+          <div className="row">
+            <div className="label">수량</div>
+            <InputText onChange={this.onChangeAmount} value={this.state.amount} width={80} />
+          </div>
+
+          <div className="row">
+            <div className="label">메이커 위치</div>
+            <div className="content">
+              <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
+                selection options={LocationList} placeholder="시/도"
+                onChange={this.onChangeLocation} />
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="label">메이커 재판매</div>
+            <div className="content">
+              <DropBox id="resale" selection options={[{ text: "가능", value: 0 }, { text: "불가능", value: 1 }]}
+                onChange={this.onChangeResale} value={this.state.resale} placeholder="선택" />
+            </div>
+          </div>
+        </div>
+        {/* bottom */}
+        <div className="bottom">
+          <div className="buttons">
+            <RedButton width={150} height={30} text={"의뢰를 등록합니다."} okText="등록" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
+            <GrayButton width={150} height={30} text={"취소하시겠습니까?"} value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
+          </div>
+        </div>
+      </Wrapper>
     );
   };
 }

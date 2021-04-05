@@ -16,11 +16,18 @@ const StyleButton = styled.div`
   border:${props=>props.isWhite==null?"none":"1px solid #707070"};
   background-color:${props=>props.isWhite==null?"#707070":"white"};
   .text{
-    color:${props=>props.isWhite==null?"white":"#707070"};
-    font-weight:400;
-    font-family:Noto Sans KR;
-    font-size: ${props=>props.fontSize==null?market_style.font.size.giant2:props.fontSize+"px"};
-}
+    margin: auto;
+    width: max-content;
+    text-align: center;
+    font: normal normal bold 15px/22px Noto Sans KR;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1
+    // color:${props=>props.isWhite==null?"white":"#707070"};
+    // font-weight:400;
+    // font-family:Noto Sans KR;
+    // font-size: ${props=>props.fontSize==null?market_style.font.size.giant2:props.fontSize+"px"};
+  }
   &:hover{
       opacity:90%;
   }
