@@ -41,7 +41,7 @@ const Wrapper = styled.div`
     // min-height: 1221px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 3px 3px 5px #0000001A;
-    border: 0.25px solid #B7B7B7;
+    border: 1px solid #EAEAEA;
     border-radius: 20px;
     padding: 50px 150px;
     padding-bottom: 50px;
@@ -140,7 +140,7 @@ const Wrapper = styled.div`
     margin-bottom: 29px;
     width: 1006px;
     height: 2px;
-    border: 2px solid #EFEFEF;
+    border: 1px solid #EFEFEF;
   }
 `;
 const DropBox = styled(Dropdown)`
