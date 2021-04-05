@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   }
   border: 1px solid transparent;
   width: 240px;
-  height: 310px;
+  height: 328px;
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #4141411A;
   border: 0.5px solid #EAEAEA;
@@ -45,19 +45,18 @@ const TextWrapper = styled.div`
   flex-direction:column;
   align-items:center;
   .nick {
-    margin-top:5px;
+    margin-top:10px;
     text-align:center;
     width:100%;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
-    // padding:2px 0px;
     font-weight: 500;
     font-size:${market_style.font.size.normal1};
     color: #060000;
   }
   .category {
-    margin-top:2px;
+    margin-top:10px;
     font-weight: 500;
     font-size:${market_style.font.size.small1};
     color: #FF0000;
@@ -68,7 +67,7 @@ const Counter = styled.div`
   flex-direction: row;
   width: max-content;
   margin-left: auto;
-  margin-top: 2px;
+  margin-top: 5px;
   margin-right: auto;
   font-family: Noto Sans KR;
   letter-spacing: 0;

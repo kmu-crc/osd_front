@@ -37,7 +37,7 @@ class Main extends Component {
 
       <Wrapper>
         <TextWrapper>
-          <Head marginTop={30}>인기 디자이너&nbsp;
+          <Head marginTop={20}>인기 디자이너&nbsp;
           <span style={{fontSize:market_style.font.size.smal3}}>|</span>
           &nbsp;메이커</Head>
         </TextWrapper>
@@ -46,7 +46,7 @@ class Main extends Component {
 
       <Wrapper>
         <TextWrapper>
-          <Head marginTop={30}>인기 아이템</Head>
+          <Head marginTop={20}>인기 아이템</Head>
         </TextWrapper>
         <ScrollTopProductContainer />
       </Wrapper>

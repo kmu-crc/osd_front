@@ -89,8 +89,8 @@ const ButtonBox = styled.div`
   min-width:100%;
   display:flex;
   justify-content:center;
-  padding-left:130px;
-  padding-top:36px;
+  // padding-left:130px;
+  padding-top:20px;
   margin-bottom:70px;
 `;
 // const RedButton = styled.div`
@@ -823,7 +823,7 @@ class ModifyItemInfo extends Component {
         (<ButtonBox className="buttonBox" >
           <RedButton
             text={"수정된 내용을 저장합니다."}
-
+            width={150} height={30} fontSize={market_style.font.size.small1}
             okText="확인"
             cancelText="취소"
             value={"저장하기"}
@@ -834,6 +834,7 @@ class ModifyItemInfo extends Component {
 
           <GrayButton
             text={"수정된 내용이 저장되지 않습니다."}
+            width={150} height={30} fontSize={market_style.font.size.small1}
             value={"취소하기"}
             okText="확인"
             cancelText="취소"

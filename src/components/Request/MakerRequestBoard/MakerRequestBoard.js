@@ -79,11 +79,15 @@ export default class MakerRequestBoard extends Component {
     render() {
         return (<React.Fragment>
             <Content>
+                {
+                this.props.dataList.length >0?
                 <ListElement>
                     <div className="title">제목</div>
                     <div className="writer">글쓴이</div>
                     <div className="date">작성일</div>
-                </ListElement>
+                </ListElement>:
+                null
+                }
                 <Wrapper className="listWrap">
                     {/* {this.state.rendering ? */}
                     <ScrollBoardList getListRequest={this.getList} ListComponent={RequestElement} dataList={this.props.dataList} total={this.props.Count}

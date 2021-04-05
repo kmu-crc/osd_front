@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   }
 `;
 const Content = styled(ContentBox)`
-  // margin-top: ${props => props.top}px;
+  margin-top: ${props => props.top}px;
   width:100%;
   @media only screen and (max-width: 991px) and (min-width: 768px){
     & .ui.grid>.row{
@@ -44,7 +44,7 @@ const RequestButton = styled.div`
 const Container = styled.div`
   padding:0px 30px 0px 30px;
   ._wrapper{
-    margin-bottom:15px;
+    margin-bottom:20px;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -58,7 +58,7 @@ const Container = styled.div`
       justify-content:center;
       align-items:center;
       font-family:Noto Sans KR;
-      font-weight:500;
+      font-weight:600;
       font-size:${market_style.font.size.normal3};
     }
     .sort {
@@ -111,7 +111,7 @@ class DesignerList extends Component {
     const { sort, category1, category2, cate1, cate2 } = this.props;
     return (<React.Fragment>
 
-      <Content top={20}>
+      <Content top={15}>
         <Container>
           <div className="category">
             <Category

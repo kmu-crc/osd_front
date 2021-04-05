@@ -18,7 +18,7 @@ const Wrapper = styled.div`
     cursor:pointer;
   }
   width: 310;
-  height: 346px;
+  height: 356px;
   padding:20px 15px;
   position: relative;
   border: 0.5px solid #EAEAEA;
@@ -49,9 +49,10 @@ const TextWrapper = styled.div`
   width: 100%;
   display:flex;
   justify-content:space-between;
-  align-items:center;
+  align-items:flex-start;
   .title {
     width:170px;
+    height:27px;
     color:#000000;
     font-weight: 500;
     font-size:${market_style.font.size.normal1};
@@ -59,12 +60,12 @@ const TextWrapper = styled.div`
   }
   .author {
     width:100px;
+    height:22px;
     display: flex;
     justify-content:flex-end;
     color:#707070;
     font-weight: 400;
     font-size:${market_style.font.size.small1};
-    line-height: 18px;
   }
 `;
 const TypeWrapper = styled.div`
@@ -78,7 +79,7 @@ const NumberWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items:center;
-  margin-top:6px;
+  margin-top:10px;
   .price {
     font-weight: 500;
     font-size:${market_style.font.size.small1};

@@ -43,7 +43,7 @@ const MainBox = styled.div`
     font-weight:500;
   }
     .contentsBox{
-      margin-top:15px;
+      margin-top:20px;
       width:100%;
       display:flex;
     }
@@ -93,8 +93,8 @@ const ThumbnailBox = styled.div`
 `;
 const Thumbnail = styled.div`
   cursor:pointer;
-  width:220px;
-  height:220px;
+  width:250px;
+  height:250px;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -105,16 +105,16 @@ const Thumbnail = styled.div`
 `;
 const ExperienceBox = styled.div`
     width:100%;
-    box-shadow: 5px 5px 10px #00000029;
+    box-shadow: 3px 3px 5px #0000001A;
     border-radius: 20px;
     border: 0.5px solid #EAEAEA;
-    padding:20px 30px 20px 30px;
+    padding:10px 30px 16px 30px;
     .title_{
       width:100%;
+      height:27px;
       text-align:center;
       font-size:${market_style.font.size.normal1};
       font-weight:500;
-      margin-bottom:10px;
       color:#707070;
     }
     .wrapper{

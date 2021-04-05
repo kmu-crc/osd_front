@@ -19,7 +19,7 @@ margin-top: 31px;
 `;
 const GalleryItem = styled.div`
   min-width:294px;
-  max-width:294px;
+  max-width:300px;
   height:100%;
   border-radius:20px;
   box-shadow: 3px 3px 5px #4141411A;
@@ -45,13 +45,14 @@ const GalleryItem = styled.div`
 const ScrollInfo = styled.div`
   margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
   width: ${props => props.width == null ? "100%" : props.width + "px"};
-  height: 376px;
+  // height: 376px;
+  // height:max-content;
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #4141411A;
   border: 1px solid #eaeaea;
   border-radius: 20px;
   opacity: 1;
-  padding:20px 26px;
+  padding:20px 0px 0px 0px;
   font-family: Noto Sans KR;
   `
 const AdditionalInfo = styled.div`
@@ -110,13 +111,13 @@ class GalleryDetail extends Component {
                   <div className="galleryThumb"/>
                   <div className="name">{this.props.galleryDetail&&this.props.galleryDetail.title}</div>
                 </GalleryItem>
-                <AdditionalInfo mLeft={30}>
+                <AdditionalInfo mLeft={20}>
                     <div className="title margin_bottom">{this.props.galleryDetail&&this.props.galleryDetail.title}</div>
                     <div className="text">{this.props.galleryDetail&&this.props.galleryDetail.description}
                     </div>
                 </AdditionalInfo>
             </div>   
-            <ScrollInfo mTop={15}>
+            <ScrollInfo mTop={20}>
                 <ItemInGalleryContainer id={this.props.id}/>
             </ScrollInfo>
         </Wrapper>

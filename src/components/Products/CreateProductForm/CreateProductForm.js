@@ -273,7 +273,7 @@ const DesignElement = styled.div`
   font-size:${market_style.font.size.normal3};
   font-family: "Noto Sans KR";
   z-index: 700;
-  width: 300px;
+  width: 283pxx;
   height: 150px;
   border-radius: 15px;
   // background-size: cover;
@@ -407,6 +407,9 @@ const MainBox = styled.div`
   .centering{
     padding-right:30px;
     justify-content:center; 
+  }
+  .justifyCenter{
+    jusify-content:center;
   }
   .marginTop{
     margin-top:20px; 
@@ -923,7 +926,7 @@ class ItemTypeForm extends Component {
             :
             // {/* 로컬 그리드 에디터 - */}
             <React.Fragment>
-              <div className="contentsBox centering">
+              <div className="contentsBox justifyCenter">
                 <DesignTemplateSelector>
                   <div className="title">
                     템플릿을 선택하시면 보다 편하게 작업을 시작하실 수 있습니다!

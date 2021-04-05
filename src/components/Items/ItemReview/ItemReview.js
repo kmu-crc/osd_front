@@ -28,9 +28,14 @@ const Reviews = styled.div`
         display:flex;
 
         .title_{
-            text-align:center;
+            display:flex;
+            color:black;
+            justify-content:center;
+            align-items:center;
+            height:27px;
             font-size:${market_style.font.size.normal1};
-            font-weight: 500;
+            text-align: left;
+            font-weight:600;
         }  
         .score{
             font-size:${market_style.font.size.small1};
@@ -389,6 +394,7 @@ class ItemReview extends Component {
                         <div className="title_">리뷰({total})</div>
                         {/* <div className="score">총점(리뷰수):<TotalScore/>({total})</div> */}
                     </div>
+                    <div className="blankBox">
                         {
                             !master ?
                             payment && payment.length > 0 ?
@@ -400,6 +406,7 @@ class ItemReview extends Component {
                             :
                             null
                         }
+                    </div>
                 </div>
                 <div className="reviewContent">
                     {review && review.length > 0 ?

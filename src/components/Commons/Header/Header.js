@@ -53,9 +53,6 @@ const MainHeader = styled.div`
   }
 `
 const HeaderContainer = styled.ul`
-*{
-  // border:1px solid black;
-}
   height:45px;
   padding:0px 30px 0px 30px;
   display: flex;

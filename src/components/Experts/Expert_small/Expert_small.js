@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   }
   border: 1px solid transparent;
   width: 220px;
-  height: 295px;
+  height: 310px;
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #4141411A;
   border: 0.5px solid #EAEAEA;
@@ -51,13 +51,14 @@ const TextWrapper = styled.div`
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
-    padding:5px 0px;
+    padding:0px 0px 5px 0px;
     font-weight: 500;
     font-weight: 500;
     font-size:${market_style.font.size.normal1};
     color: #060000;
   }
   .category {
+    margin-top:5px;
     font-weight: 500;
     font-size:${market_style.font.size.small1};
     color: #FF0000;
@@ -93,7 +94,7 @@ const Counter = styled.div`
     font-weight: 300;
     line-height: 18px;
     .heart{
-      margin-right:10px;
+      margin-right:3px;
     }
   }
 `;

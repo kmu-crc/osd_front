@@ -47,7 +47,7 @@ const MainBox = styled.div`
     font-weight:500;
   }
     .contentsBox{
-      margin-top:15px;
+      margin-top:20px;
       width:100%;
       display:flex;
     }
@@ -96,8 +96,8 @@ const ThumbnailBox = styled.div`
 `;
 const Thumbnail = styled.div`
   cursor:pointer;
-  width:220px;
-  height:220px;
+  width:250px;
+  height:250px;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -111,13 +111,13 @@ const ExperienceBox = styled.div`
     box-shadow: 3px 3px 5px #0000001A;
     border-radius: 20px;
     border: 0.5px solid #EAEAEA;
-    padding:20px 30px 20px 30px;
+    padding:10px 30px 16px 30px;
     .title_{
       width:100%;
+      height:27px;
       text-align:center;
       font-size:${market_style.font.size.normal1};
       font-weight:500;
-      margin-bottom:10px;
       color:#707070;
     }
     .wrapper{
@@ -314,6 +314,7 @@ const SubBox = styled.div`
       font-size:${market_style.font.size.normal1};
       font-weight:500;
       margin-bottom:10px;
+      color:#707070;
     }
     .redText{
       color:red;
@@ -1111,7 +1112,7 @@ class ModifyMaker extends Component {
                     );
                   })}
                   {/* <CreateCareer number={0} onChangeCareer={this.onChangeCareer}/> */}
-                  <Button /*onClick={this.onSubmit}*/ width={250} height={30} onClick={this.onClickAddCareer}>
+                  <Button /*onClick={this.onSubmit}*/ width={250} height={30} margin={112} onClick={this.onClickAddCareer}>
                   <Icon name="plus" size='tiny' color='red' /><div className="label">경험 추가</div>
                   </Button>
                 </div>

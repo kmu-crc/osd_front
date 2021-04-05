@@ -12,7 +12,6 @@ const Wrapper = styled.div`
 *{
   // border:1px solid black;
 }
-  margin-left:10px;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -21,7 +20,7 @@ const Wrapper = styled.div`
   }
 `;
 const Content = styled(ContentBox)`
-  // margin-top: ${props => props.top}px;
+  margin-top: ${props => props.top}px;
   width:100%;
   @media only screen and (max-width: 991px) and (min-width: 768px){
     & .ui.grid>.row{
@@ -38,11 +37,14 @@ const RequestButton = styled.div`
   font-size:${market_style.font.size.mini2};
   border:1px solid red;
   margin-right:20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   `;
 const Container = styled.div`
   padding:0px 30px 0px 30px;
   ._wrapper{
-    margin-bottom:15px;
+    margin-bottom:20px;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -56,7 +58,7 @@ const Container = styled.div`
       justify-content:center;
       align-items:center;
       font-family:Noto Sans KR;
-      font-weight:500;
+      font-weight:600;
       font-size:${market_style.font.size.normal3};
     }
     .sort {
@@ -68,6 +70,7 @@ const Container = styled.div`
     }
   }
 `;
+
 
 class ProductList extends Component {
   constructor(props) {
@@ -109,7 +112,7 @@ class ProductList extends Component {
     // console.log(this.props);
 
     return (<React.Fragment>
-      <Content top={30}>
+      <Content top={15}>
         <Container>
           <div className="category">
             <Category

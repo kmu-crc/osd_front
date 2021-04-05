@@ -58,7 +58,7 @@ const ProfileBox = styled.div`
 }
     border: 1px solid transparent;
     width: 240px;
-    height: 320px;
+    height: 335px;
     background: #FFFFFF;
     box-shadow: 3px 3px 5px #4141411A;
     border: 0.5px solid #EAEAEA;
@@ -80,7 +80,7 @@ const ProfileBox = styled.div`
       overflow:hidden;
       text-overflow:ellipsis;
       white-space:nowrap;
-      padding:5px 0px;
+      height:27px;
       font-weight: 500;
       font-weight: 500;
       font-size:${market_style.font.size.normal1};
@@ -102,7 +102,7 @@ const ProfileBox = styled.div`
     align-items: center;
   }
   .marginTop1{
-    margin-top:2px;
+    margin-top:10px;
   }
   .marginTop2{
     margin-top:6px;
@@ -110,7 +110,7 @@ const ProfileBox = styled.div`
 `;
 const InformationBox = styled.div` 
     width: 1046px;
-    height: 320px;
+    height: 335px;
     box-shadow: 3px 3px 5px #0000001A;
     border: 0.5px solid #EAEAEA;
     border-radius: 20px;
@@ -124,12 +124,13 @@ const InformationBox = styled.div`
       font-size:${market_style.font.size.normal3};
     }
     .fontNormal{font-size:${market_style.font.size.normal1}}
-    .fontSmall{font-size:${market_style.font.size.small1}}
+    .fontSmall{font-size:${market_style.font.size.small1};}
     .fontStyleNormal{font-family:Noto Sans KR; font-weight:400;line-height:25px;}
     .alignCenter{text-align:center;}
     .red{color:red;}
     .cursorPointer{cursor:pointer;}
     .displayFlex{display:flex;align-items:center;justify-content:center;}
+    .alignEnd{align-items:flex-end;}
     .marginRight{margin-right:10px;}
     .marginBottom{margin-bottom:7px;}
     .design-clipart {
@@ -431,7 +432,7 @@ class MyDetail extends Component {
                 {/* 카테고리 */}
                 &nbsp;
               </div>
-              <div className="LabelBox">
+              <div className="LabelBox marginTop2">
                 <span className="fontMini normal fontStyleLight">{(MyDetail && MyDetail.count) || 0}개의 아이템 |</span>&nbsp;
                   <span className="red">♥</span>
                 <span className="fontMini normal fontStyleNormal">{(MyDetail && MyDetail.like) || 0}</span>
@@ -442,7 +443,7 @@ class MyDetail extends Component {
                 <div className="wrap cursorPointer" onClick={this.onClickCreateDesigner} >
                   <div className="title fontNormal fontStyleNormal"><div>다양한 아이디어를 판매하세요!</div></div>
                   <div className="design-clipart">&nbsp;</div>
-                  <div onClick={this.onClickCreateDesigner} ><div className="marginBottom fontNormal alignCenter cursorPointer fontStyleNormal displayFlex">
+                  <div onClick={this.onClickCreateDesigner} ><div className="marginBottom fontNormal alignCenter cursorPointer fontStyleNormal displayFlex alignEnd">
                     <div className="fontSmall marginRight">디자이너 등록 / 관리</div>
                   <CustomIcon width="15" height="15" imgURL={category_icon}/>
                   </div></div>

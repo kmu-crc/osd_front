@@ -17,8 +17,8 @@ const Wrapper = styled.div`
   *{
     cursor:pointer;
   }
-  width: 290px;
-  height: 336px;
+  width: 296px;
+  height: 342px;
   padding: 20px 10px;
   position: relative;
   border: 0.5px solid #EAEAEA;
@@ -52,8 +52,9 @@ const TextWrapper = styled.div`
   align-items:center;
   .title_ {
     width:110px;
+    height:22px;
     color:#000000;
-    font-weight: 500;
+    font-weight: 600;
     font-size:${market_style.font.size.small1};
     text-align: left;
   }
@@ -71,12 +72,12 @@ const NumberWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items:center;
-  margin-top:5px;
+  margin-top:10px;
   .price {
     font-weight: 400;
     font-size:${market_style.font.size.small1};
     text-align: left;
-    color:#707070;
+    color:black;
   }
   .score {
     margin-left: auto;

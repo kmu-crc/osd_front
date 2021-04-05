@@ -7,11 +7,6 @@ import MakerRequestBoardContainer from "containers/Maker/MakerRequestBoardContai
 import MakerReviewContainer from "containers/Maker/MakerReviewContainer";
 import ReviewDetailModal from "components/Commons/ReviewDetailModal";
 import { Icon } from "semantic-ui-react";
-// import noimg from "source/noimg.png";
-
-// import profile from "source/thumbnail.png";
-// import NumberFormat from "modules/NumberFormat";
-// import Item from "components/Items/Item/Item"
 import ArticleModal from "components/Commons/ArticleModal/ArticleModal";
 import market_style from "market_style";
 
@@ -65,7 +60,7 @@ const Expert = styled.div`
       overflow:hidden;
       text-overflow:ellipsis;
       white-space:nowrap;
-      padding:0px 0px 5px 0px;
+      height:27px;
       font-weight: 500;
       font-size:${market_style.font.size.normal1};
       color: black;
@@ -197,6 +192,11 @@ const ItemInfo = styled.div`
   padding: 10px 25px 20px 25px;
 
   .title {
+    color:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:27px;
     font-size:${market_style.font.size.normal1};
     font-weight: 500;
     text-align: center;
@@ -237,6 +237,11 @@ const AdditionalInfo = styled.div`
   font-family: Noto Sans KR;
   
   .title {
+    display:flex;
+    color:black;
+    justify-content:center;
+    align-items:center;
+    height:27px;
     font-size:${market_style.font.size.normal1};
     font-weight: 500;
     text-align: center;
@@ -283,13 +288,17 @@ const MakerBoard = styled.div`
   border-radius: 20px;
   border:1px solid #eaeaea;
   opacity: 1;
-  padding:10px 25px;
+  padding:10px 25px 20px 25px;
   font-family: Noto Sans KR;
   .flex{
     display:flex;
     justify-content:flex-end;
   }
   .headerWrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:27px;
     width:100%;
     display:flex;
     justify-content:space-between;
@@ -443,15 +452,15 @@ const CommentForm = styled.textarea`
 const TagPiece = styled.div`
     width: max-content;
     min-width: max-content;
-    background-color: #EFEFEF;
+    background-color:#E9E9E96A;
     margin-right: 8px;
     margin-top: 5px;
     color: #707070;
-    padding:3px 11px 4px 11px;
-    border-radius: 15px;
+    padding:5px 12px;
+    border-radius: 10px;
     display: flex;
     justify-content: space-between;
-    font-size:${market_style.font.size.mini2}px;
+    font-size:${market_style.font.size.small1};
     .close {
         margin-left: 10px;
         width: max-content;
@@ -464,7 +473,7 @@ width:100%;
 height:30px;
 display:flex;
 justify-content:flex-end;
-margin-top:10px;
+// margin-top:10px;
 
 .button{
     width:150px;
@@ -704,7 +713,7 @@ class MakerDetail extends Component {
 
 
           {/**보유아이템 */}
-          <ItemInfo height={414} mTop={20}>
+          <ItemInfo height={420} mTop={20}>
             <div className="title margin_bottom">디자인 아이템</div>
             <div className="hrline margin_bottom"/>
             <div className="wrapItem">

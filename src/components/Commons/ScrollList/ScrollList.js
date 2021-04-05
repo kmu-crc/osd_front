@@ -18,7 +18,7 @@ const ListContainer = styled.div`
     flex: 0 0 180px;
     justify-content: space-around;
     margin: ${props=>props.isSmall==true?"0px 20px 30px 0px":
-              props.isMini==true?"0px 30px 25px 0px":"0px 0px 29px 20px"};
+              props.isMini==true?"0px 23px 30px 0px":"0px 0px 35px 22px"};
   }
   .designer{
     // flex: 0 0 247px;

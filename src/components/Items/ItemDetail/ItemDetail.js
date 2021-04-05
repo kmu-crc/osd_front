@@ -87,7 +87,7 @@ const ItemInfo = styled.div`
     font-size:${market_style.font.size.normal1};
     text-align: left;
     color: #000000;
-    font-weight:600;
+    font-weight:500;
   }
   .marginBottom{
     margin-bottom:10px;
@@ -253,17 +253,16 @@ const Introduction = styled.div`
 `;
 const TagPiece = styled.div`
     width: max-content;
-    min-width: 30px;
-    background-color: #EFEFEF;
-    margin-right: 5px;
-    margin-bottom: 5px;
+    min-width: max-content;
+    background-color:#E9E9E96A;
+    margin-right: 8px;
+    margin-top: 5px;
     color: #707070;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 15px;
+    padding:5px 12px;
+    border-radius: 10px;
     display: flex;
     justify-content: space-between;
+    font-size:${market_style.font.size.small1};
     .close {
         margin-left: 10px;
         width: max-content;
@@ -271,7 +270,6 @@ const TagPiece = styled.div`
         padding: 0px 2px;
     }
 `;
-
 const CoverGrident = styled.div`
   display:${props => props.isGradient ? "block" : "none"};
   width:100%;
@@ -306,6 +304,11 @@ const QuestionBoard = styled.div`
   font-family: Noto Sans KR;
   position:relative;
   .title {
+    display:flex;
+    color:black;
+    justify-content:center;
+    align-items:center;
+    height:27px;
     width:100%;
     font-size:${market_style.font.size.normal1};
     font-weight: 500;
@@ -396,6 +399,11 @@ const Content = styled.div`
   position:relative;
   overflow:hidden;
   .title {
+    display:flex;
+    color:black;
+    justify-content:center;
+    align-items:center;
+    height:27px;
     width:100%;
     text-align:center;
     font-size:${market_style.font.size.normal1};

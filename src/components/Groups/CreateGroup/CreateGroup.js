@@ -29,7 +29,7 @@ const MainBox = styled.div`
   }
   .hrline{
     width:100%;
-    border:2px solid #EFEFEF;
+    border:1px solid #EFEFEF;
     margin-top:10px;
   }
     .contentBox{
