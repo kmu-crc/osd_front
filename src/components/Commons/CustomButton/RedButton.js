@@ -16,7 +16,7 @@ const StyleButton = styled.div`
   background-color:${props => props.disabled == false || props.disabled == null ? "red" : "#A0A0A0"};
   border:${props => props.disabled == false || props.disabled == null ? "1px solid red" : "1px solid gray"};
   cursor:pointer;
-  margin-right:20px;
+  margin-right:${props=>props.marginRight == null ? "20px":props.marginRight+"px"};
   .text{
     color:${props => props.disabled == false || props.disabled == null ? "white" : "white"};
     font-family:Noto Sans KR;
@@ -53,7 +53,7 @@ export class RedButton extends Component {
         // console.log("disabled:", this.props.disabled);
         return (
             <React.Fragment>
-                <StyleButton width={this.props.width} height={this.props.height} fontSize={this.props.fontSize} disabled={this.props.disabled} onClick={this.onClickButton}>
+                <StyleButton marginRight={this.props.marginRight} width={this.props.width} height={this.props.height} fontSize={this.props.fontSize} disabled={this.props.disabled} onClick={this.onClickButton}>
                     <div className="text">{this.props.value}</div>
                 </StyleButton>
             </React.Fragment>

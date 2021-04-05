@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   width:100%;
   display:flex;
   // justify-content:center;
-  padding-left:${props => props.isSearch == null ? "0px" : "10px"};
+  padding-left:${props=>props.isSearch==null?"8px":"10px"};
 `
 class ScrollDesignListContainer extends Component {
   componentDidUpdate(prevProps) {

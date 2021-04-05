@@ -4,6 +4,11 @@ import { GetTopItemListRequest } from "actions/Commons/TopList";
 import ScrollList from "components/Commons/ScrollList";
 import Loading from "components/Commons/Loading";
 import Item from "components/Items/Item";
+import styled from "styled-components"
+
+const Wrapper_itemlist = styled.div`
+padding-left:8px;
+`
 
 class ScrollTopProductContainer extends Component {
   componentWillMount() {
@@ -17,9 +22,11 @@ class ScrollTopProductContainer extends Component {
     
     return (
       this.props.status === "INIT" ? <Loading /> :
+        <Wrapper_itemlist>
         <ScrollList
           cols={6} type="item" getListRequest={this.getList} ListComponent={Item}
           dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} />
+        </Wrapper_itemlist>
     );
   }
 };

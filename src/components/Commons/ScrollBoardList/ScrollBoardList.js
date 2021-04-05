@@ -59,7 +59,7 @@ class ScrollBoardList extends Component {
           {/* <div style={{ width: "50px" }}>
             <div style={{ textAlign: "center", borderRadius: "15px" }}>{this.state.page + 1}</div>
           </div> */}
-          <div style={{ width: "50px" }}>
+          <div style={{ width:"100%",marginTop:"20px" }}>
             {10<total ?
             // <div onClick={this.goNext}>next</div> 
             <Pagination

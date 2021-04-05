@@ -19,7 +19,7 @@ const Container = styled.div`
 `;
 const CategoryItem = styled.div`
   cursor:pointer;
-  font-size:${market_style.font.size.normal1};
+  font-size:${props=>props.firstFontSize==null?market_style.font.size.normal1:props.firstFontSize};
   &:hover{
     opacity:0.7;
   }
@@ -27,7 +27,7 @@ const CategoryItem = styled.div`
 const CategoryItem2 = styled.div`
   margin-top:3px;
   cursor:pointer;
-  font-size:${market_style.font.size.small1};
+  font-size:${props=>props.secondFontSize==null?market_style.font.size.small1:props.secondFontSize};
   &:hover{
     opacity:0.7;
   }
@@ -96,6 +96,7 @@ class Category extends Component {
           <CategoryMenu>
             {category1.map((cate, i) => cate.value !== 0 &&
               <CategoryItem
+                firstFontSize = {this.props.firstFontSize}
                 onClick={() => this.onChangeCategory1(cate.value)}
                 key={i} className={`element ${cate.value === parseInt(cate1, 10) ? "active" : ""}`}>
                 {cate.text}</CategoryItem>)}
@@ -120,8 +121,6 @@ class Category extends Component {
                     key={i} className={`element ${cate.value === parseInt(cate3, 10) ? "active" : ""}`}>{cate.text}</CategoryItem2>)) : null}
             </CategoryMenu>
           </div>}
-
-
       </Container>
       // <CateColumn className="category"
       //   widescreen={this.props.widescreen ? this.props.widescreen : null}

@@ -44,7 +44,6 @@ import { GetExpertMakerDetailRequest } from "actions/Expert"
 //`;
 const Wrapper = styled(ContentBox)`
   width:100%;
-  margin-top:25px;
   margin-bottom: 100px;
   position: relative;
   z-index:3;

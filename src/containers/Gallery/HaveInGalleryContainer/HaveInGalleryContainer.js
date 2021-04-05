@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetHaveInGalleryRequest } from "actions/Gallery";
 import ScrollList from "components/Commons/ScrollList";
-import Gallery from "components/Gallery/Gallery/Gallery";
+import Gallery_big from "components/Gallery/Gallery_big/Gallery_big";
 import ModifyGallery from "components/Gallery/ModifyGallery/ModifyGallery";
 import styled from "styled-components";
 const ScrollBox = styled.div`
@@ -30,8 +30,9 @@ class HaveInGalleryContainer extends Component {
       isScroll={this.props.dataListAdded.length>4?true:false}
       >
         <ScrollList
-          cols={8} type="gallery" getListRequest={this.getList} ListComponent={this.props.isModify === true ? ModifyGallery : Gallery}
+          cols={8} type="gallery" getListRequest={this.getList} ListComponent={this.props.isModify === true ? ModifyGallery : Gallery_big}
           dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} handler={this.props.handlerIsGalleryModify} />
+          
       </ScrollBox>
 
 

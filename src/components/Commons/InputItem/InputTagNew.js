@@ -45,17 +45,16 @@ const TagList = styled.div`
 const TagPiece = styled.div`
     width:max-content;
     min-width:30px;
-    max-height:30px;
     border:1px solid #707070;
-    border-radius:15px;
-    padding: 11px 10px 11px 10px;
+    border-radius:10px;
+    padding: 5px 12px;
     display: flex;
     justify-content: space-between;
     align-items:center;
-    font-size:${market_style.font.size.samll1};
+    font-size:${market_style.font.size.small1};
     font-family:Noto Sans CJK KR, Regular;
     margin-right:8px;
-    margin-bottom:8px;
+    margin-top:5px;
     .close {
         color:#707070;
         margin-left: 10px;

@@ -6,12 +6,11 @@ import { Rating } from 'semantic-ui-react'
 import market_style from "market_style";
 
 const Wrapper = styled.div`
-  width:430px;
+  width:600px;
   height:113px;
   display:flex;
   color:#707070;
-  font-size:${market_style.font.size.mini2};
-  margin-right:20px;
+  margin-right:30px;
   margin-bottom:20px;
   .content{
     width:100%;
@@ -19,20 +18,22 @@ const Wrapper = styled.div`
     margin-left:10px;
     .row{
       width: max-content;
-      margin-bottom: 15x;
+      margin-bottom: 10x;
+      font-size:${market_style.font.size.small1};
     }
     .text_{
       margin-bottom: 10px;
       overflow:hidden;
       text-overflow:ellipsis;
       word-wrap:break-word;
+      font-size:${market_style.font.size.mini2};
     }
   }
   cursor:pointer;
   :hover{ background-color: #EFEFEF;}
 `;
 const Thumbnail = styled.div`
-  min-width:130px;
+  min-width:150px;
   min-height:113px;
   display:flex;
   justify-content:center;

@@ -39,7 +39,7 @@ const GalleryModal = styled(Modal)`
   }
   .hrline{
     width:100%;
-    border:2px solid #EFEFEF;
+    border:1px solid #EFEFEF;
     margin-top:10px;
   }
   .content{

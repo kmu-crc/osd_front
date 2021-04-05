@@ -21,11 +21,21 @@ const Reviews = styled.div`
       border-bottom:2px solid #efefef;
       padding-bottom:10px;
       margin-bottom:10px;
-    .wrapper{
+      .blankBox{
+        width:150px;
+       }
+      .wrapper{
         display:flex;
+
         .title_{
+            display:flex;
+            color:black;
+            justify-content:center;
+            align-items:center;
+            height:27px;
             font-size:${market_style.font.size.normal1};
-            font-weight: 500;
+            text-align: left;
+            font-weight:600;
         }  
         .score{
             font-size:${market_style.font.size.small1};
@@ -158,10 +168,6 @@ const ReviewPiece = styled.div`
     }
 `
 const CreateReview = styled.div`
-    // *{
-    //     border:1px solid black;
-    // }
-    // border:1px solid black;
     width:100%;
     height:30px;
     margin-bottom:10px;
@@ -183,33 +189,34 @@ const CreateReview = styled.div`
     }
 `
 const Wrapper = styled.div`
-  width:430px;
+  width:600px;
   height:113px;
   display:flex;
   color:#707070;
-  font-size:${market_style.font.size.mini2};
-  margin-right:20px;
+  margin-right:30px;
   margin-bottom:20px;
   .content{
     width:100%;
     height:100%;
     margin-left:10px;
-    .row{
+    .row_{
       width: max-content;
-      margin-bottom: 15x;
+      margin-bottom: 10x;
+      font-size:${market_style.font.size.small1};
     }
     .text_{
       margin-bottom: 10px;
       overflow:hidden;
       text-overflow:ellipsis;
       word-wrap:break-word;
+      font-size:${market_style.font.size.mini2};
     }
   }
   cursor:pointer;
   :hover{ background-color: #EFEFEF;}
 `;
 const Thumbnail = styled.div`
-  min-width:130px;
+  min-width:150px;
   min-height:113px;
   display:flex;
   justify-content:center;
@@ -357,34 +364,11 @@ class ItemReview extends Component {
                 <Wrapper onClick={() => this.props.handler(props)} onClick={() => {this.setState({detail:props,reviewDetail:true})}} img={thumbnail_list[0] || noimg}>
                 <Thumbnail imageURL={props.m_img} />
                 <div className="content">
-                  <div className="row"><RenderingStar/></div>
-                  <div className="row">{props.nick_name}</div>
+                  <div className="row_"><RenderingStar/></div>
+                  <div className="row_">{props.nick_name}</div>
                   <div className="text_">{props.comment && props.comment.slice(0, 64)}{props.comment && props.comment.length > 64 ? "..." : ""}</div>
                 </div>
                 </Wrapper>
-                // <ReviewPiece onClick={() => {this.setState({detail:props,reviewDetail:true})}} img={thumbnail_list[0] || noimg}>
-                //     {thumbnail_list.length<=0?null:<div className="pics" />}
-                //     <div className="_contents">
-                //         <div className="header">
-                //             <div className="leftbox">
-                //                 <div className="nickname">{props.nick_name}</div>
-                //                 <div className="score">
-                //                     <Rating name="score" icon='star' defaultRating={parseInt(props.score,10)||0} maxRating={5} disabled />
-                //                 </div>
-                //             </div>
-                //         <div className="createTime">
-                //             {
-                //                     new Date(props.create_time).getFullYear()+"."
-                //                 +((new Date(props.create_time).getMonth()+1)<10?'0'+(new Date(props.create_time).getMonth()+1):(new Date(props.create_time).getMonth()+1))+"."
-                //                 +(new Date(props.create_tㅔime).getDate()<10?'0'+new Date(props.create_time).getDate():new Date(props.create_time).getDate())
-                //             }
-                //         </div>
-                //         </div>
-                //         <div className="comment">
-                //             {props.comment && props.comment.slice(0, 100)}
-                //             {props.comment && props.comment.length > 100 ? "..." : ""}</div>
-                //     </div>
-                // </ReviewPiece>
             )
         }
         console.log("==========",this.state,this.props);
@@ -405,10 +389,12 @@ class ItemReview extends Component {
             {/* <WriteReviewModal open={this.state.writeReview} close={() => this.setState({ writeReview: false })}/> */}
             <Reviews isScroll={review.length>2?true:false}>
                 <div className="headerWrapper">
+                    <div className="blankBox"/>
                     <div className="wrapper">
                         <div className="title_">리뷰({total})</div>
                         {/* <div className="score">총점(리뷰수):<TotalScore/>({total})</div> */}
                     </div>
+                    <div className="blankBox">
                         {
                             !master ?
                             payment && payment.length > 0 ?
@@ -420,6 +406,7 @@ class ItemReview extends Component {
                             :
                             null
                         }
+                    </div>
                 </div>
                 <div className="reviewContent">
                     {review && review.length > 0 ?

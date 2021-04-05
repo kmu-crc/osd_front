@@ -74,18 +74,21 @@ const ListElement = styled.div`
     }
   }
   .writer{
-    min-width:12%;
+    min-width:13.5%;
     display:flex;
     align-items:center;
     overflow:hidden;
+    font-weight:400;
     font-size:${market_style.font.size.mini2};
   }
   .response_{
-    min-width:12%;
+    min-width:13.5%;
     display:flex;
     align-items:center;
     overflow:hidden;
     cursor:pointer;
+    font-weight:400;
+    font-size:${market_style.font.size.mini2};
   }
   .date{
     min-width:max-content;
@@ -95,6 +98,16 @@ const ListElement = styled.div`
     padding:5px;
     overflow:hidden;
     font-size:${market_style.font.size.mini2};
+  }
+  .nick{
+    width:100px;
+    text-align:left;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size:${market_style.font.size.mini2};
+    font-weight:400;
+    color:#000000;
   }
 `;
 const ThumbnailWriter = styled.div`
@@ -157,13 +170,13 @@ class DesignerBoardElement extends Component {
           {
             item.status==="response"?
             <NavLink className="response_" to={userLink}>
-                  <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
-                  <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
+                  <div ><ThumbnailWriter src={item.imgURL} /></div>
+                  <div className="nick">{item.nick_name}</div>
             </NavLink>
           :
           <div className="writer">
             <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
-            <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
+            <div className="nick">{item.nick_name}</div>
           </div>
           }
           

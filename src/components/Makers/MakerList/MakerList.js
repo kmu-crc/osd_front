@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   }
 `;
 const Content = styled(ContentBox)`
-  // margin-top: ${props => props.top}px;
+  margin-top: ${props => props.top}px;
   width:100%;
   @media only screen and (max-width: 991px) and (min-width: 768px){
     & .ui.grid>.row{
@@ -52,12 +52,13 @@ const Container = styled.div`
       width: 100%;
     }
     ._title{
+      color:black;
       width:200px;
       display:flex;
       justify-content:center;
       align-items:center;
       font-family:Noto Sans KR;
-      font-weight:500;
+      font-weight:600;
       font-size:${market_style.font.size.normal3};
     }
     .sort {
@@ -69,6 +70,7 @@ const Container = styled.div`
     }
   }
 `;
+
 const target = `maker`;
 export default class MakerList extends Component {
   constructor(props) {
@@ -106,7 +108,7 @@ export default class MakerList extends Component {
 
     return (<React.Fragment>
 
-      <Content top={30}>
+      <Content top={15}>
         <Container>
           <div className="category">
             <Category // which="메이커"
@@ -144,7 +146,7 @@ export default class MakerList extends Component {
         </Container>
       </Content>
 
-      <Content top={16}>
+      <Content>
         <Wrapper className="listWrap">
           <ScrollMakerListContainer sort={sort} cate1={cate1} cate2={cate2} cate3={cate3} history={this.props.history} />
         </Wrapper>

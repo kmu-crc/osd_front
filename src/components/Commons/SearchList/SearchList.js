@@ -33,7 +33,6 @@ const Wrapper = styled.div`
   }
 `;
 const Content = styled.div`
-
 `
 // const Content = styled(ContentBox)`
 // @media only screen and (max-width: 991px) and (min-width: 768px){
@@ -46,6 +45,7 @@ const ImgWrapper = styled.div`
   width: 100%;
   height: max-content;
   margin-bottom:7px;
+  margin-top:15px;
   // position: relative;
   // border-top: 1px solid rgba(0,0,0,0.2);
 `;

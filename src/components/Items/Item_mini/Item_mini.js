@@ -17,9 +17,9 @@ const Wrapper = styled.div`
   *{
     cursor:pointer;
   }
-  width: 200px;
-  height: 223px;
-  padding:13px;
+  width: 296px;
+  height: 342px;
+  padding: 20px 10px;
   position: relative;
   border: 0.5px solid #EAEAEA;
   border-radius: 20px;
@@ -29,10 +29,10 @@ const Wrapper = styled.div`
   cursor: pointer;
 `;
 const ItemPic = styled.div`
-  min-width: 175px;
-  min-height: 152px;
-  max-width: 175px;
-  max-height: 152px;
+  min-width: 100%;
+  min-height: 236px;
+  max-width: 100%;
+  max-height: 236px;
   font-size:30px;
   font-weight:500;
   color:white;
@@ -45,16 +45,17 @@ const ItemPic = styled.div`
   background-position: center center
 `;
 const TextWrapper = styled.div`
-  margin-top:5px;
+  margin-top:10px;
   width: 100%;
   display:flex;
   justify-content:space-between;
   align-items:center;
   .title_ {
     width:110px;
+    height:22px;
     color:#000000;
-    font-weight: 500;
-    font-size:${market_style.font.size.mini2};
+    font-weight: 600;
+    font-size:${market_style.font.size.small1};
     text-align: left;
   }
   .author {
@@ -62,8 +63,8 @@ const TextWrapper = styled.div`
     display: flex;
     justify-content:flex-end;
     color:#707070;
-    font-weight: 300;
-    font-size:${market_style.font.size.mini2};
+    font-weight: 400;
+    font-size:${market_style.font.size.small1};
     line-height: 18px;
   }
 `;
@@ -71,12 +72,12 @@ const NumberWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items:center;
-  margin-top:5px;
+  margin-top:10px;
   .price {
     font-weight: 400;
-    font-size:${market_style.font.size.mini2};
+    font-size:${market_style.font.size.small1};
     text-align: left;
-    color:#707070;
+    color:black;
   }
   .score {
     margin-left: auto;
@@ -84,7 +85,7 @@ const NumberWrapper = styled.div`
     flex-direction: row;
     vertical-align: middle;
     font-weight: 300;
-    font-size:${market_style.font.size.tiny1};
+    font-size:${market_style.font.size.tiny3};
     text-align: left;
   }
   .avg{
@@ -145,26 +146,11 @@ class Item_mini extends Component {
           <div className="title_"><TextFormat txt={item.title} /></div>
           <div className="author">
             <TextFormat txt={item.userName} />
-            {/* <div className="date">{date}</div> */}
           </div>
         </TextWrapper>
-        {/* numbers */}
-        {/* <TypeWrapper>
-        <TypeText>
-          {item.type===0?"디자인":null}
-          {item.type===1?"프로젝트":null}
-          {item.type===2?"기술자문/상담":null}
-          {item.type===3?"경험":null}
-          {item.type===4?"정보/데이터":null}
-          {item.type===5?"아이디어/노하우":null}
-          {item.type===6?"지적재산권":null}
-          {item.type===7?"제작품":null}
-        </TypeText>
-        </TypeWrapper> */}
         <NumberWrapper>
           <div className="price">{PointFormat(item.price / (parseInt(item.price)>9999?10000:1000) || 0)}{parseInt(item.price)>9999?"만 point":" point"}</div>
           <div className="score">
-            {/* {Star(item.score + 0.5)}({NumberFormat(item.reviews)}) */}
             <RenderingStar/>
           </div>
         </NumberWrapper>
@@ -172,13 +158,7 @@ class Item_mini extends Component {
           <PrivateLabel onClick={() => this.props.confirm(item.payment_id)}>
             <div>구매확인</div>
           </PrivateLabel> : null}
-        {/* {item.private ? <PrivateLabel>비공개</PrivateLabel> : null} */}
       </Wrapper>
-      // item.uid ?
-      // <NavLink to={"/productDetail/" + item.uid}>
-      // <ItemContent />
-      // </NavLink>
-      // : <ItemContent />
     )
   }
 }

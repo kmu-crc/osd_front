@@ -4,7 +4,12 @@ import { withRouter } from "react-router-dom";
 import ItemReview from "components/Items/ItemReview";
 import { GetItemReviewRequest, CreateItemReviewRequest, /*DeleteItemReviewRequest*/ } from "actions/Item";
 import { GetItemPaymentRequest } from "actions/Payment";
+import styled from "styled-components";
 
+const ReviewBox = styled.div`
+    height: 100%;
+    overflow:${props=>props.isScroll?"overlay":"hidden"};
+`;
 class ItemReviewContainer extends Component {
     constructor(props) {
         super(props);
@@ -41,6 +46,7 @@ class ItemReviewContainer extends Component {
     }
     render() {
         return (
+            <ReviewBox>
             <ItemReview
             refresh={this.refresh}
             handler={this.props.handler}
@@ -49,6 +55,7 @@ class ItemReviewContainer extends Component {
             getData={this.getData}
             request={this.requestReview}
             {...this.props} />
+            </ReviewBox>
             );
     }
 }

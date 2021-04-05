@@ -58,12 +58,15 @@ const ProfileBox = styled.div`
 }
     border: 1px solid transparent;
     width: 240px;
-    height: 320px;
+    height: 335px;
     background: #FFFFFF;
     box-shadow: 3px 3px 5px #4141411A;
     border: 0.5px solid #EAEAEA;
     border-radius: 20px;
     padding:10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
     .fontNormal{font-size:${market_style.font.size.normal1};}
     .fontSmall{font-size:${market_style.font.size.small1};}
     .fontMini{font-size:${market_style.font.size.mini2};}
@@ -71,6 +74,18 @@ const ProfileBox = styled.div`
     .fontStyleLight{font-family:Noto Sans KR; font-weight:200;}
     .red{color:red;}
     .normal{color:#060000;}
+    .nickName{
+      text-align:center;
+      width:80%;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      height:27px;
+      font-weight: 500;
+      font-weight: 500;
+      font-size:${market_style.font.size.normal1};
+      color: #060000;
+    }
 
   .imageBox {
     width: 100%;
@@ -87,18 +102,15 @@ const ProfileBox = styled.div`
     align-items: center;
   }
   .marginTop1{
-    margin-top:2px;
+    margin-top:10px;
   }
   .marginTop2{
     margin-top:6px;
   }
 `;
 const InformationBox = styled.div` 
-*{
-  // border:1px solid black;
-}
     width: 1046px;
-    height: 320px;
+    height: 335px;
     box-shadow: 3px 3px 5px #0000001A;
     border: 0.5px solid #EAEAEA;
     border-radius: 20px;
@@ -107,15 +119,18 @@ const InformationBox = styled.div`
     justify-content:space-around;
     align-items:center;
     padding:45px 65px 45px 65px;
+    color:black;
     .fontDefault{
       font-size:${market_style.font.size.normal3};
     }
-    .fontBig{font-size:${market_style.font.size.small1}}
-    .fontStyleNormal{font-family:Noto Sans KR; font-weight:500;}
+    .fontNormal{font-size:${market_style.font.size.normal1}}
+    .fontSmall{font-size:${market_style.font.size.small1};}
+    .fontStyleNormal{font-family:Noto Sans KR; font-weight:400;line-height:25px;}
     .alignCenter{text-align:center;}
     .red{color:red;}
     .cursorPointer{cursor:pointer;}
     .displayFlex{display:flex;align-items:center;justify-content:center;}
+    .alignEnd{align-items:flex-end;}
     .marginRight{margin-right:10px;}
     .marginBottom{margin-bottom:7px;}
     .design-clipart {
@@ -153,31 +168,38 @@ const InformationBox = styled.div`
       margin-bottom:34px;
     }
 
-
     .borderRight{
       border-right:2px solid #d6d6d6;
     }
+    .hline_left{justify-content:flex-start;}
+    .hline_center{justify-content:center;}
+    .hline_right{justify-content:flex-end;}
+    .wrap{
+      width:max-content;
+      display:flex;
+      justify-content:space-between;
+      flex-direction:column;
+    }
+    .title{
+      width:251px;
+      height:54px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      margin-bottom:34px;
+      text-align:center;
+      color:black;
+    }
     .grayBox{
-      width:33%;
+      width:30%;
       height:230px;
       display:flex;
-      align-items:space-between;
-      justify-content:center;
-      .wrap{
-        width:max-content;
-        display:flex;
-        justify-content:space-between;
-        flex-direction:column;
-      }
-      .title{
-        width:251px;
-        height:54px;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        margin-bottom:34px;
-      }
 
+    }
+    .centerBox{
+      width:40%;
+      height:230px;
+      display:flex;
     }
 `;
 const MenuBox = styled.div`
@@ -405,44 +427,44 @@ class MyDetail extends Component {
                 <Thumbnail URL={MyDetail.thumbnail == null ? noimg : MyDetail.thumbnail} />
                 {/* </label> */}
               </div>
-              <div className="LabelBox fontNormal">{MyDetail.nick_name}</div>
+              <div className=" nickName">{MyDetail.nick_name}</div>
               <div className="LabelBox fontSmall fontStyleNormal red marginTop1">
                 {/* 카테고리 */}
                 &nbsp;
               </div>
-              <div className="LabelBox">
+              <div className="LabelBox marginTop2">
                 <span className="fontMini normal fontStyleLight">{(MyDetail && MyDetail.count) || 0}개의 아이템 |</span>&nbsp;
                   <span className="red">♥</span>
                 <span className="fontMini normal fontStyleNormal">{(MyDetail && MyDetail.like) || 0}</span>
               </div>
             </ProfileBox>
             <InformationBox>
-              <div className="grayBox borderRight">
+              <div className="grayBox borderRight hline_left">
                 <div className="wrap cursorPointer" onClick={this.onClickCreateDesigner} >
                   <div className="title fontNormal fontStyleNormal"><div>다양한 아이디어를 판매하세요!</div></div>
                   <div className="design-clipart">&nbsp;</div>
-                  <div onClick={this.onClickCreateDesigner} ><div className="marginBottom fontNormal alignCenter cursorPointer fontStyleNormal displayFlex">
-                    <div className="marginRight">디자이너 등록 / 관리</div>
+                  <div onClick={this.onClickCreateDesigner} ><div className="marginBottom fontNormal alignCenter cursorPointer fontStyleNormal displayFlex alignEnd">
+                    <div className="fontSmall marginRight">디자이너 등록 / 관리</div>
                   <CustomIcon width="15" height="15" imgURL={category_icon}/>
                   </div></div>
                 </div>
               </div>
-              <div className="grayBox borderRight">
-                <div className="wrap cursorPointer " onClick={this.onClickCreateMaker}>
-                  <div className="title fontNormal fontStyleNormal"><div>제작 기술을 공유하고 <br />장소를 쉐어해보세요!</div></div>
+              <div className="centerBox borderRight hline_center">
+                <div className="wrap cursorPointer" onClick={this.onClickCreateMaker}>
+                  <div className="title fontNormal fontStyleNormal"><div>제작 기술을 공유하고 장소를<br /> 쉐어해보세요!</div></div>
                   <div className="toolbox-clipart">&nbsp;</div>
                   <div onClick={this.onClickCreateMaker}><div className="marginBottom fontNormal alignCenter cursorPointer fontStyleNormal displayFlex">
-                    <div className="marginRight">메이커 등록 / 관리</div>                    
+                    <div className="fontSmall marginRight">메이커 등록 / 관리</div>                    
                     <CustomIcon width="15" height="15" imgURL={category_icon}/>
                   </div></div>
                 </div>
               </div>
-              <div className="grayBox">
+              <div className="grayBox hline_right">
                 <div className="wrap cursorPointer">
                   <div className="title fontNormal fontStyleNormal"><div>본인인증을 통해 더욱 다양한 <br /> 혜택을 누려보세요!</div></div>
                   <div className="verify-clipart"></div>
                   <div><div className="marginBottom fontNormal alignCenter cursorPointer fontStyleNormal displayFlex">
-                    <div className="marginRight">본인 인증</div>
+                    <div className="fontSmall marginRight">본인 인증</div>
                     <CustomIcon width="15" height="15" imgURL={category_icon}/>
                   </div></div>
                 </div>

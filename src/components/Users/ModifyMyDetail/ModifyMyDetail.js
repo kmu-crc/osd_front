@@ -31,6 +31,9 @@ const MainBox = styled.div`
     justify-content:flex-end;
     margin-top:15px;
   }
+  .marginTop{
+    margin-top:26px;
+  }
 `;
 const InputTextBox = styled.input`
   border:none;
@@ -314,9 +317,9 @@ class ModifyMyDetail extends Component {
 
           </div>
 
-          <div className="contentsBox">
+          <div className="contentsBox marginTop">
             {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>적용</div></RedButton> */}
-            {/* <RedButton disabled={!this.state.isModify} text="수정된 내용을 저장합니다." okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={this.state.isModify} /> */}
+            <RedButton width={150} height={30} fontSize={market_style.font.size.normal1} marginRight={0} disabled={!this.state.isModify} text="수정된 내용을 저장합니다." okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={this.state.isModify} />
             {/* <GrayButton text={"수정된 내용이 저장되지 않습니다."} okText="확인" cancelText="취소" value={"취소하기"} onClick={this.onClickCancel} isConfirm={this.state.isModify} /> */}
           </div>
         </MainBox>

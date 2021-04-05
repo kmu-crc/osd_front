@@ -6,7 +6,7 @@ import ContentBox from "components/Commons/ContentBox";
 
 const Wrapper = styled(ContentBox)`
   width:100%;
-  margin-top:60px;
+  margin-top:20px;
   margin-bottom: 100px;
   position: relative;
   z-index:3;
