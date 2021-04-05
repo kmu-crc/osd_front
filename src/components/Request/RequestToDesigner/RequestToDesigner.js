@@ -1,128 +1,193 @@
-import ContentBox from "components/Commons/ContentBox";
 import { Dropdown } from "semantic-ui-react"
-import { InputTagNew, InputFile, InputPriceNew, InputCalendar } from "components/Commons/InputItem"
-import { RedButton, GrayButton } from "components/Commons/CustomButton"
-import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
-import { FileUploadRequest } from "actions/Uploads";
 import category_icon from "source/category_icon.svg";
-import { confirm } from "components/Commons/Confirm/Confirm";
-import market_style from "market_style";
+import { CustomIcon } from "components/Commons/ArrowIcon";
+import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
+import { InputTagNew, InputFile, InputPriceNew, InputCalendar } from "components/Commons/InputItem"
 
 import React, { Component } from "react";
 import styled from 'styled-components';
 import { alert } from "components/Commons/Alert/Alert";
 
-const Wrapper = styled.div`
-  *{ border: 1px solid #AEAEAE; }
-  width: 100%;
-  padding: 0px 30px;
-  font-family: Noto Sans KR;
+// import { RedButton, GrayButton } from "components/Commons/CustomButton"
+// import market_style from "market_style";
+// import { FileUploadRequest } from "actions/Uploads";
+// import ContentBox from "components/Commons/ContentBox";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 
-  .title {
-    margin-top: 20px;
-    margin-bottom: 15px;
-    .text {
+const Wrapper = styled.div`
+  padding-top: 15px;
+  
+  .header {
+    width: 100%;
+
+    .title {
       width: max-content;
       margin: auto;
-      font: normal normal bold 20px/29px Noto Sans KR;
-      letter-spacing: 0px;
-      color: #000000;
-      text-align: center;
+
+      .text {
+        text-align: center;
+        font: normal normal bold 20px/29px Noto Sans KR;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+      }
     }
   }
+
   .form {
+    margin: auto;
+    margin-top: 15px;
     width: 1306px;
-    min-height: 554px;
+    // min-height: 1221px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 3px 3px 5px #0000001A;
     border: 0.25px solid #B7B7B7;
     border-radius: 20px;
-    padding: 40px 150px;
+    padding: 50px 150px;
+    padding-bottom: 50px;
 
     .row {
+      width: 100%;
       display: flex;
       flex-direction: row;
-
-      .label {
+      margin-bottom: 30px;
+      :last-child {
+        margin-bottom: 0px;
+      }
+      .label { 
+        width: 186px;
         height: 22px;
-        width: 185px;
         text-align: left;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-
-        text-align: left;
-        font: normal normal medium 15px/22px Noto Sans KR;
+        font: normal normal bold 15px/22px Noto Sans KR;
         letter-spacing: 0px;
         color: #707070;
-        span { font-weight: bold;color: #FF0000;}
       }
-
-      .content {
+      .content { 
         width: 100%;
-        max-width: 820px;
-        height: 22px;
-        margin-bottom: 31px;
-        // margin-left: 94px;
-
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
+        min-width: 820px;
+        min-height: 22px;
 
         text-align: left;
         font: normal normal normal 15px/22px Noto Sans KR;
         letter-spacing: 0px;
         color: #000000;
+
+        .title-input {
+          width: 100%;
+          min-width: 820px;
+          height: 31px;
+          background: #E9E9E9 0% 0% no-repeat padding-box;
+          border-radius: 10px;
+          border: none;
+
+          text-align: left;
+          font: normal normal 300 13px/19px Noto Sans KR;
+          letter-spacing: 0px;
+          color: #000; //#707070;
+          padding: 3px 0px 0px 11px;
+        }
       }
     }
   }
 
   .bottom {
-    width: 100%;
-    height: 30px;
     margin-top: 20px;
-    position: relative;
-    display: flex;
+    margin-bottom: 40px;
+    width: 100%;
 
+    .buttons {
+      margin: auto;
+      width: max-content;
+    }
     button {
       width: 150px;
       height: 30px;
       border: none;
-      text-align: center;
-      text-decoration: none;
-      text-align: center;
-      letter-spacing: 0px;
+
+      .text {
+        margin: auto;
+        width: max-content;
+        text-align: center;
+        font: normal normal bold 15px/22px Noto Sans KR;
+        letter-spacing: 0px;
+        color: #FFFFFF;
+        opacity: 1;
+      }
+      &.ok {
+        background: #FF0000 0% 0% no-repeat padding-box;
+        &.disabled {
+          background: #707070 0% 0% no-repeat padding-box;
+        }
+      }
+      &.cancel {
+        background: #707070 0% 0% no-repeat padding-box;
+      }
+      opacity: 1;
       :first-child {
         margin-right: 20px;
       }
-      font: normal normal bold 15px/22px Noto Sans KR;
-      color: #FFFFFF;
-    }
-
-    .apply {
-      margin-left: auto;
-      background: #FF0000 0% 0% no-repeat padding-box; /* Green - #4CAF50; */
-    }
-
-    .cancel {
-      margin-right: auto;
-      border: none;
-      background: #707070 0% 0% no-repeat padding-box;
     }
   }
+
+  .flexing-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .hr {
+    margin-top: 30px;
+    margin-bottom: 29px;
+    width: 1006px;
+    height: 2px;
+    border: 2px solid #EFEFEF;
+  }
 `;
-const InputText = styled.input.attrs({ type: "text" })`
-  width: ${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height: 52px;
-  border-radius: 26px;
-  font-family: Noto Sans KR;
-  font-size: ${market_style.font.size.normal3};
-  background-color: #E9E9E9;
-  margin-right: 21px;
-  outline: none;
-  border: 0px;
-  padding: 0.67857143em 1em;
+const DropBox = styled(Dropdown)`
+  width: 180px !important;
+  height: 31px !important;
+  border-radius: 10px !important;
+  background-color:#E9E9E9 !important;
+  border: none;
+
+  .text {
+    margin: 4px 0px 0px 22px;
+    font: normal normal normal 15px/22px Noto Sans KR;
+    letter-spacing: 0px !important;
+    color: #000000 !important;
+  }
+
+  .icon {
+    padding: 5px !important;
+  }
+
+  &.ui, &.selection, &.dropdown {
+    min-height: 31px !important;
+    height: 31px !important;
+    padding: 0px !important;
+    // background-color: blue !important;
+  }
 `;
+const LocationList = [
+  { value: 0, text: "서울특별시" },
+  { value: 1, text: "부산광역시" },
+  { value: 2, text: "대구광역시" },
+  { value: 3, text: "인천광역시" },
+  { value: 4, text: "광주광역시" },
+  { value: 5, text: "대전광역시" },
+  { value: 6, text: "울산광역시" },
+  { value: 7, text: "경기도" },
+  { value: 8, text: "강원도" },
+  { value: 9, text: "충청북도" },
+  { value: 10, text: "충청남도" },
+  { value: 11, text: "전라북도" },
+  { value: 12, text: "경상북도" },
+  { value: 13, text: "경상남도" },
+  { value: 14, text: "제주도" },
+  { value: 15, text: "제한없음" },
+];
+
+
 class RequestToDesigner extends Component {
   constructor(props) {
     super(props);
@@ -160,80 +225,22 @@ class RequestToDesigner extends Component {
     this.getDayDateValue = this.getDayDateValue.bind(this);
     this.onFileChange = this.onFileChange.bind(this);
   }
-  async onClickCategorylevel1(event, { value }) {
-    await this.setState({ category_level1: { value }.value });
-  }
-  async onClickCategorylevel2(event, { value }) {
-    await this.setState({ category_level2: { value }.value });
-  }
-  onClickItemType(event, { value }) {
-    this.setState({ itemType: { value }.value });
-  }
-  onChangeTitle(event) {
-    this.setState({
-      title: event.target.value,
-    })
-  }
-  async getPriceValue(value) {
-    await this.setState({
-      price: value
-    });
-  }
-  async getStartDateValue(value) {
-    // await console.log("startDate",value);
-    await this.setState({ startDate: value });
-  }
-  async getEndDateValue(value) {
-    // await console.log("endDate",value);
-    await this.setState({ endDate: value });
-  }
-  async getDayDateValue(value) {
-    await this.setState({ dayDate: value })
-  }
-  getTagValue(data) {
-    this.setState({
-      tag: data.slice(),
-    })
-  }
-  onChangePrice(event) {
-    this.setState({
-      price: event.target.value,
-    })
-  }
-  onChangeLocation(event, { value }) {
-    this.setState({
-      location: { value }.value
-    });
-  }
-  async onChangeContent(data) {
-    await this.setState({
-      content: data.content
-    });
-    // this.setState({
-    //   content: event.target.value,
-    // })
-  }
-  onChangeOwnership(event, { value }) {
-    this.setState({
-      ownership: { value }.value,
-    })
-  }
-  onChangeOffline(event, { value }) {
-    this.setState({
-      offline: { value }.value,
-    })
-  }
-  handleAddTag(tag) {
-    this.setState({
-      tag: tag.slice(),
-    });
-  }
-  async onFileChange(file) {
-    this.setState({
-      file_url: file.file_url,
-      filename: file.filename,
-    });
-  }
+  async onClickCategorylevel1(event, { value }) { await this.setState({ category_level1: { value }.value }); }
+  async onClickCategorylevel2(event, { value }) { await this.setState({ category_level2: { value }.value }); }
+  onClickItemType(event, { value }) { this.setState({ itemType: { value }.value }); }
+  onChangeTitle(event) { this.setState({ title: event.target.value, }) }
+  async getPriceValue(value) { await this.setState({ price: value }); }
+  async getStartDateValue(value) { await this.setState({ startDate: value }); }
+  async getEndDateValue(value) { await this.setState({ endDate: value }); }
+  async getDayDateValue(value) { await this.setState({ dayDate: value }) }
+  getTagValue(data) { this.setState({ tag: data.slice(), }) }
+  onChangePrice(event) { this.setState({ price: event.target.value, }) }
+  onChangeLocation(event, { value }) { this.setState({ location: { value }.value }); }
+  async onChangeContent(data) { await this.setState({ content: data.content }); }
+  onChangeOwnership(event, { value }) { this.setState({ ownership: { value }.value, }) }
+  onChangeOffline(event, { value }) { this.setState({ offline: { value }.value, }) }
+  handleAddTag(tag) { this.setState({ tag: tag.slice(), }); }
+  async onFileChange(file) { this.setState({ file_url: file.file_url, filename: file.filename, }); }
   async onSubmit() {
     const data = {
       type: "designer",
@@ -280,26 +287,119 @@ class RequestToDesigner extends Component {
     const { userInfo } = this.props;
 
     return (<Wrapper>
-      <div className="title">
-        <p className="text">
-          디자인 의뢰
-        </p>
+      {/* header */}
+      <div className="header">
+        <div className="title">
+          <div className="text">디자인 의뢰</div>
+        </div>
       </div>
+
+      {/* form */}
       <div className="form">
         <div className="row">
           <div className="label">의뢰자</div>
-          <div className="content">{userInfo.nickName}{userInfo.nickName}{userInfo.nickName}{userInfo.nickName}{userInfo.nickName}</div>
+          <div className="content">{userInfo.nickName}</div>
         </div>
+
         <div className="row">
           <div className="label">제목<Mandatory /></div>
-          <div className="contents"><InputText onChange={this.onChangeTitle} value={this.state.title} width={820} /></div>
+          <div className="content"><input onChange={this.onChangeTitle} className="title-input" placeholder="제목을 입력하세요." /></div>
+        </div>
+
+        <div className="row">
+          <div className="label">카테고리</div>
+          <div className="content flexing-row">
+            <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
+            <CustomIcon width="5" height="10" marginRight="20" marginLeft="20" imgURL={category_icon} />
+            <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="label">태그</div>
+          <div className="content">
+            <InputTagNew getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="label">의뢰 내용<Mandatory /></div>
+          <div className="content">
+            <TextControllerClassic
+              item={{ content: this.state.content, /*height: 388*/ }}
+              name={"comment"}
+              getValue={this.onChangeContent}
+              // width="820"
+              editheight="388"
+              marginBottom="0"
+              border="1px solid #707070"
+            // initClick={this.state.click}
+            // deleteItem={this.deleteItem}
+            />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="label">파일 등록</div>
+          <div className="content">
+            <InputFile width={533} getValue={this.onFileChange} accept="pdf" />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="label">희망 비용</div>
+          <div className="content">
+            <InputPriceNew name="price" getValue={this.getPriceValue} />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="label ">기간</div>
+          <div className="content">
+            <InputCalendar
+              startDate={this.state.startDate}
+              endDate={this.state.endDate}
+              name="calendar"
+              getStartDateValue={this.getStartDateValue}
+              getEndDateValue={this.getEndDateValue}
+              getDayDateValue={this.getDayDateValue} />
+          </div>
+        </div>
+
+        <div className="hr"></div>
+
+        <div className="row">
+          <div className="label">디자이너 위치</div>
+          <div className="content">
+            <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
+              selection options={LocationList} placeholder="시/도"
+              onChange={this.onChangeLocation} />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="label">디자인 소유권</div>
+          <div className="content">
+            <DropBox id="designerOwnership" selection options={[{ text: "구매자", value: 0 }, { text: "디자이너", value: 1 }]}
+              onChange={this.onChangeOwnership} value={this.state.ownership} placeholder="선택" />
+          </div>
         </div>
       </div>
+
+
+      {/* bottom */}
       <div className="bottom">
-        <button className="apply">등록하기</button>
-        <button className="cancel">취소하기</button>
+        <div className="buttons">
+          <button onClick={this.onSubmit} className="ok">
+            <div className="text">등록하기</div>
+          </button>
+          <button onClick={() => { window.history.back() }} className="cancel">
+            <div className="text">취소하기</div>
+          </button>
+        </div>
       </div>
-    </Wrapper>);
+
+    </Wrapper >);
   };
 }
 export default RequestToDesigner;

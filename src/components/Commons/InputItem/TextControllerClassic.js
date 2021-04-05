@@ -8,16 +8,32 @@ import 'react-quill/dist/quill.bubble.css';
 import market_style from "market_style";
 
 const EditorWrapper = styled.div`
-    margin-bottom: 5px;
+    position: relative;
+    margin-bottom: ${props => props.marginBottom ? props.marginBottom : 5}px;
     .copyright {
+        position: absolute;
         width: max-content;
+        right: 3px;
+        top: 0px;
         margin-left: auto;
         font-size: ${market_style.font.size.tiny1};
+        color: #707070;
     }
     .editor {
         width:${props => props.width == null ? "100%" : props.width + "px"};
         height:${props => props.editheight == null ? "100%" : props.editheight + "px"};
         font-size: ${market_style.font.size.tiny1};
+        border: ${props => props.border == null ? "1px solid #EFEFEF" : props.border};
+        .ql-snow {
+            max-height: ${props => props.editheight == null ? "100%" : props.editheight - 44 + "px"};
+        }
+        .ql-editor {
+            max-height: ${props => props.editheight == null ? "100%" : props.editheight - 44 + "px"};
+        }
+        .ql-blank {
+            // background-color: red;
+            max-height: ${props => props.editheight == null ? "100%" : props.editheight - 44 + "px"};
+        }
     }
 `;
 export class TextControllerClassic extends Component {
@@ -32,27 +48,12 @@ export class TextControllerClassic extends Component {
         const { item } = this.props;
         return (
             <React.Fragment>
-                <EditorWrapper width={this.props.width} editheight={this.props.editheight} height={item.height}>
-                    {/*<CKEditor
-
-                id="classicEditor_"
-                editor={ClassicEditor}
-                data={item.content}
-                onInit={editor => { editor.editing.view.focus(); }}
-                onChange={(event, editor) => {
-                    const data = editor.getData();
-                    this.props.getValue({ content: data });
-                }}
-                onBlur={(event, editor) => { console.log('Blur.', event, editor); }}
-                onFocus={(event, editor) => { console.log('Focus.', editor); }} />
-            <p className="copyright">(editor: CKEditor 5 classic)</p> */}
+                <EditorWrapper border={this.props.border} width={this.props.width} editheight={this.props.editheight} height={item.height} marginBottom={this.props.marginBottom}>
+                    <div className="copyright">power by https://quilljs.com</div>
                     <Editor
                         value={this.props.item.content}
                         className="editor"
                         onChange={this.onChangeText}
-                        // onChange={(content, delta, source, editor) => {
-                        //     this.props.getValue({ content: editor.getHTML() })
-                        // }}
                         theme="snow"
                         modules={{
                             toolbar: [
@@ -74,7 +75,6 @@ export class TextControllerClassic extends Component {
                             'color', 'background'
                         ]}
                     />
-                    <div className="copyright">power by https://quilljs.com</div>
                 </EditorWrapper>
 
             </React.Fragment>

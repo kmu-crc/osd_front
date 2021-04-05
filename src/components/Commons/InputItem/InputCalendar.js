@@ -5,42 +5,60 @@ import market_style from "market_style";
 const FormBox = styled.div`
     display:flex;
     align-items:center;
-    .won{
-        margin-right:50px;
+
+    margin-right: 20.5px;
+
+    .last-child {
+        margin-right: 0px;
     }
+
+&.middle-border {
+    div { 
+        width: 10px; 
+        height: 31px; 
+        position: relative;
+    }
+    div:before { 
+        content: '';
+        position: absolute;
+        border-bottom: 1px solid #707070;
+        height: 100%;
+        width: 100%;
+        transform: translateY(-50%);
+    }
+}
 `
+
 const FormStyle = styled.input.attrs({ type: "date" })`
-    width: max-content;
-    height:52px;
-    margin: 0;
-    padding: 0.67857143em 1em;
-    margin-right:5px;
-    font-size: ${market_style.font.size.small3};
-    text-align:center;
-    font-family:Noto Sans CJK KR, Regular;
-    background-color:#E9E9E9;
-    outline:none;
-    border:0px;
-    border-radius:26px;
+    width: 160px;
+    height: 31px;
+    background: #E9E9E9 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    outline: none;
+    border: 0px;
+    
+    padding-left: 20px;
+
+    line-height: 22px;
+    // text-align: center;
+    font: normal normal normal 15px/22px Noto Sans KR;
+    letter-spacing: 0px;
+    color: #000000;
+
     transition: color 0.1s ease, border-color 0.1s ease;
     -webkit-appearance: none;
-
-    &::placeholder {
-        color: ${StyleGuide.color.geyScale.scale5};
-    }
-    &:focus {
-        &::placeholder {
-            color: ${StyleGuide.color.geyScale.scale7};
-        }
-        border-color: #85b7d9;
-        box-shadow: 0 0 0 0 rgba(34, 36, 38, 0.35) inset;
-    }
-    &.error {
-        border: 1px solid ${StyleGuide.color.main.basic};
-        color: ${StyleGuide.color.main.basic};
-        &::placeholder {
-            color: ${StyleGuide.color.main.basic};
-        }
+    position: relative;
+    ::-webkit-calendar-picker-indicator {
+        color: rgba(0, 0, 0, 0);
+        opacity: 1;
+        // display: block;
+        position: absolute;
+        right: 20px;
+        // top: 6px;
+        // background: url(https://mywildalberta.ca/images/GFX-MWA-Parks-Reservations.png) no-repeat;
+        width: 20px;
+        height: 20px;
+        border-width: thin;
     }
 `;
 const FormText = styled.input.attrs({ type: "number" })`
@@ -220,25 +238,27 @@ export class InputCalendar extends Component {
     render() {
         return (
             <React.Fragment>
-                <div style={{display:"flex",alignItems:"center",fontSize:market_style.font.size.small3}}>
-                <FormBox>
-                    <FormStyle
-                        id="startDate"
-                        placeholder={this.props.placeholder}
-                        value={this.state.startDate || ""}
-                        onChange={this.onChangeStartDate}
-                    />
-                </FormBox>
-                &nbsp;~ &nbsp;
-                <FormBox>
-                    <FormStyle
-                        id="endDate"
-                        placeholder={this.props.placeholder}
-                        value={this.state.endDate || ""}
-                        onChange={this.onChangeEndDate}
-                    />
-                </FormBox>
-                {/* <FormText
+                <div style={{ display: "flex", alignItems: "center", fontSize: market_style.font.size.small3 }}>
+                    <FormBox>
+                        <FormStyle
+                            id="startDate"
+                            placeholder={this.props.placeholder}
+                            value={this.state.startDate || ""}
+                            onChange={this.onChangeStartDate}
+                        />
+                    </FormBox>
+                    <FormBox className="middle-border">
+                        <div></div>
+                    </FormBox>
+                    <FormBox>
+                        <FormStyle
+                            id="endDate"
+                            placeholder={this.props.placeholder}
+                            value={this.state.endDate || ""}
+                            onChange={this.onChangeEndDate}
+                        />
+                    </FormBox>
+                    {/* <FormText
                     id="dateDate"
                     width={80}
                     value={this.state.dayDate || ""}

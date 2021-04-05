@@ -22,12 +22,14 @@ export default class Detail extends Component {
       alert("미구현");
     }
   }
+  returnToList = () => {
+    window.location.href = "/request/" + this.props.Detail.type;
+  }
 
   render() {
     const { Detail, MyDetail, userInfo } = this.props;
     if (Detail == null || Detail.length === 0) return (<Loading />);
 
-    // const TypeText = Detail.type === "maker" ? "제작" : "디자인";
     const level1 = Detail.status === "response" ? Detail.request.category_level1 : Detail.category_level1;
     const level2 = Detail.status === "response" ? Detail.request.category_level2 : Detail.category_level2;
     const category_level1 = this.props.category1 && this.props.category1[level1 - 1] && this.props.category1[level1 - 1].text;
@@ -35,22 +37,32 @@ export default class Detail extends Component {
 
     return (<React.Fragment>
 
-      {/* DESIGN REQUEST DETAIL */}
-      {Detail.type === "designer" && Detail.status === "request"
-        ? <DesignRequestDetail {...Detail} onClick={() => this.onClickResponse()} category_level1={category_level1} category_level2={category_level2} />
-        : null}
+      {/* REQUEST DETAIL */}
+      {Detail.status === "request"
+        ? <DesignRequestDetail
+          {...Detail}
+          returnToList={() => this.returnToList()}
+          onClick={() => this.onClickResponse()}
+          category_level1={category_level1}
+          category_level2={category_level2}
+        /> : null}
 
-      {/* DESIGN RESPONSE DETAIL */}
-      {Detail.type === "designer" && Detail.status === "response"
-        ? <DesignResponseDetail {...Detail} onClick={() => this.onClickResponse()} userInfo={userInfo} isPurchased={this.props.isPurchased} category_level1={category_level1} category_level2={category_level2} />
-        : null}
-
-      {/* MAKER REQUEST DETAIL */}
-
-      {/* MAKER RESPONSE DETAIL */}
+      {/* RESPONSE DETAIL */}
+      {Detail.status === "response"
+        ? <DesignResponseDetail
+          {...Detail}
+          returnToList={() => this.returnToList()}
+          onClick={() => this.onClickResponse()}
+          userInfo={userInfo}
+          isPurchased={this.props.isPurchased}
+          category_level1={category_level1}
+          category_level2={category_level2}
+        /> : null}
 
       {/* NORMAL DETAIL */}
-
+      {Detail.status === "normal"
+        ? <div>{Detail.status}</div>
+        : null}
 
     </React.Fragment>);
   }

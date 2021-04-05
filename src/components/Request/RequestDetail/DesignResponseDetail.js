@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
+
 import category_icon from "source/category_icon.svg";
 
 const LocationList = [
@@ -32,7 +33,6 @@ const CustomIcon = styled.div`
   display: ${props => props.isNon == true ? "none" : "block"}
 `;
 const DesignResponseDetailWrapper = styled.div`
-  *{border:1px solid #AEAEAE;}
   width: 100%;
   padding: 0px 30px;
   
@@ -136,9 +136,27 @@ const DesignResponseDetailWrapper = styled.div`
     .attach-arrow {
       width: 10px;
       height: 10px;
-      background-color: #FF0000;
+      // background-color: #FF0000;
       margin-right: 16px;
       margin-left: 4px;
+      
+      border-left: 1px solid red;
+      border-bottom: 1px solid red;
+      
+      // .addfilebox{
+      //   .addfile{
+      //     width:10px;
+      //     height:10px;
+      //     border-left: 1px solid red;
+      //     border-bottom: 1px solid red;
+      //   }
+      //   .black_addfile{
+      //     width: 10px;
+      //     height: 10px;
+      //     border-left: 1px solid black;
+      //     border-bottom: 1px solid black;
+      //   }
+      // }
     }
   }
   
@@ -170,7 +188,9 @@ const DesignResponseDetailWrapper = styled.div`
       height: 19px;
       background: #FFFFFF;
       border: none;
-  
+      display: flex;
+      flex-direction: row;
+
       text-align: left;
       font: normal normal medium 13px/19px Noto Sans KR;
       letter-spacing: 0px;
@@ -189,9 +209,8 @@ export const DesignResponseDetail = (props) => {
 
   return (<DesignResponseDetailWrapper>
     <div className="title">
-      <p className="text">
-        디자인 의뢰 응답{/*상세*/}
-      </p>
+      {props.type === "designer" ? <p className="text"> 디자인 의뢰 응답</p> : null}
+      {props.type === "maker" ? <p className="text"> 제작 의뢰 응답</p> : null}
     </div>
 
     <div className="form-list">
@@ -221,7 +240,9 @@ export const DesignResponseDetail = (props) => {
           <div className="label">의뢰 내용</div>
           <div className="content">
             <div dangerouslySetInnerHTML={{ __html: `${request.content || ""}` }} />
-            <div className="attach-file"> <div className="attach-arrow" /> 첨부파일: {request.filename ? <a href={request.file_url}>{request.filename}</a> : "없음"}</div> {/* &#10145; */}
+            <div className="attach-file">
+              <div className="attach-arrow" />
+              첨부파일: {request.filename ? <a href={request.file_url}>{request.filename}</a> : "없음"}</div> {/* &#10145; */}
           </div>
         </div>
         <div className="row">
@@ -252,7 +273,9 @@ export const DesignResponseDetail = (props) => {
           <div className="label">설명</div>
           <div className="content">
             <div dangerouslySetInnerHTML={{ __html: `${content || ""}` }} />
-            <div className="attach-file"> <div className="attach-arrow" /> 첨부파일: {filename ? <a href={file_url}>{filename}</a> : "없음"}</div> {/* &#10145; */}
+            <div className="attach-file">
+              <div className="attach-arrow" />
+              첨부파일: {filename ? <a href={file_url}>{filename}</a> : "없음"}</div> {/* &#10145; */}
           </div>
         </div>
         <div className="row">
@@ -268,22 +291,10 @@ export const DesignResponseDetail = (props) => {
 
     {/*  */}
     <div className="bottom">
-      {/* this.props.userInfo && this.props.Detail && this.props.isPurchased == false &&
-        this.props.userInfo.uid == this.props.Detail.client_id ?
-        <ButtonWrapper>
-          <div className="btnbox">
-            <div className="_box">
-              <RedButton value={"의뢰 구입"} onClick={this.props.purchase} />
-            </div>
-          </div>
-        </ButtonWrapper> */}
-      {props.userInfo &&
-        // props.Detail &&
-        props.isPurchased === false &&
-        props.userInfo.uid === props.client_id ?
+      {props.userInfo && props.isPurchased === false && props.userInfo.uid === props.client_id ?
         <button onClick={() => props.onClick()} className="reply">의뢰구입</button> : null}
 
-      <button className="back"> {"<"} 목록으로</button>
+      <button onClick={() => props.returnToList()} className="back"> <CustomIcon style={{ transform: "rotate(180deg)", opacity: ".9" }} width="5" height="10" marginRight="12" marginLeft="0" imgURL={category_icon} /> 목록으로</button>
     </div>
 
   </DesignResponseDetailWrapper>)

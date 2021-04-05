@@ -4,22 +4,22 @@ import category_icon from "source/category_icon.svg";
 // import market_style from "market_style";
 
 const LocationList = [
-    { value: 0, text: "서울특별시" },
-    { value: 1, text: "부산광역시" },
-    { value: 2, text: "대구광역시" },
-    { value: 3, text: "인천광역시" },
-    { value: 4, text: "광주광역시" },
-    { value: 5, text: "대전광역시" },
-    { value: 6, text: "울산광역시" },
-    { value: 7, text: "경기도" },
-    { value: 8, text: "강원도" },
-    { value: 9, text: "충청북도" },
-    { value: 10, text: "충청남도" },
-    { value: 11, text: "전라북도" },
-    { value: 12, text: "경상북도" },
-    { value: 13, text: "경상남도" },
-    { value: 14, text: "제주도" },
-    { value: 15, text: "제한없음" },
+  { value: 0, text: "서울특별시" },
+  { value: 1, text: "부산광역시" },
+  { value: 2, text: "대구광역시" },
+  { value: 3, text: "인천광역시" },
+  { value: 4, text: "광주광역시" },
+  { value: 5, text: "대전광역시" },
+  { value: 6, text: "울산광역시" },
+  { value: 7, text: "경기도" },
+  { value: 8, text: "강원도" },
+  { value: 9, text: "충청북도" },
+  { value: 10, text: "충청남도" },
+  { value: 11, text: "전라북도" },
+  { value: 12, text: "경상북도" },
+  { value: 13, text: "경상남도" },
+  { value: 14, text: "제주도" },
+  { value: 15, text: "제한없음" },
 ];
 const CustomIcon = styled.div`
     width: ${props => props.width}px;
@@ -33,7 +33,6 @@ const CustomIcon = styled.div`
     display: ${props => props.isNon == true ? "none" : "block"}
   `;
 const DesignRequestDetailWrapper = styled.div`
-  *{border:1px solid #AEAEAE;}
     width: 100%;
     padding: 0px 30px;
   
@@ -160,6 +159,8 @@ const DesignRequestDetailWrapper = styled.div`
         height: 19px;
         background: #FFFFFF;
         border: none;
+        display: flex;
+        flex-direction: row;
   
         text-align: left;
         font: normal normal medium 13px/19px Noto Sans KR;
@@ -170,63 +171,64 @@ const DesignRequestDetailWrapper = styled.div`
   `;
 
 export const DesignRequestDetail = (props) => {
-    const { nick_name, title, category_level1, category_level2, tag, content, price, file_url, filename, start_date, end_date, location, ownership, } = props;
-    console.log(props);
+  const { nick_name, title, category_level1, category_level2, tag, content, price, file_url, filename, start_date, end_date, location, ownership, } = props;
 
-    return (<DesignRequestDetailWrapper>
-        <div className="title">
-            <p className="text">
-                디자인 의뢰 상세</p></div>
-        <div className="form">
-            <div className="row">
-                <div className="label">의뢰자</div>
-                <div className="content">{nick_name || "이름없음"}</div>
-            </div>
-            <div className="row">
-                <div className="label">제목</div>
-                <div className="content">{title || "제목없음"}</div>
-            </div>
-            <div className="row">
-                <div className="label">카테고리</div>
-                <div className="content flex-and-middle">
-                    {category_level1}
-                    {category_level2 ? <CustomIcon width="5" height="10" marginRight="20" marginLeft="20" imgURL={category_icon} /> : null}
-                    {category_level2 ? category_level2 : null}
-                </div>
-            </div>
-            <div className="row">
-                <div className="label">태그</div>
-                <div className="content taglist">{tag && tag.split(",").map((t, index) => <p key={t + index} className="tag">{t}</p>)}</div>
-            </div>
-            <div className="row">
-                <div className="label">의뢰 내용</div>
-                <div className="content">
-                    <div dangerouslySetInnerHTML={{ __html: `${content || ""}` }} />
-                    <div className="attach-file"> <div className="attach-arrow" /> 첨부파일: {filename ? <a href={file_url}>{filename}</a> : "없음"}</div> {/* &#10145; */}
-                </div>
-            </div>
-            <div className="row">
-                <div className="label">희망 비용</div>
-                <div className="content">{parseInt(price, 10) / (price > 9999 ? 10000 : 1) + (price > 9999 ? "만" : "") + " point"}</div>
-            </div>
-            <div className="row">
-                <div className="label">기간</div>
-                <div className="content">{start_date}~{end_date}</div>
-            </div>
-            <div className="row">
-                <div className="label">디자인 위치</div>
-                <div className="content">{LocationList[location || 15].text}</div>
-            </div>
-            <div className="row">
-                <div className="label">디자인 소유권</div>
-                <div className="content">{ownership <= 0 ? "의뢰자" : "디자이너"}</div>
-            </div>
+  return (<DesignRequestDetailWrapper>
+    <div className="title">
+      {props.type === "designer" ? <p className="text"> 디자인 의뢰 상세</p> : null}
+      {props.type === "maker" ? <p className="text"> 제작 의뢰 상세</p> : null}
+    </div>
+    <div className="form">
+      <div className="row">
+        <div className="label">의뢰자</div>
+        <div className="content">{nick_name || "이름없음"}</div>
+      </div>
+      <div className="row">
+        <div className="label">제목</div>
+        <div className="content">{title || "제목없음"}</div>
+      </div>
+      <div className="row">
+        <div className="label">카테고리</div>
+        <div className="content flex-and-middle">
+          {category_level1}
+          {category_level2 ? <CustomIcon width="5" height="10" marginRight="20" marginLeft="20" imgURL={category_icon} /> : null}
+          {category_level2 ? category_level2 : null}
         </div>
-
-        <div className="bottom">
-            <button onClick={() => props.onClick()} className="reply">의뢰응답</button>
-            <button className="back"> {"<"} 목록으로</button>
+      </div>
+      <div className="row">
+        <div className="label">태그</div>
+        <div className="content taglist">{tag && tag.split(",").map((t, index) => <p key={t + index} className="tag">{t}</p>)}</div>
+      </div>
+      <div className="row">
+        <div className="label">의뢰 내용</div>
+        <div className="content">
+          <div dangerouslySetInnerHTML={{ __html: `${content || ""}` }} />
+          <div className="attach-file"> <div className="attach-arrow" /> 첨부파일: {filename ? <a href={file_url}>{filename}</a> : "없음"}</div> {/* &#10145; */}
         </div>
+      </div>
+      <div className="row">
+        <div className="label">희망 비용</div>
+        <div className="content">{parseInt(price, 10) / (price > 9999 ? 10000 : 1) + (price > 9999 ? "만" : "") + " point"}</div>
+      </div>
+      <div className="row">
+        <div className="label">기간</div>
+        <div className="content">{start_date}~{end_date}</div>
+      </div>
+      <div className="row">
+        {props.type === "designer" ? <div className="label">디자이너 위치</div> : null}
+        {props.type === "maker" ? <div className="label">메이커 위치</div> : null}
+        <div className="content">{LocationList[location || 15].text}</div>
+      </div>
+      <div className="row">
+        <div className="label">디자인 소유권</div>
+        <div className="content">{ownership <= 0 ? "의뢰자" : "디자이너"}</div>
+      </div>
+    </div>
 
-    </DesignRequestDetailWrapper>)
+    <div className="bottom">
+      <button onClick={() => props.onClick()} className="reply">의뢰응답</button>
+      <button onClick={() => props.returnToList()} className="back"> <CustomIcon style={{ transform: "rotate(180deg)" }} width="5" height="10" marginRight="20" marginLeft="20" imgURL={category_icon} /> 목록으로</button>
+    </div>
+
+  </DesignRequestDetailWrapper>)
 }
