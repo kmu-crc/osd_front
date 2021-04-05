@@ -246,10 +246,21 @@ const InputTextarea = styled.textarea`
 
 `;
 const DropBox = styled(Dropdown)`
-  min-width:200px !important;
-  background-color: #E9E9E9 !important;
-  margin-right: 10px;
-  border-radius: 20px !important;
+    width:160px;
+    min-width:100px !important;
+    min-height:31px !important;
+    max-height:31px !important;   
+    display:flex !important;
+    align-items:center !important; 
+    background-color:#E9E9E9 !important;
+    margin-right:10px;
+    font-size:${market_style.font.size.small1};
+    border-radius:10px !important;
+    .icon{
+      width:max-content !important;
+      height:max-content !important;
+      padding:6px !important;
+    }
 `;
 const Margin = styled.div`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
@@ -358,6 +369,7 @@ class ModifyItemInfo extends Component {
     this.onHandleReturnedTags = this.onHandleReturnedTags.bind(this);
     this.onClickCategorylevel1 = this.onClickCategorylevel1.bind(this);
     this.onClickCategorylevel2 = this.onClickCategorylevel2.bind(this);
+    this.onClickCategorylevel3=this.onClickCategorylevel3.bind(this);
     this.deleteThisItem = this.deleteThisItem.bind(this);
     this.onHandleAdditionalText = this.onHandleAdditionalText.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
@@ -382,6 +394,7 @@ class ModifyItemInfo extends Component {
       title: ItemDetail.title,
       category_level1: ItemDetail.category_level1,
       category_level2: ItemDetail.category_level2,
+      category_level3: ItemDetail.category_level3,
       tag: ItemDetail.tag.indexOf(",") == -1 ? [] : ItemDetail.tag.split(","),
       itemType: ItemDetail.type,
       thumbnail: ItemDetail.thumbnail.l_img,
@@ -400,6 +413,7 @@ class ModifyItemInfo extends Component {
       && this.state.tag.join(',') === this.props.ItemDetail.tag
       && this.state.category_level1 === this.props.ItemDetail.category_level1
       && this.state.category_level2 === this.props.ItemDetail.category_level2
+      && this.state.category_level3 === this.props.ItemDetail.category_level3
       && _.isEqual(this.state.additional, { "contact-type": this.props.ItemDetail["contact-type"], description: this.props.ItemDetail.description, members: this.props.ItemDetail.members, price: this.props.ItemDetail.price, public: this.props.ItemDetail.public, "selling-type": this.props.ItemDetail["selling-type"] })
       // "\n7", this.state.content, this.props.ItemDetail.content,
       // "\n8", this.state.step === this.props.ItemDetail.steps,
@@ -424,7 +438,7 @@ class ModifyItemInfo extends Component {
       // basic
       title: this.state.title,
       files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name }],
-      tag: this.state.tag, category1: this.state.category_level1, category2: this.state.category_level2,
+      tag: this.state.tag, category1: this.state.category_level1, category2: this.state.category_level2,category3: this.state.category_level3,
       // itemType: this.state.itemType, //fixed
       // additional
       additional: this.state.additional, content: this.state.content, step: this.state.steps,
@@ -459,10 +473,19 @@ class ModifyItemInfo extends Component {
   }
   async onClickCategorylevel1(event, { value }) {
     await this.setState({ category_level1: value });
+    this.setState({ ismodified: await this.isModify() });
+
   };
   async onClickCategorylevel2(event, { value }) {
     await this.setState({ category_level2: value });
+    this.setState({ ismodified: await this.isModify() });
+
   };
+  async onClickCategorylevel3(event, { value }) {
+    await this.setState({ category_level3: value });
+    this.setState({ ismodified: await this.isModify() });
+
+  }
   onClickItemType(_, { value }) {
     this.setState({ itemType: { value }.value, additional: null, type: { value }.value === 1 ? "project" : "blog" });
   };
@@ -517,10 +540,7 @@ class ModifyItemInfo extends Component {
   };
   async onHandleAdditionalText(event) {
     let copy = { ...this.state.additional };
-    // console.log(document.getElementById(event.target.id).value.replace(""));
-    // copy[event.target.name] = document.getElementsByName(event.target.name).value.("\r\n","<br/>");
     copy[event.target.name] = event.target.value;
-    // alert(copy[event.target.name]);
     await this.setState({ additional: copy });
   };
   async getPriceValue(value) {
@@ -553,8 +573,11 @@ class ModifyItemInfo extends Component {
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
+    const category3 = (this.state.category_level1 && this.state.category_level2 && this.props.category3 && this.props.category3.filter(item => item.parent === this.state.category_level2)) || [{ text: "_", value: -1 }];
+
     const { /* edit, */ itemType, tab } = this.state;
     const Mandatory = () => <span className="font_red" title="필수사항입니다."> * </span>
+    console.log(this.props);
     return (<MainBox>
       {this.state.loading ? <Loading /> : null}
 
@@ -580,7 +603,7 @@ class ModifyItemInfo extends Component {
       {tab === "basic" ?
         (<div className="contentsBox">
           <ThumbnailBox>
-            <div className="label">썸네일 이미지 등록<Mandatory /></div>
+            <div className="label">썸네일 이미지<Mandatory /></div>
             <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/*" />
             <label htmlFor="file">
               <Thumbnail img={this.state.thumbnail}>
@@ -601,8 +624,16 @@ class ModifyItemInfo extends Component {
                 <div className="label">카테고리<Mandatory /></div>
                 <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
                 <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
+              {parseInt(this.state.category_level2, 10) === 42 ? 
+                <React.Fragment>
+                    <DropBox id="category_level3" value={this.state.category_level3} selection options={category3} placeholder="언어선택" onChange={this.onClickCategorylevel3} />
+                      <div style={{disply:"flex",alignItems:"center"}}>
+                      <CheckBox2 onChange={() => this.setState({ is_problem: !this.state.is_problem, })} checked={this.state.is_problem} />
+                      <div style={{marginLeft:"30px"}}>문제 등록기능을 사용합니다.</div>
+                      </div>
+                </React.Fragment>
+              : null}
               </div>
-
               <div className="wrapper flex margin_bottom">
                 <div className="label">태그</div>
                 <div>

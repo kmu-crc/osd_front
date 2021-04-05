@@ -45,7 +45,7 @@ const TextWrapper = styled.div`
   flex-direction:column;
   align-items:center;
   .nick {
-    margin-top:10px;
+    margin-top:5px;
     text-align:center;
     width:100%;
     overflow:hidden;
@@ -56,6 +56,7 @@ const TextWrapper = styled.div`
     color: #060000;
   }
   .category {
+    height:22px;
     margin-top:10px;
     font-weight: 500;
     font-size:${market_style.font.size.small1};
@@ -63,9 +64,11 @@ const TextWrapper = styled.div`
   }
 `;
 const Counter = styled.div`
+
   display: flex;
   flex-direction: row;
   width: max-content;
+  height:19px;
   margin-left: auto;
   margin-top: 5px;
   margin-right: auto;
