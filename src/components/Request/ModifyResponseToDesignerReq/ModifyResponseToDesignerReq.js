@@ -517,7 +517,7 @@ class ModifyResponseToDesignerReq extends Component {
           </div>
           <div className="row">
             <div className="label">카테고리</div>
-            <div className="content">
+            <div className="content flexing-row">
               {category_level1}
               {category_level2 ? <CustomIcon width="15" height="15" marginRight="31" marginLeft="31" imgURL={category_icon} /> : null}
               {category_level2 ? category_level2 : null}
