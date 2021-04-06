@@ -149,7 +149,12 @@ padding: 0px 30px;
   font: normal normal normal 13px/19px Noto Sans KR;
   letter-spacing: 0px;
   color: #FF0000;
-
+  .attach-link {
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    width: 100%;
+   } 
   .attach-arrow {
     width: 10px;
     height: 10px;
@@ -539,7 +544,7 @@ class ModifyResponseToMakerReq extends Component {
           </div>
           <div className="row">
             <div className="label">카테고리</div>
-            <div className="content">
+            <div className="content flexing-row">
               {category_level1}
               {category_level2 ? <CustomIcon width="15" height="15" marginRight="31" marginLeft="31" imgURL={category_icon} /> : null}
               {category_level2 ? category_level2 : null}
@@ -563,15 +568,15 @@ class ModifyResponseToMakerReq extends Component {
               <div dangerouslySetInnerHTML={{ __html: `${request.content || ""}` }} />
               <div className="attach-file">
                 <div className="attach-arrow" />
+                <div className="attach-link">
                   첨부파일: {request.filename ? <a href={request.file_url}>{request.filename}</a> : "없음"}</div> {/* &#10145; */}
+                </div>
             </div>
           </div>
-
           <div className="row">
             <div className="label">희망비용</div>
             <div className="content">{request.price}</div>
           </div>
-
           <div className="row">
             <div className="label">기간</div>
             <div className="content">{request.start_date}~{request.end_date}</div>
@@ -629,7 +634,13 @@ class ModifyResponseToMakerReq extends Component {
       </div>
 
       {/*  */}
-      <div className="bottom"> </div>
+      <div className="bottom">
+        <div className="buttons">
+          <RedButton width={150} height={30} text={"수정된 내용을 저장합니다."} okText="확인" cancelText="취소" value={"수정하기"} onClick={this.onSubmit} isConfirm={true} />
+          <GrayButton width={150} height={30} text={"수정된 내용이 저장되지 않습니다."} value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} />
+        </div>
+      </div>
+
     </Wrapper>);
   };
 }

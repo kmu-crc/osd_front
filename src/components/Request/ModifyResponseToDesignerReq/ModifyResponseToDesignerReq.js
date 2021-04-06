@@ -151,7 +151,12 @@ padding: 0px 30px;
   font: normal normal normal 13px/19px Noto Sans KR;
   letter-spacing: 0px;
   color: #FF0000;
-
+  .attach-link {
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    width: 100%;
+   } 
   .attach-arrow {
     width: 10px;
     height: 10px;
@@ -517,7 +522,7 @@ class ModifyResponseToDesignerReq extends Component {
           </div>
           <div className="row">
             <div className="label">카테고리</div>
-            <div className="content">
+            <div className="content flexing-row">
               {category_level1}
               {category_level2 ? <CustomIcon width="15" height="15" marginRight="31" marginLeft="31" imgURL={category_icon} /> : null}
               {category_level2 ? category_level2 : null}
@@ -541,7 +546,9 @@ class ModifyResponseToDesignerReq extends Component {
               <div dangerouslySetInnerHTML={{ __html: `${request.content || ""}` }} />
               <div className="attach-file">
                 <div className="attach-arrow" />
+                <div className="attach-link">
                   첨부파일: {request.filename ? <a href={request.file_url}>{request.filename}</a> : "없음"}</div> {/* &#10145; */}
+              </div>
             </div>
           </div>
 
