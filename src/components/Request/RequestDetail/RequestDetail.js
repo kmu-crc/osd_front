@@ -36,6 +36,7 @@ export default class Detail extends Component {
     const category_level2 = (level2 && this.props.category2 && this.props.category2.filter(cate => cate.value === level2)[0].text) || "";
 
     return (<React.Fragment>
+      {this.props.Detail.status}
 
       {/* REQUEST DETAIL */}
       {Detail.status === "request"
