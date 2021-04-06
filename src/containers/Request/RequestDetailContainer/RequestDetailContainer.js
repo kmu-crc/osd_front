@@ -71,6 +71,7 @@ class RequestDetailContainer extends Component {
 const mapStateToProps = (state) => ({
   userInfo: state.Authentication.status.userInfo,
   Detail: state.RequestDetail.status.Detail,
+  MyDetail: state.MyDetail.status.MyDetail,
   token: state.Authentication.status.token,
   category1: state.CategoryAll.status.category1,
   category2: state.CategoryAll.status.category2,
