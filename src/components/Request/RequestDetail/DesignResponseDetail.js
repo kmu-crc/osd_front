@@ -35,7 +35,7 @@ const CustomIcon = styled.div`
 const DesignResponseDetailWrapper = styled.div`
   width: 100%;
   padding: 0px 30px;
-  
+  margin-bottom:30px;
   .title {
     margin-top: 20px;
     margin-bottom: 15px;
@@ -58,7 +58,7 @@ const DesignResponseDetailWrapper = styled.div`
     min-height: 582px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 3px 3px 5px #0000001A;
-    border: 0.25px solid #B7B7B7;
+    border: 0.25px solid #eaeaea;
     border-radius: 20px;
     padding: 30px 50px;
     :first-child {
@@ -291,8 +291,17 @@ export const DesignResponseDetail = (props) => {
 
     {/*  */}
     <div className="bottom">
+      {
+          props.userInfo&&
+          props.userInfo&&props.userInfo.uid == props.expert_id?
+          <button onClick={()=>{
+            window.location.href = `${props.type == "designer"?"/modifyResponseToDesignerReq":"/modifyResponseToMakerReq"}/${props.uid}`          
+          }
+          } className="reply">응답수정</button> : null
+        
+      }
       {props.userInfo && props.isPurchased === false && props.userInfo.uid === props.client_id ?
-        <button onClick={() => props.onClick()} className="reply">의뢰구입</button> : null}
+        <button onClick={props.purchase} className="reply">의뢰구입</button> : null}
 
       <button onClick={() => props.returnToList()} className="back"> <CustomIcon style={{ transform: "rotate(180deg)", opacity: ".9" }} width="5" height="10" marginRight="12" marginLeft="0" imgURL={category_icon} /> 목록으로</button>
     </div>

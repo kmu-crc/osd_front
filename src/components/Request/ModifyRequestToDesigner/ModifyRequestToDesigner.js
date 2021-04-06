@@ -251,7 +251,7 @@ class ModifyRequestToDesigner extends Component {
         expert_id: nextProps.Detail.expert_id || null,
         personal: nextProps.Detail.personal || null,
         title: nextProps.Detail.title,
-        tag: nextProps.Detail.tag.split(","),
+        tag: nextProps.Detail.tag&&nextProps.Detail.tag.split(","),
         price: nextProps.Detail.price,
         content: nextProps.Detail.content,
         location: nextProps.Detail.location,
