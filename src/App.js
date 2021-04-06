@@ -95,7 +95,7 @@ class App extends Component {
             <Route path="/requestToMaker/:id" component={RequiresAuth(RequiresPayUser(requestMakerPage))} />
             <Route path="/ModifyrequestToDesigner/:id" component={RequiresAuth(RequiresPayUser(ModifyrequestDesignerPage))} />
             <Route path="/ModifyrequestToMaker/:id" component={RequiresAuth(RequiresPayUser(ModifyrequestMakerPage))} />
-            <Route path="/responseToDesignerReq/:pid" component={RequiresAuth(RequiresPayUser(ResponseToDesignerReqPage))} />
+            <Route path="/responseToDesignerReq/:id" component={RequiresAuth(RequiresPayUser(ResponseToDesignerReqPage))} />
             <Route path="/responseToMakerReq/:id" component={RequiresAuth(RequiresPayUser(ResponseToMakerReqPage))} />
             <Route path="/modifyResponseToDesignerReq/:id" component={RequiresAuth(RequiresPayUser(modifyResponseToDesignerReqPage))} />
             <Route path="/modifyResponseToMakerReq/:id" component={RequiresAuth(RequiresPayUser(modifyResponseToMakerReqPage))} />
