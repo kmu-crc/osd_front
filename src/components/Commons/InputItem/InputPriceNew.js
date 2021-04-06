@@ -47,7 +47,7 @@ const Button = styled.button`
     cursor:pointer;
     background: none;
 
-    width: 70px;
+    width: ${props => props.width ? props.width : 70}px;
     max-width: 100px;
     height: 31px;
 
@@ -55,7 +55,7 @@ const Button = styled.button`
     justify-content: center;
     align-items: center;
 
-    margin-right: 20px;
+    margin-right: ${props => props.marginRight ? props.marginRight : 20}px;
 
     :last-child {
         margin-right: 0px;
@@ -110,14 +110,16 @@ export class InputPriceNew extends Component {
         this.returnData();
     }
     render() {
+        const { width, placeholder, option } = this.props;
+        const tag = option ? option.tag : null;
         return (
             <React.Fragment>
-                <FormBox>
+                <FormBox >
                     <div className="formwrapper">
                         <FormStyle
                             id="price"
-                            width={this.props.width == null ? "208" : this.props.width}
-                            placeholder={this.props.placeholder}
+                            width={width == null ? "208" : width}
+                            placeholder={placeholder}
                             value={this.state.price || 0}
                             onChange={this.onChangePrice}
                         />
@@ -126,11 +128,11 @@ export class InputPriceNew extends Component {
                         </div>
                     </div>
                     <div className="buttonbox">
-                        <Button onClick={() => this.onClickButton(1000)}><div className="text">+1천</div></Button>
-                        <Button onClick={() => this.onClickButton(10000)}><div className="text">+1만</div></Button>
-                        <Button onClick={() => this.onClickButton(50000)}><div className="text">+5만</div></Button>
-                        <Button onClick={() => this.onClickButton(100000)}><div className="text">+10만</div></Button>
-                        <Button onClick={() => this.onClickButton(1000000)}><div className="text">+100만</div></Button>
+                        <Button marginRight={tag && tag.marginRight} width={tag && tag.width} onClick={() => this.onClickButton(1000)}><div className="text">+1천</div></Button>
+                        <Button marginRight={tag && tag.marginRight} width={tag && tag.width} onClick={() => this.onClickButton(10000)}><div className="text">+1만</div></Button>
+                        <Button marginRight={tag && tag.marginRight} width={tag && tag.width} onClick={() => this.onClickButton(50000)}><div className="text">+5만</div></Button>
+                        <Button marginRight={tag && tag.marginRight} width={tag && tag.width} onClick={() => this.onClickButton(100000)}><div className="text">+10만</div></Button>
+                        <Button marginRight={tag && tag.marginRight} width={tag && tag.width} onClick={() => this.onClickButton(1000000)}><div className="text">+100만</div></Button>
                     </div>
                 </FormBox>
             </React.Fragment>
