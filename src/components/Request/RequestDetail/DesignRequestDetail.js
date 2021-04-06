@@ -122,7 +122,12 @@ const DesignRequestDetailWrapper = styled.div`
       font: normal normal normal 13px/19px Noto Sans KR;
       letter-spacing: 0px;
       color: #FF0000;
-  
+      .attach-link {
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        width: 100%;
+       } 
       .attach-arrow {
         width: 10px;
         height: 10px;
@@ -204,7 +209,11 @@ export const DesignRequestDetail = (props) => {
         <div className="label">의뢰 내용</div>
         <div className="content">
           <div dangerouslySetInnerHTML={{ __html: `${content || ""}` }} />
-          <div className="attach-file"> <div className="attach-arrow" /> 첨부파일: {filename ? <a href={file_url}>{filename}</a> : "없음"}</div> {/* &#10145; */}
+          <div className="attach-file">
+            <div className="attach-arrow" />
+            <div className="attach-link">
+              첨부파일: {filename ? <a href={file_url}>{filename}</a> : "없음"}</div>
+          </div>
         </div>
       </div>
       <div className="row">
@@ -226,11 +235,11 @@ export const DesignRequestDetail = (props) => {
       </div>
     </div>
     <div className="bottom">
-      { (props.userInfo&&props.userInfo.uid) == (props.Detail&&props.Detail.client_id)?
-        <button onClick={() => window.location.href = `/ModifyrequestTo${props.Detail.type=="designer"?"Designer":"Maker"}/`+props.Detail.uid} className="reply">의뢰수정</button>
+      {(props.userInfo && props.userInfo.uid) == (props.Detail && props.Detail.client_id) ?
+        <button onClick={() => window.location.href = `/ModifyrequestTo${props.Detail.type == "designer" ? "Designer" : "Maker"}/` + props.Detail.uid} className="reply">의뢰수정</button>
         :
         <Link className="reply" to={{ pathname: `/responseTo${props.Detail.type}Req/${props.Detail.uid}`, state: { detail: props.Detail, expert: props.MyDetail } }}>
-        <button onClick={() => props.onClick(props.Detail.type,"request",false)} className="reply">의뢰응답</button>
+          <button onClick={() => props.onClick(props.Detail.type, "request", false)} className="reply">의뢰응답</button>
         </Link>
       }
       <button onClick={() => props.returnToList()} className="back"> <CustomIcon style={{ transform: "rotate(180deg)" }} width="5" height="10" marginRight="20" marginLeft="20" imgURL={category_icon} /> 목록으로</button>

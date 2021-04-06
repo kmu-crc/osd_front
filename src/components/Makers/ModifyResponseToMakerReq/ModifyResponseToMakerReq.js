@@ -149,7 +149,12 @@ padding: 0px 30px;
   font: normal normal normal 13px/19px Noto Sans KR;
   letter-spacing: 0px;
   color: #FF0000;
-
+  .attach-link {
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    width: 100%;
+   } 
   .attach-arrow {
     width: 10px;
     height: 10px;
@@ -563,7 +568,9 @@ class ModifyResponseToMakerReq extends Component {
               <div dangerouslySetInnerHTML={{ __html: `${request.content || ""}` }} />
               <div className="attach-file">
                 <div className="attach-arrow" />
+                <div className="attach-link">
                   첨부파일: {request.filename ? <a href={request.file_url}>{request.filename}</a> : "없음"}</div> {/* &#10145; */}
+                </div>
             </div>
           </div>
           <div className="row">

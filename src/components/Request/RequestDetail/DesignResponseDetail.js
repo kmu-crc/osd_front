@@ -132,7 +132,12 @@ const DesignResponseDetailWrapper = styled.div`
     font: normal normal normal 13px/19px Noto Sans KR;
     letter-spacing: 0px;
     color: #FF0000;
-  
+    .attach-link {
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      width: 100%;
+     }  
     .attach-arrow {
       width: 10px;
       height: 10px;
@@ -242,7 +247,9 @@ export const DesignResponseDetail = (props) => {
             <div dangerouslySetInnerHTML={{ __html: `${request.content || ""}` }} />
             <div className="attach-file">
               <div className="attach-arrow" />
-              첨부파일: {request.filename ? <a href={request.file_url}>{request.filename}</a> : "없음"}</div> {/* &#10145; */}
+              <div className="attach-link">
+                첨부파일: {request.filename ? <a href={request.file_url}>{request.filename}</a> : "없음"}</div> {/* &#10145; */}
+            </div>
           </div>
         </div>
         <div className="row">
@@ -292,13 +299,13 @@ export const DesignResponseDetail = (props) => {
     {/*  */}
     <div className="bottom">
       {
-          props.userInfo&&
-          props.userInfo&&props.userInfo.uid == props.expert_id?
-          <button onClick={()=>{
-            window.location.href = `${props.type == "designer"?"/modifyResponseToDesignerReq":"/modifyResponseToMakerReq"}/${props.uid}`          
+        props.userInfo &&
+          props.userInfo && props.userInfo.uid == props.expert_id ?
+          <button onClick={() => {
+            window.location.href = `${props.type == "designer" ? "/modifyResponseToDesignerReq" : "/modifyResponseToMakerReq"}/${props.uid}`
           }
           } className="reply">응답수정</button> : null
-        
+
       }
       {props.userInfo && props.isPurchased === false && props.userInfo.uid === props.client_id ?
         <button onClick={props.purchase} className="reply">의뢰구입</button> : null}
