@@ -516,157 +516,121 @@ class ModifyResponseToMakerReq extends Component {
       }
       return item;
     })
-    return (
-      {/*  */ }
-      < div className = "header" >
+    return (<Wrapper>
+      {/*  */}
+      <div className="header">
         <div className="title">
-          <div className="text">디자인 의뢰 응답 수정</div>
+          <div className="text">제작 의뢰 응답 수정</div>
         </div>
-   </div >
-      <React.Fragment>
-        <Wrapper>
-          <MainBox>
-            <div className="title">제작 의뢰 응답</div>
-            <div className="contentsBox">
-              <FormBox isHalf={true}>
+      </div>
 
-                <div className="wrapper flex centering" >
-                  <div className="label">의뢰자</div>
-                  <div>{detail.client_name || null}</div>
-                </div>
+      {/*  */}
+      <div className="form-list">
+        {/* request */}
+        <div className="form">
 
-                <div className="wrapper flex centering">
-                  <div className="label">제목</div>
-                  <div className="textBox">{request.title}</div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">카테고리</div>
-                  <div className="textBox">
-                    {/* {category_level1 ? category_level1 + (category_level2 ? `>` : "") : null}{category_level2} */}
-                    {category_level1}
-                    {category_level2 ? <CustomIcon width="15" height="15" marginRight="31" marginLeft="31" imgURL={category_icon} /> : null}
-                    {category_level2 ? category_level2 : null}
-                  </div>
-                </div>
-
-                <div className="wrapper flex centering add_margin_bottom">
-                  <div className="label">태그</div>
-                  <TagList>
-                    {request && request.tag && request.tag.split(",").map((item, index) =>
-                      <TagPiece key={index}>
-                        {item}
-                      </TagPiece>
-                    )}
-                  </TagList>
-                </div>
-
-
-                <div className="wrapper flex centering">
-                  <div className="label">의뢰 내용</div>
-                  <div className="textBox" dangerouslySetInnerHTML={{ __html: `${request.content || ""}` }} />
-                </div>
-
-                <div className="wrapper flex centering add_margin_bottom">
-                  <div className="label" />
-                  <div className="addfilebox"><div className="addfile" /></div>
-
-                  <div className="file_label_box">
-                    <div className="file_label">
-                      {request && request.file_url ?
-                        <a href={request.file_url} download={request.filename} className="iconWrap">
-                          <FileIcon type={"application"} extension={"pdf"} />
-                          {request.filename}
-                        </a>
-                        : "첨부 파일 없음"}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">희망비용</div>
-                  <div className="textBox">{request.price}</div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">기간</div>
-                  <div className="textBox">{request.start_date}~{request.end_date}</div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">수량</div>
-                  <div className="textBox">{request.amount}</div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">메이커 위치</div>
-                  <div className="textBox">{request.location && LocationList[parseInt(request.location, 10)].text}</div>
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label">메이커 재판매</div>
-                  <div className="textBox">{request.resale <= 0 ? "불가능" : "가능"}</div>
-                </div>
-
-                {/* <div className="wrapper flex centering">
-                  <div className="label">오프라인 상담</div>
-                  <div className="textBox">{this.state.offline <= 0 ? "불가능" : "가능"}</div>
-                </div> */}
-
-              </FormBox>
-              <FormBox isHalf={true}>
-
-                {/* <div className="wrapper flex">
-                <div className="label">제목</div>
-                <InputText onChange={this.onChangeResponseTitle} value={this.state.res_title} width={483}/>
-              </div> */}
-
-                <div className="wrapper flex centering" >
-                  <div className="label2">응답자</div>
-                  <div>{(this.props.userInfo && this.props.userInfo.nickName) || null}</div>
-                </div>
-
-                <div className="wrapper flex">
-                  <div className="label2">응답 내용</div>
-                  {/* <InputTextarea onChange={this.onChangeResponseContent} value={this.state.res_content} width={483} height={483} /> */}
-                  <TextControllerClassic
-                    item={{ content: this.state.content, height: 430 }}
-                    name={"comment"}
-                    getValue={this.onChangeResponseContent}
-                    width="480"
-                    editheight="430"
-                  />
-                </div>
-
-                <div className="wrapper flex centering">
-                  <div className="label2">수량</div>
-                  <InputText type="number" onChange={this.onChangeReponseAmount} value={this.state.res_amount || ''} width={100} />
-                </div>
-
-                <div className="wrapper flex">
-                  <div className="label2">희망비용</div>
-                  <InputPriceNew price={this.state.price} name="price" getValue={this.getPriceValue} />
-                </div>
-
-
-                <div className="wrapper flex centering">
-                  <div className="label2 ">기간</div>
-                  <InputCalendar startDate={this.state.startDate} endDate={this.state.endDate} name="calendar"
-                    getStartDateValue={this.getStartDateValue} getEndDateValue={this.getEndDateValue} getDayDateValue={this.getDayDateValue} />
-                </div>
-
-              </FormBox>
+          <div className="row" >
+            <div className="label">의뢰자</div>
+            <div className="content">{detail.client_name || null}</div>
+          </div>
+          <div className="row">
+            <div className="label">제목</div>
+            <div className="content">{request.title}</div>
+          </div>
+          <div className="row">
+            <div className="label">카테고리</div>
+            <div className="content">
+              {category_level1}
+              {category_level2 ? <CustomIcon width="15" height="15" marginRight="31" marginLeft="31" imgURL={category_icon} /> : null}
+              {category_level2 ? category_level2 : null}
             </div>
-            <div className="contentsBox">
-              <div className="box_" />
-              <div className="box_centering">
-                <RedButton text={"수정된 내용을 저장합니다."} okText="확인" cancelText="취소" value={"수정하기"} onClick={this.onSubmit} isConfirm={true} />
-                <GrayButton text={"수정된 내용이 저장되지 않습니다."} value={"취소하기"} onClick={() => { window.history.back() }} isConfirm={true} /></div>
+          </div>
+          <div className="row">
+            <div className="label">태그</div>
+            <div className="content">
+              <TagList>
+                {request && request.tag && request.tag.split(",").map((item, index) =>
+                  <TagPiece key={index}>
+                    {item}
+                  </TagPiece>
+                )}
+              </TagList>
             </div>
-          </MainBox>
-        </Wrapper>
-      </React.Fragment>
-    );
+          </div>
+          <div className="row">
+            <div className="label">의뢰 내용</div>
+            <div className="content">
+              <div dangerouslySetInnerHTML={{ __html: `${request.content || ""}` }} />
+              <div className="attach-file">
+                <div className="attach-arrow" />
+                  첨부파일: {request.filename ? <a href={request.file_url}>{request.filename}</a> : "없음"}</div> {/* &#10145; */}
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="label">희망비용</div>
+            <div className="content">{request.price}</div>
+          </div>
+
+          <div className="row">
+            <div className="label">기간</div>
+            <div className="content">{request.start_date}~{request.end_date}</div>
+          </div>
+          <div className="row">
+            <div className="label">수량</div>
+            <div className="content">{request.amount}</div>
+          </div>
+          <div className="row">
+            <div className="label">메이커 위치</div>
+            <div className="content">{request.location && LocationList[parseInt(request.location, 10)].text}</div>
+          </div>
+          <div className="row">
+            <div className="label">메이커 재판매</div>
+            <div className="content">{request.resale <= 0 ? "불가능" : "가능"}</div>
+          </div>
+        </div>
+
+        {/* response */}
+        <div className="form">
+          <div className="row">
+            <div className="label no-border">응답자</div>
+            <div className="content no-margin">{(this.props.userInfo && this.props.userInfo.nickName) || null}</div>
+          </div>
+          <div className="row">
+            <div className="label no-border">설명</div>
+            <div className="content no-margin">
+              <TextControllerClassic
+                item={{ content: this.state.content, /*height: 388*/ }}
+                name={"comment"}
+                getValue={this.onChangeResponseContent}
+                // width="820"
+                editheight="311"
+                marginBottom="0"
+                border="1px solid #707070"
+              // initClick={this.state.click}
+              // deleteItem={this.deleteItem}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="label no-border">희망비용</div>
+            <div className="content no-margin">
+              <InputPriceNew price={this.state.price} name="price" getValue={this.getPriceValue} option={{ tag: { marginRight: 9, width: 60 } }} /></div>
+          </div>
+          <div className="row">
+            <div className="label no-border">기간</div>
+            <div className="content no-margin">
+              <InputCalendar startDate={this.state.startDate} endDate={this.state.endDate} name="calendar"
+                getStartDateValue={this.getStartDateValue} getEndDateValue={this.getEndDateValue} getDayDateValue={this.getDayDateValue} />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {/*  */}
+      <div className="bottom"> </div>
+    </Wrapper>);
   };
 }
 
