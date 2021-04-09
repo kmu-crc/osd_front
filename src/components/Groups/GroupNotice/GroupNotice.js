@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ButtonOSD from "./ButtonOSD";
 import NoticeDialog from "./NoticeDialog";
 import BoardDialog from "./BoardDialog";
+import DueDateDialog from "./DueDateDialog";
 import ExportExcelFile from './ExportExcelFile';
 // import host from "config";
 // import { alert } from "components/Commons/Alert/Alert";
@@ -67,30 +68,38 @@ export default class GroupNotice extends Component {
 
 
 
+
   render() {
-    const { GroupDetail, userInfo, hasProgrammingDesign } = this.props;
-    const { /*dialog*/notice, board, /**/submitStatus, data } = this.state;
+    const { GroupDetail, userInfo, token, hasProgrammingDesign } = this.props;
+    const { /*dialog*/notice, board, /**/submitStatus, data, due } = this.state;
     const user_id = userInfo && userInfo.uid;
     console.log(this.props);
     return (<React.Fragment>
       {notice
-        ? <NoticeDialog user_id={user_id} group_owner_id={GroupDetail.user_id} token={this.props.token} group_id={GroupDetail.uid} open={notice} close={this.closeNoticeDialog} />
+        ? <NoticeDialog user_id={user_id} group_owner_id={GroupDetail.user_id} token={token} group_id={GroupDetail.uid} open={notice} close={this.closeNoticeDialog} />
         : null}
       {board
-        ? <BoardDialog userInfo={userInfo} token={this.props.token} group_id={GroupDetail.uid} open={board} close={this.closeBoardDialog} />
+        ? <BoardDialog userInfo={userInfo} token={token} group_id={GroupDetail.uid} open={board} close={this.closeBoardDialog} />
         : null}
       {submitStatus
         ? <ExportExcelFile title={GroupDetail.title} group={GroupDetail} data={data} />
         : null}
+      {due
+        ? <DueDateDialog id={GroupDetail.uid} token={token} open={due} close={() => this.setState({ due: false })} />
+        : null}
 
       <Wrapper>
-
         <ButtonOSD onClick={() => this.setState({ notice: true })}>공지사항</ButtonOSD>
         <ButtonOSD onClick={() => this.setState({ board: true })}>게시판</ButtonOSD>
 
         {user_id === GroupDetail.user_id && hasProgrammingDesign
           ? <ButtonOSD onClick={this.getExportFile}>제출현황보기</ButtonOSD>
           : null}
+
+        {user_id === GroupDetail.user_id && hasProgrammingDesign
+          ? <ButtonOSD onClick={() => this.setState({ due: true })}>마감기한설정</ButtonOSD>
+          : null}
+
       </Wrapper>
 
     </React.Fragment>
