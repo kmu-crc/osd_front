@@ -7,12 +7,22 @@ import { Pagination } from 'semantic-ui-react'
 import market_style from "market_style";
 
 const Board = styled.div`
-  margin:-20px 0px -20px 0px;
+  margin:-20px -12px -20px -12px;
   .title__{
     font-family:Noto Sans KR;
     font-size:18px;
     color:black;
-    margin-bottom:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+  .lineBox{
+    width:100%;
+    padding:10px 0px;
+    .line{
+      width:100%;
+      border:1px solid #efefef;
+    }
   }
   .pagenation{
     display:flex;
@@ -23,7 +33,6 @@ const ListElement = styled.div`
   width:100%;
   height:36px;
   border: 1px solid #eaeaea;
-  margin-top:10px;
   padding:6px 54px 6px 54px;
   display:flex;
   margin-bottom:10px;
@@ -71,14 +80,7 @@ class MyUploadMakerReqBoardContainer extends Component {
     return (
       <Board>
       <div className="title__">제작 의뢰</div>
-      <ListElement>
-            {/* no.    <div style={{ marginRight: "15px" }}>번호</div> */}
-            {/* title   */}<div className="title">제목</div>
-            {/* writer  */}<div className="writer">글쓴이</div>
-            {/* date    */}<div className="date">작성일</div>
-            {/* {/* view    <div style={{ marginRight: "15px" }}>조회수</div> */}
-            {/* {/* like    <div style={{ marginRight: "15px" }}>좋아요</div> */}
-        </ListElement>
+      <div className="lineBox"><div className="line"/></div>
       <DesignerRequestBoard getList={this.getList} {...this.props} />
       {
         lastPage==0?null:

@@ -8,12 +8,24 @@ import { Pagination } from 'semantic-ui-react'
 
 const Board = styled.div`
   margin:-20px -50px -20px -50px;
+  display:flex;
+  flex-direction:column;
   .title_{
     font-family:Noto Sans KR;
-    margin-left:38px;
     font-size:18px;
     color:black;
-    margin-bottom:20px;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+  .lineBox{
+    width:100%;
+    padding:6px 38px 10px 38px;
+    .line{
+      width:100%;
+      border:1px solid #efefef;
+    }
   }
   .pagenation{
     display:flex;
@@ -47,6 +59,8 @@ class LikeInItemContainer extends Component {
     return(
       <Board>
       <div className="title_">관심 아이템</div>
+      <div className="lineBox"><div className="line"/></div>
+
       <PagingList getListRequest={this.getList}
                     type="sales"
                     ListComponent={Item_myDetail}

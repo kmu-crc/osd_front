@@ -271,9 +271,6 @@ const AdditionalInfo = styled.div`
   .reviewItem{
     width:100%;
     height:80%;
-    display:flex;
-    overflow:hidden;
-    overflow-y:auto;
   }
   .wrapItem{
     width:100%;
@@ -758,11 +755,12 @@ class DesignerDetail extends Component {
 
       {/* 리뷰 */}
       {/*  */}
-      <AdditionalInfo height={191} mTop={20}>
+      <AdditionalInfo height={366} mTop={20} style={{height:"max-content",maxHeight:"366px"}}>
           <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
-          <div className="hrline margin_bottom"/>
+          <div className="hrline"/>
           <div className="reviewItem">
             <DesignerReviewContainer
+              count={this.props.ReviewCount}
               id={parseInt(this.props.id, 10)}
               handler={detail => this.setState({ reviewdetail: true, detail: detail })} />
         </div>

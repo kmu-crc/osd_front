@@ -40,6 +40,7 @@ class ItemQuestionContainer extends Component {
 const mapStateToProps = (state) => ({
     question: state.ItemQuestion.status.Question,
     total: state.ItemQuestion.status.Total,
+    replyCount: state.ItemQuestion.status.ReplyCount,
     token: state.Authentication.status.token,
     userInfo: state.Authentication.status.userInfo,
 });

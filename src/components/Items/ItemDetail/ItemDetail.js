@@ -282,8 +282,9 @@ const CoverGrident = styled.div`
 `
 const Review = styled.div`
 width: 100%;
-height:200px;
-padding:10px 25px;
+height:max-content;
+max-height:366px;
+padding:10px 25px 20px 25px;
 box-shadow: 3px 3px 5px #0000001A;
 border:1px solid #eaeaea;
 border-radius: 20px;
