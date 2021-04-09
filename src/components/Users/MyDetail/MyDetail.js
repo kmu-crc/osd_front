@@ -355,7 +355,7 @@ class MyDetail extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { selectMenu: this.props.index }
+    this.state = { selectMenu: parseInt(this.props.index,10) }
     this.onClickMenu = this.onClickMenu.bind(this);
     this.onClickCreateDesigner = this.onClickCreateDesigner.bind(this);
     this.onClickCreateMaker = this.onClickCreateMaker.bind(this);

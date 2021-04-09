@@ -93,7 +93,7 @@ const SortableStep = SortableElement(({ disableReorder, reload, index, editStep,
         {step.cards && step.cards.length > 0 ?
             <React.Fragment>
                 <div style={{ marginTop: "10px" }}>
-                    <AsBelowArrow angle={0} percent={.2} marginTop={0} marginRight={0} marginBottom={0} marginLeft={65} />
+                    <AsBelowArrow angle={0} percent={.2} marginTop={0} marginRight={0} marginBottom={0} marginLeft={90} />
                 </div>
                 <div>
                     <SortableDesignCards
@@ -113,9 +113,9 @@ const SortableStep = SortableElement(({ disableReorder, reload, index, editStep,
 
         {editor ?
             <React.Fragment>
-                {/* <div style={{ marginTop: "10px" }}>
-                    <AsBelowArrow angle={0} percent={.2} marginTop={0} marginRight={0} marginBottom={0} marginLeft={65} />
-                </div> */}
+                <div style={{ marginTop: "10px" }}>
+                    <AsBelowArrow angle={0} percent={.2} marginTop={0} marginRight={0} marginBottom={0} marginLeft={90} />
+                </div>
                 <div style={{ marginTop: "10px" }}>
                     <CreateCard
                         onClick={() => createCard({ order: (step && step.cards) ? step.cards.length : 0, id: boardId })}

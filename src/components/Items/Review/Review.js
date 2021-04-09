@@ -12,6 +12,23 @@ const Wrapper = styled.div`
   color:#707070;
   margin-right:30px;
   margin-bottom:20px;
+  .wrapper{
+    display:flex;
+    .line{
+      margin-bottom: 10x;
+      font-size:${market_style.font.size.small1};
+    }
+    .marginRight{
+      margin-right:49px;
+    }
+    .nick_{
+      width:max-content;
+      max-width:100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
   .content{
     width:100%;
     height:100%;
@@ -22,7 +39,9 @@ const Wrapper = styled.div`
       font-size:${market_style.font.size.small1};
     }
     .text_{
-      margin-bottom: 10px;
+      border:1px solid black;
+      margin-top:28px;
+      // margin-bottom: 10px;
       overflow:hidden;
       text-overflow:ellipsis;
       word-wrap:break-word;
@@ -53,8 +72,10 @@ class Review extends Component {
     <Wrapper onClick={() => this.props.handler(item)}>
       <Thumbnail imageURL={item.m_img} />
       <div className="content">
+        <div className="wrapper">
+        <div className="nick_ line marginRight">{item.nick_name}</div>
         <div className="row"><RenderingStar/></div>
-        <div className="row">{item.nick_name}</div>
+        </div>
         <div className="text_">{item.comment && item.comment.slice(0, 64)}{item.comment && item.comment.length > 64 ? "..." : ""}</div>
       </div>
     </Wrapper>)

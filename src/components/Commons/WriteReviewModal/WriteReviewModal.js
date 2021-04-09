@@ -16,16 +16,17 @@ const AddPic = styled.div`
 
     margin-right:${props=>props.marginRight==null?0:props.marginRight}px;
 
-    // border:1px solid #d6d6d6;
     background-color: #efefef;
     background-image: url(${props => props.img});
     background-size:cover;
-    border-radius:5px;
+    border-radius:10px;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
     position:relative;
+    cursor:pointer;
+    border:1px solid #eaeaea;
     .deleteButton{
         display:none;
         z-index:999;
@@ -52,39 +53,39 @@ const AddPic = styled.div`
 `
 const TextArea = styled.textarea`
     width:100%;
-    height:280px;
+    height:234px;
     padding:20px;
     font-family:Noto Sans CJK KR, Regular;
-    font-size:${market_style.font.size.samll3};
+    font-size:${market_style.font.size.mini2};
     font-weight:300;
     color:#afafaf;
     border:1px solid #efefef;
     border-radius:10px;
     outline:none;
-    margin-top:18px;
+    margin-top:10px;
     background-color:#efefef;
 `
 const ReviewButton=styled.div`
-  width:110px;
-  height:43px;
+  width:150px;
+  height:30px;
   background-color:red;
   display:flex;
   justify-content:center;
   align-items:center;
   cursor:pointer;
   .text{
-    font-size:${market_style.font.size.normal3};
+    font-size:${market_style.font.size.small1};
       color:white;
   }
 `
 const WriteDialog=styled(Modal)`
-    width: 887px;
-    height:707px;
+    width:1000px;
+    // height: 634px !important;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 5px 5px 10px #00000029;
-    border-radius: 20px;
+    border-radius: 20px !important;
     opacity: 1;
-    padding:24px;
+    padding:30px 50px;
     ::-webkit-scrollbar {
         position: absolute;
         width: 3.9px;
@@ -93,7 +94,7 @@ const WriteDialog=styled(Modal)`
         background: rgba(112, 112, 112, 0.45) !important;
     } 
     .buttonbox{
-        margin-top:26px;
+        margin-top:20px;
         width:100%;
         display:flex;
         justify-content:center;
@@ -107,17 +108,14 @@ const WriteDialog=styled(Modal)`
     }
     ._wrapper{
         width:100%;
-        margin:0px 25px 25px 0px;
-        padding:0px 26px;
     .header{
         display:flex;
         justify-content:center;
-        .headerbox{
-            display:flex;
-            .mainImg{
+        margin-bottom:20px;
+        .mainImg{
                 border:0.5px solid #eaeaea;
-                width:97px;
-                height:97px;
+                width:130px;
+                height:130px;
                 background-image: url(${props => props.img});
                 background-size: contain;
                 background-repeat:no-repeat;
@@ -125,26 +123,20 @@ const WriteDialog=styled(Modal)`
                 margin-right:20px;
             }
             .explainBox{
-                .text{
-                    font-family:Noto Sans CJK KR, Regular;
-                    font-size:${market_style.font.size.samll1};
-                    color:#707070;
-                    margin-bottom:6px;
-                    height:22px;
+                display:flex;
+                flex-direction:column;
+                justify-content:space-between;
+                .basic{
+                    font-size:${market_style.font.size.small1};
                     display:flex;
                     align-items:center;
+                    margin-bottom:5px;
                 }
                 .boldText{
-                    font-family:Noto
-                    font-size:${market_style.font.size.samll1};
-                    color:black;
-                    margin-top:17px;
-                    height:22px;
-                    display:flex;
-                    align-items:center;
+                    font-weight:500;
                 }
+
             }
-        }
     }
     .hrLine{
         height:2px;
@@ -318,23 +310,22 @@ class WriteReviewModal extends Component {
             <React.Fragment>
                     <WriteDialog open={this.props.open} onClose={this.props.close} img={this.props.ItemDetail&&this.props.ItemDetail.thumbnail&&this.props.ItemDetail.thumbnail.l_img}>
                     <div className="close-box" onClick={this.props.close}>
-                        <Cross angle={45} color={"#707070"} weight={1} width={15} height={15} />
+                        <Cross angle={45} color={"#707070"} weight={1} width={23} height={23} />
                     </div>
                     <div className="_wrapper">
                         <div className="header">
-                        <div className="headerbox">
-                            <div className="mainImg"/>
-                            <div className="explainBox">
-                            <div className="text">별점을 선택해주세요</div>
-                            <div style={{height:"26px"}}>
-                                <Rating style={{marginRight:"10px"}} size="huge" name="score" icon='star' onRate={this.handleOnChangeScore} value={this.state.score || 0} maxRating={5} />
-                                ({this.state.score})
-                            </div>
-                            <div className="boldText">{this.props.ItemDetail.title}</div>
+                                <div className="mainImg"/>
+                                <div className="explainBox">
+                                    <div>
+                                    <div className="basic boldText">별점을 선택해주세요</div>
+                                    <div className="basic">
+                                        <Rating size="huge" name="score" icon='star' onRate={this.handleOnChangeScore} value={this.state.score || 0} maxRating={5} />
+                                        ({this.state.score})
+                                    </div>
+                                    </div>
+                                    <div className="basic boldText">{this.props.ItemDetail.title}</div>
+                                </div>
                         </div>
-                        </div>
-                    </div>
-                    <div className="hrLine"/>
                     <div className="review-content">
                         <div className="mini_pic_list">
                                 {
@@ -345,7 +336,7 @@ class WriteReviewModal extends Component {
                                         <React.Fragment>
                                             <input hidden onChange={(event)=>this.handleOnChangeThumbnail(event,index)} id={`file${index}`}type="file" accept="image/*" />
                                             <label onClick={()=>{console.log(imgCount)}} htmlFor={`file${index}`}>
-                                                <AddPic key={index} width={135} height={135} marginRight={12} img={item}>
+                                                <AddPic key={index} width={130} height={130} marginRight={15} img={item}>
                                                     <div className="deleteButton"
                                                     onClick={async(e)=>{
                                                         e.preventDefault();
@@ -372,7 +363,7 @@ class WriteReviewModal extends Component {
                                     onChange={(event)=>this.handleOnChangeThumbnail(event,this.state.thumbnail&&this.state.thumbnail.length<0?0:this.state.thumbnail.length)} 
                                     id={`addfile`}type="file" accept="image/*" />
                                 <label htmlFor={`addfile`}>
-                                <AddPic width={135} height={135} marginRight={12}>
+                                <AddPic width={130} height={130} marginRight={15}>
                                     {/* <div className="deleteButton"><Cross angle={45} color={"white"} weight={2} width={10} height={10} /></div> */}
                                     <div className="text">+</div>
                                     <div>사진 추가하기</div>

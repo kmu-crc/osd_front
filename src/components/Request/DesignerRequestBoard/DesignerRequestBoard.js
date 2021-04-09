@@ -49,23 +49,23 @@ const ListElement = styled.div`
   width:100%;
   height:36px;
   border: 1px solid #eaeaea;
-  padding:6px 54px 6px 54px;
+  padding:6px 54px 6px 40px;
   display:flex;
   margin-bottom:10px;
   .title{
-    min-width:83%;
+    min-width:75.5%;
     display:flex;
     align-items:center;
     font-size:${market_style.font.size.mini2};
   }
   .writer{
-    min-width:12%;
+    min-width:21%;
     display:flex;
     align-items:center;
     font-size:${market_style.font.size.mini2};
   }
   .date{
-    min-width:3%;
+    min-width:4%;
     display:flex; 
     justify-content:center;
     align-items:center;
@@ -75,7 +75,7 @@ const ListElement = styled.div`
 
 export default class DesignerRequestBoard extends Component {
     getList = (page) =>
-        this.props.getList(page);
+        this.props.getList(page); 
 
     render() {
         return (<React.Fragment>

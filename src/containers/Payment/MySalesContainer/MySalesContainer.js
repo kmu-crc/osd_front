@@ -10,16 +10,21 @@ import { Pagination } from 'semantic-ui-react'
 
 const Board = styled.div`
   margin:-20px -12px -20px -12px;
-  .title_{
+  .title__{
     font-family:Noto Sans KR;
     font-size:18px;
     color:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
   }
-  .hrline{
+  .lineBox{
     width:100%;
-    border:2px solid #EFEFEF;
-    margin-top:10px;
-    margin-bottom:10px;
+    padding:10px 0px;
+    .line{
+      width:100%;
+      border:1px solid #efefef;
+    }
   }
   .pagenation{
     display:flex;
@@ -27,20 +32,33 @@ const Board = styled.div`
   }
 `
 const ListElement = styled.div`
-  width: 100%;
-  margin: 0 auto 0.9rem;
-  font-size:${market_style.font.size.mini2};
-  border-radius: 3px 3px 3px 3px;
-  overflow: hidden;
-  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
-  background-color: #FFFFFF;
-  text-align: left;
-  box-sizing: border-box;
-  padding: 10px;
-  list-style: none;
-  display: flex;
-  fiex-direction: row;
+  width:100%;
+  height:36px;
+  border: 1px solid #eaeaea;
+  padding:6px 54px 6px 54px;
+  display:flex;
+  margin-bottom:10px;
+  .title{
+    min-width:83%;
+    display:flex;
+    align-items:center;
+    font-size:${market_style.font.size.mini2};
+  }
+  .writer{
+    min-width:12%;
+    display:flex;
+    align-items:center;
+    font-size:${market_style.font.size.mini2};
+  }
+  .date{
+    min-width:3%;
+    display:flex; 
+    justify-content:center;
+    align-items:center;
+    font-size:${market_style.font.size.mini2};
+    }
 `;
+
 
 class MySalesContainer extends Component {
   constructor(props)
@@ -67,8 +85,13 @@ class MySalesContainer extends Component {
     const lastPage = parseInt(this.props.allPage / 10, 10);
     return (
       <Board>
-      <div className="title_">판매 아이템</div>
-      <div className="hrline"/>
+      <div className="title__">판매 아이템</div>
+      <div className="lineBox"><div className="line"/></div>
+      <ListElement>
+                <div className="title">제목</div>
+                <div className="writer">글쓴이</div>
+                <div className="date">작성일</div>
+      </ListElement>
       <ScrollBoardList
       total={this.props.Count}
       dataList={this.props.dataList}

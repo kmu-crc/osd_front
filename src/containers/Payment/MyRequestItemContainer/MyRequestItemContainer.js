@@ -8,21 +8,33 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
 
+
 const Board = styled.div`
   margin:-20px -50px -20px -50px;
+  display:flex;
+  flex-direction:column;
   .title_{
     font-family:Noto Sans KR;
-    margin-left:38px;
     font-size:18px;
     color:black;
-    margin-bottom:20px;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+  .lineBox{
+    width:100%;
+    padding:6px 38px 10px 38px;
+    .line{
+      width:100%;
+      border:1px solid #efefef;
+    }
   }
   .pagenation{
     display:flex;
     justify-content:center;
   }
 `
-
 class MyRequestItemContainer extends Component {
   constructor(props)
   {
@@ -58,6 +70,7 @@ class MyRequestItemContainer extends Component {
     return (
       <Board>
       <div className="title_">의뢰 아이템</div>
+      <div className="lineBox"><div className="line"/></div>
       <PagingList
         getListRequest={this.getList}
         ListComponent={Item_myDetail}

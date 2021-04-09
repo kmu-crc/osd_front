@@ -7,12 +7,18 @@ import reply from "source/reply_.svg";
 import Cross from "components/Commons/Cross";
 import { Modal } from 'semantic-ui-react';
 import market_style from "market_style";
+import { Pagination } from 'semantic-ui-react'
 
 const HRLine = styled.div`
     width:100%;
     height:${props=>props.height}px;
     background-color:#d6d6d6;
     margin-top:${props=>props.marginTop}px;
+`
+const PageBox = styled.div`
+    width:100%;
+    display:flex;
+    justify-content:center;
 `
 const Icon = styled.div`
         width:25px;
@@ -23,18 +29,15 @@ const Icon = styled.div`
 `
 const ReplyBox= styled.div`
 *{
-    font-size:${market_style.font.size.small3};
+    font-size:${market_style.font.size.small1};
 }
     width:100%;
-    height:61px;
-    // border-bottom:1px solid #efefef;
+    height:42px;
     display:flex;
     align-items:center;
     cursor:pointer;
     .number{
-        text-align:center;
         min-width:96px;
-        margin-right:20px;
     }
     .comment{
         display:flex;
@@ -52,8 +55,7 @@ const ReplyBox= styled.div`
     }
     .createtime{
         min-width:100px;
-        margin-right:35px;
-        margin-left:35px;
+        margin-left:100px;
     }
     &:hover{
         .comment{
@@ -65,13 +67,24 @@ const ReplyBox= styled.div`
 
 `
 const CommentDetail = styled.div`
-    padding-left:170px;
-    font-size:${market_style.font.size.small1};
-    background-color:#EFEFEF;
-    padding-top:30px;
-    padding-bottom:30px;
-    padding-right:60px;
-    color:#707070;
+    width:100%;
+    display:flex;
+    .common{
+        font-size:${market_style.font.size.small1};
+        background-color:#EEEEEE;
+        color:#707070;
+        padding:20px 15px;
+        border-radius:10px;
+        width:100%;
+        height:max-content;
+        margin-bottom:10px;
+    }   
+    .org{
+        margin-left:92px;
+    }
+    .reply{
+        margin-left:150px;
+    }
 `
 const Page = styled.div`
     width: max-content;
@@ -303,22 +316,23 @@ class ItemQuestion extends Component {
     };
 
     render() {
-        const { question, userInfo, total, user_id } = this.props;
+        const { question, userInfo, total, user_id, replyCount } = this.props;
         const { reply, this_reply, this_comment, page } = this.state;
         const master = user_id === (userInfo && userInfo.uid);
         let countNum = 0;//question&&question.length>0?question.length:0;
         question && question .length > 0 && question.forEach(element=> {
             if(element.sort_in_group==0)countNum++;
         });
-        // countNum = countNum*(parseInt(total/10,10)-this.state.page)+(total%10);
-        console.log("countNum======",countNum)
+        const lastPage = parseInt((this.props.total+replyCount) / 10, 10);
+        countNum = total-this.state.page*10+replyCount;
+
         const Question = (props) => {
             return (
                 <React.Fragment>
                    
-                
+                <HRLine height={1}/>
                 <ReplyBox >
-                    {props.is_question==true?<div className="number">{props.numbering}</div>:null}
+                    {props.is_question==true?<div className="number">{String(props.numbering).padStart(2,'0')}</div>:null}
 
                     {!props.itsmine && props.sort_in_group === 0 && master ?
                         <div onClick={() => this.reply(props.uid)}><ReplyButton id="answer"><div id="answer" className="text">답변</div></ReplyButton></div> : null}
@@ -348,11 +362,13 @@ class ItemQuestion extends Component {
                     </div>
                     
                 </ReplyBox>
-                <HRLine height={1}/>
+               
                 {
                             this.state.open_id==props.uid?
                             <React.Fragment>
-                                <CommentDetail dangerouslySetInnerHTML={{ __html: `${props.comment}`}}/>
+                                <CommentDetail>
+                                    <div className={`common ${props.sort_in_group==0?"org":"reply"}`} dangerouslySetInnerHTML={{ __html: `${props.comment}`}}/>
+                                </CommentDetail>
                             </React.Fragment>
                             :
                             null
@@ -364,7 +380,7 @@ class ItemQuestion extends Component {
 
             {master ?
                 null
-                : <div style={{ marginTop: "5px",display:"flex" }}>
+                : <div style={{ marginTop: "5px",marginBottom:"15px",display:"flex" }}>
                     {/* <div className="input-wrapper"> */}
                         <ReplyForm
                             id="this_comment"
@@ -380,12 +396,11 @@ class ItemQuestion extends Component {
             <div>
                 {question && question.length > 0 ?
                     question.map((item, index) =>{
-                        console.log(countNum);
-                        // reply?countNum:countNum--;
-                        // countNum=reply&&item.sort_in_group>0?countNum:countNum--;
+                        console.log(total-this.state.page*10);
                         return(
                         <div key={index} >
                             <Question
+                                // numbering={item.sort_in_group==0?countNum--:countNum}
                                 numbering={item.sort_in_group==0?countNum--:countNum}
                                 {...item}
                                 key={index}
@@ -408,13 +423,31 @@ class ItemQuestion extends Component {
                                 </AnswerBox> : null}
                             </div>)}) : null}
             </div>
-            {total>10?
+            <PageBox>
+            { (total+replyCount) >10?
+                        <Pagination
+                        activePage={this.state.page}
+                        boundaryRange={0}
+                        defaultActivePage={1}
+                        ellipsisItem={null}
+                        firstItem={null}
+                        lastItem={null}
+                        siblingRange={1}
+                        totalPages={lastPage + 1}
+                        secondary
+                        onPageChange={(event, { activePage }) => {
+                            this.getData(activePage-1);
+                        }}
+                      />:null
+              }
+            </PageBox>
+            {/* {total>10?
             <Page>
                 {total
                     ? Array(parseInt((total / 10) + 1, 10)).fill().map((_, i) =>
-                        <div style={{cursor:"pointer"}} key={i} onClick={() => this.getData(i)} className={page === i ? "this number" : "another number"}> {i + 1}</div>)
+                        <div style={{cursor:"pointer"}} key={i} onClick={() => {this.getData(i)}} className={page === i ? "this number" : "another number"}> {i + 1}</div>)
                     : (<React.Fragment>&nbsp;</React.Fragment>)}
-            </Page>:null}
+            </Page>:null} */}
             {/* <Dialog open={this.state.open}>
                     <div className="close-box">
                         <Cross angle={45} color={"#707070"} weight={1} width={15} height={15} onClick={()=>{this.setState({open:false})}}/>

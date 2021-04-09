@@ -15,15 +15,10 @@ const Wrapper = styled.div`
   // border:1px solid black;
 }
   width: 100%;
-  .title{
-    width:100%;
-    font-family:Noto Sans CJK KR, Medium;
-    font-size:${market_style.font.size.normal3};
-    margin-bottom:40px;
-  }
   .tabBox{
     width:100%;
     display:flex;
+    justify-content:center;
     font-size:${market_style.font.size.normal1};
     font-family:Noto Sans KR;
     .text_grey{color:#d6d6d6;cursor:pointer;font-weight:500;}
@@ -34,6 +29,7 @@ const Wrapper = styled.div`
   }
 `;
 const PointContainer = styled.div`
+  margin:-20px 20px -20px 20px;
   width: 100%;
   margin-right: auto;
   margin-left: auto;
@@ -53,108 +49,7 @@ const Title = styled.div`
     margin-bottom: 25px;
   }
 `;
-const PointWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-left: auto;
-  margin-right: 75px;
-  margin-top: 40px;
-  line-height: 20px;
-  width: 500px;
- 
-  .text {
-    margin-right: 10px;
-    font-size:${market_style.font.size.normal3};
-    font-weight: 300;
-  }
-  .point {
-    margin-left: auto;
-    margin-left: 50px;
-    margin-right: 15px;
-    font-size:${market_style.font.size.giant3};
-    font-weight: 500;
-  }
-  .unit {
-    font-weight: 500;
-    width: 25px;
-    height: 25px;
-    padding: 5px;
-    text-align: center;
-    background-color: #6A0DAD;
-    border-radius: 50%;
-    color: #FFFFFF;
-  }
-`;
-const Charge = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  .flex{
-    display:flex;
-  }
-  .item { 
-    width: max-content;
-    margin: 10px;
-    .charge {
-      cursor: default;
-      width: max-content;
-      padding: 35px;
-      text-align: center;
-      border-radius: 25px;
-      background-color: orange;
-      color: white;
-      font-weight: 500;
-    }
 
-    .not-yet {
-      background-color: gray;
-    }
-  }
-`;
-const HistoryContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  .history-element {
-    display: flex;
-    flex-direction row;
-    justify-content: space-between;
-    border: 1px solid gray;
-  }
-`;
-const FormStyle = styled.input.attrs({ type: "number" })`
-    width: ${props => props.width}px;
-    ::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    margin: 0;
-    -webkit-appearance: none;
-    padding: 0.67857143em 1em;
-    height:43px;
-    border-radius:20px;
-    font-family:Noto Sans KR;
-    font-size:${market_style.font.size.normal3};
-    background-color:#E9E9E9;
-    outline:none;
-    border:0px;
-    margin-right:5px;
-    transition: color 0.1s ease, border-color 0.1s ease;
-
-`;
-const Button = styled.div`
-  height:43px;
-  width:max-content;
-  padding:10px;
-  background-color:#707070;
-  display:flex;
-  justify-content:center;
-  border-radius:20px;
-  align-items:center;
-  .text{
-    color:white;
-  }
-`
 const PaymentBox = styled.div`
   width:100%;
   .continue{
@@ -167,7 +62,7 @@ const PaymentBox = styled.div`
   }
   .hrLine{
     width:100%;
-    border:2px solid #efefef;
+    border:1px solid #efefef;
     margin-top:16px;
     margin-bottom:10px;
   }
@@ -227,11 +122,13 @@ const PaymentBox = styled.div`
       width:130px;
       height:46px;
       display:flex;
+      border-radius:20px;
       justify-content:center;
       align-items:center;
       background: #E9E9E9 0% 0% no-repeat padding-box;
     }
     .redbtn{
+      
       background-color:red;
       color:white;
       font-size:${market_style.font.size.small1};
@@ -249,13 +146,12 @@ const PointListBox = styled.div`
   width:100%;
   .hrLine{
     width:100%;
-    border:2px solid #efefef;
+    border:1px solid #efefef;
     margin-top:16px;
     margin-bottom:10px;
   }
   .hrLineDeep{
-    border: 2px solid var(--unnamed-color-afafaf);
-    border: 2px solid #AFAFAF;
+    border: 1px solid #AFAFAF;
     opacity: 1;
   }
   .content_box{

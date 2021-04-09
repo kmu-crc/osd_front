@@ -267,9 +267,9 @@ const AdditionalInfo = styled.div`
   .reviewItem{
     width:100%;
     height:80%;
-    display:flex;
-    overflow:hidden;
-    overflow-y:auto;
+    // display:flex;
+    // overflow:hidden;
+    // overflow-y:auto;
   }
   .wrapItem{
     width:100%;
@@ -736,11 +736,12 @@ class MakerDetail extends Component {
           }
 
           {/* 리뷰 */}
-          <AdditionalInfo height={191} mTop={20}>
+          <AdditionalInfo height={366} mTop={20} style={{height:"max-content",maxHeight:"366px"}}>
             <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
             <div className="hrline margin_bottom"/>
             <div className="reviewItem">
             <MakerReviewContainer
+              count={this.props.ReviewCount}
               id={parseInt(this.props.id, 10)}
               handler={detail => this.setState({ reviewdetail: true, detail: detail })} />
               </div>
@@ -752,7 +753,7 @@ class MakerDetail extends Component {
             <div className="headerWrapper margin_bottom">
               <div className="_title">메이커 게시판</div>
             </div>
-            <div className="hrline margin_bottom"/>
+            <div className="hrline"/>
               <div className="list">
                 <MakerRequestBoardContainer id={parseInt(this.props.id, 10)} />
               </div>

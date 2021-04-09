@@ -10,10 +10,16 @@ import ReviewDetailModal from "components/Commons/ReviewDetailModal";
 import WriteReviewModal from "components/Commons/WriteReviewModal"
 import market_style from "market_style";
 import ReviewPic from "components/Items/Review";
-
+import { Pagination } from 'semantic-ui-react'
 const Reviews = styled.div`
   background: #FFFFFF;
   width:100%;
+  .pagenation{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    border:1px soild black;
+  }
   .headerWrapper{
       display:flex;
       align-items:center;
@@ -54,8 +60,10 @@ const Reviews = styled.div`
     }
   .reviewContent{
     width:103%;
-    height:113px;
-    overflow-Y:${props=>props.isScroll?"overlay":"hidden"};
+    height:max-content;
+    max-height:256px;
+    overflow:hidden;
+    // overflow-Y:${props=>props.isScroll?"overlay":"hidden"};
     display:flex;
     flex-wrap:wrap;
     .piece{
@@ -189,27 +197,51 @@ const CreateReview = styled.div`
     }
 `
 const Wrapper = styled.div`
-  width:600px;
+  min-width:600px;
+  max-width:600px;
   height:113px;
   display:flex;
   color:#707070;
   margin-right:30px;
-  margin-bottom:20px;
+  margin-bottom:10px;
+  margin-top:10px;
+  .wrapper{
+    display:flex;
+    .line{
+      margin-bottom: 10x;
+      font-size:${market_style.font.size.small1};
+    }
+    .marginRight{
+      margin-right:49px;
+    }
+    .nick_{
+      width:max-content;
+      max-width:100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size:${market_style.font.size.small1};
+      font-weight:500;
+    }
+  }
+
   .content{
     width:100%;
     height:100%;
     margin-left:10px;
-    .row_{
+    .row{
       width: max-content;
       margin-bottom: 10x;
       font-size:${market_style.font.size.small1};
     }
     .text_{
+      margin-top:28px;
       margin-bottom: 10px;
       overflow:hidden;
       text-overflow:ellipsis;
       word-wrap:break-word;
-      font-size:${market_style.font.size.mini2};
+      font-size:${market_style.font.size.small1};
+      font-weight:300;
     }
   }
   cursor:pointer;
@@ -242,6 +274,7 @@ class ItemReview extends Component {
             reviewDetail:false,
             writeReview:false,
             detail:null,
+            page:0,
         };
         this.onChangeValue = this.onChangeValue.bind(this);
         this.reset = this.reset.bind(this);
@@ -343,7 +376,10 @@ class ItemReview extends Component {
         this.setState({ page: page });
         this.props.getData(page);
     };
-
+    getList = page =>{
+        this.setState({page:page+1});
+        this.props.GetItemReviewRequest(this.props.id, page);
+      }
     render() {
         console.log(this.props);
         const { review, payment, userInfo, total, score, user_id } = this.props;
@@ -351,6 +387,7 @@ class ItemReview extends Component {
         const master = user_id === (userInfo && userInfo.uid);
         const avgScore = this.props.score;
         let reviewCount=0;
+        const lastPage = parseInt(total/ 4, 10);
         const TotalScore = ()=>{
             return <Rating name="score" icon='star' size="tiny" defaultRating={parseInt(this.state.totalscore,10)} maxRating={5} disabled />
         }
@@ -364,8 +401,10 @@ class ItemReview extends Component {
                 <Wrapper onClick={() => this.props.handler(props)} onClick={() => {this.setState({detail:props,reviewDetail:true})}} img={thumbnail_list[0] || noimg}>
                 <Thumbnail imageURL={props.m_img} />
                 <div className="content">
+                <div className="wrapper">
+                  <div className="nick_ line marginRight">{props.nick_name}</div>
                   <div className="row_"><RenderingStar/></div>
-                  <div className="row_">{props.nick_name}</div>
+                  </div>
                   <div className="text_">{props.comment && props.comment.slice(0, 64)}{props.comment && props.comment.length > 64 ? "..." : ""}</div>
                 </div>
                 </Wrapper>
@@ -420,21 +459,9 @@ class ItemReview extends Component {
                                     itsmine={item.user_id === (userInfo && userInfo.uid)}
                                     is_review={item.sort_in_group === 0}
                                 />
-                                {/* {reply && item.uid === this.state.targetId ?
-                                    <div className="line" style={{ marginTop: "34px", }}>
-                                        <div className="input-wrapper">
-                                            <textarea
-                                                value={this_reply || ""}
-                                                onChange={this.onChangeValue}
-                                                name="this_reply"
-                                                onKeyDown={this.handleKeyDown} />
-                                        </div>
-                                        <div className="button" onClick={() => this.requestAnswer(item)} >
-                                            <div className="text" >답변</div></div>
-                                    </div> : null} */}
                                 </React.Fragment>)}) : <div className="blank">작성된 리뷰가 없습니다.</div>}
                 </div>
-                {total>10?
+                {/* {total>10?
                 <Page>
                     {total
                         ? Array(parseInt((total / 10) + 1, 10)).fill().map((_, i) =>
@@ -442,7 +469,25 @@ class ItemReview extends Component {
                         : (<React.Fragment>&nbsp;</React.Fragment>)}
                 </Page>    
                 :null
-                }
+                } */}
+                <div className="pagenation">
+                { total >4?
+                        <Pagination
+                        activePage={this.state.page}
+                        boundaryRange={0}
+                        defaultActivePage={1}
+                        ellipsisItem={null}
+                        firstItem={null}
+                        lastItem={null}
+                        siblingRange={1}
+                        totalPages={lastPage + 1}
+                        secondary
+                        onPageChange={(event, { activePage }) => {
+                          this.getList(activePage - 1);
+                        }}
+                      />:null
+              }
+              </div>
             </Reviews>
         </React.Fragment >)
     }

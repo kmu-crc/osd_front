@@ -257,7 +257,7 @@ export const GetItemQuestionRequest = (id, page) => {
       method: "GET"
     })
       .then(res => res.json())
-      .then(data => dispatch(GetItemQuestionSuccess(data)))
+      .then(data =>  {console.log(data);dispatch(GetItemQuestionSuccess(data))})
       .catch(error => dispatch(GetItemQuestionFailure(error)));
   };
 };

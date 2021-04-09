@@ -12,7 +12,7 @@ const initialState = {
         status: "INIT"
     },
     status: {
-        Question: [], Total: 0,
+        Question: [], Total: 0, ReplyCount:0,
         PaymentMessage:[],msgTotal:0,
     },
     GetPaymentMessage: {
@@ -45,7 +45,8 @@ export function ItemQuestion(state, action) {
                 },
                 status: {
                     Question: { $set: action.payload.data.questions },
-                    Total: { $set: action.payload.data.total }  
+                    Total: { $set: action.payload.data.total } ,
+                    ReplyCount: { $set: action.payload.data.replyCount }  
                 }
             });
         case types.GET_ITEM_QUESTION_FAILURE:
