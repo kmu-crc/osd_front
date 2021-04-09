@@ -75,7 +75,7 @@ const ListElement = styled.div`
 
 export default class DesignerRequestBoard extends Component {
     getList = (page) =>
-        this.props.getList(page);
+        this.props.getList(page); 
 
     render() {
         return (<React.Fragment>
