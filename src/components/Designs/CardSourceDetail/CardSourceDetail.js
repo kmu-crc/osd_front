@@ -1075,7 +1075,7 @@ class CardSourceDetail extends Component {
           return a.order < b.order ? -1 : a.order > b.order ? 1 : 0;
         })
       }).then(async () => {
-        await this.setState({ loading: true, });
+        await this.setState({ loading: true, result: null });
         let ntry = 10;
         fetch(`${host}/design/problem/submit`, {
           headers: {
@@ -1117,8 +1117,12 @@ class CardSourceDetail extends Component {
                   setTimeout(check, 1500);
               };
               check();
+              if (ntry === 0 && this.state.result == null) {
+                alert('제출결과를 가져오지 못하였습니다. 잠시후 제출내역을 확인해주세요.');
+                this.setState({ loading: false });
+              }
             } else {
-              alert('제출에 실패하였습니다.');
+              alert('제출에 실패하였습니다.\n' + res.message);
               this.setState({ loading: false });
               return;
             }
