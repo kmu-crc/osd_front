@@ -17,19 +17,19 @@ const ListContainer = styled.div`
   .item{
     flex: 0 0 180px;
     justify-content: space-around;
-    margin: ${props=>props.isSmall==true?"0px 20px 30px 0px":
-              props.isMini==true?"0px 23px 30px 0px":"0px 0px 35px 22px"};
+    margin: ${props => props.isSmall == true ? "0px 20px 30px 0px" :
+    props.isMini == true ? "0px 23px 30px 0px" : "0px 0px 35px 22px"};
   }
   .designer{
     // flex: 0 0 247px;
     justify-content: space-around;
-    margin: ${props=>props.isSmall==true?"0px 20px 30px 0px":"0px 0px 30px 28px"};
+    margin: ${props => props.isSmall == true ? "0px 20px 30px 0px" : "0px 0px 30px 28px"};
     padding: 0px;
   }
   .maker{
     // flex: 0 0 247px;
     justify-content: space-around;
-    margin: ${props=>props.isSmall==true?"0px 20px 30px 0px":"0px 0px 30px 28px"};
+    margin: ${props => props.isSmall == true ? "0px 20px 30px 0px" : "0px 0px 30px 28px"};
     padding: 0px;
   }
   .gallery{
@@ -40,12 +40,12 @@ const ListContainer = styled.div`
   }
   .sales{
     justify-content: space-around;
-    margin: ${props=>props.isSmall==true?"0px 0px 35px 35px":"0px 0px 35px 35px"};
+    margin: ${props => props.isSmall == true ? "0px 0px 35px 35px" : "0px 0px 35px 35px"};
     padding: 0px;
   }
   .sales_Expert{
     justify-content: space-around;
-    margin: ${props=>props.isSmall==true?"0px 0px 35px 30px":"0px 0px 35px 30px"};
+    margin: ${props => props.isSmall == true ? "0px 0px 35px 30px" : "0px 0px 35px 30px"};
     padding: 0px;
   }
 `;
@@ -96,13 +96,13 @@ class ScrollList extends Component {
               <Loader className="loading" active={false}
                 inline="centered" size="huge" key={0} />
             }>
-            <ListContainer isSmall={this.props.isSmall==null?false:true} isMini={this.props.isMini==null?false:true}>
+            <ListContainer isSmall={this.props.isSmall == null ? false : true} isMini={this.props.isMini == null ? false : true}>
               {this.props.dataListAdded.map((content, index) => (
-                <React.Fragment>
+                // <React.Fragment>
                 <div key={index} className={this.props.type}>
                   <ListComponent data={content} type={type} confirm={this.props.confirm} handler={this.props.handler} />
                 </div>
-                </React.Fragment>
+                // </React.Fragment>
               ))}
             </ListContainer>
           </InfiniteScroll>

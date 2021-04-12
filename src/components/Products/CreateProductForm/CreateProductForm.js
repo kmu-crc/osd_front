@@ -6,7 +6,7 @@ import CheckBox2 from "components/Commons/CheckBox";
 import { LocalGridEditor } from "components/GridEditor/LocalGridEditor";
 import { AddController, InputContent, Controller, InputTag, /*ThumbnailList,*/ RadioType } from "components/Commons/InputItem";
 import SearchDesignMemberContainer from "containers/Commons/SearchMemberContainer";
-import { InputPriceNew } from "components/Commons/InputItem/InputPriceNew";
+import { InputCalendar, InputPriceNew } from "components/Commons/InputItem";
 import Loading from "components/Commons/Loading";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import templateImgDesign from "source/template-image-design.png";
@@ -18,7 +18,6 @@ import arrow from "source/arrow.svg";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
-
 
 const fashion = [
   { order: 0, title: "Ideation" },
@@ -233,7 +232,7 @@ class TemplateGridEditor extends Component {
             ? steps.map((step, index) =>
               <div key={step + index} className="step">
                 <StepCard title={step.title} />
-                <AsBelowArrow angle={0} percent={.25} marginTop={10} marginRight={0} marginBottom={10} marginLeft={85} />
+                <AsBelowArrow angle={0} percent={.25} marginTop={10} marginRight={0} marginBottom={10} marginLeft={60} />
                 <CreateCard />
               </div>)
             : null
@@ -256,6 +255,7 @@ const template = [
 const ItemType = [
   { text: "디자인", value: 0 },
   { text: "프로젝트", value: 1 },
+  { text: "강의", value: 8 },
   { text: "기술자문/상담", value: 2 },
   { text: "경험", value: 3 },
   { text: "정보/데이터", value: 4 },
@@ -451,8 +451,8 @@ const ThumbnailBox = styled.div`
   }
 `;
 const Thumbnail = styled.div`
-  width: ${props => props.width == null ? "230px" : props.width+"px"};
-  height: ${props => props.height == null ? "230px" : props.height+"px"};
+  width: ${props => props.width == null ? "230px" : props.width + "px"};
+  height: ${props => props.height == null ? "230px" : props.height + "px"};
   margin-bottom: ${props => props.marginBottom == null ? 0 : props.marginBottom}px;
   background: #E9E9E9;
   border: ${props => props.img ? "1px solid #E9E9E9" : "none"};
@@ -466,15 +466,17 @@ const Thumbnail = styled.div`
 `;
 
 const FormBox = styled.div`
-  width:${props => props.width != null ? props.width+"px" : "100%"};
-  height:${props => props.height != null ? props.height+"px" : "max-content"};
+  width:${props => props.width != null ? props.width + "px" : "100%"};
+  height:${props => props.height != null ? props.height + "px" : "max-content"};
   box-shadow: ${props => props.boxShadow == null ? "" : "5px 5px 10px #00000029"};
   margin-top: ${props => props.marginTop || 0}px;
   margin-bottom: ${props => props.marginBottom || 0}px;
   border-radius: 20px;
-  padding: ${props=>props.padding==null?"30px 50px":props.padding};
+  padding: ${props => props.padding == null ? "30px 50px" : props.padding};
   border:1px solid #eaeaea;
+
   .FormBoxScroll{
+    position: relative;
     padding:0px 15px 0px 0px;
     width:100%;
     height:100%;
@@ -534,6 +536,23 @@ const DescirptionText = styled.div`
 font-size:${market_style.font.size.mini2};
   color:#707070;
 `;
+const InputNumberText = styled.input.attrs({ type: "number" })`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:31px;
+  border-radius:10px;
+  font-family:Noto Sans KR;
+  font-size:${market_style.font.size.mini2};
+  background-color:#E9E9E9;
+  outline:none;
+  border:0px;
+  padding: 0.67857143em 1em;
+  font-weight:300;
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+`;
 const InputText = styled.input.attrs({ type: "text" })`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
   height:31px;
@@ -562,6 +581,7 @@ const InputTextarea = styled.textarea`
 
 `;
 const DropBox = styled(Dropdown)`
+
     width:160px;
     min-width:100px !important;
     min-height:31px !important;
@@ -626,7 +646,7 @@ class CreateProductForm extends Component {
       tag: [], category1: null, category2: null, category3: null,
       itemType: -1, is_problem: false,
       // send data - additional
-      additional: null, content: [], steps: [], type: "blog", private: 0,
+      additional: null, content: [], steps: [], steps2: [], type: "blog", private: 0,
     };
     this.onClickItemType = this.onClickItemType.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
@@ -650,7 +670,7 @@ class CreateProductForm extends Component {
       is_problem: this.state.is_problem === true ? 1 : 0,
       itemType: this.state.itemType,
       // additional
-      additional: this.state.additional, content: this.state.content, step: this.state.steps,
+      additional: this.state.additional, content: this.state.content, step: this.state.steps, step2: this.state.steps2,
       type: this.state.type, private: this.state.private
     };
     // console.log("sent:", data);
@@ -726,6 +746,7 @@ class CreateProductForm extends Component {
     const { /* edit, */ itemType } = this.state;
     const Mandatory = () => <span className="font_red" title="필수사항입니다.">*</span>
 
+    console.log(this.state);
     return (<MainBox>
       {this.state.loading ? <Loading /> : null}
       {this.props.keep ? <div>REDIRECTED</div> : null}
@@ -745,7 +766,7 @@ class CreateProductForm extends Component {
         </ThumbnailBox>
 
         <FormBox height={302} marginBottom={20} boxShadow={true}>
-            <div className="FormBoxScroll">
+          <div className="FormBoxScroll">
             <div className="wrapper margin_bottom flex">
               <div className="label">제목<Mandatory /></div>
               <InputText placeholder="제목을 입력하세요" width={330} name="title" value={this.state.title || ""} onChange={this.onChangeValue} />
@@ -756,15 +777,15 @@ class CreateProductForm extends Component {
               <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
 
 
-            {parseInt(this.state.category_level2, 10) === 42 ? 
-            <React.Fragment>
-                <DropBox id="category_level3" value={this.state.category_level3} selection options={category3} placeholder="언어선택" onChange={this.onClickCategorylevel3} />
-                  <div style={{disply:"flex",alignItems:"center"}}>
-                  <CheckBox2 onChange={() => this.setState({ is_problem: !this.state.is_problem, })} checked={this.state.is_problem} />
-                  <div style={{marginLeft:"30px"}}>문제 등록기능을 사용합니다.</div>
+              {parseInt(this.state.category_level2, 10) === 42 ?
+                <React.Fragment>
+                  <DropBox id="category_level3" value={this.state.category_level3} selection options={category3} placeholder="언어선택" onChange={this.onClickCategorylevel3} />
+                  <div style={{ disply: "flex", alignItems: "center" }}>
+                    <CheckBox2 onChange={() => this.setState({ is_problem: !this.state.is_problem, })} checked={this.state.is_problem} />
+                    <div style={{ marginLeft: "30px" }}>문제 등록기능을 사용합니다.</div>
                   </div>
-            </React.Fragment>
-              : null}
+                </React.Fragment>
+                : null}
             </div>
             <div className="wrapper margin_bottom flex">
               <div className="label">태그</div>
@@ -786,7 +807,7 @@ class CreateProductForm extends Component {
       <div className="contentsBox">
         {itemType > -1 ?
           <ItemTypeForm
-            returnState={obj => this.setState({ additional: obj.additional, content: obj.content, steps: obj.steps, type: obj.type })}
+            returnState={obj => this.setState({ additional: obj.additional, content: obj.content, steps: obj.steps, steps2:obj.steps2, type: obj.type })}
             itemType={this.state.itemType}
             userInfo={this.props.userInfo}
           />
@@ -820,7 +841,7 @@ class CreateProductForm extends Component {
             </Link>
             : <RedButton width={150} height={30} fontSize={market_style.font.size.small1} text="아이템을 등록합니다." okText="확인" cancelText="취소" value={"등록하기"} onClick={this.onSubmit} isConfirm={true} />
           }
-          <GrayButton width={150} height={30} fontSize={market_style.font.size.small1} text={"취소하시겠습니까?"} value={"취소하기"} onClick={async() => {
+          <GrayButton width={150} height={30} fontSize={market_style.font.size.small1} text={"취소하시겠습니까?"} value={"취소하기"} onClick={async () => {
             if (await confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
               window.history.back();
             }
@@ -858,7 +879,7 @@ const DesignTemplateSelector = styled.div`
 class ItemTypeForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { reset: 0, additional: null, content: [], steps: [], type: this.props.itemType === 1 ? "project" : "blog", template: null };
+    this.state = { reset: 0, additional: null, content: [], steps: [], steps2: [], type: this.props.itemType === 1 || this.props.itemType === 8 ? "project" : "blog", template: null, /* 2nd template */ template_practice: null };
     this.onHandleContent = this.onHandleContent.bind(this);
     this.onHandleAdditional = this.onHandleAdditional.bind(this);
     this.returnState = this.returnState.bind(this);
@@ -868,7 +889,7 @@ class ItemTypeForm extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.itemType !== this.props.itemType) {
       this.setState({ additional: null, content: [], steps: [], type: "blog" });
-      if (this.props.itemType === 1) {
+      if (this.props.itemType === 1 || this.props.itemType === 8) {
         this.setState({ type: "project" });
       }
     }
@@ -895,8 +916,7 @@ class ItemTypeForm extends Component {
 
   render() {
     const itemType = this.props.itemType == null ? -1 : parseInt(this.props.itemType, 10);
-    const {/* additional, */content, steps } = this.state;
-    // console.log(this.state, this.props);
+    const {/* additional, steps*/ content, } = this.state;
 
     return (
 
@@ -912,17 +932,20 @@ class ItemTypeForm extends Component {
               {itemType === 5 ? <ItemIdea return={this.onHandleAdditional} /> : null}
               {itemType === 6 ? <ItemPatent return={this.onHandleAdditional} /> : null}
               {itemType === 7 ? <ItemProduct return={this.onHandleAdditional} /> : null}
+              {itemType === 8 ? <ItemLecture return={this.onHandleAdditional} /> : null}
             </div>
           </FormBox>
 
           <FormBox boxShadow={true} marginTop={25}>
+            {this.props.itemType === 8 ? <div> 강의내용구조 </div> : null}
+
             <ResetButtonWrapper
               onClick={async () => {
                 await this.setState({
                   additional: null,
                   content: [],
                   steps: [],
-                  type: this.props.itemType === 1 ? "project" : "blog",
+                  type: this.props.itemType === 1 || this.props.itemType === 8 ? "project" : "blog",
                   template: null,
                   is_project: 0,
                   reset: (++this.state.reset) % 10,
@@ -993,16 +1016,64 @@ class ItemTypeForm extends Component {
               </React.Fragment>}
 
           </FormBox>
+          {this.props.itemType === 8
+            ? <FormBox boxShadow={true} marginTop={25}>
+              <div>
+                실습내용구조
+              </div>
+              { // {/* 로컬 그리드 에디터 - */}
+                <React.Fragment>
+                  <div className="contentsBox centering">
+                    <DesignTemplateSelector>
+                      <div className="title">
+                        템플릿을 선택하시면 보다 편하게 작업을 시작하실 수 있습니다!</div>
+                      <div className="template-wrapper">
+                        {template && template.length > 0 &&
+                          template.map(item =>
+                            <label
+                              className="element"
+                              key={item.type}
+                              onClick={
+                                async () => {
+                                  await this.setState({ template_practice: item.type })
+                                }}>
+                              {item.text}
+                              <DesignElement ><img alt="" src={item.img} /></DesignElement>
+                            </label>
+                          )}
+                      </div>
+                    </DesignTemplateSelector>
+                  </div>
+                  <div className="contentsBox centering">
+                    <EditorWrapper>
+                      <div className="editor">
+                        <TemplateGridEditor
+                          reset={this.state.reset}
+                          selected={
+                            content => {
+                              this.setState({ steps2: content, type: "project", is_project: 1 });
+                              this.returnState();
+                            }}
+                          type={this.state.template_practice} />
+                      </div>
+                      <div className="title">
+                        선택하신 템플릿으로 시작하시고 싶으시다면 아래에 등록 버튼을 클릭해주세요.</div>
+                    </EditorWrapper>
+                  </div>
+                </React.Fragment>}
+
+            </FormBox>
+            : null}
         </div>
-        </MainBox>
-        );
+      </MainBox>
+    );
   }
 };
 class Field extends Component {
   render() {
     const { title } = this.props;
     return (
-      <div className={`wrapper flex ${this.props.isMargin==false?null:"margin_bottom"} ${this.props.isCentering==null?null:"Vcentering"}`}>
+      <div className={`wrapper flex ${this.props.isMargin == false ? null : "margin_bottom"} ${this.props.isCentering == null ? null : "Vcentering"}`}>
         <div className={`label`}>{title}</div>
         {this.props.children}
       </div>)
@@ -1092,7 +1163,7 @@ class ItemProject extends Component {
           <InputTextarea placeholder="설명을 입력하세요" onChange={this.onHandleChange} name="description" height={60} /></Field>
         <Field title="팀원 초대">
           <div className="inputBox">
-          {this.state.alone ? undefined : <SearchDesignMemberContainer className="searchRect" onChangeMembers={this.changeMembers} />}
+            {this.state.alone ? undefined : <SearchDesignMemberContainer className="searchRect" onChangeMembers={this.changeMembers} />}
           </div>
           {/* LEAVE ME ALONE */}
           {/* <NoInviteMemberBox>
@@ -1362,4 +1433,85 @@ class ItemProduct extends Component {
       </React.Fragment>)
   }
 };
+class ItemLecture extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      description: "",
+      price: 0,
+      max_students: 0,
+      recruit_unlimited: false,
+      recruit_always: false,
+      start_date: null,
+      end_date: null
+    };
+
+    this.onHandleChange = this.onHandleChange.bind(this);
+    this.returnState = this.returnState.bind(this);
+    this.getPriceValue = this.getPriceValue.bind(this);
+    this.getEndDateValue = this.getEndDateValue.bind(this);
+    this.getStartDateValue = this.getStartDateValue.bind(this);
+    this.getDayDateValue = this.getDayDateValue.bind(this);
+  };
+  returnState() {
+    this.props.return && this.props.return(this.state);
+  };
+  async onHandleChange(event) {
+    const { name, value } = event.target;
+    await this.setState({ [name]: parseInt(value, 10) });
+    this.returnState();
+  };
+  async getEndDateValue(value) {
+    await this.setState({ end_date: value });
+    this.returnState();
+  }
+  async getStartDateValue(value) {
+    await this.setState({ start_date: value });
+    this.returnState();
+  }
+  async getDayDateValue(value) {
+    await this.setState({ day_date: value })
+    this.returnState();
+  }
+  async getPriceValue(value) {
+    await this.setState({ price: value });
+    this.returnState();
+  }
+
+  render() {
+    const { recruit_always, start_date, end_date, max_students } = this.state;
+
+    // console.log("LECTURE:", start_date, end_date);
+    return (
+      <React.Fragment>
+        <Field title="설명">
+          <InputTextarea placeholder="설명을 입력하세요" onChange={this.onHandleChange} name="description" height={60} />
+        </Field>
+
+        <Field title="최대 모집인원">
+          <InputNumberText width={100} onChange={this.onHandleChange} min="0" name="max_students" value={max_students || 0} />&nbsp;명&nbsp;(모집인원 0명 = 무제한)
+        </Field>
+
+        <Field title="수강생 모집기간">
+          <CheckBox2 onChange={() => this.setState({ recruit_always: !recruit_always, })} checked={recruit_always} />&nbsp;상시모집&nbsp;&nbsp;
+          {!recruit_always
+            ? <InputCalendar
+              name="calendar"
+              startDate={start_date}
+              endDate={end_date}
+              getStartDateValue={this.getStartDateValue}
+              getEndDateValue={this.getEndDateValue}
+              getDayDateValue={this.getDayDateValue}
+            />
+            : null}
+        </Field>
+
+        <Field isMargin={false} isCentering={true} title="수강료">
+          <InputPriceNew getValue={this.getPriceValue} name="price" />
+        </Field>
+
+      </React.Fragment>)
+  }
+};
+
 
