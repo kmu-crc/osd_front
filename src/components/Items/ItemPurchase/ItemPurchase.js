@@ -20,6 +20,7 @@ import market_style from "market_style";
 
 const MessageBox = styled.div`
   padding:10px;
+
 `
 const CustomIcon =styled.div`
 width:${props => props.width}px;
@@ -68,9 +69,9 @@ const InputText = styled.input.attrs({ type: "text" })`
 const MessageWrapper = styled.div`
     width:100%;
     display:flex;
-    justify-content:${props=>props.isMy?"flex-start":"flex-start"};
-    align-items:flex-end;
+    justify-content:flex-start;
     flex-direction:${props=>props.isMy?"row-reverse":"row"};
+    align-items:flex-end;
     margin-bottom:16px;
   .msg_bubble{
     max-width:400px;
@@ -106,29 +107,44 @@ const MessageWrapper = styled.div`
   }
 `
 const Wrapper = styled.div`
-  // * { border: 1px solid red; };
-  margin-top: 50px;
-  margin-bottom:50px;
-  .line { 
-    display: flex; 
-  };
+
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:10px 30px;
+  .profileBox{
+    width:100%;
+    
+    display:flex;
+    box-shadow: 3px 3px 5px #0000001A;
+    border:1px solid #eaeaea;
+    border-radius:20px;
+    padding:30px 45px;
+  }
   .flex-align-column {
     flex-direction: column;
   };
+  .row{
+    width:100%;
+    margin-top:20px;
+    margin-bottom:20px;
+  }
 `;
 const ItemImages = styled.div`
-  width: 600px;
-  height: 600px;
-  // margin-left: 25px; 
+  max-width: 396px;
+  max-height: 354px;
+  min-width: 396px;
+  min-height: 354px;
   .main-image {
-    border: 1px solid #EFEFEF;
     overflow-x: auto;
     width: 100%;
     height: 100%; 
     background-image: url(${prop => prop.main});
-    background-size: cover;
+    background-size: contain;
     background-position: center center;
-    border-radius: 20px;
+    background-repeat:no-repeat;
   }
   .sub-images {
     margin-top: 30px;
@@ -144,42 +160,45 @@ const ItemImages = styled.div`
   }
 `;
 const ItemInfo = styled.div`
+
   position: relative;
-  margin-left: 50px;
-  width: 948px;
-  height: 600px;
+  margin-left: 45px;
   font-family: Noto Sans KR;
   background: #FFFFFF;
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px; 
-  padding:35px;
+  width:100%;
+  .flex{display:flex;}
+  .spaceBetween{justify-content:space-between;align-items:center;}
   .title {
-    font-size:${market_style.font.size.big3};
-    // line-height: 50px;
+    font-size:${market_style.font.size.normal1};
     text-align: left;
     color: #000000;
+    font-weight:500;
+  }
+  .marginBottom{
+    margin-bottom:10px;
   }
   .expert {
-    margin-top: 19px;
     position:relative;
+    display:flex;
+    align-items:center;
     .who {
-      width: 34px;
-      height: 34px;
+      width: 23px;
+      height: 23px;
       border-radius: 50%;
       background-size: cover;
       background-position: center center;
       background-image: url(${props => props.face});
-      margin-right: 26px;
+      margin-right: 5px;
     }
     .nick{
       cursor:pointer;
-      font-size:${market_style.font.size.small3};
+      font-size:${market_style.font.size.small1};
       font-weight: 300;
       line-height: 29px;
       color: #060000;
     }
    .text {
-     background-color: #FAFAFA;
+    background-color: #FAFAFA;
     margin-top: 29px;
     height: 200px;
     width: 100%;
@@ -195,68 +214,42 @@ const ItemInfo = styled.div`
     }
   }
   .price-and-score {
-    margin-left: auto;
-    margin-right: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
     font-weight: 500;
-    font-size:${market_style.font.size.normal3};
-    line-height: 29px;
-    text-align: left;
-    color: #060000;
-  }
-  .options {
-    margin-top: 50px;
-    .text {
-      width: max-content;
-      text-align: left;
-      font-weight: 500;
-      font-size:${market_style.font.size.normal3};
-      line-height: 29px;
-      letter-spacing: 0;
-      color: #000000;
-      opacity: 1;
-    }
-    .combo-wrapper {
-      margin-bottom: 28px;
-      .box {
-        border-radius: 21px;
-        background-color: #E9E9E9;
-        height: 43px;
-        margin-left: 41px;
-      }
-      .WIDTH360 { width: 360px; }
-      .WIDTH178 { width: 178px; }
+    font-size:${market_style.font.size.small1};
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    .price{
+      margin-right:10px;
     }
   }
+
   .bottom {
-    width: max-content;
-    position: absolute;
-    right: 35px;
-    bottom: 15px;
+    width:100%;
+    display:flex;
+    justify-content:flex-end;
+    margin-top:20px;
   };
   .buttons {
     cursor: pointer;
     .button { 
-      width: 213px;
-      height: 70px;
+      width: 150px;
+      height: 30px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      margin-left:20px;
       .text{
-        width: max-content;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 15px;
-        line-height: 37px;
-        font-size:${market_style.font.size.giant2};
+        font-size:${market_style.font.size.small1};
         font-weight: 500;
       }
       &.first { 
         color: #FFFFFF; 
         background: #FF0000; 
-        margin-right: 27px; 
       }
       &.second {
         border: 1px solid red;
-        color: #FF0000;
+        color: #707070;
         background: #FFFFFF; 
         &.active{
           color: #FFFFFF;
@@ -267,11 +260,12 @@ const ItemInfo = styled.div`
     }
   }
 `;
-const Introduction = styled.div`                 
+const Introduction = styled.div`
   position: relative;
-  height: 460px;
+  height: 237px;
   opacity: 1;
   font-family: Noto Sans KR;
+  margin-top:20px;
   .wrapItem{
     width:100%;
     height:100%;
@@ -279,20 +273,15 @@ const Introduction = styled.div`
     .flex{
       display:flex;
     }
- 
     .title {
-      margin-top: 10px;
-      font-size:${market_style.font.size.normal1};
+      font-size:${market_style.font.size.small1};
       font-weight: 500;
-      line-height: 28px;
       text-align: left;
-    }
-    .itemDescription{
     }
     .text {
       width: 100%;
-      margin-top: 15px;
-      margin-bottom:29px;
+      margin-top: 10px;
+      margin-bottom:25px;
       font-size:${market_style.font.size.small1};
       font-weight: 300;
       line-weight: 27px;
@@ -320,102 +309,168 @@ const Introduction = styled.div`
     }
     .wrapItem {
       overflow: auto;
+      overflow-y:overlay;
     }
   }
 `;
-// const TagPiece = styled.div`
-//     width: max-content;
-//     min-width: 30px;
-//     background-color: #EFEFEF;
-//     margin-right: 5px;
-//     margin-bottom: 5px;
-//     color: #707070;
-//     padding: 5px;
-//     padding-left: 10px;
-//     padding-right: 10px
-//     border-radius: 15px;
-//     display: flex;
-//     justify-content: space-between;
-//     .close {
-//         margin-left: 10px;
-//         width: max-content;
-//         height: max-content;
-//         padding: 0px 2px;
-//     }
-// `;
+const TagPiece = styled.div`
+    width: max-content;
+    min-width: max-content;
+    background-color:#E9E9E96A;
+    margin-right: 8px;
+    margin-top: 5px;
+    color: #707070;
+    padding:5px 12px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-size:${market_style.font.size.small1};
+    .close {
+        margin-left: 10px;
+        width: max-content;
+        height: max-content;
+        padding: 0px 2px;
+    }
+`;
+const ItemContents = styled.div`
+  // *{ border: 1px solid blue; }
+  width: 100%;
+  height:max-content;
+  max-height: 585px;
+  background: #FFFFFF;
+  box-shadow: 3px 3px 5px #0000001A;
+  border: 0.25px solid #eaeaea;
+  border-radius: 20px;
+  opacity: 1;
+  padding: 20px 25px;
 
-// const CoverGrident = styled.div`
-//   display:${props => props.isGradient ? "block" : "none"};
-//   width:100%;
-//   height:100%;
-//   position:absolute;
-//   z-index:900;
-//   left:0;
-//   top:0;
-//   background:${props => props.isGradient ? "linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255,1.0))" : null};
-// `
+  .header {
+    padding-bottom: 10px;
+    border-bottom: 2px solid #EFEFEF; 
+    .title {
+      margin: auto;
+      // margin-top: 10px;
+      width: max-content;
+      line-height: 27px;
+      font-size: 18px;
+      color: #000000;
+      font-family: Noto Sans KR;
+      font-weight: Medium;
+      letter-spacing: 0px;
+    }
+  }
+  .editor-wrapper {
+    :hover {
+      opacity: 0.95;
+    }
+    width: 99%;
+    height: 510px;
+    padding-top: 15px;
+    word-wrap: break-word;
+    overflow: hidden;
+  }
+  .message-wrapper {
+    width: 100%;
+    height: 300px;
+    padding-top: 15px;
+    word-wrap: break-word;
+    overflow: hidden;
+    margin-bottom:10px;
+    &:hover {
+      opacity: 0.95;
+    }
+    .message-detail{
+      height:100%;
+      overflow-y:auto;
+      overflow-x:hidden;
+    }
+  }
+  .iconWrapper{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    margin-right:30px;
+  }
+  .font_small{
+    height:20px;
+    font-size:7px;
+    color:#707070;
+  }
+  .who {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center center;
+    background-image: url(${props => props.face});
+    margin-right: 12px;
+  }
+  .flex{
+    display:flex;
+  }
+  .nick{
+    cursor:pointer;
+    font-size:${market_style.font.size.small3};
+    font-weight: 300;
+    line-height: 29px;
+    color: #060000;
+  }
+  .title {
+    font-weight: 500;
+    margin-bottom: 25px;
+  }
+  .margin_bottom_s{
+    margin-bottom:15px;
+  }
+  .element {
+    margin-top: 22px;
+  }
+  .element-reply {
+    margin-top: 14px;
+  }
+  .first {
+    margin-top: 50px; 
+  }
+  .input-wrapper {
+     width: 735px;
+     height: 88px;
+     border-radius: 21px;
+     background: #E9E9E9;
+     padding: 15px;
+     textarea {
+      width: 705px;
+      height: 58px;
+      border: none;
+      background: none;
+      resize: none;
+    }
+  }
+  .button {
+    width: 205px;
+    height: 88px;
+    margin-left: 39px;
+    border: 3px solid #E9E9E9;
+    cursor: default;
+    .text {
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 32px;
+      width: max-content;
+      font-weight: 500;
+      font-size:${market_style.font.size.small3};
+      line-height: 25px;
+      text-align: left;
+    }
+  }
+  .detail_board{
+    height:max-content;
+    // border:1px solid black;
+    // overflow:scroll;
+    // scroll-y:hidden;
+  }
+`;
 
-// const Board = styled.div`
-//   // *{border: 1px solid red;}
-//   width: 1600px;
-//   height: ${props => props.height};
-//   background: #FFFFFF;
-//   box-shadow: 5px 5px 10px #00000029;
-//   border-radius: 20px;
-//   opacity: 1;
-//   padding: 45px 25px 20px 30px; // 90px 51px 45px 60px;
-//   font-family: Noto Sans KR;
-//   color: #000000;
-//   font-weight: 300;
-//   font-size: 19px;
-//   line-height: 28px;
-//   text-align: left;
-//   position:relative;
-//   .title {
-//     font-weight: 500;
-//   }
-//   .element {
-//     margin-top: 22px;
-//   }
-//   .element-reply {
-//     margin-top: 14px;
-//     padding:10px;
-  
-//   .first {
-//     margin-top: 50px; 
-//   }
-//   .input-wrapper {
-//      width: 735px;
-//      height: 88px;
-//      border-radius: 21px;
-//      background: #E9E9E9;
-//      padding: 15px;
-//      textarea {
-//       width: 705px;
-//       height: 58px;
-//       border: none;
-//       background: none;
-//       resize: none;
-//     }
-//   }
-//   .button {
-//     width: 205px;
-//     height: 88px;
-//     margin-left: 39px;
-//     border: 3px solid #E9E9E9;
-//     cursor: default;
-//     .text {
-//       margin-left: auto;
-//       margin-right: auto;
-//       margin-top: 32px;
-//       width: max-content;
-//       font-weight: 500;
-//       font-size: 17px;
-//       line-height: 25px;
-//       text-align: left;
-//     }
-//   }
-// `;
 const Content = styled.div`
   width: ${props => props.width || 1094}px;
   height: ${props => props.height};
@@ -522,42 +577,6 @@ const Content = styled.div`
     margin-bottom:12px;
   }
 `;
-// const Label = styled.label`
-//     min-width:35px;
-//     min-height:35px;
-//     border:1px solid #dddddd;
-//     font-weight:500;
-//     color:#707070;
-//     text-align:center;
-//     margin:5px;
-//     border-radius:20px;
-//     &:hover{
-//         cursor:pointer;
-//     }
-// `
-// const ExpandingButton = styled.div`
-//     width:${props => props.width}px;
-//     height:30px;
-//     margin-top:10px;
-//     // margin-bottom:10px;
-//     display:flex;
-//     justify-content:center;
-//     .button{
-//         width:100%;
-//         height:100%;
-//         // width:80%;
-//         // height:100%;
-//         display:flex;
-//         justify-content:center;
-//         align-items:cfius:20px;
-//         // background-color:#707070;
-//         cursor:pointer;
-//     }
-//     .font{
-//         font-size:15px;
-//         color:gray;
-//     }
-// `;
 
 const MemberBox = styled.div`
     width:300px;
@@ -748,39 +767,58 @@ class ItemPurchase extends Component {
         </MemberBox>
       );
     }
-    // const Type_productContent=()=>{
-    //   return <Content
-    //   id="contents_rgn"
-    //   style={{ marginTop: "15px", overflow: "hidden" }}
-    //   // height={expandingContent ? "100%" : "400px"}
-    //   width={1600}>
-
-    // </Content>
-    // }
-    // const Type_adviceContent=()=>{
-    //   return <Content
-    //   id="contents_rgn"
-    //   style={{ marginTop: "15px", overflow: "hidden" }}
-    //   // height={expandingContent ? "100%" : "400px"}
-    //   width={1600}>
-
-    // </Content>
-    // }
-
-    // const Type_closeContent=()=>{
-    //   return <Content
-    //   id="contents_rgn"
-    //   style={{ marginTop: "15px", overflow: "hidden" }}
-    //   // height={expandingContent ? "100%" : "400px"}
-    //   width={1600}>
-
-    // </Content>
-    // }
     return item ?
       <React.Fragment>
         <Wrapper>
           {/* thumbnail and item-info */}
-          <div className="line">
+          <div className="profileBox">
+            <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg}>
+              <div className="main-image" />
+            </ItemImages>
+
+            <ItemInfo face={item.who || who}>
+              <div className="flex-align-column line">
+                <div className="flex spaceBetween">
+                <div className="title">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
+                <div className="expert">
+                  {/* {(this.props.userInfo && item.members && item.members.length > 0 && this.state.isShowmember)
+                    ? <MemberListBox />
+                    : null} */}
+                  <div className="who" />
+                  <div className="nick" onClick={() => this.setState({ isShowmember: !this.state.isShowmember })}>{item.userName}
+                    {this.props.userInfo && item.members && item.members.length > 0
+                      ?
+                      `외 ${item.members.length}명` : null}
+                  </div>
+                  </div>
+                  </div>
+
+
+                <Introduction id="Introduction">
+                  <div className="wrapItem">
+                    <div className="title">설명</div>
+                    <div id="itemDescription" className="text"
+                      dangerouslySetInnerHTML={{ __html: `${item.description || ""}` }}
+                    />
+                    <div className="title">유형</div>
+                    <div className="text flex">
+                      {item.type === 0 ? "디자인" : null}
+                      {item.type === 1 ? "프로젝트" : null}
+                      {item.type === 2 ? "기술자문/상담" : null}
+                      {item.type === 3 ? "경험" : null}
+                      {item.type === 4 ? "정보/데이터" : null}
+                      {item.type === 5 ? "아이디어/노하우" : null}
+                      {item.type === 6 ? "지적재산권" : null}
+                      {item.type === 7 ? "제작품" : null}
+                    </div>
+                    {/* <div className="gradient_box" ></div> */}
+                  </div>
+                </Introduction>
+              </div>
+            </ItemInfo>
+
+          </div>
+          {/* <div className="line">
             <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg}>
               <div className="main-image" />
             </ItemImages>
@@ -814,21 +852,32 @@ class ItemPurchase extends Component {
               </div>
             </ItemInfo>
 
-          </div>
+          </div> */}
 
           {/* item-contents */}
-          <div style={{ marginTop: "35px" }}>
-          <Content
-            face={this.props.userInfo.thumbnail.s_img}
-            id="contents_rgn"
-            style={{ marginTop: "15px", overflow: "hidden" }}
-            width={1600}>
-            
+          <div className="row">
+          <ItemContents>
+
+{/** -------------------- PROJECT ----------------------- */}
 {/** -------------------- CLOSE CONTENT ----------------------- */}
-            {item&&(item.type===0||item.type===3||item.type===4||item.type===5||item.type===6)?
+            {item&&(item.type===1||item.type===0||item.type===3||item.type===4||item.type===5||item.type===6)?
             <React.Fragment>
-                  <div className="title">아이템 상세내용</div>
-                  {item && item.upload_type === "blog"? <div className="detail_board" id="detail_board">
+                  <div className="header">
+                    <div className="title">아이템 상세내용</div>
+                  </div>
+
+                  <div className="editor-wrapper ">
+                    {item && item.upload_type === "blog"
+                      ? <div style={{ overflow: "auto", height: "100%", }}>
+                        <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} />
+                      </div>
+                      : null}
+
+                    {item && item.upload_type === "project"
+                      ? <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} />
+                      : null}
+                  </div>
+                  {/* {item && item.upload_type === "blog"? <div className="detail_board" id="detail_board">
                       <CardSourceDetailContainer bought={item.bought} isCancel  cardId={item.cardId} />
                     </div>
                     : null}
@@ -836,13 +885,15 @@ class ItemPurchase extends Component {
                     <div className="detail_board" id="detail_board">
                       <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} />
                     </div>
-                    : null}
+                    : null} */}
             </React.Fragment>
             :null}
-{/** -------------------- PROJECT ----------------------- */}
-            {item&&(item.type===1)? 
+
+            {/* {item&&(item.type===1)? 
             <React.Fragment>
-              <div className="title">아이템 상세내용</div>
+              <div className="header">
+                <div className="title">아이템 상세내용</div>
+              </div>
                 {item && item.upload_type === "blog"? 
                   <div className="detail_board" id="detail_board">
                     <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} />
@@ -854,17 +905,16 @@ class ItemPurchase extends Component {
                   </div>
                   : null}
             </React.Fragment>
-            :null}
+            :null} */}
 {/** -------------------- ADVICE ----------------------- */}
             {item&&(item.type===2||item.type===7)?
             <React.Fragment>
-
+              <div className="header">
               <div className="title margin_bottom_s">{item.type==2?'자문/상담':item.type==7?'제작품 문의':null}</div>
-              <div className="flex">
-              <div className="who" />
-              <div className="nick" onClick={() => this.setState({ isShowmember: !this.state.isShowmember })}>{this.props.userInfo.nickName}</div>
               </div>
               <div className="hrLine"/>
+              <div className="message-wrapper">
+                <div className="message-detail">
               <MessageBox>
                 {
                   this.props.paymentMessageList&&
@@ -877,8 +927,9 @@ class ItemPurchase extends Component {
                     +(createtime.getHours()<=12&&createtime.getHours()>=6?"오전":"오후")
                     +(createtime.getHours()<=9?'0'+createtime.getHours():createtime.getHours())
                     +":"+(createtime.getMinutes()<=9?'0'+createtime.getMinutes():createtime.getMinutes())
+                    console.log(item.from_id,this.props.userInfo);
                     return( 
-                    <MessageWrapper isMy={item.from_id===this.props.userInfo.uid}> 
+                    <MessageWrapper isMy={item.from_id==this.props.userInfo.uid}> 
                     {
                       console.log(
                         String(item.filename).substring(String(item.filename).lastIndexOf('.'),String(item.filename).length))
@@ -918,12 +969,14 @@ class ItemPurchase extends Component {
                         <div className="msg_time">{msgTime}</div>    
                       </React.Fragment>
                     }
-                      
+                    
                     </MessageWrapper>
                     )
                   })
                 }
               </MessageBox>
+              </div>
+              </div>
               <div className="hrLine"/>
               <div className="flex margin_bottom_s">
 
@@ -985,7 +1038,7 @@ class ItemPurchase extends Component {
             </React.Fragment>
             :null} */}
 
-            </Content>
+            </ItemContents>
           </div>
 {/** ---------------------------------------------------------- */}
           {/* item-contents */}

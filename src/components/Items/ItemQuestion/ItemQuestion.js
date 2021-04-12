@@ -52,6 +52,9 @@ const ReplyBox= styled.div`
         min-width:100px;
         margin-right:35px;
         text-align:right;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     .createtime{
         min-width:100px;

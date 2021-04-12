@@ -68,51 +68,111 @@ const TitleWrapper = styled.div`
 `;
 const NewStepDialog = styled(Modal)`
     min-width: 320px;
-    max-width: 849px;
-    height: 295px;
-    border-radius: 5px;
+    max-width: 800px;
+    height: 203px;
+    border-radius: 20px !important;
     background-color: #FFFFFF;
-    box-shadow: 0px 3px 6px #FF0000;
-    .close-box {
-        position: absolute;
-        width: max-content;
-        top: 10px;
-        right: 15px;
+    box-shadow: 5px 5px 10px #00000029;
+    padding:20px 33px;
+    .header_{
+        width:100%;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        .header_text{
+            font-size:${market_style.font.size.normal1};
+            font-weight:500;
+            color:black;
+        }
+        .blankbox{
+            width:28px;
+        }
     }
-    .edit-step-name-button-container {
-        display: flex;
-        margin-top: 38px;
+    .row{
+        width:100%;
+        display:flex;
+        align-items:center;
+        margin-top:30px;
+        margin-bottom:40px;
+        .label_{
+            width:78px;
+            font-family:Noto Sans KR,Bold;
+            font-size:${market_style.font.size.small1};
+        }
+        .input_style{
+            width:100%;
+            height:31px;
+            background-color:#e9e9e9;
+            border-radius:10px;
+            padding:5px 20px;
+            border:none;
+            outline:none;
+        }
+    }
+    .button_container{
+        width:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        .btn_Style{
+            width:150px;
+            height:30px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            margin:0px 10px;
+            cursor:pointer;
+        }
+        .red{
+            background-color:red;
+            color:white;
+        }
+        .white{
+            background-color:white;
+            border:1px solid #707070;
+            color:#707070;
+        }
+    }
+    // .close-box {
+    //     position: absolute;
+    //     width: max-content;
+    //     top: 10px;
+    //     right: 15px;
+    // }
+    // .edit-step-name-button-container {
+    //     display: flex;
+    //     margin-top: 38px;
 
-        .edit-step-name-button-submit {
-            margin-left: auto;
-            text-align: middle;
-            color: #FF0000;
-            font-size:${market_style.font.size.normal3};
-            font-weight: 500;
-            font-family: Noto Sans KR;
-            line-height: 40px;
-            border-bottom: 1.5px solid #FF0000;
-            border:1px splid black;
-            cursor: pointer;
-        }
-        .edit-step-name-button-cancel {
-            margin-left: 25px;
-            margin-right: 75px;
-            width: max-content;
-            border: none;
-            background: none;
-            height: 40px;
-            line-height: 40px;
-            color: #707070;
-            padding-bottom: 1.5px;
-            border-bottom: 1.5px solid #707070;
-            font-size:${market_style.font.size.normal3};
-            font-weight: 500;
-            font-family: Noto Sans KR;
-            text-align: left;
-            cursor: pointer;
-        }
-    }
+    //     .edit-step-name-button-submit {
+    //         margin-left: auto;
+    //         text-align: middle;
+    //         color: #FF0000;
+    //         font-size:${market_style.font.size.normal3};
+    //         font-weight: 500;
+    //         font-family: Noto Sans KR;
+    //         line-height: 40px;
+    //         border-bottom: 1.5px solid #FF0000;
+    //         border:1px splid black;
+    //         cursor: pointer;
+    //     }
+    //     .edit-step-name-button-cancel {
+    //         margin-left: 25px;
+    //         margin-right: 75px;
+    //         width: max-content;
+    //         border: none;
+    //         background: none;
+    //         height: 40px;
+    //         line-height: 40px;
+    //         color: #707070;
+    //         padding-bottom: 1.5px;
+    //         border-bottom: 1.5px solid #707070;
+    //         font-size:${market_style.font.size.normal3};
+    //         font-weight: 500;
+    //         font-family: Noto Sans KR;
+    //         text-align: left;
+    //         cursor: pointer;
+    //     }
+    // }
 `;
 
 class NewStepModal extends Component {
@@ -152,7 +212,22 @@ class NewStepModal extends Component {
     }
     render() {
         return (<NewStepDialog onKeyDown={this.handleKeyDown} open={this.props.open} onClose={this.onClose}>
-            <div onClick={this.onClose} className="close-box">
+            <div className="header_">
+                <div className="blankbox"/>
+                <div className="header_text">새 단계</div>
+                <div className="blankbox" onClick={this.onClose}>
+                    <Cross style={{cursor:"pointer"}} angle={45} color={"#000000"} weight={1} width={20} height={20}/>
+                </div>
+            </div>
+            <div className="row">
+                    <div className="label_">제목</div>
+                    <input className="input_style" name="title" onChange={this.onChange} autoComplete="off" autoFocus={true} value={this.state.title} />
+            </div>
+            <div className="button_container">
+                <div className="btn_Style red" onClick={this.onSubmit}>등록하기</div>
+                <div className="btn_Style white" onClick={this.onClose}>취소하기</div>
+            </div>
+            {/* <div onClick={this.onClose} className="close-box">
                 <Cross angle={45} color={"#000000"} weight={2} width={32} height={32} />
             </div>
             <TitleWrapper>새 단계</TitleWrapper>
@@ -165,7 +240,7 @@ class NewStepModal extends Component {
             <div className="edit-step-name-button-container">
                 <div className="edit-step-name-button-submit" onClick={this.onSubmit} >생성하기</div>
                 <div className="edit-step-name-button-cancel" onClick={this.onClose} >취소하기</div>
-            </div>
+            </div> */}
         </NewStepDialog>)
     }
 }

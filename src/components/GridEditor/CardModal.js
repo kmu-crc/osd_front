@@ -29,18 +29,10 @@ import market_style from "market_style";
 // import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
 // import {confirmAlert} from "react-confirm-alert";
 const ContentBorder = styled.div`
-   height: 29px;
-   font-family: Noto Sans KR;
-   font-size:${market_style.font.size.normal3};
-   color: #707070;
-   font-weight: 500;
-   line-height: 29px;
-   margin-left: 50px;
-   margin-top: 30px;
-   padding-right: 25px;
-   .border-line {
-       border-bottom: 1px solid #707070;
-   }
+    width:100%;
+    border:1px solid #EFEFEF;
+    margin-top:10px;
+    margin-bottom:10px;
 `;
 const CommentWrapper = styled.div`
    .comment-title {
@@ -57,16 +49,11 @@ const CommentWrapper = styled.div`
    }
 `;
 const CardDialog = styled(Modal)`
-
-        margin-top: 50px !important;
-        margin-bottom: 50px !important;
-        height: max-content;
-        background: #FFFFFF 0% 0% no-repeat padding-box;
-        box-shadow: 0px 3px 6px #000000;
-        border: 1px solid #EFEFEF;
-        border-radius: 10px;
-        opacity: 1;
-        min-width:85%;
+    width:100% !important;
+    max-width:1000px !important;
+    border-radius:20px !important; 
+    padding:30px 50px !important;
+    margin-bottom:30px !important;
     ::-webkit-scrollbar {
         position: absolute;
         width: 3.9px;
@@ -75,9 +62,26 @@ const CardDialog = styled(Modal)`
         background: rgba(112, 112, 112, 0.45) !important;
     } 
     .content{
-        padding: 45px;
-        margin-left: auto;
-        line-height: 17px;
+        width:100%;
+    }
+    .modifyRgn{
+        width:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        .redBtn{
+            cursor:pointer;
+            color:red;
+            font-size:${market_style.font.size.small1};
+            text-decoration:underline;
+            margin-right:20px;
+        }
+        .greyBtn{
+            cursor:pointer;
+            color:#707070;
+            font-size:${market_style.font.size.small1};
+            text-decoration:underline;
+        }
     }
     .prevPane {
         width: 115px;
@@ -133,93 +137,121 @@ const CardDialog = styled(Modal)`
     }
     .content-wrapper {
         position: relative;
-        .card-header-first {
-            display: flex;
-            justify-content: space-between;
-            height: 29px;
-            margin-top: 30px;
-            margin-left: 52px;
-            .header-title {
-                font-family: Noto Sans KR;
-                font-size:${market_style.font.size.normal3};
-                color: #707070;
-                font-weight: 500;
-                line-height: 29px;
-            }
-            .header-edit-button {
-                font-family: Noto Sans KR;
-                font-size:${market_style.font.size.small3};
-                color: #707070;
-                font-weight: 900;
-                line-height: 29px;
-                margin-right: 75px;
-                .edit-btn {
-                    border: none;
-                    background: none;
-                    width: max-content;
-                    height: 40px;
-                    line-height: 40px;
-                    color: #FF0000;
-                    padding-bottom: 1.5px;
-                    border-bottom: 1.5px solid #FF0000;
-                    font-size:${market_style.font.size.normal3};
-                    font-weight: 500;
-                    font-family: Noto Sans KR;
-                    text-align: left;
-                    cursor: pointer;
-                }
-                .cancel-btn {
-                    margin-left: 25px;
-                    border: none;
-                    background: none;
-                    width: max-content;
-                    height: 40px;
-                    line-height: 40px;
-                    color: #707070;
-                    padding-bottom: 1.5px;
-                    border-bottom: 1.5px solid #707070;
-                    font-size:${market_style.font.size.normal3};
-                    font-weight: 500;
-                    font-family: Noto Sans KR;
-                    text-align: left;
-                    cursor: pointer;
-                }
-            }
+        .card-header-first{
+           width:100%; 
+           display:flex;
+           justify-content:space-between;
+           align-items:center;
+           .header-title{
+                width:50%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-size:${market_style.font.size.normal1};
+           }
+           .header-update{
+               display:flex;
+               align-items:center;
+               .update_{
+                   font-size:${market_style.font.size.mini2};
+               }
+               .close_{
+                   margin-left:50px;
+                   cursor:pointer;
+               }
+           }
         }
-        .card-header-second {
-            width: 100%;
-            height: 29px;
-            display: flex;
-            justify-content: flex-start;
-            padding-left: 52px;
-            margin-top: 30px;
-            .contents {
-                font-size:${market_style.font.size.normal3};
-                color: #707070;
-                font-weight: 300;
-                font-family: Noto Sans KR;
-                line-height: 29px;   
-            }
-            .nick-name {
-                width: max-content;
-                margin-left: auto;
-                margin-right: 5px;
-                font-size:${market_style.font.size.normal3};
-                color: #707070;
-                font-weight: 300;
-                font-family: Noto Sans KR;
-                line-height: 29px;   
-            }
-            .update-time {
-                width: max-content;
-                margin-right: 75px;
-                color: #707070;
-                font-size:${market_style.font.size.small3};
-                font-weight: 300;
-                font-family: Noto Sans KR;
-                line-height: 29px;
-            }
-        }
+        // .card-header-first {
+        //     border:1px solid red;
+        //     *{
+        //         border:1px solid black;
+        //     }
+        //     display: flex;
+        //     justify-content: space-between;
+        //     height: 29px;
+        //     margin-top: 30px;
+        //     margin-left: 52px;
+        //     .header-title {
+        //         font-family: Noto Sans KR;
+        //         font-size:${market_style.font.size.normal3};
+        //         color: #707070;
+        //         font-weight: 500;
+        //         line-height: 29px;
+        //     }
+        //     .header-edit-button {
+        //         font-family: Noto Sans KR;
+        //         font-size:${market_style.font.size.small3};
+        //         color: #707070;
+        //         font-weight: 900;
+        //         line-height: 29px;
+        //         margin-right: 75px;
+        //         .edit-btn {
+        //             border: none;
+        //             background: none;
+        //             width: max-content;
+        //             height: 40px;
+        //             line-height: 40px;
+        //             color: #FF0000;
+        //             padding-bottom: 1.5px;
+        //             border-bottom: 1.5px solid #FF0000;
+        //             font-size:${market_style.font.size.normal3};
+        //             font-weight: 500;
+        //             font-family: Noto Sans KR;
+        //             text-align: left;
+        //             cursor: pointer;
+        //         }
+        //         .cancel-btn {
+        //             margin-left: 25px;
+        //             border: none;
+        //             background: none;
+        //             width: max-content;
+        //             height: 40px;
+        //             line-height: 40px;
+        //             color: #707070;
+        //             padding-bottom: 1.5px;
+        //             border-bottom: 1.5px solid #707070;
+        //             font-size:${market_style.font.size.normal3};
+        //             font-weight: 500;
+        //             font-family: Noto Sans KR;
+        //             text-align: left;
+        //             cursor: pointer;
+        //         }
+        //     }
+        // }
+        // .card-header-second {
+        //     width: 100%;
+        //     height: 29px;
+        //     display: flex;
+        //     justify-content: flex-start;
+        //     padding-left: 52px;
+        //     margin-top: 30px;
+        //     .contents {
+        //         font-size:${market_style.font.size.normal3};
+        //         color: #707070;
+        //         font-weight: 300;
+        //         font-family: Noto Sans KR;
+        //         line-height: 29px;   
+        //     }
+        //     .nick-name {
+        //         width: max-content;
+        //         margin-left: auto;
+        //         margin-right: 5px;
+        //         font-size:${market_style.font.size.normal3};
+        //         color: #707070;
+        //         font-weight: 300;
+        //         font-family: Noto Sans KR;
+        //         line-height: 29px;   
+        //     }
+        //     .update-time {
+        //         width: max-content;
+        //         margin-right: 75px;
+        //         color: #707070;
+        //         font-size:${market_style.font.size.small3};
+        //         font-weight: 300;
+        //         font-family: Noto Sans KR;
+        //         line-height: 29px;
+        //     }
+        // }
     }
 `
 const EditCardHeaderContainer = styled.div`
@@ -498,12 +530,10 @@ class CardModal extends Component {
                 <React.Fragment>
                     <div style={{ zIndex: 100 }}>
                         <CardDialog open={this.props.open} onClose={this.onClose}>
-                            {this.state.loading && <Loading />}
-
                         <div className="close-box" onClick={this.onClose} >
                             <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
                         </div>
-
+                            {this.state.loading && <Loading />}
                         <div className="content-wrapper" >
                             {this.state.edit
                                 ? <React.Fragment>
@@ -537,7 +567,16 @@ class CardModal extends Component {
                                 </React.Fragment>
                                 :
                                 <React.Fragment>
-                                    <div className="card-header-first">
+                                    <div className = "card-header-first">
+                                        <div className="header-title">{card.title}</div>
+                                        <div className="header-update">
+                                            <div className="update_">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div>
+                                            {/* <div onClick={this.onClose} className="close_">
+                                                <Cross angle={45} color={"#000000"} weight={1} width={14} height={14} />
+                                            </div> */}
+                                        </div>
+                                    </div>
+                                    {/* <div className="card-header-first">
                                         <div className="header-title">{card.title}</div>
                                         <div className="header-edit-button">
                                             {this.props.edit ?
@@ -551,12 +590,10 @@ class CardModal extends Component {
                                         <div className="contents"><TextFormat txt={card.content || ""} chars={25} /></div>
                                         <div className="nick-name">{card.nick_name}</div>
                                         <div className="update-time">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div>
-                                    </div>
+                                    </div> */}
                                 </React.Fragment>}
 
-                            <ContentBorder>
-                                <div className="border-line" />
-                            </ContentBorder>
+                            <ContentBorder/>
 
                             <div className="content">
                                 <CardSourceDetailContainer
@@ -581,6 +618,15 @@ class CardModal extends Component {
                                         this.state.modifyresult==false}
                                 />
                             </div>
+                            {
+                                this.props.edit?
+                                <div className="modifyRgn">
+                                    <div className="redBtn" onClick={() => this.setState({ edit: !this.state.edit, title: card.title, content: card.content })}>수정하기</div>
+                                    <div className="greyBtn" onClick={(event) => this.removeCard(event)}>삭제하기</div>
+                                </div>
+                                :
+                                null
+                            }
                         </div>
                         </CardDialog>
                         <BlankSpace />

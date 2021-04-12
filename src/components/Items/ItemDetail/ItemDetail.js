@@ -138,30 +138,7 @@ const ItemInfo = styled.div`
       margin-right:10px;
     }
   }
-  // .options {
-  //   margin-top: 50px;
-  //   .text {
-  //     width: max-content;
-  //     text-align: left;
-  //     font-weight: 500;
-  //     font-size:${market_style.font.size.normal3};
-  //     line-height: 29px;
-  //     letter-spacing: 0;
-  //     color: #000000;
-  //     opacity: 1;
-  //   }
-  //   .combo-wrapper {
-  //     margin-bottom: 28px;
-  //     .box {
-  //       border-radius: 21px;
-  //       background-color: #E9E9E9;
-  //       height: 43px;
-  //       margin-left: 41px;
-  //     }
-  //     .WIDTH360 { width: 360px; }
-  //     .WIDTH178 { width: 178px; }
-  //   }
-  // }
+
   .bottom {
     width:100%;
     display:flex;
@@ -526,7 +503,7 @@ const PeerBox = styled.div`
 const ItemContents = styled.div`
   // *{ border: 1px solid blue; }
   width: 1306px;
-  height: 477px;
+  height: 585px;
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #0000001A;
   border: 0.25px solid #eaeaea;
@@ -553,8 +530,8 @@ const ItemContents = styled.div`
     :hover {
       opacity: 0.95;
     }
-    width: 100%;
-    height: 405px;
+    width: 99%;
+    height: 510px;
     padding-top: 15px;
     word-wrap: break-word;
     overflow: hidden;

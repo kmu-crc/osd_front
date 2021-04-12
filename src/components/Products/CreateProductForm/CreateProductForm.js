@@ -478,7 +478,7 @@ const FormBox = styled.div`
     padding:0px 15px 0px 0px;
     width:100%;
     height:100%;
-    overflow-Y:auto;
+    overflow-Y:overlay;
     overflow-X:hidden;
   }
   .maxWidth{
@@ -572,11 +572,19 @@ const DropBox = styled(Dropdown)`
     margin-right:10px;
     font-size:${market_style.font.size.small1};
     border-radius:10px !important;
+    position:relative !important;
     .icon{
       width:max-content !important;
       height:max-content !important;
       padding:6px !important;
     }
+    .menu{
+      height:max-content;
+      max-height:113px !important;
+      z-index:9999 !important;
+
+    }
+    .
 `;
 const InfoContentChooseItemType = styled.div`
   border: 1px dashed gray;
@@ -775,7 +783,7 @@ class CreateProductForm extends Component {
 
             <div className="wrapper flex">
               <div className="label">아이템 유형<span className="font_red">*</span></div>
-              <DropBox selection options={ItemType} placeholder="아이템 유형" onChange={this.onClickItemType} />
+              <DropBox upward selection options={ItemType} placeholder="아이템 유형" onChange={this.onClickItemType} />
             </div>
           </div>
         </FormBox>
