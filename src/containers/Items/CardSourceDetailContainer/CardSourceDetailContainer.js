@@ -13,6 +13,7 @@ class CardSourceDetailContainer extends Component {
     this.props.cardId && this.props.GetItemContentsRequest(this.props.cardId, this.props.token);
   }
   render() {
+    console.log(this.props);
     return (
       <CardSourceDetail {...this.props} handlerModifyContent={() => this.props.handlerModifyContent} upDateRequest={this.props.UpdateItemContentsRequest} />
     );
