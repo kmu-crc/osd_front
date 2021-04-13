@@ -3,9 +3,7 @@ import ProductPurchaseContainer from "containers/Products/ProductPurchaseContain
 
 export class ProductPurchasePage extends Component {
   render() {
-    return (<ProductPurchaseContainer 
-      id={this.props.match.params.id}
-      payment={this.props.match.params.payment}
-      />);
+    return (<ProductPurchaseContainer id={this.props.match.params.id} payment={this.props.match.params.payment}
+    />);
   }
 }

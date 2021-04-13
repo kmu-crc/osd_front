@@ -3,7 +3,7 @@ import update from "react-addons-update";
 
 const initialState = {
     ItemStep: { status: "INIT" },
-    status: { ItemStep: [], }
+    status: { ItemStep: [], Item2ndStep: [], }
 };
 
 export function ItemStep(state, action) {
@@ -18,18 +18,12 @@ export function ItemStep(state, action) {
                     ItemStep: { $set: action.step }
                 }
             });
-        // case types.PRODUCT_DETAIL_RESET:
-        //   return update(state, {
-        //     status: {
-        //       ProductDetail: { $set: action.ProductDetail }
-        //     }
-        //   });
-        // case types.GET_PRODUCT_COUNT:
-        //   return update(state, {
-        //     status: {
-        //       Count: { $set: action.Count }
-        //     }
-        //   });
+        case types.GET_ITEM_2ND_STEP:
+            return update(state, {
+                status: {
+                    Item2ndStep: { $set: action.step }
+                }
+            });
         default:
             return state;
     }
