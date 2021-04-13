@@ -1454,7 +1454,6 @@ class ItemLecture extends Component {
       end_date: null
     };
 
-    this.onHandleChange = this.onHandleChange.bind(this);
     this.returnState = this.returnState.bind(this);
     this.getPriceValue = this.getPriceValue.bind(this);
     this.getEndDateValue = this.getEndDateValue.bind(this);
