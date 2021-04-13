@@ -7,6 +7,7 @@ import Cross from "components/Commons/Cross"
 import who from "source/thumbnail.png";
 import CardSourceDetailContainer from "containers/Items/CardSourceDetailContainer";
 import ItemStepContainer from "containers/Items/ItemStepContainer";
+import Item2ndStepContainer from "containers/Items/Item2ndStepContainer";
 import ItemQuestionContainer from "containers/Items/ItemQuestionContainer";
 import ItemReviewContainer from "containers/Items/ItemReviewContainer";
 import PointFormat from "modules/PointFormat";
@@ -385,7 +386,7 @@ const Board = styled.div`
   }
 `;
 const Content = styled.div`
-  width: ${props => props.width==null?"100%" : props.width+"px"};
+  width: ${props => props.width == null ? "100%" : props.width + "px"};
   height: max-content;
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #0000001A;
@@ -597,7 +598,7 @@ class ItemDetail extends Component {
       this.props.LikeProductRequest(this.props.id, this.props.token)
   };
   async buyThisItem(event) {
-    if (!await confirm(`${this.props.item.price / (this.props.item.price>9999?10000:1)}${this.props.item.price>9999?"만":""} point가 결제됩니다.`)) {
+    if (!await confirm(`${this.props.item.price / (this.props.item.price > 9999 ? 10000 : 1)}${this.props.item.price > 9999 ? "만" : ""} point가 결제됩니다.`)) {
       event.preventDefault();
     } else {
       this.props.item.price > this.props.Point ? this.gotoChargePoint() : this.purchaseThisItem()
@@ -679,19 +680,19 @@ class ItemDetail extends Component {
             <ItemInfo face={item.who || who}>
               <div className="flex-align-column line">
                 <div className="flex spaceBetween">
-                <div className="title">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
-                <div className="expert">
-                  {/* {(this.props.userInfo && item.members && item.members.length > 0 && this.state.isShowmember)
+                  <div className="title">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
+                  <div className="expert">
+                    {/* {(this.props.userInfo && item.members && item.members.length > 0 && this.state.isShowmember)
                     ? <MemberListBox />
                     : null} */}
-                  <div className="who" />
-                  <div className="nick" onClick={() => this.setState({ isShowmember: !this.state.isShowmember })}>{item.userName}
-                    {this.props.userInfo && item.members && item.members.length > 0
-                      ?
-                      `외 ${item.members.length}명` : null}
+                    <div className="who" />
+                    <div className="nick" onClick={() => this.setState({ isShowmember: !this.state.isShowmember })}>{item.userName}
+                      {this.props.userInfo && item.members && item.members.length > 0
+                        ?
+                        `외 ${item.members.length}명` : null}
+                    </div>
                   </div>
-                  </div>
-                  </div>
+                </div>
 
 
                 <Introduction id="Introduction">
@@ -704,6 +705,7 @@ class ItemDetail extends Component {
                     <div className="text flex">
                       {item.type === 0 ? "디자인" : null}
                       {item.type === 1 ? "프로젝트" : null}
+                      {item.type === 8 ? "강의" : null}
                       {item.type === 2 ? "기술자문/상담" : null}
                       {item.type === 3 ? "경험" : null}
                       {item.type === 4 ? "정보/데이터" : null}
@@ -727,11 +729,11 @@ class ItemDetail extends Component {
                   </div>
                 </Introduction>
 
-                  <div className="price-and-score line">
-                    <div className="price">
-                      {PointFormat(item.price / (item.price>9999?10000:1) || 0)}{item.price>9999?"만":""} point</div>
-                      <RenderStar />
-                  </div>
+                <div className="price-and-score line">
+                  <div className="price">
+                    {PointFormat(item.price / (item.price > 9999 ? 10000 : 1) || 0)}{item.price > 9999 ? "만" : ""} point</div>
+                  <RenderStar />
+                </div>
 
                 <div className="bottom">
                   <div className="buttons flex">
@@ -766,11 +768,11 @@ class ItemDetail extends Component {
                     }
                     {this.props.ItemDetail && this.props.userInfo &&
                       this.props.ItemDetail.user_id == this.props.userInfo.uid ? null : this.state.isLike === false ?
-                        <div className="button second" onClick={this.onClickLike}>
-                          <div className="text">관심항목추가</div></div>
-                        :
-                        <div className="button second active" onClick={this.onClickLike}>
-                          <div className="text">관심항목</div></div>}
+                      <div className="button second" onClick={this.onClickLike}>
+                        <div className="text">관심항목추가</div></div>
+                      :
+                      <div className="button second active" onClick={this.onClickLike}>
+                        <div className="text">관심항목</div></div>}
                   </div>
                 </div>
               </div>
@@ -780,9 +782,11 @@ class ItemDetail extends Component {
 
           {/* item-contents */}
           <div className="row">
-              <ItemContents>
+            <ItemContents>
               <div className="header">
-                <div className="title">아이템 상세내용</div>
+                <div className="title">
+                  {item.type === 8 ? "강의내용" : "아이템 상세내용"}
+                </div>
               </div>
 
               <div className="editor-wrapper ">
@@ -799,6 +803,23 @@ class ItemDetail extends Component {
 
             </ItemContents>
           </div>
+          {item.type === 8
+            ? <div className="row">
+              <ItemContents>
+                <div className="header">
+                  <div className="title">실습내용</div>
+                </div>
+
+                <div className="editor-wrapper ">
+                  {item && item.upload_type === "project"
+                    ? <Item2ndStepContainer item={item} id={item["item-id"]} bought={item.bought} />
+                    : null}
+                </div>
+
+              </ItemContents>
+            </div>
+            : null
+          }
 
           {/* review and board */}
           <div className="row">
@@ -814,8 +835,8 @@ class ItemDetail extends Component {
 
           <div className="row">
             <QuestionBoard>
-            <div className="title margin_bottom">게시판</div>
-              <div className="hrline margin_bottom"/>
+              <div className="title margin_bottom">게시판</div>
+              <div className="hrline margin_bottom" />
               <ItemQuestionContainer user_id={item.user_id} isExpanding={(result) => { this.setState({ isexpandingBoard: result }) }} />
             </QuestionBoard>
           </div>

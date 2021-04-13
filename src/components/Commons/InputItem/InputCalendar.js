@@ -171,18 +171,16 @@ export class InputCalendar extends Component {
         const start = event.target.value.split("-");
         const startDay = new Date(start[0], start[1] - 1, start[2]);
 
-        // console.log("onChangeStartDate:",startDay,endDay);
-
         let timestamp = endDay - startDay;
         const oneDay = 24 * 60 * 60 * 1000;
 
         const dDay = Math.floor(timestamp / oneDay + 1);
-        console.log(start, end);
         if (dDay < 1) {
             await this.setState({ startDate: this.state.startDate, dayDate: this.state.dayDate });
-            return;
+            alert("시작일지정 잘못되었습니다.");
+        } else {
+            await this.setState({ startDate: event.target.value, dayDate: Math.floor(timestamp / oneDay) });
         }
-        await this.setState({ startDate: event.target.value, dayDate: Math.floor(timestamp / oneDay) });
         this.returnData();
     }
     async onChangeEndDate(event) {
@@ -201,11 +199,11 @@ export class InputCalendar extends Component {
         console.log("end:::", dDay);
         if (dDay < 1) {
             await this.setState({ endDate: this.state.endDate, dayDate: this.state.dayDate });
-            return;
+            alert("종료일지정 잘못되었습니다.");
+        } else {
+            //일수
+            await this.setState({ endDate: event.target.value, dayDate: Math.floor(timestamp / oneDay) });
         }
-
-        // //일수
-        await this.setState({ endDate: event.target.value, dayDate: Math.floor(timestamp / oneDay) });
         this.returnData();
     }
     async onChangeDayDate(event) {
