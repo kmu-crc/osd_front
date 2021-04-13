@@ -37,28 +37,24 @@ const CreateCardContainer = styled.div`
 const CreateStepContainer = styled.div`
     position: relative;
     display: flex;
+    justify-content:center;
+    align-items:center;
     width: 200px;
     height: 40px;
     border-radius: 10px;
-    background-clip: padding-box;
     margin-right: ${props => props.marginRight}px;
     border: 1px solid rgba(112,112,112, 0.5);
     cursor: pointer;
     .close-box{
         poistion: relative;
-        margin-top: 9px;
-        margin-left: 9px;
     }
     .create-button{
         opacity: ${props => props.disabled}; 
-        margin-top: 2px;
         margin-left: 10px;
-        height: 29px;
         color: #707070;
         font-family: Noto Sans KR;
         font-size:${market_style.font.size.small1};
         text-align: left;
-        line-height: 29px;
     }
 `;
 // export const CreateStep = (props) => {

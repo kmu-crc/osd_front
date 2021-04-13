@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyPaymentRequest } from "actions/Payment";
-import Item_myDetail from "components/Items/Item_myDetail";
+import Item_purchase from "components/Items/Item_purchase";
 import PagingList from "components/Commons/PagingList";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
@@ -61,7 +61,7 @@ class MyPaymentContainer extends Component {
       <div className="lineBox"><div className="line"/></div>
       <PagingList
         getListRequest={this.getList}
-        ListComponent={Item_myDetail}
+        ListComponent={Item_purchase}
         type="sales"
         isSmall={true}
         dataList={this.props.dataList}

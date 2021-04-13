@@ -26,7 +26,7 @@ const NormalWrapper = styled.div`
     box-shadow: 3px 3px 5px #0000001A;
     border: 0.25px solid #eaeaea;
     border-radius: 20px;
-    padding: 40px 150px;
+    padding: 40px 100px;
 
     .row {
       display: flex;
@@ -163,7 +163,6 @@ export default class Detail extends Component {
               <p className="text">게시글</p>
           </div>
 
-            <div className="form-list">
               <div className="form">
                 <div className="row">
                   <div className="label">제목</div>
@@ -177,7 +176,6 @@ export default class Detail extends Component {
                   <div className="label">내용</div>
                   <div className="content" dangerouslySetInnerHTML={{ __html: this.props.Detail&&this.props.Detail.content }}/>
                 </div>
-              </div>
             </div>
           </NormalWrapper>
         </React.Fragment>

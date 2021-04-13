@@ -256,11 +256,19 @@ const DropBox = styled(Dropdown)`
     margin-right:10px;
     font-size:${market_style.font.size.small1};
     border-radius:10px !important;
+    position:relative !important;
     .icon{
       width:max-content !important;
       height:max-content !important;
       padding:6px !important;
     }
+    .menu{
+      height:max-content;
+      max-height:113px !important;
+      z-index:9999 !important;
+
+    }
+    .
 `;
 const Margin = styled.div`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};

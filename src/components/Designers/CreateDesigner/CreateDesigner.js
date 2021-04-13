@@ -168,7 +168,7 @@ const FormBox = styled.div`
 
     box-shadow: 3px 3px 5px #0000001A;
     border-radius: 20px;
-    padding:30px 50px;
+    padding:27px 50px;
     border: 0.5px solid #EAEAEA;
     .FormBoxScroll{
       padding:0px 15px 0px 0px;
@@ -181,11 +181,10 @@ const FormBox = styled.div`
     width:100%;
   }
   .wrapper{
-    
     width:100%;
     display:flex;
     align-items:center;
-    margin-bottom:20px;
+    margin-bottom:18px;
   }
   .last_margin{
     margin-bottom:0px;
@@ -284,13 +283,20 @@ const DropBox = styled(Dropdown)`
     margin-right:10px;
     font-size:${market_style.font.size.small1};
     border-radius:10px !important;
+    position:relative !important;
     .icon{
       width:max-content !important;
       height:max-content !important;
       padding:6px !important;
     }
-`;
+    .menu{
+      height:max-content;
+      max-height:113px !important;
+      z-index:9999 !important;
 
+    }
+    .
+`;
 class CreateDesigner extends Component {
   constructor(props) {
     super(props);
@@ -512,7 +518,7 @@ class CreateDesigner extends Component {
               <div className="wrapper last_margin flex">
                 <div className="label">위치</div>
                 {/* <DropBox id="country" disabled selection options={[{ value: 0, text: "대한민국" }]} value={0} /> */}
-                <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
+                <DropBox upward id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
                   selection options={LocationList} placeholder="시/도"
                   onChange={this.onChangeLocation} />
               </div>
