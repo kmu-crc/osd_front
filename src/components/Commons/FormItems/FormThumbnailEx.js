@@ -4,9 +4,6 @@ import styled from "styled-components";
 import { FormFile } from "./FormFile";
 import market_style from "market_style";
 const InputWrap = styled.div`
-// div{ border:1px solid red; };
-  // position: relative;
-  margin-bottom: 2.5rem;
   display: flex;
   flex-direction: row;
   @media only screen and (min-width: 0px) and (max-width: 700px) {
@@ -28,20 +25,24 @@ const InputWrap = styled.div`
   }
   .find{
     width:max-content;
+    padding:5px 21px 4px 21px;
+    border-radius:16px;
+    border:1px solid red;
     font-weight: 500;
-    font-size: ${market_style.font.size.small3};
-    border-bottom: 1.5px solid #FF0000;
-    line-height: 25px;
+    font-size: ${market_style.font.size.small1};
     text-align: left;
     color: #FF0000;
     cursor:pointer;
+    display:flex;
+    justify-content:center;
+    align-items:center;
   }
   .text{
     width: 341px;
     height: 45px;
     margin-top: 11px;
     font-weight: 300;
-    font-size: ${market_style.font.size.mini3};
+    font-size: ${market_style.font.size.mini2};
     line-height: 20px;
     text-align: left;
     color: #707070;
@@ -119,10 +120,10 @@ export class FormThumbnailEx extends Component {
       <InputWrap>
       
       <label htmlFor={id ? id : name} ><ThumbnailImgEx style={newstyle}/></label>
-        <div>
+        <div style={{height:"100%",display:"flex",alignItems:"flex-end"}}>
             <div className="wrapper">
               <div className="inside-wrapper">
-              <label htmlFor={id ? id : name} ><div className="find">찾아보기</div></label></div>
+              <label htmlFor={id ? id : name} ><div className="find">파일 등록</div></label></div>
               <div className="text">프로필 사진은 대표적으로 보이게 되는 사진으로,<br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
             </div>
         </div>

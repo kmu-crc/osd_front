@@ -4,7 +4,7 @@ import { FileController } from "components/Commons/InputItem/FileController";
 import market_style from "market_style";
 const ControllerWrap = styled.div`
   // padding: 15px 0;
-  margin: 20px 0;
+  margin: 30px 0;
   position: relative;
   text-align: center;
 
@@ -35,7 +35,7 @@ const ControllerWrap = styled.div`
     align-items: center;
     justify-content: center;
     list-style: none;
-    padding: 35px;
+    padding: 6px 0px;
   }
 `;
 const NewController = styled.li`
@@ -47,7 +47,7 @@ const NewController = styled.li`
   color: #FF0000;
   padding-bottom: 1.5px;
   border-bottom: 1.5px solid #FF0000;
-  font-size: ${market_style.font.size.normal3};
+  font-size: ${market_style.font.size.small1};
   font-weight: 500;
   font-family: Noto Sans KR;
   text-align: center;

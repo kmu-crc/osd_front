@@ -256,52 +256,78 @@ const CardDialog = styled(Modal)`
 `
 const EditCardHeaderContainer = styled.div`
    .edit-header-container {
-    //    border:1px solid black;
        width:100%;
        display: flex;
        justify-content:space-between;
-       margin-top: 15px;
-       margin-left: 45px;
-       width: max-content;
+       align-items:center;
        .edit-card-info {
+           display:flex;
            width: max-content;
-           height: 29px;
-           font-size:${market_style.font.size.normal3};
+           font-size:${market_style.font.size.normal1};
            font-weight: 500;
            font-family: Noto Sans KR;
            text-align: left;
-           line-height: 40px;
            color: #707070;
+           .icon_style{
+               width:20px;
+               height:20px;
+               border-radius:50%;
+               background-color:white;
+               display:flex;
+               justify-content:center;
+               align-items:center;
+               margin-right:10px;
+               padding-left:3px;
+               cursor:pointer;
+           }
+           .borderRed{
+               border:1px solid red;
+           }
+           .borderGrey{
+               border:1px solid #707070;
+           }
        }
+       .close_{
+        margin-left:50px;
+        cursor:pointer;
+        }
+   }
+   .hrline{
+       width:100%;
+       border:1px solid #efefef;
+       margin-top:10px;
+   }
+   .marginTop{
+       margin-top:30px;
+   }
+   .marginBottom{
+       margin-bottom:30px;
    }
    .edit-header-thumbnail {
        display: flex;
-       margin-top: 25px;
-       margin-left: 65px;
+       margin-top: 14px;
+
        .thumbnail-txt {
-           width: 97px;
-           height: 29px;
-           font-size:${market_style.font.size.normal3};
-           font-weight: 500;
-           font-family: Noto Sans KR;
-           text-align: left;
-           line-height: 40px;
-           color: #707070;
+            width: 91px;
+            font-size:${market_style.font.size.small1};
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            text-align: left;
+            color: #707070;
        }
 
    }
    .edit-header-title {
        display: flex;
-       margin-top: 15px;
-       margin-left: 65px;
+       margin-top:30px;
+       display:flex;
+       align-items:center;
        .title-txt {
-           width: 97px;
-           height: 29px;
-           font-size:${market_style.font.size.normal3};
+           width: 91px;
+           font-size:${market_style.font.size.small1};
            font-weight: 500;
            font-family: Noto Sans KR;
            text-align: left;
-           line-height: 40px;
            color: #707070;
        }
        .title-input-container{
@@ -312,30 +338,29 @@ const EditCardHeaderContainer = styled.div`
            border-radius: 5px;
        }
        .title-input-style{
-           border-radius: 5px;
-           width: 100%;
-           border: none;
-           background: transparent;
-           font-size:${market_style.font.size.normal3};
-           font-weight: 500;
-           color: #707070;
-           height: 100%;
-           padding: 16px 23px 16px 23px;
+           border-radius: 10px;
+           width: 600px;
+           font-size:${market_style.font.size.small1};
+           font-weight: 400;
+           color: black;
+           padding: 7px 15px;
+           background-color:#E9E9E9;
+           outline:none;
+           border:none;
        }
    }
    .edit-header-description{
-       display: flex;
-       margin-top: 15px;
-       margin-left: 65px;
+        display: flex;
+        margin-top:30px;
+        display:flex;
+        align-items:center;
        .description-txt{
-           width: 97px;
-           height: 29px;
-           font-size:${market_style.font.size.normal3};
-           font-weight: 500;
-           font-family: Noto Sans KR;
-           text-align: left;
-           line-height: 40px;
-           color: #707070;
+            width: 91px;
+            font-size:${market_style.font.size.small1};
+            font-weight: 500;
+            font-family: Noto Sans KR;
+            text-align: left;
+            color: #707070;
        }
        .description-input-container{
            margin-left: 31px;
@@ -345,15 +370,15 @@ const EditCardHeaderContainer = styled.div`
            border-radius: 5px;
        }
        .description-input-style{
-           border-radius: 5px;
-           width: 100%;
-           border: none;
-           background: transparent;
-           font-size:${market_style.font.size.normal3};
-           font-weight: 500;
-           color: #707070;
-           height: 100%;
-           padding: 16px 23px 16px 23px;
+            border-radius: 10px;
+            width: 600px;
+            font-size:${market_style.font.size.small1};
+            font-weight: 400;
+            color: black;
+            padding: 7px 15px;
+            background-color:#E9E9E9;
+            outline:none;
+            border:none;
        }
    }
    .edit-header-button-container {
@@ -402,7 +427,7 @@ const BlankSpace = styled.div`
 class CardModal extends Component {
     constructor(props) {
         super(props);
-        this.state = { sroll: false, edit: false, title: "", description: "", content: [], modifyresult:false,private:false }
+        this.state = { sroll: false, edit: false, isEditing:false, title: "", description: "", content: [], modifyresult:false,private:false }
         this.handlerModifyContent = this.handlerModifyContent.bind(this);
     };
     handlerModifyContent(){
@@ -530,38 +555,38 @@ class CardModal extends Component {
                 <React.Fragment>
                     <div style={{ zIndex: 100 }}>
                         <CardDialog open={this.props.open} onClose={this.onClose}>
-                        <div className="close-box" onClick={this.onClose} >
+                        {/* <div className="close-box" onClick={this.onClose} >
                             <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
-                        </div>
+                        </div> */}
                             {this.state.loading && <Loading />}
                         <div className="content-wrapper" >
                             {this.state.edit
                                 ? <React.Fragment>
                                     <EditCardHeaderContainer>
                                         <div className="edit-header-container">
-                                            <div className="edit-card-info">컨텐츠 정보수정</div>
-                                            <div onClick={()=>{this.setState({private:!this.state.private})}} style={{cursor:"pointer",margin:"5px",border:`${this.state.private==true?"1px solid red":"1px solid grey"}`,paddingLeft:"2px",paddingBottom:"2px",
-                                                        width:"30px",height:"30px",borderRadius:"50%",backgroundColor:"white",display:"flex",
-                                                        justifyContent:"center",alignItems:"center"}}>
-                                                <Icon name={`${this.state.private==true?"lock":"lock open"}`} color={`${this.state.private==true?"red":"grey"}`}/>
+                                            <div className="edit-card-info">
+                                            <div onClick={()=>{this.setState({private:!this.state.private})}} 
+                                                className={`icon_style ${this.state.private == true?"borderRed":"borderGrey"}`}>
+                                                <Icon size='mini' name={`${this.state.private==true?"lock":"lock open"}`} color={`${this.state.private==true?"red":"grey"}`}/>
+                                            </div>컨텐츠 정보수정
+                                            </div>
+                                            <div onClick={this.onClose} className="close_">
+                                                <Cross angle={45} color={"#000000"} weight={1} width={14} height={14} />
                                             </div>
                                         </div>
+                                        <div className="hrline"/>
                                         <div className="edit-header-thumbnail">
                                             <div className="thumbnail-txt">이미지</div>
-                                            <FormThumbnailEx style={{ width: "210px", height: "210px", marginLeft: "30px", borderRadius: "10px", backgroundColor: "#EFEFEF" }}
+                                            <FormThumbnailEx style={{ marginBottom:"0px",width: "200px", height: "200px", borderRadius: "10px", backgroundColor: "#EFEFEF" }}
                                                 name="thumbnail" image={this.state.thumbnail} placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]} />
                                         </div>
                                         <div className="edit-header-title">
                                             <div className="title-txt">제목</div>
-                                            <div className="title-input-container">
-                                                <input className="title-input-style" name="title" onChange={this.onChangeTitle} value={this.state.title} maxLength="20" placeholder="제목을 입력해주세요." />
-                                            </div>
+                                            <input className="title-input-style" name="title" onChange={this.onChangeTitle} value={this.state.title} maxLength="20" placeholder="제목을 입력해주세요." />
                                         </div>
-                                        <div className="edit-header-description">
+                                        <div className="edit-header-description marginBottom">
                                             <div className="description-txt">설명</div>
-                                            <div className="description-input-container">
-                                                <input className="description-input-style" name="description" onChange={this.onChangeDescription} value={this.state.description} maxLength="1000" placeholder="설명을 입력해주세요." />
-                                            </div>
+                                            <input className="description-input-style" name="description" onChange={this.onChangeDescription} value={this.state.description} maxLength="1000" placeholder="설명을 입력해주세요." />
                                         </div>
                                     </EditCardHeaderContainer>
                                 </React.Fragment>
@@ -571,9 +596,9 @@ class CardModal extends Component {
                                         <div className="header-title">{card.title}</div>
                                         <div className="header-update">
                                             <div className="update_">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div>
-                                            {/* <div onClick={this.onClose} className="close_">
+                                            <div onClick={this.onClose} className="close_">
                                                 <Cross angle={45} color={"#000000"} weight={1} width={14} height={14} />
-                                            </div> */}
+                                            </div>
                                         </div>
                                     </div>
                                     {/* <div className="card-header-first">
@@ -619,9 +644,9 @@ class CardModal extends Component {
                                 />
                             </div>
                             {
-                                this.props.edit?
+                                this.props.edit&&this.state.isEditing==false?
                                 <div className="modifyRgn">
-                                    <div className="redBtn" onClick={() => this.setState({ edit: !this.state.edit, title: card.title, content: card.content })}>수정하기</div>
+                                    <div className="redBtn" onClick={() => this.setState({ edit: !this.state.edit,isEditing:!this.state.isEditing, title: card.title, content: card.content })}>수정하기</div>
                                     <div className="greyBtn" onClick={(event) => this.removeCard(event)}>삭제하기</div>
                                 </div>
                                 :
