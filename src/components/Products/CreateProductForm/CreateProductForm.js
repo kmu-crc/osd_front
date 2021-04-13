@@ -815,7 +815,7 @@ class CreateProductForm extends Component {
       <div className="contentsBox">
         {itemType > -1 ?
           <ItemTypeForm
-            returnState={obj => this.setState({ additional: obj.additional, content: obj.content, steps: obj.steps, steps2:obj.steps2, type: obj.type })}
+            returnState={obj => this.setState({ additional: obj.additional, content: obj.content, steps: obj.steps, steps2: obj.steps2, type: obj.type })}
             itemType={this.state.itemType}
             userInfo={this.props.userInfo}
           />
@@ -1460,15 +1460,20 @@ class ItemLecture extends Component {
     this.getEndDateValue = this.getEndDateValue.bind(this);
     this.getStartDateValue = this.getStartDateValue.bind(this);
     this.getDayDateValue = this.getDayDateValue.bind(this);
+    this.onHandleMaxStudent = this.onHandleMaxStudent.bind(this);
+    this.onHandleDescription = this.onHandleDescription.bind(this);
   };
   returnState() {
     this.props.return && this.props.return(this.state);
   };
-  async onHandleChange(event) {
-    const { name, value } = event.target;
-    await this.setState({ [name]: parseInt(value, 10) });
+  async onHandleMaxStudent(event) {
+    await this.setState({ max_students: parseInt(event.target.value, 10) });
     this.returnState();
   };
+  async onHandleDescription(event) {
+    await this.setState({ description: event.target.value });
+    this.returnState();
+  }
   async getEndDateValue(value) {
     await this.setState({ end_date: value });
     this.returnState();
@@ -1488,16 +1493,14 @@ class ItemLecture extends Component {
 
   render() {
     const { recruit_always, start_date, end_date, max_students } = this.state;
-
-    // console.log("LECTURE:", start_date, end_date);
     return (
       <React.Fragment>
         <Field title="설명">
-          <InputTextarea placeholder="설명을 입력하세요" onChange={this.onHandleChange} name="description" height={60} />
+          <InputTextarea placeholder="설명을 입력하세요" onChange={this.onHandleDescription} name="description" height={60} />
         </Field>
 
         <Field title="최대 모집인원">
-          <InputNumberText width={100} onChange={this.onHandleChange} min="0" name="max_students" value={max_students || 0} />&nbsp;명&nbsp;(모집인원 0명 = 무제한)
+          <InputNumberText width={100} onChange={this.onHandleMaxStudent} min="0" name="max_students" value={max_students || 0} />&nbsp;명&nbsp;(모집인원 0명 = 무제한)
         </Field>
 
         <Field title="수강생 모집기간">

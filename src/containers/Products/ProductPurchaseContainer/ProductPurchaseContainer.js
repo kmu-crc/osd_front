@@ -6,7 +6,7 @@ import Loading from "components/Commons/Loading";
 import {
   // GetProductDetailRequest,
   GetProductCountRequest, GetLikeProductRequest,
-  UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest, addCartRequest,GetDidYouBuyItRequest
+  UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest, addCartRequest, GetDidYouBuyItRequest
 } from "actions/Product";
 import { CreateItemPaymentRequest,  /*GetItemPaymentRequest*/ } from "actions/Payment";
 import { GetItemDetailRequest } from "actions/Item";
@@ -21,16 +21,16 @@ class ProductPurchaseContainer extends Component {
     this.Payment = this.Payment.bind(this);
   }
   componentDidMount() {
-    console.log(this.props.payment,this.props.id);
+    console.log(this.props.payment, this.props.id);
     this.props.GetItemDetailRequest(this.props.id, this.props.token)
-      .then(this.props.userInfo &&this.props.GetDidYouBuyItRequest(this.props.id, this.props.userInfo.uid))
+      .then(this.props.userInfo && this.props.GetDidYouBuyItRequest(this.props.id, this.props.userInfo.uid))
       .then(this.props.GetLikeProductRequest(this.props.id, this.props.token))
       .then(
         this.props.userInfo &&
         this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token))
       .then(
-        this.props.GetPaymentMessageRequest(this.props.payment,0)
-        )
+        this.props.GetPaymentMessageRequest(this.props.payment, 0)
+      )
   }
   Payment(item, option) {
     this.props.CreateItemPaymentRequest(
@@ -62,19 +62,20 @@ class ProductPurchaseContainer extends Component {
   }
 
   render() {
-    console.log(this.props);
     const yours = this.props.ItemDetail.members && this.props.ItemDetail.members.filter(mem => mem.user_id === this.props.userInfo && this.props.userInfo.uid);
     return this.props.ItemDetail ?
+      // this.props.isbuy && this.props.isbuy === 1 ?
       this.props.ItemDetail.private === 1 && !yours ?
         this.ThisIsPrivateItem() :
         <ItemPurchase purchase={this.Payment} itemId={this.props.ItemDetail["item-id"]} item={this.props.ItemDetail} {...this.props} />
+      // : ""
       : <Loading />
   }
 }
 
 const mapStateToProps = (state) => ({
   ItemDetail: state.ItemDetail.status.ItemDetail,
-  paymentMessageList:state.ItemQuestion.status.PaymentMessage,
+  paymentMessageList: state.ItemQuestion.status.PaymentMessage,
   Count: state.ProductDetail.status.Count,
   isbuy: state.ProductDetail.status.isbuy,
   like: state.ProductLike.status.like,
@@ -85,7 +86,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  GetDidYouBuyItRequest:(item_id,user_id)=>dispatch(GetDidYouBuyItRequest(item_id,user_id)),
+  GetDidYouBuyItRequest: (item_id, user_id) => dispatch(GetDidYouBuyItRequest(item_id, user_id)),
   GetItemDetailRequest: (id, token) => dispatch(GetItemDetailRequest(id, token)),
   GetProductCountRequest: (id) => dispatch(GetProductCountRequest(id)),
   GetLikeProductRequest: (id, token) => dispatch(GetLikeProductRequest(id, token)),
