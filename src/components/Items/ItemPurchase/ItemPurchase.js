@@ -22,31 +22,31 @@ const MessageBox = styled.div`
   padding:10px;
 
 `
-const CustomIcon =styled.div`
+const CustomIcon = styled.div`
 width:${props => props.width}px;
 height:${props => props.height}px;
-background-image:url(${props=>props.imgURL});
+background-image:url(${props => props.imgURL});
 background-repeat: no-repeat;
 background-size: contain;
 padding:${props => props.padding}px;
-margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
-margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
-display:${props=>props.isNon===true?"none":"block"}
+margin-right:${props => props.marginRight == null ? "13" : props.marginRight}px;
+margin-left:${props => props.marginLeft == null ? "13" : props.marginLeft}px;
+display:${props => props.isNon === true ? "none" : "block"}
 `
 const CustomButton = styled.div`
     min-width:${props => props.width}px;
     min-height:${props => props.height}px;
-    border:1px solid ${props => props.borderColor==null?"#d6d6d6":props.borderColor};
+    border:1px solid ${props => props.borderColor == null ? "#d6d6d6" : props.borderColor};
     background-color:${props => props.backgroundColor};
-    // background-image:url(${props=>props.imgURL})
+    // background-image:url(${props => props.imgURL})
     display:flex;
     justify-content:center;
     align-items:center;
-    margin-bottom:${props=>props.marginBottom==null?"0":props.marginBottom}px;
+    margin-bottom:${props => props.marginBottom == null ? "0" : props.marginBottom}px;
     .text_{
       font-size:${props => props.fontSize}pt;
       font-weight:500;
-      color:${props => props.fontColor==null?"white":props.fontColor};
+      color:${props => props.fontColor == null ? "white" : props.fontColor};
     }
     &:hover{
         // background-color:${props => props.onMouseColor};
@@ -70,12 +70,12 @@ const MessageWrapper = styled.div`
     width:100%;
     display:flex;
     justify-content:flex-start;
-    flex-direction:${props=>props.isMy?"row-reverse":"row"};
+    flex-direction:${props => props.isMy ? "row-reverse" : "row"};
     align-items:flex-end;
     margin-bottom:16px;
   .msg_bubble{
     max-width:400px;
-    background-color:${props=>props.isMy?"#d6d6d6":"#EFEFEF"};
+    background-color:${props => props.isMy ? "#d6d6d6" : "#EFEFEF"};
     padding:13px;
     display:flex;
     justify-content:center;
@@ -85,7 +85,7 @@ const MessageWrapper = styled.div`
   }
   .file_bubble{
     max-width:400px;
-    background-color:${props=>props.isMy?"#d6d6d6":"#EFEFEF"};
+    background-color:${props => props.isMy ? "#d6d6d6" : "#EFEFEF"};
     padding:13px;
     display:flex;
     justify-content:center;
@@ -103,7 +103,7 @@ const MessageWrapper = styled.div`
   .timeWrapper{
     display:flex;
     flex-direction:column;
-    align-items:${props=>props.isMy?"flex-end":"flex-start"};
+    align-items:${props => props.isMy ? "flex-end" : "flex-start"};
   }
 `
 const Wrapper = styled.div`
@@ -619,15 +619,15 @@ class ItemPurchase extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      file:null,
-      file_url:null,
+      file: null,
+      file_url: null,
       isShowmember: false,
       isLike: this.props.like == null ? false : this.props.like,
       expandingContent: false, expandingReview: false, expandingBoard: false,
       isexpandingContent: false, isexpandingReview: false, isexpandingBoard: false,
       //for review detail
       reviewdetail: false, detail: null,
-      message:"",
+      message: "",
     }
     this.onClickLike = this.onClickLike.bind(this);
     this.buyThisItem = this.buyThisItem.bind(this);
@@ -648,36 +648,36 @@ class ItemPurchase extends Component {
       })
     }
   };
-  onCancelFile(event){
-    this.setState({message:"",file:null,filename:null,file_url:null});
-    document.getElementById("advicebox").disabled=false;
+  onCancelFile(event) {
+    this.setState({ message: "", file: null, filename: null, file_url: null });
+    document.getElementById("advicebox").disabled = false;
   }
-  
+
   onSendFile = async event => {
     const s3path = await FileUploadRequest(this.state.file);
     const data = {
-      payment_id:this.props.payment,
-      from_id:this.props.userInfo.uid,
-      message:"",
-      filename:this.state.filename,
-      file_url:s3path.path
+      payment_id: this.props.payment,
+      from_id: this.props.userInfo.uid,
+      message: "",
+      filename: this.state.filename,
+      file_url: s3path.path
     }
-    await this.props.CreatePaymentMessageRequest(data,this.props.id,this.props.token);
-    await this.props.GetPaymentMessageRequest(this.props.payment,0);
-    this.setState({message:"",file:null,filename:null,file_url:null});
-    document.getElementById("advicebox").disabled=false;
+    await this.props.CreatePaymentMessageRequest(data, this.props.id, this.props.token);
+    await this.props.GetPaymentMessageRequest(this.props.payment, 0);
+    this.setState({ message: "", file: null, filename: null, file_url: null });
+    document.getElementById("advicebox").disabled = false;
   }
   onFileChange = async event => {
-    this.setState({file:event.currentTarget.files});
+    this.setState({ file: event.currentTarget.files });
     // console.log(event.currentTarget.files);
     // return;
-    
+
     this.setState({
       // file_url: s3path.path,
       message: event.currentTarget.files[0].name,
-      filename:event.currentTarget.files[0].name
+      filename: event.currentTarget.files[0].name
     });
-    document.getElementById("advicebox").disabled=true;
+    document.getElementById("advicebox").disabled = true;
   }
   onClickLike(event) {
     const isLike = !this.state.isLike;
@@ -690,7 +690,7 @@ class ItemPurchase extends Component {
       this.props.LikeProductRequest(this.props.id, this.props.token)
   };
   async buyThisItem(event) {
-    if (!await confirm(`${this.props.item.price / (this.props.item.price>9999?10000:1)}${this.props.item.price>9999?"만":""} point가 결제됩니다.`)) {
+    if (!await confirm(`${this.props.item.price / (this.props.item.price > 9999 ? 10000 : 1)}${this.props.item.price > 9999 ? "만" : ""} point가 결제됩니다.`)) {
       event.preventDefault();
     } else {
       this.props.item.price > this.props.Point ? this.gotoChargePoint() : this.purchaseThisItem()
@@ -700,7 +700,7 @@ class ItemPurchase extends Component {
   }
   async modifyThisItem() {
     // if (await confirm("아이템을 수정하시겠습니까?")) {
-      window.location.href = `/productModify/${this.props.ItemDetail["item-id"]}`;
+    window.location.href = `/productModify/${this.props.ItemDetail["item-id"]}`;
     // }
   }
 
@@ -716,28 +716,28 @@ class ItemPurchase extends Component {
   purchaseThisItem() {
     this.props.purchase(this.props.item);
   }
-  onChangeMessage(event){
-    this.setState({message:event.target.value});
+  onChangeMessage(event) {
+    this.setState({ message: event.target.value });
     document.getElementById("advicebox").focus();
   }
-  async writeMessage(){
-    console.log(this.props.id,this.props.token);
+  async writeMessage() {
+    console.log(this.props.id, this.props.token);
     const data = {
-      payment_id:this.props.payment,
-      from_id:this.props.userInfo.uid,
-      message:this.state.message,
-      filename:null,
-      file_url:null
+      payment_id: this.props.payment,
+      from_id: this.props.userInfo.uid,
+      message: this.state.message,
+      filename: null,
+      file_url: null
     }
-    await this.props.CreatePaymentMessageRequest(data,this.props.id,this.props.token);
-    await this.props.GetPaymentMessageRequest(this.props.payment,0);
-    await this.setState({message:""});
+    await this.props.CreatePaymentMessageRequest(data, this.props.id, this.props.token);
+    await this.props.GetPaymentMessageRequest(this.props.payment, 0);
+    await this.setState({ message: "" });
   }
 
   render() {
-    console.log(this.props);
+    console.log("ItemPurchase:", this.props);
     const item = this.props.item;
-    const week=["일","월","화","수","목","금","토"];
+    const week = ["일", "월", "화", "수", "목", "금", "토"];
     // const { expandingContent, expandingReview, expandingBoard } = this.state;
     // const { score } = this.props.item;
     // let tag = this.props.ItemDetail.tag + "";
@@ -779,19 +779,19 @@ class ItemPurchase extends Component {
             <ItemInfo face={item.who || who}>
               <div className="flex-align-column line">
                 <div className="flex spaceBetween">
-                <div className="title">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
-                <div className="expert">
-                  {/* {(this.props.userInfo && item.members && item.members.length > 0 && this.state.isShowmember)
+                  <div className="title">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
+                  <div className="expert">
+                    {/* {(this.props.userInfo && item.members && item.members.length > 0 && this.state.isShowmember)
                     ? <MemberListBox />
                     : null} */}
-                  <div className="who" />
-                  <div className="nick" onClick={() => this.setState({ isShowmember: !this.state.isShowmember })}>{item.userName}
-                    {this.props.userInfo && item.members && item.members.length > 0
-                      ?
-                      `외 ${item.members.length}명` : null}
+                    <div className="who" />
+                    <div className="nick" onClick={() => this.setState({ isShowmember: !this.state.isShowmember })}>{item.userName}
+                      {this.props.userInfo && item.members && item.members.length > 0
+                        ?
+                        `외 ${item.members.length}명` : null}
+                    </div>
                   </div>
-                  </div>
-                  </div>
+                </div>
 
 
                 <Introduction id="Introduction">
@@ -804,6 +804,7 @@ class ItemPurchase extends Component {
                     <div className="text flex">
                       {item.type === 0 ? "디자인" : null}
                       {item.type === 1 ? "프로젝트" : null}
+                      {item.type === 8 ? "강의" : null}
                       {item.type === 2 ? "기술자문/상담" : null}
                       {item.type === 3 ? "경험" : null}
                       {item.type === 4 ? "정보/데이터" : null}
@@ -856,12 +857,12 @@ class ItemPurchase extends Component {
 
           {/* item-contents */}
           <div className="row">
-          <ItemContents>
+            <ItemContents>
 
-{/** -------------------- PROJECT ----------------------- */}
-{/** -------------------- CLOSE CONTENT ----------------------- */}
-            {item&&(item.type===1||item.type===0||item.type===3||item.type===4||item.type===5||item.type===6)?
-            <React.Fragment>
+              {/** -------------------- PROJECT ----------------------- */}
+              {/** -------------------- CLOSE CONTENT ----------------------- */}
+              {item && (item.type === 1 || item.type === 0 || item.type === 3 || item.type === 4 || item.type === 5 || item.type === 6) ?
+                <React.Fragment>
                   <div className="header">
                     <div className="title">아이템 상세내용</div>
                   </div>
@@ -886,10 +887,23 @@ class ItemPurchase extends Component {
                       <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} />
                     </div>
                     : null} */}
-            </React.Fragment>
-            :null}
+                </React.Fragment>
+                : null}
 
-            {/* {item&&(item.type===1)? 
+              {item.type === 8
+                ?
+                <React.Fragment>
+                  <div className="header">
+                    <div className="title">강의내용</div>
+                  </div>
+                  <div className="editor-wrapper ">
+                    <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} />
+                  </div>
+
+                </React.Fragment>
+                : null
+              }
+              {/* {item&&(item.type===1)? 
             <React.Fragment>
               <div className="header">
                 <div className="title">아이템 상세내용</div>
@@ -906,133 +920,133 @@ class ItemPurchase extends Component {
                   : null}
             </React.Fragment>
             :null} */}
-{/** -------------------- ADVICE ----------------------- */}
-            {item&&(item.type===2||item.type===7)?
-            <React.Fragment>
-              <div className="header">
-              <div className="title margin_bottom_s">{item.type==2?'자문/상담':item.type==7?'제작품 문의':null}</div>
-              </div>
-              <div className="hrLine"/>
-              <div className="message-wrapper">
-                <div className="message-detail">
-              <MessageBox>
-                {
-                  this.props.paymentMessageList&&
-                  this.props.paymentMessageList.map((item,index)=>{
-                    const createtime = new Date(item.create_time);
-                    const msgTime = createtime.getFullYear()+"."
-                    +(createtime.getMonth()+1)+"."
-                    +createtime.getDate()
-                    +"("+week[createtime.getDay()]+")"
-                    +(createtime.getHours()<=12&&createtime.getHours()>=6?"오전":"오후")
-                    +(createtime.getHours()<=9?'0'+createtime.getHours():createtime.getHours())
-                    +":"+(createtime.getMinutes()<=9?'0'+createtime.getMinutes():createtime.getMinutes())
-                    console.log(item.from_id,this.props.userInfo);
-                    return( 
-                    <MessageWrapper isMy={item.from_id==this.props.userInfo.uid}> 
-                    {
-                      console.log(
-                        String(item.filename).substring(String(item.filename).lastIndexOf('.'),String(item.filename).length))
-                    }
-                    {
-                      item.filename==null?
-                      <React.Fragment>
-                          <div className="msg_bubble">{item.message}</div>      
-                          <div className="msg_time">{msgTime}</div>    
-                      </React.Fragment>
-                      :
-                      item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)===".jpg"||
-                      item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)===".JPG"||
-                      item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)===".png"||
-                      item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)===".PNG"?
-                      <React.Fragment>
-                        <div className="file_bubble">
-                            {/* <FileImage imgURL={item.file_url}/> */}
-                            <img width={334} src={item.file_url}/>
-                        </div>
-                        <div className="timeWrapper">
-                          <a href={item.file_url} download={item.filename} className="iconWrap">
-                            <CustomIcon width={21} height={21} imgURL={download}/>
-                          </a>
-                          <div className="msg_time">{msgTime}</div>
-                        </div>    
-                      </React.Fragment>
-                      :
-                      <React.Fragment>
-                        <a href={item.file_url} download={item.filename} className="iconWrap">
-                          {/* <FileIcon type={"application"} extension={item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)}/> */}
-                          <div className="file_bubble">
-                            <CustomIcon width={19} height={19} imgURL={docu}/>{item.filename}
-                            <CustomIcon isNon={item.from_id===this.props.userInfo.uid} width={19} height={19} imgURL={download}/>
-                          </div>
-                        </a>
-                        <div className="msg_time">{msgTime}</div>    
-                      </React.Fragment>
-                    }
-                    
-                    </MessageWrapper>
-                    )
-                  })
-                }
-              </MessageBox>
-              </div>
-              </div>
-              <div className="hrLine"/>
-              <div className="flex margin_bottom_s">
+              {/** -------------------- ADVICE ----------------------- */}
+              {item && (item.type === 2 || item.type === 7) ?
+                <React.Fragment>
+                  <div className="header">
+                    <div className="title margin_bottom_s">{item.type == 2 ? '자문/상담' : item.type == 7 ? '제작품 문의' : null}</div>
+                  </div>
+                  <div className="hrLine" />
+                  <div className="message-wrapper">
+                    <div className="message-detail">
+                      <MessageBox>
+                        {
+                          this.props.paymentMessageList &&
+                          this.props.paymentMessageList.map((item, index) => {
+                            const createtime = new Date(item.create_time);
+                            const msgTime = createtime.getFullYear() + "."
+                              + (createtime.getMonth() + 1) + "."
+                              + createtime.getDate()
+                              + "(" + week[createtime.getDay()] + ")"
+                              + (createtime.getHours() <= 12 && createtime.getHours() >= 6 ? "오전" : "오후")
+                              + (createtime.getHours() <= 9 ? '0' + createtime.getHours() : createtime.getHours())
+                              + ":" + (createtime.getMinutes() <= 9 ? '0' + createtime.getMinutes() : createtime.getMinutes())
+                            console.log(item.from_id, this.props.userInfo);
+                            return (
+                              <MessageWrapper isMy={item.from_id == this.props.userInfo.uid}>
+                                {
+                                  console.log(
+                                    String(item.filename).substring(String(item.filename).lastIndexOf('.'), String(item.filename).length))
+                                }
+                                {
+                                  item.filename == null ?
+                                    <React.Fragment>
+                                      <div className="msg_bubble">{item.message}</div>
+                                      <div className="msg_time">{msgTime}</div>
+                                    </React.Fragment>
+                                    :
+                                    item.filename.substring(item.filename.lastIndexOf('.'), item.filename.length) === ".jpg" ||
+                                      item.filename.substring(item.filename.lastIndexOf('.'), item.filename.length) === ".JPG" ||
+                                      item.filename.substring(item.filename.lastIndexOf('.'), item.filename.length) === ".png" ||
+                                      item.filename.substring(item.filename.lastIndexOf('.'), item.filename.length) === ".PNG" ?
+                                      <React.Fragment>
+                                        <div className="file_bubble">
+                                          {/* <FileImage imgURL={item.file_url}/> */}
+                                          <img width={334} src={item.file_url} />
+                                        </div>
+                                        <div className="timeWrapper">
+                                          <a href={item.file_url} download={item.filename} className="iconWrap">
+                                            <CustomIcon width={21} height={21} imgURL={download} />
+                                          </a>
+                                          <div className="msg_time">{msgTime}</div>
+                                        </div>
+                                      </React.Fragment>
+                                      :
+                                      <React.Fragment>
+                                        <a href={item.file_url} download={item.filename} className="iconWrap">
+                                          {/* <FileIcon type={"application"} extension={item.filename.substring(item.filename.lastIndexOf('.'),item.filename.length)}/> */}
+                                          <div className="file_bubble">
+                                            <CustomIcon width={19} height={19} imgURL={docu} />{item.filename}
+                                            <CustomIcon isNon={item.from_id === this.props.userInfo.uid} width={19} height={19} imgURL={download} />
+                                          </div>
+                                        </a>
+                                        <div className="msg_time">{msgTime}</div>
+                                      </React.Fragment>
+                                }
 
-              <label htmlFor="addimg">
-              <input
-                      hidden
-                      type="file"
-                      id="addimg"
-                      name="source"
-                      ref={ref => (this.input = ref)}
-                      onChange={this.onFileChange}
-                      accept="image/*" 
+                              </MessageWrapper>
+                            )
+                          })
+                        }
+                      </MessageBox>
+                    </div>
+                  </div>
+                  <div className="hrLine" />
+                  <div className="flex margin_bottom_s">
+
+                    <label htmlFor="addimg">
+                      <input
+                        hidden
+                        type="file"
+                        id="addimg"
+                        name="source"
+                        ref={ref => (this.input = ref)}
+                        onChange={this.onFileChange}
+                        accept="image/*"
                       />
-              <div className="iconWrapper"> 
-                  <CustomIcon width={24} height={30} imgURL={addimage}/>
-                  <div className="font_small">이미지</div>
-              </div>
-              </label>
-              <label htmlFor="addfile">
-              <input
-                      hidden
-                      type="file"
-                      id="addfile"
-                      name="source"
-                      ref={ref => (this.input = ref)}
-                      onChange={this.onFileChange}
+                      <div className="iconWrapper">
+                        <CustomIcon width={24} height={30} imgURL={addimage} />
+                        <div className="font_small">이미지</div>
+                      </div>
+                    </label>
+                    <label htmlFor="addfile">
+                      <input
+                        hidden
+                        type="file"
+                        id="addfile"
+                        name="source"
+                        ref={ref => (this.input = ref)}
+                        onChange={this.onFileChange}
                       // accept=".pdf" 
                       />
-              <div className="iconWrapper"> 
-                  <CustomIcon width={24} height={30} imgURL={addfile}/>
-                  <div className="font_small">파일</div>
-                </div>
-              </label>
-              </div>
-              <div style={{display:"flex"}}>
-                
-              {/* <Label htmlFor="file">
+                      <div className="iconWrapper">
+                        <CustomIcon width={24} height={30} imgURL={addfile} />
+                        <div className="font_small">파일</div>
+                      </div>
+                    </label>
+                  </div>
+                  <div style={{ display: "flex" }}>
+
+                    {/* <Label htmlFor="file">
                 +</Label> */}
 
-              <InputText id="advicebox" value={this.state.message} onChange={this.onChangeMessage}/>
-              {
-                this.state.file==null?
-                <CustomButton id="sendmessage" width="100" height="100" backgroundColor="white" fontColor="#707070" fontSize="12" onClick={this.writeMessage}><div className="text_">보내기</div></CustomButton>
-                :
-                <React.Fragment>
-                  <div>
-                  <CustomButton id="sendfile" width="100" height="45" backgroundColor="white" fontColor="#707070" marginBottom="10"  fontSize="12" onClick={this.onSendFile}>전송하기</CustomButton>
-                  <CustomButton id="cancelbtn" width="100" height="45" backgroundColor="white" fontColor="#707070" fontSize="12" onClick={this.onCancelFile}>취소하기</CustomButton>
+                    <InputText id="advicebox" value={this.state.message} onChange={this.onChangeMessage} />
+                    {
+                      this.state.file == null ?
+                        <CustomButton id="sendmessage" width="100" height="100" backgroundColor="white" fontColor="#707070" fontSize="12" onClick={this.writeMessage}><div className="text_">보내기</div></CustomButton>
+                        :
+                        <React.Fragment>
+                          <div>
+                            <CustomButton id="sendfile" width="100" height="45" backgroundColor="white" fontColor="#707070" marginBottom="10" fontSize="12" onClick={this.onSendFile}>전송하기</CustomButton>
+                            <CustomButton id="cancelbtn" width="100" height="45" backgroundColor="white" fontColor="#707070" fontSize="12" onClick={this.onCancelFile}>취소하기</CustomButton>
+                          </div>
+                        </React.Fragment>
+                    }
                   </div>
                 </React.Fragment>
-              }
-              </div>
-            </React.Fragment>
-            :null}
-{/** -------------------- PRODUCT CONTENT ----------------------- */}
-            {/* {item&&(item.type===7)?
+                : null}
+              {/** -------------------- PRODUCT CONTENT ----------------------- */}
+              {/* {item&&(item.type===7)?
             <React.Fragment>
                     <div className="title">제작품 문의</div>
             </React.Fragment>
@@ -1040,33 +1054,20 @@ class ItemPurchase extends Component {
 
             </ItemContents>
           </div>
-{/** ---------------------------------------------------------- */}
-          {/* item-contents */}
-            {/* {item.type<Content
-              id="contents_rgn"
-              style={{ marginTop: "15px", overflow: "hidden" }}
-              width={1600}>
-              <div className="title">아이템 상세내용</div>
-              {item && item.upload_type === "blog"
-                ? <div className="detail_board" id="detail_board">
-                  <CardSourceDetailContainer
-                    bought={item.bought}
-                    isCancel
-                    cardId={item.cardId}
-                  />
+
+          {(item && item.type === 8)
+            ? <div className="row">
+              <ItemContents>
+                <div className="header">
+                  <div className="title">실습내용</div>
                 </div>
-                : null}
-              {item && item.upload_type === "project"
-                ?
-                <div className="detail_board" id="detail_board">
-                  <ItemStepContainer
-                    item={item}
-                    id={item["item-id"]}
-                    bought={item.bought}
-                  />
+                <div className="editor-wrapper ">
+                  {/* <Item2ndStepContainer item={item} id={item["item-id"]} bought={item.bought} /> */}
                 </div>
-                : null}
-            </Content>} */}
+              </ItemContents>
+            </div>
+            : null}
+
         </Wrapper>
       </React.Fragment>
       :

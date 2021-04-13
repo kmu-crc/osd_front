@@ -185,9 +185,12 @@ const Introduction = styled.div`
   .wrapItem{
     width:100%;
     height:100%;
-    overflow:hidden;
+    overflow: hidden auto;
     .flex{
       display:flex;
+    }
+    .flex-wrap{
+      flex-wrap: wrap;
     }
     .title {
       font-size:${market_style.font.size.small1};
@@ -691,7 +694,7 @@ class ItemDetail extends Component {
                       {item.type === 7 ? "제작품" : null}
                     </div>
                     <div className="title marginBottom">태그</div>
-                    <div className="flex">
+                    <div className="flex flex-wrap">
                       {
                         tag.indexOf(",") == -1 ? null : tag.split(",").map((item, index) => {
                           return (
