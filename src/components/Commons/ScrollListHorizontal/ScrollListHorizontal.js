@@ -30,7 +30,7 @@ const SliderBox = styled.div`
 
     .left_gradient{
       position:absolute;
-      left:0px;
+      left:-1px;
       width:111px;
       height:338px;
       padding:143px 68px 124px 30px;
@@ -47,7 +47,7 @@ const SliderBox = styled.div`
     }
     .right_gradient{
       position:absolute;
-      right:0px;
+      right:-1px;
       width:111px;
       height:300px;
       padding:143px 30px 124px 68px;

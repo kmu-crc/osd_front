@@ -21,7 +21,7 @@ const Board = styled.div`
   }
   .lineBox{
     width:100%;
-    padding:6px 38px 10px 38px;
+    padding:10px 38px 10px 38px;
     .line{
       width:100%;
       border:1px solid #efefef;

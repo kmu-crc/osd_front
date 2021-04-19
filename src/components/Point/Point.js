@@ -21,8 +21,8 @@ const Wrapper = styled.div`
     justify-content:center;
     font-size:${market_style.font.size.normal1};
     font-family:Noto Sans KR;
-    .text_grey{color:#d6d6d6;cursor:pointer;font-weight:500;}
-    .text_black{color:black;cursor:pointer;font-weight:500;}
+    .text_grey{color:#d6d6d6;cursor:pointer;}
+    .text_black{color:black;cursor:pointer;}
     .text_light_grey{color:#efefef;}
     .margin_left{margin-left:0px;}
     .margin_right{margin-right:20px;}

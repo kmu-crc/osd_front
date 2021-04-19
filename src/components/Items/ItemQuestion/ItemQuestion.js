@@ -9,6 +9,13 @@ import { Modal } from 'semantic-ui-react';
 import market_style from "market_style";
 import { Pagination } from 'semantic-ui-react'
 
+const NoPage = styled.div`
+    width:100%;
+    height:100px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+`
 const HRLine = styled.div`
     width:100%;
     height:${props=>props.height}px;
@@ -403,7 +410,7 @@ class ItemQuestion extends Component {
                         return(
                         <div key={index} >
                             <Question
-                                // numbering={item.sort_in_group==0?countNum--:countNum}
+                                // numbering={item.sort_in_group==0?countㅋNum--:countNum}
                                 numbering={item.sort_in_group==0?countNum--:countNum}
                                 {...item}
                                 key={index}
@@ -424,7 +431,11 @@ class ItemQuestion extends Component {
                                     <QuestionButton id="answer" onClick={() => this.requestAnswer(item)} >
                                         <div className="text" id="answer" >답변</div></QuestionButton>
                                 </AnswerBox> : null}
-                            </div>)}) : null}
+                            </div>)}) 
+                            :
+                            <NoPage>
+                                등록된 게시글이 없습니다
+                            </NoPage>}
             </div>
             <PageBox>
             { (total+replyCount) >10?
