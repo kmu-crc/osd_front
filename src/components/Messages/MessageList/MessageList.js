@@ -204,7 +204,7 @@ const ChatBox = styled.div`
       display:flex;
       justify-content:center;
       .sendBox{
-        width:100%;
+        min-width:90%;
         height:100%;
         border-top:1px solid #707070;
         background-color:#dddddd;
@@ -263,7 +263,7 @@ const PlusIcon = styled.div`
   }
 `;
 const SendButton = styled.div`
-  width:117px;
+  min-width:10%;
   height:100%;
   background-color:white;
   border:1px solid #EFEFEF;
@@ -283,7 +283,8 @@ const SendButton = styled.div`
   }
 `;
 const SendMessageTextarea = styled.div`
-  width:95%;
+  max-width:100%;
+  min-width:100%;
   height:100%;
   font-size:18px;
   // font-weight:500;
@@ -416,8 +417,17 @@ function SummaryItem(props) {
       </SummaryIcon>
       <div className="summary_box">
         <div className="summary_Name">{props.friend_name}</div>
-        <div className="summary_message" 
-        dangerouslySetInnerHTML={{ __html: props.message && props.message.replace(/<br\/>/g, "") }}/>
+        {
+          props.message&&props.message.indexOf("<img")!=-1?
+          <div className="summary_message">
+            <Icon className="picture" size="large"/>사진첨부
+          </div>
+          :
+          <div className="summary_message" 
+          dangerouslySetInnerHTML={{ __html: props.message && props.message.indexOf("<img")!=-1? `<Icon className="picture" size="mini"/>사진첨부`: props.message.replace(/<br\/>/g, "") }}/>
+        }
+        {/* <div className="summary_message" 
+        dangerouslySetInnerHTML={{ __html: props.message && props.message.indexOf("<img")!=-1? `<Icon className="picture" size="mini"/>사진첨부`: props.message.replace(/<br\/>/g, "") }}/> */}
       </div>
     </SummaryItemBox>);
 }
