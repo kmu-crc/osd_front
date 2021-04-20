@@ -143,6 +143,27 @@ export function GetItem2ndStepsRequest(id, token) {
 const GetItem2ndStep = step => (
   { type: types.GET_ITEM_2ND_STEP, step: step }
 )
+// get step - new version
+export function GetItemStepsRequest2(index, id, token) {
+  return (dispatch) => {
+    const url = `${host}/item/detail/${id}/step3`;
+    console.log(url);
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token || "" },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(data => dispatch(GetItemStep_(index, data.contents || [])))
+      .catch(error => console.log("err", error));
+  }
+}
+const GetItemStep_ = (index, step) => ({ type: types.GET_ITEM_STEP, index: index, step: step })
+export function ClearItemStepsRequest() {
+  return (dispatch) => {
+    return dispatch(ClearItemStep());
+  }
+}
+const ClearItemStep = () => ({ type: types.CLEAR_ITEM_STEPS, });
 
 // NEW LIST
 export const CreateItemListRequest = (data, id, token) => {
@@ -273,7 +294,7 @@ export const GetItemQuestionRequest = (id, page) => {
       method: "GET"
     })
       .then(res => res.json())
-      .then(data =>  {console.log(data);dispatch(GetItemQuestionSuccess(data))})
+      .then(data => { console.log(data); dispatch(GetItemQuestionSuccess(data)) })
       .catch(error => dispatch(GetItemQuestionFailure(error)));
   };
 };

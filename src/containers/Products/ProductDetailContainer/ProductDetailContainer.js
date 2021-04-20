@@ -5,10 +5,10 @@ import ItemDetail from "components/Items/ItemDetail";
 import Loading from "components/Commons/Loading";
 import {
   GetProductCountRequest, GetLikeProductRequest,
-  UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest, addCartRequest,GetDidYouBuyItRequest
+  UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest, addCartRequest, GetDidYouBuyItRequest
 } from "actions/Product";
 import { CreateItemPaymentRequest,  /*GetItemPaymentRequest*/ } from "actions/Payment";
-import { GetItemDetailRequest } from "actions/Item";
+import { GetItemDetailRequest, ClearItemStepsRequest } from "actions/Item";
 import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 import { GetMyPointRequest, } from "actions/Point";
 import { alert } from "components/Commons/Alert/Alert";
@@ -23,8 +23,10 @@ class ProductDetailContainer extends Component {
     this.Payment = this.Payment.bind(this);
   }
   componentDidMount() {
+    // this.props.ClearItemStepsRequest();
+
     this.props.GetItemDetailRequest(this.props.id, this.props.token)
-      .then(this.props.userInfo &&this.props.GetDidYouBuyItRequest(this.props.id, this.props.userInfo.uid))
+      .then(this.props.userInfo && this.props.GetDidYouBuyItRequest(this.props.id, this.props.userInfo.uid))
       .then(this.props.GetLikeProductRequest(this.props.id, this.props.token))
       .then(
         this.props.userInfo &&
@@ -73,6 +75,7 @@ class ProductDetailContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  Steps: state.ItemSteps.ItemSteps,
   ItemDetail: state.ItemDetail.status.ItemDetail,
   Count: state.ProductDetail.status.Count,
   isbuy: state.ProductDetail.status.isbuy,
@@ -84,7 +87,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  GetDidYouBuyItRequest:(item_id,user_id)=>dispatch(GetDidYouBuyItRequest(item_id,user_id)),
+  GetDidYouBuyItRequest: (item_id, user_id) => dispatch(GetDidYouBuyItRequest(item_id, user_id)),
   GetItemDetailRequest: (id, token) => dispatch(GetItemDetailRequest(id, token)),
   GetProductCountRequest: (id) => dispatch(GetProductCountRequest(id)),
   GetLikeProductRequest: (id, token) => dispatch(GetLikeProductRequest(id, token)),
@@ -95,6 +98,7 @@ const mapDispatchToProps = (dispatch) => ({
   addCartRequest: (items, token) => dispatch(addCartRequest(items, token)),
   GetMyPointRequest: (id, token) => dispatch(GetMyPointRequest(id, token)),
   CreateItemPaymentRequest: (data, id, token) => dispatch(CreateItemPaymentRequest(data, id, token)),
+  ClearItemStepsRequest: () => dispatch(ClearItemStepsRequest()),
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductDetailContainer));

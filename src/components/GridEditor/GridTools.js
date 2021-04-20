@@ -243,7 +243,7 @@ export const StepCard = (props) => {
         onClick={props.onClick}
     >
         <div className="icon-area">{props.children}</div>
-        <div className="text-area" id={props.id} uid={props.uid} title={props.title}>{props.title.slice(0, 10)} {props.title.length > 10 ? "..." : ""} </div>
+        <div className="text-area" id={props.id} uid={props.uid} title={props.title}>{props.title && props.title.slice(0, 10)} {props.title && props.title.length > 10 ? "..." : ""} </div>
     </StepCardStyle >)
 }
 export const ContentCard = (props) => {
@@ -253,22 +253,22 @@ export const ContentCard = (props) => {
         ? <CardContainer uid={props.uid} id={props.id} onClick={props.onClick} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} thumbnail={props.card.thumbnail}>
             <div className="icon-area">{props.children}</div>
             {
-                props.card.thumbnail?
-                <React.Fragment>
-                    <div className="titleBox">{props.card.title.slice(0, 10)}</div>
-                    <div className="subBox">
-                        <div>{props.card.nick_name.slice(0, 10)}</div>
-                        <div>{DateFormat(props.card.update_time)}</div>
-                    </div>
-                </React.Fragment>
-                :
-                <React.Fragment>
-                    <div className="titleBox">{props.card.title.slice(0, 10)}</div>
-                    <div className="subBox">
-                        <div>{props.card.nick_name.slice(0, 10)}</div>
-                        <div>{DateFormat(props.card.update_time)}</div>
-                    </div>
-                </React.Fragment>
+                props.card.thumbnail ?
+                    <React.Fragment>
+                        <div className="titleBox">{props.card.title && props.card.title.slice(0, 10)}</div>
+                        <div className="subBox">
+                            <div>{props.card.nick_name && props.card.nick_name.slice(0, 10)}</div>
+                            <div>{DateFormat(props.card.update_time)}</div>
+                        </div>
+                    </React.Fragment>
+                    :
+                    <React.Fragment>
+                        <div className="titleBox">{props.card.title && props.card.title.slice(0, 10)}</div>
+                        <div className="subBox">
+                            <div>{props.card.nick_name && props.card.nick_name.slice(0, 10)}</div>
+                            <div>{DateFormat(props.card.update_time)}</div>
+                        </div>
+                    </React.Fragment>
             }
         </CardContainer>
         : <CardContainer />

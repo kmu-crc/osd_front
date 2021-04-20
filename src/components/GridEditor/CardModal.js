@@ -13,7 +13,7 @@ import {
 import { GetDesignBoardRequest, } from "actions/Designs/DesignBoard";
 import { UpdateDesignTime } from "actions/Designs/UpdateDesign";
 
-import { GetItemStepsRequest, UpdateCardSourceRequest, DeleteItemCardRequest } from "actions/Item";
+import { UpdateCardSourceRequest, DeleteItemCardRequest } from "actions/Item";
 import CardSourceDetailContainer from 'containers/Items/CardSourceDetailContainer';
 
 import { FormThumbnailEx } from "components/Commons/FormItems";
@@ -669,7 +669,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     DeleteItemCardRequest: (board_id, card_id, token) => dispatch(DeleteItemCardRequest(board_id, card_id, token)),
-    GetItemStepsRequest: (id, token) => dispatch(GetItemStepsRequest(id, token)),
+    // GetItemStepsRequest: (id, token) => dispatch(GetItemStepsRequest(id, token)),
 
     UpdateCardSourceRequest: (data, card_id, token) => { return dispatch(UpdateCardSourceRequest(data, card_id, token)); },
     UpdateCardTitleRequest: (data, token, id) => { return dispatch(UpdateCardTitleRequest(data, token, id)); },
