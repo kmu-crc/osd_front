@@ -1,32 +1,39 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import GridEditor from "components/GridEditor";
-// import { LocalGridEditor as GridEditor } from "components/GridEditor/LocalGridEditor";
-import { GetItemStepsRequest, CreateItemListRequest, DeleteItemListRequest, UpdateItemListRequest } from "actions/Item";
-// , ,
-// , GetCardDetailRequest, GetDesignCardRequest, GetDesignBoardRequest,
-// UpdateCardTitleRequest, UpdateDesignBoardRequest, 
+import { GetItemStepsRequest2, CreateItemListRequest, DeleteItemListRequest, UpdateItemListRequest } from "actions/Item";
 
 class ItemStepContainer extends Component {
   componentDidMount() {
-    this.props.GetItemStepsRequest(this.props.ItemDetail["item-id"], this.props.token);
+    const { header, index, token } = this.props;
+    if (header != null)
+      this.props.GetItemStepsRequest2(index, header.uid, token);
+  }
+  GetItemStep = () => {
+    const { header, index, token } = this.props;
+    if (header != null)
+      this.props.GetItemStepsRequest2(index, header.uid, token);
   }
   render() {
+    const { ItemDetail } = this.props
     return (
-      <GridEditor {...this.props} itemId={this.props.ItemDetail["item-id"]} item={this.props.ItemDetail} />
+      <GridEditor {...this.props} GetItemStepsRequest={this.GetItemStep} itemId={ItemDetail["item-id"]} item={ItemDetail} />
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  ItemDetail: state.ItemDetail.status.ItemDetail,
-  ItemStep: state.ItemStep.status.ItemStep,
-  token: state.Authentication.status.token,
-  userInfo: state.Authentication.status.userInfo,
-});
+const mapStateToProps = (state, props) => {
+  const { index } = props;
+  return {
+    ItemDetail: state.ItemDetail.status.ItemDetail,
+    ItemStep: state.ItemSteps.ItemSteps[index],
+    token: state.Authentication.status.token,
+    userInfo: state.Authentication.status.userInfo,
+  }
+};
 
 const mapDispatchToProps = (dispatch) => ({
-  GetItemStepsRequest: (id, token) => dispatch(GetItemStepsRequest(id, token)),
+  GetItemStepsRequest2: (index, id, token) => dispatch(GetItemStepsRequest2(index, id, token)),
   CreateItemListRequest: (data, id, token) => dispatch(CreateItemListRequest(data, id, token)),
   DeleteItemListRequest: (id, list_id, token) => dispatch(DeleteItemListRequest(id, list_id, token)),
   UpdateItemListRequest: (id, list_id, token, data) => dispatch(UpdateItemListRequest(id, list_id, token, data)),

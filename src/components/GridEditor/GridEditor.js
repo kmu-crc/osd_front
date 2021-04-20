@@ -5,11 +5,11 @@ import CardModal from "./CardModal";
 import NewStepModal from "./NewStepModal";
 import EditStepModal from "./EditStepModal";
 import NewCardModal from "./NewCardModal";
-import { ReactHeight } from 'react-height';
 import arrow from "source/arrow.svg";
 import SortableDesignSteps from "./SortableDesignSteps";
 import osdcss from "StyleGuide";
 import { alert } from "components/Commons/Alert/Alert";
+// import { ReactHeight } from 'react-height';
 // import { confirm } from "components/Commons/Confirm/Confirm";
 
 const LeftWhitePane = styled.div`
@@ -204,7 +204,7 @@ class GridEditor extends Component {
             })
             .then(res => {
                 console.log(res);
-                this.props.GetItemStepsRequest(this.props.itemId, this.props.token);
+                this.props.GetItemStepsRequest();
             })
             .catch((err) => {
                 console.error(err);
@@ -215,7 +215,7 @@ class GridEditor extends Component {
         await this.props.UpdateItemListRequest(this.props.itemId, data.where, this.props.token, { title: data.title })
             .then(res => {
                 console.log(res);
-                this.props.GetItemStepsRequest(this.props.itemId, this.props.token);
+                this.props.GetItemStepsRequest();
             })
         this.CloseEditStep();
     }
@@ -223,8 +223,7 @@ class GridEditor extends Component {
         const data = { title: _data.title, order: _data.where, type: "item", content_id: this.props.item["item-id"], }
         await this.props.CreateItemListRequest(data, this.props.item["item-id"], this.props.token)
             .then(res => {
-                console.log(res);
-                this.props.GetItemStepsRequest(this.props.item["item-id"], this.props.token);
+                this.props.GetItemStepsRequest();
             })
             .catch(async (err) => { await alert("Failed to create new STEP"); console.error(err) });
         this.CloseNewStep();
@@ -282,7 +281,7 @@ class GridEditor extends Component {
         await Promise
             .all(promiseAry)
             .then(() =>
-                this.props.GetItemStepsRequest(this.props.itemId, this.props.token)
+                this.props.GetItemStepsRequest()
             )
     }
     componentDidUpdate(props, state) {
@@ -292,12 +291,12 @@ class GridEditor extends Component {
                     this.setState({ right: true });
                 }
             }
+            return true;
         }
         // if (nextProps.DesignDetailStepCard && nextProps.DesignDetailStepCard.uid != null && this.props.DesignDetailStepCard !== nextProps.DesignDetailStepCard) {
         // console.log(nextProps.DesignDetailStepCard.uid, "i got it", nextProps.DesignDetailStepCard, this.props.DesignDetailStepCard, typeof this.props.DesignDetailStepCard);
         // this.setState({ cardDetail: nextProps.DesignDetailStepCard });
         // }
-        return true;
     }
     async handleReturn(data) {
         console.log(data);
@@ -310,10 +309,8 @@ class GridEditor extends Component {
         }
     }
     render() {
-        const { editor, ItemStep, itemId, userInfo } = this.props;
+        const { editor, ItemStep: steps, itemId, userInfo } = this.props;
         const { gap, h, left, right, boardId, card, row, newcard, newstep, editstep, cardDetail, title, where } = this.state;
-        const steps = ItemStep;
-        // console.log("----=================dfasdfdfd",userInfo);
 
         return (<Wrapper>
             {itemId ?
@@ -332,6 +329,8 @@ class GridEditor extends Component {
 
                     {editor && newcard ?
                         <NewCardModal
+                            GetItemStepsRequest={this.props.GetItemStepsRequest}
+
                             // boardId={boardId}
                             // order={steps.length}
                             isTeam={editor}
@@ -342,17 +341,6 @@ class GridEditor extends Component {
                             close={() => this.setState({ newcard: false })}
                         /> : null}
 
-                    {card ?
-                        <CardModal
-                            bought={this.props.bought}
-                            open={card} close={() => this.setState({ card: false })}
-                            edit={editor} //userInfo && (userInfo.uid === cardDetail.user_id)}
-                            card={cardDetail}
-                            isTeam={editor}
-                            // title={title}
-                            boardId={boardId}
-                            itemId={itemId}
-                        /> : null}
 
                     {editor && newstep ?
                         <NewStepModal
@@ -401,6 +389,20 @@ class GridEditor extends Component {
                                 </div> : null}
                         </div>
                     </GridEditorWrapper>
+
+
+                    {card ?
+                        <CardModal
+                            GetItemStepsRequest={this.props.GetItemStepsRequest}
+                            bought={this.props.bought}
+                            open={card} close={() => this.setState({ card: false })}
+                            edit={editor} //userInfo && (userInfo.uid === cardDetail.user_id)}
+                            card={cardDetail}
+                            isTeam={editor}
+                            // title={title}
+                            boardId={boardId}
+                            itemId={itemId}
+                        /> : null}
                     {/* </ReactHeight> */}
                 </React.Fragment>
 
