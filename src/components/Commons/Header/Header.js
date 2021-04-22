@@ -13,73 +13,58 @@ import { alert } from "components/Commons/Alert/Alert";
 import MarketLogo from "source/market_logo.png";
 import market_style from "market_style";
 
-const MainHeader = styled.div`
-  height:45px;
-  padding:0px 30px 0px 30px;
-  display: flex;
-  justify-content:space-between;
-  align-items:center;
-  .pointer{cursor:pointer;}
-  .left_menu{
-    width:200px;
-    .text{
-      font-family:Noto Sans KR;
-      font-size:${market_style.font.size.mini2};
-      font-weight:700;
-      color:black;
-    }
-  }
-  .center_menu{
-    width:450px;
-    display:flex;
+const HeaderContainer = styled.ul`
+    height:45px;
+    padding:0px 30px 0px 30px;
+    display: flex;
     justify-content:space-between;
     align-items:center;
-    color:black;
-    .menu_text{
-      font-size:${market_style.font.size.small1};
-      font-weight:500;
-    }
-  }
-  .right_menu{
-    width:200px;
-    display:flex;
-    justify-content:flex-end;
+    .betweenMenu{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      .left_menu{
+        display:flex;
+        align-items:center;
+        justify-content:flex-start;
+        width:max-content;
+        z-index:9;
+      }
 
-    .red_text{
-      color:red;
-      font-size:${market_style.font.size.small1};
-      font-weight:500;
+      .right_menu{
+        display:flex;
+        align-items:center;
+        justify-content:flex-end;
+        width:max-content;
+        z-index:13;
+        position:relative;
+      }
     }
-  }
-`
-const HeaderContainer = styled.ul`
-  height:45px;
-  padding:0px 30px 0px 30px;
-  display: flex;
-  align-items:center;
-  .left_menu{
-    display:flex;
-    align-items:center;
-    justify-content:flex-start;
-    width:35%;
+    .center_menu{
+      position:absolute;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      max-width:1366px;
+    }
+
+@media only screen and (min-width: 500px) and (max-width:1000px){
+  height:70px;
+  flex-wrap:wrap;
+  .betweenMenu{
+    margin-top:5px;
   }
   .center_menu{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:30%;
+    position:static;
+    margin-bottom:10px;
   }
-  .right_menu{
-    display:flex;
-    align-items:center;
-    justify-content:flex-end;
-    width:35%
-  }
+}
 `;
 
 const HeaderItem = styled.li`
   min-width:max-content;
-  height:35px;
+  height:100%;
   font-size: ${market_style.font.size.small1};
   font-family:Noto Sans KR, Medium;
   font-weight:500;
@@ -110,10 +95,12 @@ const HeaderItem = styled.li`
     background: #E9E9E9;
     border-radius: 15px;
     position: relative;
+    z-index:9;
     .search-icon-wrapper {
+      width:100%;
       .input-style {
         width: 100%;
-        height: 25px;
+        height: 100%;
         padding-left: 14px;
         padding-right: 40px;
         border: none;
@@ -136,13 +123,18 @@ const HeaderItem = styled.li`
   .active {
     color: #F00;
   }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    margin-right:10px;
+    margin-top:5px;
+    &.search {
+      width:100%;
+    }
+  }
 `;
 
 const UserMenu = styled.div`
-  z-index: 999;
   height: max-content;
   width: 155px;
-  pointer-events: auto;
   border-radius: 15px;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
@@ -153,6 +145,7 @@ const UserMenu = styled.div`
   position: absolute;
   top:30px;
   right:0px;
+  z-index:13;
   .item {
     border:1px solid #EFEFEF;
     padding:10px;
@@ -200,6 +193,20 @@ const LoginBox = styled.div`
     height35px;
     margin-right:20px;
     cursor:pointer;
+  }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    .addItem{
+      width:50px;
+      ._text{
+        text-align:center;
+      }
+    }
+    .userNickname{
+      display:none;
+    }
+    .iconBox {
+      margin-right:10px;
+    }
   }
 `
 class Header extends Component {
@@ -319,79 +326,12 @@ class Header extends Component {
     const searchtype = designerActive ? "designer" : makerActive ? "maker" : itemActive ? "item" : null;
 
     const pattern_eng= /[a-zA-Z]/;
-
-    // active alarm icon
     return (
-    // window.location.pathname === "/"||
-    // window.location.pathname === "/signup"||
-    // window.location.pathname === "/signin"?
-    // <MainHeader>
-    //   <div className="left_menu">
-    //     <div className="text pointer"
-    //     onClick={()=>window.location.href="/"}
-    //     >OPENDESIGNWORLD</div>
-    //   </div>
-    //   <div className="center_menu">
-    //     <div className="menu_text pointer"
-    //      onClick={()=>{
-    //       window.location.href="/designer"
-    //     }}
-    //     >디자이너</div>
-    //     <div className="menu_text pointer"
-    //      onClick={()=>{
-    //       window.location.href="/maker"
-    //     }}
-    //     >메이커</div>
-    //     <div className="menu_text pointer"
-    //      onClick={()=>{
-    //       window.location.href="/product"
-    //     }}
-    //     >아이템</div>
-    //     <div className="menu_text pointer"
-    //      onClick={()=>{
-    //       window.location.href="/request/designer"
-    //     }}
-    //     >게시판</div>
-    //   </div>
-    //   <div className="right_menu">
-    //   {valid && userInfo?
-    //     <LoginBox>
-    //         <div className="iconBox" >
-    //           <AlarmContainer />
-    //         </div>
-
-    //         <div className="iconBox" onClick={this.onClickMessageIcon}>
-    //           <Icon className="grey envelope" size="large" />
-    //         </div>
-    //           <div onClick={async () => await this.setState({ active: !this.state.active })} style={{ display: "flex", position:"relative",alignItems:"center", flexDirection: "row", cursor: "pointer" }}>
-    //           <div  style={{ width: "23px", height: "23px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
-    //           <div  style={{ width: "max-content", marginLeft: "5px",fontFamily:market_style.font.family,
-    //            fontSize:market_style.font.size.small1 }}>
-    //             <TextFormat txt={userInfo.nickName} chars={pattern_eng.test(userInfo.nickName)?6:3} />
-    //             </div>
-    //           {this.state.active ?
-    //             <UserMenu id="popmenu">
-    //               <Link to={`/mypage`}>
-    //                 <div className="item" id="popmenu">내 정보</div>
-    //               </Link>
-    //               <div onClick={this.logout} className="item" id="popmenu">로그아웃</div>
-    //             </UserMenu>
-    //             : null}
-    //         </div>
-    //     </LoginBox>
-    //   :
-    //   <div className="red_text pointer"
-    //   onClick={()=>{
-    //     window.location.href="/signin"
-    //   }}
-    //   >로그인</div>
-    //   }
-    //   </div>
-      
-    // </MainHeader>
-    // :
     <HeaderContainer>
+
+
       {/*  */}
+      <div className="betweenMenu">
       <div className="left_menu">
       <HeaderItem>
           <div className="logo_box"
@@ -437,17 +377,6 @@ class Header extends Component {
       </HeaderItem>
       </div>
 
-      <div className="center_menu">
-        {location.indexOf("/search") !== -1 ? null :
-        <HeaderItem className="search">
-          <div className="search-icon-wrapper">
-            <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
-            <Link to={`/search/${searchtype}/update/${this.state.keyword}`} id="searchLink">
-              <img alt="icon" src={Zoom} id="searchbox" className="search-icon" onClick={this.onClickSearch}/>
-            </Link>
-          </div>
-        </HeaderItem>}
-      </div>
       <div className="right_menu">
         {valid && userInfo
           ? (<LoginBox>
@@ -461,7 +390,7 @@ class Header extends Component {
             <div className="addItem" onClick={()=>{window.location.href="/createProduct"}}><div className="_text">아이템 등록</div></div>
             <div onClick={async () => await this.setState({ active: !this.state.active })} style={{ display: "flex",alignItems:"center", flexDirection: "row", cursor: "pointer" }}>
               <div  style={{ width: "23px", height: "23px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
-              <div  style={{ width: "max-content", marginLeft: "5px",fontFamily:market_style.font.family,
+              <div  className="userNickname" style={{ width: "max-content", marginLeft: "5px",fontFamily:market_style.font.family,
                fontSize:market_style.font.size.small1 }}>
                 <TextFormat txt={userInfo.nickName} chars={pattern_eng.test(userInfo.nickName)?6:3} />
                 </div>
@@ -478,6 +407,18 @@ class Header extends Component {
           : (<LoginBox>
                 <div className="login_text"><Link to={`/signin`}>로그인</Link></div>
             </LoginBox>)}
+      </div>
+      </div>
+      <div className="center_menu">
+        {location.indexOf("/search") !== -1 ? null :
+        <HeaderItem className="search">
+          <div className="search-icon-wrapper">
+            <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
+            <Link to={`/search/${searchtype}/update/${this.state.keyword}`} id="searchLink">
+              <img alt="icon" src={Zoom} id="searchbox" className="search-icon" onClick={this.onClickSearch}/>
+            </Link>
+          </div>
+        </HeaderItem>}
       </div>
     </HeaderContainer >)
   };

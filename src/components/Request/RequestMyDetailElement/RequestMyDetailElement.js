@@ -72,10 +72,12 @@ const ListElement = styled.div`
     }
   }
   .writer_{
-    width:15%;
-    font-family:Noto Sans KR,Medium;
-    font-size:13px;
+    min-width:13.5%;
     display:flex;
+    align-items:center;
+    overflow:hidden;
+    font-weight:400;
+    font-size:${market_style.font.size.mini2};
   }
   .response_{
     width:15%;
@@ -86,9 +88,22 @@ const ListElement = styled.div`
   }
   .date{
     width:10%;
+    min-width:max-content;
     font-family:Noto Sans KR,Medium;
     font-size:13px;
     text-align:right;
+  }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    padding:6px 20px 6px 20px;
+    .title_{
+      width:70%;
+    }
+    .writer{
+      width:15%;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
   }
 `;
 const ThumbnailWriter = styled.div`
@@ -134,12 +149,12 @@ class RequestMyDetailElement extends Component {
             item.status==="response"?
             <NavLink className="response_" to={userLink}>
                   <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
-                  <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
+                  <div style={{ border: "1px solid transparent",overflow:"hidden",whiteSpace:"nowrap",textOverflow:"ellipsis" }}>{item.nick_name}</div>
             </NavLink>
           :
           <div className="writer_">
             <div style={{ border: "1px solid transparent" }}><ThumbnailWriter src={item.imgURL} /></div>
-            <div style={{ border: "1px solid transparent" }}>{item.nick_name}</div>
+            <div style={{ border: "1px solid transparent",overflow:"hidden",whiteSpace:"nowrap",textOverflow:"ellipsis" }}>{item.nick_name}</div>
           </div>
           }
           <div className="date">{DateFormat(item.create_time)}</div>

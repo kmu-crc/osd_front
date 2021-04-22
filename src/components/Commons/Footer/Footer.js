@@ -14,30 +14,44 @@ const Foot = styled.footer`
   bottom: 0px;
   width: 100%;
   color: #fff;
-  & .ui.grid>.row {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    display:flex;
-    justify-content:space-between;
-  }
-  & .copyright {
-  }
-  & .list > a {
-    float: left;
-    margin-right: 3rem;
-    font-size: ${market_style.font.size.tiny3};
-    cursor: pointer;
-  }
-
-  // new 
+  display:flex;
   .row{
-    padding:5px;
-    display:flex;
-    justify-content:space-between;
+      width:100%;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      padding-left:10px;
+      display:flex;
+      justify-content:space-between;
   }
-  .ul > .Link{
-    margin-right:10px;
+  .list{
+    a{
+      margin-right:10px;
+    }
   }
+  // & .ui.grid>.row {
+  //   padding-top: 0.5rem;
+  //   padding-bottom: 0.5rem;
+  //   display:flex;
+  //   justify-content:space-between;
+  // }
+  // & .copyright {
+  // }
+  // & .list > a {
+  //   float: left;
+  //   margin-right: 3rem;
+  //   font-size: ${market_style.font.size.tiny3};
+  //   cursor: pointer;
+  // }
+
+  // // new 
+  // .row{
+  //   padding:5px;
+  //   display:flex;
+  //   justify-content:space-between;
+  // }
+  // .ul > .Link{
+  //   margin-right:10px;
+  // }
 `;
 
 
@@ -49,18 +63,16 @@ class Footer extends Component {
   render() {
     return (
       <Foot>
-        <div className="row">
-           <div onClick={this.goNewWorld}>
+          <div className="row">
+              <div onClick={this.goNewWorld}>
                 <TextFormat txt="Copyright @ 2020 Open Design Inc." />
               </div>
-          <div>
-            <ul className="list">
+              <div className="list">
               <Link to="/">사이트 소개</Link>
               <Link to="/footerPara">이용약관</Link>
               <Link to="/footerPrivacy">개인정보보호정책</Link>
-            </ul>
+            </div>
           </div>
-        </div>
       </Foot>
     );
   }

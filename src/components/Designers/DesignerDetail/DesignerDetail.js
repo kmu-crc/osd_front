@@ -40,9 +40,23 @@ const Wrapper = styled.div`
   display:flex;
   flex-direction:column;
   .row_wrapper{
+    width:100%;
   }
   .flex{
     display:flex;
+  }
+  .flexWrap{
+    flex-wrap:wrap;
+  }
+  @media only screen and (min-width: 1000px) and (max-width:1366px){
+    .flexWrap{
+      flex-wrap:nowrap;
+    }
+  }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    .flexWrap{
+      flex-wrap:wrap;
+    }
   }
 `;
 const Expert = styled.div`
@@ -54,7 +68,11 @@ const Expert = styled.div`
   border-radius: 20px;
   border:1px solid #eaeaea;
   box-shadow: 3px 3px 5px #0000001A;
-
+  .pic{
+    width:100%;
+    display:flex;
+    justify-content:center;
+  }
   .profile_Wrapper{
     width:100%;
     font-family: Noto Sans KR;
@@ -119,6 +137,14 @@ const Expert = styled.div`
       font-weight: 300;
     }
   }
+  @media only screen and (min-width: 1000px) and (max-width:1366px){
+    margin-bottom:20px;
+  }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    width:100%;
+    margin-bottom:20px;
+    margin-right:0px;
+  }
 `;
 const Profile = styled.div`
   width: 250px;
@@ -131,7 +157,8 @@ const Profile = styled.div`
 `;
 
 const Introduction = styled.div`
-  width:100%;
+  width:980px;
+  min-width:440px;
   height:439px;
   padding: 40px 60px;
   background: #FFFFFF;
@@ -229,9 +256,10 @@ const ItemInfo = styled.div`
   }
 `;
 const AdditionalInfo = styled.div`
+
   margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
   width: ${props => props.width == null ? "100%" : props.width + "px"};
-  height: ${props => props.height == null ? "100%" : props.height + "px"};
+  height: ${props => props.height == null ? "max-content" : props.height + "px"};
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #0000001A;
   border-radius: 20px;
@@ -281,6 +309,7 @@ const AdditionalInfo = styled.div`
     }
 `;
 const DesignerBoard = styled.div`
+
   width: ${props => props.width == null ? "100%" : props.width + "px"};
   margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
   margin-bottom:50px;
@@ -470,6 +499,7 @@ const TagPiece = styled.div`
     }
 `;
 const CreateRequest = styled.div`
+
 width:100%;
 height:30px;
 display:flex;
@@ -628,10 +658,12 @@ class DesignerDetail extends Component {
     console.log(this.props);
     return (<Wrapper>
         {/* Designer */}
-        <div className="row_wrapper flex">
+        <div className="row_wrapper flex flexWrap">
         <Expert>
           {/* Profile */}
+          <div className="pic">
           <Profile face={this.state.thumbnail} />
+          </div>
           {/* Text */}
           <div className="profile_Wrapper">
             <div className="nick">
@@ -755,7 +787,7 @@ class DesignerDetail extends Component {
 
       {/* 리뷰 */}
       {/*  */}
-      <AdditionalInfo height={366} mTop={20} style={{height:"max-content",maxHeight:"366px"}}>
+      <AdditionalInfo mTop={20} style={{height:"max-content"}}>
           <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
           <div className="hrline"/>
           <div className="reviewItem">

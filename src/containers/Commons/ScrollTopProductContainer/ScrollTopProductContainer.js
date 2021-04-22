@@ -8,6 +8,7 @@ import styled from "styled-components"
 
 const Wrapper_itemlist = styled.div`
 padding-left:8px;
+
 `
 
 class ScrollTopProductContainer extends Component {

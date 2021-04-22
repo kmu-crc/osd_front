@@ -11,13 +11,37 @@ const Container = styled.div`
   .over {
     display: flex;
     flex-direction: row;
+    justify-content:center;
     height:22px;
+    padding:0px 20px;
+    overflow-x:overlay;
+    overflow-y:hidden;
+
   }
   .under {
     height:max-content;
+    overflow-x:overlay;
+    overflow-y:hidden;
   }
+  .over {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .over::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera*/
+  }
+  .under {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .under::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera*/
+  }
+  
+}
 `;
 const CategoryItem = styled.div`
+  min-width:max-content;
   cursor:pointer;
   font-size:${props=>props.firstFontSize==null?market_style.font.size.normal1:props.firstFontSize};
   &:hover{
@@ -25,6 +49,7 @@ const CategoryItem = styled.div`
   }
 `
 const CategoryItem2 = styled.div`
+  min-width:max-content;
   margin-top:3px;
   cursor:pointer;
   font-size:${props=>props.secondFontSize==null?market_style.font.size.small1:props.secondFontSize};
@@ -40,7 +65,6 @@ const CurrentCategory = styled.div`
   line-height: 29px;
 `;
 const CategoryMenu = styled.div`
-  width:100%;
   display: flex;
   justify-content:center;
   flex-direction: row;

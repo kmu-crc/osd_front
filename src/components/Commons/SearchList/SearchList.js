@@ -14,14 +14,11 @@ import market_style from "market_style";
 // css styling
 
 const MainBox = styled.div`
-// border:1px solid black;
-// *{
-//   border:1px solid blue;
-// }
+
 ` 
 const Wrapper = styled.div`
   width: 102%;
-  padding:${props=>props.marginType=="item"?"0px 213px 0px 170px":"0px 213px 0px 213px"};
+  padding:0px 15em;
   margin-left:${props=>props.marginType=="item"?"15px":"0px"};
   & ul {
     margin-top: 30px;
@@ -31,6 +28,12 @@ const Wrapper = styled.div`
     margin-left: auto;
     margin-right: 25px;
   }
+  @media only screen and (min-width: 600px) and (max-width:1120px){
+    padding:0px 7em;
+  }
+@media only screen and (min-width: 0px) and (max-width:600px){
+  padding:0px 25%;
+}
 `;
 const Content = styled.div`
 `
@@ -99,7 +102,14 @@ const MenuWrap = styled.div`
   justify-content:space-between;
   align-items:center;
   .dropstyle{
+    min-width:max-content;
     height:max-content;
+  }
+  @media only screen and (min-width: 600px) and (max-width:1120px){
+    padding:0px 7em;
+  }
+  @media only screen and (min-width: 0px) and (max-width:600px){
+    padding:0px 20%;
   }
 `;
 
