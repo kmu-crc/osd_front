@@ -936,7 +936,7 @@ class ModifyItemInfo extends Component {
           item.headers.length > 0 &&
           item.headers.map(
             (head, index) =>
-              <div className="row">
+              <div className="row" style={{ marginBottom: "30px" }}>
                 <ItemContents>
                   <div className="header">
                     <div className="title">

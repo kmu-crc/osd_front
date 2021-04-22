@@ -127,22 +127,6 @@ export function GetItemStepsRequest(id, token) {
 const GetItemStep = step => (
   { type: types.GET_ITEM_STEP, step: step }
 )
-// get 2nd step
-export function GetItem2ndStepsRequest(id, token) {
-  return (dispatch) => {
-    const url = `${host}/item/detail/${id}/step2`;
-    return fetch(url, {
-      headers: { "Content-Type": "application/json", "x-access-token": token || "" },
-      method: "GET"
-    })
-      .then(res => res.json())
-      .then(data => { console.log(data); return dispatch(GetItem2ndStep(data.contents || [])) })
-      .catch(error => console.log("err", error));
-  }
-}
-const GetItem2ndStep = step => (
-  { type: types.GET_ITEM_2ND_STEP, step: step }
-)
 // get step - new version
 export function GetItemStepsRequest2(index, id, token) {
   return (dispatch) => {

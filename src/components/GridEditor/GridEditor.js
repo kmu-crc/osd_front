@@ -220,9 +220,15 @@ class GridEditor extends Component {
         this.CloseEditStep();
     }
     async NewStep(_data) {
-        const data = { title: _data.title, order: _data.where, type: "item", content_id: this.props.item["item-id"], }
+        // content_id: 190
+        // editor_type: "project"
+        // name: "554"
+        // type: "item"
+        // uid: 11
+        const data = { list_header_id: this.props.header.uid, title: _data.title, order: _data.where, content_id: this.props.item["item-id"], }
         await this.props.CreateItemListRequest(data, this.props.item["item-id"], this.props.token)
             .then(res => {
+                console.log(res);
                 this.props.GetItemStepsRequest();
             })
             .catch(async (err) => { await alert("Failed to create new STEP"); console.error(err) });
