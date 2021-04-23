@@ -39,7 +39,7 @@ const TitleBox = styled.div`
     color:black;
   }
   .sort{
-    width:300px;
+    width:100%;
   }
   @media only screen and (max-width: 800px) and (min-width: 500px){
     margin-top:0px;

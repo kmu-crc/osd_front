@@ -6,7 +6,7 @@ import market_style from "market_style";
 const FormStyle = styled.input.attrs({ type: "text" })`
 
     width: 100%;
-    min-width: 820px;
+    // min-width: 820px;
     height: 31px;
     background: #E9E9E9 0% 0% no-repeat padding-box;
     border-radius: 10px;
@@ -18,7 +18,7 @@ const FormStyle = styled.input.attrs({ type: "text" })`
 
 
 
-    // width: ${props => props.width}px;
+    max-width: ${props => props.width}px;
 
     margin: 0;
     -webkit-appearance: none;

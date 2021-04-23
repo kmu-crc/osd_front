@@ -18,8 +18,7 @@ const MainBox = styled.div`
 ` 
 const Wrapper = styled.div`
   width: 102%;
-  padding:0px 15em;
-  margin-left:${props=>props.marginType=="item"?"15px":"0px"};
+  padding:${props=>props.marginType=="item"?"0px 13em":"0px 15em"};
   & ul {
     margin-top: 30px;
   }
@@ -28,11 +27,12 @@ const Wrapper = styled.div`
     margin-left: auto;
     margin-right: 25px;
   }
-  @media only screen and (min-width: 600px) and (max-width:1120px){
-    padding:0px 7em;
+  @media only screen and (min-width: 600px) and (max-width:1366px){
+    padding:${props=>props.marginType=="item"?"0px 3em":"0px 7em"};
+
   }
 @media only screen and (min-width: 0px) and (max-width:600px){
-  padding:0px 25%;
+  padding:${props=>props.marginType=="item"?"0px":"0px 5em"};
 }
 `;
 const Content = styled.div`

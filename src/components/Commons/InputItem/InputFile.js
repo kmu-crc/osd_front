@@ -28,7 +28,7 @@ const FormStyle = styled.input.attrs({ type: "text" })`
     opacity: 1;
     border: none;
     outline:none;
-    
+    margin-bottom:5px;
     -webkit-appearance: none;
     margin-right: 10px;
     padding: 6px 0px 0px 11px;

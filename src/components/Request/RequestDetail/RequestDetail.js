@@ -31,10 +31,11 @@ const NormalWrapper = styled.div`
     .row {
       display: flex;
       flex-direction: row;
-
+      flex-wrap:wrap;
+      
       .label {
         height: 22px;
-        width: 140px;
+        min-width: 140px;
         text-align: left;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -45,18 +46,31 @@ const NormalWrapper = styled.div`
         font: normal normal medium 15px/22px Noto Sans KR;
         letter-spacing: 0px;
         color: #707070;
+
+        margin-right: 94px;
+        margin-bottom:5px;
       }
 
       .content {
-        width: max-content;
-        height: 100%;
+        width: 100%;
+        max-width: max-content;
         margin-bottom: 31px;
-        margin-left: 94px;
-
+        
         text-align: left;
         font: normal normal normal 15px/22px Noto Sans KR;
         letter-spacing: 0px;
         color: #000000;
+      }
+    }
+  }
+}
+@media only screen and (min-width: 500px) and (max-width:1000px){
+
+  .form{
+    padding:40px 10%;
+    .row{
+      .label{
+        margin-right: 30px;
       }
     }
   }

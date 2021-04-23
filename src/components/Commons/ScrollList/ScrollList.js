@@ -12,7 +12,6 @@ const ScrollContainer = styled.div`
 const ListContainer = styled.div`
 
   padding:0px;
-  display: flex;
   flex-wrap: wrap;
   width: 100%;
   display:flex;
