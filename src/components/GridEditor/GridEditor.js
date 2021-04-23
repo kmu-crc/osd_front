@@ -31,7 +31,7 @@ const RightWhitePane = styled.div`
     position: absolute;
     z-index: 830;
     width: ${props => props.width}px;
-    height: ${props => props.height}px;
+    height: ${props => props.height + "px" || "100%"};
     left: ${props => props.left}px;
     right: ${props => props.right}px;
     background: #FFFFFF; // transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%);
@@ -220,9 +220,15 @@ class GridEditor extends Component {
         this.CloseEditStep();
     }
     async NewStep(_data) {
-        const data = { title: _data.title, order: _data.where, type: "item", content_id: this.props.item["item-id"], }
+        // content_id: 190
+        // editor_type: "project"
+        // name: "554"
+        // type: "item"
+        // uid: 11
+        const data = { list_header_id: this.props.header.uid, title: _data.title, order: _data.where, content_id: this.props.item["item-id"], }
         await this.props.CreateItemListRequest(data, this.props.item["item-id"], this.props.token)
             .then(res => {
+                console.log(res);
                 this.props.GetItemStepsRequest();
             })
             .catch(async (err) => { await alert("Failed to create new STEP"); console.error(err) });
@@ -272,17 +278,15 @@ class GridEditor extends Component {
         const jobs = [];
         let promiseAry = [];
         items.forEach((element, index) => {
-            if (element.order !== index) { jobs.push({ uid: element.uid, neworder: index }); }
+            if (element.order !== index) {
+                jobs.push({ uid: element.uid, neworder: index });
+            }
         });
         if (jobs.length === 0) return;
         promiseAry = jobs.map(job =>
             this.props.UpdateItemListRequest(this.props.itemId, job.uid, this.props.token, { order: job.neworder }))
 
-        await Promise
-            .all(promiseAry)
-            .then(() =>
-                this.props.GetItemStepsRequest()
-            )
+        await Promise.all(promiseAry).then(this.props.GetItemStepsRequest())
     }
     componentDidUpdate(props, state) {
         if (props.ItemStep !== this.props.ItemStep) {
@@ -311,7 +315,7 @@ class GridEditor extends Component {
     render() {
         const { editor, ItemStep: steps, itemId, userInfo } = this.props;
         const { gap, h, left, right, boardId, card, row, newcard, newstep, editstep, cardDetail, title, where } = this.state;
-
+        console.log(h);
         return (<Wrapper>
             {itemId ?
                 <React.Fragment>
@@ -322,9 +326,9 @@ class GridEditor extends Component {
                         : null}
 
                     {right ?
-                        // <RightWhitePane width={43} height={h} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
-                        <Arrow angle="180deg" top={0} gap={0} right={3} onClick={this.ScrollRight} />
-                        // </RightWhitePane> 
+                        <RightWhitePane width={25} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
+                            <Arrow angle="180deg" top={0} gap={0} right={3} onClick={this.ScrollRight} />
+                        </RightWhitePane>
                         : null}
 
                     {editor && newcard ?
@@ -363,7 +367,7 @@ class GridEditor extends Component {
                         /> : null}
 
                     {/* <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}> */}
-                    <GridEditorWrapper ref={this.grid}>
+                    <GridEditorWrapper ref={this.grid} id="herehere!">
                         <div style={{ width: window.innerWidth + "px" }} className="Editor" ref={this.temp}>
                             {/* ------------단계 ------------*/}
                             {steps && steps.length > 0 ?

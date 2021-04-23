@@ -3,7 +3,7 @@ import update from "react-addons-update";
 
 const initialState = {
     ItemStep: { status: "INIT" },
-    status: { ItemStep: [], Item2ndStep: [], }
+    status: { ItemStep: [], }
 };
 
 export function ItemStep(state, action) {
@@ -16,12 +16,6 @@ export function ItemStep(state, action) {
             return update(state, {
                 status: {
                     ItemStep: { $set: action.step }
-                }
-            });
-        case types.GET_ITEM_2ND_STEP:
-            return update(state, {
-                status: {
-                    Item2ndStep: { $set: action.step }
                 }
             });
         default:

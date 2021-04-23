@@ -458,7 +458,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     CreateItemCardRequest: (data, id, list_id, token) => dispatch(CreateItemCardRequest(data, id, list_id, token)),
     UpdateCardSourceRequest: (data, card_id, token) => dispatch(UpdateCardSourceRequest(data, card_id, token)),
-    GetItemStepsRequest: (id, token) => dispatch(GetItemStepsRequest(id, token)),
+    // GetItemStepsRequest: (id, token) => dispatch(GetItemStepsRequest(id, token)),
 
     GetDesignBoardRequest: (id) => dispatch(GetDesignBoardRequest(id)),
     GetDesignDetailRequest: (id, token) => dispatch(GetDesignDetailRequest(id, token)),

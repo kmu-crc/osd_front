@@ -9,17 +9,17 @@ import market_style from "market_style";
 const CreateCardContainer = styled.div`
     width: 200px;
     height: 200px;
-    margin-right: ${props => props.marginRight}px;
+    // margin-right: ${props => props.marginRight}px;
     border-radius: 15px; 
     background-clip: padding-box; 
     border: 2px solid rgba(112, 112, 112, 0.5);
     cursor: pointer;
-    
+    // margin: auto; 
     .cross-wrapper {
         width: max-content;
         position: relative;
         margin: auto;
-        margin-top: 35px;
+        margin-top: 75px;
     }
     .text {
         width: 100%;

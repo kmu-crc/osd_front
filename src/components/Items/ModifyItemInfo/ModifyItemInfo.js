@@ -376,6 +376,20 @@ const ItemContents = styled.div`
       font-weight: Medium;
       letter-spacing: 0px;
     }
+    .title-input {
+      width: 100%;
+      min-width: 820px;
+      height: 31px;
+      background: #E9E9E9 0% 0% no-repeat padding-box;
+      border-radius: 10px;
+      border: none;
+
+      text-align: left;
+      font: normal normal 300 13px/19px Noto Sans KR;
+      letter-spacing: 0px;
+      color: #000; //#707070;
+      padding: 3px 0px 0px 11px;
+    }
   }
   .editor-wrapper {
     :hover {
@@ -386,6 +400,23 @@ const ItemContents = styled.div`
     padding-top: 15px;
     word-wrap: break-word;
     overflow: hidden;
+  }
+  button {
+    &.edit{
+      margin-left: 10px;
+      width: 120px;
+      height: 31px;
+      background-color: red;
+      font: normal normal 300 13px/19px Noto Sans KR;
+      color: white;
+      border: none;
+      outline: none;
+      border-radius: 10px;
+    }
+    &.disabled{
+      background-color: #EFEFEF;
+      color: gray;
+    }
   }
 `;
 const InputNumberText = styled.input.attrs({ type: "number" })`
@@ -423,6 +454,8 @@ class ModifyItemInfo extends Component {
       // tab: "basic",
       alone: false,
       ismodified: false,
+      // more
+      listname: null,
     };
     this.onClickItemType = this.onClickItemType.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
@@ -440,9 +473,10 @@ class ModifyItemInfo extends Component {
     this.onHandleRadio = this.onHandleRadio.bind(this);
     this.isModify = this.isModify.bind(this);
     this.onCancel = this.onCancel.bind(this);
+    this.onChangeListName = this.onChangeListName.bind(this);
+    this.editGridEditorName = this.editGridEditorName.bind(this);
   };
   async componentDidMount() {
-    console.log("++++++++++", this.props.ItemDetail);
     const { ItemDetail } = this.props;
     let additional = await {
       description: ItemDetail.description,
@@ -469,8 +503,8 @@ class ModifyItemInfo extends Component {
       //
       additional: additional,
     }
+    await this.setState({ listname: ItemDetail.headers.map(head => head.name) });
     await this.setState(item);
-    // console.log(this.state, this.props.ItemDetail);
   };
   async isModify() {
     // check 
@@ -636,6 +670,16 @@ class ModifyItemInfo extends Component {
       }
     }
   }
+  async onChangeListName(event, index) {
+    let copy = this.state.listname.map((v, i) => i === index ? event.target.value : v);
+    await this.setState({ listname: copy });
+  }
+  async editGridEditorName(header, index) {
+    this.props.UpdateItemListHeaderRequest(header.uid, this.props.token, { name: this.state.listname[index] })
+      .then(() => {
+        this.props.GetItemDetailRequest(this.props.id, this.props.token);
+      })
+  }
 
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
@@ -645,7 +689,6 @@ class ModifyItemInfo extends Component {
     const { /* edit, */ itemType, tab } = this.state;
     const Mandatory = () => <span className="font_red" title="필수사항입니다."> * </span>
     const { ItemDetail: item } = this.props;
-    console.log(this.props);
 
     return (<MainBox>
       {this.state.loading ? <Loading /> : null}
@@ -936,11 +979,23 @@ class ModifyItemInfo extends Component {
           item.headers.length > 0 &&
           item.headers.map(
             (head, index) =>
-              <div className="row">
+              <div key={index} className="row" style={{ marginBottom: "30px" }}>
                 <ItemContents>
                   <div className="header">
-                    <div className="title">
-                      {head.name || "아이템 상세내용"}
+                    <div className="title" style={{ display: "flex" }}>
+                      {head.name ?
+                        <React.Fragment>
+                          <input
+                            className="title-input"
+                            value={(this.state.listname && this.state.listname[index]) || ""}
+                            onChange={e => this.onChangeListName(e, index)}
+                          />
+                          <button
+                            className={`edit ${(this.state.listname && this.state.listname[index]) === head.name && "disabled"}`}
+                            disabled={(this.state.listname && this.state.listname[index]) === head.name}
+                            onClick={e => this.editGridEditorName(head, index)}>수정</button>
+                        </React.Fragment>
+                        : "아이템 상세내용"}
                     </div>
                   </div>
                   <div className="editor-wrapper">
@@ -966,38 +1021,41 @@ class ModifyItemInfo extends Component {
           // {/* {itemType > -1 ? 
           // : <InfoContentChooseItemType> 아이템 유형을 선택하여 세부적인 <br /> 내용을 입력해주신 후 아이템을 등록해주세요. </InfoContentChooseItemType>} */}
           // </div>
-        ) : null}
+        ) : null
+      }
 
       {/* 버튼 */}
-      {itemType > -1 && tab === "basic" ?
-        (<ButtonBox className="buttonBox" >
-          <RedButton
-            text={"수정된 내용을 저장합니다."}
-            width={150} height={30} fontSize={market_style.font.size.small1}
-            okText="확인"
-            cancelText="취소"
-            value={"저장하기"}
+      {
+        itemType > -1 && tab === "basic" ?
+          (<ButtonBox className="buttonBox" >
+            <RedButton
+              text={"수정된 내용을 저장합니다."}
+              width={150} height={30} fontSize={market_style.font.size.small1}
+              okText="확인"
+              cancelText="취소"
+              value={"저장하기"}
 
-            onClick={this.onSubmit}
-            disabled={!this.state.ismodified}
-            isConfirm={true} />
+              onClick={this.onSubmit}
+              disabled={!this.state.ismodified}
+              isConfirm={true} />
 
-          <GrayButton
-            text={"수정된 내용이 저장되지 않습니다."}
-            width={150} height={30} fontSize={market_style.font.size.small1}
-            value={"취소하기"}
-            okText="확인"
-            cancelText="취소"
-            onClick={this.onCancel}
-            isConfirm={false} />
+            <GrayButton
+              text={"수정된 내용이 저장되지 않습니다."}
+              width={150} height={30} fontSize={market_style.font.size.small1}
+              value={"취소하기"}
+              okText="확인"
+              cancelText="취소"
+              onClick={this.onCancel}
+              isConfirm={false} />
 
-          {/* <RedButton onClick={this.onSubmit}>수정하기</RedButton> */}
-          {/* <RedButton gray onClick={() => {
+            {/* <RedButton onClick={this.onSubmit}>수정하기</RedButton> */}
+            {/* <RedButton gray onClick={() => {
             if (window.confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
               window.history.back();
             }
           }}>취소</RedButton> */}
-        </ButtonBox>) : null}
+          </ButtonBox>) : null
+      }
     </MainBox >);
   };
 };

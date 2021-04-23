@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { DeleteItemRequest, UpdateItemRequest, GetItemDetailRequest } from "actions/Item";
+import { DeleteItemRequest, UpdateItemRequest, GetItemDetailRequest, UpdateItemListRequest, UpdateItemListHeaderRequest } from "actions/Item";
 import ModifyItemInfo from "components/Items/ModifyItemInfo";
 // import { SearchMemberRequest } from "actions/Commons/Search";
 import { alert } from "components/Commons/Alert/Alert";
-import { confirm } from "components/Commons/Confirm/Confirm";
+// import { confirm } from "components/Commons/Confirm/Confirm";
 class ModifyItemFormContainer extends Component {
   state = {
     valid: false
@@ -45,8 +45,10 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
   GetItemDetailRequest: (id, token) => dispatch(GetItemDetailRequest(id, token)),
+  UpdateItemListHeaderRequest: (id, token, data) => dispatch(UpdateItemListHeaderRequest(id, token, data)),
   UpdateItemRequest: (data, id, token) => dispatch(UpdateItemRequest(data, id, token)),
-  DeleteItemRequest: (id, token) => dispatch(DeleteItemRequest(id, token))
+  DeleteItemRequest: (id, token) => dispatch(DeleteItemRequest(id, token)),
+  UpdateItemListRequest: (id, list, token, data) => dispatch(UpdateItemListRequest(id, list, token, data))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ModifyItemFormContainer));

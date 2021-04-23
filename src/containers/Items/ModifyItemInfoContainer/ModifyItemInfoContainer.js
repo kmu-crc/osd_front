@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import ModifyItemInfo from "components/Items/ModifyItemInfo";
 import { GetDesignDetailRequest } from "actions/Design";
 import { UpdateDesignInfoRequest } from "actions/Designs/UpdateDesign";
-// import { GetCategoryLevel1Request, GetCategoryLevel2Request } from "actions/Categorys";
+import { UpdateItemListHeaderRequest, } from "actions/Item";
 import { SearchMemberRequest } from "actions/Commons/Search";
 
 class ModifyItemInfoContainer extends Component {
@@ -21,15 +21,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  GetDesignDetailRequest: (id, token) => {
-    return dispatch(GetDesignDetailRequest(id, token))
-  },
-  UpdateDesignInfoRequest: (data, id, token) => {
-    return dispatch(UpdateDesignInfoRequest(data, id, token));
-  },
-  SearchMemberRequest: (data, token) => {
-    return dispatch(SearchMemberRequest(data, token));
-  }
+  GetDesignDetailRequest: (id, token) => dispatch(GetDesignDetailRequest(id, token)),
+  UpdateDesignInfoRequest: (data, id, token) => dispatch(UpdateDesignInfoRequest(data, id, token)),
+  SearchMemberRequest: (data, token) => dispatch(SearchMemberRequest(data, token)),
+  UpdateItemListHeaderRequest: (id, token, data) => dispatch(UpdateItemListHeaderRequest(id, token, data)),
+
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ModifyItemInfoContainer));

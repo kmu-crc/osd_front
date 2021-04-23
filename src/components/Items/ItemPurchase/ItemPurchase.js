@@ -1062,7 +1062,7 @@ class ItemPurchase extends Component {
                   <div className="title">실습내용</div>
                 </div>
                 <div className="editor-wrapper ">
-                  {/* <Item2ndStepContainer item={item} id={item["item-id"]} bought={item.bought} /> */}
+                  {/* <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} /> */}
                 </div>
               </ItemContents>
             </div>

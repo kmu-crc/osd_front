@@ -30,17 +30,14 @@ const ProductTotalCountFail = () => { return { type: types.GET_PRODUCT_TOTAL_COU
 export function GetItemDetailRequest(id, token) {
   return (dispatch) => {
     const url = `${host}/item/detail/${id}`;
-    // console.log(url);
+    console.log(url);
     return fetch(url, {
       headers: { "Content-Type": "application/json", "x-access-token": token || "" },
       method: "GET"
     })
       .then(res => res.json())
-      .then(data => {
-        // console.log(data);
-        return dispatch(GetItemDetail(data))
-      })
-      .catch(error => console.log("err", error));
+      .then(data => dispatch(GetItemDetail(data)))
+      .catch(error => console.error("err", error));
   }
 };
 const GetItemDetail = (details) => {
@@ -127,22 +124,6 @@ export function GetItemStepsRequest(id, token) {
 const GetItemStep = step => (
   { type: types.GET_ITEM_STEP, step: step }
 )
-// get 2nd step
-export function GetItem2ndStepsRequest(id, token) {
-  return (dispatch) => {
-    const url = `${host}/item/detail/${id}/step2`;
-    return fetch(url, {
-      headers: { "Content-Type": "application/json", "x-access-token": token || "" },
-      method: "GET"
-    })
-      .then(res => res.json())
-      .then(data => { console.log(data); return dispatch(GetItem2ndStep(data.contents || [])) })
-      .catch(error => console.log("err", error));
-  }
-}
-const GetItem2ndStep = step => (
-  { type: types.GET_ITEM_2ND_STEP, step: step }
-)
 // get step - new version
 export function GetItemStepsRequest2(index, id, token) {
   return (dispatch) => {
@@ -217,6 +198,23 @@ export const UpdateItemListRequest = (id, list_id, token, data) => {
 export const UpdateItemList = () => ({ type: types.UPDATE_BOARD });
 export const UpdateItemListSuccess = (res) => ({ type: types.UPDATE_BOARD_SUCCESS, success: res.success });
 export const UpdateItemListFailure = (error) => ({ type: types.UPDATE_BOARD_FAILURE, success: error.success, });
+// MODIFY LIST HEADER
+export const UpdateItemListHeaderRequest = (id, token, data) => {
+  return (dispatch) => {
+    dispatch(UpdateItemListHeader());
+    return fetch(`${host}/item/detail/updateHeader/${id}`, {
+      headers: { "x-access-token": token, 'Content-Type': 'application/json' },
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(res => res && dispatch(UpdateItemListHeaderSuccess(res)))
+      .catch(error => dispatch(UpdateItemListHeaderFailure(error)));
+  };
+};
+export const UpdateItemListHeader = () => ({ type: types.UPDATE_BOARD_HEADER });
+export const UpdateItemListHeaderSuccess = (res) => ({ type: types.UPDATE_BOARD_HEADER_SUCCESS, success: res.success });
+export const UpdateItemListHeaderFailure = (error) => ({ type: types.UPDATE_BOARD_HEADER_FAILURE, success: error.success, });
 
 // NEW CARD
 export const CreateItemCardRequest = (data, id, list_id, token) => {
