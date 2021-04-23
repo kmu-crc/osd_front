@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import GridEditor from "components/GridEditor";
-import { GetItemStepsRequest2, CreateItemListRequest, DeleteItemListRequest, UpdateItemListRequest } from "actions/Item";
+import { GetItemStepsRequest2, CreateItemListRequest, DeleteItemListRequest,  UpdateItemListRequest } from "actions/Item";
+import { UpdateCardTitleRequest, GetDesignCardRequest, } from "actions/Designs/DesignCard"
+import { GetDesignBoardRequest, } from "actions/Designs/DesignBoard";
 
 class ItemStepContainer extends Component {
   componentDidMount() {
@@ -37,6 +39,11 @@ const mapDispatchToProps = (dispatch) => ({
   CreateItemListRequest: (data, id, token) => dispatch(CreateItemListRequest(data, id, token)),
   DeleteItemListRequest: (id, list_id, token) => dispatch(DeleteItemListRequest(id, list_id, token)),
   UpdateItemListRequest: (id, list_id, token, data) => dispatch(UpdateItemListRequest(id, list_id, token, data)),
+  // 
+  UpdateCardTitleRequest: (data, token, id) => dispatch(UpdateCardTitleRequest(data, token, id)),
+  GetDesignBoardRequest: (id) => dispatch(GetDesignBoardRequest(id)),
+  GetDesignCardRequest: (id, board_id) => dispatch(GetDesignCardRequest(id, board_id)),
+  // 
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemStepContainer);

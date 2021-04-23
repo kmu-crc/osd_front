@@ -72,17 +72,17 @@ const SortableCard = SortableElement(({ disableReorder, editor, card, openCard, 
             // : openCard(card, card.order, boardId)
         }
         id="contentcard" uid={card.uid} {...margin} card={card} designId={designId} >
-        {editor && !disableReorder ? <VerticalDragHandle is_white={card.first_img} /> : null}
+        {/* {editor && !disableReorder ? <VerticalDragHandle is_white={card.first_img} /> : null} */}
     </ContentCard>));
 
 const SortableStep = SortableElement(({ disableReorder, reload, index, editStep, step, boardId, editor, designId, openCard, createCard, reorder, userInfo }) => (
     <div style={{ position: "relative" }}>
-        <DragHandler>
+        {<DragHandler>
             <div className="wrapper">
                 {editor && !disableReorder ? <HorizonDragHandle /> : null}
                 <div className="tip-txt">단계의 순서를<br />'드래그앤드롭'으로<br />바꾸실 수 있습니다.</div>
             </div>
-        </DragHandler>
+        </DragHandler>}
         <StepCard
             onClick={() => editStep(step.title, step.uid)}
             title={step.title}
@@ -229,7 +229,8 @@ class SortableDesignSteps extends Component {
             onSortEnd={this.onSortEnd}
             onSortStart={(_, event) => event.preventDefault()}
             // shouldCancelStart = { this.shouldCancelStart }
-            useDragHandle>
+            useDragHandle={true}
+        >
             <div style={{ display: "flex" }}>
                 {items.map((item, index) => (
                     <SortableStep
