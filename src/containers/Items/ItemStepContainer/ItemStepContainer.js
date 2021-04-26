@@ -1,15 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import GridEditor from "components/GridEditor";
-import { GetItemStepsRequest2, CreateItemListRequest, DeleteItemListRequest,  UpdateItemListRequest } from "actions/Item";
+import { GetItemStepsRequest2, CreateItemListRequest, DeleteItemListRequest, UpdateItemListRequest } from "actions/Item";
 import { UpdateCardTitleRequest, GetDesignCardRequest, } from "actions/Designs/DesignCard"
 import { GetDesignBoardRequest, } from "actions/Designs/DesignBoard";
 
 class ItemStepContainer extends Component {
   componentDidMount() {
     const { header, index, token } = this.props;
-    if (header != null)
+    console.log(header, index, token);
+
+    if (header != null) {
       this.props.GetItemStepsRequest2(index, header.uid, token);
+    } else {
+      alert("no head");
+    }
   }
   GetItemStep = () => {
     const { header, index, token } = this.props;
@@ -17,7 +22,8 @@ class ItemStepContainer extends Component {
       this.props.GetItemStepsRequest2(index, header.uid, token);
   }
   render() {
-    const { ItemDetail } = this.props
+    const { ItemDetail, ItemStep } = this.props
+    console.log("STEPS:", ItemDetail, ItemStep);
     return (
       <GridEditor {...this.props} GetItemStepsRequest={this.GetItemStep} itemId={ItemDetail["item-id"]} item={ItemDetail} />
     );

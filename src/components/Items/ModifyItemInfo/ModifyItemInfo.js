@@ -983,19 +983,19 @@ class ModifyItemInfo extends Component {
                 <ItemContents>
                   <div className="header">
                     <div className="title" style={{ display: "flex" }}>
-                      {head.name ?
-                        <React.Fragment>
-                          <input
-                            className="title-input"
-                            value={(this.state.listname && this.state.listname[index]) || ""}
-                            onChange={e => this.onChangeListName(e, index)}
-                          />
-                          <button
-                            className={`edit ${(this.state.listname && this.state.listname[index]) === head.name && "disabled"}`}
-                            disabled={(this.state.listname && this.state.listname[index]) === head.name}
-                            onClick={e => this.editGridEditorName(head, index)}>수정</button>
-                        </React.Fragment>
-                        : "아이템 상세내용"}
+                      {/* {head.name ? */}
+                      <React.Fragment>
+                        <input
+                          className="title-input"
+                          value={(this.state.listname && this.state.listname[index]) || ""}
+                          onChange={e => this.onChangeListName(e, index)}
+                        />
+                        <button
+                          className={`edit ${(this.state.listname && this.state.listname[index]) === head.name && "disabled"}`}
+                          disabled={(this.state.listname && this.state.listname[index]) === head.name}
+                          onClick={e => this.editGridEditorName(head, index)}>수정</button>
+                      </React.Fragment>
+                      {/* : "아이템 상세내용"} */}
                     </div>
                   </div>
                   <div className="editor-wrapper">
