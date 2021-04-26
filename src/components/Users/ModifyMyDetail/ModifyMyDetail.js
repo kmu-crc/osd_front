@@ -12,24 +12,36 @@ import market_style from "market_style";
 const Wrapper = styled(ContentBox)`
   width:100%;
   position: relative;
-  padding-left:54px;
-  padding-right:54px;
+  // padding-left:54px;
+  // padding-right:54px;
   z-index:3;
 `;
 const MainBox = styled.div`
-  width:100%;
-  .title{
-    width:170px;
-    height:29px;
-    font-family:Noto Sans KR, Medium;
-    font-size:${market_style.font.size.normal1};
-    font-weight:500;
+margin:-20px 20px -20px 20px;
+  .title_{
+    font-family:Noto Sans KR;
+    font-size:18px;
+    color:black;
+    width:100%; 
+    display:flex;
+    justify-content:center;
+    align-items:center;
   }
-  .contentsBox{
+  .lineBox{
+    width:100%;
+    margin-top:10px;
+    .line{
+      width:100%;
+      border:1px solid #efefef;
+    }
+  }
+  .contentsBox_{
     width:100%;
     display:flex;
-    justify-content:flex-end;
     margin-top:15px;
+  }
+  .flexEnd{
+    justify-content:flex-end;
   }
   .marginTop{
     margin-top:26px;
@@ -53,7 +65,7 @@ const ThumbnailBox = styled.div`
   }
   width:300px;
   height:300px;
-  box-shadow: 5px 5px 10px #00000029;
+  box-shadow: 3px 3px 5px #0000001A;
   border:0.5px solid #eaeaea;
   border-radius: 20px;
   padding:24px 40px 24px 40px;
@@ -97,7 +109,7 @@ const FormBox = styled.div`
     font-family:Noto Sans KR;
     font-size:${market_style.font.size.small1};
   }
-  margin-left:102px;
+  margin-left:50px;
   margin-top:85px;
   .wrapper{
     width:100%;
@@ -126,6 +138,7 @@ const FormBox = styled.div`
   .label{
     min-width:136px;
     height:29px;
+    color:black;
   }
   .label_centering{
     text-align:center;
@@ -261,8 +274,9 @@ class ModifyMyDetail extends Component {
         {this.state.loading ? <Loading /> : null}
 
         <MainBox>
-          <div className="title">내 정보 수정</div>
-          <div className="contentsBox">
+          <div className="title_">내 정보 수정</div>
+          <div className="lineBox"><div className="line"/></div>
+          <div className="contentsBox_">
             <ThumbnailBox>
               <input hidden onChange={this.handleOnChangeThumbnail} id="file_" type="file" />
               <div className="label">썸네일 등록</div>
@@ -280,7 +294,7 @@ class ModifyMyDetail extends Component {
                 <div className="label">닉네임</div>
                 <InputTextBox
                   id="nickName"
-                  width={"300px"}
+                  width={"417px"}
                   value={this.state.nickName || ""}
                   placeholder="닉네임을 입력하세요."
                   onChange={this.onChangeValue} />
@@ -289,7 +303,7 @@ class ModifyMyDetail extends Component {
                 <div className="label">비밀번호</div>
                 <InputTextBox type="password"
                   id="password"
-                  width={"300px"}
+                  width={"417px"}
                   value={this.state.password || ""}
                   placeholder="비밀번호를 입력하세요."
                   onChange={this.onChangeValue} />
@@ -298,7 +312,7 @@ class ModifyMyDetail extends Component {
                 <div className="label">비밀번호 확인</div>
                 <InputTextBox
                   id="passwordCheck"
-                  width={"300px"}
+                  width={"417px"}
                   type="password"
                   value={this.state.passwordCheck || ""}
                   placeholder="비밀번호를 한번 더 입력하세요."
@@ -308,7 +322,7 @@ class ModifyMyDetail extends Component {
                 <div className="label">휴대폰</div>
                 <InputTextBox
                   id="phone"
-                  width={"300px"}
+                  width={"417px"}
                   value={this.state.phone || ""}
                   placeholder="휴대폰 번호를 입력하세요."
                   onChange={this.onChangePhone} />
@@ -317,9 +331,9 @@ class ModifyMyDetail extends Component {
 
           </div>
 
-          <div className="contentsBox marginTop">
+          <div className="contentsBox_ flexEnd marginTop">
             {/* <RedButton onClick={this.onSubmit} left={223} bottom={0}><div>적용</div></RedButton> */}
-            <RedButton width={150} height={30} fontSize={market_style.font.size.normal1} marginRight={0} disabled={!this.state.isModify} text="수정된 내용을 저장합니다." okText="확인" cancelText="취소" value={"저장하기"} onClick={this.onSubmit} isConfirm={this.state.isModify} />
+            <RedButton width={150} height={30} fontSize={market_style.font.size.normal1} marginRight={0} disabled={!this.state.isModify} text="수정된 내용을 저장합니다." okText="확인" cancelText="취소" value={"수정하기"} onClick={this.onSubmit} isConfirm={this.state.isModify} />
             {/* <GrayButton text={"수정된 내용이 저장되지 않습니다."} okText="확인" cancelText="취소" value={"취소하기"} onClick={this.onClickCancel} isConfirm={this.state.isModify} /> */}
           </div>
         </MainBox>

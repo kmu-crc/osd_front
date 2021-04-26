@@ -43,8 +43,9 @@ const LocationList = [
 
 const Wrapper = styled.div`
   padding-top: 15px;
-  // *{border: 1px solid blue;}
-  
+  padding-left:30px; 
+  padding-right:30px;
+
   .header {
     width: 100%;
 
@@ -65,8 +66,7 @@ const Wrapper = styled.div`
   .form {
     margin: auto;
     margin-top: 15px;
-    width: 1306px;
-    // min-height: 1221px;
+    width: 100%;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 3px 3px 5px #0000001A;
     border: 1px solid #EAEAEA;
@@ -75,34 +75,43 @@ const Wrapper = styled.div`
     padding-bottom: 50px;
 
     .row {
-      width: 100%;
       display: flex;
       flex-direction: row;
-      margin-bottom: 30px;
+      flex-wrap:wrap;
       :last-child {
         margin-bottom: 0px;
       }
       .label { 
-        width: 186px;
         height: 22px;
+        min-width: 140px;
+        text-align: left;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 1px solid #707070;
+
         text-align: left;
         font: normal normal bold 15px/22px Noto Sans KR;
         letter-spacing: 0px;
         color: #707070;
+
+        margin-right: 94px;
+        margin-bottom:5px;
+      }
+      .max-width{
+        max-width: max-content;
       }
       .content { 
         width: 100%;
-        min-width: 820px;
-        min-height: 22px;
-
+        margin-bottom: 31px;
+        
         text-align: left;
         font: normal normal normal 15px/22px Noto Sans KR;
         letter-spacing: 0px;
         color: #000000;
 
         .title-input {
-          width: 100%;
-          min-width: 820px;
+          width:100%;
           height: 31px;
           background: #E9E9E9 0% 0% no-repeat padding-box;
           border-radius: 10px;
@@ -112,7 +121,7 @@ const Wrapper = styled.div`
           font: normal normal 300 13px/19px Noto Sans KR;
           letter-spacing: 0px;
           color: #000; //#707070;
-          padding: 3px 0px 0px 11px;
+          padding: 2px 0px 3px 11px;
         }
       }
     }
@@ -122,11 +131,9 @@ const Wrapper = styled.div`
     margin-top: 20px;
     margin-bottom: 40px;
     width: 100%;
-
     .buttons {
-      margin: auto;
-      width: max-content;
-      display: flex;
+      display:flex;
+      justify-content:center;
     }
     button {
       width: 150px;
@@ -162,128 +169,27 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    flex-wrap:wrap;
   }
 
   .hr {
     margin-top: 30px;
     margin-bottom: 29px;
-    width: 1006px;
+    width: 100%;
     height: 2px;
     border: 1px solid #EFEFEF;
   }
-`;
-const MainBox = styled.div`
-  width:100%;
-  .title{
-    width:170px;
-    height:29px;
-    font-family:Noto Sans CJK KR, Medium;
-    font-size:${market_style.font.size.normal3};
-    font-weight:500;
-    margin-left:130px;
+  @media only screen and (min-width: 500px) and (max-width:1000px){
 
+    .form{
+      padding:40px 10%;
+      .row{
+        .label{
+          margin-right: 30px;
+        }
+      }
+    }
   }
-  .contentsBox{
-    position: relative;
-    width:100%;
-    display:flex;
-    padding:36px 130px 36px 136px;
-  }
-  .centering_{
-    width:100%;
-    display:flex;
-    padding:36px 130px 36px 136px;
-    justify-content:center;
-    margin-bottom:30px;
-    
-  }
-
-`;
-
-const FormBox = styled.div`
-
-  font-family:Noto Sans KR;
-  font-weight:500;
-  font-size:${market_style.font.size.normal3};
-  width:100%;
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px;
-  padding-left:59px;
-  padding-right:59px;
-  padding-top:49px;
-
-  .wrapper{
-    width:100%;
-    margin-bottom:70px;
-  }
-  .margin_zero{
-    margin:0px;
-  }
-  .flex{
-    display:flex;
-  }
-  .centering{
-    align-items:center;
-  }
-  .innerWraper{
-    width:100%;
-    margin-bottom:26px;
-    display:flex;
-  }
-  .label{
-    font-family:Noto Sans CJK KR, Regular;
-    font-size:${market_style.font.size.normal3};
-    min-width:157px;
-    height:29px;
-  }
-  .text_small{
-    font-family:Noto Sans CJK KR, Regular;
-    font-size:${market_style.font.size.small3};
-  }
-  .label_centering{
-    text-align:center;
-  }
-  .index{
-    width:30px;
-    height:30px;
-    color:#707070;
-  }
-  .faded-text {
-    border-radius: 15px;
-    background-color: #EAEAEA;
-    padding: 15px 15px;
-  }
-  .information {
-    color: red;
-    font-size:${market_style.font.size.small2};
-    margin-left: 10px;
-  }
-`;
-const InputText = styled.input.attrs({ type: "text" })`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:52px;
-  border-radius:26px;
-  font-family:Noto Sans KR;
-  font-size:${market_style.font.size.normal3};
-  background-color:#E9E9E9;
-  margin-right:21px;
-  outline:none;
-  border:0px;
-  padding: 0.67857143em 1em;
-
-`;
-const InputTextarea = styled.textarea`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
-  border-radius:20px;
-  font-family:Noto Sans KR;
-  font-size:${market_style.font.size.normal3};
-  background-color:#E9E9E9;
-  outline:none;
-  border:0px;
-  readonly;
-  padding: 0.67857143em 1em;
-
 `;
 const DropBox = styled(Dropdown)`
   width: 180px !important;
@@ -291,7 +197,8 @@ const DropBox = styled(Dropdown)`
   border-radius: 10px !important;
   background-color:#E9E9E9 !important;
   border: none;
-
+  margin-bottom:5px;
+  margin-right:10px;
   .text {
     margin: 4px 0px 0px 22px;
     font: normal normal normal 15px/22px Noto Sans KR;
@@ -309,13 +216,6 @@ const DropBox = styled(Dropdown)`
     padding: 0px !important;
     // background-color: blue !important;
   }
-`;
-const HRLine = styled.div`
-    width:93%;
-    height:3px;
-    background-color:#E9E9E9;
-    margin-top:35px;
-    margin-bottom:35px;
 `;
 class ModifyRequestToDesigner extends Component {
   constructor(props) {
@@ -545,17 +445,17 @@ class ModifyRequestToDesigner extends Component {
 
           <div className="row" >
             <div className="label">의뢰자</div>
-            <div className="content">{(this.props.userInfo && this.props.userInfo.nickName) || null}</div>
+            <div className="content max-width">{(this.props.userInfo && this.props.userInfo.nickName) || null}</div>
           </div>
 
           <div className="row">
             <div className="label">제목<Mandatory /></div>
-            <div className="content"><input onChange={this.onChangeTitle} className="title-input" value={this.state.title || ''} placeholder="제목을 입력하세요." /></div>
+            <div className="content" style={{maxWidth:"768px"}}><input onChange={this.onChangeTitle} className="title-input" value={this.state.title || ''} placeholder="제목을 입력하세요." /></div>
           </div>
 
           <div className="row">
             <div className="label">카테고리</div>
-            <div className="content flexing-row">
+            <div className="content max-width flexing-row">
               <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
               <CustomIcon width="5" height="10" marginRight="20" marginLeft="20" imgURL={category_icon} />
               <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
@@ -564,19 +464,19 @@ class ModifyRequestToDesigner extends Component {
 
           <div className="row">
             <div className="label">태그</div>
-            <div className="content">
-              <InputTagNew taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요" width={483} />
+            <div className="content" style={{maxWidth:"768px"}}>
+              <InputTagNew width={768} taglist={this.state.tag} getValue={this.handleAddTag} placeholder="태그를 입력하고 [enter]키를 누르세요"/>
             </div>
           </div>
 
           <div className="row">
             <div className="label">의뢰 내용<Mandatory /></div>
-            <div className="content">
+            <div className="content" style={{maxWidth:"768px"}}>
               <TextControllerClassic
                 item={{ content: this.state.content, /*height: 388*/ }}
                 name={"comment"}
                 getValue={this.onChangeContent}
-                // width="820"
+                // width="768"
                 editheight="388"
                 marginBottom="0"
                 border="1px solid #707070"
@@ -588,21 +488,21 @@ class ModifyRequestToDesigner extends Component {
 
           <div className="row">
             <div className="label">파일 등록</div>
-            <div className="content">
+            <div className="content max-width">
               <InputFile width={533} getValue={this.onFileChange} file={{ file_url: this.props.Detail.file_url || '', filename: this.props.Detail.filename || '' }} accept="pdf" />
             </div>
           </div>
 
           <div className="row">
             <div className="label">희망 비용</div>
-            <div className="content">
+            <div className="content max-width">
               <InputPriceNew name="price" getValue={this.getPriceValue} price={parseInt(this.state.price, 10)} />
             </div>
           </div>
 
           <div className="row">
             <div className="label ">기간</div>
-            <div className="content">
+            <div className="content max-width">
               <InputCalendar
                 startDate={this.state.startDate}
                 endDate={this.state.endDate}
@@ -617,15 +517,19 @@ class ModifyRequestToDesigner extends Component {
 
           <div className="row">
             <div className="label">디자이너 위치</div>
+            <div className="content max-width">
             <DropBox id="location" value={isNaN(parseInt(this.state.location, 10)) === true ? null : parseInt(this.state.location, 10)}
               selection options={LocationList} placeholder="시/도"
               onChange={this.onChangeLocation} />
+            </div>
           </div>
 
           <div className="row">
             <div className="label">디자인 소유권</div>
+            <div className="content max-width">
             <DropBox id="designerOwnership" selection options={[{ text: "구매자", value: 0 }, { text: "디자이너", value: 1 }]}
               onChange={this.onChangeOwnership} value={parseInt(this.state.ownership, 10)} placeholder="선택" />
+            </div>
           </div>
 
         </div>

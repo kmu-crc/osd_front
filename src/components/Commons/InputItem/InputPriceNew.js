@@ -18,7 +18,8 @@ const FormBox = styled.div`
     .buttonbox{
         display: flex;
         flex-direction: row;
-        margin-top: 15px;
+        margin-top: 10px;
+        flex-wrap:wrap;
     }
 `
 const FormStyle = styled.input.attrs({ type: "number" })`
@@ -56,7 +57,7 @@ const Button = styled.button`
     align-items: center;
 
     margin-right: ${props => props.marginRight ? props.marginRight : 20}px;
-
+    margin-top:5px;
     :last-child {
         margin-right: 0px;
     }

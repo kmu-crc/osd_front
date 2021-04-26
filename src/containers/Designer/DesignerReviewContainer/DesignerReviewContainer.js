@@ -20,8 +20,7 @@ const ContentsBox = styled.div`
   min-width:103%;
   display:flex;
   flex-wrap:wrap;
-  height:max-content;
-  max-height:300px;
+
   .blank{
     width:97%;
     height:50px;
@@ -33,12 +32,17 @@ const ContentsBox = styled.div`
     width:100%;
     display:flex;
     justify-content:center;
-    border:1px soild black;
+  }
+  @media only screen and (min-width: 1366px){
+    height:300px;
+  }
+  @media only screen and (min-width: 500px) and (max-height:1366px){
+    height:max-content;
   }
 `
 const Wrapper_ = styled.div`
-  min-width:600px;
-  max-width:600px;
+  width:600px;
+  min-width:390px;
   height:113px;
   display:flex;
   color:#707070;
@@ -121,6 +125,7 @@ class DesignerReviewContainer extends Component {
     console.log(this.props.dataList);
     return (
       <React.Fragment>
+        
       <ContentsBox>
             { this.props.count != 0?
               this.props.dataList.map((item,index)=>{
@@ -132,7 +137,7 @@ class DesignerReviewContainer extends Component {
                       <div className="nick_ line marginRight">{item.nick_name}</div>
                       <div className="row"><RenderingStar score={item.score}/></div>
                       </div>
-                      <div className="text_">{item.comment && item.comment.slice(0, 64)}{item.comment && item.comment.length > 64 ? "..." : ""}</div>
+                      <div className="text_">{item.comment && item.comment.slice(0, 50)}{item.comment && item.comment.length > 64 ? "..." : ""}</div>
                     </div>
                   </Wrapper_>)
               }):<div className="blank">리뷰 없음</div>

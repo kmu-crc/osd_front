@@ -17,11 +17,11 @@ const Wrapper = styled.div`
 const Content = styled(ContentBox)`
   margin-top: ${props => props.top}px;
   width: 100%;
-  @media only screen and (max-width: 991px) and (min-width: 768px){
-    & .ui.grid>.row{
-      margin-left: 6.25% !important;
-    }
-  }
+  // @media only screen and (max-width: 991px) and (min-width: 768px){
+  //   & .ui.grid>.row{
+  //     margin-left: 6.25% !important;
+  //   }
+  // }
   background-color: ${props => props.bgcolor || "#FFFFFF"};
 `;
 //const RequestButton = styled.div`
@@ -71,6 +71,18 @@ const ListElement = styled.div`
     align-items:center;
     font-size:${market_style.font.size.mini2};
     }
+    @media only screen and (min-width: 500px) and (max-width:1000px){
+      padding:6px 20px 6px 20px;
+      .title{
+        min-width:70%;
+      }
+      .writer{
+        min-width:16%;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+      }
+    }
 `;
 
 export default class DesignerRequestBoard extends Component {
@@ -89,10 +101,8 @@ export default class DesignerRequestBoard extends Component {
                 </ListElement>
                 :null
                 }
-                <Wrapper className="listWrap">
-                    <ScrollBoardList getListRequest={this.getList} ListComponent={RequestMyDetailElement} dataList={this.props.dataList} total={this.props.Count}
-                        mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} />
-                </Wrapper>
+                <ScrollBoardList getListRequest={this.getList} ListComponent={RequestMyDetailElement} dataList={this.props.dataList} total={this.props.Count}
+                    mobile={16} tablet={5} computer={4} largeScreen={2} widescreen={2} />
             </Content>
         </React.Fragment>)
     }

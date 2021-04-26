@@ -11,8 +11,6 @@ import category_icon from "source/category_icon.svg";
 import { alert } from "components/Commons/Alert/Alert";
 import market_style from "market_style";
 
-// import { Dropdown } from "semantic-ui-react"
-// import { confirm } from "components/Commons/Confirm/Confirm";
 const LocationList = [
   { value: 0, text: "서울특별시" },
   { value: 1, text: "부산광역시" },
@@ -31,339 +29,192 @@ const LocationList = [
   { value: 14, text: "제주도" },
   { value: 15, text: "제한없음" },
 ];
-
 const CustomIcon = styled.div`
-  width:${props => props.width}px;
-  height:${props => props.height}px;
-  background-image:url(${props => props.imgURL});
+  width: ${props => props.width}px;
+  height: ${props => props.height}px;
+  background-image: url(${props => props.imgURL});
   background-repeat: no-repeat;
   background-size: contain;
-  padding:${props => props.padding}px;
-  margin-right:${props => props.marginRight == null ? "13" : props.marginRight}px;
-  margin-left:${props => props.marginLeft == null ? "13" : props.marginLeft}px;
-  display:${props => props.isNon === true ? "none" : "block"}
-`
+  padding: ${props => props.padding}px;
+  margin-right: ${props => props.marginRight == null ? "13" : props.marginRight}px;
+  margin-left: ${props => props.marginLeft == null ? "13" : props.marginLeft}px;
+  display: ${props => props.isNon == true ? "none" : "block"}
+`;
 const Wrapper = styled.div`
-width: 100%;
-padding: 0px 30px;
-
-// *{border:1px dashed blue;}
-
-.title {
-  margin-top: 20px;
-  margin-bottom: 15px;
-  .text {
-    width: max-content;
-    margin: auto;
-    font: normal normal bold 20px/29px Noto Sans KR;
-    letter-spacing: 0px;
-    color: #000000;
-    text-align: center;
+  width: 100%;
+  padding: 0px 30px;
+  margin-bottom:30px;
+  .title {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    .text {
+      width: max-content;
+      margin: auto;
+      font: normal normal bold 20px/29px Noto Sans KR;
+      letter-spacing: 0px;
+      color: #000000;
+      text-align: center;
+    }
   }
-}
-
-.form-list {
-  display: flex;
-  flex-direction: row;
-}
-.form {
-  width: 643px;
-  // min-height: 582px;
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  box-shadow: 3px 3px 5px #0000001A;
-  border: 0.25px solid #B7B7B7;
-  border-radius: 20px;
-  padding: 30px 50px;
-  :first-child {
-    margin-right: 20px;
-  }
-
-  .row {
+  
+  .form-list {
+    width:102%;
     display: flex;
     flex-direction: row;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
 
-    .label {
-      height: 22px;
-      width: 106px;
-      text-align: left;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 1px solid #707070;
-      &.no-border {
-        border: none;
+  .form {
+    width: 643px;
+    max-width:100%;
+    min-height: 582px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 3px 3px 5px #0000001A;
+    border: 0.25px solid #eaeaea;
+    border-radius: 20px;
+    padding: 30px 50px;
+    margin-right:20px;
+    margin-bottom:20px;
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap:wrap;
+
+      .label {
+        height: 22px;
+        min-width: 140px;
+        text-align: left;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 1px solid #707070;
+
+        text-align: left;
+        font: normal normal medium 15px/22px Noto Sans KR;
+        letter-spacing: 0px;
+        color: #707070;
+
+        margin-right: 94px;
+        margin-bottom:5px;
       }
-      text-align: left;
-      font: normal normal medium 15px/22px Noto Sans KR;
-      letter-spacing: 0px;
-      color: #707070;
+
+      .content {
+        width: 100%;
+        max-width: max-content;
+        margin-bottom: 31px;
+        
+        text-align: left;
+        font: normal normal normal 15px/22px Noto Sans KR;
+        letter-spacing: 0px;
+        color: #000000;
+      }
     }
-
-    .content {
-      // width: max-content;
-      width: 100%;
-      height: 100%;
-      margin-bottom: 31px;
-      margin-left: 55px;
-
-      &.no-margin {
-        margin-left: 0px;
-      }
+  }
+  .flex-and-middle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .taglist {
+    display: flex;
+    flex-direction: row;
+    .tag {
+      height: 31px;
+      background: #E9E9E96A 0% 0% no-repeat padding-box;
+      border-radius: 10px;
+      padding: 5px 12px 4px 13px; 
+      /* top | right | bottom | left */
       text-align: left;
       font: normal normal normal 15px/22px Noto Sans KR;
       letter-spacing: 0px;
-      color: #000000;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
+      color: #707070;
+      margin-right: 10px;
+    }
+  
+  }
+  .attach-file {
+    display: flex;
+    align-items: center;
+    height: 19px;
+    text-align: left;
+    font: normal normal normal 13px/19px Noto Sans KR;
+    letter-spacing: 0px;
+    color: #FF0000;
+    width:150px;
+    .attach-link {
+        width:80%;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+     }  
+    .attach-arrow {
+      width: 10px;
+      height: 10px;
+      margin-right: 16px;
+      margin-left: 4px;
+      
+      border-left: 1px solid red;
+      border-bottom: 1px solid red;
     }
   }
-}
-.flex-and-middle {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-.taglist {
-  display: flex;
-  flex-direction: row;
-  .tag {
-    height: 31px;
-    background: #E9E9E96A 0% 0% no-repeat padding-box;
-    border-radius: 10px;
-    padding: 5px 12px 4px 13px; 
-    /* top | right | bottom | left */
-    text-align: left;
-    font: normal normal normal 15px/22px Noto Sans KR;
-    letter-spacing: 0px;
-    color: #707070;
-    margin-right: 10px;
-  }
-
-}
-.attach-file {
-  display: flex;
-  align-items: center;
-
-  height: 19px;
-  text-align: left;
-  font: normal normal normal 13px/19px Noto Sans KR;
-  letter-spacing: 0px;
-  color: #FF0000;
-   .attach-link {
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    width: 100%;
-   } 
-  .attach-arrow {
-    width: 10px;
-    height: 10px;
-    // background-color: #FF0000;
-    margin-right: 16px;
-    margin-left: 4px;
-    
-    border-left: 1px solid red;
-    border-bottom: 1px solid red;
-
-    // .addfilebox{
-    //   .addfile{
-    //     width:10px;
-    //     height:10px;
-    //     border-left: 1px solid red;
-    //     border-bottom: 1px solid red;
-    //   }
-    //   .black_addfile{
-    //     width: 10px;
-    //     height: 10px;
-    //     border-left: 1px solid black;
-    //     border-bottom: 1px solid black;
-    //   }
-    // }
-  }
-}
-
+  
   .bottom {
     margin-top: 20px;
     margin-bottom: 40px;
     width: 100%;
 
     .buttons {
-      margin: auto;
-      width: max-content;
-      display: flex;
-    }
-    button {
-      width: 150px;
-      height: 30px;
-      border: none;
-
-      .text {
-        margin: auto;
-        width: max-content;
-        text-align: center;
-        font: normal normal bold 15px/22px Noto Sans KR;
-        letter-spacing: 0px;
-        color: #FFFFFF;
-        opacity: 1;
-      }
-      &.ok {
-        background: #FF0000 0% 0% no-repeat padding-box;
-        &.disabled {
-          background: #707070 0% 0% no-repeat padding-box;
-        }
-      }
-      &.cancel {
-        background: #707070 0% 0% no-repeat padding-box;
-      }
-      opacity: 1;
-      :first-child {
-        margin-right: 20px;
-      }
-    }
-  }
-
-  .flexing-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .hr {
-    margin-top: 30px;
-    margin-bottom: 29px;
-    width: 1006px;
-    height: 2px;
-    border: 1px solid #EFEFEF;
-  }
-`;
-const MainBox = styled.div`
-  width:100%;
-  .title{
-    width:170px;
-    height:29px;
-    font-family:Noto Sans KR, Medium;
-    font-size:${market_style.font.size.normal3};
-    font-weight:500;
-    // margin-left:130px;
-
-  }
-  .contentsBox{
-    position: relative;
-    width:100%;
-    display:flex;
-    padding-top:36px;
-    .box_{
-      width:50%;
-    }
-    .box_centering{
-      width:50%;
       display:flex;
       justify-content:center;
     }
-  }
-
-`;
-
-const FormBox = styled.div`
-  width:${props => props.isHalf === true ? "50%" : "100%"};
-  box-shadow: 5px 5px 10px #00000029;
-  border-radius: 20px;
-  padding:${props => props.isHalf === true ? "72px 50px 72px 50px" : "72px 113px 72px 113px"};
-  margin-right:${props => props.isHalf === true ? "44px" : "10px"};
-
-  .wrapper{
-    width:100%;
-    margin-bottom:50px;
-  }
-  .margin_zero{
-    margin:0px;
-  }
-  .add_margin_bottom{
-    margin-bottom:100px;
-  }
-  .flex{
-    display:flex;
-  }
-  .centering{
-    // align-items:center;
-  }
-  .color_red{
-    color:red;
-  }
-  .innerWraper{
-    width:100%;
-    margin-bottom:26px;
-    display:flex;
-  }
-  .addfilebox{
-    height:40px;
-    margin-right:8px;
-    .addfile{
-      width:20px;
-      height:20px;
-      border-left:1px dashed red;
-      border-bottom:1px dashed red;
+    .reply {
+      margin: auto;
+      width: 150px;
+      height: 30px;
+      background: #FF0000 0% 0% no-repeat padding-box; /* Green - #4CAF50; */
+      border: none;
+      text-align: center;
+      text-decoration: none;
+      text-align: center;
+      font: normal normal bold 15px/22px Noto Sans KR;
+      letter-spacing: 0px;
+      color: #FFFFFF;
     }
-    .black_addfile{
-      width:20px;
-      height:20px;
-      border-left:1px dashed black;
-      border-bottom:1px dashed black;
+  
+    .back {
+      position: absolute;
+      width: max-content;
+      right: 20px;
+      height: 19px;
+      background: #FFFFFF;
+      border: none;
+      display: flex;
+      flex-direction: row;
+
+      text-align: left;
+      font: normal normal medium 13px/19px Noto Sans KR;
+      letter-spacing: 0px;
+      color: #707070;
     }
   }
-  .file_label_box{
-    height:40px;
-    display:flex;
-    align-items:center;
-  }
- 
-  .file_label{
-    font-size:${market_style.font.size.small3};
-    color:red;
-  }
-  ._black_{
-    font-size:${market_style.font.size.small3};
-    color:black;
-  }
-  .label2{
-    min-width:157px;
-    height:29px;
-    font-size:${market_style.font.size.normal3};
-    font-family:Noto Sans CJK KR, Regular;
-    // color:#707070;
-    margin-right:60px;
-  }
-  .label{
-    min-width:157px;
-    height:max-content;
-    font-size:${market_style.font.size.normal3};
-    font-family:Noto Sans CJK KR, Regular;
-    color:#707070;
-    margin-right:60px;
-    border-right:2px solid #707070;
-  }
-  .label_centering{
-    text-align:center;
-  }
-  .index{
-    width:30px;
-    height:30px;
-    color:#707070;
-  }
-  .textBox{
-    font-family:Noto Sans CJK KR, Regular;
-    font-size:${market_style.font.size.small3};
-    line-height:17px;
-    display:flex;
-  }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
 
+    .form{
+      padding: 30px 10%;
+      .row{
+        .label{
+          margin-right: 30px;
+        }
+      }
+    }
+  }
 `;
 
 const TagList = styled.div`
   width: 100%;
   display: flex;
-  // padding: 10px;
   flex-wrap: wrap;
 `;
 const TagPiece = styled.div`
@@ -372,7 +223,7 @@ const TagPiece = styled.div`
     max-height:30px;
     border:1px solid #707070;
     border-radius:15px;
-    padding: 8px 10px 5px 10px;
+    padding: 5px 10px 6px 10px;
     display: flex;
     justify-content: space-between;
     align-items:center;
@@ -388,6 +239,381 @@ const TagPiece = styled.div`
         cursor:pointer;
     }
 `;
+// const LocationList = [
+//   { value: 0, text: "서울특별시" },
+//   { value: 1, text: "부산광역시" },
+//   { value: 2, text: "대구광역시" },
+//   { value: 3, text: "인천광역시" },
+//   { value: 4, text: "광주광역시" },
+//   { value: 5, text: "대전광역시" },
+//   { value: 6, text: "울산광역시" },
+//   { value: 7, text: "경기도" },
+//   { value: 8, text: "강원도" },
+//   { value: 9, text: "충청북도" },
+//   { value: 10, text: "충청남도" },
+//   { value: 11, text: "전라북도" },
+//   { value: 12, text: "경상북도" },
+//   { value: 13, text: "경상남도" },
+//   { value: 14, text: "제주도" },
+//   { value: 15, text: "제한없음" },
+// ];
+
+// const CustomIcon = styled.div`
+//   width:${props => props.width}px;
+//   height:${props => props.height}px;
+//   background-image:url(${props => props.imgURL});
+//   background-repeat: no-repeat;
+//   background-size: contain;
+//   padding:${props => props.padding}px;
+//   margin-right:${props => props.marginRight == null ? "13" : props.marginRight}px;
+//   margin-left:${props => props.marginLeft == null ? "13" : props.marginLeft}px;
+//   display:${props => props.isNon === true ? "none" : "block"}
+// `
+// const Wrapper = styled.div`
+// width: 100%;
+// padding: 0px 30px;
+
+// // *{border:1px dashed blue;}
+
+// .title {
+//   margin-top: 20px;
+//   margin-bottom: 15px;
+//   .text {
+//     width: max-content;
+//     margin: auto;
+//     font: normal normal bold 20px/29px Noto Sans KR;
+//     letter-spacing: 0px;
+//     color: #000000;
+//     text-align: center;
+//   }
+// }
+
+// .form-list {
+//   display: flex;
+//   flex-direction: row;
+// }
+// .form {
+//   width: 643px;
+//   // min-height: 582px;
+//   background: #FFFFFF 0% 0% no-repeat padding-box;
+//   box-shadow: 3px 3px 5px #0000001A;
+//   border: 0.25px solid #B7B7B7;
+//   border-radius: 20px;
+//   padding: 30px 50px;
+//   :first-child {
+//     margin-right: 20px;
+//   }
+
+//   .row {
+//     display: flex;
+//     flex-direction: row;
+
+//     .label {
+//       height: 22px;
+//       width: 106px;
+//       text-align: left;
+//       text-overflow: ellipsis;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       border-right: 1px solid #707070;
+//       &.no-border {
+//         border: none;
+//       }
+//       text-align: left;
+//       font: normal normal medium 15px/22px Noto Sans KR;
+//       letter-spacing: 0px;
+//       color: #707070;
+//     }
+
+//     .content {
+//       // width: max-content;
+//       width: 100%;
+//       height: 100%;
+//       margin-bottom: 31px;
+//       margin-left: 55px;
+
+//       &.no-margin {
+//         margin-left: 0px;
+//       }
+//       text-align: left;
+//       font: normal normal normal 15px/22px Noto Sans KR;
+//       letter-spacing: 0px;
+//       color: #000000;
+//       text-overflow: ellipsis;
+//       white-space: nowrap;
+//       overflow: hidden;
+//     }
+//   }
+// }
+// .flex-and-middle {
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+// }
+// .taglist {
+//   display: flex;
+//   flex-direction: row;
+//   .tag {
+//     height: 31px;
+//     background: #E9E9E96A 0% 0% no-repeat padding-box;
+//     border-radius: 10px;
+//     padding: 5px 12px 4px 13px; 
+//     /* top | right | bottom | left */
+//     text-align: left;
+//     font: normal normal normal 15px/22px Noto Sans KR;
+//     letter-spacing: 0px;
+//     color: #707070;
+//     margin-right: 10px;
+//   }
+
+// }
+// .attach-file {
+//   display: flex;
+//   align-items: center;
+
+//   height: 19px;
+//   text-align: left;
+//   font: normal normal normal 13px/19px Noto Sans KR;
+//   letter-spacing: 0px;
+//   color: #FF0000;
+//    .attach-link {
+//     overflow:hidden;
+//     text-overflow:ellipsis;
+//     white-space:nowrap;
+//     width: 100%;
+//    } 
+//   .attach-arrow {
+//     width: 10px;
+//     height: 10px;
+//     // background-color: #FF0000;
+//     margin-right: 16px;
+//     margin-left: 4px;
+    
+//     border-left: 1px solid red;
+//     border-bottom: 1px solid red;
+
+//     // .addfilebox{
+//     //   .addfile{
+//     //     width:10px;
+//     //     height:10px;
+//     //     border-left: 1px solid red;
+//     //     border-bottom: 1px solid red;
+//     //   }
+//     //   .black_addfile{
+//     //     width: 10px;
+//     //     height: 10px;
+//     //     border-left: 1px solid black;
+//     //     border-bottom: 1px solid black;
+//     //   }
+//     // }
+//   }
+// }
+
+//   .bottom {
+//     margin-top: 20px;
+//     margin-bottom: 40px;
+//     width: 100%;
+
+//     .buttons {
+//       margin: auto;
+//       width: max-content;
+//       display: flex;
+//     }
+//     button {
+//       width: 150px;
+//       height: 30px;
+//       border: none;
+
+//       .text {
+//         margin: auto;
+//         width: max-content;
+//         text-align: center;
+//         font: normal normal bold 15px/22px Noto Sans KR;
+//         letter-spacing: 0px;
+//         color: #FFFFFF;
+//         opacity: 1;
+//       }
+//       &.ok {
+//         background: #FF0000 0% 0% no-repeat padding-box;
+//         &.disabled {
+//           background: #707070 0% 0% no-repeat padding-box;
+//         }
+//       }
+//       &.cancel {
+//         background: #707070 0% 0% no-repeat padding-box;
+//       }
+//       opacity: 1;
+//       :first-child {
+//         margin-right: 20px;
+//       }
+//     }
+//   }
+
+//   .flexing-row {
+//     display: flex;
+//     flex-direction: row;
+//     align-items: center;
+//   }
+
+//   .hr {
+//     margin-top: 30px;
+//     margin-bottom: 29px;
+//     width: 1006px;
+//     height: 2px;
+//     border: 1px solid #EFEFEF;
+//   }
+// `;
+// const MainBox = styled.div`
+//   width:100%;
+//   .title{
+//     width:170px;
+//     height:29px;
+//     font-family:Noto Sans KR, Medium;
+//     font-size:${market_style.font.size.normal3};
+//     font-weight:500;
+//     // margin-left:130px;
+
+//   }
+//   .contentsBox{
+//     position: relative;
+//     width:100%;
+//     display:flex;
+//     padding-top:36px;
+//     .box_{
+//       width:50%;
+//     }
+//     .box_centering{
+//       width:50%;
+//       display:flex;
+//       justify-content:center;
+//     }
+//   }
+
+// `;
+
+// const FormBox = styled.div`
+//   width:${props => props.isHalf === true ? "50%" : "100%"};
+//   box-shadow: 5px 5px 10px #00000029;
+//   border-radius: 20px;
+//   padding:${props => props.isHalf === true ? "72px 50px 72px 50px" : "72px 113px 72px 113px"};
+//   margin-right:${props => props.isHalf === true ? "44px" : "10px"};
+
+//   .wrapper{
+//     width:100%;
+//     margin-bottom:50px;
+//   }
+//   .margin_zero{
+//     margin:0px;
+//   }
+//   .add_margin_bottom{
+//     margin-bottom:100px;
+//   }
+//   .flex{
+//     display:flex;
+//   }
+//   .centering{
+//     // align-items:center;
+//   }
+//   .color_red{
+//     color:red;
+//   }
+//   .innerWraper{
+//     width:100%;
+//     margin-bottom:26px;
+//     display:flex;
+//   }
+//   .addfilebox{
+//     height:40px;
+//     margin-right:8px;
+//     .addfile{
+//       width:20px;
+//       height:20px;
+//       border-left:1px dashed red;
+//       border-bottom:1px dashed red;
+//     }
+//     .black_addfile{
+//       width:20px;
+//       height:20px;
+//       border-left:1px dashed black;
+//       border-bottom:1px dashed black;
+//     }
+//   }
+//   .file_label_box{
+//     height:40px;
+//     display:flex;
+//     align-items:center;
+//   }
+ 
+//   .file_label{
+//     font-size:${market_style.font.size.small3};
+//     color:red;
+//   }
+//   ._black_{
+//     font-size:${market_style.font.size.small3};
+//     color:black;
+//   }
+//   .label2{
+//     min-width:157px;
+//     height:29px;
+//     font-size:${market_style.font.size.normal3};
+//     font-family:Noto Sans CJK KR, Regular;
+//     // color:#707070;
+//     margin-right:60px;
+//   }
+//   .label{
+//     min-width:157px;
+//     height:max-content;
+//     font-size:${market_style.font.size.normal3};
+//     font-family:Noto Sans CJK KR, Regular;
+//     color:#707070;
+//     margin-right:60px;
+//     border-right:2px solid #707070;
+//   }
+//   .label_centering{
+//     text-align:center;
+//   }
+//   .index{
+//     width:30px;
+//     height:30px;
+//     color:#707070;
+//   }
+//   .textBox{
+//     font-family:Noto Sans CJK KR, Regular;
+//     font-size:${market_style.font.size.small3};
+//     line-height:17px;
+//     display:flex;
+//   }
+
+// `;
+
+// const TagList = styled.div`
+//   width: 100%;
+//   display: flex;
+//   // padding: 10px;
+//   flex-wrap: wrap;
+// `;
+// const TagPiece = styled.div`
+//     width:max-content;
+//     min-width:30px;
+//     max-height:30px;
+//     border:1px solid #707070;
+//     border-radius:15px;
+//     padding: 8px 10px 5px 10px;
+//     display: flex;
+//     justify-content: space-between;
+//     align-items:center;
+//     font-size:${market_style.font.size.small1};
+//     font-family:Noto Sans CJK KR, Regular;
+//     margin-right:8px;
+//     .close {
+//         color:#707070;
+//         margin-left: 10px;
+//         width: max-content;
+//         height: max-content;
+//         padding: 0px 2px;
+//         cursor:pointer;
+//     }
+// `;
 
 class ResponseToDesignerReq extends Component {
   constructor(props) {
@@ -407,21 +633,6 @@ class ResponseToDesignerReq extends Component {
     this.getEndDateValue = this.getEndDateValue.bind(this);
     this.getDayDateValue = this.getDayDateValue.bind(this);
   }
-  // componentDidMount() {
-  //   // //test 데이터 초기화
-  //   // this.setState({
-  //   //   category_level1: 1,
-  //   //   category_level2: 0,
-  //   //   title: "제작의뢰합니다.",
-  //   //   tag: ["테스트1", "테스트2", "테스트3"],
-  //   //   price: 12300,
-  //   //   content: "제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰제작의뢰",
-  //   //   location: "대한민국 서울특별시",
-  //   //   offline: 0,
-  //   //   amount: 1,
-  //   //   ownership: 0,
-  //   // });
-  // };
 
   async onChangeResponseContent(data) {
     await this.setState({ content: data.content });
@@ -491,11 +702,9 @@ class ResponseToDesignerReq extends Component {
     })
     return (<Wrapper>
       {/*  */}
-      <div className="header">
         <div className="title">
-          <div className="text">디자인 의뢰 응답</div>
+          <p className="text">디자인 의뢰 응답</p>
         </div>
-      </div>
 
       {/*  */}
       <div className="form-list">
@@ -530,17 +739,16 @@ class ResponseToDesignerReq extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="label">의뢰 내용</div>
-            <div className="content">
-              <div dangerouslySetInnerHTML={{ __html: `${detail.content || ""}` }} />
-              <div className="attach-file">
-                <div className="attach-arrow" />
-                <div className="attach-link">
-                  첨부파일: {detail.filename ? <a href={detail.file_url}>{detail.filename}</a> : "없음"}
-                </div>
-              </div>
+          <div className="label">의뢰 내용</div>
+          <div className="content">
+            <div dangerouslySetInnerHTML={{ __html: `${detail.content || ""}` }} />
+            <div className="attach-file">
+              <div className="attach-arrow" />
+              <div className="attach-link">
+                첨부파일: {detail.filename ? <a href={detail.file_url}>{detail.filename}</a> : "없음"}</div> {/* &#10145; */}
             </div>
           </div>
+        </div>
 
           <div className="row">
             <div className="label">희망비용</div>
@@ -572,18 +780,15 @@ class ResponseToDesignerReq extends Component {
 
           <div className="row">
             <div className="label no-border">응답 내용</div>
-            <div className="content no-margin">
-              <TextControllerClassic
-                item={{ content: this.state.content, /*height: 388*/ }}
-                name={"comment"}
-                getValue={this.onChangeResponseContent}
-                // width="820"
-                editheight="311"
-                marginBottom="0"
-                border="1px solid #707070"
-              // initClick={this.state.click}
-              // deleteItem={this.deleteItem}
-              />
+            <div className="content" style={{maxWidth:"768px"}}>
+            <TextControllerClassic
+              item={{ content: this.state.content, /*height: 388*/ }}
+              name={"comment"}
+              getValue={this.onChangeResponseContent}
+              editheight="388"
+              marginBottom="0"
+              border="1px solid #707070"
+            />
             </div>
           </div>
 

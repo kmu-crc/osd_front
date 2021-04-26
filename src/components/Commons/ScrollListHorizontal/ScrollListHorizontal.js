@@ -30,7 +30,7 @@ const SliderBox = styled.div`
 
     .left_gradient{
       position:absolute;
-      left:0px;
+      left:-1px;
       width:111px;
       height:338px;
       padding:143px 68px 124px 30px;
@@ -47,7 +47,7 @@ const SliderBox = styled.div`
     }
     .right_gradient{
       position:absolute;
-      right:0px;
+      right:-1px;
       width:111px;
       height:300px;
       padding:143px 30px 124px 68px;
@@ -78,7 +78,7 @@ class ScrollListHorizontal extends Component {
   async handleScroll(event) {
 
     if (event.target.id == "wrapper_top") {
-      console.log(document.getElementById("wrapper_top").scrollLeft, document.getElementById("wrapper_top").scrollWidth - 1366);
+      // console.log(document.getElementById("wrapper_top").scrollLeft, document.getElementById("wrapper_top").scrollWidth - 1366);
       document.getElementById("wrapper_top").scrollLeft > 5 ? await this.setState({ L_handler: true }) : await this.setState({ L_handler: false });
       document.getElementById("wrapper_top").scrollLeft < document.getElementById("wrapper_top").scrollWidth - 1366
         ? await this.setState({ R_handler: true }) : await this.setState({ R_handler: false });
@@ -95,14 +95,26 @@ class ScrollListHorizontal extends Component {
         {
           this.state.L_handler ?
             <div className="left_gradient">
-              <div className="arrow" onClick={() => this.onClickArrow(-1000)}></div>
+              <div className="arrow" onClick={() => this.onClickArrow(
+                window.innerWidth>1366?-1200
+                :window.innerWidth>1200?-1000
+                :window.innerWidth>1000?-800
+                :window.innerWidth>800?-600
+                :-400
+                )}></div>
             </div>
             : null
         }
         {
           this.state.R_handler ?
             <div className="right_gradient">
-              <div className="arrow" onClick={() => this.onClickArrow(1000)}></div>
+              <div className="arrow" onClick={() => this.onClickArrow(
+                 window.innerWidth>1366?1200
+                 :window.innerWidth>1200?1000
+                 :window.innerWidth>1000?800
+                 :window.innerWidth>800?600
+                 :400
+                )}></div>
             </div>
             : null
         }
@@ -122,40 +134,6 @@ class ScrollListHorizontal extends Component {
           }
         </div>
       </SliderBox>
-      //     <SlideWrap id="content">
-      //       <Carousel
-      //       autoCycle={false}
-      //       breakpoints={[
-      //     {
-      //       breakpoint: 500,
-      //       settings: {
-      //         slidesToShow: 1,
-      //         slidesToScroll: 1,
-      //       },
-      //     },
-      //     {
-      //       breakpoint: 768,
-      //       settings: {
-      //         slidesToShow: 1,
-      //         slidesToScroll: 1,
-      //       },
-      //     },
-      //   ]}
-      //   showSides={true}
-      //   sidesOpacity={.5}
-      //   sideSize={-0.5}
-      //   slidesToScroll={4}
-      //   slidesToShow={6}
-      //   scrollOnDevice={true}
-      //   cycleInterval={6000}
-      // >
-      //       {List.length ? List.map((item, index) =>
-      //       <Slide key={index}>
-      //           <ListComponent data={item} />
-      //       </Slide>) : (
-      //           <div style={{ marginLeft: "auto", marginRight: "auto" }}>노 데이타!</div>)}
-      //           </Carousel>
-      //     </SlideWrap>
     );
   }
 }

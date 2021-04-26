@@ -5,15 +5,17 @@ import styled from "styled-components";
 import market_style from "market_style";
 // CSS STYLING
 const ScrollContainer = styled.div`
-*{
-  // border:1px solid black;
-}
+  .wrapper_{
+    width:100%;
+  }
 `;
 const ListContainer = styled.div`
+
   padding:0px;
-  display: flex;
   flex-wrap: wrap;
   width: 100%;
+  display:flex;
+  
   .item{
     flex: 0 0 180px;
     justify-content: space-around;
@@ -47,6 +49,9 @@ const ListContainer = styled.div`
     justify-content: space-around;
     margin: ${props => props.isSmall == true ? "0px 0px 35px 30px" : "0px 0px 35px 30px"};
     padding: 0px;
+  }
+  @media only screen and (min-width: 500px) and (max-width:1366px){
+    justify-content:center;
   }
 `;
 const NoData = styled.div`
@@ -90,7 +95,7 @@ class ScrollList extends Component {
       this.props.dataListAdded &&
         this.props.dataListAdded.length > 0 ?
         <ScrollContainer>
-          <InfiniteScroll id={this.props.scrollId || "infi-scroll"} threshold={100} pageStart={0}
+          <InfiniteScroll className="wrapper_" id={this.props.scrollId || "infi-scroll"} threshold={100} pageStart={0}
             loadMore={this.getLoadData} hasMore={this.state.hasMore}
             loader={
               <Loader className="loading" active={false}
