@@ -27,7 +27,8 @@ const EditorWrapper = styled.div`
         height:100%;
         height:${props => props.editheight == null ? "100%" : props.editheight + "px"};
         font-size: ${market_style.font.size.tiny1};
-        border: ${props => props.border == null ? "1px solid #EFEFEF" : props.border};
+        // border: ${props => props.border == null ? "1px solid #EFEFEF" : props.border};
+        border:none;
         .ql-snow {
             max-height: ${props => props.editheight == null ? "100%" : props.editheight - 44 + "px"};
         }
@@ -35,7 +36,6 @@ const EditorWrapper = styled.div`
             max-height: ${props => props.editheight == null ? "100%" : props.editheight - 44 + "px"};
         }
         .ql-blank {
-            // background-color: red;
             max-height: ${props => props.editheight == null ? "100%" : props.editheight - 44 + "px"};
         }
     }

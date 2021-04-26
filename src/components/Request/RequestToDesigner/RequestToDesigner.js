@@ -352,12 +352,9 @@ class RequestToDesigner extends Component {
               item={{ content: this.state.content, /*height: 388*/ }}
               name={"comment"}
               getValue={this.onChangeContent}
-              // width="820"
               editheight="388"
               marginBottom="0"
               border="1px solid #707070"
-            // initClick={this.state.click}
-            // deleteItem={this.deleteItem}
             />
           </div>
         </div>

@@ -14,12 +14,9 @@ const MainBox = styled.div`
     font-family:Noto Sans KR,Medium;
     color:#060000;
   }
-
-  width:806px;
-  height:496px;
-  padding:75px;
+  width:max-content;
+  height:max-content;
   display:flex;
-  padding:89px 205px 108px 205px;
   .contentsBox{
     width:396px;
     display:flex;

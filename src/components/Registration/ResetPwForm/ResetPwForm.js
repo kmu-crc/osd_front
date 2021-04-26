@@ -20,13 +20,18 @@ const ResetFormCard = styled.div`
   font-family:Noto Sans KR,Medium;
   color:#707070;
 }
-width:933px;
-height:309px;
+width:100%;
+height:max-content;
 padding:28px;
 display:flex;
 justify-content:center;
 align-items:center;
-
+.centering{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
   .contentsBox{
     width:498px;
     height:100%;
@@ -34,13 +39,13 @@ align-items:center;
     flex-direction:column;
 
     .titleBox{
-      
       width:100%;
       display:flex;
       flex-direction:column;
       justify-content:center;
       align-items:center;
       .title{
+        color:black;
         font-size:${market_style.font.size.normal3};
         font-weight:700;
       }
@@ -55,9 +60,8 @@ align-items:center;
       *{
         font-size:${market_style.font.size.small2};
       }
+      margin-bottom:13px;
       display:flex;
-      height:43px;
-      margin-bottom:19px;
       .label{
         min-width:104px;
         font-weight:500;
@@ -90,22 +94,23 @@ const ResetForm = styled.form`
 `
 const InputTextBox = styled.input.attrs({ type: 'text' })`
   border:none;
-  width:100%;
-  height:100%;
+  width:300px;
+  height:25px;
   padding-left:20px;
   background-color:#E9E9E9;
   border-radius:21px;
   display:flex;
   justify-content:center;
   outline:none;
-  
+  font-size:${market_style.font.size.tiny2};
   color:#060000;
+  font-weight:300;
 `
 const CustomButton = styled.div`
   width:${props => props.width}px;
   height:${props => props.height}px;
   border:1px solid ${props => props.borderColor};
-  border-radius:${props => props.borderRadius}px;
+  // border-radius:${props => props.borderRadius}px;
   background-color:${props => props.bgColor};
   color:${props => props.fontColor};
   display:flex;
@@ -174,7 +179,7 @@ class ResetPwForm extends Component {
     return (
       // <Bg>
         <ResetFormCard>
-        <form onSubmit={this.onSubmit}>
+        <form className="centering" onSubmit={this.onSubmit}>
 
            <div className="contentsBox">
               <div className="titleBox">
@@ -192,7 +197,7 @@ class ResetPwForm extends Component {
                   onChange={this.onChangeValue} />
             </div>
             <div className="row spaceBetween">
-            <CustomButton onClick={this.onSubmit} width={251} height={43}
+            <CustomButton onClick={this.onSubmit} width={150} height={30}
                   bgColor={"red"} borderRadius={21} borderColor={"red"} fontColor={"white"}>전송</CustomButton>
             </div>
           </ResetForm>
