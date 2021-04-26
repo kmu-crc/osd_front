@@ -875,7 +875,7 @@ class ItemPurchase extends Component {
                       : null}
 
                     {item && item.upload_type === "project"
-                      ? <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} />
+                      ? <ItemStepContainer header={item.headers[0]} index={0} item={item} id={item["item-id"]} bought={item.bought} />
                       : null}
                   </div>
                   {/* {item && item.upload_type === "blog"? <div className="detail_board" id="detail_board">
