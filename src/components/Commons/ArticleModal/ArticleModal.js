@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
+
 const WriteNormalArticleModal = styled(Modal)`
   width:988px;
   height:max-content;
@@ -99,77 +100,77 @@ const TitleForm = styled.input`
   outline: none;
   border-radius: 10px;
 `
-const CommentForm = styled.textarea`
-  padding:10px;
-  resize:none;
-  width:100%;
-  height:100px;
-  border:1px solid #E6E6E6;
-  outline:none;
-  border-radius:10px;
-`
+//const CommentForm = styled.textarea`
+//  padding:10px;
+//  resize:none;
+//  width:100%;
+//  height:100px;
+//  border:1px solid #E6E6E6;
+//  outline:none;
+//  border-radius:10px;
+//`
 class ArticleModal extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            title:"",content:"",
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: "", content: "",
     }
-    render(){
-      const Mandatory = () => <span style={{color:"red"}} title="필수사항입니다.">*</span>
+  }
+  render() {
+    const Mandatory = () => <span style={{ color: "red" }} title="필수사항입니다.">*</span>
 
-        return(
-            <React.Fragment>
-                <WriteNormalArticleModal open={this.props.write} onClose={async(e) => {
-                  if(this.state.title!=""||this.state.content!=""){
-                    if(await confirm("내용이 저장되지 않습니다. 그래도 닫으시겠습니까?","예","아니오")){
-                      e.preventDefault();
-                    }else{
-                      return;
-                    }
-                  }
-                  this.setState({ title: "", content: "" });this.props.handlerModal(false)
-                  }}>
-                        <div className="close-box" onClick={() => {this.setState({ title: "", content: "" });this.props.handlerModal(false)}}>
-                            <Cross style={{cursor:"pointer"}} angle={45} color={"#000000"} weight={3} width={15} height={15} />
-                        </div>
-                        <div className="form align_item_center">
-                            <div className="title_label">제목<Mandatory/></div>
-                            <TitleForm
-                            value={this.state.title || ""}
-                            onChange={event => this.setState({ title: event.target.value })}
-                            name="title"
-                            />
-                            </div>
-                            <div className="form form_height">
-                            <div className="title_label ">내용<Mandatory/></div>
-                            <div style = {{width:"100%",display:"flex",justifyContent:"center"}}>
-                            <TextControllerClassic
-                            item={{content:this.state.content}}
-                            name={"content"}
-                            getValue={async(data)=>{this.setState({content:data.content})}}
-                            width="700"
-                            editheight="240"
-                            />
-                            </div>
-                        </div>
-                        <div className="form redButtonBox">
-                            <div className="redButton" onClick={async()=>{
-                              if(this.state.title==""){
-                                await alert("게시글의 제목을 입력해주세요.");
-                                return;
-                              }else if(this.state.content==""){
-                                await alert("게시글의 내용을 입력해주세요");
-                                return;
-                              }
-                              this.props.createNoneRequest(this.state.title,this.state.content)}} >
-                                <div className="btnText" >작성하기</div>
-                            </div>
-                        </div>
-                </WriteNormalArticleModal>
-            </React.Fragment>
-        );
-    }
+    return (
+      <React.Fragment>
+        <WriteNormalArticleModal open={this.props.write} onClose={async (e) => {
+          if (this.state.title !== "" || this.state.content !== "") {
+            if (await confirm("내용이 저장되지 않습니다. 그래도 닫으시겠습니까?", "예", "아니오")) {
+              e.preventDefault();
+            } else {
+              return;
+            }
+          }
+          this.setState({ title: "", content: "" }); this.props.handlerModal(false)
+        }}>
+          <div className="close-box" onClick={() => { this.setState({ title: "", content: "" }); this.props.handlerModal(false) }}>
+            <Cross style={{ cursor: "pointer" }} angle={45} color={"#000000"} weight={3} width={15} height={15} />
+          </div>
+          <div className="form align_item_center">
+            <div className="title_label">제목<Mandatory /></div>
+            <TitleForm
+              value={this.state.title || ""}
+              onChange={event => this.setState({ title: event.target.value })}
+              name="title"
+            />
+          </div>
+          <div className="form form_height">
+            <div className="title_label ">내용<Mandatory /></div>
+            <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+              <TextControllerClassic
+                item={{ content: this.state.content }}
+                name={"content"}
+                getValue={async (data) => { this.setState({ content: data.content }) }}
+                width="700"
+                editheight="240"
+              />
+            </div>
+          </div>
+          <div className="form redButtonBox">
+            <div className="redButton" onClick={async () => {
+              if (this.state.title === "") {
+                await alert("게시글의 제목을 입력해주세요.");
+                return;
+              } else if (this.state.content === "") {
+                await alert("게시글의 내용을 입력해주세요");
+                return;
+              }
+              this.props.createNoneRequest(this.state.title, this.state.content)
+            }} >
+              <div className="btnText" >작성하기</div>
+            </div>
+          </div>
+        </WriteNormalArticleModal>
+      </React.Fragment>
+    );
+  }
 }
 export default ArticleModal;
-                      
