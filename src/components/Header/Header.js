@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
-import MenuContext from "Global/Context/GlobalContext"
-
-import Message from "components/Header/Message"
-import logo from "source/logo.png"
-import AlarmContainer from "containers/Header/AlarmContainer"
-import SearchForm from "components/Header/SearchForm"
-import SignNav from "components/Header/SignNav"
-import Socket from "modules/Socket"
-import opendesign_style from "opendesign_style"
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import MenuContext from "Global/Context/GlobalContext";
+import Message from "components/Header/Message";
+import logo from "source/logo.png";
+import AlarmContainer from "containers/Header/AlarmContainer";
+import SearchForm from "components/Header/SearchForm";
+import SignNav from "components/Header/SignNav";
+import Socket from "modules/Socket";
+import opendesign_style from "opendesign_style";
+import Logo from "source/logo.png";
 
 // CSS
 const WrapperBox = styled.div`
@@ -242,7 +242,80 @@ const RightMenu = styled.ul`
 
     }
 
-`
+`;
+const LoadingIconBox = styled.div`
+  width:100px;
+  height:100px;
+  margin:0 auto;
+  background: ${props => `url(${props.imageURL})`};
+  background-position:center center;
+  background-repeat:no-repeat;
+  -webkit-animation: jello-horizontal 0.9s infinite both;
+            animation: jello-horizontal 0.9s infinite both;
+  
+  @-webkit-keyframes jello-horizontal {
+    0% {
+      -webkit-transform: scale3d(1, 1, 1);
+              transform: scale3d(1, 1, 1);
+    }
+    30% {
+      -webkit-transform: scale3d(1.25, 0.75, 1);
+              transform: scale3d(1.25, 0.75, 1);
+    }
+    40% {
+      -webkit-transform: scale3d(0.75, 1.25, 1);
+              transform: scale3d(0.75, 1.25, 1);
+    }
+    50% {
+      -webkit-transform: scale3d(1.15, 0.85, 1);
+              transform: scale3d(1.15, 0.85, 1);
+    }
+    65% {
+      -webkit-transform: scale3d(0.95, 1.05, 1);
+              transform: scale3d(0.95, 1.05, 1);
+    }
+    75% {
+      -webkit-transform: scale3d(1.05, 0.95, 1);
+              transform: scale3d(1.05, 0.95, 1);
+    }
+    100% {
+      -webkit-transform: scale3d(1, 1, 1);
+              transform: scale3d(1, 1, 1);
+    }
+  }
+  @keyframes jello-horizontal {
+    0% {
+      -webkit-transform: scale3d(1, 1, 1);
+              transform: scale3d(1, 1, 1);
+    }
+    30% {
+      -webkit-transform: scale3d(1.25, 0.75, 1);
+              transform: scale3d(1.25, 0.75, 1);
+    }
+    40% {
+      -webkit-transform: scale3d(0.75, 1.25, 1);
+              transform: scale3d(0.75, 1.25, 1);
+    }
+    50% {
+      -webkit-transform: scale3d(1.15, 0.85, 1);
+              transform: scale3d(1.15, 0.85, 1);
+    }
+    65% {
+      -webkit-transform: scale3d(0.95, 1.05, 1);
+              transform: scale3d(0.95, 1.05, 1);
+    }
+    75% {
+      -webkit-transform: scale3d(1.05, 0.95, 1);
+              transform: scale3d(1.05, 0.95, 1);
+    }
+    100% {
+      -webkit-transform: scale3d(1, 1, 1);
+              transform: scale3d(1, 1, 1);
+    }
+  }
+`;
+const DevNoticeModal = styled.div`
+`;
 function isOpen(ws) { return ws.readyState === ws.OPEN }
 class Header extends Component {
     constructor(props) {
@@ -285,15 +358,6 @@ class Header extends Component {
         }
         window.addEventListener("resize", this.handleResize, false);
     };
-    componentWillUpdate(nextProps) {
-        // console.log(this.props.userInfo)
-        if (this.props.userInfo != null && nextProps.userInfo != null && this.props.userInfo.uid != null && nextProps.userInfo.uid != null) {
-            if (this.props.userInfo.uid !== nextProps.userInfo.uid) {
-                window.history.go(0);
-            }
-        }
-
-    }
     componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize, false);
         // this.audio.removeEventListener('ended', () => this.setState({ play: false }));
@@ -305,65 +369,72 @@ class Header extends Component {
     handleResize = () => {
         this.setState({ screenWidth: window.innerWidth })
     };
+    componentDidMount(prevProps) {
+        if (this.props.userInfo && prevProps.userInfo == null) {
+            return true;
+        }
+    }
 
     render() {
-        return (
-            <React.Fragment>
-                <WrapperBox>
-                    <Menu className={(this.context.hidemenu ? " hidemenu" : "")}>
+        // const { devNotice } = this.props;
 
-                        <RightMenu>
-                                <CenterMenu>
-                                {window.location.href.search('/search') > -1 ? null :
+        return (<React.Fragment>
+            <WrapperBox>
+                {/* {devNotice && devNotice.length > 0 && devNotice.map(note => { })} <LoadingIconBox imageURL={Logo} /> */}
+
+                <Menu className={(this.context.hidemenu ? " hidemenu" : "")}>
+
+                    <RightMenu>
+                        <CenterMenu>
+                            {window.location.href.search('/search') > -1 ? null :
                                 <div className="searchItem">
                                     <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={1} />
                                 </div>}
-                                 </CenterMenu>
-                            <div className="signnav">
+                        </CenterMenu>
+                        <div className="signnav">
                             {this.props.userInfo != null ? (
                                 <React.Fragment>
                                     <li className="IconItem"><Message noti={this.state.alarm} /></li>
                                     <li className="IconItem"><AlarmContainer {...this.props} alarm={this.state.alarm} /></li>
                                     <li className="redItem">
-                                    <div onClick={this.gotoCreateDesignPage}>디자인 등록</div></li>
+                                        <div onClick={this.gotoCreateDesignPage}>디자인 등록</div></li>
                                 </React.Fragment>
                             ) : null}
 
                             <li className="profileItem">
                                 <SignNav formWidth={this.state.screenWidth} {...this.props} /></li> {/* <SignNavContainer /> */}
-                            </div>
-                        </RightMenu>
+                        </div>
+                    </RightMenu>
 
-                        <LeftMenu>
-                            <li className="logoBox">
-                                <a href="/"><img alt="logo" className="logo" src={logo} /></a></li>
-                            <MenuItem isSelect={window.location.pathname === "/design"
-                                || window.location.pathname.search("/design/") > -1 ? true : false
-                                    || window.location.pathname.search("/designDetail/") > -1 ? true : false
-                                        || window.location.pathname.search("/createDesign/") > -1 ? true : false
-                                            || window.location.pathname.search("/modifyDesign/") > -1 ? true : false}>
-                                <a className="link_tag" href="/design">디자인</a></MenuItem>
-                            <MenuItem isSelect={window.location.pathname === '/group'
-                                || window.location.pathname.search("/group/") > -1 ? true : false
-                                    || (window.location.pathname.search('/groupDetail/') > -1 ? true : false)
-                                    || window.location.pathname.search("/createGroup/") > -1 ? true : false
-                                        || window.location.pathname.search("/modifyGroup/") > -1 ? true : false}>
-                                <a className="link_tag" href="/group">그룹</a></MenuItem>
-                            <MenuItem isSelect={window.location.pathname === '/designer'
-                                || window.location.pathname.search("/designer/") > -1 ? true : false
-                                    || (window.location.pathname.search('/designerDetail/') > -1 ? true : false)
-                                    || window.location.pathname.search("/createDesigner/") > -1 ? true : false
-                                        || window.location.pathname.search("/modifyDesigner/") > -1 ? true : false}>
-                                <a className="link_tag" href="/designer">디자이너</a></MenuItem>
+                    <LeftMenu>
+                        <li className="logoBox">
+                            <a href="/"><img alt="logo" className="logo" src={logo} /></a></li>
+                        <MenuItem isSelect={window.location.pathname === "/design"
+                            || window.location.pathname.search("/design/") > -1 ? true : false
+                                || window.location.pathname.search("/designDetail/") > -1 ? true : false
+                                    || window.location.pathname.search("/createDesign/") > -1 ? true : false
+                                        || window.location.pathname.search("/modifyDesign/") > -1 ? true : false}>
+                            <a className="link_tag" href="/design">디자인</a></MenuItem>
+                        <MenuItem isSelect={window.location.pathname === '/group'
+                            || window.location.pathname.search("/group/") > -1 ? true : false
+                                || (window.location.pathname.search('/groupDetail/') > -1 ? true : false)
+                                || window.location.pathname.search("/createGroup/") > -1 ? true : false
+                                    || window.location.pathname.search("/modifyGroup/") > -1 ? true : false}>
+                            <a className="link_tag" href="/group">그룹</a></MenuItem>
+                        <MenuItem isSelect={window.location.pathname === '/designer'
+                            || window.location.pathname.search("/designer/") > -1 ? true : false
+                                || (window.location.pathname.search('/designerDetail/') > -1 ? true : false)
+                                || window.location.pathname.search("/createDesigner/") > -1 ? true : false
+                                    || window.location.pathname.search("/modifyDesigner/") > -1 ? true : false}>
+                            <a className="link_tag" href="/designer">디자이너</a></MenuItem>
 
-                        </LeftMenu>
-                        {/* window.location.pathname === '/design'==false?1:-1||window.location.pathname.search('/design/') || window.location.pathname.search('/designDetail/') > -1 ? true : false */}
+                    </LeftMenu>
+                    {/* window.location.pathname === '/design'==false?1:-1||window.location.pathname.search('/design/') || window.location.pathname.search('/designDetail/') > -1 ? true : false */}
 
 
-                    </Menu>
-                </WrapperBox>
-            </React.Fragment>
-        )
+                </Menu>
+            </WrapperBox>
+        </React.Fragment>)
     }
 }
 
