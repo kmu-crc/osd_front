@@ -126,6 +126,9 @@ const SubmitResultModal = styled(Modal)`
       color: #707070;
     }
     .content_box{
+      max-width:100%;
+      overflow:hidden;
+      word-break:break-all;
       display:flex;
       margin-top:30px;
       .name{

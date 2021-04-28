@@ -3,8 +3,9 @@ import styled from "styled-components";
 
 const MsgSectionBoard = styled.div`
   width:100%;
-  height:100%;
-  padding-top:50px;
+  height:90%;
+  padding-top:10px;
+  padding-right:10px;
   position: relative;
   flex-direction: column-reverse;
   justify-content: flex-end;
@@ -23,7 +24,8 @@ const ReceiveMessageBox = styled.div`
   align-items:flex-end;
   .messageReceiveBubble{
     display: inline-block;
-    width: 45%;
+    width: max-content;  
+    max-width:100%;    
     padding: 13px 25px 13px 20px;
     border-radius: 20px;
     background-color: #FFFFFF;
@@ -37,6 +39,7 @@ const ReceiveMessageBox = styled.div`
     color: #707070;
     text-align: left;
     line-height: 25px;
+    overflow-y:auto;
   }
   .messageReceiveTime {
     width: 100px;
@@ -62,11 +65,11 @@ const SendMessageBox = styled.div`
     align-items:flex-end;
     .messageSendBubble{
       display: inline-block;
-      width: 45%;
+      width: max-content;  
+      max-width:100%;    
       padding: 13px 25px 13px 20px;
       border-radius: 20px;
       background-color: #FFFFFF;
-      word-wrap:break-word;
     }
     .messageText {
       width: 100%;
@@ -76,6 +79,7 @@ const SendMessageBox = styled.div`
       color: #707070;
       text-align: left;
       line-height: 25px;
+      overflow-y:auto;
     }
     .messageSendTime {
       width: 100px;
@@ -195,15 +199,21 @@ class MessageDetail extends Component {
             , hasMore: this.checkHasMore(this.props.MessageDetail)
             , addList: this.props.MessageDetail, nowList: this.props.MessageDetail.reverse().concat(this.state.nowList)
           });
+          
+          return;
+        }).then(()=>{
           this.state.page === 1 && this.ScrollDown();
-        }).catch((err) => {
+        })
+        .catch((err) => {
           console.error(err);
           this.setState({ loading: false, hasMore: false });
         });
     });
   }
   ScrollDown() {
-    document.getElementById("MsgBox").scrollTo(0, document.getElementById("MsgBox").scrollHeight - 10);
+    // document.getElementById("MsgBox").scrollTo(0, document.getElementById("MsgBox").scrollHeight);
+    document.getElementById("MsgBox").scrollTop = document.getElementById("MsgBox").scrollHeight;
+    console.log(document.getElementById("MsgBox").scrollHeight);
   }
   handleScroll = async (e) => {
     const reach = e.target.scrollTop <= this.state.gap;
@@ -233,6 +243,7 @@ class MessageDetail extends Component {
     const arrMsg = list && list.length > 0 ? list.map(item => {
       let isMyMsg = true;
       if (item.from_user_id !== myId) isMyMsg = false;
+      console.log(item.message);
       return (
         <React.Fragment key={item.uid}>
           <LoadMessage isMyMsg={isMyMsg} msgText={item.message === "" ? "\u00a0" : item.message} updateTime={CheckedTime(item.create_time)} />
