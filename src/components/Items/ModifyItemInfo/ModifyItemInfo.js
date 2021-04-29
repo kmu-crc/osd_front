@@ -80,6 +80,16 @@ const MainBox = styled.div`
       color:black;
     }
   }
+  @media only screen and (min-width: 1000px) and (max-width:1366px){
+    .flexWrap{
+      flex-wrap:nowrap;
+    }
+  }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    .flexWrap{
+      flex-wrap:wrap;
+    }
+  }
 `;
 
 const ButtonBox = styled.div`
@@ -93,22 +103,6 @@ const ButtonBox = styled.div`
   padding-top:20px;
   margin-bottom:70px;
 `;
-// const RedButton = styled.div`
-//   width: 290px;
-//   height: 70px;
-//   font-family: Noto Sans KR;
-//   font-size:30px;
-//   font-weight: 500;
-//   color: white;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   background-color: ${props => props.gray ? "gray" : "red"};
-//   cursor:pointer;
-//   // position: absolute;
-//   // left:${props => props.left};
-//   // bottom:${props => props.bottom};
-// `;
 const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
@@ -120,6 +114,9 @@ const ThumbnailBox = styled.div`
   box-shadow: 3px 3px 5px #0000001A;
   border:1px solid #eaeaea;
   border-radius:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
   .label{
     width:100%;
     text-align:center;
@@ -132,6 +129,14 @@ const ThumbnailBox = styled.div`
     display:flex;
     align-items:center;
     margin-bottom:20px;
+  }
+  @media only screen and (min-width: 1000px) and (max-width:1366px){
+    margin-bottom:20px;
+  }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    width:100%;
+    margin-bottom:20px;
+    margin-right:0px;
   }
 `;
 const Thumbnail = styled.div`
@@ -149,30 +154,34 @@ const Thumbnail = styled.div`
   cursor:pointer;
 `;
 const FormBox = styled.div`
-
-  width:${props => props.width != null ? props.width+"px" : "100%"};
-  height:${props => props.height != null ? props.height+"px" : "max-content"};
+  width:100%;
+  // max-width:1014px;
+  max-width:${props => props.width != null ? props.width + "px" : "100%"};
+  height:${props => props.height != null ? props.height + "px" : "max-content"};
   box-shadow: ${props => props.boxShadow == null ? "" : "5px 5px 10px #00000029"};
   margin-top: ${props => props.marginTop || 0}px;
   margin-bottom: ${props => props.marginBottom || 0}px;
   border-radius: 20px;
-  padding: ${props=>props.padding==null?"30px 50px":props.padding};
+  padding: ${props => props.padding == null ? "30px 50px" : props.padding};
   border:1px solid #eaeaea;
 
   .FormBoxScroll{
+    position: relative;
     padding:0px 15px 0px 0px;
     width:100%;
     height:100%;
-    overflow-Y:auto;
+    overflow-Y:overlay;
     overflow-X:hidden;
+  }
+  .flexWrapBox{
+    width:100%;
+    display:flex;
+    flex-wrap:wrap;
   }
   .maxWidth{
     width:100%;
   }
   .contentWrap{
-    // *{
-    //   border:1px solid black;
-    // }
   }
   .Vcentering{
     align-items:center;
@@ -212,6 +221,13 @@ const FormBox = styled.div`
     width:30px;
     height:30px;
     color:#707070;
+  }
+  .remove-margin{
+    // margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    padding:27px;
   }
 `;
 const DescirptionText = styled.div`
@@ -609,7 +625,7 @@ class ModifyItemInfo extends Component {
 
       {/* 공통/기본입력사항 */}
       {tab === "basic" ?
-        (<div className="contentsBox">
+        (<div className="contentsBox flexWrap">
           <ThumbnailBox>
             <div className="label">썸네일 이미지<Mandatory /></div>
             <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/*" />

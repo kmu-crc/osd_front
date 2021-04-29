@@ -6,6 +6,8 @@ import { SignOutRequest } from "actions/Registration";
 import { SetSession, GetSession } from "modules/Sessions";
 import { Dimmer, Loader } from "semantic-ui-react";
 import { SetActive } from "actions/OpenDesign";
+// import { Socket } from "socket.io-client";
+import Socket from "modules/socket";
 
 export default function CheckAuth(Components) {
   class AuthenticatedComponent extends Component {
@@ -25,10 +27,10 @@ export default function CheckAuth(Components) {
       if (this.props.token != null) {
         SetSession("market", this.props.token);
       }
-      GetSession("market").then(token => {
-        this.props.CheckTokenRequest(token).then(data => {
-          this.setState({ valid: true });
-          // console.log(data);
+      GetSession("market").then((token) => {
+        this.props.CheckTokenRequest(token).then(async data => {
+          await this.setState({ valid: true });
+          Socket.emit("live socket id",this.props.userInfo.uid)          // console.log(data);
           // if (data && data.info) {
           //   if (!data.info.isDetail) {
           //     if (this.props.location.pathname === "/inserUserDetail") {

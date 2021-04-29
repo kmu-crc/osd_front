@@ -33,7 +33,7 @@ const MainBox = styled.div`
     // border:1px solid black;
     color:black;
   }
-  padding:10px 30px;
+  padding:20px 30px;
   .title{
     width:100%;
     display:flex;
@@ -53,8 +53,18 @@ const MainBox = styled.div`
     .marginTop{
       margin-top:20px;
     }
-`;
 
+    @media only screen and (min-width: 1000px) and (max-width:1366px){
+      .flexWrap{
+        flex-wrap:nowrap;
+      }
+    }
+    @media only screen and (min-width: 500px) and (max-width:1000px){
+      .flexWrap{
+        flex-wrap:wrap;
+      }
+    }
+`;
 const ThumbnailBox = styled.div`
   *{
     font-family:Noto Sans KR;
@@ -69,6 +79,9 @@ const ThumbnailBox = styled.div`
   border-radius: 20px;
   padding:20px 25px;
   margin-right:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
   .label{
     width:100%;
     display:flex;
@@ -88,6 +101,14 @@ const ThumbnailBox = styled.div`
     align-items:center;
     background:#EEEEEE;
     border-radius:50%;
+  }
+  @media only screen and (min-width: 1000px) and (max-width:1366px){
+    margin-bottom:20px;
+  }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    width:100%;
+    margin-bottom:20px;
+    margin-right:0px;
   }
 `;
 const Thumbnail = styled.div`
@@ -128,7 +149,9 @@ const ExperienceBox = styled.div`
       margin-bottom:5px;
       .number_label{
         width:7%;
+        min-width:max-content;
         font-size:${market_style.font.size.mini2};
+        margin-right:5px;
       }
       .text_label{
         width:31%;
@@ -181,6 +204,7 @@ const FormBox = styled.div`
     width:100%;
   }
   .wrapper{
+    
     width:100%;
     display:flex;
     align-items:center;
@@ -223,6 +247,14 @@ const FormBox = styled.div`
     width:30px;
     height:30px;
     color:#707070;
+  }
+  .flexWrapBox{
+    width:100%;
+    display:flex;
+    flex-wrap:wrap;
+  }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    padding:27px;
   }
 
 `;
@@ -284,6 +316,7 @@ const DropBox = styled(Dropdown)`
     font-size:${market_style.font.size.small1};
     border-radius:10px !important;
     position:relative !important;
+    
     .icon{
       width:max-content !important;
       height:max-content !important;
@@ -295,7 +328,9 @@ const DropBox = styled(Dropdown)`
       z-index:9999 !important;
 
     }
-    .
+    @media only screen and (min-width: 500px) and (max-width:1000px){
+      margin-bottom:10px;
+    }
 `;
 class CreateDesigner extends Component {
   constructor(props) {
@@ -477,7 +512,7 @@ class CreateDesigner extends Component {
 
         <MainBox>
           <div className="title">디자이너 등록</div>
-          <div className="contentsBox">
+          <div className="contentsBox flexWrap">
             <ThumbnailBox>
               <div className="label">프로필 썸네일<sub style={{color:"red"}}>*</sub></div>
               <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
@@ -504,8 +539,10 @@ class CreateDesigner extends Component {
 
               <div className="wrapper flex">
                 <div className="label">카테고리<sup style={{color:"red"}}>*</sup></div>
-                <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
-                <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
+                <div className="flexWrapBox">
+                  <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
+                  <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
+                </div>
               </div>
 
               <div className="wrapper flex">

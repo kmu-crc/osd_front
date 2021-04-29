@@ -72,6 +72,7 @@ const Arrow = styled.div`
 `;
 const GridEditorWrapper = styled.div`
     display: flex;
+    position:relative;
     width: ${window.innerWidth < osdcss.resolutions.LargeMaxWidth
         ? window.innerWidth
         : osdcss.resolutions.LargeMaxWidth}; 
@@ -90,7 +91,7 @@ const GridEditorWrapper = styled.div`
 `;
 const Wrapper = styled.div`
     height: 100%;
-    width: 1256px;
+    width: 100%;
     position: relative;
     overflow: hidden;
     // overflow-x: hidden;
