@@ -744,7 +744,7 @@ class MakerDetail extends Component {
 
           {/**보유아이템 */}
           <ItemInfo height={420} mTop={20}>
-            <div className="title margin_bottom">디자인 아이템</div>
+            <div className="title margin_bottom">제작 아이템</div>
             <div className="hrline margin_bottom"/>
             <div className="wrapItem">
           {<HaveInItemContainer id={this.props.id} />}

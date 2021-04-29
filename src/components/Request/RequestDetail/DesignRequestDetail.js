@@ -244,7 +244,11 @@ export const DesignRequestDetail = (props) => {
         <div className="content">{LocationList[location || 15].text}</div>
       </div>
       <div className="row">
-        <div className="label">디자인 소유권</div>
+          {
+            props.Detail.type === "designer" ?
+            <div className="label">디자인 소유권</div>
+            :<div className="label">제작 소유권</div>
+          }
         <div className="content">{ownership <= 0 ? "의뢰자" : "디자이너"}</div>
       </div>
     </div>

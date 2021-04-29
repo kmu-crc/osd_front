@@ -299,8 +299,10 @@ class Payment extends Component {
                         <div className="payment_button_Box">
                             <CustomButton
                                 width={150} height={30} fontSize={15} radius={0}
-                                backgroundColor={'#707070'} fontColor={"white"}
-                                onClick={() => total > Point ? this.gotoChargePoint() : this.purchaseThisItem(total)}
+                                backgroundColor={'#ff0000'} fontColor={"white"}
+                                onClick={() => {console.log(total,Point,total>Point)
+                                    total > Point ? this.gotoChargePoint() : this.purchaseThisItem(total)}
+                                }
                             ><div>결제</div></CustomButton>
                         </div>
                     </div>

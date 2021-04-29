@@ -278,7 +278,11 @@ export const DesignResponseDetail = (props) => {
           <div className="content">{LocationList[parseInt(request.location, 10) || 15].text}</div>
         </div>
         <div className="row">
-          <div className="label">디자인 소유권</div>
+          {
+            props.type === "designer" ?
+            <div className="label">디자인 소유권</div>
+            :<div className="label">제작 소유권</div>
+          }
           <div className="content">{request.ownership <= 0 ? "의뢰자" : "디자이너"}</div>
         </div>
       </div>

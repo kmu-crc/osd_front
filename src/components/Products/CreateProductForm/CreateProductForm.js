@@ -405,7 +405,6 @@ const MainBox = styled.div`
     width: 100%;
   }
   .centering{
-    padding-right:30px;
     justify-content:center; 
   }
   .justifyCenter{
@@ -424,6 +423,16 @@ const MainBox = styled.div`
     color: #FF0000;
     cursor: default;
   }
+  @media only screen and (min-width: 1000px) and (max-width:1366px){
+    .flexWrap{
+      flex-wrap:nowrap;
+    }
+  }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    .flexWrap{
+      flex-wrap:wrap;
+    }
+  }
 `;
 const ThumbnailBox = styled.div`
   *{
@@ -436,6 +445,9 @@ const ThumbnailBox = styled.div`
   box-shadow: 3px 3px 5px #0000001A;
   border:1px solid #eaeaea;
   border-radius:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
   .label{
     width:100%;
     text-align:center;
@@ -448,6 +460,14 @@ const ThumbnailBox = styled.div`
     display:flex;
     align-items:center;
     margin-bottom:20px;
+  }
+  @media only screen and (min-width: 1000px) and (max-width:1366px){
+    margin-bottom:20px;
+  }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    width:100%;
+    margin-bottom:20px;
+    margin-right:0px;
   }
 `;
 const Thumbnail = styled.div`
@@ -466,7 +486,9 @@ const Thumbnail = styled.div`
 `;
 
 const FormBox = styled.div`
-  width:${props => props.width != null ? props.width + "px" : "100%"};
+  width:100%;
+  // max-width:1014px;
+  max-width:${props => props.width != null ? props.width + "px" : "100%"};
   height:${props => props.height != null ? props.height + "px" : "max-content"};
   box-shadow: ${props => props.boxShadow == null ? "" : "5px 5px 10px #00000029"};
   margin-top: ${props => props.marginTop || 0}px;
@@ -482,6 +504,11 @@ const FormBox = styled.div`
     height:100%;
     overflow-Y:overlay;
     overflow-X:hidden;
+  }
+  .flexWrapBox{
+    width:100%;
+    display:flex;
+    flex-wrap:wrap;
   }
   .maxWidth{
     width:100%;
@@ -531,18 +558,8 @@ const FormBox = styled.div`
     // margin-top: 10px;
     margin-bottom: 10px;
   }
-  & .title-input {
-    width: 35%;
-    height: 31px;
-    background: #E9E9E9 0% 0% no-repeat padding-box;
-    border-radius: 10px;
-    border: none;
-
-    text-align: left;
-    font: normal normal 300 13px/19px Noto Sans KR;
-    letter-spacing: 0px;
-    color: #000; //#707070;
-    padding: 3px 0px 0px 11px;
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    padding:27px;
   }
 `;
 const DescirptionText = styled.div`
@@ -594,7 +611,6 @@ const InputTextarea = styled.textarea`
 
 `;
 const DropBox = styled(Dropdown)`
-
     width:160px;
     min-width:100px !important;
     min-height:31px !important;
@@ -606,6 +622,7 @@ const DropBox = styled(Dropdown)`
     font-size:${market_style.font.size.small1};
     border-radius:10px !important;
     position:relative !important;
+    
     .icon{
       width:max-content !important;
       height:max-content !important;
@@ -617,7 +634,9 @@ const DropBox = styled(Dropdown)`
       z-index:9999 !important;
 
     }
-    .
+    @media only screen and (min-width: 500px) and (max-width:1000px){
+      margin-bottom:10px;
+    }
 `;
 const InfoContentChooseItemType = styled.div`
   border: 1px dashed gray;
@@ -772,14 +791,14 @@ class CreateProductForm extends Component {
     const Mandatory = () => <span className="font_red" title="필수사항입니다.">*</span>
 
     console.log(this.state);
-    return (<MainBox>
+    return (<MainBox style={{padding:"0px 30px"}}>
       {this.state.loading ? <Loading /> : null}
       {this.props.keep ? <div>REDIRECTED</div> : null}
       {/* 타이틀 */}
       <div className="title">아이템 등록</div>
 
       {/* 공통/기본입력사항 */}
-      <div className="contentsBox centering">
+      <div className="contentsBox flexWrap centering">
         <ThumbnailBox>
           <div className="label">썸네일 이미지<Mandatory /></div>
           <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/*" />
@@ -790,7 +809,7 @@ class CreateProductForm extends Component {
           </label>
         </ThumbnailBox>
 
-        <FormBox height={302} marginBottom={20} boxShadow={true}>
+        <FormBox width={1014} height={302} marginBottom={20} boxShadow={true}>
           <div className="FormBoxScroll">
             <div className="wrapper margin_bottom flex">
               <div className="label">제목<Mandatory /></div>
@@ -798,10 +817,10 @@ class CreateProductForm extends Component {
             </div>
             <div className={"margin_bottom flex " + `${parseInt(this.state.category_level2, 10) === 42 ? "remove-margin" : ""}`}>
               <div className="label">카테고리<Mandatory /></div>
+              <div className="flexWrapBox">
               <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
               <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
-
-
+              </div>
               {parseInt(this.state.category_level2, 10) === 42 ?
                 <React.Fragment>
                   <DropBox id="category_level3" value={this.state.category_level3} selection options={category3} placeholder="언어선택" onChange={this.onClickCategorylevel3} />
@@ -815,7 +834,7 @@ class CreateProductForm extends Component {
             <div className="wrapper margin_bottom flex">
               <div className="label">태그</div>
               <div className="maxWidth">
-                <InputTag placeholder="태그를 입력하고 [enter]키를 누르세요" width={330} getValue={this.onHandleReturnedTags} />
+                <InputTag placeholder="태그를 입력하고 [enter]키를 누르세요" getValue={this.onHandleReturnedTags} />
               </div>
             </div>
 
@@ -879,6 +898,7 @@ class CreateProductForm extends Component {
 export default CreateProductForm;
 
 const DesignTemplateSelector = styled.div`
+  width:100%;
   .title {
     width:100%;
     text-align:center;
@@ -890,9 +910,14 @@ const DesignTemplateSelector = styled.div`
   .template-wrapper {
     display: flex;
     overflow: auto;
+    flex-wrap:wrap;
+    justify-content:center;
+
   }
   .element {
-    min-width: 150px;
+    width:100%;
+    max-width: 285px;
+    min-width:100px;
     margin: 5px;
     border: 2px solid #EFEFEF;
     padding: 5px;
@@ -900,6 +925,7 @@ const DesignTemplateSelector = styled.div`
       border: 2px solid #777777;
     }
   }
+
 `;
 class ItemTypeForm extends Component {
   constructor(props) {
@@ -1532,7 +1558,10 @@ class ItemLecture extends Component {
         </Field>
 
         <Field title="수강생 모집기간">
-          <CheckBox2 onChange={() => this.setState({ recruit_always: !recruit_always, })} checked={recruit_always} />&nbsp;상시모집&nbsp;&nbsp;
+          <div style={{display:"flex",flexWrap:"wrap"}}>
+          <div>
+          <CheckBox2 onChange={() => this.setState({ recruit_always: !recruit_always, })} checked={recruit_always} /></div>&nbsp;상시모집&nbsp;&nbsp;
+          <div style={{marginTop:"10px"}}>
           {!recruit_always
             ? <InputCalendar
               name="calendar"
@@ -1543,6 +1572,8 @@ class ItemLecture extends Component {
               getDayDateValue={this.getDayDateValue}
             />
             : null}
+            </div>
+            </div>
         </Field>
 
         <Field isMargin={false} isCentering={true} title="수강료">

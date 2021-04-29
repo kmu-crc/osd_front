@@ -77,7 +77,7 @@ class ScrollList extends Component {
       this.props.getListRequest(page)
         .then(() => {
           this.setState({
-            hasMore: this.props.dataList === null || this.props.dataList.length < 10 ? false : true,
+            hasMore: this.props.dataList === null || this.props.dataList.length < (this.props.type=="item"?8:10) ? false : true,
             loading: true
           });
         }).catch((err) => {

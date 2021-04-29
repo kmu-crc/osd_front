@@ -37,7 +37,7 @@ const MainBox = styled.div`
 // *{
 //   border:1px solid black;
 // }
-  width: 1366px;
+  width: 100%;
   padding:0px 30px 0px 30px;
   // height: 1959px;
   margin-top: 37px;
@@ -109,7 +109,9 @@ const ProfileBox = styled.div`
   }
 `;
 const InformationBox = styled.div` 
-    width: 1046px;
+    width:100%;
+    max-width:1046px;
+    min-width:50px;
     height: 335px;
     box-shadow: 3px 3px 5px #0000001A;
     border: 0.5px solid #EAEAEA;
@@ -189,6 +191,9 @@ const InformationBox = styled.div`
       margin-bottom:34px;
       text-align:center;
       color:black;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
     .grayBox{
       width:30%;
@@ -473,10 +478,6 @@ class MyDetail extends Component {
           </div>
           <div className="contents">
             <MenuBox>
-              {/* <div className="title_Label">아이템</div> */}
-              {/* <div className="title_Label">관심</div> */}
-              {/* <div className="title_Label">참여</div> */}
-              {/* <div className="title_Label">의뢰</div> */}
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 10 ? "red" : null} id="my_point_status">내 포인트 관리</MenuButton>
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 9 ? "red" : null} id="modify_myinfo">내 정보 수정</MenuButton>

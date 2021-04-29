@@ -32,7 +32,6 @@ const Wrapper = styled.div`
   align-items:center;
   .profileBox{
     width:100%;
-    
     display:flex;
     box-shadow: 3px 3px 5px #0000001A;
     border:1px solid #eaeaea;
@@ -46,38 +45,30 @@ const Wrapper = styled.div`
     width:100%;
     margin-top:20px;
   }
+  @media only screen and (max-width: 1000px) and (min-width: 500px){
+    .profileBox{
+      flex-direction:column;
+      flex-wrap:wrap;
+    }
+  }
 `;
 const ItemImages = styled.div`
-  max-width: 396px;
-  max-height: 354px;
-  min-width: 396px;
+  width: 396px;
+  min-width:396px;
+  height: 354px;
   min-height: 354px;
-  .main-image {
-    overflow-x: auto;
-    width: 100%;
-    height: 100%; 
-    background-image: url(${prop => prop.main});
-    background-size: contain;
-    background-position: center center;
-    background-repeat:no-repeat;
-  }
-  .sub-images {
-    margin-top: 30px;
-    .sub {
-      width: 102px;
-      height: 86px;
-      background-image: url(${prop => prop.main});
-      background-size: cover;
-      background-position: center center;
-    }
-    .nine-teen { margin-right: 19px; }
-    .eight-teen { margin-right: 18px; }
+  margin-right: 45px;
+  background-image: url(${prop => prop.main});
+  background-size: contain;
+  background-position: center center;
+  background-repeat:no-repeat;
+  @media only screen and (max-width: 1000px) and (min-width: 500px){
+    width:100%;
+    min-width:100%;
   }
 `;
 const ItemInfo = styled.div`
-
   position: relative;
-  margin-left: 45px;
   font-family: Noto Sans KR;
   background: #FFFFFF;
   width:100%;
@@ -506,7 +497,6 @@ const PeerBox = styled.div`
 const ItemContents = styled.div`
   // *{ border: 1px solid blue; }
   width: 100%;
-  // width: 1306px;
   height: 585px;
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #0000001A;
@@ -653,10 +643,7 @@ class ItemDetail extends Component {
         <Wrapper>
           {/* thumbnail and item-info */}
           <div className="profileBox">
-            <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg}>
-              <div className="main-image" />
-            </ItemImages>
-
+            <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg}/>
             <ItemInfo face={item.who || who}>
               <div className="flex-align-column line">
                 <div className="flex spaceBetween">

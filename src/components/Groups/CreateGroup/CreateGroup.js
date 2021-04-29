@@ -337,7 +337,6 @@ class CreateGroup extends Component {
   }
   render() {
     let count = 0;
-    // console.log(this.props.dataList);
     const itemList = this.props.dataList.length<0?{value:0,text:"없음"}:this.props.dataList.map((item,index)=>{
       return({value:count++,text:item.title,key:item.uid});
     })
@@ -396,7 +395,7 @@ class CreateGroup extends Component {
             </div>
             <div className="contentBox">
             <RedButton width={150} height={30} fontSize={15}  value={"등록하기"}  onClick={this.onSubmit}/>
-            <GrayButton isWhite={true} width={150} height={30} fontSize={15} text={"취소하시겠습니까?"} value={"취소하기"} onClick={this.onClickClose} isConfirm={true}></GrayButton>
+            <GrayButton width={150} height={30} fontSize={15} text={"취소하시겠습니까?"} value={"취소하기"} onClick={this.onClickClose} isConfirm={true}></GrayButton>
             </div>
         </MainBox>
       </React.Fragment>
