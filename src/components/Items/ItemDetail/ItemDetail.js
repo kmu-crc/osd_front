@@ -7,7 +7,6 @@ import Cross from "components/Commons/Cross"
 import who from "source/thumbnail.png";
 import CardSourceDetailContainer from "containers/Items/CardSourceDetailContainer";
 import ItemStepContainer from "containers/Items/ItemStepContainer";
-import Item2ndStepContainer from "containers/Items/Item2ndStepContainer";
 import ItemQuestionContainer from "containers/Items/ItemQuestionContainer";
 import ItemReviewContainer from "containers/Items/ItemReviewContainer";
 import PointFormat from "modules/PointFormat";
@@ -749,45 +748,29 @@ class ItemDetail extends Component {
           </div>
 
           {/* item-contents */}
-          <div className="row">
-            <ItemContents>
-              <div className="header">
-                <div className="title">
-                  {item.type === 8 ? "강의내용" : "아이템 상세내용"}
+          {item &&
+            item.headers &&
+            item.headers.length > 0 &&
+            item.headers.map(
+              (head, index) =>
+                <div className="row">
+                  <ItemContents>
+                    <div className="header">
+                      <div className="title">
+                        {head.name || "아이템 상세내용"}
+                      </div>
+                    </div>
+                    <div className="editor-wrapper">
+                      {head.editor_type === "project"
+                        ? <ItemStepContainer index={index} header={head} item={item} id={head.content_id} bought={item.bought} />
+                        : null}
+                      {head.editor_type === "blog"
+                        ? <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} />
+                        : null}
+                    </div>
+                  </ItemContents>
                 </div>
-              </div>
-
-              <div className="editor-wrapper ">
-                {item && item.upload_type === "blog"
-                  ? <div style={{ overflow: "auto", height: "100%", }}>
-                    <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} />
-                  </div>
-                  : null}
-
-                {item && item.upload_type === "project"
-                  ? <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} />
-                  : null}
-              </div>
-
-            </ItemContents>
-          </div>
-          {item.type === 8
-            ? <div className="row">
-              <ItemContents>
-                <div className="header">
-                  <div className="title">실습내용</div>
-                </div>
-
-                <div className="editor-wrapper ">
-                  {item && item.upload_type === "project"
-                    ? <Item2ndStepContainer item={item} id={item["item-id"]} bought={item.bought} />
-                    : null}
-                </div>
-
-              </ItemContents>
-            </div>
-            : null
-          }
+            )}
 
           {/* review and board */}
           <div className="row">

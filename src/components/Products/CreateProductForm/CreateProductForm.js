@@ -685,6 +685,7 @@ class CreateProductForm extends Component {
       thumbnail: null, thumbnail_name: null,
       tag: [], category1: null, category2: null, category3: null,
       itemType: -1, is_problem: false,
+      listname1: null, listname2: null,
       // send data - additional
       additional: null, content: [], steps: [], steps2: [], type: "blog", private: 0,
     };
@@ -711,11 +712,14 @@ class CreateProductForm extends Component {
       itemType: this.state.itemType,
       // additional
       additional: this.state.additional, content: this.state.content, step: this.state.steps, step2: this.state.steps2,
-      type: this.state.type, private: this.state.private
+      type: this.state.type, private: this.state.private,
+      // more
+      listname1: this.state.listname1, listname2: this.state.listname2
     };
-    // console.log("sent:", data);
-    // return;
     data.additional.description = data && data.additional && data.additional.description && data.additional.description.replace(/(?:\r\n|\r|\n)/g, '<br />');
+
+    // console.log(data);
+    // return;
 
     this.props.CreateDesignRequest(data, this.props.token)
       .then(async result => {
@@ -847,7 +851,7 @@ class CreateProductForm extends Component {
       <div className="contentsBox">
         {itemType > -1 ?
           <ItemTypeForm
-            returnState={obj => this.setState({ additional: obj.additional, content: obj.content, steps: obj.steps, steps2: obj.steps2, type: obj.type })}
+            returnState={obj => this.setState({ additional: obj.additional, content: obj.content, steps: obj.steps, steps2: obj.steps2, type: obj.type, listname1: obj.listname1, listname2: obj.listname2 })}
             itemType={this.state.itemType}
             userInfo={this.props.userInfo}
           />
@@ -926,9 +930,11 @@ const DesignTemplateSelector = styled.div`
 class ItemTypeForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { reset: 0, additional: null, content: [], steps: [], steps2: [], type: this.props.itemType === 1 || this.props.itemType === 8 ? "project" : "blog", template: null, /* 2nd template */ template_practice: null };
+    this.state = { reset: 0, additional: null, content: [], listname1: null, listname2: null, steps: [], steps2: [], type: this.props.itemType === 1 || this.props.itemType === 8 ? "project" : "blog", template: null, /* 2nd template */ template_practice: null };
     this.onHandleContent = this.onHandleContent.bind(this);
     this.onHandleAdditional = this.onHandleAdditional.bind(this);
+    this.onHandleFirstListName = this.onHandleFirstListName.bind(this);
+    this.onHandleSecondListName = this.onHandleSecondListName.bind(this);
     this.returnState = this.returnState.bind(this);
     this.onHandleGrid = this.onHandleGrid.bind(this);
     this.toProject = this.toProject.bind(this);
@@ -943,6 +949,14 @@ class ItemTypeForm extends Component {
   }
   async returnState() {
     this.props.returnState && this.props.returnState(this.state);
+  }
+  async onHandleFirstListName(event) {
+    await this.setState({ listname1: event.target.value });
+    this.returnState();
+  }
+  async onHandleSecondListName(event) {
+    await this.setState({ listname2: event.target.value });
+    this.returnState();
   }
   async onHandleContent(value) { //write content state
     await this.setState({ content: value.content });
@@ -984,7 +998,9 @@ class ItemTypeForm extends Component {
           </FormBox>
 
           <FormBox boxShadow={true} marginTop={25}>
-            {this.props.itemType === 8 ? <div> 강의내용구조 </div> : null}
+            {this.props.itemType === 8 ? <div>
+              <input onChange={this.onHandleFirstListName} className="title-input" placeholder="강의내용" />
+            </div> : null}
 
             <ResetButtonWrapper
               onClick={async () => {
@@ -1066,7 +1082,7 @@ class ItemTypeForm extends Component {
           {this.props.itemType === 8
             ? <FormBox boxShadow={true} marginTop={25}>
               <div>
-                실습내용구조
+                <input onChange={this.onHandleSecondListName} className="title-input" placeholder="실습내용" />
               </div>
               { // {/* 로컬 그리드 에디터 - */}
                 <React.Fragment>

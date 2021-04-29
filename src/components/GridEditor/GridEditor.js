@@ -5,11 +5,11 @@ import CardModal from "./CardModal";
 import NewStepModal from "./NewStepModal";
 import EditStepModal from "./EditStepModal";
 import NewCardModal from "./NewCardModal";
-import { ReactHeight } from 'react-height';
 import arrow from "source/arrow.svg";
 import SortableDesignSteps from "./SortableDesignSteps";
 import osdcss from "StyleGuide";
 import { alert } from "components/Commons/Alert/Alert";
+// import { ReactHeight } from 'react-height';
 // import { confirm } from "components/Commons/Confirm/Confirm";
 
 const LeftWhitePane = styled.div`
@@ -31,7 +31,7 @@ const RightWhitePane = styled.div`
     position: absolute;
     z-index: 830;
     width: ${props => props.width}px;
-    height: ${props => props.height}px;
+    height: ${props => props.height + "px" || "100%"};
     left: ${props => props.left}px;
     right: ${props => props.right}px;
     background: #FFFFFF; // transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%);
@@ -205,7 +205,7 @@ class GridEditor extends Component {
             })
             .then(res => {
                 console.log(res);
-                this.props.GetItemStepsRequest(this.props.itemId, this.props.token);
+                this.props.GetItemStepsRequest();
             })
             .catch((err) => {
                 console.error(err);
@@ -216,16 +216,21 @@ class GridEditor extends Component {
         await this.props.UpdateItemListRequest(this.props.itemId, data.where, this.props.token, { title: data.title })
             .then(res => {
                 console.log(res);
-                this.props.GetItemStepsRequest(this.props.itemId, this.props.token);
+                this.props.GetItemStepsRequest();
             })
         this.CloseEditStep();
     }
     async NewStep(_data) {
-        const data = { title: _data.title, order: _data.where, type: "item", content_id: this.props.item["item-id"], }
+        // content_id: 190
+        // editor_type: "project"
+        // name: "554"
+        // type: "item"
+        // uid: 11
+        const data = { list_header_id: this.props.header.uid, title: _data.title, order: _data.where, content_id: this.props.item["item-id"], }
         await this.props.CreateItemListRequest(data, this.props.item["item-id"], this.props.token)
             .then(res => {
                 console.log(res);
-                this.props.GetItemStepsRequest(this.props.item["item-id"], this.props.token);
+                this.props.GetItemStepsRequest();
             })
             .catch(async (err) => { await alert("Failed to create new STEP"); console.error(err) });
         this.CloseNewStep();
@@ -274,17 +279,15 @@ class GridEditor extends Component {
         const jobs = [];
         let promiseAry = [];
         items.forEach((element, index) => {
-            if (element.order !== index) { jobs.push({ uid: element.uid, neworder: index }); }
+            if (element.order !== index) {
+                jobs.push({ uid: element.uid, neworder: index });
+            }
         });
         if (jobs.length === 0) return;
         promiseAry = jobs.map(job =>
             this.props.UpdateItemListRequest(this.props.itemId, job.uid, this.props.token, { order: job.neworder }))
 
-        await Promise
-            .all(promiseAry)
-            .then(() =>
-                this.props.GetItemStepsRequest(this.props.itemId, this.props.token)
-            )
+        await Promise.all(promiseAry).then(this.props.GetItemStepsRequest())
     }
     componentDidUpdate(props, state) {
         if (props.ItemStep !== this.props.ItemStep) {
@@ -293,12 +296,12 @@ class GridEditor extends Component {
                     this.setState({ right: true });
                 }
             }
+            return true;
         }
         // if (nextProps.DesignDetailStepCard && nextProps.DesignDetailStepCard.uid != null && this.props.DesignDetailStepCard !== nextProps.DesignDetailStepCard) {
         // console.log(nextProps.DesignDetailStepCard.uid, "i got it", nextProps.DesignDetailStepCard, this.props.DesignDetailStepCard, typeof this.props.DesignDetailStepCard);
         // this.setState({ cardDetail: nextProps.DesignDetailStepCard });
         // }
-        return true;
     }
     async handleReturn(data) {
         console.log(data);
@@ -311,11 +314,9 @@ class GridEditor extends Component {
         }
     }
     render() {
-        const { editor, ItemStep, itemId, userInfo } = this.props;
+        const { editor, ItemStep: steps, itemId, userInfo } = this.props;
         const { gap, h, left, right, boardId, card, row, newcard, newstep, editstep, cardDetail, title, where } = this.state;
-        const steps = ItemStep;
-        // console.log("----=================dfasdfdfd",userInfo);
-
+        console.log(h);
         return (<Wrapper>
             {itemId ?
                 <React.Fragment>
@@ -326,13 +327,15 @@ class GridEditor extends Component {
                         : null}
 
                     {right ?
-                        // <RightWhitePane width={43} height={h} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
-                        <Arrow angle="180deg" top={0} gap={0} right={3} onClick={this.ScrollRight} />
-                        // </RightWhitePane> 
+                        <RightWhitePane width={25} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
+                            <Arrow angle="180deg" top={0} gap={0} right={3} onClick={this.ScrollRight} />
+                        </RightWhitePane>
                         : null}
 
                     {editor && newcard ?
                         <NewCardModal
+                            GetItemStepsRequest={this.props.GetItemStepsRequest}
+
                             // boardId={boardId}
                             // order={steps.length}
                             isTeam={editor}
@@ -343,17 +346,6 @@ class GridEditor extends Component {
                             close={() => this.setState({ newcard: false })}
                         /> : null}
 
-                    {card ?
-                        <CardModal
-                            bought={this.props.bought}
-                            open={card} close={() => this.setState({ card: false })}
-                            edit={editor} //userInfo && (userInfo.uid === cardDetail.user_id)}
-                            card={cardDetail}
-                            isTeam={editor}
-                            // title={title}
-                            boardId={boardId}
-                            itemId={itemId}
-                        /> : null}
 
                     {editor && newstep ?
                         <NewStepModal
@@ -376,7 +368,7 @@ class GridEditor extends Component {
                         /> : null}
 
                     {/* <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}> */}
-                    <GridEditorWrapper ref={this.grid}>
+                    <GridEditorWrapper ref={this.grid} id="herehere!">
                         <div style={{ width: window.innerWidth + "px" }} className="Editor" ref={this.temp}>
                             {/* ------------단계 ------------*/}
                             {steps && steps.length > 0 ?
@@ -402,6 +394,20 @@ class GridEditor extends Component {
                                 </div> : null}
                         </div>
                     </GridEditorWrapper>
+
+
+                    {card ?
+                        <CardModal
+                            GetItemStepsRequest={this.props.GetItemStepsRequest}
+                            bought={this.props.bought}
+                            open={card} close={() => this.setState({ card: false })}
+                            edit={editor} //userInfo && (userInfo.uid === cardDetail.user_id)}
+                            card={cardDetail}
+                            isTeam={editor}
+                            // title={title}
+                            boardId={boardId}
+                            itemId={itemId}
+                        /> : null}
                     {/* </ReactHeight> */}
                 </React.Fragment>
 

@@ -875,7 +875,7 @@ class ItemPurchase extends Component {
                       : null}
 
                     {item && item.upload_type === "project"
-                      ? <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} />
+                      ? <ItemStepContainer header={item.headers[0]} index={0} item={item} id={item["item-id"]} bought={item.bought} />
                       : null}
                   </div>
                   {/* {item && item.upload_type === "blog"? <div className="detail_board" id="detail_board">
@@ -1062,7 +1062,7 @@ class ItemPurchase extends Component {
                   <div className="title">실습내용</div>
                 </div>
                 <div className="editor-wrapper ">
-                  {/* <Item2ndStepContainer item={item} id={item["item-id"]} bought={item.bought} /> */}
+                  {/* <ItemStepContainer item={item} id={item["item-id"]} bought={item.bought} /> */}
                 </div>
               </ItemContents>
             </div>
