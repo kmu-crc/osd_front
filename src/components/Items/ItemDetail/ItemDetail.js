@@ -766,7 +766,7 @@ class ItemDetail extends Component {
             item.headers.length > 0 &&
             item.headers.map(
               (head, index) =>
-                <div className="row">
+                <div key={index} className="row">
                   <ItemContents>
                     <div className="header">
                       <div className="title">

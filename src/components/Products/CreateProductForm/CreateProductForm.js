@@ -134,7 +134,8 @@ const Arrow = styled.div`
     }
 `;
 const AsBelowArrow = styled.div`;
-    margin-left: ${props => props.marginLeft + "px" || "0px"};
+    //margin-left: ${props => props.marginLeft + "px" || "0px"};
+    margin: auto;
     margin-top: ${props => props.marginTop + "px" || "0px"};
     margin-bottom: ${props => props.marginBottom + "px" || "0px"};
     width: ${props => props.percent * 100}px;
@@ -232,7 +233,7 @@ class TemplateGridEditor extends Component {
             ? steps.map((step, index) =>
               <div key={step + index} className="step">
                 <StepCard title={step.title} />
-                <AsBelowArrow angle={0} percent={.25} marginTop={10} marginRight={0} marginBottom={10} marginLeft={60} />
+                <AsBelowArrow angle={0} percent={.25} marginTop={10} marginRight={0} marginBottom={10} marginLeft={90} />
                 <CreateCard />
               </div>)
             : null
@@ -901,10 +902,28 @@ const DesignTemplateSelector = styled.div`
     }
   }
 `;
+
+// const defaultHeaders = ;
 class ItemTypeForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { reset: 0, additional: null, content: [], listname1: null, listname2: null, steps: [], steps2: [], type: this.props.itemType === 1 || this.props.itemType === 8 ? "project" : "blog", template: null, /* 2nd template */ template_practice: null };
+    this.state = {
+      reset: 0,
+      additional: null,
+      content: [],
+      listname1: null,
+      listname2: null,
+      step1type: false,
+      steps: [],
+      steps2: [],
+      type: this.props.itemType === 1 || this.props.itemType === 8 ? "project" : "blog",
+      template: null,
+      /* 2nd template */
+      template_practice: null,
+
+      // new
+      headers: [{ name: null, is_practice: false, steps: [], content: [], template: null },],
+    };
     this.onHandleContent = this.onHandleContent.bind(this);
     this.onHandleAdditional = this.onHandleAdditional.bind(this);
     this.onHandleFirstListName = this.onHandleFirstListName.bind(this);
@@ -915,7 +934,7 @@ class ItemTypeForm extends Component {
   }
   componentDidUpdate(prevProps) {
     if (prevProps.itemType !== this.props.itemType) {
-      this.setState({ additional: null, content: [], steps: [], type: "blog" });
+      this.setState({ headers: [{ name: null, is_practice: false, steps: [], content: [], template: null },], additional: null, content: [], steps: [], type: "blog" });
       if (this.props.itemType === 1 || this.props.itemType === 8) {
         this.setState({ type: "project" });
       }
@@ -951,7 +970,7 @@ class ItemTypeForm extends Component {
 
   render() {
     const itemType = this.props.itemType == null ? -1 : parseInt(this.props.itemType, 10);
-    const {/* additional, steps*/ content, } = this.state;
+    const {/* additional, steps, */headers, content, } = this.state;
 
     return (
 
@@ -971,108 +990,68 @@ class ItemTypeForm extends Component {
             </div>
           </FormBox>
 
-          <FormBox boxShadow={true} marginTop={25}>
-            {this.props.itemType === 8 ? <div>
-              <input onChange={this.onHandleFirstListName} className="title-input" placeholder="강의내용" />
-            </div> : null}
+          {headers && headers.map((head, index) =>
+            <FormBox key={index} boxShadow={true} marginTop={25}>
+              {itemType === 8 ? <div style={{ display: "flex" }}>
+                <input onChange={(e) => {
+                  const copy = headers.map((_head, _index) => {
+                    if (index === _index) {
+                      _head.name = e.target.value;
+                    }
+                    return _head;
+                  });
+                  this.setState({ headers: copy });
+                }} value={head.name || "강의내용"} className="title-input" placeholder="강의내용" />
+                <label>
+                  <CheckBox2
+                    onChange={() => {
+                      const copy = headers.map((_head, _index) => {
+                        if (index === _index) {
+                          _head.is_practice = !_head.is_practice;
+                        }
+                        return _head;
+                      });
+                      this.setState({ headers: copy });
+                    }}
+                    checked={head.is_practice}
+                  />&nbsp;파생여부&nbsp;&nbsp;
+                </label>
+                {index !== 0 && <div style={{ marginLeft: "auto", marginRight: "25px" }} onClick={() => {
+                  const copy = headers.filter((_head, _index) => index !== _index);
+                  console.log(copy);
+                  this.setState({ headers: copy });
+                }}>x</div>}
+              </div> : null}
 
-            <ResetButtonWrapper
-              onClick={async () => {
-                await this.setState({
-                  additional: null,
-                  content: [],
-                  steps: [],
-                  type: this.props.itemType === 1 || this.props.itemType === 8 ? "project" : "blog",
-                  template: null,
-                  is_project: 0,
-                  reset: (++this.state.reset) % 10,
-                });
-                this.returnState();
-              }}>
-              작업 취소<i className="undo icon" />
-            </ResetButtonWrapper>
-            {this.state.type === "blog" ?
-              // <div className="contentWrap">
-              <InputContent
-                reset={this.state.reset}
-                projectable={true}
-                content={content}
-                toProject={this.toProject}
-                returnState={this.onHandleContent} />
-              // </div>
-              :
-              // {/* 로컬 그리드 에디터 - */}
-              <React.Fragment>
-                <div className="contentsBox centering">
-                  <DesignTemplateSelector>
-                    <div className="title">
-                      템플릿을 선택하시면 보다 편하게 작업을 시작하실 수 있습니다!
-                  </div>
-                    <div className="template-wrapper">
-                      {template &&
-                        template.length > 0 &&
-                        template.map(item =>
-                          <label
-                            className="element"
-                            key={item.type}
-                            onClick={
-                              async () => {
-                                await this.setState({ template: item.type })
-                              }}>
-                            {item.text}
-                            <DesignElement ><img alt="" src={item.img} /></DesignElement>
-                          </label>
-                        )}
-                    </div>
-                  </DesignTemplateSelector>
-                  {/* 
-                  <LocalGridEditor
-                    userInfo={this.props.userInfo}
-                    content={steps}
-                    returnContent={this.onHandleGrid}
-                    editor={true} />
-                */}
-                </div>
-                <div className="contentsBox centering">
-                  <EditorWrapper>
-                    <div className="editor">
-                      <TemplateGridEditor
-                        reset={this.state.reset}
-                        selected={
-                          content => {
-                            this.setState({ steps: content, type: "project", is_project: 1 });
-                            this.returnState();
-                          }}
-                        type={this.state.template} />
-                    </div>
-                    <div className="title">
-                      선택하신 템플릿으로 시작하시고 싶으시다면 아래에 등록 버튼을 클릭해주세요.
-                  </div>
-                  </EditorWrapper>
-                </div>
-              </React.Fragment>}
-
-          </FormBox>
-          {this.props.itemType === 8
-            ? <FormBox boxShadow={true} marginTop={25}>
-              <div>
-                <input onChange={this.onHandleSecondListName} className="title-input" placeholder="실습내용" />
-              </div>
-              { // {/* 로컬 그리드 에디터 - */}
+              {this.state.type === "blog" ?
+                <InputContent
+                  reset={this.state.reset}
+                  projectable={true}
+                  content={content}
+                  toProject={this.toProject}
+                  returnState={this.onHandleContent} />
+                :
                 <React.Fragment>
                   <div className="contentsBox centering">
                     <DesignTemplateSelector>
-                      <div className="title">
-                        템플릿을 선택하시면 보다 편하게 작업을 시작하실 수 있습니다!</div>
+                      <div className="title"> 템플릿을 선택하시면 보다 편하게 작업을 시작하실 수 있습니다!  </div>
                       <div className="template-wrapper">
-                        {template && template.length > 0 &&
+
+                        {template &&
+                          template.length > 0 &&
                           template.map(item =>
                             <label
                               className="element"
                               key={item.type}
                               onClick={
                                 async () => {
-                                  await this.setState({ template_practice: item.type })
+                                  const copy = headers.map((_head, _index) => {
+                                    if (_index === index) {
+                                      _head.template = item.type;
+                                    }
+                                    return _head;
+                                  });
+                                  await this.setState({ headers: copy });
                                 }}>
                               {item.text}
                               <DesignElement ><img alt="" src={item.img} /></DesignElement>
@@ -1088,21 +1067,44 @@ class ItemTypeForm extends Component {
                           reset={this.state.reset}
                           selected={
                             content => {
-                              this.setState({ steps2: content, type: "project", is_project: 1 });
+                              this.setState({ steps: content, type: "project", is_project: 1 });
                               this.returnState();
                             }}
-                          type={this.state.template_practice} />
+                          type={head.template} />
                       </div>
-                      <div className="title">
-                        선택하신 템플릿으로 시작하시고 싶으시다면 아래에 등록 버튼을 클릭해주세요.</div>
+
+                      <div className="title"> 선택하신 템플릿으로 시작하시고 싶으시다면 아래에 등록 버튼을 클릭해주세요.  </div>
+
                     </EditorWrapper>
                   </div>
                 </React.Fragment>}
 
             </FormBox>
-            : null}
+          )}
+
+          {itemType === 8 ?
+            <FormBox boxShadow={true} marginTop={25}>
+              <div onClick={() => { const copy = [...headers]; copy.push({ name: null, is_practice: false, steps: [], content: [], template: null }); this.setState({ headers: copy }); }}> + </div>
+            </FormBox> : null}
+
+          {/* <FormBox boxShadow={true} marginTop={25}>
+            <ResetButtonWrapper
+              onClick={async () => {
+                await this.setState({
+                  additional: null,
+                  content: [], steps: [],
+                  type: this.props.itemType === 1 || this.props.itemType === 8 ? "project" : "blog",
+                  template: null,
+                  is_project: 0,
+                  reset: (++this.state.reset) % 10,
+                });
+                this.returnState();
+              }}>
+              작업 취소<i className="undo icon" />
+            </ResetButtonWrapper>
+          </FormBox> */}
         </div>
-      </MainBox>
+      </MainBox >
     );
   }
 };
