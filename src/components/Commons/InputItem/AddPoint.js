@@ -15,6 +15,7 @@ const FormBox = styled.div`
     }
     .buttonbox{
         display:flex;
+        flex-wrap:wrap;
     }
 `
 const FormStyle = styled.input.attrs({ type: "number" })`
@@ -23,7 +24,7 @@ const FormStyle = styled.input.attrs({ type: "number" })`
     padding: 0.67857143em 1em;
     margin-right:5px;
     text-align:right;
-    // margin-bottom:27px;
+    margin-bottom:10px;
     border:0px;
     border-radius:26px;
     outline:none;
@@ -58,6 +59,7 @@ const Button = styled.div`
     justify-content:center;
     align-items:center;
     margin-right:12px;
+    margin-bottom:10px;
     cursor:pointer;
     .text{
         font-size:${market_style.font.size.small1};

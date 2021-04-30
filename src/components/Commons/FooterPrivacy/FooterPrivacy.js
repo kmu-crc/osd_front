@@ -5,8 +5,7 @@ import market_style from "market_style";
 
 const FromFieldCard = styled.div`
   width:100%;
-  margin-left:180px;
-  margin-top:88px;
+  padding:20px 30px;
 `;
 
 const TabBox=styled.div`
@@ -43,7 +42,6 @@ const ContentBox=styled.div`
 class FooterPrivacy extends Component {
   render() {
     return(
-      <div style={{width:"83%"}}>
         <FromFieldCard>
               <TabBox>
                 {/* <div className="text_grey pointer" onClick={()=>window.location.href="/footerPrivacy"}>이용약관</div>
@@ -164,7 +162,6 @@ class FooterPrivacy extends Component {
               </div>
               </ContentBox>
         </FromFieldCard>
-      </div>
     );
   }
 }

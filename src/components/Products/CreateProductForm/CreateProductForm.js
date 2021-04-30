@@ -558,6 +558,20 @@ const FormBox = styled.div`
     // margin-top: 10px;
     margin-bottom: 10px;
   }
+  & .title-input {
+    width: 35%;
+    height: 31px;
+    background: #E9E9E9 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    border: none;
+
+    text-align: left;
+    font: normal normal 300 13px/19px Noto Sans KR;
+    letter-spacing: 0px;
+    color: #000; //#707070;
+    padding: 2px 0px 3px 11px;
+    margin-bottom:10px;
+  }
   @media only screen and (min-width: 500px) and (max-width:1000px){
     padding:27px;
   }
@@ -652,6 +666,7 @@ const InfoContentChooseItemType = styled.div`
   color: #707070;
 `;
 const EditorWrapper = styled.div`
+  width:100%;
   .title {
     width: 100%;
     text-align:center;
@@ -662,6 +677,7 @@ const EditorWrapper = styled.div`
     margin-bottom: 15px;
   }
   .editor{
+    width:100%;
     opacity: .75;
     overflow: auto;
   }
@@ -1072,7 +1088,7 @@ class ItemTypeForm extends Component {
                         type={this.state.template} />
                     </div>
                     <div className="title">
-                      선택하신 템플릿으로 시작하시고 싶으시다면 아래에 등록 버튼을 클릭해주세요.
+                      선택하신 템플릿으로 시작하고 싶다면 아래에 등록 버튼을 클릭해주세요.
                   </div>
                   </EditorWrapper>
                 </div>
@@ -1120,7 +1136,7 @@ class ItemTypeForm extends Component {
                           type={this.state.template_practice} />
                       </div>
                       <div className="title">
-                        선택하신 템플릿으로 시작하시고 싶으시다면 아래에 등록 버튼을 클릭해주세요.</div>
+                      선택하신 템플릿으로 시작하고 싶다면 아래에 등록 버튼을 클릭해주세요.</div>
                     </EditorWrapper>
                   </div>
                 </React.Fragment>}

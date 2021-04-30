@@ -77,7 +77,7 @@ class LikeInMakerContainer extends Component {
           firstItem={null}
           lastItem={null}
           siblingRange={1}
-          totalPages={lastPage + 1}
+          totalPages={lastPage}
           // pointing
           secondary
           onPageChange={(event, { activePage }) => {
