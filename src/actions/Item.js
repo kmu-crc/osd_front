@@ -54,6 +54,22 @@ export function GetProductCountRequest(id) {
 };
 function GetDesignCount(data) { return { type: types.GET_PRODUCT_COUNT, Count: data } };
 
+// Get Content Header
+export function GetContentHeaderRequest(payment, item, token) {
+  return (dispatch) => {
+    const url = `${host}/item/${item}/purchased-header/${payment}`;
+    console.log(url);
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token || "" },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(data => dispatch(GetContentHeader(data && data.data)))
+      .catch(error => console.error("err", error));
+  }
+};
+const GetContentHeader = (headers) => ({ type: types.GET_CONTENT_HEADER, ContentHeader: headers });
+
 // content
 export function GetItemContentsRequest(id, token) {
   return (dispatch) => {

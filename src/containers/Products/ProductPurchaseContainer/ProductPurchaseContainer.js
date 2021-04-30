@@ -9,7 +9,7 @@ import {
   UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest, addCartRequest, GetDidYouBuyItRequest
 } from "actions/Product";
 import { CreateItemPaymentRequest,  /*GetItemPaymentRequest*/ } from "actions/Payment";
-import { GetItemDetailRequest } from "actions/Item";
+import { GetItemDetailRequest, GetContentHeaderRequest } from "actions/Item";
 import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 import { GetMyPointRequest, } from "actions/Point";
 import { GetPaymentMessageRequest, CreatePaymentMessageRequest, /*DeleteItemQuestionRequest*/ } from "actions/Item";
@@ -22,15 +22,15 @@ class ProductPurchaseContainer extends Component {
   }
   componentDidMount() {
     console.log(this.props.payment, this.props.id);
-    this.props.GetItemDetailRequest(this.props.id, this.props.token)
-      .then(this.props.userInfo && this.props.GetDidYouBuyItRequest(this.props.id, this.props.userInfo.uid))
-      .then(this.props.GetLikeProductRequest(this.props.id, this.props.token))
-      .then(
-        this.props.userInfo &&
-        this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token))
-      .then(
-        this.props.GetPaymentMessageRequest(this.props.payment, 0)
-      )
+
+    const { id, token, userInfo, payment } = this.props;
+
+    this.props.GetItemDetailRequest(id, token)
+      .then(userInfo && this.props.GetDidYouBuyItRequest(id, userInfo.uid))
+      .then(this.props.GetLikeProductRequest(id, token))
+      .then(userInfo && this.props.GetMyPointRequest(userInfo.uid, token))
+      .then(this.props.GetPaymentMessageRequest(payment, 0))
+      .then(token && this.props.GetContentHeaderRequest(payment, id, token))
   }
   Payment(item, option) {
     this.props.CreateItemPaymentRequest(
@@ -74,6 +74,7 @@ class ProductPurchaseContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  ContentHeader: state.ItemDetail.status.ContentHeader,
   ItemDetail: state.ItemDetail.status.ItemDetail,
   paymentMessageList: state.ItemQuestion.status.PaymentMessage,
   Count: state.ProductDetail.status.Count,
@@ -99,6 +100,7 @@ const mapDispatchToProps = (dispatch) => ({
   CreateItemPaymentRequest: (data, id, token) => dispatch(CreateItemPaymentRequest(data, id, token)),
   GetPaymentMessageRequest: (id, page) => dispatch(GetPaymentMessageRequest(id, page)),
   CreatePaymentMessageRequest: (data, id, token) => dispatch(CreatePaymentMessageRequest(data, id, token)),
+  GetContentHeaderRequest: (payment, item, token) => dispatch(GetContentHeaderRequest(payment, item, token)),
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductPurchaseContainer));

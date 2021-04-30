@@ -807,3 +807,9 @@ export const REQUEST_POINT_UP = "REQUEST_POINT_UP";
 export const GET_POINT_HISTORY_REQUEST = "GET_POINT_HISTORY_REQUEST";
 export const GET_POINT_HISTORY_FAILURE = "GET_POINT_HISTORY_FAILURE";
 export const GET_POINT_HISTORY_SUCCESS = "GET_POINT_HISTORY_SUCCESS";
+
+
+////////////////////////////////////////////////////////////////////////////
+// CONTENT
+////////////////////////////////////////////////////////////////////////////
+export const GET_CONTENT_HEADER = "GET_CONTENT_HEADER";

@@ -79,9 +79,7 @@ const WriteNormalArticleModal = styled(Modal)`
       padding-left:10px;
       padding-right:10px;
       .score{
-
       }
-
       .buttonBox{
           .button{
               width:100px;
@@ -96,7 +94,6 @@ const WriteNormalArticleModal = styled(Modal)`
                   color:white;
               }
           }
-
       }
   }
 `;
@@ -184,4 +181,3 @@ class ArticleModal extends Component {
     }
 }
 export default ArticleModal;
-                      

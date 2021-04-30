@@ -5,5 +5,4 @@ let Socket = socketIOClient(host, {
     // path: "/api",
     transports: ['websocket', 'polling', 'flashsocket']
 });
-
 export default Socket;
