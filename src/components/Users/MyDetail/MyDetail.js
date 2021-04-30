@@ -21,7 +21,7 @@ import MyPointStatusContainer from "containers/Point/PointContainer";
 
 import category_icon from "source/category_icon.svg";
 import market_style from "market_style";
-
+import { Dropdown } from "semantic-ui-react";
 const CustomIcon=styled.div`
   width:${props => props.width}px;
   height:${props => props.height}px;
@@ -30,16 +30,12 @@ const CustomIcon=styled.div`
   background-size: contain;
   padding:${props => props.padding}px;
   display:${props=>props.isNon==true?"none":"block"}
-  margin-left:10px;
+  margin-left:15px;
   `
 
 const MainBox = styled.div`
-// *{
-//   border:1px solid black;
-// }
   width: 100%;
   padding:0px 30px 0px 30px;
-  // height: 1959px;
   margin-top: 37px;
   .header {
     width: 100%;
@@ -50,6 +46,24 @@ const MainBox = styled.div`
     width: 100%;
     height: max-content;
     display: flex;
+    .dropBox{
+      display:none;
+    }
+    .menuBox{
+      display:block;
+    }
+  }
+  @media only screen and (min-width: 500px) and (max-width: 1000px) {
+    .contents{
+      flex-direction:column;
+      .dropBox{
+        display:flex;
+        margin-bottom:20px;
+      }
+      .menuBox{
+        display:none;
+      }
+    }
   }
 `;
 const ProfileBox = styled.div`
@@ -109,103 +123,80 @@ const ProfileBox = styled.div`
   }
 `;
 const InformationBox = styled.div` 
-    width:100%;
-    max-width:1046px;
-    min-width:50px;
-    height: 335px;
-    box-shadow: 3px 3px 5px #0000001A;
-    border: 0.5px solid #EAEAEA;
-    border-radius: 20px;
-    margin-left:20px;
+width:100%;
+height:335px;
+border:0.5px solid #eaeaea;
+box-shadow: 3px 3px 5px #0000001A;
+border-radius: 20px;
+padding:55px 0px 55px 0px;
+display:flex;
+margin-left:20px;
+
+.innerBox{
+  width:100%;
+  max-width:360px;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  .text{
+    width:max-content;
+    height:54px;
+    font-size:${market_style.font.size.normal1};
+    margin-bottom:34px;
+    text-align:center;
+  }
+  .imgBox{
+    height:70px;
+    margin-bottom:34px;
+    .img{
+      width:100%;
+      height:100%;
+    }
+  }
+  .button{
+    width:max-content;
+    height:15px;
+    font-size:${market_style.font.size.small3};
     display:flex;
-    justify-content:space-around;
-    align-items:center;
-    padding:45px 65px 45px 65px;
-    color:black;
-    .fontDefault{
-      font-size:${market_style.font.size.normal3};
+    cursor:pointer;
+  }
+}
+.largeWidth{
+  max-width:341px;
+}
+.hrLine{
+  width:2px;
+  height:100%;
+  background-color:#E9E9E9;
+}
+@media only screen and (min-width: 500px) and (max-width: 1000px) {
+  flex-direction:column;
+  padding:15px;
+  .innerBox{
+    .text{
+      display:none;
     }
-    .fontNormal{font-size:${market_style.font.size.normal1}}
-    .fontSmall{font-size:${market_style.font.size.small1};}
-    .fontStyleNormal{font-family:Noto Sans KR; font-weight:400;line-height:25px;}
-    .alignCenter{text-align:center;}
-    .red{color:red;}
-    .cursorPointer{cursor:pointer;}
-    .displayFlex{display:flex;align-items:center;justify-content:center;}
-    .alignEnd{align-items:flex-end;}
-    .marginRight{margin-right:10px;}
-    .marginBottom{margin-bottom:7px;}
-    .design-clipart {
-      width: 88px;
-      height: 70px;
-      margin-left: auto;
-      margin-right: auto;
-      background-image: url(${adddesigner});
-      background-size: contain;
-      background-position: center center;
-      background-repeat:no-repeat;
-      margin-bottom:34px;
-
+    .imgBox{
+      height:50px;
+      margin-bottom:10px;
+      margin-right:10px;
     }
-    .toolbox-clipart {
-      width: 50px;
-      height: 70px;
-      margin-left: auto;
-      margin-right: auto;
-      background-image: url(${addmaker});
-      background-size: contain;
-      background-position: center center;
-      background-repeat:no-repeat;
-      margin-bottom:34px;
+    .button{
+      font-size:${market_style.font.size.small3};
     }
-    .verify-clipart {
-      width: 60px;
-      height: 70px;
-      margin-left: auto;
-      margin-right: auto;
-      background-image: url(${confirmMe});
-      background-size: contain;
-      background-position: center center;
-      background-repeat:no-repeat;
-      margin-bottom:34px;
-    }
-
-    .borderRight{
-      border-right:2px solid #d6d6d6;
-    }
-    .hline_left{justify-content:flex-start;}
-    .hline_center{justify-content:center;}
-    .hline_right{justify-content:flex-end;}
-    .wrap{
-      width:max-content;
-      display:flex;
-      justify-content:space-between;
-      flex-direction:column;
-    }
-    .title{
-      width:251px;
-      height:54px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      margin-bottom:34px;
-      text-align:center;
-      color:black;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-    }
-    .grayBox{
-      width:30%;
-      height:230px;
-      display:flex;
-
-    }
-    .centerBox{
-      width:40%;
-      height:230px;
-      display:flex;
-    }
+    max-width:100%;
+    display:flex;
+    flex-direction:column;
+  }
+  .hrLine{
+    width:100%;
+    height:2px;
+    margin-top:5px;
+    margin-bottom:5px;
+  }
+}
 `;
 const MenuBox = styled.div`
     *{
@@ -220,20 +211,13 @@ const MenuBox = styled.div`
     padding:30px 33px 30px 33px;
     padding-bottom:30px;
     margin-bottom:50px;
-    .title_Label{
-      width:100%;
-      height:20px;
-      font-size:${market_style.font.size.normal3};
-      font-family:Noto Sans KR,Medium;
-      margin-left:15px;
-      margin-top:35px;
-      margin-bottom:30px;
-      font-weight:700;
-    }
     .hrLine{
       border:0.5px solid #707070;
       opacity:0.2;
       margin-bottom:17.5px;
+    }
+    @media only screen and (min-width: 500px) and (max-width: 1000px) {
+
     }
 `;
 const MenuButton = styled.div`
@@ -246,16 +230,20 @@ const MenuButton = styled.div`
   margin-bottom:17.5px;
   text-align:center;
   color:${props => props.fontColor == null ? "#060000" : props.fontColor};
+  @media only screen and (min-width: 500px) and (max-width: 1000px) {
+    margin-bottom:0px;
+    height:max-content;
+  }
 `;
 const BoardBox = styled.div`
-    width:1046px;
+    max-width:1046px;
+    width:100%;
     height:max-content;
-    // min-height:900px;
     box-shadow: 3px 3px 5px #00000029;
     border: 0.5px solid #EAEAEA;
     border-radius: 20px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
-    margin-left:20px ;
+    margin-left:20px;
     margin-bottom:50px;
     padding:50px;
   
@@ -308,27 +296,13 @@ const BoardBox = styled.div`
             margin-left:70px;
           }
         }
-        .circle {
-          width: 80px;
-          height: 29px;
-          margin-right: 13px;
-          border-radius: 16px;
-          font-size:6px;
-          display:flex;
-          justify-content:center;
-          align-items:center;
-          padding:5px;
-          &.red1 { background: #FF0000; };
-          &.red2 { background: #FFC0C0; };
-          &.red3 { background: #FF6868; };
-          &.red4 { background: #FFD6D6; };
-        };
       }
-
-    
-      
-      .another {}
-      .more {}
+    }
+      @media only screen and (min-width: 500px) and (max-width: 1000px) {
+        margin-left:0px;
+        height:max-content;
+        padding:30px;
+      }
 `;
 const Thumbnail = styled.div`
     width:220px;
@@ -365,6 +339,7 @@ class MyDetail extends Component {
     this.onClickCreateDesigner = this.onClickCreateDesigner.bind(this);
     this.onClickCreateMaker = this.onClickCreateMaker.bind(this);
     this.onClickThumbnail = this.onClickThumbnail.bind(this);
+    this.onChangeDropMenu = this.onChangeDropMenu.bind(this);
   }
   onClickCreateDesigner(event) {
     if (this.props.MyDetail.isDesigner === 1) {
@@ -397,6 +372,12 @@ class MyDetail extends Component {
       "sell_item",
     ]
     this.setState({ selectMenu: menuNames.indexOf(event.target.id) });
+  }
+  async onChangeDropMenu(event,{value}){
+    console.log({value}.value);
+    const indexNumber = [10,9,0,11,8,7,1,2,3,4,5,6];
+    let number = indexNumber[{value}.value];
+    this.setState({ selectMenu: number });
   }
 
   async onClickThumbnail(event) {
@@ -444,40 +425,27 @@ class MyDetail extends Component {
               </div>
             </ProfileBox>
             <InformationBox>
-              <div className="grayBox borderRight hline_left">
-                <div className="wrap cursorPointer" onClick={this.onClickCreateDesigner} >
-                  <div className="title fontNormal fontStyleNormal"><div>다양한 아이디어를 판매하세요!</div></div>
-                  <div className="design-clipart">&nbsp;</div>
-                  <div onClick={this.onClickCreateDesigner} ><div className="marginBottom fontNormal alignCenter cursorPointer fontStyleNormal displayFlex alignEnd">
-                    <div className="fontSmall marginRight">디자이너 등록 / 관리</div>
-                  <CustomIcon width="15" height="15" imgURL={category_icon}/>
-                  </div></div>
-                </div>
+              <div className="innerBox">
+                <div className="text">다양한 아이디어를 판매하세요!</div>
+                <div className="imgBox"><img className="img" src={adddesigner}/></div>
+                <div onClick={this.onClickCreateDesigner} className="button">디자이너 등록 / 관리&nbsp;&nbsp;<CustomIcon width="15" height="15" imgURL={category_icon}/></div>
               </div>
-              <div className="centerBox borderRight hline_center">
-                <div className="wrap cursorPointer" onClick={this.onClickCreateMaker}>
-                  <div className="title fontNormal fontStyleNormal"><div>제작 기술을 공유하고 장소를<br /> 쉐어해보세요!</div></div>
-                  <div className="toolbox-clipart">&nbsp;</div>
-                  <div onClick={this.onClickCreateMaker}><div className="marginBottom fontNormal alignCenter cursorPointer fontStyleNormal displayFlex">
-                    <div className="fontSmall marginRight">메이커 등록 / 관리</div>                    
-                    <CustomIcon width="15" height="15" imgURL={category_icon}/>
-                  </div></div>
-                </div>
+              <div className="hrLine"/>
+              <div className="innerBox largeWidth">
+                <div className="text">제작 기술을 공유하고<br/>장소를 쉐어해보세요!</div>
+                <div className="imgBox"><img className="img" src={addmaker}/></div>
+                <div onClick={this.onClickCreateMaker} className="button">메이커 등록 / 관리&nbsp;&nbsp;<CustomIcon width="15" height="15" imgURL={category_icon}/></div>
               </div>
-              <div className="grayBox hline_right">
-                <div className="wrap cursorPointer">
-                  <div className="title fontNormal fontStyleNormal"><div>본인인증을 통해 더욱 다양한 <br /> 혜택을 누려보세요!</div></div>
-                  <div className="verify-clipart"></div>
-                  <div><div className="marginBottom fontNormal alignCenter cursorPointer fontStyleNormal displayFlex">
-                    <div className="fontSmall marginRight">본인 인증</div>
-                    <CustomIcon width="15" height="15" imgURL={category_icon}/>
-                  </div></div>
-                </div>
+              <div className="hrLine"/>
+              <div className="innerBox">
+                <div className="text">본인 인증을 통해 더욱 다양한<br/>혜택을 누려보세요!</div>
+                <div className="imgBox"><img className="img" src={confirmMe}/></div>
+                <div className="button">본인 인증 하기&nbsp;&nbsp;<CustomIcon width="15" height="15" imgURL={category_icon}/></div>
               </div>
             </InformationBox>
           </div>
           <div className="contents">
-            <MenuBox>
+            <MenuBox className="menuBox">
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 10 ? "red" : null} id="my_point_status">내 포인트 관리</MenuButton>
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 9 ? "red" : null} id="modify_myinfo">내 정보 수정</MenuButton>
@@ -508,6 +476,39 @@ class MyDetail extends Component {
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 6 ? "red" : null} id="request_maker">제작 의뢰({MyDetail&&MyDetail.allCount&&MyDetail.allCount.requestMaker_count})</MenuButton>
             </MenuBox>
+            <Dropdown   
+              className="dropBox"
+              selection
+              defaultValue={1}
+              options={[
+                          {key:10,value:0,text:`내 포인트 관리`},
+                          {key:9,value:1,text:`내 정보 수정`},
+                          {key:0,value:2,text:`구입 아이템(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.payment_count})`},
+                          {key:11,value:3,text:`판매 아이템(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.saleItem_count})`},
+                          {key:8,value:4,text:`의뢰 아이템(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.itemRequest_count})`},
+                          {key:7,value:5,text:`등록 아이템(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.registerItem_count})`},
+                          {key:1,value:6,text:`관심 아이템(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeItem_count})`},
+                          {key:2,value:7,text:`관심 디자이너(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeDesigner_count})`},
+                          {key:3,value:8,text:`관심 메이커(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeMaker_count})`},
+                          {key:4,value:9,text:`참여 프로젝트`},
+                          {key:5,value:10,text:`디자인 의뢰(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.requestDesigner_count})`},
+                          {key:6,value:11,text:`제작 의뢰(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.requestMaker_count})`}
+                        ]}
+                        onChange={this.onChangeDropMenu}/>
+            {/* <select id="menu" size={12}>
+              <option onClick={this.onClickMenu} fontColor={selectMenu === 10 ? "red" : null} id="my_point_status">내 포인트 관리</option>
+              <option onClick={this.onClickMenu} fontColor={selectMenu === 9 ? "red" : null} id="modify_myinfo">내 정보 수정</option>
+              <option onClick={this.onClickMenu} fontColor={selectMenu === 0 ? "red" : null} id="orderlist">구입 아이템({MyDetail&&MyDetail.allCount&&MyDetail.allCount.payment_count})</option>
+              <option onClick={this.onClickMenu} fontColor={selectMenu === 11? "red" : null} id="sell_item">판매 아이템({MyDetail&&MyDetail.allCount&&MyDetail.allCount.saleItem_count})</option>
+              <option onClick={this.onClickMenu} fontColor={selectMenu === 8 ? "red" : null} id="request_item">의뢰 아이템({MyDetail&&MyDetail.allCount&&MyDetail.allCount.itemRequest_count})</option>
+              <option onClick={this.onClickMenu} fontColor={selectMenu === 7 ? "red" : null} id="upload_item">등록 아이템({MyDetail&&MyDetail.allCount&&MyDetail.allCount.registerItem_count})</option>
+              <option onClick={this.onClickMenu} fontColor={selectMenu === 1 ? "red" : null} id="interest_Item">관심 아이템({MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeItem_count})</option>
+              <option onClick={this.onClickMenu} fontColor={selectMenu === 2 ? "red" : null} id="interest_Designer">관심 디자이너({MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeDesigner_count})</option>
+              <option onClick={this.onClickMenu} fontColor={selectMenu === 3 ? "red" : null} id="interest_Maker">관심 메이커({MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeMaker_count})</option>
+              <option onClick={this.onClickMenu} fontColor={selectMenu === 4 ? "red" : null} id="join_project">참여 프로젝트</option>
+              <option onClick={this.onClickMenu} fontColor={selectMenu === 5 ? "red" : null} id="request_designer">디자인 의뢰({MyDetail&&MyDetail.allCount&&MyDetail.allCount.requestDesigner_count})</option>
+              <option onClick={this.onClickMenu} fontColor={selectMenu === 6 ? "red" : null} id="request_maker">제작 의뢰({MyDetail&&MyDetail.allCount&&MyDetail.allCount.requestMaker_count})</option>
+            </select> */}
             <BoardBox>
               {selectMenu === 10 ? <MyPointStatusContainer /> : null}
               {selectMenu === 9 ? <ModifyMyDetailContainer /> : null}

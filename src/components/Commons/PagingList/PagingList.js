@@ -5,9 +5,7 @@ import styled from "styled-components";
 import market_style from "market_style";
 // CSS STYLING
 const ScrollContainer = styled.div`
-*{
-  // border:1px solid black;
-}
+
 `;
 const ListContainer = styled.div`
   padding:0px;
@@ -46,6 +44,11 @@ const ListContainer = styled.div`
     justify-content: space-around;
     margin: ${props=>props.isSmall==true?"0px 0px 35px 30px":"0px 0px 35px 30px"};
     padding: 0px;
+  }
+  @media only screen and (min-width: 500px) and (max-width: 740px) {
+    justify-content:center;
+    .item{
+    }
   }
 `;
 const NoData = styled.div`

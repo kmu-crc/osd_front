@@ -28,7 +28,7 @@ const PageBox = styled.div`
     justify-content:center;
 `
 const Icon = styled.div`
-        width:25px;
+        width:30px;
         height:22px;
         background-image: url(${reply});
         margin-left:117px;
@@ -50,8 +50,14 @@ const ReplyBox= styled.div`
         display:flex;
         width:100%;
         margin-right:35px;
+        overflow:hidden;
         .commentText{
+            width:100%;
+            height:26px;
             margin-top:5px;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            white-space:nowrap;
         }
 
     }
@@ -74,6 +80,23 @@ const ReplyBox= styled.div`
             }
         }
     }
+    @media only screen and (max-width: 1000px) and (min-width: 500px){
+        .number{
+            min-width:50px;
+        }
+        .nickname{
+            min-width:50px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right:15px;
+        }
+        .createtime{
+            text-align:right;
+            margin-left:0px;
+        }
+    }
+
 
 `
 const CommentDetail = styled.div`
@@ -136,8 +159,8 @@ const ReplyForm = styled.textarea`
 const AnswerBox = styled.div`
     display:flex;
     margin-bottom:25px;
-    padding-left:110px;
-    padding-right:50px;
+    padding-left:90px;
+    // padding-right:50px;
 `
 const AnswerForm = styled.textarea`
         width:100%;
@@ -164,6 +187,10 @@ const QuestionButton = styled.div`
         font-weight:500;
         font-size:${market_style.font.size.small1};
     }
+    @media only screen and (max-width: 1000px) and (min-width: 500px){
+        min-width:60px;
+    }
+
     
 `
 const ReplyPrefix = styled.div`
@@ -341,13 +368,13 @@ class ItemQuestion extends Component {
                 <React.Fragment>
                    
                 <HRLine height={1}/>
-                <ReplyBox >
+                <ReplyBox onClick={() => {props.openModal(props.comment);this.setState({open_id:this.state.open_id==props.uid?null:props.uid});}}>
                     {props.is_question==true?<div className="number">{String(props.numbering).padStart(2,'0')}</div>:null}
 
                     {!props.itsmine && props.sort_in_group === 0 && master ?
                         <div onClick={() => this.reply(props.uid)}><ReplyButton id="answer"><div id="answer" className="text">답변</div></ReplyButton></div> : null}
                     {/* {props.itsmine && !master ?<div >[삭제하기]</div> : null} */}
-                    <div className="comment" onClick={() => {props.openModal(props.comment);this.setState({open_id:this.state.open_id==props.uid?null:props.uid});}}  >
+                    <div className="comment"   >
                         {props.is_question ? "" : <Icon/>}
                         {/* <div className="commentText">{props.comment}</div></div> */}
                         {

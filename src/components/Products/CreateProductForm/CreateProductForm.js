@@ -559,6 +559,20 @@ const FormBox = styled.div`
     // margin-top: 10px;
     margin-bottom: 10px;
   }
+  & .title-input {
+    width: 35%;
+    height: 31px;
+    background: #E9E9E9 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    border: none;
+
+    text-align: left;
+    font: normal normal 300 13px/19px Noto Sans KR;
+    letter-spacing: 0px;
+    color: #000; //#707070;
+    padding: 2px 0px 3px 11px;
+    margin-bottom:10px;
+  }
   @media only screen and (min-width: 500px) and (max-width:1000px){
     padding:27px;
   }
@@ -653,6 +667,7 @@ const InfoContentChooseItemType = styled.div`
   color: #707070;
 `;
 const EditorWrapper = styled.div`
+  width:100%;
   .title {
     width: 100%;
     text-align:center;
@@ -663,6 +678,7 @@ const EditorWrapper = styled.div`
     margin-bottom: 15px;
   }
   .editor{
+    width:100%;
     opacity: .75;
     overflow: auto;
   }
@@ -1016,38 +1032,119 @@ class ItemTypeForm extends Component {
             </div>
           </FormBox>
 
-          {headers && headers.map((head, index) =>
-            <FormBox key={index} boxShadow={true} marginTop={25}>
-              {itemType === 8 ? <div style={{ display: "flex" }}>
-                <input onChange={(e) => {
-                  const copy = headers.map((_head, _index) => {
-                    if (index === _index) {
-                      _head.name = e.target.value;
-                    }
-                    return _head;
-                  });
-                  this.setState({ headers: copy });
-                }} value={head.name || "강의내용"} className="title-input" placeholder="강의내용" />
-                <label>
-                  <CheckBox2
-                    onChange={() => {
-                      const copy = headers.map((_head, _index) => {
-                        if (index === _index) {
-                          _head.is_practice = !_head.is_practice;
-                        }
-                        return _head;
-                      });
-                      this.setState({ headers: copy });
-                    }}
-                    checked={head.is_practice}
-                  />&nbsp;파생여부&nbsp;&nbsp;
-                </label>
-                {index !== 0 && <div style={{ marginLeft: "auto", marginRight: "25px" }} onClick={() => {
-                  const copy = headers.filter((_head, _index) => index !== _index);
-                  console.log(copy);
-                  this.setState({ headers: copy });
-                }}>x</div>}
-              </div> : null}
+          <FormBox boxShadow={true} marginTop={25}>
+            {this.props.itemType === 8 ? <div>
+              <input onChange={this.onHandleFirstListName} className="title-input" placeholder="강의내용" />
+            </div> : null}
+
+            <ResetButtonWrapper
+              onClick={async () => {
+                await this.setState({
+                  additional: null,
+                  content: [],
+                  steps: [],
+                  type: this.props.itemType === 1 || this.props.itemType === 8 ? "project" : "blog",
+                  template: null,
+                  is_project: 0,
+                  reset: (++this.state.reset) % 10,
+                });
+                this.returnState();
+              }}>
+              작업 취소<i className="undo icon" />
+            </ResetButtonWrapper>
+            {this.state.type === "blog" ?
+              // <div className="contentWrap">
+              <InputContent
+                reset={this.state.reset}
+                projectable={true}
+                content={content}
+                toProject={this.toProject}
+                returnState={this.onHandleContent} />
+              // </div>
+              :
+              // {/* 로컬 그리드 에디터 - */}
+              <React.Fragment>
+                <div className="contentsBox centering">
+                  <DesignTemplateSelector>
+                    <div className="title">
+                      템플릿을 선택하시면 보다 편하게 작업을 시작하실 수 있습니다!
+                  </div>
+                    <div className="template-wrapper">
+                      {template &&
+                        template.length > 0 &&
+                        template.map(item =>
+                          <label
+                            className="element"
+                            key={item.type}
+                            onClick={
+                              async () => {
+                                await this.setState({ template: item.type })
+                              }}>
+                            {item.text}
+                            <DesignElement ><img alt="" src={item.img} /></DesignElement>
+                          </label>
+                        )}
+                    </div>
+                  </DesignTemplateSelector>
+                  {/* 
+                  <LocalGridEditor
+                    userInfo={this.props.userInfo}
+                    content={steps}
+                    returnContent={this.onHandleGrid}
+                    editor={true} />
+                */}
+                </div>
+                <div className="contentsBox centering">
+                  <EditorWrapper>
+                    <div className="editor">
+                      <TemplateGridEditor
+                        reset={this.state.reset}
+                        selected={
+                          content => {
+                            this.setState({ steps: content, type: "project", is_project: 1 });
+                            this.returnState();
+                          }}
+                        type={this.state.template} />
+                    </div>
+                    <div className="title">
+                      선택하신 템플릿으로 시작하고 싶다면 아래에 등록 버튼을 클릭해주세요.
+                  </div>
+                  </EditorWrapper>
+                </div>
+              </React.Fragment>}
+//           {headers && headers.map((head, index) =>
+//             <FormBox key={index} boxShadow={true} marginTop={25}>
+//               {itemType === 8 ? <div style={{ display: "flex" }}>
+//                 <input onChange={(e) => {
+//                   const copy = headers.map((_head, _index) => {
+//                     if (index === _index) {
+//                       _head.name = e.target.value;
+//                     }
+//                     return _head;
+//                   });
+//                   this.setState({ headers: copy });
+//                 }} value={head.name || "강의내용"} className="title-input" placeholder="강의내용" />
+//                 <label>
+//                   <CheckBox2
+//                     onChange={() => {
+//                       const copy = headers.map((_head, _index) => {
+//                         if (index === _index) {
+//                           _head.is_practice = !_head.is_practice;
+//                         }
+//                         return _head;
+//                       });
+//                       this.setState({ headers: copy });
+//                     }}
+//                     checked={head.is_practice}
+//                   />&nbsp;파생여부&nbsp;&nbsp;
+//                 </label>
+//                 {index !== 0 && <div style={{ marginLeft: "auto", marginRight: "25px" }} onClick={() => {
+//                   const copy = headers.filter((_head, _index) => index !== _index);
+//                   console.log(copy);
+//                   this.setState({ headers: copy });
+//                 }}>x</div>}
+//               </div> : null}
+
 
               {this.state.type === "blog" ?
                 <InputContent
@@ -1098,9 +1195,8 @@ class ItemTypeForm extends Component {
                             }}
                           type={head.template} />
                       </div>
-
-                      <div className="title"> 선택하신 템플릿으로 시작하시고 싶으시다면 아래에 등록 버튼을 클릭해주세요.  </div>
-
+                      <div className="title">
+                      선택하신 템플릿으로 시작하고 싶다면 아래에 등록 버튼을 클릭해주세요.</div>
                     </EditorWrapper>
                   </div>
                 </React.Fragment>}

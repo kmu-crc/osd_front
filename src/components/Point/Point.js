@@ -21,8 +21,8 @@ const Wrapper = styled.div`
     justify-content:center;
     font-size:${market_style.font.size.normal1};
     font-family:Noto Sans KR;
-    .text_grey{color:#d6d6d6;cursor:pointer;}
-    .text_black{color:black;cursor:pointer;}
+    .text_grey{min-width:max-content;color:#d6d6d6;cursor:pointer;}
+    .text_black{min-width:max-content;color:black;cursor:pointer;}
     .text_light_grey{color:#efefef;}
     .margin_left{margin-left:0px;}
     .margin_right{margin-right:20px;}
@@ -75,10 +75,12 @@ const PaymentBox = styled.div`
     margin-bottom:38px;
   }
   .input_title{
+    min-width:max-content;
     font-family:Noto Sans KR;
     font-size:${market_style.font.size.small1};
     font-weight:500;
     margin-right:30px;
+    margin-bottom:10px;
   } 
   .input_flag{
     width:1px;
@@ -86,6 +88,7 @@ const PaymentBox = styled.div`
     margin-right:30px;
     border-right:1px solid #707070;
     font-size:${market_style.font.size.normal3};
+    margin-bottom:10px;
   }
   .margin_top{
     margin-top:107px;
@@ -93,6 +96,7 @@ const PaymentBox = styled.div`
   .inputprice{
     width:100%;
     display:flex;
+    flex-wrap:wrap;
     align-items:center;
     margin-bottom:50px;
   }
@@ -113,9 +117,11 @@ const PaymentBox = styled.div`
   .addPrice{
     width:100%;
     display:flex;
+    flex-wrap:wrap;
     margin-bottom:7px;
     .selectPayment{
       display:flex;
+      flex-wrap:wrap;
     }
     .buttonIcon{
       cursor:pointer;
@@ -133,12 +139,13 @@ const PaymentBox = styled.div`
       color:white;
       font-size:${market_style.font.size.small1};
       margin-right:20px;
+      margin-bottom:10px;
     }
     .defaultbtn{
       color:#707070;
       font-size:${market_style.font.size.small1};
       margin-right:20px;
-
+      margin-bottom:10px;
     }
   }
 `

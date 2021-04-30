@@ -6,8 +6,7 @@ import FooterPara from "./FooterPara"
 import market_style from "market_style";
 const FromFieldCard = styled.div`
   width:100%;
-  margin-left:180px;
-  margin-top:88px;
+  padding:20px 30px;
 `;
 
 const FormHeader = styled(Header) `
@@ -56,17 +55,19 @@ const ContentBox=styled.div`
     display:flex;
     border-bottom:2px solid #EFEFEF;
     padding-bottom:50px;
+    flex-wrap:wrap;
     .index{
-      margin-right:60px;
+      margin-right:50px;
       padding-bottom:137px;
     }
+  }
+  .indexWrapper{
   }
 
 `
 class FooterTerm extends Component {
   render() {
     return(
-      <div style={{width:"83%"}}>
       <FromFieldCard>
             <TabBox>
                 <div className="text_black pointer" onClick={()=>window.location.href="/footerPrivacy"}>이용약관</div>
@@ -74,7 +75,7 @@ class FooterTerm extends Component {
                 <div className="text_black pointer" onClick={()=>window.location.href="/footerPara"}>개인정보 보호정책</div> */}
             </TabBox>
             <ContentBox>
-            <div>
+            <div className="indexWrapper">
               <div className="font_small font_bold">오픈디자인 이용약관</div>
               <h4>[차례]</h4>
               <div className="indexBox">
@@ -331,7 +332,6 @@ class FooterTerm extends Component {
             </div>
             </ContentBox>
       </FromFieldCard>
-    </div>
     );
   }
 }

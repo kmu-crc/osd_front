@@ -322,13 +322,13 @@ class GridEditor extends Component {
                 <React.Fragment>
                     {left ?
                         // <LeftWhitePane width={43} height={h} background="transparent linear-gradient(0deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
-                        <Arrow angle="0deg" top={0} gap={0} left={3} onClick={this.ScrollLeft} />
+                        <Arrow angle="0deg" top={5} gap={0} left={3} onClick={this.ScrollLeft} />
                         // </LeftWhitePane>
                         : null}
 
                     {right ?
                         <RightWhitePane width={25} right={0} background="transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
-                            <Arrow angle="180deg" top={0} gap={0} right={3} onClick={this.ScrollRight} />
+                            <Arrow angle="180deg" top={5} gap={0} right={3} onClick={this.ScrollRight} />
                         </RightWhitePane>
                         : null}
 
