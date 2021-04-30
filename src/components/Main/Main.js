@@ -31,9 +31,9 @@ class Main extends Component {
   render() {
     return (<MainContainer>
 
-      <Wrapper>
+      {/* <Wrapper> */}
         <SliderContainer />
-      </Wrapper>
+      {/* </Wrapper> */}
 
       <Wrapper>
         <TextWrapper>

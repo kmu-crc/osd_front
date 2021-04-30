@@ -7,7 +7,6 @@ import ContentBox from "components/Commons/ContentBox";
 import Category from "components/Commons/Category";
 import market_style from "market_style";
 
-// CSS STYLING
 const Wrapper = styled.div`
 *{
   // border:1px solid black;
@@ -35,25 +34,28 @@ const RequestButton = styled.div`
   color: #FF0000;
   font-family: Noto Sans KR;
   font-size:${market_style.font.size.mini2};
-  border:1px solid red;
   margin-right:20px;
+  border:1px solid red;
   display:flex;
   justify-content:center;
   align-items:center;
   `;
 const Container = styled.div`
+  width:100%;
   padding:0px 30px 0px 30px;
   ._wrapper{
     margin-bottom:20px;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    flex-wrap:wrap;
     .category {
       width: 100%;
     }
     ._title{
       color:black;
-      width:200px;
+      width:max-content;
+      
       display:flex;
       justify-content:center;
       align-items:center;
@@ -67,6 +69,14 @@ const Container = styled.div`
     .request {
       width: 300px;
       display:flex;
+    }
+  }
+  @media only screen and (max-width: 800px) and (min-width: 500px){
+    ._wrapper{
+      margin-top:20px;
+      .sort{
+        width:100%;
+      }
     }
   }
 `;

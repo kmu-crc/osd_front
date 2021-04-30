@@ -6,37 +6,39 @@ import styled from "styled-components";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
-
 const WriteNormalArticleModal = styled(Modal)`
-  width:988px;
+  width:1000px;
   height:max-content;
   min-width:300px;
-  min-height:200px;
-  // max-width:790px;
-  width:45%;
+  // min-height:200px;
   height:max-height;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   margin-bottom:10px;
   border-radius:15px !important;
-  padding:25px 50px 0px 50px;
-  .close-box{
+  padding:20px 33px;
+  .upper-box{
     width: 100%;
     height:max-content;
     display:flex;
-    justify-content:flex-end;
-    margin-bottom:10px;
-  
+    justify-content:space-between;
+    margin-bottom:30px;
+    .blank{width:20px;}
+    .header{
+      font-size:${market_style.font.size.normal1};
+      font-weight:500;
+      color:black;
+    }
   }
   .title_label{
-    font-size:${market_style.font.size.normal3};
+    font-size:${market_style.font.size.small1};
     font-weight:500;
-    min-width:65px;
+    min-width:78px;
     height:max-content;
   }
   .form{
       width:100%;
       height:max-content;
-      margin-bottom:30px;
+      margin-bottom:15px;
       display:flex;
   }
   .align_item_center{
@@ -46,23 +48,30 @@ const WriteNormalArticleModal = styled(Modal)`
     height:max-content;
   }
   .redButtonBox{
-    padding-top:30px;
     width:100%;
     display:flex;
     justify-content:center;
   }
-  .redButton{
-    background-color:red;
-    width:121px;
-    height:45px;
+  .button{
+    width:150px;
+    height:30px;
     display:flex;
     justify-content:center;
     align-items:center;
     cursor:pointer;
     .btnText{
-      font-size:${market_style.font.size.normal3};
-      color:white;
+      font-size:${market_style.font.size.small1};
     }
+  }
+  .marginRight{margin-right:20px;}
+  .red{
+    background-color:red;
+    color:white
+  }
+  .grey{
+    background-color:white;
+    border:1px solid #707070;
+    color:#707070;
   }
   .contents{
       display:flex;
@@ -70,9 +79,7 @@ const WriteNormalArticleModal = styled(Modal)`
       padding-left:10px;
       padding-right:10px;
       .score{
-
       }
-
       .buttonBox{
           .button{
               width:100px;
@@ -87,7 +94,6 @@ const WriteNormalArticleModal = styled(Modal)`
                   color:white;
               }
           }
-
       }
   }
 `;
@@ -96,81 +102,82 @@ const TitleForm = styled.input`
   resize: none;
   width: 100%;
   height: 30px;
-  border: 1px solid #E6E6E6;
+  border:none;
   outline: none;
   border-radius: 10px;
+  background-color:#e9e9e9;
 `
-//const CommentForm = styled.textarea`
-//  padding:10px;
-//  resize:none;
-//  width:100%;
-//  height:100px;
-//  border:1px solid #E6E6E6;
-//  outline:none;
-//  border-radius:10px;
-//`
+const CommentForm = styled.textarea`
+  padding:10px;
+  resize:none;
+  width:100%;
+  height:100px;
+  border:1px solid #E6E6E6;
+  outline:none;
+  border-radius:10px;
+`
 class ArticleModal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: "", content: "",
+    constructor(props){
+        super(props);
+        this.state = {
+            title:"",content:"",
+        }
     }
-  }
-  render() {
-    const Mandatory = () => <span style={{ color: "red" }} title="필수사항입니다.">*</span>
+    render(){
+      const Mandatory = () => <span style={{color:"red"}} title="필수사항입니다.">*</span>
 
-    return (
-      <React.Fragment>
-        <WriteNormalArticleModal open={this.props.write} onClose={async (e) => {
-          if (this.state.title !== "" || this.state.content !== "") {
-            if (await confirm("내용이 저장되지 않습니다. 그래도 닫으시겠습니까?", "예", "아니오")) {
-              e.preventDefault();
-            } else {
-              return;
-            }
-          }
-          this.setState({ title: "", content: "" }); this.props.handlerModal(false)
-        }}>
-          <div className="close-box" onClick={() => { this.setState({ title: "", content: "" }); this.props.handlerModal(false) }}>
-            <Cross style={{ cursor: "pointer" }} angle={45} color={"#000000"} weight={3} width={15} height={15} />
-          </div>
-          <div className="form align_item_center">
-            <div className="title_label">제목<Mandatory /></div>
-            <TitleForm
-              value={this.state.title || ""}
-              onChange={event => this.setState({ title: event.target.value })}
-              name="title"
-            />
-          </div>
-          <div className="form form_height">
-            <div className="title_label ">내용<Mandatory /></div>
-            <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-              <TextControllerClassic
-                item={{ content: this.state.content }}
-                name={"content"}
-                getValue={async (data) => { this.setState({ content: data.content }) }}
-                width="700"
-                editheight="240"
-              />
-            </div>
-          </div>
-          <div className="form redButtonBox">
-            <div className="redButton" onClick={async () => {
-              if (this.state.title === "") {
-                await alert("게시글의 제목을 입력해주세요.");
-                return;
-              } else if (this.state.content === "") {
-                await alert("게시글의 내용을 입력해주세요");
-                return;
-              }
-              this.props.createNoneRequest(this.state.title, this.state.content)
-            }} >
-              <div className="btnText" >작성하기</div>
-            </div>
-          </div>
-        </WriteNormalArticleModal>
-      </React.Fragment>
-    );
-  }
+        return(
+            <React.Fragment>
+                <WriteNormalArticleModal open={this.props.write} onClose={async(e) => {
+                  if(this.state.title!=""||this.state.content!=""){
+                    if(await confirm("내용이 저장되지 않습니다. 그래도 닫으시겠습니까?","예","아니오")){
+                      e.preventDefault();
+                    }else{
+                      return;
+                    }
+                  }
+                  this.setState({ title: "", content: "" });this.props.handlerModal(false)
+                  }}>
+                        <div className="upper-box" >
+                          <div className="blank"/>
+                          <div className="header">게시글 작성</div>
+                          <Cross onClick={() => {this.setState({ title: "", content: "" });this.props.handlerModal(false)}} style={{cursor:"pointer"}} angle={45} color={"#000000"} weight={1} width={20} height={20}/>
+                        </div>
+                        <div className="form align_item_center">
+                            <div className="title_label">제목<Mandatory/></div>
+                            <TitleForm
+                            value={this.state.title || ""}
+                            onChange={event => this.setState({ title: event.target.value })}
+                            name="title"
+                            />
+                            </div>
+                        <div className="form form_height">
+                            <div className="title_label ">내용<Mandatory/></div>
+                            <TextControllerClassic
+                            item={{content:this.state.content}}
+                            name={"content"}
+                            getValue={async(data)=>{this.setState({content:data.content})}}
+                            editheight={300}
+                            />
+                        </div>
+                        <div className="form redButtonBox">
+                            <div className="button red marginRight" onClick={async()=>{
+                              if(this.state.title==""){
+                                await alert("게시글의 제목을 입력해주세요.");
+                                return;
+                              }else if(this.state.content==""){
+                                await alert("게시글의 내용을 입력해주세요");
+                                return;
+                              }
+                              this.props.createNoneRequest(this.state.title,this.state.content)}} >
+                                <div className="btnText" >작성하기</div>
+                            </div>
+                            <div className="button grey" onClick={() => {this.setState({ title: "", content: "" });this.props.handlerModal(false)}}>취소하기</div>
+                        </div>
+                        
+                </WriteNormalArticleModal>
+            </React.Fragment>
+        );
+    }
 }
 export default ArticleModal;

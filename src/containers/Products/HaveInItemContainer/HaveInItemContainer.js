@@ -8,7 +8,8 @@ const ScrollBox = styled.div`
     min-width:103%;
     height: 100%;
 
-    overflow:${props=>props.isScroll?"overlay":"hidden"};
+    // overflow:${props=>props.isScroll?"overlay":"hidden"};
+    overflow:overlay;
 `;
 class HaveInItemContainer extends Component {
   componentWillMount() {
@@ -21,6 +22,7 @@ class HaveInItemContainer extends Component {
 
   render() {
     console.log("test-----",this.props);
+    
     return(
       <ScrollBox
       isScroll={this.props.dataListAdded.length>4?true:false}

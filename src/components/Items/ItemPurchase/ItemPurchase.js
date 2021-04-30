@@ -35,16 +35,15 @@ display:${props => props.isNon === true ? "none" : "block"}
 `
 const CustomButton = styled.div`
     min-width:${props => props.width}px;
-    min-height:${props => props.height}px;
+    height:${props => props.height}px;
     border:1px solid ${props => props.borderColor == null ? "#d6d6d6" : props.borderColor};
     background-color:${props => props.backgroundColor};
-    // background-image:url(${props => props.imgURL})
     display:flex;
     justify-content:center;
     align-items:center;
     margin-bottom:${props => props.marginBottom == null ? "0" : props.marginBottom}px;
     .text_{
-      font-size:${props => props.fontSize}pt;
+      font-size:${props => props.fontSize}px;
       font-weight:500;
       color:${props => props.fontColor == null ? "white" : props.fontColor};
     }
@@ -56,7 +55,7 @@ const CustomButton = styled.div`
 
 const InputText = styled.input.attrs({ type: "text" })`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:100px;
+  height:60px;
   border-radius:10px;
   font-family:Noto Sans KR;
   font-size:${market_style.font.size.normal3};
@@ -70,18 +69,18 @@ const MessageWrapper = styled.div`
     width:100%;
     display:flex;
     justify-content:flex-start;
-    flex-direction:${props => props.isMy ? "row-reverse" : "row"};
     align-items:flex-end;
+    flex-direction:${props => props.isMy ? "row-reverse" : "row"};
     margin-bottom:16px;
   .msg_bubble{
     max-width:400px;
-    background-color:${props => props.isMy ? "#d6d6d6" : "#EFEFEF"};
-    padding:13px;
+    background-color:${props => props.isMy ? "#e9e9e9" : "#e9e9e9"};
+    padding:4px 20px;
     display:flex;
     justify-content:center;
     align-items:flex-end;
     border-radius:30px;
-    font-size:${market_style.font.size.small3};
+    font-size:${market_style.font.size.small1};
   }
   .file_bubble{
     max-width:400px;
@@ -95,7 +94,7 @@ const MessageWrapper = styled.div`
   }
   .msg_time{
     width:max-content;
-    height:25px;
+    height:max-content;
     font-size:${market_style.font.size.tiny2};
     margin-left:12px;
     margin-right:12px;
@@ -342,7 +341,7 @@ const ItemContents = styled.div`
   border: 0.25px solid #eaeaea;
   border-radius: 20px;
   opacity: 1;
-  padding: 20px 25px;
+  padding: 10px 25px 20px 25px;
 
   .header {
     padding-bottom: 10px;
@@ -390,7 +389,8 @@ const ItemContents = styled.div`
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    margin-right:30px;
+    margin-right:10px;
+    cursor:pointer;
   }
   .font_small{
     height:20px;
@@ -421,7 +421,7 @@ const ItemContents = styled.div`
     margin-bottom: 25px;
   }
   .margin_bottom_s{
-    margin-bottom:15px;
+    margin-bottom:10px;
   }
   .element {
     margin-top: 22px;

@@ -7,7 +7,7 @@ const FormStyle = styled.div`
     width: 100%;
     height: max-content;
     display: flex;
-    
+    flex-wrap:wrap;
     .contentBox{
         display:flex;
         width: max-content;

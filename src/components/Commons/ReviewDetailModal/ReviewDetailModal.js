@@ -45,7 +45,8 @@ const CustomButton = styled.div`
     }
 `
 const Dialog = styled(Modal)`
-    width: 1000px !important;
+    width: 1000px;
+    min-width:300px;
     height:max-content;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 5px 5px 10px #00000029;

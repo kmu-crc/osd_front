@@ -20,11 +20,14 @@ const Wrapper = styled.div`
   }
 `;
 const TitleBox = styled.div`
+  padding:0px 15px;
   margin-top: ${props => props.top == null?"0px":props.top}px;
   margin-bottom: ${props => props.bottom==null?"0px":props.bottom}px;
   width: 100%; 
   display:flex;
   justify-content:space-between;
+  flex-wrap:wrap;
+
   ._title{
     width:100%;
     display:flex;
@@ -36,7 +39,17 @@ const TitleBox = styled.div`
     color:black;
   }
   .sort{
-    width:300px;
+    width:100%;
+  }
+  @media only screen and (max-width: 800px) and (min-width: 500px){
+    margin-top:0px;
+    ._title{
+      width:100%;
+      justify-content:flex-end;
+    }
+    .sort{
+      width:100%;
+    }
   }
 `
 const Content = styled(ContentBox)`
@@ -213,6 +226,7 @@ const Container = styled.div`
   .request {
     width: max-content;
   }
+
 `;
 const ListElement = styled.div`
   width:100%;
@@ -234,11 +248,21 @@ const ListElement = styled.div`
     font-size:${market_style.font.size.mini2};
   }
   .date{
+    min-width:max-content;
     width:max-content;
     display:flex; 
     justify-content:center;
     align-items:center;
     font-size:${market_style.font.size.mini2};
+    }
+    @media only screen and (min-width: 500px) and (max-width:1000px){
+      padding:6px 54px 6px 20px;
+      .title{
+        min-width:70%;
+      }
+      .writer{
+        min-width:16%;
+      }
     }
 `;
 const target = `request`;

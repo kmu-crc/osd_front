@@ -36,9 +36,23 @@ const Wrapper = styled.div`
   display:flex;
   flex-direction:column;
   .row_wrapper{
+    width:100%;
   }
   .flex{
     display:flex;
+  }
+  .flexWrap{
+    flex-wrap:wrap;
+  }
+  @media only screen and (min-width: 1000px) and (max-width:1366px){
+    .flexWrap{
+      flex-wrap:nowrap;
+    }
+  }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    .flexWrap{
+      flex-wrap:wrap;
+    }
   }
 `;
 const Expert = styled.div`
@@ -50,7 +64,11 @@ const Expert = styled.div`
   border-radius: 20px;
   border:1px solid #eaeaea;
   box-shadow: 3px 3px 5px #0000001A;
-
+  .pic{
+    width:100%;
+    display:flex;
+    justify-content:center;
+  }
   .profile_Wrapper{
     width:100%;
     font-family: Noto Sans KR;
@@ -115,6 +133,14 @@ const Expert = styled.div`
       font-weight: 300;
     }
   }
+  @media only screen and (min-width: 1000px) and (max-width:1366px){
+    margin-bottom:20px;
+  }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    width:100%;
+    margin-bottom:20px;
+    margin-right:0px;
+  }
 `;
 const Profile = styled.div`
   width: 250px;
@@ -127,7 +153,8 @@ const Profile = styled.div`
 `;
 
 const Introduction = styled.div`
-  width:100%;
+  width:980px;
+  min-width:440px;
   height:439px;
   padding: 40px 60px;
   background: #FFFFFF;
@@ -192,8 +219,8 @@ const ItemInfo = styled.div`
   padding: 10px 25px 20px 25px;
 
   .title {
-    color:black;
     display:flex;
+    color:black;
     justify-content:center;
     align-items:center;
     height:27px;
@@ -225,9 +252,10 @@ const ItemInfo = styled.div`
   }
 `;
 const AdditionalInfo = styled.div`
+
   margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
   width: ${props => props.width == null ? "100%" : props.width + "px"};
-  height: ${props => props.height == null ? "100%" : props.height + "px"};
+  height: ${props => props.height == null ? "max-content" : props.height + "px"};
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #0000001A;
   border-radius: 20px;
@@ -238,10 +266,10 @@ const AdditionalInfo = styled.div`
   
   .title {
     display:flex;
-    color:black;
     justify-content:center;
     align-items:center;
     height:27px;
+    color:black;
     font-size:${market_style.font.size.normal1};
     font-weight: 500;
     text-align: center;
@@ -267,9 +295,6 @@ const AdditionalInfo = styled.div`
   .reviewItem{
     width:100%;
     height:80%;
-    // display:flex;
-    // overflow:hidden;
-    // overflow-y:auto;
   }
   .wrapItem{
     width:100%;
@@ -280,6 +305,7 @@ const AdditionalInfo = styled.div`
     }
 `;
 const MakerBoard = styled.div`
+
   width: ${props => props.width == null ? "100%" : props.width + "px"};
   margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
   margin-bottom:50px;
@@ -469,6 +495,7 @@ const TagPiece = styled.div`
     }
 `;
 const CreateRequest = styled.div`
+
 width:100%;
 height:30px;
 display:flex;
@@ -505,6 +532,7 @@ justify-content:flex-end;
 }
 
 `;
+
 class MakerDetail extends Component {
   constructor(props) {
     super(props);
@@ -598,11 +626,13 @@ class MakerDetail extends Component {
     return (
       this.props.MakerViewDetail ?
         <Wrapper>
-          <div className="row_wrapper flex">
+          <div className="row_wrapper flex flexWrap">
             {/* Designer */}
             <Expert>
               {/* Profile */}
+              <div className="pic">
               <Profile face={this.state.image} />
+              </div>
               {/* Text */}
               <div className="profile_Wrapper">
                     <div className="nick">
@@ -714,7 +744,7 @@ class MakerDetail extends Component {
 
           {/**보유아이템 */}
           <ItemInfo height={420} mTop={20}>
-            <div className="title margin_bottom">디자인 아이템</div>
+            <div className="title margin_bottom">제작 아이템</div>
             <div className="hrline margin_bottom"/>
             <div className="wrapItem">
           {<HaveInItemContainer id={this.props.id} />}
@@ -736,7 +766,7 @@ class MakerDetail extends Component {
           }
 
           {/* 리뷰 */}
-          <AdditionalInfo height={366} mTop={20} style={{height:"max-content",maxHeight:"366px"}}>
+          <AdditionalInfo mTop={20} style={{height:"max-content"}}>
             <div className="title margin_bottom">리뷰({this.props.ReviewCount})</div>
             <div className="hrline margin_bottom"/>
             <div className="reviewItem">

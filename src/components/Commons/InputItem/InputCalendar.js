@@ -5,7 +5,7 @@ import market_style from "market_style";
 const FormBox = styled.div`
     display:flex;
     align-items:center;
-
+    margin-bottom:5px;
     margin-right: 20.5px;
 
     .last-child {
@@ -59,40 +59,6 @@ const FormStyle = styled.input.attrs({ type: "date" })`
         width: 20px;
         height: 20px;
         border-width: thin;
-    }
-`;
-const FormText = styled.input.attrs({ type: "number" })`
-    width: ${props => props.width}px;
-    height:52px;
-    margin: 0;
-    margin-right:5px;
-    padding: 0.67857143em 1em;
-    border:0px;
-    border-radius:26px;
-    text-align:center;
-    font-family:Noto Sans KR;
-    font-size: ${market_style.font.size.small3};
-    background-color:#E9E9E9;
-    outline:none;
-    -webkit-appearance: none;
-    transition: color 0.1s ease, border-color 0.1s ease;
-
-    &::placeholder {
-        color: ${StyleGuide.color.geyScale.scale5};
-    }
-    &:focus {
-        &::placeholder {
-            color: ${StyleGuide.color.geyScale.scale7};
-        }
-        border-color: #85b7d9;
-        box-shadow: 0 0 0 0 rgba(34, 36, 38, 0.35) inset;
-    }
-    &.error {
-        border: 1px solid ${StyleGuide.color.main.basic};
-        color: ${StyleGuide.color.main.basic};
-        &::placeholder {
-            color: ${StyleGuide.color.main.basic};
-        }
     }
 `;
 // const Button = styled.div`
@@ -236,7 +202,7 @@ export class InputCalendar extends Component {
     render() {
         return (
             <React.Fragment>
-                <div style={{ display: "flex", alignItems: "center", fontSize: market_style.font.size.small3 }}>
+                <div style={{ display: "flex", flexWrap:"wrap", alignItems: "center", fontSize: market_style.font.size.small3 }}>
                     <FormBox>
                         <FormStyle
                             id="startDate"

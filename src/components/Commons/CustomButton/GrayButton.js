@@ -19,9 +19,9 @@ const StyleButton = styled.div`
     margin: auto;
     width: max-content;
     text-align: center;
-    font: normal normal bold 15px/22px Noto Sans KR;
+    font: normal normal 15px/22px Noto Sans KR;
     letter-spacing: 0px;
-    color: #FFFFFF;
+    color: ${props=>props.fontColor==null?"#FFFFFF":props.fontColor};
     opacity: 1
     // color:${props=>props.isWhite==null?"white":"#707070"};
     // font-weight:400;
@@ -54,7 +54,7 @@ export class GrayButton extends Component {
     render() {
         return (
             <React.Fragment>
-                <StyleButton width={this.props.width} height={this.props.height} fontSize={this.props.fontSize} isWhite={this.props.isWhite} onClick={this.onClickButton}>
+                <StyleButton fontColor={this.props.fontColor} width={this.props.width} height={this.props.height} fontSize={this.props.fontSize} isWhite={this.props.isWhite} onClick={this.onClickButton}>
                     <div className="text">{this.props.value}</div>
                 </StyleButton>
             </React.Fragment>

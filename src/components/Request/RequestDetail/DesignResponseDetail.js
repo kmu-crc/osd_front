@@ -50,54 +50,57 @@ const DesignResponseDetailWrapper = styled.div`
   }
   
   .form-list {
+    width:102%;
     display: flex;
     flex-direction: row;
+    justify-content:center;
+    flex-wrap:wrap;
   }
+
   .form {
     width: 643px;
+    max-width:100%;
     min-height: 582px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 3px 3px 5px #0000001A;
     border: 0.25px solid #eaeaea;
     border-radius: 20px;
     padding: 30px 50px;
-    :first-child {
-      margin-right: 20px;
-    }
+    margin-right:20px;
+    margin-bottom:20px;
 
     .row {
       display: flex;
       flex-direction: row;
-  
+      flex-wrap:wrap;
+
       .label {
         height: 22px;
-        width: 140px;
+        min-width: 140px;
         text-align: left;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
         border-right: 1px solid #707070;
-  
+
         text-align: left;
         font: normal normal medium 15px/22px Noto Sans KR;
         letter-spacing: 0px;
         color: #707070;
+
+        margin-right: 94px;
+        margin-bottom:5px;
       }
-  
+
       .content {
-        // width: max-content;
         width: 100%;
-        height: 100%;
+        max-width: max-content;
         margin-bottom: 31px;
-        margin-left: 55px;
-  
+        
         text-align: left;
         font: normal normal normal 15px/22px Noto Sans KR;
         letter-spacing: 0px;
         color: #000000;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
       }
     }
   }
@@ -168,10 +171,9 @@ const DesignResponseDetailWrapper = styled.div`
   .bottom {
     width: 100%;
     height: 30px;
-    margin-top: 20px;
     position: relative;
     display: flex;
-  
+
     .reply {
       margin: auto;
       width: 150px;
@@ -200,6 +202,17 @@ const DesignResponseDetailWrapper = styled.div`
       font: normal normal medium 13px/19px Noto Sans KR;
       letter-spacing: 0px;
       color: #707070;
+    }
+  }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+
+    .form{
+      padding: 30px 10%;
+      .row{
+        .label{
+          margin-right: 30px;
+        }
+      }
     }
   }
 `;
@@ -265,11 +278,14 @@ export const DesignResponseDetail = (props) => {
           <div className="content">{LocationList[parseInt(request.location, 10) || 15].text}</div>
         </div>
         <div className="row">
-          <div className="label">디자인 소유권</div>
+          {
+            props.type === "designer" ?
+            <div className="label">디자인 소유권</div>
+            :<div className="label">제작 소유권</div>
+          }
           <div className="content">{request.ownership <= 0 ? "의뢰자" : "디자이너"}</div>
         </div>
       </div>
-
       {/* 응답 */}
       <div className="form">
         <div className="row">

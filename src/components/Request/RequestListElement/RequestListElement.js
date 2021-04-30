@@ -109,6 +109,26 @@ const ListElement = styled.div`
     font-weight:400;
     color:#000000;
   }
+
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    padding:6px 54px 6px 20px;
+    .title_{
+      min-width:70%;
+      display:flex;
+      align-items:center;
+      padding:5px;
+      font-weight:700;
+      color:black;
+      font-size:${market_style.font.size.small1};
+
+      .text{
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        cursor:pointer;
+      }
+    }
+  }
 `;
 const ThumbnailWriter = styled.div`
   width: 23px;
