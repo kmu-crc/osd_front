@@ -34,10 +34,13 @@ const ListElement = styled.div`
   padding-left:50px;
   padding-right:50px;
   .non-status-box{
+    min-width: max-content;
+    height:max-content;
     margin-left:5px;
   }
   .status-box{
-    min-width: 80px;
+    min-width: max-content;
+    height:max-content;
     line-height: 15px;
     font-family: Noto Sans KR;
     font-weight: 500;

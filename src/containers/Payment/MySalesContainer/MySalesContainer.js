@@ -39,23 +39,40 @@ const ListElement = styled.div`
   display:flex;
   margin-bottom:10px;
   .title{
-    min-width:83%;
+    width:80%;
+    min-width:max-content;
     display:flex;
     align-items:center;
     font-size:${market_style.font.size.mini2};
   }
   .writer{
-    min-width:12%;
+    width:15%;
+    min-width:max-content;
     display:flex;
     align-items:center;
     font-size:${market_style.font.size.mini2};
   }
   .date{
-    min-width:3%;
+    width:5%;
+    min-width:max-content;
     display:flex; 
     justify-content:center;
     align-items:center;
     font-size:${market_style.font.size.mini2};
+    }
+
+    @media only screen and (min-width: 500px) and (max-width: 800px) {
+      padding-left:20px;
+      padding-right:20px;
+      .title{
+        width:80%;
+      }
+      .writer{
+        width:17%;
+      }
+      .date{
+        width:3%;
+      }
     }
 `;
 
@@ -109,7 +126,7 @@ class MySalesContainer extends Component {
       firstItem={null}
       lastItem={null}
       siblingRange={1}
-      totalPages={lastPage + 1}
+      totalPages={lastPage}
       // pointing
       secondary
       onPageChange={(event, { activePage }) => {

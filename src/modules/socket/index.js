@@ -1,7 +1,8 @@
 import socketIOClient from "socket.io-client";
 import host from "config";
-const wspath = host;
-let Socket = socketIOClient(wspath,
-    { transports: ['websocket', 'polling', 'flashsocket'] }
-);
+
+let Socket = socketIOClient(host, {
+    // path: "/api",
+    transports: ['websocket', 'polling', 'flashsocket']
+});
 export default Socket;

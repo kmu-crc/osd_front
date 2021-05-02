@@ -12,8 +12,6 @@ import market_style from "market_style";
 const Wrapper = styled(ContentBox)`
   width:100%;
   position: relative;
-  // padding-left:54px;
-  // padding-right:54px;
   z-index:3;
 `;
 const MainBox = styled.div`
@@ -38,6 +36,7 @@ margin:-20px 20px -20px 20px;
   .contentsBox_{
     width:100%;
     display:flex;
+    flex-wrap:wrap;
     margin-top:15px;
   }
   .flexEnd{
@@ -46,10 +45,20 @@ margin:-20px 20px -20px 20px;
   .marginTop{
     margin-top:26px;
   }
+  @media only screen and (min-width: 500px) and (max-width: 1366px) {
+    .contentsBox_{
+      width:100%;
+      display:flex;
+      flex-wrap:wrap;
+      flex-direction:column;
+      align-items:center;
+    }
+  }
 `;
 const InputTextBox = styled.input`
   border:none;
-  width: ${props => props.width || "100%"};
+  max-width: ${props => props.width || "100%"};
+  width:100%;
   height:30px;
   padding:9px 20px;
   background-color:#E9E9E9;
@@ -109,6 +118,8 @@ const FormBox = styled.div`
     font-family:Noto Sans KR;
     font-size:${market_style.font.size.small1};
   }
+  width:100%;
+  max-width:550px;
   margin-left:50px;
   margin-top:85px;
   .wrapper{
@@ -148,7 +159,9 @@ const FormBox = styled.div`
     height:30px;
     color:#707070;
   }
-
+  @media only screen and (min-width: 500px) and (max-width: 1000px) {
+    margin-left:0px;
+  }
 `;
 const Margin = styled.div`
   width:${props => props.width == null ? 100 + "%" : props.width + "px"};

@@ -22,11 +22,13 @@ const ListElement = styled.div`
   padding-right:50px;
   .title_{
     width:80%;
+    min-width:max-content;
     font-family:Noto Sans KR,Bold;
     font-size:15px;
   }
   .writer_{
     width:15%;
+    min-width:max-content;
     margin-right:5%;
     font-family:Noto Sans KR,Medium;
     font-size:13px;
@@ -34,8 +36,13 @@ const ListElement = styled.div`
   }
   .date{
     width:5%;
+    min-width:max-content;
     font-family:Noto Sans KR,Medium;
     font-size:13px;
+  }
+  @media only screen and (min-width: 500px) and (max-width: 740px) {
+    padding-left:20px;
+    padding-right:20px;
   }
 `;
 const ThumbnailWriter = styled.div`
