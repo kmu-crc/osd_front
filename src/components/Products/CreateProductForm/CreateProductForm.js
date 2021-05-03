@@ -18,6 +18,7 @@ import arrow from "source/arrow.svg";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
+import { Icon } from "semantic-ui-react";
 
 const fashion = [
   { order: 0, title: "Ideation" },
@@ -488,7 +489,6 @@ const Thumbnail = styled.div`
 
 const FormBox = styled.div`
   width:100%;
-  // max-width:1014px;
   max-width:${props => props.width != null ? props.width + "px" : "100%"};
   height:${props => props.height != null ? props.height + "px" : "max-content"};
   box-shadow: ${props => props.boxShadow == null ? "" : "5px 5px 10px #00000029"};
@@ -536,6 +536,9 @@ const FormBox = styled.div`
   .flex{
     display:flex;
   }
+  .cursor{
+    cursor:pointer;
+  }
   .innerWraper{
     width:100%;
     margin-bottom:26px;
@@ -572,6 +575,21 @@ const FormBox = styled.div`
     color: #000; //#707070;
     padding: 2px 0px 3px 11px;
     margin-bottom:10px;
+    margin-right:10px;
+  }
+  .checkbox_wrapper{
+    width:max-content;
+    height:25px;
+    display:flex;
+    align-items:center;
+    .checkbox{
+      width:max-content;
+      height:25px;
+      margin-right:5px;
+    }
+    .text{
+      height:max-content;
+    }
   }
   @media only screen and (min-width: 500px) and (max-width:1000px){
     padding:27px;
@@ -1032,7 +1050,7 @@ class ItemTypeForm extends Component {
             </div>
           </FormBox>
 
-          <FormBox boxShadow={true} marginTop={25}>
+          {/* <FormBox boxShadow={true} marginTop={25}>
             {this.props.itemType === 8 ? <div>
               <input onChange={this.onHandleFirstListName} className="title-input" placeholder="강의내용" />
             </div> : null}
@@ -1053,16 +1071,13 @@ class ItemTypeForm extends Component {
               작업 취소<i className="undo icon" />
             </ResetButtonWrapper>
             {this.state.type === "blog" ?
-              // <div className="contentWrap">
               <InputContent
                 reset={this.state.reset}
                 projectable={true}
                 content={content}
                 toProject={this.toProject}
                 returnState={this.onHandleContent} />
-              // </div>
               :
-              // {/* 로컬 그리드 에디터 - */}
               <React.Fragment>
                 <div className="contentsBox centering">
                   <DesignTemplateSelector>
@@ -1086,13 +1101,6 @@ class ItemTypeForm extends Component {
                         )}
                     </div>
                   </DesignTemplateSelector>
-                  {/* 
-                  <LocalGridEditor
-                    userInfo={this.props.userInfo}
-                    content={steps}
-                    returnContent={this.onHandleGrid}
-                    editor={true} />
-                */}
                 </div>
                 <div className="contentsBox centering">
                   <EditorWrapper>
@@ -1111,39 +1119,45 @@ class ItemTypeForm extends Component {
                   </div>
                   </EditorWrapper>
                 </div>
-              </React.Fragment>}
-//           {headers && headers.map((head, index) =>
-//             <FormBox key={index} boxShadow={true} marginTop={25}>
-//               {itemType === 8 ? <div style={{ display: "flex" }}>
-//                 <input onChange={(e) => {
-//                   const copy = headers.map((_head, _index) => {
-//                     if (index === _index) {
-//                       _head.name = e.target.value;
-//                     }
-//                     return _head;
-//                   });
-//                   this.setState({ headers: copy });
-//                 }} value={head.name || "강의내용"} className="title-input" placeholder="강의내용" />
-//                 <label>
-//                   <CheckBox2
-//                     onChange={() => {
-//                       const copy = headers.map((_head, _index) => {
-//                         if (index === _index) {
-//                           _head.is_practice = !_head.is_practice;
-//                         }
-//                         return _head;
-//                       });
-//                       this.setState({ headers: copy });
-//                     }}
-//                     checked={head.is_practice}
-//                   />&nbsp;파생여부&nbsp;&nbsp;
-//                 </label>
-//                 {index !== 0 && <div style={{ marginLeft: "auto", marginRight: "25px" }} onClick={() => {
-//                   const copy = headers.filter((_head, _index) => index !== _index);
-//                   console.log(copy);
-//                   this.setState({ headers: copy });
-//                 }}>x</div>}
-//               </div> : null}
+              </React.Fragment>} */}
+          {headers && headers.map((head, index) =>
+            <FormBox key={index} boxShadow={true} marginTop={25}>
+              {itemType === 8 ? <div style={{ display: "flex" }}>
+                <input onChange={(e) => {
+                  const copy = headers.map((_head, _index) => {
+                    if (index === _index) {
+                      _head.name = e.target.value;
+                    }
+                    return _head;
+                  });
+                  this.setState({ headers: copy });
+                }} value={head.name || "강의내용"} className="title-input" placeholder="강의내용" />
+                <label>
+                  <div className="checkbox_wrapper">
+                  <div className="checkbox">
+                  <CheckBox2
+                    onChange={() => {
+                      const copy = headers.map((_head, _index) => {
+                        if (index === _index) {
+                          _head.is_practice = !_head.is_practice;
+                        }
+                        return _head;
+                      });
+                      this.setState({ headers: copy });
+                    }}
+                    checked={head.is_practice}
+                  /></div>
+                  <div className="text">
+                    &nbsp;파생여부&nbsp;&nbsp;
+                  </div>
+                  </div>
+                </label>
+                {index !== 0 && <div className="cursor" style={{ marginLeft: "auto", marginRight: "25px" }} onClick={() => {
+                  const copy = headers.filter((_head, _index) => index !== _index);
+                  console.log(copy);
+                  this.setState({ headers: copy });
+                }}>x</div>}
+              </div> : null}
 
 
               {this.state.type === "blog" ?
@@ -1206,7 +1220,8 @@ class ItemTypeForm extends Component {
 
           {itemType === 8 ?
             <FormBox boxShadow={true} marginTop={25}>
-              <div onClick={() => { const copy = [...headers]; copy.push({ name: null, is_practice: false, steps: [], content: [], template: null }); this.setState({ headers: copy }); }}> + </div>
+              <div className="flexWrapBox Vcentering cursor" onClick={() => { const copy = [...headers]; copy.push({ name: null, is_practice: false, steps: [], content: [], template: null }); this.setState({ headers: copy }); }}>
+              <Icon name="plus" size='tiny' color='red' /><div className="label">템플릿 추가</div></div>
             </FormBox> : null}
 
           {/* <FormBox boxShadow={true} marginTop={25}>

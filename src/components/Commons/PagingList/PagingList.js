@@ -50,6 +50,15 @@ const ListContainer = styled.div`
     .item{
     }
   }
+  @media only screen and (min-width: 500px) and (max-width:700px){
+    justify-content:center;
+    .sales{
+      margin: 0px 0px 35px 0px;
+    }
+    .sales_Expert{
+      margin: 0px 10px 35px 10px;
+    }
+  }
 `;
 const NoData = styled.div`
   min-width:100%;

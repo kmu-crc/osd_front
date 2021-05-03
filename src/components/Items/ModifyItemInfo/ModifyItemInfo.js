@@ -704,7 +704,6 @@ class ModifyItemInfo extends Component {
     const { /* edit, */ itemType, tab } = this.state;
     const Mandatory = () => <span className="font_red" title="필수사항입니다."> * </span>
     const { ItemDetail: item } = this.props;
-
     return (<MainBox>
       {this.state.loading ? <Loading /> : null}
 
@@ -993,49 +992,38 @@ class ModifyItemInfo extends Component {
           item.headers &&
           item.headers.length > 0 &&
           item.headers.map(
-            (head, index) =>
-              <div key={index} className="row" style={{ marginBottom: "30px" }}>
-                <ItemContents>
-                  <div className="header">
-                    <div className="title" style={{ display: "flex" }}>
-                      {/* {head.name ? */}
-                      <React.Fragment>
-                        <input
-                          className="title-input"
-                          value={(this.state.listname && this.state.listname[index]) || ""}
-                          onChange={e => this.onChangeListName(e, index)}
-                        />
-                        <button
-                          className={`edit ${(this.state.listname && this.state.listname[index]) === head.name && "disabled"}`}
-                          disabled={(this.state.listname && this.state.listname[index]) === head.name}
-                          onClick={e => this.editGridEditorName(head, index)}>수정</button>
-                      </React.Fragment>
-                      {/* : "아이템 상세내용"} */}
-                    </div>
+            (head, index) =>{
+              console.log(head);
+              return(<div key={index} className="row" style={{ marginBottom: "30px" }}>
+              <ItemContents>
+                <div className="header">
+                  <div className="title" style={{ display: "flex" }}>
+                    {head.name ?
+                    <React.Fragment>
+                      <input
+                        className="title-input"
+                        value={(this.state.listname && this.state.listname[index]) || ""}
+                        onChange={e => this.onChangeListName(e, index)}
+                      />
+                      <button
+                        className={`edit ${(this.state.listname && this.state.listname[index]) === head.name && "disabled"}`}
+                        disabled={(this.state.listname && this.state.listname[index]) === head.name}
+                        onClick={e => this.editGridEditorName(head, index)}>수정</button>
+                    </React.Fragment>
+                    : "아이템 상세내용"}
                   </div>
-                  <div className="editor-wrapper">
-                    {head.editor_type === "project"
-                      ? <ItemStepContainer index={index} header={head} editor={true} /> : null}
-                    {head.editor_type === "blog"
-                      ? <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} /> : null}
-                    {/* <ItemContentEditor
-                      header={head}
-                      index={index}
-                      item={this.props.ItemDetail}
-                      cardId={this.props.ItemDetail.cardId}
-                      edit={this.props.ItemDetail.user_id === (this.props.userInfo && this.props.userInfo.uid)}
-                      returnState={(obj) => {
-                        this.setState({ additional: obj.additional, content: obj.content, steps: obj.steps, type: obj.type })
-                        // console.log(this.state); 
-                      }}
-                      type={this.state.type} userInfo={this.props.userInfo} /> */}
-                  </div>
-                </ItemContents>
-              </div>
+                </div>
+                <div className="editor-wrapper">
+                  {head.editor_type === "project"
+                    ? <ItemStepContainer index={index} header={head} editor={true} /> : null}
+                  {head.editor_type === "blog"
+                    ? <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} /> : null}
+                </div>
+              </ItemContents>
+            </div>)
+            }
+
           )
-          // {/* {itemType > -1 ? 
-          // : <InfoContentChooseItemType> 아이템 유형을 선택하여 세부적인 <br /> 내용을 입력해주신 후 아이템을 등록해주세요. </InfoContentChooseItemType>} */}
-          // </div>
         ) : null
       }
 
