@@ -807,8 +807,10 @@ class ItemPurchase extends Component {
           {ContentHeader &&
             ContentHeader.length > 0 &&
             ContentHeader.map(
-              (head, index) =>
-                <div key={index} className="row">
+              (head, index) =>{
+                console.log(head);
+                return(
+                  <div key={index} className="row">
                   <ItemContents>
                     <div className="header">
                       <div className="title">
@@ -819,12 +821,15 @@ class ItemPurchase extends Component {
                       {head.editor_type === "project"
                         ? <ItemStepContainer editor={head.type === "copied" ? true : false} index={index} header={head} item={item} id={head.content_id} bought={item.bought} />
                         : null}
-                      {head.editor_type === "blog"
+                      {item.cardId&&head.editor_type === "blog"
                         ? <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} />
                         : null}
                     </div>
                   </ItemContents>
-                </div>)}
+                </div>
+                )                
+              }
+            )}
 
           {/** -------------------- ADVICE ----------------------- */}
           {

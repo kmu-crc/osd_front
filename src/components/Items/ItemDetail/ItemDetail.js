@@ -636,12 +636,7 @@ class ItemDetail extends Component {
     }
     return item ?
       <React.Fragment>
-        {/* {(this.props.userInfo && item.members && item.members.length > 1)
-          ? <ConnectedMemberContainer id={this.props.itemId} members={item.members} userInfo={this.props.userInfo} />
-          : null} */}
-
         <Wrapper>
-          {/* thumbnail and item-info */}
           <div className="profileBox">
             <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg}/>
             <ItemInfo face={item.who || who}>
