@@ -14,7 +14,11 @@ import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 import { GetMyPointRequest, } from "actions/Point";
 import { GetPaymentMessageRequest, CreatePaymentMessageRequest, /*DeleteItemQuestionRequest*/ } from "actions/Item";
 import { alert } from "components/Commons/Alert/Alert";
-// import { confirm } from "components/Commons/Confirm/Confirm";
+import styled from "styled-components";
+const Wrapper = styled.div`
+  margin:20px 30px
+`
+
 class ProductPurchaseContainer extends Component {
   constructor(props) {
     super(props);
@@ -67,8 +71,9 @@ class ProductPurchaseContainer extends Component {
       // this.props.isbuy && this.props.isbuy === 1 ?
       this.props.ItemDetail.private === 1 && !yours ?
         this.ThisIsPrivateItem() :
+        <Wrapper>
         <ItemPurchase purchase={this.Payment} itemId={this.props.ItemDetail["item-id"]} item={this.props.ItemDetail} {...this.props} />
-      // : ""
+        </Wrapper>
       : <Loading />
   }
 }

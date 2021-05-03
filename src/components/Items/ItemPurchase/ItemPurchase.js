@@ -112,10 +112,8 @@ const Wrapper = styled.div`
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  padding:10px 30px;
   .profileBox{
     width:100%;
-    
     display:flex;
     box-shadow: 3px 3px 5px #0000001A;
     border:1px solid #eaeaea;
@@ -128,40 +126,31 @@ const Wrapper = styled.div`
   .row{
     width:100%;
     margin-top:20px;
-    margin-bottom:20px;
+  }
+  @media only screen and (max-width: 1000px) and (min-width: 500px){
+    .profileBox{
+      flex-direction:column;
+      flex-wrap:wrap;
+    }
   }
 `;
 const ItemImages = styled.div`
-  max-width: 396px;
-  max-height: 354px;
-  min-width: 396px;
+  width: 396px;
+  min-width:396px;
+  height: 354px;
   min-height: 354px;
-  .main-image {
-    overflow-x: auto;
-    width: 100%;
-    height: 100%; 
-    background-image: url(${prop => prop.main});
-    background-size: contain;
-    background-position: center center;
-    background-repeat:no-repeat;
-  }
-  .sub-images {
-    margin-top: 30px;
-    .sub {
-      width: 102px;
-      height: 86px;
-      background-image: url(${prop => prop.main});
-      background-size: cover;
-      background-position: center center;
-    }
-    .nine-teen { margin-right: 19px; }
-    .eight-teen { margin-right: 18px; }
+  margin-right: 45px;
+  background-image: url(${prop => prop.main});
+  background-size: contain;
+  background-position: center center;
+  background-repeat:no-repeat;
+  @media only screen and (max-width: 1000px) and (min-width: 500px){
+    width:100%;
+    min-width:100%;
   }
 `;
 const ItemInfo = styled.div`
-
   position: relative;
-  margin-left: 45px;
   font-family: Noto Sans KR;
   background: #FFFFFF;
   width:100%;
@@ -268,9 +257,12 @@ const Introduction = styled.div`
   .wrapItem{
     width:100%;
     height:100%;
-    overflow:hidden;
+    overflow: hidden auto;
     .flex{
       display:flex;
+    }
+    .flex-wrap{
+      flex-wrap: wrap;
     }
     .title {
       font-size:${market_style.font.size.small1};
@@ -312,27 +304,7 @@ const Introduction = styled.div`
     }
   }
 `;
-const TagPiece = styled.div`
-    width: max-content;
-    min-width: max-content;
-    background-color:#E9E9E96A;
-    margin-right: 8px;
-    margin-top: 5px;
-    color: #707070;
-    padding:5px 12px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    font-size:${market_style.font.size.small1};
-    .close {
-        margin-left: 10px;
-        width: max-content;
-        height: max-content;
-        padding: 0px 2px;
-    }
-`;
 const ItemContents = styled.div`
-  // *{ border: 1px solid blue; }
   width: 100%;
   height:max-content;
   max-height: 585px;
@@ -342,7 +314,7 @@ const ItemContents = styled.div`
   border-radius: 20px;
   opacity: 1;
   padding: 10px 25px 20px 25px;
-
+  margin-bottom:20px;
   .header {
     padding-bottom: 10px;
     border-bottom: 2px solid #EFEFEF; 
@@ -772,12 +744,8 @@ class ItemPurchase extends Component {
     return item ?
       <React.Fragment>
         <Wrapper>
-          {/* thumbnail and item-info */}
           <div className="profileBox">
-            <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg}>
-              <div className="main-image" />
-            </ItemImages>
-
+            <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg}/>
             <ItemInfo face={item.who || who}>
               <div className="flex-align-column line">
                 <div className="flex spaceBetween">
@@ -796,8 +764,8 @@ class ItemPurchase extends Component {
                 </div>
 
 
-                <Introduction id="Introduction">
-                  <div className="wrapItem">
+                <Introduction id="Introduction" >
+                  <div className="wrapItem" >
                     <div className="title">설명</div>
                     <div id="itemDescription" className="text"
                       dangerouslySetInnerHTML={{ __html: `${item.description || ""}` }}
@@ -814,7 +782,18 @@ class ItemPurchase extends Component {
                       {item.type === 6 ? "지적재산권" : null}
                       {item.type === 7 ? "제작품" : null}
                     </div>
-                    {/* <div className="gradient_box" ></div> */}
+                    {/* <div className="title marginBottom">태그</div>
+                    <div className="flex flex-wrap">
+                      {
+                        tag.indexOf(",") == -1 ? null : tag.split(",").map((item, index) => {
+                          return (
+                            <TagPiece key={index}>
+                              {item}
+                            </TagPiece>
+                          );
+                        })
+                      }
+                    </div> */}
                   </div>
                 </Introduction>
               </div>
@@ -850,7 +829,7 @@ class ItemPurchase extends Component {
           {/** -------------------- ADVICE ----------------------- */}
           {
             item && (item.type === 2 || item.type === 7) ?
-              <React.Fragment>
+              <ItemContents>
                 <div className="header">
                   <div className="title margin_bottom_s">{item.type == 2 ? '자문/상담' : item.type == 7 ? '제작품 문의' : null}</div>
                 </div>
@@ -961,7 +940,7 @@ class ItemPurchase extends Component {
                   <InputText id="advicebox" value={this.state.message} onChange={this.onChangeMessage} />
                   {
                     this.state.file == null ?
-                      <CustomButton id="sendmessage" width="100" height="100" backgroundColor="white" fontColor="#707070" fontSize="12" onClick={this.writeMessage}><div className="text_">보내기</div></CustomButton>
+                      <CustomButton id="sendmessage" width="100" height="60" backgroundColor="white" fontColor="#707070" fontSize="12" onClick={this.writeMessage}><div className="text_">보내기</div></CustomButton>
                       :
                       <React.Fragment>
                         <div>
@@ -971,17 +950,17 @@ class ItemPurchase extends Component {
                       </React.Fragment>
                   }
                 </div>
-              </React.Fragment>
+              </ItemContents>
               : null
           }
           {/** -------------------- PRODUCT CONTENT ----------------------- */}
-          {
+          {/* {
             item && (item.type === 7) ?
               <React.Fragment>
                 <div className="title">제작품 문의</div>
               </React.Fragment>
               : null
-          }
+          } */}
 
 
 
