@@ -1297,3 +1297,17 @@ export function GetHaveGroupInDesignRequest(token,group_id) {
   //   })
   // }
 }
+
+// duedate
+export function GetProblemListFromDesignInGroupRequest(group_id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/problemcontents`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject);
+  });
+};

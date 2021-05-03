@@ -595,7 +595,7 @@ export function UpdateDesignTime(id, token) {
     }
 }
 export function UpdateDesignCardTime(id, token) {
-    const url = `${host}/design/updateDesignCardTime/${id}`;
+    const url = `${host}/design/updateDesignCardTimeByContent/${id}`;
     return dispatch => {
         dispatch(UpdateDesignInfo());
         return fetch(url, {
