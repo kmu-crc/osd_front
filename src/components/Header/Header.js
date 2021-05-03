@@ -298,7 +298,7 @@ class Header extends Component {
         this.setState({ screenWidth: window.innerWidth })
     };
     componentDidMount(prevProps) {
-        if (this.props.userInfo && prevProps.userInfo == null) {
+        if (this.props.userInfo && prevProps == null) {
             return true;
         }
     }
@@ -357,9 +357,6 @@ class Header extends Component {
                             <a className="link_tag" href="/designer">디자이너</a></MenuItem>
 
                     </LeftMenu>
-                    {/* window.location.pathname === '/design'==false?1:-1||window.location.pathname.search('/design/') || window.location.pathname.search('/designDetail/') > -1 ? true : false */}
-
-
                 </Menu>
             </WrapperBox>
         </React.Fragment>)

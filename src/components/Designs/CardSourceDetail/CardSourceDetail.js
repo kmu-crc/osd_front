@@ -1097,8 +1097,12 @@ class CardSourceDetail extends Component {
         }).then(res => res.json())
           .then(res => {
             if (res.success) {
-              this.props.UpdateDesignCardTime(this.state.item_uid, this.props.token);
-              this.props.UpdateDesignTime(this.props.DesignDetail.uid, this.props.token);
+              this.props.UpdateDesignCardTime(this.state.item_uid, this.props.token)
+                .then(() => this.props.GetCardDetailRequest(this.props.uid))
+                .then(() => this.props.UpdateDesignTime(this.props.DesignDetail.uid, this.props.token))
+                .then(() => this.props.GetDesignSourceRequest(this.props.DesignDetail.uid))
+                .then(() => this.props.GetDesignDetailRequest(this.props.DesignDetail.uid));
+                
               const check = () => {
                 this.setState({ loading: true, });
                 fetch(`${host}/design/problem/result-request2/${res.id}`, {
