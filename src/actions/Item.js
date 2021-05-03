@@ -231,6 +231,22 @@ export const UpdateItemListHeaderRequest = (id, token, data) => {
 export const UpdateItemListHeader = () => ({ type: types.UPDATE_BOARD_HEADER });
 export const UpdateItemListHeaderSuccess = (res) => ({ type: types.UPDATE_BOARD_HEADER_SUCCESS, success: res.success });
 export const UpdateItemListHeaderFailure = (error) => ({ type: types.UPDATE_BOARD_HEADER_FAILURE, success: error.success, });
+// CREATE LIST HEADER
+export const CreateItemListHeaderRequest = (id, token) => {
+  return (dispatch) => {
+    dispatch(CreateItemListHeader());
+    return fetch(`${host}/item/detail/createHeader/${id}`, {
+      headers: { "x-access-token": token, 'Content-Type': 'application/json' },
+      method: "POST", // body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(res => res && dispatch(CreateItemListHeaderSuccess(res)))
+      .catch(error => dispatch(CreateItemListHeaderFailure(error)));
+  };
+};
+export const CreateItemListHeader = () => ({ type: types.CREATE_BOARD_HEADER });
+export const CreateItemListHeaderSuccess = (res) => ({ type: types.CREATE_BOARD_HEADER_SUCCESS, success: res.success });
+export const CreateItemListHeaderFailure = (error) => ({ type: types.CREATE_BOARD_HEADER_FAILURE, success: error.success, });
 
 // NEW CARD
 export const CreateItemCardRequest = (data, id, list_id, token) => {

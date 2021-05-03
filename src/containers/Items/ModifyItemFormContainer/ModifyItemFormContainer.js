@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { DeleteItemRequest, UpdateItemRequest, GetItemDetailRequest, UpdateItemListRequest, UpdateItemListHeaderRequest } from "actions/Item";
+import { DeleteItemRequest, UpdateItemRequest, GetItemDetailRequest, UpdateItemListRequest, UpdateItemListHeaderRequest, CreateItemListHeaderRequest } from "actions/Item";
 import ModifyItemInfo from "components/Items/ModifyItemInfo";
 // import { SearchMemberRequest } from "actions/Commons/Search";
 import { alert } from "components/Commons/Alert/Alert";
@@ -46,6 +46,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   GetItemDetailRequest: (id, token) => dispatch(GetItemDetailRequest(id, token)),
   UpdateItemListHeaderRequest: (id, token, data) => dispatch(UpdateItemListHeaderRequest(id, token, data)),
+  CreateItemListHeaderRequest: (id, token, data) => dispatch(CreateItemListHeaderRequest(id, token, data)),
   UpdateItemRequest: (data, id, token) => dispatch(UpdateItemRequest(data, id, token)),
   DeleteItemRequest: (id, token) => dispatch(DeleteItemRequest(id, token)),
   UpdateItemListRequest: (id, list, token, data) => dispatch(UpdateItemListRequest(id, list, token, data))
