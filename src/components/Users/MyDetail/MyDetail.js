@@ -246,7 +246,6 @@ const BoardBox = styled.div`
     margin-left:20px;
     margin-bottom:50px;
     padding:50px;
-  
     .flex{
       display:flex;
     }
@@ -313,21 +312,6 @@ const Thumbnail = styled.div`
     background-position:center;
     background-size:cover;
     cursor:pointer
-`;
-const EmptyBox = styled.div`
-    width:${props => props.width}px;
-    height:${props => props.height}px;
-`;
-const RoundButton = styled.div`
-  width:${props => props.width}px;
-  height:${props => props.height}px;
-  color:${props => props.color};
-  border:1px solid ${props => props.borderColor};
-  border-radius:21px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  cursor:pointer;
 `;
 
 class MyDetail extends Component {
