@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { TextControllerClassic as TextController } from "components/Commons/InputItem/TextControllerClassic";
-// import { TextControllerPlus as TextController } from "components/Commons/InputItem";
+// import { TextControllerClassic as TextController } from "components/Commons/InputItem/TextControllerClassic";
+import { TextControllerPlus as TextController } from "components/Commons/InputItem";
 import { FileController } from "components/Commons/InputItem/FileController";
 import { ProblemController } from "components/Commons/InputItem/ProblemController";
 
@@ -133,15 +133,9 @@ export class Controller extends Component {
     await this.setState({ click: true });
   };
   async onChangeValue(data) {
-    // let newObj={...this.props.item };
-    // newObj.content = data.content;
-    // await this.setState({ ...newObj });
-    // await this.setState({content:data.content});
-    // await console.log(this.state);
-
-    if (this.props.getValue)
-      // await this.props.getValue(this.state);
-      await this.props.getValue({ ...this.props.item, content: data.content })
+    if (this.props.getValue) {
+      await this.props.getValue({ ...this.props.item, content: data.content });
+    }
   };
   async privateItem(event) {
     if (this.props.privateItem) {

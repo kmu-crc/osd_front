@@ -540,6 +540,7 @@ class ModifyItemInfo extends Component {
       type: ItemDetail.upload_type,
       //
       additional: additional,
+      is_problem: ItemDetail.is_problem,
     }
     await this.setState({ listname: ItemDetail.headers.map(head => head.name) });
     await this.setState(item);
@@ -1044,7 +1045,7 @@ class ModifyItemInfo extends Component {
                               className={`edit ${(this.state.listname && this.state.listname[index]) === head.name && "disabled"}`}
                               disabled={(this.state.listname && this.state.listname[index]) === head.name}
                               onClick={e => this.editGridEditorName(head, index)}>수정</button>
-                            <div style={{ marginLeft: "15px", display: "flex", height: "19px",  }}>
+                            <div style={{ marginLeft: "15px", display: "flex", height: "19px", }}>
                               <CheckBox2 onChange={() => this.updateListHeader(head)} checked={head.type === "practice" || head.type === "copied"} />
                               <div style={{ width: "max-content", font: "normal normal 300 13px/19px Noto Sans KR" }}>파생여부</div>
                             </div>
