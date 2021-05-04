@@ -9,7 +9,11 @@ import market_style from "market_style";
 
 // css styling
 const MsgContent = styled.div`
+  display:flex;
+  flex-direction:column;
   & .ui.comments .comment {
+    width:100% !important;
+
     position: relative;
     padding: 0.3rem 0;
     overflow:hidden;
@@ -126,11 +130,11 @@ class MessageDetail extends Component {
     const myId = this.props.userInfo.uid;
     return (
       <MsgContent>
-        <div className="ui comments" id="comments" ref={ref => this.list = ref}>
+        <div className={"ui comments"} id="comments" ref={ref => this.list = ref}>
           <div style={{ bottom: "0px" }}>
             {list && list.map(item => (
-              <div className={item.from_user_id === myId ? "comment my" : "comment"} key={item.uid}>
-                {item.from_user_id !== myId && <div className="avatar"> <img src={item.s_img ? item.s_img : thumbnail} alt="profile" /></div>}
+              <div className={item.from_user_id === myId ? "comment my right" : "comment left"} key={item.uid}>
+                {item.from_user_id !== myId && <div className="avatar"> <img style={{width:"45px",height:"45px",borderRadius:"25px"}} src={item.s_img ? item.s_img : thumbnail} alt="profile" /></div>}
                 <div className={item.from_user_id === myId ? "content my" : "content"}>
                   {/* {item.from_user_id !== myId && <a className="author"><TextFormat txt={item.nick_name} chars={12} /></a>} */}
                   {item.from_user_id !== myId && <TextFormat cursor={true} txt={item.nick_name} chars={12} />}

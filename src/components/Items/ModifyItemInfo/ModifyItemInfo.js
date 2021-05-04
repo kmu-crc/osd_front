@@ -369,7 +369,7 @@ const ItemContents = styled.div`
   // *{ border: 1px solid blue; }
   width: 100%;
   // width: 1306px;
-  height: 585px;
+  height: max-content;
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #0000001A;
   border: 0.25px solid #eaeaea;
@@ -411,7 +411,7 @@ const ItemContents = styled.div`
       opacity: 0.95;
     }
     width: 99%;
-    height: 510px;
+    height: 100%;
     padding-top: 15px;
     word-wrap: break-word;
     overflow: hidden;
@@ -1017,7 +1017,7 @@ class ModifyItemInfo extends Component {
                   {head.editor_type === "project"
                     ? <ItemStepContainer index={index} header={head} editor={true} /> : null}
                   {head.editor_type === "blog"
-                    ? <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} /> : null}
+                    ? <CardSourceDetailContainer edit={true} bought={item.bought} isCancel cardId={item.cardId} /> : null}
                 </div>
               </ItemContents>
             </div>)

@@ -18,32 +18,30 @@ import market_style from "market_style";
 
 // CSS STYLING
 const Container = styled.div`
-*{
-  font-family:Noto Sans KR;
-}
-// *{ border: 1px solid red;}
   display:flex;
   justify-content:center;
   margin-top: 35px;
   margin-bottom:100px;
+  padding:0px 30px;
   width: 100%;
-  height:750px;
+  
   .line{
     display: flex;
     flex-direction: row;
   }
 `;
 const Wrapper = styled.div`
+  width:100%;
   display: flex;
   flex-direction: row;
   justify-content: space-start;
   border-radius: 20px;
   box-shadow: 5px 5px 10px #00000029;
+  overflow:hidden;
 `;
 const Peers = styled.div`
   cursor: default;
   background: #F9F9F9;
-  border-radius: 25px 0 0 25px;
   padding: 25px ;
   .self {
     padding:25px;
@@ -63,15 +61,34 @@ const Peers = styled.div`
     align-items:center;
     padding-top:25px;
     padding-bottom:25px;
+    position:relative;
     .searchRow{
       display:flex;
+      flex-wrap:wrap;
+      .search-input{
+        width:355px !important; 
+        background-color:white;
+        border:none;
+        outline:none;
+        padding:5px;
+      }
+    }
+    .search-list{
+      position:absolute !important;
+      width:100% !important; 
+      background-color:white;
+      border-radius:5px;
+      padding:0px 5px 5px 5px;
+      box-shadow: 5px 5px 10px #00000029;
     }
     .heading{
       margin-right:10px;
+      margin-bottom:5px;
       display:flex;
       align-items:center;
     }
     .memberBox{
+      width:100%;
       border-radius:10px;
       border:1px solid white;
       padding:5px;
@@ -91,6 +108,7 @@ const Peers = styled.div`
     overflow: auto;
     }
     .person {
+      *{cursor:pointer;}
       max-height:100px;
       margin-bottom:5px;
       background-color:#FBFBFB;
@@ -108,7 +126,6 @@ const Peers = styled.div`
       width: 100%;
       display: flex;
       flex-direction: row;
-      // justify-content: space-between;
      .middle {
         width: 250px;
         margin-left: 5px;
@@ -122,6 +139,9 @@ const Peers = styled.div`
           overflow: hidden;
           text-overflow: ellipsis;
         }
+        .last-date{
+          display:none;
+        }
       }
       .date {
         width: 75px;
@@ -132,8 +152,66 @@ const Peers = styled.div`
           margin-left: auto;
           margin-right: 10px;
         }
+
         .checker {
         }
+      }
+    }
+  }
+  @media only screen and (min-width : 700px) and (max-width:1000px) {
+    width:max-content;
+    .searchBox{
+      .searchRow{
+        .search-input{
+          width:100% !important;
+        }
+      }
+    }
+    .list{
+      .person{
+        padding:10px; 
+        .middle{
+          width:max-content;
+          .name{
+            width:100px;
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (min-width : 500px) and (max-width:700px) {
+    width:max-content;
+    padding:10px;
+    .searchBox{
+      .searchRow{
+        .search-input{
+          width:100% !important;
+        }  
+      }
+    }
+    .list{
+      .person{
+        width:max-content;
+        padding:5px;
+        .middle{
+          width:max-content;
+          .name{
+            width:50px;
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+          }
+          .last-message{display:none;}
+          .last-date{
+            display:block;
+          }
+        }    
+      }
+      .date{
+        display:none;
       }
     }
   }
@@ -142,10 +220,8 @@ const Chatting = styled.div`
   background: #FFFFFF;
   border-left:1px solid #E6E6E6;
   padding:25px;
-  border-radius: 0 25px 25px 0;
   font-family: Noto Sans KR;
-  width: 750px;
-
+  width: 100%;
   &.expand {
     border-radius: 0;
   }
@@ -156,6 +232,7 @@ const Chatting = styled.div`
     display: flex;
     flex-direction: row;
     padding:25px;
+    width:100%;
     .nick {
       margin-left: 5px;
       font-size:${market_style.font.size.small2};
@@ -176,7 +253,7 @@ const Chatting = styled.div`
   }
   .chat-list {
     margin-top: 15px;
-    height: 530px;
+    height: 75%;
     overflow:hidden;
   }
   .chat-input {
@@ -224,19 +301,23 @@ const Chatting = styled.div`
       overflow:auto;
     }
   }
+  @media only screen and (min-width : 700px) and (max-width:1000px) {
+    padding:15px;
+  }
+  @media only screen and (min-width : 500px) and (max-width:700px) {
+    padding:10px;
+  }
 `;
 const SendMessageTextarea = styled.div`
   width:95%;
-  height:40px;
+  max-height:40px;
   min-height:40px;
   font-size:${market_style.font.size.mini2};
-  // font-weight:500;
-  // color:#707070;
   text-align:left;
   line-height:27px;
   background-color:#dddddd;
   resize:none;
-  border:none;글
+  border:none;
   outline:none;
   padding:5px;
   overflow:auto;
@@ -259,8 +340,10 @@ const SendMessageTextarea = styled.div`
 //`;
 const Face = styled.div`
   background-image: url(${props => props.img ? props.img : who});
-  width: 45px;
-  height: 45px;
+  min-width: 45px;
+  min-height: 45px;
+  max-width: 45px;
+  max-height: 45px;
   border-radius: 50%;
   background-size: cover;
   background-position: center center;
@@ -429,10 +512,10 @@ class MessageList extends Component {
             <div className="searchBox">
               <div className="searchRow">
                 <div className="heading"><div>대화상대 검색</div></div>
-                <FormInput style={{ borderRadius: "20px", outline: "none", border: "none", width: "380px", height: "29px", paddingLeft: "10px" }}
-                  type="text" name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={["MinLength2"]} getValue={this.getValue} value={this.state.searchform} />
-              </div>
-              <div style={this.state.openMember ? { display: "block" } : { display: "none" }}>
+                <FormInput  className="search-input"
+                  type="text" name="search" placeholder={window.innerWidth>700?"찾고자 하는 회원의 닉네임을 입력해 주세요.":"닉네임 검색"} validates={["MinLength2"]} getValue={this.getValue} value={this.state.searchform} />
+                </div>
+              <div className="search-list" style={this.state.openMember ? { display: "block" } : { display: "none" }}>
                 {this.props.members && this.props.members.map((item, index) => {
                   return (<div className="memberBox" key={`member${index}`} onClick={() => this.selectMember(item)}>{item.email}</div>);
                 })}
@@ -450,6 +533,7 @@ class MessageList extends Component {
                       <div className="middle">
                         <div className="name">{peer.friend_name}</div>
                         <div className="last-message" dangerouslySetInnerHTML={{__html:peer.message}}></div>
+                        <div className="last-date">{DateFormat(peer.update_time)}</div>
                       </div>
                       <div className="date">
                         <div className="sent-date">{DateFormat(peer.update_time)}</div>
