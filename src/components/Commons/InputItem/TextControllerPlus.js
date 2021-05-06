@@ -8,15 +8,16 @@ import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials";
 import Paragraph from "@ckeditor/ckeditor5-paragraph/src/paragraph";
 import Heading from '@ckeditor/ckeditor5-heading/src/heading';
 
-// import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
-// import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
-// import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
-// import Link from '@ckeditor/ckeditor5-link/src/link';
 import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
 import Font from '@ckeditor/ckeditor5-font/src/font'
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
+
+// import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
+// import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
+// import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
+// import Link from '@ckeditor/ckeditor5-link/src/link';
 // import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 // ClassicEditor.builtinPlugins = [Essentials, Autoformat, Alignment, Font, Bold, Italic, BlockQuote, Heading, Link, Paragraph, Table, TableToolbar]
 // ClassicEditor.defaultConfig = {
@@ -26,12 +27,16 @@ import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
 //   fontSize: { options:  },
 //   language: 'en'
 // };
+
 const editorConfiguration = {
   plugins: [
-    Essentials, Paragraph, Bold, Italic, Heading, Font, BlockQuote, Table, TableToolbar, Alignment,
+    Essentials, Paragraph, Bold, Italic, Heading,
+    Font, BlockQuote, Table, TableToolbar, Alignment,
   ],
   toolbar: [
-    "heading", "|", 'undo', 'redo', "|", "alignment", "bold", "italic", "underline", "strikethrough", 'fontColor', 'fontBackgroundColor', 'fontSize', 'fontFamily', "|", 'blockQuote', 'insertTable',
+    "heading", "|", 'undo', 'redo', "|",
+    "alignment", "bold", "italic", "underline", "strikethrough", 'fontColor', 'fontBackgroundColor', 'fontSize', 'fontFamily',
+    "|", 'blockQuote', 'insertTable',
   ],
   heading: {
     options: [
@@ -78,10 +83,8 @@ export const TextControllerPlus = (props) => {
         config={editorConfiguration}
         onBlur={async (_, editor) => {
           let data = editor.getData();
-          console.log("Array:", editor.ui.componentFactory.names());
           await props.getValue({ content: data });
         }}
-      //onChange={(event, editor) => { const data = editor.getData(); console.log(data); }}
       />
     </div>
   );

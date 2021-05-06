@@ -567,8 +567,7 @@ class ModifyItemInfo extends Component {
   }
   async onSubmit(event) {
     // event.preventDefault();
-
-    // this.setState({ loading: true });
+    this.setState({ loading: true });
     const members = this.state.alone ? [] : this.state.additional.members
     let additional = {
       ...this.state.additional,
@@ -578,7 +577,7 @@ class ModifyItemInfo extends Component {
       // basic
       title: this.state.title,
       files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name }],
-      tag: this.state.tag, category1: this.state.category_level1, category2: this.state.category_level2, category3: this.state.category_level3,
+      tag: this.state.tag, category1: this.state.category_level1, category2: this.state.category_level2, category3: this.state.category_level3, is_problem: this.state.is_problem,
       // itemType: this.state.itemType, //fixed
       // additional
       additional: this.state.additional, content: this.state.content, step: this.state.steps,
@@ -730,9 +729,10 @@ class ModifyItemInfo extends Component {
   }
   async updateListHeader(head) {
     const { id, token } = this.props;
-    this.props.UpdateItemListHeaderRequest(head.uid, token, { type: head.type === "item" ? "pratice" : "item" })
-      .then(this.props.GetItemDetailRequest(id, token));
+    this.props.UpdateItemListHeaderRequest(head.uid, token, { type: head.type === "item" ? "practice" : "item" })
+      .then(this.props.GetItemDetailRequest(id, token))
   }
+
 
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
@@ -742,6 +742,7 @@ class ModifyItemInfo extends Component {
     const { /* edit, */ itemType, tab } = this.state;
     const Mandatory = () => <span className="font_red" title="필수사항입니다."> * </span>
     const { ItemDetail: item } = this.props;
+    console.log("ITEM::", this.props);
     return (<MainBox>
       {this.state.loading ? <Loading /> : null}
 
@@ -990,7 +991,7 @@ class ModifyItemInfo extends Component {
                   </Field>
 
                   <Field title="최대 모집인원">
-                    <InputNumberText width={100} onChange={this.onHandleAdditionalText} min="0" name="max_students" value={this.state.additional.max_students || 0} />&nbsp;명&nbsp;(모집인원 0명 = 무제한)
+                    <InputNumberText width={100} onChange={this.onHandleAdditionalText} min="0" name="max_students" value={this.state.additional.max_students || 0} />&nbsp;명&nbsp;
                   </Field>
 
                   <Field title="수강생 모집기간">
@@ -1047,7 +1048,7 @@ class ModifyItemInfo extends Component {
                               onClick={e => this.editGridEditorName(head, index)}>수정</button>
                             <div style={{ marginLeft: "15px", display: "flex", height: "19px", }}>
                               <CheckBox2 onChange={() => this.updateListHeader(head)} checked={head.type === "practice" || head.type === "copied"} />
-                              <div style={{ width: "max-content", font: "normal normal 300 13px/19px Noto Sans KR" }}>파생여부</div>
+                              <div style={{ width: "max-content", font: "normal normal 300 13px/19px Noto Sans KR" }}>파생가능</div>
                             </div>
                           </React.Fragment>
                           : "아이템 상세내용"}
@@ -1062,12 +1063,12 @@ class ModifyItemInfo extends Component {
                   </ItemContents>
                 </div>)
               })}
-          {itemType === 8 ?
+          {/* {itemType === 8 ?
             <FormBox boxShadow={true} marginTop={25}>
               <div className="flexWrapBox Vcentering cursor"
                 onClick={(e) => this.newGridEditorName()}>
                 <Icon name="plus" size='tiny' color='red' /><div className="label">템플릿 추가</div></div>
-            </FormBox> : null}
+            </FormBox> : null} */}
         </React.Fragment>
         : null
       }

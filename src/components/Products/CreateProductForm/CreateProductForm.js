@@ -1132,7 +1132,7 @@ class ItemTypeForm extends Component {
                     return _head;
                   });
                   this.setState({ headers: copy });
-                }} value={head.name || "강의내용"} className="title-input" placeholder="강의내용" />
+                }} value={head.name} className="title-input" placeholder="강의내용" />
                 <label>
                   <div className="checkbox_wrapper">
                     <div className="checkbox">
@@ -1148,16 +1148,10 @@ class ItemTypeForm extends Component {
                         }}
                         checked={head.is_practice}
                       /></div>
-                    <div className="text">
-                      &nbsp;파생여부&nbsp;&nbsp;
-                  </div>
+                    <div className="text">파생가능</div>
                   </div>
                 </label>
-                {index !== 0 && <div className="cursor" style={{ marginLeft: "auto", marginRight: "25px" }} onClick={() => {
-                  const copy = headers.filter((_head, _index) => index !== _index);
-                  this.setState({ headers: copy });
-                  this.returnState();
-                }}>x</div>}
+                {/* {index !== 0 && <div className="cursor" style={{ marginLeft: "auto", marginRight: "25px" }} onClick={() => { const copy = headers.filter((_head, _index) => index !== _index); this.setState({ headers: copy }); this.returnState(); }}>x</div>} */}
               </div> : null}
 
 
@@ -1215,21 +1209,20 @@ class ItemTypeForm extends Component {
                     </EditorWrapper>
                   </div>
                 </React.Fragment>}
-
             </FormBox>
           )}
 
-          {itemType === 8 ?
+          {/* {itemType === 8 ?
             <FormBox boxShadow={true} marginTop={25}>
-              <div className="flexWrapBox Vcentering cursor" 
-              onClick={() => { 
-                const copy = [...headers]; 
-                copy.push({ name: null, is_practice: false, steps: [], content: [], template: null }); 
-                this.setState({ headers: copy }); 
-                this.returnState();
+              <div className="flexWrapBox Vcentering cursor"
+                onClick={() => {
+                  const copy = [...headers];
+                  copy.push({ name: null, is_practice: false, steps: [], content: [], template: null });
+                  this.setState({ headers: copy });
+                  this.returnState();
                 }}>
                 <Icon name="plus" size='tiny' color='red' /><div className="label">템플릿 추가</div></div>
-            </FormBox> : null}
+            </FormBox> : null} */}
 
           {/* <FormBox boxShadow={true} marginTop={25}>
             <ResetButtonWrapper
@@ -1674,7 +1667,7 @@ class ItemLecture extends Component {
         </Field>
 
         <Field title="최대 모집인원">
-          <InputNumberText width={100} onChange={this.onHandleMaxStudent} min="0" name="max_students" value={max_students || 0} />&nbsp;명&nbsp;(모집인원 0명 = 무제한)
+          <InputNumberText width={100} onChange={this.onHandleMaxStudent} min="0" name="max_students" value={max_students || 0} />&nbsp;명&nbsp;
         </Field>
 
         <Field title="수강생 모집기간">
