@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import RequestDetail from "components/Request/RequestDetail";
-import { GetRequestDetailRequest } from "actions/Request";
+import { GetRequestDetailRequest,UpdateRequestRequest, DeleteRequestRequest } from "actions/Request";
 import { GetThisPurchasedRequest, UpdatePaymentRequest, CreateItemPaymentRequest } from "actions/Payment";
 import bg from "source/design_bg.jpg";
 import { alert } from "components/Commons/Alert/Alert";
@@ -79,6 +79,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  UpdateRequestRequest: (id, data, token) => dispatch(UpdateRequestRequest(id, data, token)),
+  DeleteRequestRequest: (id , token) => dispatch(DeleteRequestRequest(id, token)),
   GetRequestDetailRequest: (id) => dispatch(GetRequestDetailRequest(id)),
   GetThisPurchasedRequest: (id, token) => dispatch(GetThisPurchasedRequest(id, token)),
   UpdatePaymentRequest: (id, token) => dispatch(UpdatePaymentRequest(id, token)),

@@ -43,6 +43,7 @@ const TextWrapper = styled.div`
   justify-content:center;
   align-items:center;
   .title {
+    height:25px;
     font-weight: 500;
     font-size:${market_style.font.size.small1};
     text-align: left;

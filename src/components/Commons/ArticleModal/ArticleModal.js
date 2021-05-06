@@ -120,9 +120,10 @@ class ArticleModal extends Component {
     constructor(props){
         super(props);
         this.state = {
-            title:"",content:"",
+            title:this.props.title||"",content:this.props.content||"",
         }
     }
+
     render(){
       const Mandatory = () => <span style={{color:"red"}} title="필수사항입니다.">*</span>
 
@@ -140,7 +141,7 @@ class ArticleModal extends Component {
                   }}>
                         <div className="upper-box" >
                           <div className="blank"/>
-                          <div className="header">게시글 작성</div>
+                          <div className="header">게시글 {this.props.isModify==true?"수정":"작성"}</div>
                           <Cross onClick={() => {this.setState({ title: "", content: "" });this.props.handlerModal(false)}} style={{cursor:"pointer"}} angle={45} color={"#000000"} weight={1} width={20} height={20}/>
                         </div>
                         <div className="form align_item_center">
@@ -169,8 +170,13 @@ class ArticleModal extends Component {
                                 await alert("게시글의 내용을 입력해주세요");
                                 return;
                               }
-                              this.props.createNoneRequest(this.state.title,this.state.content)}} >
-                                <div className="btnText" >작성하기</div>
+                                this.props.isModify == true?
+                                this.props.updateNoneRequest(this.state.title,this.state.content)
+                                :
+                                this.props.createNoneRequest(this.state.title,this.state.content)
+                              }} >
+                              
+                                <div className="btnText" >{this.props.isModify==true?"수정":"작성"}하기</div>
                             </div>
                             <div className="button grey" onClick={() => {this.setState({ title: "", content: "" });this.props.handlerModal(false)}}>취소하기</div>
                         </div>

@@ -30,7 +30,7 @@ const MainBox = styled.div`
   }
   .hrline{
     width:100%;
-    border:2px solid #EFEFEF;
+    border:1px solid #EFEFEF;
     margin-top:10px;
   }
     .contentBox{
@@ -38,8 +38,23 @@ const MainBox = styled.div`
       display:flex;
       justify-content:center;
       margin-top:20px;
+      flex-wrap:wrap;
+      .blankButton{
+        display:none;
+        width:150px;
+        height:30px;
+        margin-bottom:10px;
+        margin-right:20px;
+      }
+      
     }
-
+    @media only screen and (min-width: 500px) and (max-width:550px){
+      .contentBox{
+        .blankButton{
+          display:block;
+        }
+      }
+    }
 `;
 
 const ThumbnailBox = styled.div`
@@ -52,6 +67,7 @@ const ThumbnailBox = styled.div`
   border-radius: 20px;
   padding:24px 18px 34px 18px;
   margin-right:20px;
+  margin-bottom:20px;
   .label{
     display:flex;
     justify-content:center;
@@ -80,7 +96,8 @@ const Thumbnail = styled.div`
   }
 `;
 const FormBox = styled.div`
-  width:521px;
+  max-width:521px;
+  width:100%;
   height:329px;
   box-shadow: 3px 3px 5px #0000001A;
   border:1px solid #eaeaea;
@@ -251,36 +268,26 @@ class ModifyGroup extends Component {
         thumbnail: nextProps.galleryDetail.thumbnail,
       })
       if (nextProps.dataList.length > 0) {
-        let number = 0;
-        let arr = [];
-        nextProps.dataList.map((data, index) => {
-          nextProps.galleryDetail.itemList.map((item, index) => {
-            if (item.value === data.uid) {
-              arr.push({ value: item.value, number });
-            }
-            return item;
-          })
-          number++;
-          return data;
-        })
-        this.setState({ selectItemList: arr });
+        this.setState({selectItemList:nextProps.galleryDetail.itemList})
       }
+      // if (nextProps.dataList.length > 0) {
+      //   console.log(nextProps.galleryDetail.itemList);
+      //   let number = 0;
+      //   let arr = [];
+      //   nextProps.dataList.map((data, index) => {
+      //     nextProps.galleryDetail.itemList.map((item, index) => {
+      //       if (item.value === data.uid) {
+      //         arr.push({ value: item.value, number });
+      //       }
+      //       return item;
+      //     })
+      //     number++;
+      //     return data;
+      //   })
+      //   this.setState({ selectItemList: arr });
+      // }
 
     }
-    // if(nextProps.galleryDetail&&(this.props.dataList!==nextProps.dataList)){
-
-    //   let number=1;
-    //   let arr = [];
-    //   nextProps.dataList.map((data,index)=>{
-    //     nextProps.galleryDetail.itemList.map((item,index)=>{
-    //       if(item.value == data.uid){
-    //         arr.push({value:item.value,number});
-    //       }
-    //     })
-    //     number++;
-    //   })
-    //   this.setState({selectItemList:arr});
-    // }
   }
   checkModify=()=>{
     if (this.props.galleryDetail.title == this.state.title||
@@ -353,7 +360,7 @@ class ModifyGroup extends Component {
         this.props.galleryDetail.itemList.map((item,index)=>{
           console.log(item);
           if(this.state.selectItemList[index].value!=item.value){
-            isModify=true;
+          isModify=true;
           }
         })
           if(isModify==false){
@@ -410,10 +417,15 @@ class ModifyGroup extends Component {
       });
   };
 
-  onSelectItem(event, { value }) {
-    // console.log({value});
-    this.setState({ selectItemList: this.state.selectItemList.concat({ value: this.props.dataList[{ value }.value].uid, number: { value }.value }) });
-    // this.setState({selectItemList:this.state.selectItemList.concat({value:{value}.value,text:{value}.text})});
+ onSelectItem(event, { value }) {
+    const itemList = this.props.dataList.length<0?[]:this.props.dataList.filter(item=>{
+      return(
+          !this.state.selectItemList.map(tag=>tag.uid).includes(item.uid)
+        )
+      }
+    )
+    console.log(itemList,itemList.filter(item=>[{value}.value].includes(item.uid)),{value}.value);
+    this.setState({selectItemList:this.state.selectItemList.concat(itemList.filter(item=>[{value}.value].includes(item.uid)))});
     this.checkModify();
   }
   onDeleteTag = async (event) => {
@@ -427,24 +439,21 @@ class ModifyGroup extends Component {
     this.checkModify();
   }
   render() {
-    console.log(this.props);
-    let count = 0;
-    // console.log(this.props.dataList);
-    const itemList = this.props.dataList.length < 0 ? { value: 0, text: "없음" } : this.props.dataList.map((item, index) => {
-      return ({ value: count++, text: item.title, key: item.uid });
-    })
-    // console.log(itemList);
-
-    const TagBox = this.props.dataList.length > 0 && this.state.selectItemList.map((item, index) => {
-      // console.log(item.number);
+    const itemList = this.props.dataList.length<0?[]:this.props.dataList.filter(item=>{
+      // console.log(this.state.selectItemList,item.uid);
+      if(this.state.selectItemList.length>0)
+        return !this.state.selectItemList.map(tag=>tag.uid).includes(item.uid)
+      return item;
+      }
+    )    
+    const TagBox = this.state.selectItemList.map((item, index)=>{
       return (
-        <TagPiece key={index}>
-          {this.props.dataList[item.number].title}
-          <div id={index} onClick={this.onDeleteTag} className="close">x</div>
-        </TagPiece>
-      );
-    })
-
+          <TagPiece key={index}>
+              <div className="label">{item.title}</div>
+              <div id={index} onClick={this.onDeleteTag} className="close">x</div>
+          </TagPiece>
+      )
+    });
     return (
       <React.Fragment>
         {this.props.keep ? "redirected" : null}
@@ -481,7 +490,12 @@ class ModifyGroup extends Component {
               </div>
               <div className="wrapper flex margin_zero">
                 <div className="label">아이템</div>
-                <DropBox onChange={this.onSelectItem} id="itemDropBox" selection options={itemList}/>
+                <DropBox onChange={this.onSelectItem} id="itemDropBox" selection 
+                         options={itemList&&itemList.map((item,index)=>{
+                           return(
+                             {value:item.uid,text:item.title,key:index}
+                           )
+                         })}/>
               </div>
               <div className="wrapper flex margin_zero">
                 <div className="label"/>
@@ -493,9 +507,10 @@ class ModifyGroup extends Component {
             </FormBox>
           </div>
           <div className="contentBox">
-            <RedButton width={150} height={30} fontSize={15}  text={"수정된 내용을 저장합니다."} value={"저장하기"} disabled={!this.state.isModify} okText="확인" cancelText="취소" onClick={this.onSubmit} isConfirm={false} />
-            <GrayButton fontColor={"#707070"} isWhite={true} width={150} height={30} fontSize={15} text={"수정된 내용이 저장되지 않습니다."} value={"취소하기"} okText="확인" cancelText="취소"  onClick={this.onClickClose} isConfirm={true} />
-            <GrayButton fontColor={"#707070"} isWhite={true} width={150} height={30} fontSize={15} text={"갤러리를 삭제합니다."} value={"삭제하기"} okText="확인" cancelText="취소"  onClick={this.onDelete} isConfirm={true} />
+            <RedButton   width={150} height={30} fontSize={15}  text={"수정된 내용을 저장합니다."} value={"저장하기"} disabled={!this.state.isModify} okText="확인" cancelText="취소" onClick={this.onSubmit} isConfirm={false} />
+            <GrayButton  fontColor={"#707070"} isWhite={true} width={150} height={30} fontSize={15} text={"수정된 내용이 저장되지 않습니다."} value={"취소하기"} okText="확인" cancelText="취소"  onClick={this.onClickClose} isConfirm={true} />
+            <GrayButton  fontColor={"#707070"} isWhite={true} width={150} height={30} fontSize={15} text={"갤러리를 삭제합니다."} value={"삭제하기"} okText="확인" cancelText="취소"  onClick={this.onDelete} isConfirm={true} />
+            <div className="blankButton"/>
           </div>
         </MainBox>
       </React.Fragment>

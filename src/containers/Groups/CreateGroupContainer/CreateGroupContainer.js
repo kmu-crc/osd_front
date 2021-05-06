@@ -13,8 +13,8 @@ import market_style from "market_style";
 
 
 const GalleryModal = styled(Modal)`
-  width:940px !important;
-  padding:0px 0px 0px 25px !important; 
+  max-width:940px !important;
+  width:100% !important;
   position: relative;
   z-index:3;
   border-radius:20px !important;
@@ -40,7 +40,7 @@ const GalleryModal = styled(Modal)`
   }
   .content{
     border-radius:20px !important;
-    width:max-content !important;
+    width:100% !important;
     height:max-content !important;
   }
 `

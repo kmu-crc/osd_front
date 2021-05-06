@@ -37,6 +37,7 @@ const MainBox = styled.div`
       display:flex;
       justify-content:center;
       margin-top:20px;
+      flex-wrap:wrap;
     }
 
 `;
@@ -51,6 +52,7 @@ const ThumbnailBox = styled.div`
   border-radius: 20px;
   padding:24px 18px 34px 18px;
   margin-right:20px;
+  margin-bottom:20px;
   .label{
     display:flex;
     justify-content:center;
@@ -79,7 +81,8 @@ const Thumbnail = styled.div`
   }
 `;
 const FormBox = styled.div`
-  width:521px;
+  max-width:521px;
+  width:100%;
   height:329px;
   box-shadow: 3px 3px 5px #0000001A;
   border:1px solid #eaeaea;
@@ -280,7 +283,6 @@ class CreateGroup extends Component {
     let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
     await data.files.push(file);
     console.log(data);
-// return;
 
     if (this.state.thumbnail != null || this.state.thumbnail !== "") {
       await data.files.push(file);
@@ -309,46 +311,58 @@ class CreateGroup extends Component {
       });
   };
   onSelectItem(event,{value}){
-    this.setState({selectItemList:this.state.selectItemList.concat({value:this.props.dataList[{value}.value].uid,number:{value}.value})});
-    return;
-    console.log(this.state.dropList);
-    let copy = [...this.state.dropList];
-    copy.splice(value,copy.length==0?-1:1);
-    // list.slice(0, deleteIdx).concat(this.state.selectItemList.slice(parseInt(deleteIdx, 10) + 1, length)
-    this.setState({dropList:copy,selectItemList:this.state.selectItemList.concat({value:this.props.dataList[{value}.value].uid,number:{value}.value})});
+    const itemList = this.props.dataList.length<0?[]:this.props.dataList.filter(item=>{
+      return(
+          !this.state.selectItemList.map(tag=>tag.uid).includes(item.uid)
+        )
+      }
+    )
+    console.log(itemList,itemList.filter(item=>[{value}.value].includes(item.uid)),{value}.value);
+    this.setState({selectItemList:this.state.selectItemList.concat(itemList.filter(item=>[{value}.value].includes(item.uid)))});
+    // this.setState({selectItemList:this.state.selectItemList.concat({value:this.props.dataList[{value}.value].uid,number:{value}.value})});
+    // return;
+    // console.log(this.state.dropList);
+    // let copy = [...this.state.dropList];
+    // copy.splice(value,copy.length==0?-1:1);
+    // // list.slice(0, deleteIdx).concat(this.state.selectItemList.slice(parseInt(deleteIdx, 10) + 1, length)
+    // this.setState({dropList:copy,selectItemList:this.state.selectItemList.concat({value:this.props.dataList[{value}.value].uid,number:{value}.value})});
   }
   onDeleteTag = async (event) => {
     const deleteIdx = event.target.id;
     const length = this.state.selectItemList.length;
-    // const uid = this.state.selectItemList[deleteIdx].uid;
-    // console.log(uid);
     let list = [];
     list = list.concat(this.state.selectItemList);
     this.setState({
       selectItemList: list.slice(0, deleteIdx).concat(this.state.selectItemList.slice(parseInt(deleteIdx, 10) + 1, length))
     });
-
-    // const itemList = this.props.dataList.length<0?{value:0,text:"없음"}:this.props.dataList.map((item,index)=>{
-    //   return({value:count++,text:item.title,key:item.uid});
-    // });
   }
   onClickClose(event){
     this.props.handleShowModal(false);
   }
   render() {
-    let count = 0;
-    const itemList = this.props.dataList.length<0?{value:0,text:"없음"}:this.props.dataList.map((item,index)=>{
-      return({value:count++,text:item.title,key:item.uid});
-    })
-    // console.log(itemList);
-    const TagBox = this.state.selectItemList.map((item, index) => {
+    const itemList = this.props.dataList.length<0?[]:this.props.dataList.filter(item=>{
+      console.log(this.state.selectItemList,item.uid);
+      if(this.state.selectItemList.length>0)
+        return !this.state.selectItemList.map(tag=>tag.uid).includes(item.uid)
+      return item;
+      }
+    )    
+    const TagBox = this.state.selectItemList.map((item, index)=>{
       return (
           <TagPiece key={index}>
-              <div className="label">{this.props.dataList[item.number].title}</div>
+              <div className="label">{item.title}</div>
               <div id={index} onClick={this.onDeleteTag} className="close">x</div>
           </TagPiece>
-      );
-    })
+      )
+    });
+    // const TagBox = this.state.selectItemList.map((item, index) => {
+    //   return (
+    //       <TagPiece key={index}>
+    //           <div className="label">{this.props.dataList[item.number].title}</div>
+    //           <div id={index} onClick={this.onDeleteTag} className="close">x</div>
+    //       </TagPiece>
+    //   );
+    // })
 
     return (
       <React.Fragment>
@@ -382,7 +396,13 @@ class CreateGroup extends Component {
               </div>
               <div className="wrapper flex margin_zero">
                 <div className="label">아이템</div>
-                <DropBox onChange={this.onSelectItem} id="itemDropBox" selection options={itemList}/>
+                <DropBox onChange={this.onSelectItem} id="itemDropBox" selection 
+                         options={itemList&&itemList.map((item,index)=>{
+                           return(
+                             {value:item.uid,text:item.title,key:index}
+                           )
+                         })}/>
+                {console.log(itemList)}
               </div>
               <div className="wrapper flex margin_zero">
                 <div className="label"/>

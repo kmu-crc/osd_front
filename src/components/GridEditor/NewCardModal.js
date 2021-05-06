@@ -168,7 +168,7 @@ const EditCardHeaderContainer = styled.div`
         margin-top: 15px;
         margin-left: 45px;
         .edit-card-info {
-            width: max-content;
+            min-width: max-content;
             height: 29px;
             font-size:${market_style.font.size.normal3};
             font-weight: 500;
@@ -183,7 +183,7 @@ const EditCardHeaderContainer = styled.div`
         margin-top: 25px;
         margin-left: 65px;
         .thumbnail-txt {
-            width: max-content;
+            min-width: max-content;
             height: 29px;
             font-size:${market_style.font.size.normal3};
             font-weight: 500;
@@ -212,6 +212,7 @@ const EditCardHeaderContainer = styled.div`
             margin-left: 31px;
             width: 500px;
             height: 56px;
+            margin-right:20px;
             background-color: #EFEFEF;
             border-radius: 5px;
         }
@@ -247,6 +248,7 @@ const EditCardHeaderContainer = styled.div`
             height: 56px;
             background-color: #EFEFEF;
             border-radius: 5px;
+            margin-right:20px;
         }
         .description-input-style {
             border-radius: 5px;

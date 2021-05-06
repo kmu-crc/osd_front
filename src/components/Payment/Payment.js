@@ -131,6 +131,12 @@ const InfoBox = styled.div`
     .paddingTop{
         padding-top:37px;
     }
+    @media only screen and (min-width: 500px) and (max-width:800px){
+        flex-wrap:wrap;
+        .title_label{
+            margin-bottom:20px;
+        }
+    }
 `;
 const Row = styled.div`
     *{
@@ -160,6 +166,9 @@ const Row = styled.div`
         font-size:${market_style.font.size.small1};
         color:#707070;
     }
+    @media only screen and (min-width: 500px) and (max-width:800px){
+        margin-bottom:10px;
+    }
 `;
 const Thumbnail = styled.div`
     width:${props => props.width == null ? 100 : props.width}px;
@@ -170,28 +179,6 @@ const Thumbnail = styled.div`
     margin-top:${props => props.marginTop == null ? 0 : props.marginTop}px;
     margin-left:${props => props.marginLeft == null ? 0 : props.marginLeft}px;
 `;
-//const InputText = styled.input.attrs({ type: "text" })`
-//    width:${props => props.width == null ? 100 : props.width}px;
-//    height:${props => props.height == null ? 100 : props.height}px;
-//    background-color:${props => props.backgroundColor == null ? "#E9E9E9" : props.backgroundColor};
-//    margin-top:${props => props.marginTop == null ? 0 : props.marginTop}px;
-//    margin-left:${props => props.marginLeft == null ? 0 : props.marginLeft}px;
-//    margin-bottom:${props => props.marginBottom == null ? 0 : props.marginBottom}px;
-//    margin-right:${props => props.marginRight == null ? 0 : props.marginRight}px;
-//    outline:none;
-//    border:none;
-//`;
-//const InputTextarea = styled.textarea`
-//    width:${props => props.width == null ? 100 : props.width}px;
-//    height:${props => props.height == null ? 100 : props.height}px;
-//    background-color:${props => props.backgroundColor == null ? "#E9E9E9" : props.backgroundColor};
-//    margin-top:${props => props.marginTop == null ? 0 : props.marginTop}px;
-//    margin-left:${props => props.marginLeft == null ? 0 : props.marginLeft}px;
-//    margin-bottom:${props => props.marginBottom == null ? 0 : props.marginBottom}px;
-//    margin-right:${props => props.marginRight == null ? 0 : props.marginRight}px;
-//    outline:none;
-//    border:none;
-//`;
 const CustomBox = styled.div`
     width:${props => props.width == null ? "100%" : props.width+"px"};
     height:${props => props.height == null ? "100%" : props.height+"px"};

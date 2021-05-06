@@ -6,32 +6,35 @@ import market_style from "market_style";
 
 
 const Wrapper = styled.div`
+width:100%;
+height:max-content;
 margin-top: 31px;
 .contents_box{
     width:100%;
-    height:300px;
+    height:max-content;
     display:flex;
-  }
+}
 .contents{
     width:max-content;
     height:max-content;
 }
+@media only screen and (min-width: 500px) and (max-width:1000px){
+  .contents_box{
+    flex-wrap:wrap;
+  }
+}
 `;
 const GalleryItem = styled.div`
-  min-width:294px;
-  max-width:300px;
-  height:100%;
+  min-width:300px;
+  height:300px;
   border-radius:20px;
   box-shadow: 3px 3px 5px #4141411A;
   border: 1px solid #eaeaea;
   padding:20px 14px 10px 14px;
-  .galleryThumb{
+  .galleryThumb{ 
     width:100%;
-    height:238px;
-    background-image: url(${props => props.img});
-    background-size: cover;
-    background-repeat:no-repeat;
-    background-position: center center
+    height:230px;
+    object-fit:contain;
   }
   .name{
     width:100%;
@@ -41,12 +44,13 @@ const GalleryItem = styled.div`
     font-size:${market_style.font.size.small1};
     color:black;
   }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    width:100%;
+  }
 `
 const ScrollInfo = styled.div`
   margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
   width: ${props => props.width == null ? "100%" : props.width + "px"};
-  // height: 376px;
-  // height:max-content;
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #4141411A;
   border: 1px solid #eaeaea;
@@ -55,11 +59,13 @@ const ScrollInfo = styled.div`
   padding:20px 0px 0px 0px;
   font-family: Noto Sans KR;
   `
-const AdditionalInfo = styled.div`
+const AdditionalInfo = styled.div` 
   margin-left: ${prop => prop.mLeft}px;
   margin-top: ${props => props.mTop == null ? "0px" : props.mTop + "px"};
   width: ${props => props.width == null ? "100%" : props.width + "px"};
   height: ${props => props.height == null ? "100%" : props.height + "px"};
+  max-width:990px;
+  height:300px;
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #4141411A;
   border: 1px solid #eaeaea;
@@ -75,8 +81,9 @@ const AdditionalInfo = styled.div`
   .margin_bottom{
     margin-bottom:5px;
   }
-  .text {
+  .text_ {
     height:100%;
+    width:100%;
     font-size:${market_style.font.size.small1};
     font-weight: 300;
     text-align: left;
@@ -97,6 +104,10 @@ const AdditionalInfo = styled.div`
       overflow:auto;
     }
   }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    margin-left:0px;
+    margin-top:20px;
+  }
 `;
 
 class GalleryDetail extends Component {
@@ -106,14 +117,13 @@ class GalleryDetail extends Component {
         return(
         <Wrapper>
             <div className="contents_box">
-                {/* <Gallery data={this.props.galleryDetail}/> */}
                 <GalleryItem img={this.props.galleryDetail&&this.props.galleryDetail.thumbnail}>
-                  <div className="galleryThumb"/>
+                  <img src={this.props.galleryDetail&&this.props.galleryDetail.thumbnail} className="galleryThumb"/>
                   <div className="name">{this.props.galleryDetail&&this.props.galleryDetail.title}</div>
                 </GalleryItem>
                 <AdditionalInfo mLeft={20}>
                     <div className="title margin_bottom">{this.props.galleryDetail&&this.props.galleryDetail.title}</div>
-                    <div className="text">{this.props.galleryDetail&&this.props.galleryDetail.description}
+                    <div className="text_">{this.props.galleryDetail&&this.props.galleryDetail.description}
                     </div>
                 </AdditionalInfo>
             </div>   
