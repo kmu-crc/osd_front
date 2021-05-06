@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
+// import { TextControllerClassic as TextController } from "components/Commons/InputItem/TextControllerClassic";
+import { TextControllerPlus as TextController } from "components/Commons/InputItem";
 import { FileController } from "components/Commons/InputItem/FileController";
-import { EmbController } from "components/Commons/InputItem/EmbController";
 import { ProblemController } from "components/Commons/InputItem/ProblemController";
+
+// import { EmbController } from "components/Commons/InputItem/EmbController";
 // import {confirmAlert} from "react-confirm-alert";
 // import {options,optionsAlter} from "components/Commons/InputItem/AlertConfirm"
+
 // css styling
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
@@ -130,15 +133,9 @@ export class Controller extends Component {
     await this.setState({ click: true });
   };
   async onChangeValue(data) {
-    // let newObj={...this.props.item };
-    // newObj.content = data.content;
-    // await this.setState({ ...newObj });
-    // await this.setState({content:data.content});
-    // await console.log(this.state);
-
-    if (this.props.getValue)
-      // await this.props.getValue(this.state);
-      await this.props.getValue({ ...this.props.item, content: data.content })
+    if (this.props.getValue) {
+      await this.props.getValue({ ...this.props.item, content: data.content });
+    }
   };
   async privateItem(event) {
     if (this.props.privateItem) {
@@ -173,7 +170,7 @@ export class Controller extends Component {
       this.props.moveDown({ old: this.props.item.order, new: this.props.item.order + 1 });
     }
   };
-  async confirmed(){
+  async confirmed() {
 
   }
 
@@ -185,7 +182,7 @@ export class Controller extends Component {
         <div className="contentWrap">
           {/* {item.private === 1 ? "(비공개 항목으로 설정되어 있습니다.)" : null} */}
           {item.type === "FILE" ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} setController={this.setController} /> : null}
-          {item.type === "TEXT" ? <TextControllerClassic item={item} initClick={this.state.click} private={item.private} name={name} getValue={this.onChangeValue} deleteItem={this.deleteItem} /> : null}
+          {item.type === "TEXT" ? <TextController item={item} initClick={this.state.click} private={item.private} name={name} getValue={this.onChangeValue} deleteItem={this.deleteItem} /> : null}
           {/* {item.type === "EMBED" ? <EmbController /> : null} */}
           {item.type === "PROBLEM" ? <ProblemController item={item} getValue={this.onChangeValue} confirmed={this.confirmed} onCancel={this.cancelItem} /> : null}
           {/* <div>
