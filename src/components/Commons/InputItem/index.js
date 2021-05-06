@@ -7,6 +7,7 @@ export * from "./FileController";
 export * from "./Controller";
 export * from "./EmbController";
 export * from "./TextControllerClassic";
+export * from "./TextControllerPlus";
 export * from "./InputPrice";
 export * from "./InputContent";
 export * from "./InputCalendar";

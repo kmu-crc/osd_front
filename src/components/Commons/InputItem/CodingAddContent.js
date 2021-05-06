@@ -62,49 +62,49 @@ const NewController = styled.li`
 
 
 export class CodingAddContent extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { type: null, content: "", order: null };
+  constructor(props) {
+    super(props);
+    this.state = { type: null, content: "", order: null };
+  }
+  addContent = async (type) => {
+    if (type === "FILE") {
+      await this.setState({ type, order: this.props.order, content: "", initClick: true });
+      setTimeout(() => {
+        this.setState({ initClick: false });
+      }, 100);
+    } else {
+      await this.setState({ type, order: this.props.order, content: "", name: `__main${this.props.order == 0 ? "" : this.props.order}.cpp` });
+      this.returnData();
     }
-    addContent = async (type) => {
-        if (type === "FILE") {
-            await this.setState({ type, order: this.props.order, content: "", initClick: true });
-            setTimeout(() => {
-                this.setState({ initClick: false });
-            }, 100);
-        } else {
-            await this.setState({ type, order: this.props.order, content: "", name: `__main${this.props.order == 0 ? "" : this.props.order}.cpp` });
-            this.returnData();
-        }
+  }
+
+  returnData = async (data) => {
+    if (data) {
+      await this.setState({ type: null, order: this.props.order, content: "", initClick: false })
+      this.props.getValue(data);
+    } else {
+      if (this.props.getValue) this.props.getValue(this.state);
     }
+  }
 
-    returnData = async (data) => {
-        if (data) {
-            await this.setState({ type: null, order: this.props.order, content: "", initClick: false })
-            this.props.getValue(data);
-        } else {
-            if (this.props.getValue) this.props.getValue(this.state);
-        }
-    }
+  render() {
+    return (
+      <ControllerWrap2>
+        <div className="innerBox" >
+          <NewController
+            onClick={() => this.addContent("FILE")}
+            width="max-content" minWidth="116px" height="29px">
+            파일 등록하기</NewController>
+          <NewController
+            onClick={() => this.addContent("TEXT")}
+            width="max-content" minWidth="134px" height="29px">
+            텍스트 입력하기</NewController>
+        </div>
 
-    render() {
-        return (
-            <ControllerWrap2>
-                <div className="innerBox" >
-                    <NewController
-                        onClick={() => this.addContent("FILE")}
-                        width="max-content" minWidth="116px" height="29px">
-                        파일 등록하기</NewController>
-                    <NewController
-                        onClick={() => this.addContent("TEXT")}
-                        width="max-content" minWidth="134px" height="29px">
-                        텍스트 입력하기</NewController>
-                </div>
+        {this.state.type === "FILE" &&
+          <FileController accept={this.props.categoryType == "1" ? ".c, .cpp, .h" : this.props.categoryType == "2" ? ".py" : null} item={this.state} getValue={this.returnData} />}
 
-                {this.state.type === "FILE" &&
-                    <FileController accept={this.props.categoryType == "1" ? ".c, .cpp, .h" : this.props.categoryType == "2" ? ".py" : null} item={this.state} getValue={this.returnData} />}
-
-            </ControllerWrap2>
-        );
-    }
+      </ControllerWrap2>
+    );
+  }
 }

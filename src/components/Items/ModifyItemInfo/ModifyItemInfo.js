@@ -15,6 +15,7 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import _ from 'lodash';
 import market_style from "market_style";
+import { Icon } from "semantic-ui-react";
 
 const ItemType = [
   { text: "디자인", value: 0 },
@@ -225,6 +226,9 @@ const FormBox = styled.div`
     // margin-top: 10px;
     margin-bottom: 10px;
   }
+  .cursor {
+    cursor: pointer;
+  }
   @media only screen and (min-width: 500px) and (max-width:1000px){
     padding:27px;
   }
@@ -404,6 +408,21 @@ const ItemContents = styled.div`
       letter-spacing: 0px;
       color: #000; //#707070;
       padding: 3px 0px 0px 11px;
+      &.checkbox_wrapper{
+        width:max-content;
+        height: 19px;
+        display: flex;
+        align-items:center;
+        .checkbox{
+          width:max-content;
+          height: 19px;
+          margin-right: 5px;
+        }
+        .text{
+          font: normal normal 300 13px/19px Noto Sans KR !important;
+          height: max-content;
+        }
+      }
     }
   }
   .editor-wrapper {
@@ -451,6 +470,8 @@ const InputNumberText = styled.input.attrs({ type: "number" })`
     margin: 0;
   }
 `;
+
+
 class ModifyItemInfo extends Component {
   constructor(props) {
     super(props);
@@ -490,6 +511,8 @@ class ModifyItemInfo extends Component {
     this.onCancel = this.onCancel.bind(this);
     this.onChangeListName = this.onChangeListName.bind(this);
     this.editGridEditorName = this.editGridEditorName.bind(this);
+    this.newGridEditorName = this.newGridEditorName.bind(this);
+    this.updateListHeader = this.updateListHeader.bind(this);
   };
   async componentDidMount() {
     const { ItemDetail } = this.props;
@@ -517,6 +540,7 @@ class ModifyItemInfo extends Component {
       type: ItemDetail.upload_type,
       //
       additional: additional,
+      is_problem: ItemDetail.is_problem,
     }
     await this.setState({ listname: ItemDetail.headers.map(head => head.name) });
     await this.setState(item);
@@ -543,8 +567,7 @@ class ModifyItemInfo extends Component {
   }
   async onSubmit(event) {
     // event.preventDefault();
-
-    // this.setState({ loading: true });
+    this.setState({ loading: true });
     const members = this.state.alone ? [] : this.state.additional.members
     let additional = {
       ...this.state.additional,
@@ -554,7 +577,7 @@ class ModifyItemInfo extends Component {
       // basic
       title: this.state.title,
       files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name }],
-      tag: this.state.tag, category1: this.state.category_level1, category2: this.state.category_level2, category3: this.state.category_level3,
+      tag: this.state.tag, category1: this.state.category_level1, category2: this.state.category_level2, category3: this.state.category_level3, is_problem: this.state.is_problem,
       // itemType: this.state.itemType, //fixed
       // additional
       additional: this.state.additional, content: this.state.content, step: this.state.steps,
@@ -695,6 +718,21 @@ class ModifyItemInfo extends Component {
         this.props.GetItemDetailRequest(this.props.id, this.props.token);
       })
   }
+  async newGridEditorName() {
+    if (await confirm("새로운 내용을 추가하시겠습니까?") === false) {
+      return;
+    }
+    const { id, token } = this.props;
+
+    this.props.CreateItemListHeaderRequest(id, token)
+      .then(this.props.GetItemDetailRequest(id, token))
+  }
+  async updateListHeader(head) {
+    const { id, token } = this.props;
+    this.props.UpdateItemListHeaderRequest(head.uid, token, { type: head.type === "item" ? "practice" : "item" })
+      .then(this.props.GetItemDetailRequest(id, token))
+  }
+
 
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
@@ -704,6 +742,7 @@ class ModifyItemInfo extends Component {
     const { /* edit, */ itemType, tab } = this.state;
     const Mandatory = () => <span className="font_red" title="필수사항입니다."> * </span>
     const { ItemDetail: item } = this.props;
+    console.log("ITEM::", this.props);
     return (<MainBox>
       {this.state.loading ? <Loading /> : null}
 
@@ -952,7 +991,7 @@ class ModifyItemInfo extends Component {
                   </Field>
 
                   <Field title="최대 모집인원">
-                    <InputNumberText width={100} onChange={this.onHandleAdditionalText} min="0" name="max_students" value={this.state.additional.max_students || 0} />&nbsp;명&nbsp;(모집인원 0명 = 무제한)
+                    <InputNumberText width={100} onChange={this.onHandleAdditionalText} min="0" name="max_students" value={this.state.additional.max_students || 0} />&nbsp;명&nbsp;
                   </Field>
 
                   <Field title="수강생 모집기간">
@@ -986,45 +1025,53 @@ class ModifyItemInfo extends Component {
 
       {/* // 아이템 상세정보 입력 폼 */}
       {tab === "contents" ?
-        (
-          // <div className="contentsBox">
-          item &&
-          item.headers &&
-          item.headers.length > 0 &&
-          item.headers.map(
-            (head, index) =>{
-              console.log(head);
-              return(<div key={index} className="row" style={{ marginBottom: "30px" }}>
-              <ItemContents>
-                <div className="header">
-                  <div className="title" style={{ display: "flex" }}>
-                    {head.name ?
-                    <React.Fragment>
-                      <input
-                        className="title-input"
-                        value={(this.state.listname && this.state.listname[index]) || ""}
-                        onChange={e => this.onChangeListName(e, index)}
-                      />
-                      <button
-                        className={`edit ${(this.state.listname && this.state.listname[index]) === head.name && "disabled"}`}
-                        disabled={(this.state.listname && this.state.listname[index]) === head.name}
-                        onClick={e => this.editGridEditorName(head, index)}>수정</button>
-                    </React.Fragment>
-                    : "아이템 상세내용"}
-                  </div>
-                </div>
-                <div className="editor-wrapper">
-                  {head.editor_type === "project"
-                    ? <ItemStepContainer index={index} header={head} editor={true} /> : null}
-                  {head.editor_type === "blog"
-                    ? <CardSourceDetailContainer edit={true} bought={item.bought} isCancel cardId={item.cardId} /> : null}
-                </div>
-              </ItemContents>
-            </div>)
-            }
 
-          )
-        ) : null
+        <React.Fragment>
+          {item &&
+            item.headers &&
+            item.headers.length > 0 &&
+            item.headers.map(
+              (head, index) => {
+                return (<div key={index} className="row" style={{ marginBottom: "30px" }}>
+                  <ItemContents>
+                    <div className="header">
+                      <div className="title" style={{ display: "flex" }}>
+                        {itemType === 8 ?
+                          <React.Fragment>
+                            <input
+                              className="title-input"
+                              value={(this.state.listname && this.state.listname[index]) || ""}
+                              onChange={e => this.onChangeListName(e, index)}
+                            />
+                            <button
+                              className={`edit ${(this.state.listname && this.state.listname[index]) === head.name && "disabled"}`}
+                              disabled={(this.state.listname && this.state.listname[index]) === head.name}
+                              onClick={e => this.editGridEditorName(head, index)}>수정</button>
+                            <div style={{ marginLeft: "15px", display: "flex", height: "19px", }}>
+                              <CheckBox2 onChange={() => this.updateListHeader(head)} checked={head.type === "practice" || head.type === "copied"} />
+                              <div style={{ width: "max-content", font: "normal normal 300 13px/19px Noto Sans KR" }}>파생가능</div>
+                            </div>
+                          </React.Fragment>
+                          : "아이템 상세내용"}
+                      </div>
+                    </div>
+                    <div className="editor-wrapper">
+                      {head.editor_type === "project"
+                        ? <ItemStepContainer index={index} header={head} editor={true} /> : null}
+                      {head.editor_type === "blog"
+                        ? <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} /> : null}
+                    </div>
+                  </ItemContents>
+                </div>)
+              })}
+          {/* {itemType === 8 ?
+            <FormBox boxShadow={true} marginTop={25}>
+              <div className="flexWrapBox Vcentering cursor"
+                onClick={(e) => this.newGridEditorName()}>
+                <Icon name="plus" size='tiny' color='red' /><div className="label">템플릿 추가</div></div>
+            </FormBox> : null} */}
+        </React.Fragment>
+        : null
       }
 
       {/* 버튼 */}

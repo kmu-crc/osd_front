@@ -722,7 +722,7 @@ class CreateProductForm extends Component {
       itemType: -1, is_problem: false,
       listname1: null, listname2: null,
       // send data - additional
-      additional: null, content: [], steps: [], steps2: [], type: "blog", private: 0,
+      additional: null, content: [], steps: [], steps2: [], type: "blog", private: 0, headers: [],
     };
     this.onClickItemType = this.onClickItemType.bind(this);
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
@@ -749,7 +749,8 @@ class CreateProductForm extends Component {
       additional: this.state.additional, content: this.state.content, step: this.state.steps, step2: this.state.steps2,
       type: this.state.type, private: this.state.private,
       // more
-      listname1: this.state.listname1, listname2: this.state.listname2
+      listname1: this.state.listname1, listname2: this.state.listname2,
+      headers: this.state.headers,
     };
     data.additional.description = data && data.additional && data.additional.description && data.additional.description.replace(/(?:\r\n|\r|\n)/g, '<br />');
 
@@ -826,7 +827,7 @@ class CreateProductForm extends Component {
     const Mandatory = () => <span className="font_red" title="필수사항입니다.">*</span>
 
     console.log(this.state);
-    return (<MainBox style={{padding:"0px 30px"}}>
+    return (<MainBox style={{ padding: "0px 30px" }}>
       {this.state.loading ? <Loading /> : null}
       {this.props.keep ? <div>REDIRECTED</div> : null}
       {/* 타이틀 */}
@@ -853,8 +854,8 @@ class CreateProductForm extends Component {
             <div className={"margin_bottom flex " + `${parseInt(this.state.category_level2, 10) === 42 ? "remove-margin" : ""}`}>
               <div className="label">카테고리<Mandatory /></div>
               <div className="flexWrapBox">
-              <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
-              <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
+                <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
+                <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
               </div>
               {parseInt(this.state.category_level2, 10) === 42 ?
                 <React.Fragment>
@@ -1131,32 +1132,26 @@ class ItemTypeForm extends Component {
                     return _head;
                   });
                   this.setState({ headers: copy });
-                }} value={head.name || "강의내용"} className="title-input" placeholder="강의내용" />
+                }} value={head.name} className="title-input" placeholder="강의내용" />
                 <label>
                   <div className="checkbox_wrapper">
-                  <div className="checkbox">
-                  <CheckBox2
-                    onChange={() => {
-                      const copy = headers.map((_head, _index) => {
-                        if (index === _index) {
-                          _head.is_practice = !_head.is_practice;
-                        }
-                        return _head;
-                      });
-                      this.setState({ headers: copy });
-                    }}
-                    checked={head.is_practice}
-                  /></div>
-                  <div className="text">
-                    &nbsp;파생여부&nbsp;&nbsp;
-                  </div>
+                    <div className="checkbox">
+                      <CheckBox2
+                        onChange={() => {
+                          const copy = headers.map((_head, _index) => {
+                            if (index === _index) {
+                              _head.is_practice = !_head.is_practice;
+                            }
+                            return _head;
+                          });
+                          this.setState({ headers: copy });
+                        }}
+                        checked={head.is_practice}
+                      /></div>
+                    <div className="text">파생가능</div>
                   </div>
                 </label>
-                {index !== 0 && <div className="cursor" style={{ marginLeft: "auto", marginRight: "25px" }} onClick={() => {
-                  const copy = headers.filter((_head, _index) => index !== _index);
-                  console.log(copy);
-                  this.setState({ headers: copy });
-                }}>x</div>}
+                {/* {index !== 0 && <div className="cursor" style={{ marginLeft: "auto", marginRight: "25px" }} onClick={() => { const copy = headers.filter((_head, _index) => index !== _index); this.setState({ headers: copy }); this.returnState(); }}>x</div>} */}
               </div> : null}
 
 
@@ -1210,19 +1205,24 @@ class ItemTypeForm extends Component {
                           type={head.template} />
                       </div>
                       <div className="title">
-                      선택하신 템플릿으로 시작하고 싶다면 아래에 등록 버튼을 클릭해주세요.</div>
+                        선택하신 템플릿으로 시작하고 싶다면 아래에 등록 버튼을 클릭해주세요.</div>
                     </EditorWrapper>
                   </div>
                 </React.Fragment>}
-
             </FormBox>
           )}
 
-          {itemType === 8 ?
+          {/* {itemType === 8 ?
             <FormBox boxShadow={true} marginTop={25}>
-              <div className="flexWrapBox Vcentering cursor" onClick={() => { const copy = [...headers]; copy.push({ name: null, is_practice: false, steps: [], content: [], template: null }); this.setState({ headers: copy }); }}>
-              <Icon name="plus" size='tiny' color='red' /><div className="label">템플릿 추가</div></div>
-            </FormBox> : null}
+              <div className="flexWrapBox Vcentering cursor"
+                onClick={() => {
+                  const copy = [...headers];
+                  copy.push({ name: null, is_practice: false, steps: [], content: [], template: null });
+                  this.setState({ headers: copy });
+                  this.returnState();
+                }}>
+                <Icon name="plus" size='tiny' color='red' /><div className="label">템플릿 추가</div></div>
+            </FormBox> : null} */}
 
           {/* <FormBox boxShadow={true} marginTop={25}>
             <ResetButtonWrapper
@@ -1667,26 +1667,26 @@ class ItemLecture extends Component {
         </Field>
 
         <Field title="최대 모집인원">
-          <InputNumberText width={100} onChange={this.onHandleMaxStudent} min="0" name="max_students" value={max_students || 0} />&nbsp;명&nbsp;(모집인원 0명 = 무제한)
+          <InputNumberText width={100} onChange={this.onHandleMaxStudent} min="0" name="max_students" value={max_students || 0} />&nbsp;명&nbsp;
         </Field>
 
         <Field title="수강생 모집기간">
-          <div style={{display:"flex",flexWrap:"wrap"}}>
-          <div>
-          <CheckBox2 onChange={() => this.setState({ recruit_always: !recruit_always, })} checked={recruit_always} /></div>&nbsp;상시모집&nbsp;&nbsp;
-          <div style={{marginTop:"10px"}}>
-          {!recruit_always
-            ? <InputCalendar
-              name="calendar"
-              startDate={start_date}
-              endDate={end_date}
-              getStartDateValue={this.getStartDateValue}
-              getEndDateValue={this.getEndDateValue}
-              getDayDateValue={this.getDayDateValue}
-            />
-            : null}
+          <div style={{ display: "flex", flexWrap: "wrap" }}>
+            <div>
+              <CheckBox2 onChange={() => this.setState({ recruit_always: !recruit_always, })} checked={recruit_always} /></div>&nbsp;상시모집&nbsp;&nbsp;
+          <div style={{ marginTop: "10px" }}>
+              {!recruit_always
+                ? <InputCalendar
+                  name="calendar"
+                  startDate={start_date}
+                  endDate={end_date}
+                  getStartDateValue={this.getStartDateValue}
+                  getEndDateValue={this.getEndDateValue}
+                  getDayDateValue={this.getDayDateValue}
+                />
+                : null}
             </div>
-            </div>
+          </div>
         </Field>
 
         <Field isMargin={false} isCentering={true} title="수강료">

@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-import who from "source/thumbnail.png";
-// import FormDataToJson from "modules/FormDataToJson";
 import DateFormat from "modules/DateFormat";
 import Socket from "modules/socket";
-
-// import StyleGuide from "StyleGuide";
-// import { FormField } from "components/Commons/FormField";
-// import ValidateForm from "components/Commons/ValidateForm";
-// import { FormTextArea } from "components/Commons/FormItem";
 import { FormInput } from "components/Commons/FormItem";
 import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
 // import Button from "components/Commons/Button";
@@ -349,6 +341,7 @@ const Face = styled.div`
   background-position: center center;
 `;
 
+
 //현 문제 : 특정 채팅방에 접속한 뒤 다른 채팅방에 접속한 직 후에 알람의 제어가 꼬인다. 
 let test = 1; //보낼 사람이 변경됐을 때 알람의 수를 제어하기 위한 변수. 같은 채팅방에서 메세지를 보내면 test가 증가되고 채팅방을 변경하면 test가 1로 초기화 된다. 
 class MessageList extends Component {
@@ -364,7 +357,7 @@ class MessageList extends Component {
       render: true,
       connectedCheck: false,//채팅을 받는 당사자가 접속돼있는지, 아닌지 판별하는 변수
       textmsg: "",
-      searchform:"",
+      searchform: "",
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -420,7 +413,7 @@ class MessageList extends Component {
       });
       return;
     }
-    this.setState({searchform:value});
+    this.setState({ searchform: value });
     this.props.SearchMemberRequest(null, { key: value }, this.props.token);
   }
 
@@ -434,7 +427,7 @@ class MessageList extends Component {
         selectId: data.uid,
         selectName: data.nick_name,
         openMember: false,
-        img:data.s_img,
+        img: data.s_img,
         msgId: -1,
         render: true,
       });
@@ -442,7 +435,7 @@ class MessageList extends Component {
       await this.setState({
         selectId: data.uid,
         selectName: data.nick_name,
-        img:data.s_img,
+        img: data.s_img,
         openMember: false,
         msgId: this.props.MessageList[index].uid,
         render: true,
@@ -492,22 +485,14 @@ class MessageList extends Component {
     this.setState({ textmsg: event.target.value });
   }
   render() {
-    // console.log(this.props, this.state);
     const { isDetailClicked } = this.state;
     const { MessageList, /*userInfo*/ } = this.props;
-    console.log(this.props.MessageList);
+
     return (
       <Container>
         <Wrapper>
           <Peers>
-            {/* <div className="self">
-              <Face img={userInfo && userInfo.thumbnail && userInfo.thumbnail.m_img} />
-              <div style={{ marginLeft: "15px" }}>
-                <div>{userInfo.nickName}</div>
-                <div>{userInfo.email}</div>
-              </div>
-              <div style={{ marginLeft: "auto" }}><i className="edit icon" /></div>
-            </div> */}
+            {/* <div className="self"> <Face img={userInfo && userInfo.thumbnail && userInfo.thumbnail.m_img} /> <div style={{ marginLeft: "15px" }}> <div>{userInfo.nickName}</div> <div>{userInfo.email}</div> </div> <div style={{ marginLeft: "auto" }}><i className="edit icon" /></div> </div> */}
 
             <div className="searchBox">
               <div className="searchRow">
@@ -522,7 +507,7 @@ class MessageList extends Component {
               </div >
             </div>
 
-            {MessageList.length ? (
+            {MessageList.length > 0 ? (
               <div className="list">
                 {MessageList
                   .sort((a, b) => new Date(b.update_time).getTime() - new Date(a.update_time).getTime())
@@ -531,9 +516,10 @@ class MessageList extends Component {
                     <div className={`person ${this.state.selectId !== this.props.userInfo.uid && (this.state.selectId === peer.to_user_id || this.state.selectId === peer.from_user_id) ? "active" : ""}`} key={peer.uid} onClick={() => this.setMsgId(peer.uid, peer.friend_id, peer.friend_name, peer.s_img)}>
                       <Face img={peer.s_img} />
                       <div className="middle">
-                        <div className="name">{peer.friend_name}</div>
+                       <div className="name">{peer.friend_name}</div>
                         <div className="last-message" dangerouslySetInnerHTML={{__html:peer.message}}></div>
                         <div className="last-date">{DateFormat(peer.update_time)}</div>
+
                       </div>
                       <div className="date">
                         <div className="sent-date">{DateFormat(peer.update_time)}</div>
@@ -543,7 +529,11 @@ class MessageList extends Component {
               </div>
             ) : (<div>대화상대목록이 없습니다.</div>)}
           </Peers>
+
           <Chatting className={isDetailClicked ? "expand" : ""}>
+            {/* <div className="folding">
+              <div className="arrow"></div>
+            </div> */}
             {this.state.selectId ? (
               <React.Fragment>
                 <div className="status">
@@ -564,7 +554,7 @@ class MessageList extends Component {
                       <SendMessageTextarea contentEditable="true" id="sendMsgBox">
                       </SendMessageTextarea>
                       <div className="button-style">
-                        <button type="button" style={{outline:"none",border:"none" }} onClick={this.sendText}><div style={{ color: "white"}}>전송</div></button></div>
+                        <button type="button" style={{ outline: "none", border: "none" }} onClick={this.sendText}><div style={{ color: "white" }}>전송</div></button></div>
                     </div>
                   </React.Fragment>}
                 </div>
@@ -572,7 +562,8 @@ class MessageList extends Component {
             ) : <div>화면 왼쪽에 있는 대화상대 목록에서 대화상대를 선택해주세요.<br />
             (You have to choose person to talk in peer list left.)</div>}
           </Chatting>
-          {/* <ProfileDetail className={isDetailClicked ? "expand" : ""}></ProfileDetail> */}
+
+          {/* <ProfileDetail className={isDetailClicked ? "expand" : ""}/> */}
         </Wrapper>
       </Container >
     )

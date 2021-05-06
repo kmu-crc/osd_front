@@ -200,10 +200,8 @@ class CardSourceDetail extends Component {
   };
 
   onAddValue = async data => {
-    console.log("modify1");
     let copyContent = [...this.state.content];
     let copyData = { ...data };
-    console.log("on add value:", copyData);
     copyData.initClick = true;
     for (let item of copyContent) {
       if ((item.content_type === "FILE" && item.fileUrl == null) && (item.content_type === "FILE" && item.content === "")) {
@@ -212,12 +210,6 @@ class CardSourceDetail extends Component {
     }
     await copyContent.splice(copyData.order, 0, copyData);
 
-    // let newContent = [];
-    //copyContent = copyContent.map((item, index) => {
-    //  if(item != null){
-    //    newContent.push(item);
-    //  }
-    //})
     let newContent = copyContent.filter((item) => { return item !== null })
     newContent = await Promise.all(
       newContent.map(async (item, index) => {
@@ -230,14 +222,8 @@ class CardSourceDetail extends Component {
     );
     await this.setState({ content: newContent });
     this.props.handlerModifyContent && this.props.handlerModifyContent();
-
-    //   let formData = await ContentForm(this.state, this.props.content);
-    //   if (formData && (formData.newContent.length !== 0 && formData.updateContent.length !== 0 && formData.deleteContent.length !== 0)) {
-    //     this.props.isModify(true);
-    // }
   };
   onSubmit = async e => {
-    console.log("modify1");
     e.preventDefault();
     let copyContent = [...this.state.content];
     for (let item of copyContent) {
@@ -342,7 +328,6 @@ class CardSourceDetail extends Component {
     this.props.handlerModifyContent && this.props.handlerModifyContent();
   };
   onChangValue = async data => {
-    console.log(this.props);
     let copyContent = [...this.state.content];
     delete data.initClick;
     delete data.target;
@@ -369,7 +354,7 @@ class CardSourceDetail extends Component {
 
   render() {
     const { loading, content } = this.state;
-    console.log("ONLY", content);
+    console.log("check:::", this.props.ItemDetail);
     return (
       <React.Fragment>
         {loading ? <Loading /> : null}
@@ -402,7 +387,7 @@ class CardSourceDetail extends Component {
                   <EditorBottonWrapper>
                     <button onClick={this.onSubmit} className="submit" type="button">
                       <i className="icon outline save" />저장하기</button>
-                    <button onClick={() => { this.setState({ content: this.props.content || "" }); this.props.handleCancel==null?window.history.go(-1):this.props.handleCancel() }} className="cancel" type="button">
+                    <button onClick={() => { this.setState({ content: this.props.content || "" }); this.props.handleCancel == null ? window.history.go(-1) : this.props.handleCancel() }} className="cancel" type="button">
                       <i className="icon trash" />취소하기</button>
                   </EditorBottonWrapper>
                 </ButtonContainer>
