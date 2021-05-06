@@ -15,6 +15,7 @@ const StyleButton = styled.div`
   margin-right:20px;
   border:${props=>props.isWhite==null?"none":"1px solid #707070"};
   background-color:${props=>props.isWhite==null?"#707070":"white"};
+  margin-bottom:10px;
   .text{
     margin: auto;
     width: max-content;

@@ -3,6 +3,9 @@ import Loading from "components/Commons/Loading";
 import { DesignRequestDetail } from "./DesignRequestDetail";
 import { DesignResponseDetail } from "./DesignResponseDetail";
 import styled from "styled-components"
+import ArticleModal from "components/Commons/ArticleModal/ArticleModal";
+import { RedButton, GrayButton } from "components/Commons/CustomButton"
+import market_style from "market_style";
 
 const NormalWrapper = styled.div`
   padding:0px 30px;
@@ -18,6 +21,11 @@ const NormalWrapper = styled.div`
       color: #000000;
       text-align: center;
     }
+  }
+  .buttonBox{
+    display:flex;
+    justify-content:center;
+    margin-top:20px;
   }
   .form {
     width: 100%;
@@ -80,58 +88,36 @@ const NormalWrapper = styled.div`
 export default class Detail extends Component {
   constructor(props) {
     super(props);
-    this.onClickResponse = this.onClickResponse.bind(this);
-  }
-  onClickResponse() {
-    // switch(type){
-    //   case "designer":
-    //     if(status == "request"){
-    //       if(isOwner==true){ // 수정
-    //         window.location.href = "/ModifyrequestToDesigner/"+this.props.id;
-    //       }else{ // 응답
-    //         window.location.href = "/responseToDesignerReq/"+this.props.id;
-    //       }
-    //     }else if(status == "response"){
-    //       if(isOwner == true){//수정
-    //         window.location.href = "/modifyResponseToDesignerReq/"+this.props.id;
-    //       }else{//구매
-    //         window.location.href = "/modifyResponseToDesignerReq/"+this.props.id;
-    //       }
-    //     }
-    //     break;
-    //   case "maker":
-    //     if(status == "request"){
-    //       if(isOwner==true){ // 수정
-    //         window.location.href = "/ModifyrequestToDesigner/"+this.props.id;
-    //       }else{ // 응답
-    //         window.location.href = "/responseToDesignerReq/"+this.props.id;
-    //       }
-    //     }else if(status == "response"){
-    //       if(isOwner == true){//수정
-    //         window.location.href = "/modifyResponseToDesignerReq/"+this.props.id;
-    //       }else{//구매
-    //         window.location.href = "/modifyResponseToDesignerReq/"+this.props.id;
-    //       }
-    //     }
-    //     break;
-    // }
-
-    // if (this.props.Detail.status === "request") {
-    //   if (this.props.Detail.type === "designer_req" || this.props.Detail.type === "designer") {
-    //     window.location.href = "/ModifyrequestToDesigner/" + this.props.id;
-    //   }
-    //   else if (this.props.Detail.type === "maker" || this.props.Detail.type === "maker_req") {
-    //     window.location.href = "/ModifyrequestToMaker/" + this.props.id;
-    //   }
-    // }
-    // else if (this.props.Detail.status === "response") {
-    //   alert("미구현");
-    // }
+    this.state = {
+      write:false,
+    }
+    this.updateNoneRequest = this.updateNoneRequest.bind(this);
   }
   returnToList = () => {
     window.location.href = "/request/" + this.props.Detail.type;
   }
-
+  updateNoneRequest = (title, content) => {
+    const data = {
+      type: this.props.type,
+      status: "normal",
+      category_level1: this.state.category_level1,
+      category_level2: this.state.category_level2,
+      // content: this.state.content,
+      // title: this.state.title,
+      title: title,
+      content: content,
+      expert_id: this.props.id || null,
+      personal: this.props.id || null,
+    };
+    this.props.UpdateRequestRequest(this.props.id, data, this.props.token)
+      .then(res => {
+        if (res.success) {
+          this.props.GetRequestDetailRequest(this.props.id);
+        }
+        this.setState({ write: false, title: "", comment: "" });
+      })
+      .catch(err => console.log("에러발생" + err));
+  }
   render() {
     const { Detail, MyDetail, userInfo } = this.props;
     if (Detail == null || Detail.length === 0) return (<Loading />);
@@ -141,8 +127,19 @@ export default class Detail extends Component {
     const category_level1 = this.props.category1 && this.props.category1[level1 - 1] && this.props.category1[level1 - 1].text;
     const category_level2 = (level2 && this.props.category2 && this.props.category2.filter(cate => cate.value === level2)[0].text) || "";
 
+    console.log(this.props);
     return (<React.Fragment>
-
+      {this.state.write?
+        <ArticleModal
+          title={this.props.Detail&&this.props.Detail.title}
+          content={this.props.Detail&&this.props.Detail.content}
+          write={this.state.write}
+          handlerModal={(write) => { this.setState({ write: write }) }}
+          isModify={true}
+          updateNoneRequest={(title, content) => this.updateNoneRequest(title, content)}
+        /> 
+        :null
+      }
       {/* REQUEST DETAIL */}
       {Detail.status === "request"
         ? <DesignRequestDetail
@@ -190,6 +187,10 @@ export default class Detail extends Component {
                   <div className="label">내용</div>
                   <div className="content" dangerouslySetInnerHTML={{ __html: this.props.Detail&&this.props.Detail.content }}/>
                 </div>
+            </div>
+            <div className="buttonBox">
+            <RedButton width={150} height={30} fontSize={market_style.font.size.small1} okText="확인" cancelText="취소" value={"수정하기"} onClick={()=>this.setState({write:true})} isConfirm={false}/>
+            <GrayButton width={150} height={30} fontSize={market_style.font.size.small1} text={"삭제하시겠습니까?"} value={"삭제하기"} onClick={() => { this.props.DeleteRequestRequest(this.props.id,this.props.token);window.location.href = "/request/designer" }} isConfirm={true}></GrayButton>
             </div>
           </NormalWrapper>
         </React.Fragment>

@@ -17,6 +17,7 @@ const StyleButton = styled.div`
   border:${props => props.disabled == false || props.disabled == null ? "1px solid red" : "1px solid gray"};
   cursor:pointer;
   margin-right:${props => props.marginRight == null ? "20px" : props.marginRight + "px"};
+  margin-bottom:10px;
   .text{
     margin: auto;
     width: max-content;

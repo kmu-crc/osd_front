@@ -308,12 +308,13 @@ const EditCardHeaderContainer = styled.div`
        margin-top: 14px;
 
        .thumbnail-txt {
-            width: 91px;
+            min-width: 91px;
             font-size:${market_style.font.size.small1};
             font-weight: 500;
             font-family: Noto Sans KR;
             text-align: left;
             color: #707070;
+            // margin-right:20px;
        }
 
    }

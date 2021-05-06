@@ -41,10 +41,10 @@ const TextWrapper = styled.div`
   justify-content:center;
   align-items:center;
   .title {
+    height:25px;
     font-weight: 500;
     font-size:${market_style.font.size.mini2};
     text-align: left;
-    line-height: 25px;
   }
   .author {
     margin-top: 8px;
