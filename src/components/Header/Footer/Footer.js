@@ -59,7 +59,7 @@ class Footer extends Component {
     render() {
         return (
             <FooterContainer id="footer-div">
-                <div className="origin" title={`${gitInfo.commit.date}`} onClick={async () => await alert(`현재 버전: ${gitInfo.commit.date}`, "확인")}>Copyright @ 2020 Open Design Inc.</div>
+                <div className="origin" title={`${gitInfo.commit.date}`} onClick={async () => await alert(`현재 버전: ${gitInfo.commit.date}`, "확인")}>Copyright @ 2021 Open Design Inc.</div>
                 <div className="term" onClick={this.gotoTerm}>이용약관</div>
                 <div className="security" onClick={this.gotoPrivacy}>개인 정보 보호 방책</div>
             </FooterContainer>

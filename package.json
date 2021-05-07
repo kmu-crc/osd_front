@@ -1,6 +1,6 @@
 {
   "name": "osd_front",
-  "version": "1.5.0",
+  "version": "1.6.2",
   "private": true,
   "dependencies": {
     "@babel/core": "7.6.0",
@@ -135,7 +135,7 @@
     "start": "HTTPS=true REACT_APP_TYPE=aws node scripts/start.js",
     "local": "REACT_APP_TYPE=local node scripts/start.js",
     "dev": "HTTPS=true REACT_APP_TYPE=aws_dev node scripts/start.js",
-    "build": "REACT_APP_BUILD=true REACT_APP_TYPE=aws node scripts/build.js",
+    "build": "REACT_APP_VERSION=$npm_package_version REACT_APP_BUILD=true REACT_APP_TYPE=aws node scripts/build.js",
     "DevBuild": "HTTPS=true REACT_APP_BUILD=true REACT_APP_TYPE=aws_dev node scripts/build.js",
     "test": "node scripts/test.js"
   },
