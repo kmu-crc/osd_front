@@ -40,7 +40,7 @@ class App extends Component {
       <BrowserRouter>
         <Notice />
         <Switch>
-          
+
           {/* no client template */}
           <Route path="/chat/:id" component={CheckAuth(ChatDesignPage)} />
           <Route path="/chatg/:id" component={CheckAuth(ChatGroupPage)} />
