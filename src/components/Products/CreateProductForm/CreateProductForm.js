@@ -568,7 +568,7 @@ const FormBox = styled.div`
     background: #E9E9E9 0% 0% no-repeat padding-box;
     border-radius: 10px;
     border: none;
-
+    outline: none;
     text-align: left;
     font: normal normal 300 13px/19px Noto Sans KR;
     letter-spacing: 0px;
@@ -1666,7 +1666,7 @@ class ItemLecture extends Component {
           <InputTextarea placeholder="설명을 입력하세요" onChange={this.onHandleDescription} name="description" height={60} />
         </Field>
 
-        <Field title="최대 모집인원">
+        <Field title="최대 수강인원">
           <InputNumberText width={100} onChange={this.onHandleMaxStudent} min="0" name="max_students" value={max_students || 0} />&nbsp;명&nbsp;
         </Field>
 

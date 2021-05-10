@@ -10,7 +10,9 @@ import DesignerRequestBoardContainer from "containers/Designer/DesignerRequestBo
 import TextFormat from "modules/TextFormat";
 import { Modal } from "semantic-ui-react";
 import Cross from "components/Commons/Cross";
-import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
+// import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
+import { TextControllerPlus as TextControllerClassic } from "components/Commons/InputItem";
+
 import ReviewDetailModal from "components/Commons/ReviewDetailModal";
 import ArticleModal from "components/Commons/ArticleModal/ArticleModal";
 import market_style from "market_style";

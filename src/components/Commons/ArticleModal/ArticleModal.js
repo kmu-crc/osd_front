@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Modal } from "semantic-ui-react";
 import Cross from "components/Commons/Cross";
-import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
+// import  TextControllerClassic from "components/Commons/InputItem/TextControllerClassic";
+
+import { TextControllerPlus as TextControllerClassic } from "components/Commons/InputItem";
+
 import styled from "styled-components";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
@@ -34,6 +37,9 @@ const WriteNormalArticleModal = styled(Modal)`
     font-weight:500;
     min-width:78px;
     height:max-content;
+  }
+  .editorBox{
+    width:100%;
   }
   .form{
       width:100%;
@@ -154,12 +160,14 @@ class ArticleModal extends Component {
                             </div>
                         <div className="form form_height">
                             <div className="title_label ">내용<Mandatory/></div>
+                            <div className="editorBox">
                             <TextControllerClassic
                             item={{content:this.state.content}}
                             name={"content"}
                             getValue={async(data)=>{this.setState({content:data.content})}}
                             editheight={300}
                             />
+                            </div>
                         </div>
                         <div className="form redButtonBox">
                             <div className="button red marginRight" onClick={async()=>{

@@ -6,7 +6,9 @@ import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
 // import Button from "components/Commons/Button";
 // import NumberFormat from 'modules/NumberFormat';
 // import TextSlicer from 'modules/TextSlicer'
+import styled from "styled-components";
 import market_style from "market_style";
+import who from "source/thumbnail.png";
 
 // CSS STYLING
 const Container = styled.div`
