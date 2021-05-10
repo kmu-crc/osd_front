@@ -16,13 +16,16 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import reducers from './redux/modules'
 import thunk from 'redux-thunk'
 
+import packageJson from '../package.json'
+global.appVersion = packageJson.version
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)))
 ReactDOM.render(
 
     <Provider store={store}>
-    
-    <App />
+
+        <App />
     </Provider>, document.getElementById('root'))
 // ReactDOM.render(<App />, document.getElementById('root'))
 serviceWorker.register()

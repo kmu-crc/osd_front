@@ -132,6 +132,8 @@
     "yarn": "^1.17.3"
   },
   "scripts": {
+    "generate-build-version": "node generate-build-version",
+    "prebuild": "npm run generate-build-version",
     "start": "HTTPS=true REACT_APP_TYPE=aws node scripts/start.js",
     "local": "REACT_APP_TYPE=local node scripts/start.js",
     "dev": "HTTPS=true REACT_APP_TYPE=aws_dev node scripts/start.js",
