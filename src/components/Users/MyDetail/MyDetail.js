@@ -22,14 +22,14 @@ import MyPointStatusContainer from "containers/Point/PointContainer";
 import category_icon from "source/category_icon.svg";
 import market_style from "market_style";
 import { Dropdown } from "semantic-ui-react";
-const CustomIcon=styled.div`
+const CustomIcon = styled.div`
   width:${props => props.width}px;
   height:${props => props.height}px;
-  background-image:url(${props=>props.imgURL});
+  background-image:url(${props => props.imgURL});
   background-repeat: no-repeat;
   background-size: contain;
   padding:${props => props.padding}px;
-  display:${props=>props.isNon==true?"none":"block"}
+  display:${props => props.isNon == true ? "none" : "block"}
   margin-left:15px;
   `
 
@@ -318,7 +318,7 @@ class MyDetail extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { selectMenu: parseInt(this.props.index,10) }
+    this.state = { selectMenu: parseInt(this.props.index, 10) }
     this.onClickMenu = this.onClickMenu.bind(this);
     this.onClickCreateDesigner = this.onClickCreateDesigner.bind(this);
     this.onClickCreateMaker = this.onClickCreateMaker.bind(this);
@@ -357,10 +357,10 @@ class MyDetail extends Component {
     ]
     this.setState({ selectMenu: menuNames.indexOf(event.target.id) });
   }
-  async onChangeDropMenu(event,{value}){
-    console.log({value}.value);
-    const indexNumber = [10,9,0,11,8,7,1,2,3,4,5,6];
-    let number = indexNumber[{value}.value];
+  async onChangeDropMenu(event, { value }) {
+    console.log({ value }.value);
+    const indexNumber = [10, 9, 0, 11, 8, 7, 1, 2, 3, 4, 5, 6];
+    let number = indexNumber[{ value }.value];
     this.setState({ selectMenu: number });
   }
 
@@ -411,20 +411,20 @@ class MyDetail extends Component {
             <InformationBox>
               <div className="innerBox">
                 <div className="text">다양한 아이디어를 판매하세요!</div>
-                <div className="imgBox"><img className="img" src={adddesigner}/></div>
-                <div onClick={this.onClickCreateDesigner} className="button">디자이너 등록 / 관리&nbsp;&nbsp;<CustomIcon width="15" height="15" imgURL={category_icon}/></div>
+                <div className="imgBox"><img className="img" src={adddesigner} /></div>
+                <div onClick={this.onClickCreateDesigner} className="button">디자이너 등록 / 관리&nbsp;&nbsp;<CustomIcon width="15" height="15" imgURL={category_icon} /></div>
               </div>
-              <div className="hrLine"/>
+              <div className="hrLine" />
               <div className="innerBox largeWidth">
-                <div className="text">제작 기술을 공유하고<br/>장소를 쉐어해보세요!</div>
-                <div className="imgBox"><img className="img" src={addmaker}/></div>
-                <div onClick={this.onClickCreateMaker} className="button">메이커 등록 / 관리&nbsp;&nbsp;<CustomIcon width="15" height="15" imgURL={category_icon}/></div>
+                <div className="text">제작 기술을 공유하고<br />장소를 쉐어해보세요!</div>
+                <div className="imgBox"><img className="img" src={addmaker} /></div>
+                <div onClick={this.onClickCreateMaker} className="button">메이커 등록 / 관리&nbsp;&nbsp;<CustomIcon width="15" height="15" imgURL={category_icon} /></div>
               </div>
-              <div className="hrLine"/>
+              <div className="hrLine" />
               <div className="innerBox">
-                <div className="text">본인 인증을 통해 더욱 다양한<br/>혜택을 누려보세요!</div>
-                <div className="imgBox"><img className="img" src={confirmMe}/></div>
-                <div className="button">본인 인증 하기&nbsp;&nbsp;<CustomIcon width="15" height="15" imgURL={category_icon}/></div>
+                <div className="text">본인 인증을 통해 더욱 다양한<br />혜택을 누려보세요!</div>
+                <div className="imgBox"><img className="img" src={confirmMe} /></div>
+                <div className="button">본인 인증 하기&nbsp;&nbsp;<CustomIcon width="15" height="15" imgURL={category_icon} /></div>
               </div>
             </InformationBox>
           </div>
@@ -434,51 +434,51 @@ class MyDetail extends Component {
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 9 ? "red" : null} id="modify_myinfo">내 정보 수정</MenuButton>
               <div className="hrLine" />
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 0 ? "red" : null} id="orderlist">구입 아이템({MyDetail&&MyDetail.allCount&&MyDetail.allCount.payment_count})</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 0 ? "red" : null} id="orderlist">구입 아이템({MyDetail && MyDetail.allCount && MyDetail.allCount.payment_count})</MenuButton>
               <div className="hrLine" />
-              {(MyDetail.isDesigner==1||MyDetail.isMaker==1)?
-              <React.Fragment>
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 11? "red" : null} id="sell_item">판매 아이템({MyDetail&&MyDetail.allCount&&MyDetail.allCount.saleItem_count})</MenuButton>
-              <div className="hrLine" />
-              </React.Fragment>
-              :
-              null  
+              {(MyDetail.isDesigner == 1 || MyDetail.isMaker == 1) ?
+                <React.Fragment>
+                  <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 11 ? "red" : null} id="sell_item">판매 아이템({MyDetail && MyDetail.allCount && MyDetail.allCount.saleItem_count})</MenuButton>
+                  <div className="hrLine" />
+                </React.Fragment>
+                :
+                null
               }
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 8 ? "red" : null} id="request_item">의뢰 아이템({MyDetail&&MyDetail.allCount&&MyDetail.allCount.itemRequest_count})</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 8 ? "red" : null} id="request_item">의뢰 아이템({MyDetail && MyDetail.allCount && MyDetail.allCount.itemRequest_count})</MenuButton>
               <div className="hrLine" />
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 7 ? "red" : null} id="upload_item">등록 아이템({MyDetail&&MyDetail.allCount&&MyDetail.allCount.registerItem_count})</MenuButton>
-              <div className="hrLine" /> 
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 1 ? "red" : null} id="interest_Item">관심 아이템({MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeItem_count})</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 7 ? "red" : null} id="upload_item">등록 아이템({MyDetail && MyDetail.allCount && MyDetail.allCount.registerItem_count})</MenuButton>
               <div className="hrLine" />
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 2 ? "red" : null} id="interest_Designer">관심 디자이너({MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeDesigner_count})</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 1 ? "red" : null} id="interest_Item">관심 아이템({MyDetail && MyDetail.allCount && MyDetail.allCount.likeItem_count})</MenuButton>
               <div className="hrLine" />
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 3 ? "red" : null} id="interest_Maker">관심 메이커({MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeMaker_count})</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 2 ? "red" : null} id="interest_Designer">관심 디자이너({MyDetail && MyDetail.allCount && MyDetail.allCount.likeDesigner_count})</MenuButton>
+              <div className="hrLine" />
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 3 ? "red" : null} id="interest_Maker">관심 메이커({MyDetail && MyDetail.allCount && MyDetail.allCount.likeMaker_count})</MenuButton>
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 4 ? "red" : null} id="join_project">참여 프로젝트</MenuButton>
               <div className="hrLine" />
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 5 ? "red" : null} id="request_designer">디자인 의뢰({MyDetail&&MyDetail.allCount&&MyDetail.allCount.requestDesigner_count})</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 5 ? "red" : null} id="request_designer">디자인 의뢰({MyDetail && MyDetail.allCount && MyDetail.allCount.requestDesigner_count})</MenuButton>
               <div className="hrLine" />
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 6 ? "red" : null} id="request_maker">제작 의뢰({MyDetail&&MyDetail.allCount&&MyDetail.allCount.requestMaker_count})</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 6 ? "red" : null} id="request_maker">제작 의뢰({MyDetail && MyDetail.allCount && MyDetail.allCount.requestMaker_count})</MenuButton>
             </MenuBox>
-            <Dropdown   
+            <Dropdown
               className="dropBox"
               selection
               defaultValue={1}
               options={[
-                          {key:10,value:0,text:`내 포인트 관리`},
-                          {key:9,value:1,text:`내 정보 수정`},
-                          {key:0,value:2,text:`구입 아이템(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.payment_count})`},
-                          {key:11,value:3,text:`판매 아이템(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.saleItem_count})`},
-                          {key:8,value:4,text:`의뢰 아이템(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.itemRequest_count})`},
-                          {key:7,value:5,text:`등록 아이템(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.registerItem_count})`},
-                          {key:1,value:6,text:`관심 아이템(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeItem_count})`},
-                          {key:2,value:7,text:`관심 디자이너(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeDesigner_count})`},
-                          {key:3,value:8,text:`관심 메이커(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeMaker_count})`},
-                          {key:4,value:9,text:`참여 프로젝트`},
-                          {key:5,value:10,text:`디자인 의뢰(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.requestDesigner_count})`},
-                          {key:6,value:11,text:`제작 의뢰(${MyDetail&&MyDetail.allCount&&MyDetail.allCount.requestMaker_count})`}
-                        ]}
-                        onChange={this.onChangeDropMenu}/>
+                { key: 10, value: 0, text: `내 포인트 관리` },
+                { key: 9, value: 1, text: `내 정보 수정` },
+                { key: 0, value: 2, text: `구입 아이템(${MyDetail && MyDetail.allCount && MyDetail.allCount.payment_count})` },
+                { key: 11, value: 3, text: `판매 아이템(${MyDetail && MyDetail.allCount && MyDetail.allCount.saleItem_count})` },
+                { key: 8, value: 4, text: `의뢰 아이템(${MyDetail && MyDetail.allCount && MyDetail.allCount.itemRequest_count})` },
+                { key: 7, value: 5, text: `등록 아이템(${MyDetail && MyDetail.allCount && MyDetail.allCount.registerItem_count})` },
+                { key: 1, value: 6, text: `관심 아이템(${MyDetail && MyDetail.allCount && MyDetail.allCount.likeItem_count})` },
+                { key: 2, value: 7, text: `관심 디자이너(${MyDetail && MyDetail.allCount && MyDetail.allCount.likeDesigner_count})` },
+                { key: 3, value: 8, text: `관심 메이커(${MyDetail && MyDetail.allCount && MyDetail.allCount.likeMaker_count})` },
+                { key: 4, value: 9, text: `참여 프로젝트` },
+                { key: 5, value: 10, text: `디자인 의뢰(${MyDetail && MyDetail.allCount && MyDetail.allCount.requestDesigner_count})` },
+                { key: 6, value: 11, text: `제작 의뢰(${MyDetail && MyDetail.allCount && MyDetail.allCount.requestMaker_count})` }
+              ]}
+              onChange={this.onChangeDropMenu} />
             {/* <select id="menu" size={12}>
               <option onClick={this.onClickMenu} fontColor={selectMenu === 10 ? "red" : null} id="my_point_status">내 포인트 관리</option>
               <option onClick={this.onClickMenu} fontColor={selectMenu === 9 ? "red" : null} id="modify_myinfo">내 정보 수정</option>
@@ -497,26 +497,26 @@ class MyDetail extends Component {
               {selectMenu === 10 ? <MyPointStatusContainer /> : null}
               {selectMenu === 9 ? <ModifyMyDetailContainer /> : null}
               {selectMenu === 0 ?
-                <MyPaymentContainer allPage={MyDetail&&MyDetail.allCount&&MyDetail.allCount.payment_count}  id={this.props.userInfo.uid} /> : null}
+                <MyPaymentContainer allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.payment_count} id={this.props.userInfo.uid} /> : null}
               {selectMenu === 8 ?
-                <MyRequestItemContainer allPage={MyDetail&&MyDetail.allCount&&MyDetail.allCount.itemRequest_count} id={this.props.userInfo.uid} /> : null}
+                <MyRequestItemContainer allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.itemRequest_count} id={this.props.userInfo.uid} /> : null}
               {selectMenu === 7 ?
-                <UploadItemContainer allPage={MyDetail&&MyDetail.allCount&&MyDetail.allCount.registerItem_count} id={this.props.userInfo.uid} /> : null}
+                <UploadItemContainer allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.registerItem_count} id={this.props.userInfo.uid} /> : null}
               {selectMenu === 1 &&
-                <LikeInItemContainer allPage={MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeItem_count} id={this.props.userInfo.uid} />}
+                <LikeInItemContainer allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.likeItem_count} id={this.props.userInfo.uid} />}
               {selectMenu === 2 &&
-                <LikeInDesignerContainer allPage={MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeDesigner_count} id={this.props.userInfo.uid} />}
+                <LikeInDesignerContainer allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.likeDesigner_count} id={this.props.userInfo.uid} />}
               {selectMenu === 3 &&
-                <LikeInMakerContainer allPage={MyDetail&&MyDetail.allCount&&MyDetail.allCount.likeMaker_count} id={this.props.userInfo.uid} />}
+                <LikeInMakerContainer allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.likeMaker_count} id={this.props.userInfo.uid} />}
               {selectMenu === 4 &&
                 <MyProjectItemContainer id={this.props.userInfo.uid} />}
               {selectMenu === 5 &&
-                <MyUploadDesignReqBoardContainer allPage={MyDetail&&MyDetail.allCount&&MyDetail.allCount.requestDesigner_count} id={this.props.userInfo.uid} />}
+                <MyUploadDesignReqBoardContainer allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.requestDesigner_count} id={this.props.userInfo.uid} />}
               {selectMenu === 6 &&
-                <MyUploadMakerReqBoardContainer allPage={MyDetail&&MyDetail.allCount&&MyDetail.allCount.requestDesigner_count} id={this.props.userInfo.uid} />
+                <MyUploadMakerReqBoardContainer allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.requestDesigner_count} id={this.props.userInfo.uid} />
               }
               {selectMenu === 11 &&
-                <MySalesContainer allPage = {MyDetail&&MyDetail.allCount&&MyDetail.allCount.saleItem_count} id={this.props.userInfo.uid} />
+                <MySalesContainer allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.saleItem_count} id={this.props.userInfo.uid} />
               }
             </BoardBox>
           </div>

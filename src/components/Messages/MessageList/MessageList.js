@@ -7,6 +7,8 @@ import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
 // import NumberFormat from 'modules/NumberFormat';
 // import TextSlicer from 'modules/TextSlicer'
 import market_style from "market_style";
+import styled from "styled-components";
+import who from "source/thumbnail.png";
 
 // CSS STYLING
 const Container = styled.div`
@@ -497,9 +499,9 @@ class MessageList extends Component {
             <div className="searchBox">
               <div className="searchRow">
                 <div className="heading"><div>대화상대 검색</div></div>
-                <FormInput  className="search-input"
-                  type="text" name="search" placeholder={window.innerWidth>700?"찾고자 하는 회원의 닉네임을 입력해 주세요.":"닉네임 검색"} validates={["MinLength2"]} getValue={this.getValue} value={this.state.searchform} />
-                </div>
+                <FormInput className="search-input"
+                  type="text" name="search" placeholder={window.innerWidth > 700 ? "찾고자 하는 회원의 닉네임을 입력해 주세요." : "닉네임 검색"} validates={["MinLength2"]} getValue={this.getValue} value={this.state.searchform} />
+              </div>
               <div className="search-list" style={this.state.openMember ? { display: "block" } : { display: "none" }}>
                 {this.props.members && this.props.members.map((item, index) => {
                   return (<div className="memberBox" key={`member${index}`} onClick={() => this.selectMember(item)}>{item.email}</div>);
@@ -516,8 +518,8 @@ class MessageList extends Component {
                     <div className={`person ${this.state.selectId !== this.props.userInfo.uid && (this.state.selectId === peer.to_user_id || this.state.selectId === peer.from_user_id) ? "active" : ""}`} key={peer.uid} onClick={() => this.setMsgId(peer.uid, peer.friend_id, peer.friend_name, peer.s_img)}>
                       <Face img={peer.s_img} />
                       <div className="middle">
-                       <div className="name">{peer.friend_name}</div>
-                        <div className="last-message" dangerouslySetInnerHTML={{__html:peer.message}}></div>
+                        <div className="name">{peer.friend_name}</div>
+                        <div className="last-message" dangerouslySetInnerHTML={{ __html: peer.message }}></div>
                         <div className="last-date">{DateFormat(peer.update_time)}</div>
 
                       </div>
