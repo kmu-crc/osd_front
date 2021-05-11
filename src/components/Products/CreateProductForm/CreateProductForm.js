@@ -1634,7 +1634,8 @@ class ItemLecture extends Component {
     this.props.return && this.props.return(this.state);
   };
   async onHandleMaxStudent(event) {
-    await this.setState({ max_students: parseInt(event.target.value, 10) });
+    const { value } = event.target;
+    await this.setState({ max_students: parseInt(value > 1000 ? 1000 : value, 10) });
     this.returnState();
   };
   async onHandleDescription(event) {
@@ -1667,7 +1668,7 @@ class ItemLecture extends Component {
         </Field>
 
         <Field title="최대 수강인원">
-          <InputNumberText width={100} onChange={this.onHandleMaxStudent} min="0" name="max_students" value={max_students || 0} />&nbsp;명&nbsp;
+          <InputNumberText width={100} onBlur={(e) => { if (e.target.value > 1000) { this.setState({ max_students: 1000 }); } }} onChange={this.onHandleMaxStudent} min="1" max="1000" name="max_students" value={max_students} />&nbsp;명&nbsp;
         </Field>
 
         <Field title="수강생 모집기간">

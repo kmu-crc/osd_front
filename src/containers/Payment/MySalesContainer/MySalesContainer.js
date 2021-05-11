@@ -78,11 +78,10 @@ const ListElement = styled.div`
 
 
 class MySalesContainer extends Component {
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
     this.state = {
-      page:0,
+      page: 0, per: 10,
     }
     this.goPage = this.goPage.bind(this);
   }
@@ -94,48 +93,48 @@ class MySalesContainer extends Component {
     this.props.GetMySalesRequest(this.props.token, page);
 
   goPage = async (pagenum) => {
-      await this.setState({ page:pagenum });
-      this.props.GetMySalesRequest(this.props.token, pagenum);
+    await this.setState({ page: pagenum });
+    this.props.GetMySalesRequest(this.props.token, pagenum);
   };
   render() {
-    const { page } = this.state;
-    const lastPage = parseInt(this.props.allPage / 10, 10);
+    const { page, per } = this.state;
+    const lastPage = parseInt((this.props.allPage / per) + (this.props.allPage % per ? 1 : 0), 10);
     return (
       <Board>
-      <div className="title__">판매 아이템</div>
-      <div className="lineBox"><div className="line"/></div>
-      <ListElement>
-                <div className="title">제목</div>
-                <div className="writer">글쓴이</div>
-                <div className="date">작성일</div>
-      </ListElement>
-      <ScrollBoardList
-      total={this.props.Count}
-      dataList={this.props.dataList}
-      getListRequest={this.getList}
-      ListComponent={PaymentListElement}
-    />
-    {
-    lastPage==0?null:
-    <div className="pagenation">
-    <Pagination
-      activePage={page + 1}
-      boundaryRange={0}
-      defaultActivePage={1}
-      ellipsisItem={null}
-      firstItem={null}
-      lastItem={null}
-      siblingRange={1}
-      totalPages={lastPage}
-      // pointing
-      secondary
-      onPageChange={(event, { activePage }) => {
-        this.goPage(activePage - 1);
-      }}
-    />
-    </div>
-    }
-    </Board>
+        <div className="title__">판매 아이템</div>
+        <div className="lineBox"><div className="line" /></div>
+        <ListElement>
+          <div className="title">제목</div>
+          <div className="writer">글쓴이</div>
+          <div className="date">작성일</div>
+        </ListElement>
+        <ScrollBoardList
+          total={this.props.Count}
+          dataList={this.props.dataList}
+          getListRequest={this.getList}
+          ListComponent={PaymentListElement}
+        />
+        {
+          lastPage == 0 ? null :
+            <div className="pagenation">
+              <Pagination
+                activePage={page + 1}
+                boundaryRange={0}
+                defaultActivePage={1}
+                ellipsisItem={null}
+                firstItem={null}
+                lastItem={null}
+                siblingRange={1}
+                totalPages={lastPage}
+                // pointing
+                secondary
+                onPageChange={(event, { activePage }) => {
+                  this.goPage(activePage - 1);
+                }}
+              />
+            </div>
+        }
+      </Board>
     );
   }
 }
