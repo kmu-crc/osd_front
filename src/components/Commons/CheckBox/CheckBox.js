@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import market_style from "market_style";
 
 const CheckboxContainer = styled.label`
+
     .control {
+        width:100%;
+        height:25px;
         font-family: arial;
         display: block;
         position: relative;
@@ -12,11 +15,13 @@ const CheckboxContainer = styled.label`
         padding-top: 1px;
         cursor: pointer;
         font-size: ${market_style.font.size.small2};
+        margin-right:5px;
     }
         .control input {
-            position: absolute;
-            z-index: -1;
-            opacity: 0;
+            display:none;
+            // position: absolute;
+            // z-index: -1;
+            // opacity: 0;
         }
     .control_indicator {
         position: absolute;
