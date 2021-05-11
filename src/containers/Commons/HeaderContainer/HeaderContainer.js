@@ -4,22 +4,22 @@ import { withRouter } from "react-router-dom";
 import Header from "components/Commons/Header";
 import { SignOutRequest } from "actions/Registration";
 import { SetActive } from "actions/OpenDesign";
-// import {GetNotification} from "actions/Commons/Notification"
-// notification: state.Authentication.status.notification,
-// GetNotification: ()=>{
-// return dispatch(GetNotification())
-// },
 import { GetItemSearchCountRequest } from "actions/Design";
 import { GetMakerSearchCountRequest } from "actions/Maker";
 import { GetDesignerSearchCountRequest } from "actions/Designer";
+import Header_mobile from "mobileComponents/Header";
+
 class HeaderContainer extends Component {
-  // componentWillMount(){
-    // this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword)
-    // .then(()=>this.props.GetMakerListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword))
-    // .then(()=>this.props.GetDesignerListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.keyword));
-  // }
   render() {
-    return (<Header {...this.props} />);
+    return (
+      <React.Fragment>
+      {
+        window.innerWidth >= 500?
+        <Header {...this.props}/> :
+        <Header_mobile {...this.props}/> 
+      }
+      </React.Fragment>
+    );
   }
 }
 

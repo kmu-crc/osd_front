@@ -57,39 +57,41 @@ class App extends Component {
       <BrowserRouter>
         <ClientTemplate>
           <Switch>
+
             {/* MAIN */}
             <Route exact path="/" component={MainPage} />
+            
             {/* FOOTER */}
             <Route path="/footerPrivacy" component={FooterPrivacy} />
             <Route path="/footerPara" component={FooterPara} />
+            
             {/* DESIGNER */}
-
             <Route path="/designer/:sorting?/:cate1?/:cate2?/:cate3?" component={DesignerListPage} />
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
             <Route path="/designerModify" component={ModifyDesignerPage} />
             <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/createDesigner/redirected" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/modifyDesigner/:id" component={RequiresAuth(ModifyDesignerPage)} />
+            
             {/* MAKER */}
             <Route path="/maker/:sorting?/:cate1?/:cate2?/:cate3?" component={MakerListPage} />
             <Route path="/makerDetail/:id/:type?" component={MakerDetailPage} />
             <Route path="/createMaker" component={RequiresAuth(CreateMakerPage)} />
             <Route path="/modifyMaker/:id" component={ModifyMakerPage} />
+            
             {/* ITEM */}
             <Route path="/createProduct" component={RequiresPayUser(CreateProductPage)} />
             <Route path="/createProduct/redirected" component={RequiresPayUser(CreateProductPage)} />
-            {/* <Route path="/createProduct" component={RequiresAuth(CreateProductPage)} /> */}
             <Route path="/productModify/:id" component={RequiresAuth(RequiresPayUser(ModifyItemPage))} />
             <Route path="/productDetail/:id" component={ProductDetailPage} />
             <Route path="/product/:sorting?/:cate1?/:cate2?/:cate3?" component={ProductListPage} />
+            
             {/*PURCHASE*/}
             <Route path="/productPurchase/:id/:payment" component={RequiresAuth(RequiresPayUser(ProductPurchasePage))} />
 
             {/* REQUEST */}
             <Route path="/createRequest" component={RequiresAuth(RequiresPayUser(CreateRequestPage))} />
             <Route path="/requestDetail/:id" component={RequestDetailPage} />
-            {/* <Route path="/requestDesigner/:sorting?/:cate1?/:cate2?" component={RequestListPage} />  */}
-            {/* <Route path="/requestMaker/:sorting?/:cate1?/:cate2?" component={RequestListPage} /> */}
             <Route path="/request/:type/:cate1?/:cate2?/:cate3?/:sort?/:keyword?" component={RequestListPage} />
             <Route path="/requestToDesigner/:id" component={RequiresAuth(RequiresPayUser(requestDesignerPage))} />
             <Route path="/requestToMaker/:id" component={RequiresAuth(RequiresPayUser(requestMakerPage))} />
@@ -104,6 +106,7 @@ class App extends Component {
             <Route path="/createGallery" component={RequiresAuth(CreateGalleryPage)} />
             <Route path="/modifyGallery/:id" component={RequiresAuth(ModifyGalleryPage)} />
             <Route path="/galleryDetail/:id" component={GalleryDetailPage} />
+            
             {/* ETC */}
             <Route path="/signup" component={SignUpPage} />
             <Route path="/signin" component={SignInPage} />
@@ -115,18 +118,16 @@ class App extends Component {
             <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage} />
             <Route path="/message/:id?/:name?" component={RequiresAuth(MessagePage)} />
             <Route path="/resetPw" component={ResetPwPage} />
-            {/* <Route path="/myPage" component={MyDetailPage} /> */}
-            {/* <Route path="/payment/:id/:amount/:option" component={PaymentPage} /> */}
-            {/* <Route path="/payment/:id/:title/:amount/:option/:thumbnail" component={PaymentPage} /> */}
             <Route path="/payment" component={RequiresAuth(PaymentPage)} />
             <Route path="/cart" component={CartPage} />
+            
             {/* POINT */}
             <Route path="/point" component={RequiresAuth(PointPage)} />
+            
             {/* NOT FOUND */}
             <Route component={() => <div style={{ width: "100%", fontSize: "36px" }}>페이지를 찾을 수 없습니다.</div>} />
-
-
             <Route path="/codeview" component={RequiresAuth(CodeViewPage)} />
+            
           </Switch>
         </ClientTemplate>
       </BrowserRouter>);

@@ -8,21 +8,6 @@ import TextSlicer from "modules/TextSlicer"
 import noimg from "source/noimg.png";
 import { alert } from "components/Commons/Alert/Alert";
 import market_style from "market_style";
-// const Btn = styled.button`
-//   padding: 0.75em 1.5em;
-//   width: 50%;
-//   font-size: 11px;
-//   border-radius: 5px;
-//   color: white;
-//   margin-top: 1px;
-//   margin-right: 1px;
-//   background-color: ${StyleGuide.color.geyScale.scale5};
-//   border: 1px solid ${StyleGuide.color.geyScale.scale5};
-//   &:hover{
-//     background-color: ${StyleGuide.color.geyScale.scale7};
-//     border: 1px solid ${StyleGuide.color.geyScale.scale7};
-//   }
-// `;
 
 const CustomIcon =styled.div`
 border:1px solid #efefef;
@@ -38,17 +23,6 @@ margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
 margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
 display:${props=>props.isNon===true?"none":"block"}
 `
-// const ResponseMsg =styled.div`
-// min-width:${props => props.width}px;
-// max-width:${props => props.width}px;
-// min-height:${props => props.height}px;
-// max-height:${props => props.height}px;
-// margin-top:2px;
-// margin-right:13px;
-// display:flex;
-// justify-content:flex-end;
-// align-items:flex-end;
-// `
 const AlarmDropDown = styled.ul`
   position: absolute;
   min-height: max-content;
@@ -58,7 +32,7 @@ const AlarmDropDown = styled.ul`
   overflow-y: scroll;
   overflow-x: hidden;
   top: 50px;
-  right: ${props=>props.innerWidth>=500?"255px":"20px"};
+  right: 255px;
   background-color: white;
   padding:10px;
   // transform: translateX(-50%);
@@ -250,7 +224,7 @@ export default class Alarm extends Component {
         <Icon className="grey alarm" size="large" />
 
         {this.state.active && (
-          <AlarmDropDown innerWidth = {window.innerWidth}>
+          <AlarmDropDown>
             {alarms == null || alarms.length === 0 ? (
               <AlarmItem>
                 {/* <div style={{ width: "2%", backgroundColor: "blue" }}>&nbsp;</div> */}
