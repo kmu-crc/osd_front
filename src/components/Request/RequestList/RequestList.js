@@ -6,7 +6,8 @@ import ContentBox from "components/Commons/ContentBox";
 import Category from "components/Commons/Category";
 import { Modal } from "semantic-ui-react";
 import Cross from "components/Commons/Cross";
-import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
+// import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
+import { TextControllerPlus as TextControllerClassic } from "components/Commons/InputItem";
 import ArticleModal from "components/Commons/ArticleModal/ArticleModal";
 import market_style from "market_style";
 

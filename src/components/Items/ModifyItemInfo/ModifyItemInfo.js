@@ -402,7 +402,7 @@ const ItemContents = styled.div`
       background: #E9E9E9 0% 0% no-repeat padding-box;
       border-radius: 10px;
       border: none;
-
+      outline:none;
       text-align: left;
       font: normal normal 300 13px/19px Noto Sans KR;
       letter-spacing: 0px;
@@ -1054,9 +1054,9 @@ class ModifyItemInfo extends Component {
                               className={`edit ${(this.state.listname && this.state.listname[index]) === head.name && "disabled"}`}
                               disabled={(this.state.listname && this.state.listname[index]) === head.name}
                               onClick={e => this.editGridEditorName(head, index)}>수정</button>
-                            <div style={{ marginLeft: "15px", display: "flex", height: "19px", }}>
+                            <div style={{ marginLeft: "15px", display: "flex", height: "max-content",display:"flex",alignItems:"center"}}>
                               <CheckBox2 onChange={() => this.updateListHeader(head)} checked={head.type === "practice" || head.type === "copied"} />
-                              <div style={{ width: "max-content", font: "normal normal 300 13px/19px Noto Sans KR" }}>파생가능</div>
+                              <div style={{ width: "max-content", font: "normal normal 300 13px/19px Noto Sans KR"}}>파생가능</div>
                             </div>
                           </React.Fragment>
                           : "아이템 상세내용"}

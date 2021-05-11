@@ -1,7 +1,8 @@
 import { Dropdown } from "semantic-ui-react"
 import category_icon from "source/category_icon.svg";
 import { CustomIcon } from "components/Commons/ArrowIcon";
-import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
+// import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
+import { TextControllerPlus as TextControllerClassic } from "components/Commons/InputItem";
 import { InputTagNew, InputFile, InputPriceNew, InputCalendar } from "components/Commons/InputItem"
 
 import React, { Component } from "react";

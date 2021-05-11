@@ -568,7 +568,7 @@ const FormBox = styled.div`
     background: #E9E9E9 0% 0% no-repeat padding-box;
     border-radius: 10px;
     border: none;
-
+    outline: none;
     text-align: left;
     font: normal normal 300 13px/19px Noto Sans KR;
     letter-spacing: 0px;

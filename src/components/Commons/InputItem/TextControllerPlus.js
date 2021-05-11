@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from 'react';
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
@@ -14,19 +14,36 @@ import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
 import Font from '@ckeditor/ckeditor5-font/src/font'
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
 
-// import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
-// import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
-// import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
-// import Link from '@ckeditor/ckeditor5-link/src/link';
-// import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
-// ClassicEditor.builtinPlugins = [Essentials, Autoformat, Alignment, Font, Bold, Italic, BlockQuote, Heading, Link, Paragraph, Table, TableToolbar]
-// ClassicEditor.defaultConfig = {
-//   alignment: { options: ['left', 'center', 'justify', 'right'] },
-//   toolbar: { items: ['heading', '|', ] },
-//   table: { contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'] },
-//   fontSize: { options:  },
-//   language: 'en'
-// };
+import styled from "styled-components";
+import market_style from "market_style";
+
+const EditorWrapper = styled.div`
+    width:100%;
+    height:300px;
+    position: relative;
+    margin-bottom: ${props => props.marginBottom ? props.marginBottom : 5}px;
+    .copyright {
+        position: absolute;
+        width: max-content;
+        right: 3px;
+        top: 0px;
+        margin-left: auto;
+        font-size: ${market_style.font.size.tiny1};
+        color: #707070;
+    }
+    .editor {
+        width:100%;
+        max-width:${props => props.width == null ? "100%" : props.width + "px"};
+        // height:${props => props.editheight == null ? "100%" : props.editheight + "px"};
+        height:100%;
+        min-height:300px;
+        font-size: ${market_style.font.size.tiny1};
+        border:none;
+    }
+    .ck-editor__editable {
+      min-height: 250px;
+    }
+`;
 
 const editorConfiguration = {
   plugins: [
@@ -73,19 +90,25 @@ const editorConfiguration = {
 };
 
 
-export const TextControllerPlus = (props) => {
-  // console.log("Array:", Array.from(editor.ui.componentFactory.names()));
-  return (
-    <div>
+export class TextControllerPlus extends Component{
+  render(){
+    const { item } = this.props;
+    // console.log("Array:", Array.from(editor.ui.componentFactory.names()));
+    return (
+      <EditorWrapper border={this.props.border} width={this.props.width} editheight={this.props.editheight} height={item.height} marginBottom={this.props.marginBottom}>
       <CKEditor
-        editor={ClassicEditor}
-        data={props.item.content}
-        config={editorConfiguration}
-        onBlur={async (_, editor) => {
-          let data = editor.getData();
-          await props.getValue({ content: data });
-        }}
-      />
-    </div>
-  );
-};
+          className="editor"
+          width={"100%"}
+          height={"100%"}
+          editor={ClassicEditor}
+          data={this.props.item.content}
+          config={editorConfiguration}
+          onBlur={async (_, editor) => {
+            let data = editor.getData();
+            await this.props.getValue({ content: data });
+          }}
+        />
+      </EditorWrapper>
+    );
+  }
+}
