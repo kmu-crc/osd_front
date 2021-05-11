@@ -7,18 +7,13 @@ import { SetActive } from "actions/OpenDesign";
 import { GetItemSearchCountRequest } from "actions/Design";
 import { GetMakerSearchCountRequest } from "actions/Maker";
 import { GetDesignerSearchCountRequest } from "actions/Designer";
-import MainSlide from "components/Main/Slide";
-import Banner from "mobileComponents/Banner/Banner"
-class SliderContainer extends Component {
+import Header_mobile from "mobileComponents/Header";
+import BottomMenu from "mobileComponents/BottomMenu/BottomMenu";
+class BottomMenuContainer extends Component {
   render() {
     return (
       <React.Fragment>
-        {
-          window.innerWidth>=500?
-          <MainSlide {...this.props} />
-          :
-          <Banner {...this.props}/>
-        }
+          <BottomMenu {...this.props}/>
       </React.Fragment>
     );
   }
@@ -45,4 +40,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SliderContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BottomMenuContainer));
