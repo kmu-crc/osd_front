@@ -7,7 +7,11 @@ import { AddController, Controller, ProblemController } from "components/Commons
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
-import { Worker } from '@react-pdf-viewer/core';
+//import { Worker } from '@react-pdf-viewer/core';
+//import pdfJS from 'pdfjs-dist/build/pdf.min.js';
+//https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js
+//import { pdfjs } from 'react-pdf';
+//pdfJS.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfJS.version}/pdf.worker.min.js`;
 
 
 const ContentForm = async (data, oldData) => {
@@ -360,7 +364,7 @@ class CardSourceDetail extends Component {
         {loading ? <Loading /> : null}
 
         <CardSrcWrap>
-          <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+          {/*<Worker workerUrl="https://unpkg.com/pdfjs-dist@2.1.266/build/pdf.worker.min.js">*/}
             {this.props.edit ? (
               <form onSubmit={this.onSubmit}>
                 {content.length > 0 && content.map((item, index) =>
@@ -438,7 +442,7 @@ class CardSourceDetail extends Component {
                 : <div>등록된 컨텐츠가 없습니다.</div>
               }*/}
               </Nodata>) : null}
-          </Worker>
+          {/*</Worker>*/}
         </CardSrcWrap>
       </React.Fragment>
     );
