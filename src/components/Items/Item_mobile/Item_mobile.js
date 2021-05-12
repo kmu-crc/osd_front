@@ -23,6 +23,9 @@ const Wrapper = styled.div`
   justify-content:center;
   align-items:center;
   padding:13px 12px;
+  *{
+    cursor:pointer;
+  }
   .thumbnail{
     width:170px;
     height:140px;
@@ -95,7 +98,7 @@ class Item_mobile extends Component {
       </div>)
     }
     return (
-      <Wrapper img={img}>
+      <Wrapper img={img} onClick={this.Keeper}>
         <div className="thumbnail"/>
         <div className="title"><TextFormat txt={item.title} /></div>
         <div className="summaryBox">
