@@ -14,13 +14,16 @@ import MarketLogo from "source/market_logo.png";
 import market_style from "market_style";
 
 const HeaderContainer = styled.ul`
+    width:100%;
+    // max-width:1366px;
     height:45px;
     padding:0px 30px 0px 30px;
     display: flex;
-    justify-content:space-between;
+    justify-content:center;
     align-items:center;
     .betweenMenu{
       width:100%;
+      max-width:1366px;
       display:flex;
       justify-content:space-between;
       .left_menu{
