@@ -806,7 +806,7 @@ class Room extends React.Component {
 									this.setState({ mode: "grid" });
 								}}
 								userInfo={this.props.userInfo}
-								clicked={(me, stream) => this.clickedview(me, stream)}
+								clicked={(me, stream) => shareState ? null : this.clickedview(me, stream)}
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
 
@@ -827,7 +827,7 @@ class Room extends React.Component {
 									this.setState({ mode: "grid" });
 								}}
 								userInfo={this.props.userInfo}
-								clicked={(me, stream) => this.clickedview(me, stream)}
+								clicked={(me, stream) => shareState ? null : this.clickedview(me, stream)}
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
 							<Peers
