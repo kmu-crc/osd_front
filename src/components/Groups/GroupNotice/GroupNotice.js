@@ -96,9 +96,9 @@ export default class GroupNotice extends Component {
           ? <ButtonOSD onClick={this.getExportFile}>제출현황보기</ButtonOSD>
           : null}
 
-        {user_id === GroupDetail.user_id && hasProgrammingDesign
+        {/* {user_id === GroupDetail.user_id && hasProgrammingDesign
           ? <ButtonOSD onClick={() => this.setState({ due: true })}>마감기한설정</ButtonOSD>
-          : null}
+          : null} */}
 
       </Wrapper>
 
