@@ -21,15 +21,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    GetDesignerListRequest: (page, sort) => {
-      return dispatch(GetDesignerListRequest(page, sort))
-    },
-    GetDesignerTotalCountRequest: (category1, category2) => {
-      return dispatch(GetDesignerTotalCountRequest(category1, category2))
-    }
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  GetDesignerListRequest: (page, sort, cate1, cate2, cate3, keyword) => dispatch(GetDesignerListRequest(page, sort, cate1, cate2, cate3, keyword)),
+  GetDesignerTotalCountRequest: (category1, category2) => dispatch(GetDesignerTotalCountRequest(category1, category2))
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(DesignerListContainer);

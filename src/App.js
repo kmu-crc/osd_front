@@ -60,32 +60,32 @@ class App extends Component {
 
             {/* MAIN */}
             <Route exact path="/" component={MainPage} />
-            
+
             {/* FOOTER */}
             <Route path="/footerPrivacy" component={FooterPrivacy} />
             <Route path="/footerPara" component={FooterPara} />
-            
+
             {/* DESIGNER */}
-            <Route path="/designer/:sorting?/:cate1?/:cate2?/:cate3?" component={DesignerListPage} />
+            <Route path="/designer/:sorting?/:cate1?/:cate2?/:cate3?/:keyword?" component={DesignerListPage} />
+            <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/designerDetail/:id/:type?" component={DesignerDetailPage} />
             <Route path="/designerModify" component={ModifyDesignerPage} />
-            <Route path="/createDesigner" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/createDesigner/redirected" component={RequiresAuth(CreateDesignerPage)} />
             <Route path="/modifyDesigner/:id" component={RequiresAuth(ModifyDesignerPage)} />
-            
+
             {/* MAKER */}
-            <Route path="/maker/:sorting?/:cate1?/:cate2?/:cate3?" component={MakerListPage} />
-            <Route path="/makerDetail/:id/:type?" component={MakerDetailPage} />
+            <Route path="/maker/:sorting?/:cate1?/:cate2?/:cate3?/:keyword?" component={MakerListPage} />
             <Route path="/createMaker" component={RequiresAuth(CreateMakerPage)} />
             <Route path="/modifyMaker/:id" component={ModifyMakerPage} />
-            
+            <Route path="/makerDetail/:id/:type?" component={MakerDetailPage} />
+
             {/* ITEM */}
+            <Route path="/product/:sorting?/:cate1?/:cate2?/:cate3?/:keyword?" component={ProductListPage} />
             <Route path="/createProduct" component={RequiresPayUser(CreateProductPage)} />
             <Route path="/createProduct/redirected" component={RequiresPayUser(CreateProductPage)} />
             <Route path="/productModify/:id" component={RequiresAuth(RequiresPayUser(ModifyItemPage))} />
             <Route path="/productDetail/:id" component={ProductDetailPage} />
-            <Route path="/product/:sorting?/:cate1?/:cate2?/:cate3?" component={ProductListPage} />
-            
+
             {/*PURCHASE*/}
             <Route path="/productPurchase/:id/:payment" component={RequiresAuth(RequiresPayUser(ProductPurchasePage))} />
 
@@ -106,7 +106,7 @@ class App extends Component {
             <Route path="/createGallery" component={RequiresAuth(CreateGalleryPage)} />
             <Route path="/modifyGallery/:id" component={RequiresAuth(ModifyGalleryPage)} />
             <Route path="/galleryDetail/:id" component={GalleryDetailPage} />
-            
+
             {/* ETC */}
             <Route path="/signup" component={SignUpPage} />
             <Route path="/signin" component={SignInPage} />
@@ -120,14 +120,14 @@ class App extends Component {
             <Route path="/resetPw" component={ResetPwPage} />
             <Route path="/payment" component={RequiresAuth(PaymentPage)} />
             <Route path="/cart" component={CartPage} />
-            
+
             {/* POINT */}
             <Route path="/point" component={RequiresAuth(PointPage)} />
-            
+
             {/* NOT FOUND */}
             <Route component={() => <div style={{ width: "100%", fontSize: "36px" }}>페이지를 찾을 수 없습니다.</div>} />
             <Route path="/codeview" component={RequiresAuth(CodeViewPage)} />
-            
+
           </Switch>
         </ClientTemplate>
       </BrowserRouter>);

@@ -81,7 +81,7 @@ const Container = styled.div`
     }
   }
 `;
-const target = `designer`;
+
 export default class DesignerList extends Component {
   constructor(props) {
     super(props);
@@ -93,22 +93,23 @@ export default class DesignerList extends Component {
   }
   handleCate1 = (value) => {
     const { sort } = this.props;
-    this.props.history.push(`/${target}/${sort}/${value}`);
+    this.props.history.push(`/designer/${sort}/${value}`);
   }
   handleCate2 = (parent, value) => {
     const { sort, } = this.props;
-    this.props.history.push(`/${target}/${sort}/${parent}/${value}`);
+    this.props.history.push(`/designer/${sort}/${parent}/${value}`);
   }
   handleCate3 = (parent, value) => {
     const { sort, cate1, } = this.props;
-    this.props.history.push(`/${target}/${sort}/${cate1}/${parent}/${value}`);
+    this.props.history.push(`/designer/${sort}/${cate1}/${parent}/${value}`);
   }
   resetCate = () => {
-    this.props.history.push(`/${target}/${this.props.sort}`);
+    this.props.history.push(`/designer/${this.props.sort}`);
   }
   sortChange = (_, { value }) => {
     const { cate1, cate2, cate3 } = this.props;
-    this.props.history.push(`${target}/${value}/${cate1}/${cate2}/${cate3}`);
+    console.log(this.props.history);
+    this.props.history.push(`designer/${value}/${cate1}/${cate2}/${cate3}`);
   }
 
   render() {
