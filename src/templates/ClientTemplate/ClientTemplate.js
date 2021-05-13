@@ -44,11 +44,16 @@ class ClientTemplate extends Component {
           </div>
           {
           window.innerWidth>=500?
-          <Footer />
+          null
           :
           <BottomMenuContainer/>
           }
         </Container>
+        { window.innerWidth<500?
+          null
+          :
+          <Footer/>
+          }
       </React.Fragment>
     );
   }

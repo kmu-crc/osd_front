@@ -80,11 +80,11 @@ class App extends Component {
             <Route path="/modifyMaker/:id" component={ModifyMakerPage} />
             
             {/* ITEM */}
+            <Route path="/product/:sorting?/:cate1?/:cate2?/:cate3?" component={ProductListPage} />
             <Route path="/createProduct" component={RequiresPayUser(CreateProductPage)} />
             <Route path="/createProduct/redirected" component={RequiresPayUser(CreateProductPage)} />
             <Route path="/productModify/:id" component={RequiresAuth(RequiresPayUser(ModifyItemPage))} />
             <Route path="/productDetail/:id" component={ProductDetailPage} />
-            <Route path="/product/:sorting?/:cate1?/:cate2?/:cate3?" component={ProductListPage} />
             
             {/*PURCHASE*/}
             <Route path="/productPurchase/:id/:payment" component={RequiresAuth(RequiresPayUser(ProductPurchasePage))} />
