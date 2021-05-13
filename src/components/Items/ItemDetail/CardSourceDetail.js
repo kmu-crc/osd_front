@@ -7,7 +7,7 @@ import { AddController, Controller, ProblemController } from "components/Commons
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
-import { Worker } from '@react-pdf-viewer/core';
+// import { Worker } from '@react-pdf-viewer/core';
 
 
 const ContentForm = async (data, oldData) => {
@@ -360,85 +360,85 @@ class CardSourceDetail extends Component {
         {loading ? <Loading /> : null}
 
         <CardSrcWrap>
-          <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
-            {this.props.edit ? (
-              <form onSubmit={this.onSubmit}>
-                {content.length > 0 && content.map((item, index) =>
-                  <Controller
-                    key={index}
-                    mode={this.props.mode}
-                    name={`content${index}`}
-                    type={item.type}
-                    order={index} maxOrder={content.length - 1}
-                    item={{ ...item, index }}
-                    privateItem={this.privateItem}
-                    deleteItem={this.deleteItem}
-                    getValue={this.onChangValue}
-                  />)}
-
-                <AddController
-                  isProgramming={this.props.ItemDetail.is_problem === 1}
+          {/* <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js"> */}
+          {this.props.edit ? (
+            <form onSubmit={this.onSubmit}>
+              {content.length > 0 && content.map((item, index) =>
+                <Controller
+                  key={index}
                   mode={this.props.mode}
-                  name="addBasic" type="INIT"
-                  order={content.length > 0 ? content.length : 0}
-                  getValue={this.onAddValue} />
+                  name={`content${index}`}
+                  type={item.type}
+                  order={index} maxOrder={content.length - 1}
+                  item={{ ...item, index }}
+                  privateItem={this.privateItem}
+                  deleteItem={this.deleteItem}
+                  getValue={this.onChangValue}
+                />)}
 
-                <ButtonContainer>
-                  <EditorBottonWrapper>
-                    <button onClick={this.onSubmit} className="submit" type="button">
-                      <i className="icon outline save" />저장하기</button>
-                    <button onClick={() => { this.setState({ content: this.props.content || "" }); this.props.handleCancel == null ? window.history.go(-1) : this.props.handleCancel() }} className="cancel" type="button">
-                      <i className="icon trash" />취소하기</button>
-                  </EditorBottonWrapper>
-                </ButtonContainer>
-              </form>
-            ) : null}
+              <AddController
+                isProgramming={this.props.ItemDetail.is_problem === 1}
+                mode={this.props.mode}
+                name="addBasic" type="INIT"
+                order={content.length > 0 ? content.length : 0}
+                getValue={this.onAddValue} />
 
-            {!this.props.edit ?
-              content.length > 0 ? (
-                <ViewContent>
-                  {this.bindPrivate(content).map((item, index) =>
-                    item.private === 1 && this.props.bought === false ?
-                      <PrivateContentWrapper key={index}>
-                        {item.count}개의 비공개 항목이 있습니다.<br />
+              <ButtonContainer>
+                <EditorBottonWrapper>
+                  <button onClick={this.onSubmit} className="submit" type="button">
+                    <i className="icon outline save" />저장하기</button>
+                  <button onClick={() => { this.setState({ content: this.props.content || "" }); this.props.handleCancel == null ? window.history.go(-1) : this.props.handleCancel() }} className="cancel" type="button">
+                    <i className="icon trash" />취소하기</button>
+                </EditorBottonWrapper>
+              </ButtonContainer>
+            </form>
+          ) : null}
+
+          {!this.props.edit ?
+            content.length > 0 ? (
+              <ViewContent>
+                {this.bindPrivate(content).map((item, index) =>
+                  item.private === 1 && this.props.bought === false ?
+                    <PrivateContentWrapper key={index}>
+                      {item.count}개의 비공개 항목이 있습니다.<br />
                       이 항목{item.count > 1 ? "들" : ""}을 열람하시고 싶으시다면 이 아이템을 구매해주세요.
                       </PrivateContentWrapper> :
-                      // <PrivateContent count={item.count} key={index} /> :
-                      item.content_type === "FILE" && item.data_type === "image" ? (
-                        <div className="imgContent" key={index}>
-                          <img key={index} src={item.content} alt="이미지" download={item.file_name} />
-                        </div>
-                      ) : item.content_type === "FILE" && item.data_type === "video" ? (
-                        <span>
-                          <span className="LinkFileName">{item.file_name}</span>
-                          <video key={index} width="640" height="360" controls="controls" className="iconWrap" >
-                            <source src={item.content} type="video/mp4" download={item.file_name}></source>
-                          </video>
-                        </span>
-                      ) : item.content_type === "FILE" && item.data_type !== "image" && item.data_type !== "video" ? (
-                        <a key={index} href={item.content} download={item.file_name} className="iconWrap">
-                          <FileIcon type={item.data_type} extension={item.extension} />
-                          <span className="LinkFileName">{item.file_name}</span>
-                        </a>
-                      ) : item.content_type === "TEXT" ? (
-                        <div
-                          className="textWrap"
-                          key={index}
-                          dangerouslySetInnerHTML={{ __html: `${item.content}` }}
-                        />
-                      ) : item.content_type === "PROBLEM" && this.IsJsonString(item.content) ? (
-                        <ProblemController key={index} item={item} itemDetail={this.props.ItemDetail} userInfo={this.props.userInfo} token={this.props.token} />
-                      ) : null
-                  )}
-                </ViewContent>
-              ) : (<Nodata>
-                {/*{
+                    // <PrivateContent count={item.count} key={index} /> :
+                    item.content_type === "FILE" && item.data_type === "image" ? (
+                      <div className="imgContent" key={index}>
+                        <img key={index} src={item.content} alt="이미지" download={item.file_name} />
+                      </div>
+                    ) : item.content_type === "FILE" && item.data_type === "video" ? (
+                      <span>
+                        <span className="LinkFileName">{item.file_name}</span>
+                        <video key={index} width="640" height="360" controls="controls" className="iconWrap" >
+                          <source src={item.content} type="video/mp4" download={item.file_name}></source>
+                        </video>
+                      </span>
+                    ) : item.content_type === "FILE" && item.data_type !== "image" && item.data_type !== "video" ? (
+                      <a key={index} href={item.content} download={item.file_name} className="iconWrap">
+                        <FileIcon type={item.data_type} extension={item.extension} />
+                        <span className="LinkFileName">{item.file_name}</span>
+                      </a>
+                    ) : item.content_type === "TEXT" ? (
+                      <div
+                        className="textWrap"
+                        key={index}
+                        dangerouslySetInnerHTML={{ __html: `${item.content}` }}
+                      />
+                    ) : item.content_type === "PROBLEM" && this.IsJsonString(item.content) ? (
+                      <ProblemController key={index} item={item} itemDetail={this.props.ItemDetail} userInfo={this.props.userInfo} token={this.props.token} />
+                    ) : null
+                )}
+              </ViewContent>
+            ) : (<Nodata>
+              {/*{
                 this.props.isTeam === 1 
                 ? <Button round={true} color="Primary" size="small" onClick={this.props.openEdit}>업로드</Button>
                 : <div>등록된 컨텐츠가 없습니다.</div>
               }*/}
-              </Nodata>) : null}
-          </Worker>
+            </Nodata>) : null}
+          {/* </Worker> */}
         </CardSrcWrap>
       </React.Fragment>
     );
