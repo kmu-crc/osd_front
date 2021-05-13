@@ -115,7 +115,7 @@ export default class DesignerList extends Component {
     const { category1, category2, category3 } = this.props;
     const { cate1, cate2, cate3 } = this.props;
     const { sort } = this.props;
-    
+
     return (<React.Fragment>
       <Content top={20}>
         <Container>

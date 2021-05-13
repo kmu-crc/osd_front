@@ -4,7 +4,7 @@ import ContentBox from "components/Commons/ContentBox";
 import Loading from "components/Commons/Loading";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 // import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
-import { TextControllerPlus as TextControllerClassic } from "components/Commons/InputItem";
+import { TextController as TextControllerClassic } from "components/Commons/InputItem";
 import FileIcon from "components/Commons/FileIcon";
 import category_icon from "source/category_icon.svg";
 import { alert } from "components/Commons/Alert/Alert";
