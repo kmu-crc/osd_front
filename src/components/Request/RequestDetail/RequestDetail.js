@@ -89,7 +89,7 @@ export default class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      write:false,
+      write: false,
     }
     this.updateNoneRequest = this.updateNoneRequest.bind(this);
   }
@@ -128,22 +128,23 @@ export default class Detail extends Component {
     const category_level2 = (level2 && this.props.category2 && this.props.category2.filter(cate => cate.value === level2)[0].text) || "";
 
     console.log(this.props);
+    console.log("내용:", this.props.Detail && this.props.Detail.content);
     return (<React.Fragment>
-      {this.state.write?
+      {this.state.write ?
         <ArticleModal
-          title={this.props.Detail&&this.props.Detail.title}
-          content={this.props.Detail&&this.props.Detail.content}
+          title={this.props.Detail && this.props.Detail.title}
+          content={this.props.Detail && this.props.Detail.content}
           write={this.state.write}
           handlerModal={(write) => { this.setState({ write: write }) }}
           isModify={true}
           updateNoneRequest={(title, content) => this.updateNoneRequest(title, content)}
-        /> 
-        :null
+        />
+        : null
       }
       {/* REQUEST DETAIL */}
       {Detail.status === "request"
         ? <DesignRequestDetail
-          Detail = {Detail}
+          Detail={Detail}
           userInfo={userInfo}
           MyDetail={MyDetail}
           returnToList={() => this.returnToList()}
@@ -170,27 +171,27 @@ export default class Detail extends Component {
       {Detail.status === "normal"
         ? <React.Fragment>
           <NormalWrapper>
-          <div className="title">
+            <div className="title">
               <p className="text">게시글</p>
-          </div>
+            </div>
 
-              <div className="form">
-                <div className="row">
-                  <div className="label">제목</div>
-                  <div className="content">{this.props.Detail&&this.props.Detail.title}</div>
-                </div>
-                <div className="row">
-                  <div className="label">작성자</div>
-                  <div className="content">{this.props.Detail&&this.props.Detail.nick_name}</div>
-                </div>
-                <div className="row">
-                  <div className="label">내용</div>
-                  <div className="content" dangerouslySetInnerHTML={{ __html: this.props.Detail&&this.props.Detail.content }}/>
-                </div>
+            <div className="form">
+              <div className="row">
+                <div className="label">제목</div>
+                <div className="content">{this.props.Detail && this.props.Detail.title}</div>
+              </div>
+              <div className="row">
+                <div className="label">작성자</div>
+                <div className="content">{this.props.Detail && this.props.Detail.nick_name}</div>
+              </div>
+              <div className="row">
+                <div className="label">내용</div>
+                <div className="content" dangerouslySetInnerHTML={{ __html: this.props.Detail && this.props.Detail.content }} />
+              </div>
             </div>
             <div className="buttonBox">
-            <RedButton width={150} height={30} fontSize={market_style.font.size.small1} okText="확인" cancelText="취소" value={"수정하기"} onClick={()=>this.setState({write:true})} isConfirm={false}/>
-            <GrayButton width={150} height={30} fontSize={market_style.font.size.small1} text={"삭제하시겠습니까?"} value={"삭제하기"} onClick={() => { this.props.DeleteRequestRequest(this.props.id,this.props.token);window.location.href = "/request/designer" }} isConfirm={true}></GrayButton>
+              <RedButton width={150} height={30} fontSize={market_style.font.size.small1} okText="확인" cancelText="취소" value={"수정하기"} onClick={() => this.setState({ write: true })} isConfirm={false} />
+              <GrayButton width={150} height={30} fontSize={market_style.font.size.small1} text={"삭제하시겠습니까?"} value={"삭제하기"} onClick={() => { this.props.DeleteRequestRequest(this.props.id, this.props.token); window.location.href = "/request/designer" }} isConfirm={true}></GrayButton>
             </div>
           </NormalWrapper>
         </React.Fragment>
