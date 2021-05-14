@@ -8,15 +8,16 @@ import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
 const WriteNormalArticleModal = styled(Modal)`
-  width:1000px;
-  height:max-content;
-  min-width:300px;
-  // min-height:200px;
-  height:max-height;
+  width: ${props => props.isFullScreen && window.innerWidth || 1000}px;
+  height: ${props => props.isFullScreen && window.innerHeight - 100 || 500}px;
+  // min-width: 300px;
+  // min-height: 200px;
+
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
-  margin-bottom:10px;
-  border-radius:15px !important;
-  padding:20px 33px;
+  margin-bottom: 10px;
+  border-radius: 15px !important;
+  padding: 20px 33px;
+  
   .upper-box{
     width: 100%;
     height:max-content;
@@ -52,9 +53,10 @@ const WriteNormalArticleModal = styled(Modal)`
     height:max-content;
   }
   .redButtonBox{
-    width:100%;
-    display:flex;
-    justify-content:center;
+    position: fixed;
+    bottom: 10px;
+    width: max-content;
+    left: 35%;
   }
   .button{
     width:150px;
@@ -125,16 +127,18 @@ class ArticleModal extends Component {
     super(props);
     this.state = {
       title: this.props.title || "", content: this.props.content || "",
+      isFullScreen: false,
     }
   }
 
   render() {
+    const { title, content, isFullScreen } = this.state
     const Mandatory = () => <span style={{ color: "red" }} title="필수사항입니다.">*</span>
 
     return (
       <React.Fragment>
-        <WriteNormalArticleModal open={this.props.write} onClose={async (e) => {
-          if (this.state.title != "" || this.state.content != "") {
+        <WriteNormalArticleModal isFullScreen={isFullScreen} open={this.props.write} onClose={async (e) => {
+          if (title != "" || content != "") {
             if (await confirm("내용이 저장되지 않습니다. 그래도 닫으시겠습니까?", "예", "아니오")) {
               e.preventDefault();
             } else {
@@ -146,13 +150,13 @@ class ArticleModal extends Component {
         }}>
           <div className="upper-box" >
             <div className="blank" />
-            <div className="header">게시글 {this.props.isModify == true ? "수정" : "작성"}</div>
+            <div className="header">게시글 {this.props.isModify == true ? "수정" : "작성"} {isFullScreen ? "(Full)" : null}</div>
             <Cross onClick={() => { this.setState({ title: "", content: "" }); this.props.handlerModal(false) }} style={{ cursor: "pointer" }} angle={45} color={"#000000"} weight={1} width={20} height={20} />
           </div>
           <div className="form align_item_center">
             <div className="title_label">제목<Mandatory /></div>
             <TitleForm
-              value={this.state.title || ""}
+              value={title || ""}
               onChange={async event => {
                 await this.setState({ title: event.target.value })
               }}
@@ -163,27 +167,28 @@ class ArticleModal extends Component {
             <div className="title_label ">내용<Mandatory /></div>
             <div className="editorBox">
               <TextController
-                // <TextController
-                item={{ content: this.state.content }}
+                fullScreen={(isFullScreen) => this.setState({ isFullScreen: isFullScreen })}
+                id={1}
+                item={{ content: content }}
                 name={"content"}
                 getValue={async (data) => { this.setState({ content: data }) }}
-                height={300}
+                height={200}
               />
             </div>
           </div>
           <div className="form redButtonBox">
             <div className="button red marginRight" onClick={async () => {
-              if (this.state.title == "") {
+              if (title == "") {
                 await alert("게시글의 제목을 입력해주세요.");
                 return;
-              } else if (this.state.content == "") {
+              } else if (content == "") {
                 await alert("게시글의 내용을 입력해주세요");
                 return;
               }
               this.props.isModify == true ?
-                this.props.updateNoneRequest(this.state.title, this.state.content)
+                this.props.updateNoneRequest(title, content)
                 :
-                this.props.createNoneRequest(this.state.title, this.state.content)
+                this.props.createNoneRequest(title, content)
             }} >
 
               <div className="btnText" >{this.props.isModify == true ? "수정" : "작성"}하기</div>
