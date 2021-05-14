@@ -2,10 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMakerListRequest, GetMakerTotalCountRequest } from "actions/Maker";
 import MakerList from "components/Makers/MakerList";
+import MakerList_mobile from "mobileComponents/MakerList_mobile";
 
 class MakerListContainer extends Component {
     render() {
-        return (<MakerList {...this.props} />);
+        return (
+            <React.Fragment>
+                {
+                    window.innerWidth>=500?
+                    <MakerList {...this.props} />
+                    :
+                    <MakerList_mobile {...this.props}/>
+                }
+            </React.Fragment>
+        );
     }
 }
 
@@ -20,10 +30,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    GetMakerListRequest: (page, sort) => (
-        dispatch(GetMakerListRequest(page, sort))),
-    GetMakerTotalCountRequest: (category1, category2) => (
-        dispatch(GetMakerTotalCountRequest(category1, category2)))
+    GetMakerListRequest: (page, sort, cate1, cate2, cate3, keyword) => dispatch(GetMakerListRequest(page, sort, cate1, cate2, cate3, keyword)),
+    GetMakerTotalCountRequest: (category1, category2) => dispatch(GetMakerTotalCountRequest(category1, category2))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MakerListContainer);

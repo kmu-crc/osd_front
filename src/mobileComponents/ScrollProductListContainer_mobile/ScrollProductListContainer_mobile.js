@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignListRequest } from "actions/Design";
-import ScrollList from "components/Commons/ScrollList";
-import Item from "components/Items/Item";
-import Item_small from "components/Items/Item_small";
+import Item_mobile from "components/Items/Item_mobile";
 import styled from "styled-components";
-// import Design from "components/Designs/Design";
+import ScrollList_mobile from "mobileComponents/ScrollList_mobile";
 const Wrapper = styled.div`
   width:100%;
   display:flex;
   // justify-content:center;
-  padding-left:${props => props.isSearch == null ? "8px" : "10px"};
+  padding-left:${props=>props.isSearch==null?"8px":"10px"};
 `
-class ScrollDesignListContainer extends Component {
+class ScrollProductListContainer_mobile extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.sort !== prevProps.sort || this.props.cate1 !== prevProps.cate1 || this.props.cate2 !== prevProps.cate2 || this.props.cate3 !== prevProps.cate3 || this.props.keyword !== prevProps.keyword) {
       this.getList(0);
@@ -28,11 +26,10 @@ class ScrollDesignListContainer extends Component {
     return (
       <React.Fragment>
         <Wrapper isSearch={this.props.isSearch}>
-          <ScrollList
+          <ScrollList_mobile
             type="item"
-            isSmall={this.props.isSmall}
             getListRequest={this.getList}
-            ListComponent={this.props.isSmall == true ? Item_small : Item}
+            ListComponent={Item_mobile}
             dataList={this.props.dataList}
             dataListAdded={this.props.dataListAdded}
           />
@@ -49,8 +46,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  GetDesignListRequest: (page, sort, categoryLevel1, categoryLevel2, keyword) => dispatch(GetDesignListRequest(page, sort, categoryLevel1, categoryLevel2, keyword))
-})
+const mapDispatchToProps = (dispatch) => {
+  return {
+    GetDesignListRequest: (page, sort, categoryLevel1, categoryLevel2, keyword) => {
+      return dispatch(GetDesignListRequest(page, sort, categoryLevel1, categoryLevel2, keyword))
+    }
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ScrollDesignListContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ScrollProductListContainer_mobile);

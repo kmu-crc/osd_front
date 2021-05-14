@@ -81,7 +81,6 @@ const Container = styled.div`
   }
 `;
 
-const target = `maker`;
 export default class MakerList extends Component {
   constructor(props) {
     super(props);
@@ -93,22 +92,22 @@ export default class MakerList extends Component {
   }
   handleCate1 = (value) => {
     const { sort } = this.props;
-    this.props.history.push(`/${target}/${sort}/${value}`);
+    this.props.history.push(`/maker/${sort}/${value}`);
   }
   handleCate2 = (parent, value) => {
     const { sort, } = this.props;
-    this.props.history.push(`/${target}/${sort}/${parent}/${value}`);
+    this.props.history.push(`/maker/${sort}/${parent}/${value}`);
   }
   handleCate3 = (parent, value) => {
     const { sort, cate1, } = this.props;
-    this.props.history.push(`/${target}/${sort}/${cate1}/${parent}/${value}`);
+    this.props.history.push(`/maker/${sort}/${cate1}/${parent}/${value}`);
   }
   resetCate = () => {
-    this.props.history.push(`/${target}/${this.props.sort}`);
+    this.props.history.push(`/maker/${this.props.sort}`);
   }
   sortChange = (_, { value }) => {
     const { cate1, cate2, cate3 } = this.props;
-    this.props.history.push(`/${target}/${value}/${cate1}/${cate2}/${cate3}`);
+    this.props.history.push(`/maker/${value}/${cate1}/${cate2}/${cate3}`);
   }
 
   render() {

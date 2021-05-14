@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 // import { TextControllerClassic as TextController } from "components/Commons/InputItem/TextControllerClassic";
-import { TextControllerPlus as TextController } from "components/Commons/InputItem";
+import { TextController as TextController } from "components/Commons/InputItem";
 import { FileController } from "components/Commons/InputItem/FileController";
 import { ProblemController } from "components/Commons/InputItem/ProblemController";
 

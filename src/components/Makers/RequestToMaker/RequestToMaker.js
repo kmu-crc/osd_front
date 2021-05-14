@@ -5,7 +5,7 @@ import { Dropdown } from "semantic-ui-react"
 import { InputTagNew, InputPriceNew, InputCalendar, InputFile } from "components/Commons/InputItem"
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 // import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
-import { TextControllerPlus as TextControllerClassic } from "components/Commons/InputItem";
+import { TextController as TextControllerClassic } from "components/Commons/InputItem";
 import { FileUploadRequest } from "actions/Uploads";
 import category_icon from "source/category_icon.svg";
 import { alert } from "components/Commons/Alert/Alert";
