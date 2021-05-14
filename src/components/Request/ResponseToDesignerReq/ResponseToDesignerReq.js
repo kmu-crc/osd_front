@@ -6,7 +6,7 @@ import { InputPriceNew } from "components/Commons/InputItem/InputPriceNew";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import { InputCalendar } from "components/Commons/InputItem/InputCalendar";
 // import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
-import { TextControllerPlus as TextControllerClassic } from "components/Commons/InputItem";
+import { TextController as TextControllerClassic } from "components/Commons/InputItem";
 
 import FileIcon from "components/Commons/FileIcon";
 import category_icon from "source/category_icon.svg";

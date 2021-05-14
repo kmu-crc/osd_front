@@ -24,7 +24,7 @@ ClassicEditor.defaultConfig = {
 };
 
 
-class TextControllerPlus extends Component {
+class TextController extends Component {
   state = {};
   componentDidMount() {
     if (this.props.item) {
@@ -50,4 +50,4 @@ class TextControllerPlus extends Component {
   }
 }
 
-export default TextControllerPlus
+export default TextController

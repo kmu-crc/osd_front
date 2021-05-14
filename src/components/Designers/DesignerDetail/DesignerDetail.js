@@ -11,7 +11,7 @@ import TextFormat from "modules/TextFormat";
 import { Modal } from "semantic-ui-react";
 import Cross from "components/Commons/Cross";
 // import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
-import { TextControllerPlus as TextControllerClassic } from "components/Commons/InputItem";
+import { TextController as TextControllerClassic } from "components/Commons/InputItem";
 
 import ReviewDetailModal from "components/Commons/ReviewDetailModal";
 import ArticleModal from "components/Commons/ArticleModal/ArticleModal";
