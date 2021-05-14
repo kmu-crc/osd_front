@@ -6,7 +6,6 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "babel-loader": "^8.2.2",
     "core-js": "^3.6.5",
     "react": "^16.13.1",
     "react-ace": "^9.3.0",

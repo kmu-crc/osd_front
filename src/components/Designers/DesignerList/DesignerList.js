@@ -53,30 +53,29 @@ const Container = styled.div`
     .category {
       width: 100%;
     }
-    ._title{
-      color:black;
-      width:max-content;
-      
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      font-family:Noto Sans KR;
-      font-weight:600;
-      font-size:${market_style.font.size.normal3};
+    ._title {
+      color: black;
+      width: max-content;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Noto Sans KR;
+      font-weight: 600;
+      font-size: ${market_style.font.size.normal3};
     }
     .sort {
       width: 300px;
     }
     .request {
       width: 300px;
-      display:flex;
+      display: flex;
     }
   }
-  @media only screen and (max-width: 800px) and (min-width: 500px){
+  @media only screen and (max-width: 800px) and (min-width: 500px) {
     ._wrapper{
-      margin-top:20px;
+      margin-top: 20px;
       .sort{
-        width:100%;
+        width: 100%;
       }
     }
   }
@@ -108,8 +107,7 @@ export default class DesignerList extends Component {
   }
   sortChange = (_, { value }) => {
     const { cate1, cate2, cate3 } = this.props;
-    console.log(this.props.history);
-    this.props.history.push(`designer/${value}/${cate1}/${cate2}/${cate3}`);
+    this.props.history.push(`/designer/${value}/${cate1}/${cate2}/${cate3}`);
   }
 
   render() {
