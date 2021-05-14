@@ -15,7 +15,7 @@ class ScrollTopDesigner_mobile extends Component {
     return (
       this.props.status === "INIT"
         ? <Loading />
-        : <ScrollList ListComponent={Expert_mobile} dataList={this.props.dataList.concat(this.props.dataList)} />
+        : <ScrollList ListComponent={Expert_mobile} dataList={this.props.dataList&&this.props.dataList.concat(this.props.dataList)} />
     );
   }
 }

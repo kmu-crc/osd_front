@@ -2,10 +2,16 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetProductListRequest, GetProductTotalCountRequest } from "actions/Product";
 import ProductList from "components/Products/ProductList";
+import ProductList_mobile from "mobileComponents/ProductList_mobile"
 
 class ProductListContainer extends Component {
   render() {
-    return (<ProductList {...this.props} />);
+    return (
+      window.innerWidth>=500?
+    <ProductList {...this.props} />
+    :
+    <ProductList_mobile {...this.props}/>
+    );
   }
 }
 

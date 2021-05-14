@@ -13,6 +13,10 @@ const ListContainer = styled.div`
   flex-wrap: wrap;
   width: 100%;
   display:flex;
+  .designer{
+    margin-left:10px;
+    margin-bottom:20px;
+  }
   .item{
     margin-left:10px;
     margin-bottom:15px;
