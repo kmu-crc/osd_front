@@ -7,8 +7,6 @@ class MyDetailPage extends Component {
       <MyDetailContainer
         token={this.props.token}
         index={this.props.match.params.index ? this.props.match.params.index : 9}
-        // type={this.props.match.params.type ? this.props.match.params.type : null}
-        // type2={this.props.match.params.type2 ? this.props.match.params.type2 : null}
         history={this.props.history} />
     );
   }
