@@ -13,8 +13,8 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
 
 const Wrapper = styled.div`
-  width:194px;
-  height:244px;
+  width:190px;
+  height:220px;
   box-shadow: 2px 2px 5px #00000029;
   border-radius:10px;
   border:1px solid #eaeaea;

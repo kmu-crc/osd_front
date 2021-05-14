@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import MakerDetail from "components/Makers/MakerDetail";
+import MakerDetail_mobile from "mobileComponents/MakerDetail_mobile";
 import { GetExpertMakerViewDetailRequest } from "actions/Expert";
 import { LikeMakerRequest, UnlikeMakerRequest, GetLikeMakerRequest } from "actions/Maker";
 import { CreateRequestRequest, GetMakerRequestListRequest } from "actions/Request";
@@ -8,6 +9,9 @@ import { GetTotalCountMakerReviewRequest } from "actions/Review";
 import styled from "styled-components";
 const Wrapper = styled.div`
   margin:20px 30px
+`
+const Wrapper_mobile = styled.div`
+  margin:0px 15px;
 `
 class MakerDetailContainer extends Component {
   componentWillMount() {
@@ -17,9 +21,18 @@ class MakerDetailContainer extends Component {
   }
   render() {
     return (
-    <Wrapper>
-    <MakerDetail {...this.props} />
-    </Wrapper>
+      <React.Fragment>
+        {
+          window.innerWidth>=500?
+          <Wrapper>
+            <MakerDetail {...this.props} />
+          </Wrapper>
+          :
+          <Wrapper_mobile>
+            <MakerDetail_mobile {...this.props}/>
+          </Wrapper_mobile>
+        }
+      </React.Fragment>
     );
   }
 }

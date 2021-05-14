@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DesignerDetail from "components/Designers/DesignerDetail";
+import DesignerDetail_mobile from "mobileComponents/DesignerDetail_mobile"
 import { GetExpertDesignerViewDetailRequest } from "actions/Expert";
 import { LikeDesignerRequest, UnlikeDesignerRequest, GetLikeDesignerRequest } from "actions/Designer";
 import { CreateRequestRequest, GetDesignerRequestListRequest } from "actions/Request";
@@ -8,6 +9,9 @@ import { GetTotalCountDesignerReviewRequest } from "actions/Review";
 import styled from "styled-components";
 const Wrapper = styled.div`
   margin:20px 30px
+`
+const Wrapper_mobile = styled.div`
+  margin:0px 15px;
 `
 class DesignerDetailContainer extends Component {
   componentWillMount() {
@@ -17,9 +21,18 @@ class DesignerDetailContainer extends Component {
   }
   render() {
     return (
-    <Wrapper>
-    <DesignerDetail {...this.props} />
-    </Wrapper>
+      <React.Fragment>
+        {
+          window.innerWidth>=500?
+            <Wrapper>
+            <DesignerDetail {...this.props} />
+            </Wrapper>
+          :
+            <Wrapper_mobile>
+            <DesignerDetail_mobile {...this.props} />
+            </Wrapper_mobile>
+        }
+      </React.Fragment>
     );
   }
 }
