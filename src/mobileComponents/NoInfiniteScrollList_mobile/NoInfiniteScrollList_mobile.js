@@ -5,6 +5,7 @@ import styled from "styled-components";
 import market_style from "market_style";
 // CSS STYLING
 const ScrollContainer = styled.div`
+  width:100%;
   .wrapper_{
     width:100%;
   }
@@ -20,9 +21,10 @@ const ScrollContainer = styled.div`
   }
 `;
 const ListContainer = styled.div`
-  flex-wrap: wrap;
-  width: 100%;
-  display:flex;
+    width: 100%;
+    display:flex;
+    flex-wrap: wrap;
+
   .designer{
     margin-bottom:20px;
     &:nth-child(2n+1){

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { GetDesignerReviewListRequest } from "actions/Review";
+import { GetMakerReviewListRequest } from "actions/Review";
 import ScrollList from "components/Commons/ScrollList";
 import Review from "components/Items/Review";
 import styled from "styled-components";
@@ -106,7 +106,7 @@ const Thumbnail = styled.div`
   background-size: cover;
   background-position: center center;
 `;
-class DesignerReviewContainer_mobile extends Component {
+class MakerReviewContainer_mobile extends Component {
   constructor(props){
     super(props);
     this.state={
@@ -114,12 +114,12 @@ class DesignerReviewContainer_mobile extends Component {
     }
   }
   componentDidMount() {
-    this.props.GetDesignerReviewListRequest(this.props.id, 0);
+    this.props.GetMakerReviewListRequest(this.props.id, 0);
   }
   getList = page =>
   {
   this.setState({page:page+1,viewmore:true});
-  this.props.GetDesignerReviewListRequest(this.props.id, page);
+  this.props.GetMakerReviewListRequest(this.props.id, page);
   } 
   render() {
     const RenderingStar = (props)=>{
@@ -127,12 +127,12 @@ class DesignerReviewContainer_mobile extends Component {
     }
     const allpage = this.props.count;
     const lastPage = parseInt(this.props.count / 4, 10);
-    console.log(this.props.dataListAdded);
+    console.log(this.props);
     return (
       <React.Fragment>
         
       <ContentsBox>
-            { this.props.count != 0?
+            { this.props.dataListAdded&&this.props.dataListAdded.length != 0?
               this.props.dataListAdded.map((item,index)=>{
                 if(index>1)return null;
                 return (
@@ -167,38 +167,6 @@ class DesignerReviewContainer_mobile extends Component {
             {this.props.dataList.length > 2&&<div className="viewmore" onClick={()=>this.getList(this.state.page)}>▾</div>}
       </ContentsBox>
       </React.Fragment>
-        // 리뷰목록
-        // <ReviewBox
-        // isScroll={this.props.dataListAdded.length>2?true:false}
-        // >
-        //   <ScrollList
-        //     handler={this.props.handler}
-        //     scrollId={"review-scroller"}
-        //     cols={2}
-        //     type="review"
-        //     getListRequest={this.getList}
-        //     ListComponent={Review}
-        //     dataList={this.props.dataList}
-        //     dataListAdded={this.props.dataListAdded} />
-        // </ReviewBox>
-        // <div className="pagenation">
-        // { this.props.count >4?
-        //             <Pagination
-        //             activePage={this.state.page}
-        //             boundaryRange={0}
-        //             defaultActivePage={1}
-        //             ellipsisItem={null}
-        //             firstItem={null}
-        //             lastItem={null}
-        //             siblingRange={1}
-        //             totalPages={lastPage + 1}
-        //             secondary
-        //             onPageChange={(event, { activePage }) => {
-        //               this.getList(activePage - 1);
-        //             }}
-        //           />:null
-        //   }
-        // </div>
     )
   }
 }
@@ -206,11 +174,11 @@ class DesignerReviewContainer_mobile extends Component {
 const mapStateToProps = (state) => ({
   token: state.Authentication.status.token,
   userInfo: state.Authentication.status.userInfo,
-  dataList: state.ReviewList.status.List,
-  dataListAdded: state.ReviewList.status.ListAdded,
+  dataList: state.ReviewList.status.MakerList,
+  dataListAdded: state.ReviewList.status.MakerListAdded,
 });
 const mapDispatchToProps = (dispatch) => ({
-  GetDesignerReviewListRequest: (id, page) => dispatch(GetDesignerReviewListRequest(id, page)),
+  GetMakerReviewListRequest: (id, page) => dispatch(GetMakerReviewListRequest(id, page)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DesignerReviewContainer_mobile);
+export default connect(mapStateToProps, mapDispatchToProps)(MakerReviewContainer_mobile);

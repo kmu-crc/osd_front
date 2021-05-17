@@ -17,18 +17,18 @@ const Wrapper = styled.div`
   position: relative;
   box-shadow: 3px 3px 5px #4141411A;
   border:1px solid #eaeaea;
-  width: 190px;
-  height: 200px;
+  width: 172px;
+  height: 190px;
   background: transparent;
-  border-radius:20px;
+  border-radius:10px;
   overflow:hidden;
   font-family: Noto Sans KR;
   cursor: pointer;
   padding:13px;
 `;
 const ItemPic = styled.div`
-  width: 175;
-  height: 152px;
+  width: 152px;
+  height: 140px;
   background: transparent;
   background-image: url(${props => props.img});
   background-size: cover;

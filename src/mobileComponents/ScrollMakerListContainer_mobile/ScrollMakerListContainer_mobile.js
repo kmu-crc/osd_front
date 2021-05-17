@@ -25,7 +25,7 @@ class ScrollMakerListContainer_mobile
       <ScrollList_mobile
         getListRequest={this.getList}
         ListComponent={Expert_mobile_big}
-        type="designer"
+        type="maker"
         dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
       />
     );

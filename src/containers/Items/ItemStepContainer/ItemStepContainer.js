@@ -25,7 +25,7 @@ class ItemStepContainer extends Component {
     const { ItemDetail, ItemStep } = this.props
     console.log("STEPS:", ItemDetail, ItemStep);
     return (
-      <GridEditor {...this.props} GetItemStepsRequest={this.GetItemStep} itemId={ItemDetail["item-id"]} item={ItemDetail} />
+      <GridEditor {...this.props} GetItemStepsRequest={this.GetItemStep} itemId={ItemDetail.item_id} item={ItemDetail} />
     );
   }
 }

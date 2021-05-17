@@ -3,8 +3,8 @@ import styled from "styled-components";
 import TextFormat from "modules/TextFormat";
 import HaveInItemContainer_mobile from "mobileComponents/HaveInItemContainer_mobile";
 import HaveInGalleryContainer_mobile from "mobileComponents/HaveInGalleryContainer_mobile";
-// import MakerRequestBoardContainer from "containers/Maker/MakerRequestBoardContainer";
-// import MakerReviewContainer from "containers/Maker/MakerReviewContainer";
+import MakerRequestBoardContainer_mobile from "mobileComponents/MakerRequestBoardContainer_mobile";
+import MakerReviewContainer_mobile from "mobileComponents/MakerReviewContainer_mobile";
 import ReviewDetailModal from "components/Commons/ReviewDetailModal";
 import { Icon } from "semantic-ui-react";
 import ArticleModal from "components/Commons/ArticleModal/ArticleModal";
@@ -296,9 +296,9 @@ class MakerDetail_mobile extends Component {
           </ShadowBox>
         </React.Fragment>
         }
-        <Header>디자인 아이템</Header>
+        <Header>제작 아이템</Header>
         <div>
-          <HaveInItemContainer_mobile id={this.props.id} />
+          <HaveInItemContainer_mobile id={parseInt(this.props.id, 10)} />
         </div>
         <Header>갤러리</Header>
         <div>
@@ -306,13 +306,14 @@ class MakerDetail_mobile extends Component {
         </div>
         <Header>리뷰</Header>
         <ShadowBox>
-          {/* <DesignerReviewContainer_mobile count={this.props.ReviewCount}
+          <MakerReviewContainer_mobile 
+              count={this.props.ReviewCount}
               id={parseInt(this.props.id, 10)}
-              handler={detail => this.setState({ reviewdetail: true, detail: detail })}/> */}
+              handler={detail => this.setState({ reviewdetail: true, detail: detail })}/>
         </ShadowBox>
-        <Header>디자이너 게시판</Header>
+        <Header>메이커 게시판</Header>
         <ShadowBox>
-          {/* <DesignerRequestBoardContainer_mobile id={parseInt(0, 10)} /> */}
+          <MakerRequestBoardContainer_mobile id={parseInt(this.props.id, 10)} />
           <div className="row flex">
             {write?
                  <ArticleModal

@@ -7,8 +7,6 @@ import Item_mobile from "components/Items/Item_mobile/Item_mobile";
 import styled from "styled-components"
 
 const Wrapper_itemlist = styled.div`
-padding-left:5px;
-
 `
 
 class ScrollTopItem_mobile extends Component {

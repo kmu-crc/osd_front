@@ -16,6 +16,16 @@ const Container = styled.div`
     width:100%;
     overflow-y:auto;
   }
+  .mobileWidth{
+    width:100%;
+  }
+  .mobile-wrapper{
+    width:375px;
+    overflow-y:auto;
+  }
+  .marginAuto{
+    margin:0px auto;
+  }
   @media only screen and (max-width: 1366px){
     width: 100%;
     .children-wrapper{
@@ -25,34 +35,50 @@ const Container = styled.div`
   @media only screen and (min-width: 1366px){
     width: 1366px;
     margin-left: auto;
-    margin-right: auto;
+  margin-right: auto;
     .children-wrapper{
       width:100%;
     }
   }
 `
 class ClientTemplate extends Component {
+  
   render() {
     const innerHeight = window.innerHeight;
+    console.log(window.location.pathname);
     return (
       <React.Fragment>
         <Notice />
         <HeaderContainer active={this.props.isActive} />
         <Container isMobile={window.innerWidth>=500?false:true}>
-          <div className="children-wrapper">
-            {this.props.children}
-          </div>
           {
           window.innerWidth>=500?
-          null
+          <div className="children-wrapper">
+          {this.props.children}
+          </div>
           :
+          window.location.pathname=="/"?
+          <React.Fragment>
+            <div className="mobile-wrapper mobileWidth">
+              {this.props.children}
+            </div>
+            <BottomMenuContainer/>
+          </React.Fragment>
+          :
+          <React.Fragment>
+          <div className="mobile-wrapper marginAuto">
+            {this.props.children}
+          </div>
           <BottomMenuContainer/>
+          </React.Fragment>
           }
         </Container>
         { window.innerWidth<500?
           null
           :
-          <Footer/>
+          <React.Fragment>
+            <Footer/>
+          </React.Fragment>
           }
       </React.Fragment>
     );

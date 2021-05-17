@@ -269,7 +269,7 @@ class CardSourceDetail extends Component {
             .then(async res => {
               if (res.data.success) {
                 // await alert("아이템 컨텐츠를 수정하였습니다.");
-                window.location.href = `/productDetail/${this.props.ItemDetail["item-id"]}`
+                window.location.href = `/productDetail/${this.props.ItemDetail.item_id}`
               }
             })
         }

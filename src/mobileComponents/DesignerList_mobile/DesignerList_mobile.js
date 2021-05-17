@@ -25,7 +25,7 @@ const Wrapper =styled.div`
     margin-top:10px;
       .marginRight{margin-right:10px;}
       .redButton{
-        width:194px;
+        width:172px;
         height:30px;
         display:flex;
         align-items:center;

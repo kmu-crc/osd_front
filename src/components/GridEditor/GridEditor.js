@@ -226,8 +226,8 @@ class GridEditor extends Component {
         // name: "554"
         // type: "item"
         // uid: 11
-        const data = { list_header_id: this.props.header.uid, title: _data.title, order: _data.where, content_id: this.props.item["item-id"], }
-        await this.props.CreateItemListRequest(data, this.props.item["item-id"], this.props.token)
+        const data = { list_header_id: this.props.header.uid, title: _data.title, order: _data.where, content_id: this.props.item.item_id, }
+        await this.props.CreateItemListRequest(data, this.props.item.item_id, this.props.token)
             .then(res => {
                 console.log(res);
                 this.props.GetItemStepsRequest();

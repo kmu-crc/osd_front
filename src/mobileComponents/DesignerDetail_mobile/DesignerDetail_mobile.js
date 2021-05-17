@@ -4,18 +4,8 @@ import { Icon } from "semantic-ui-react";
 // import noimg from "source/noimg.png";
 import HaveInItemContainer_mobile from "mobileComponents/HaveInItemContainer_mobile";
 import HaveInGalleryContainer_mobile from "mobileComponents/HaveInGalleryContainer_mobile";
-
-import HaveInGalleryContainer from "containers/Gallery/HaveInGalleryContainer/HaveInGalleryContainer";
-
 import DesignerReviewContainer_mobile from "mobileComponents/DesignerReviewContainer_mobile";
 import DesignerRequestBoardContainer_mobile from "mobileComponents/DesignerRequestBoardContainer_mobile";
-import TextFormat from "modules/TextFormat";
-import { Modal } from "semantic-ui-react";
-import Cross from "components/Commons/Cross";
-// import { TextControllerClassic } from "components/Commons/InputItem/TextControllerClassic";
-import { TextControllerPlus as TextControllerClassic } from "components/Commons/InputItem";
-
-import ReviewDetailModal from "components/Commons/ReviewDetailModal";
 import ArticleModal from "components/Commons/ArticleModal/ArticleModal";
 import market_style from "market_style";
 

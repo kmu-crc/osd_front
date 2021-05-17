@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ItemDetail from "components/Items/ItemDetail";
+import ItemDetail_mobile from "mobileComponents/ItemDetail_mobile";
+
 import Loading from "components/Commons/Loading";
 import {
   GetProductCountRequest, GetLikeProductRequest,
@@ -15,6 +17,9 @@ import { alert } from "components/Commons/Alert/Alert";
 import styled from "styled-components";
 const Wrapper = styled.div`
   margin:20px 30px
+`
+const Mobile_wrapper = styled.div`
+  margin:10px;
 `
 
 class ProductDetailContainer extends Component {
@@ -35,7 +40,7 @@ class ProductDetailContainer extends Component {
   Payment(item, option) {
     this.props.CreateItemPaymentRequest(
       { payment_title: item.title, payment_price: item.price },
-      item["item-id"],
+      item.item_id,
       this.props.token)
       .then(async res => {
         if (res && res.data && res.data.success) {
@@ -44,7 +49,7 @@ class ProductDetailContainer extends Component {
             window.location.href = `/myPage/`;
           } else {
             // alert("구입이 완료되었습니다. 해당 상품의 리뷰를 작성해주세요.");
-            // window.location.href = `/productDetail/${item["item-id"]}`;
+            // window.location.href = `/productDetail/${item.item_id}`;
             await alert("구입이 완료되었습니다. [내 정보] > [구입 아이템]에서 확인하실 수 있습니다.");
             window.location.href = `/myPage/`;
 
@@ -64,13 +69,22 @@ class ProductDetailContainer extends Component {
   render() {
     console.log(this.props);
     const yours = this.props.ItemDetail.members && this.props.ItemDetail.members.filter(mem => mem.user_id === this.props.userInfo && this.props.userInfo.uid);
-    return this.props.ItemDetail ?
+    return (
+      this.props.ItemDetail ?
       this.props.ItemDetail.private === 1 && !yours ?
         this.ThisIsPrivateItem() :
-        <Wrapper>
-          <ItemDetail purchase={this.Payment} itemId={this.props.ItemDetail["item-id"]} item={this.props.ItemDetail} {...this.props} />
-        </Wrapper>
+        (
+          window.innerWidth>=500?
+          <Wrapper>
+          <ItemDetail purchase={this.Payment} itemId={this.props.ItemDetail.item_id} item={this.props.ItemDetail} {...this.props} />
+          </Wrapper>
+          :
+          <Mobile_wrapper>
+          <ItemDetail_mobile purchase={this.Payment} itemId={this.props.ItemDetail.item_id} item={this.props.ItemDetail} {...this.props} />
+          </Mobile_wrapper>
+        )
       : <Loading />
+      )
   }
 }
 

@@ -586,7 +586,7 @@ class ModifyItemInfo extends Component {
 
     // return;
     data.additional.description = data.additional.description.replace(/(?:\r\n|\r|\n)/g, '<br />');
-    this.props.UpdateItemRequest(data, this.props.ItemDetail["item-id"], this.props.token)
+    this.props.UpdateItemRequest(data, this.props.ItemDetail.item_id, this.props.token)
       .then(async result => {
         if (result.res.success) {
           await alert("아이템이 수정 되었습니다. 아이템상세페이지로 이동합니다.");
@@ -667,7 +667,7 @@ class ModifyItemInfo extends Component {
     this.setState({ loading: true });
     this.props.DeleteItemRequest &&
       await confirm("이 아이템을 삭제하시겠습니까?") &&
-      await this.props.DeleteItemRequest(this.props.ItemDetail["item-id"], this.props.token)
+      await this.props.DeleteItemRequest(this.props.ItemDetail.item_id, this.props.token)
         .then(data => {
           // console.log(data);
           if (data.res.success) {
@@ -1175,7 +1175,7 @@ class ItemContentEditor extends Component {
               index={this.props.index}
               header={this.props.header}
               // item={item}
-              // id={item["item-id"]}
+              // id={item.item_id}
               mode="project"
               bought={true}
               editor={this.props.edit}

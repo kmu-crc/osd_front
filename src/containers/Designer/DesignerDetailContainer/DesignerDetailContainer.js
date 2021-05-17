@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   margin:20px 30px
 `
 const Wrapper_mobile = styled.div`
-  margin:0px 15px;
+  margin:0px 10px;
 `
 class DesignerDetailContainer extends Component {
   componentWillMount() {
