@@ -8,7 +8,7 @@ import who from "source/thumbnail.png";
 import CardSourceDetailContainer from "containers/Items/CardSourceDetailContainer";
 import ItemStepContainer from "containers/Items/ItemStepContainer";
 import ItemQuestionContainer from "containers/Items/ItemQuestionContainer";
-import ItemReviewContainer from "containers/Items/ItemReviewContainer";
+import ItemReviewContainer_mobile from "mobileComponents/ItemReviewContainer_mobile";
 import PointFormat from "modules/PointFormat";
 import ConnectedMemberContainer from "containers/Items/ConnectedMemberContainer";
 import { Rating } from 'semantic-ui-react'
@@ -59,8 +59,16 @@ const ShadowBox = styled.div`
     min-height:140px;
     background-size:cover;
     background-color:#e9e9e9;
-    background-image:url${(props =>props.img==null?noimg:props.img)};
+    background-image:url(${props =>props.img==null?noimg:props.img});
   }
+`
+const Header = styled.div`
+  width:100%;
+  margin-top:15px;
+  margin-bottom:10px;
+  font-size:${market_style.font.size.normal3};
+  color:#c1c1c1;
+  font-weight:800;
 `
 const TagPiece = styled.div`
     width: max-content;
@@ -81,6 +89,23 @@ const TagPiece = styled.div`
         padding: 0px 2px;
     }
 `;
+
+const RedButton = styled.div`
+  width:${props=>props.width==null?"100%":props.width+"%"};
+  height:35px;
+  display:flex;
+  border-radius:10px;
+  border:${props=>props.isLike==true?null:"2px solid red"};
+  box-shadow: 2px 2px 3px #00000019;
+  justify-content:center;
+  align-items:center;
+  background-color:${props=>props.isLike==true?"red":"white"};
+  color:${props=>props.isLike==true?"white":"red"};
+  font-size:${market_style.font.size.small1};
+  font-weight:800;
+  margin-top:10px;
+  margin-right:${props=>props.marginRight==null?"0px":props.marginRight+"%"};
+`
 class ItemDetail_mobile extends Component {
   constructor(props) {
     super(props);
@@ -154,28 +179,6 @@ class ItemDetail_mobile extends Component {
     const RenderStar = () => {
       return <Rating size="small" name="score" icon='star' defaultRating={parseInt(score, 10)} maxRating={5} disabled />
     }
-    // const MemberListBox = () => {
-    //   return (
-    //     <MemberBox>
-    //       <div onClick={() => { this.setState({ isShowmember: !this.state.isShowmember }) }} className="close">
-    //         <Cross angle={45} color={"#000000"} weight={2} width={15} height={15} />
-    //       </div>
-
-    //       <div className="member_list">
-    //         {
-    //           item.members.map((item, index) => {
-    //             return (
-    //               <PeerBox imgURL={item.s_img} key={index}>
-    //                 <div className="thumbnail" />
-    //                 <div className="name_label">{item.nick_name}</div>
-    //               </PeerBox>
-    //             );
-    //           })
-    //         }
-    //       </div>
-    //     </MemberBox>
-    //   );
-    // }
     return(
       <React.Fragment>
         <Wrapper>
@@ -233,6 +236,58 @@ class ItemDetail_mobile extends Component {
                       }
                 </div>
               </div>
+          </ShadowBox>
+          <RedButton isLike={this.state.isLike} onClick={this.onClickLike}>
+            {this.state.isLike == true? "관심 항목":"관심 항목 등록"}
+          </RedButton>
+          <Link
+            onClick={async (e) => {
+              return this.props.isbuy > 0 ?
+                await confirm("이미 구매하신 이력이 존재합니다. 계속 진행하겠습니까?") ? null : window.history.go(-1)
+                : null
+            }}
+            to={{
+              pathname: `/payment`, state: {
+                item: this.props.item,
+                custom: null,
+                options: null
+              }
+            }
+            }>
+          <RedButton isLike={true}>
+            아이템 구입
+          </RedButton>
+          </Link>
+
+          <Header>아이템 상세내용</Header>
+          <ShadowBox>
+            {item &&
+              item.headers &&
+              item.headers.length > 0 &&
+              item.headers.map(
+                (head, index) =>
+                      <div className="fontNormal">
+                        {head.editor_type === "project"
+                          ? <ItemStepContainer index={index} header={head} item={item} id={head.content_id} bought={item.bought} />
+                          : null}
+                        {head.editor_type === "blog"
+                          ? <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} />
+                          : null}
+                      </div>
+              )}
+          </ShadowBox>
+          <Header>리뷰</Header>
+          <ShadowBox>
+                ...개발중
+                {/* <ItemReviewContainer_mobile
+                user_id={item.user_id}
+                detail={this.state.detail}
+                handler={detail => this.setState({ reviewdetail: true, detail: detail })}
+                isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} /> */}
+          </ShadowBox>
+          <Header>게시판</Header>
+          <ShadowBox>
+                ...개발중
           </ShadowBox>
         </Wrapper>
       </React.Fragment>

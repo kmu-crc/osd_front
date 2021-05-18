@@ -59,7 +59,7 @@ class ClientTemplate extends Component {
           :
           window.location.pathname=="/"?
           <React.Fragment>
-            <div className="mobile-wrapper mobileWidth">
+            <div className="mobileWidth">
               {this.props.children}
             </div>
             <BottomMenuContainer/>
