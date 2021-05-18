@@ -672,7 +672,7 @@ class ItemPurchase extends Component {
   }
   async modifyThisItem() {
     // if (await confirm("아이템을 수정하시겠습니까?")) {
-    window.location.href = `/productModify/${this.props.ItemDetail["item-id"]}`;
+    window.location.href = `/productModify/${this.props.ItemDetail.item_id}`;
     // }
   }
 
