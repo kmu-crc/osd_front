@@ -454,7 +454,7 @@ class MyDetail extends Component {
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 3 ? "red" : null} id="interest_Maker">관심 메이커({MyDetail && MyDetail.allCount && MyDetail.allCount.likeMaker_count})</MenuButton>
               <div className="hrLine" />
-              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 4 ? "red" : null} id="join_project">참여 프로젝트</MenuButton>
+              <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 4 ? "red" : null} id="join_project">참여 프로젝트({MyDetail && MyDetail.allCount && MyDetail.allCount.joinProject_count})</MenuButton>
               <div className="hrLine" />
               <MenuButton onClick={this.onClickMenu} fontColor={selectMenu === 5 ? "red" : null} id="request_designer">디자인 의뢰({MyDetail && MyDetail.allCount && MyDetail.allCount.requestDesigner_count})</MenuButton>
               <div className="hrLine" />
@@ -474,7 +474,7 @@ class MyDetail extends Component {
                 { key: 1, value: 6, text: `관심 아이템(${MyDetail && MyDetail.allCount && MyDetail.allCount.likeItem_count})` },
                 { key: 2, value: 7, text: `관심 디자이너(${MyDetail && MyDetail.allCount && MyDetail.allCount.likeDesigner_count})` },
                 { key: 3, value: 8, text: `관심 메이커(${MyDetail && MyDetail.allCount && MyDetail.allCount.likeMaker_count})` },
-                { key: 4, value: 9, text: `참여 프로젝트` },
+                { key: 4, value: 9, text: `참여 프로젝트(${MyDetail && MyDetail.allCount && MyDetail.allCount.joinProject_count})` },
                 { key: 5, value: 10, text: `디자인 의뢰(${MyDetail && MyDetail.allCount && MyDetail.allCount.requestDesigner_count})` },
                 { key: 6, value: 11, text: `제작 의뢰(${MyDetail && MyDetail.allCount && MyDetail.allCount.requestMaker_count})` }
               ]}

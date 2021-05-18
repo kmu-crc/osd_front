@@ -18,7 +18,7 @@ class PaymentContainer extends Component {
   Payment(item) {
     this.props.CreateItemPaymentRequest(
       { payment_title: item.title, payment_price: item.price, payment_item_type: item.type },
-      item["item-id"] || "custom",
+      item.item_id || "custom",
       this.props.token)
       .then(async res => {
         console.log(res.data.success);
@@ -28,7 +28,7 @@ class PaymentContainer extends Component {
             window.location.href = `/myPage/`;
           } else {
             // alert("구입이 완료되었습니다. 해당 상품의 리뷰를 작성해주세요.");
-            // window.location.href = `/productDetail/${this.props.item["item-id"]}`;
+            // window.location.href = `/productDetail/${this.props.item.item_id}`;
             await alert("구입이 완료되었습니다. [내 정보] > [구입 아이템]에서 확인하실 수 있습니다.");
             window.location.href = `/myPage/`;
 

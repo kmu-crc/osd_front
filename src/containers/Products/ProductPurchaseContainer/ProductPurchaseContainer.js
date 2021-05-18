@@ -39,7 +39,7 @@ class ProductPurchaseContainer extends Component {
   Payment(item, option) {
     this.props.CreateItemPaymentRequest(
       { payment_title: item.title, payment_price: item.price },
-      item["item-id"],
+      item.item_id,
       this.props.token)
       .then(async res => {
         if (res && res.data && res.data.success) {
@@ -48,7 +48,7 @@ class ProductPurchaseContainer extends Component {
             window.location.href = `/myPage/`;
           } else {
             // alert("구입이 완료되었습니다. 해당 상품의 리뷰를 작성해주세요.");
-            // window.location.href = `/productDetail/${item["item-id"]}`;
+            // window.location.href = `/productDetail/${item.item_id}`;
             await alert("구입이 완료되었습니다. [내 정보] > [구입 아이템]에서 확인하실 수 있습니다.");
             window.location.href = `/myPage/`;
 
@@ -72,7 +72,7 @@ class ProductPurchaseContainer extends Component {
       this.props.ItemDetail.private === 1 && !yours ?
         this.ThisIsPrivateItem() :
         <Wrapper>
-        <ItemPurchase purchase={this.Payment} itemId={this.props.ItemDetail["item-id"]} item={this.props.ItemDetail} {...this.props} />
+        <ItemPurchase purchase={this.Payment} itemId={this.props.ItemDetail.item_id} item={this.props.ItemDetail} {...this.props} />
         </Wrapper>
       : <Loading />
   }
