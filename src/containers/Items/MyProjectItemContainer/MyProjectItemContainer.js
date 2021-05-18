@@ -34,11 +34,10 @@ const Board = styled.div`
   }
 `
 class MyProjectItemContainer extends Component {
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
     this.state = {
-      page:0,
+      page: 0, per: 8,
     }
     this.goPage = this.goPage.bind(this);
   }
@@ -46,7 +45,7 @@ class MyProjectItemContainer extends Component {
     this.props.GetMyProjectItemRequest(this.props.id, this.props.token, 0);
   }
   goPage = async (page) => {
-    await this.setState({ page:page });
+    await this.setState({ page: page });
     this.props.GetMyProjectItemRequest(this.props.id, this.props.token, page);
   };
   getList = (page) =>
@@ -54,38 +53,36 @@ class MyProjectItemContainer extends Component {
 
 
   render() {
-    console.log("test-----",this.props);
-    const { page } = this.state;
-    const lastPage = parseInt(this.props.allPage / 8, 10);
-    return (
+    const { page, per } = this.state;
+    const lastPage = parseInt((this.props.allPage / per) + (this.props.allPage % per ? 1 : 0), 10); return (
       <Board>
-      <div className="title_">참여 프로젝트</div>
-      <div className="lineBox"><div className="line"/></div>
-      <PagingList getListRequest={this.getList}
-                    type="sales_Expert"
-                    ListComponent={Item_myDetail}
-                    dataList={this.props.dataList} 
-                    dataListAdded={this.props.dataListAdded}
-                    mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom"/>
+        <div className="title_">참여 프로젝트</div>
+        <div className="lineBox"><div className="line" /></div>
+        <PagingList getListRequest={this.getList}
+          type="sales_Expert"
+          ListComponent={Item_myDetail}
+          dataList={this.props.dataList}
+          dataListAdded={this.props.dataListAdded}
+          mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom" />
         {
-        lastPage==0?null:
-        <div className="pagenation">
-        <Pagination
-          activePage={page + 1}
-          boundaryRange={0}
-          defaultActivePage={1}
-          ellipsisItem={null}
-          firstItem={null}
-          lastItem={null}
-          siblingRange={1}
-          totalPages={lastPage}
-          // pointing
-          secondary
-          onPageChange={(event, { activePage }) => {
-            this.goPage(activePage - 1);
-          }}
-        />
-        </div>
+          lastPage == 0 ? null :
+            <div className="pagenation">
+              <Pagination
+                activePage={page + 1}
+                boundaryRange={0}
+                defaultActivePage={1}
+                ellipsisItem={null}
+                firstItem={null}
+                lastItem={null}
+                siblingRange={1}
+                totalPages={lastPage}
+                // pointing
+                secondary
+                onPageChange={(event, { activePage }) => {
+                  this.goPage(activePage - 1);
+                }}
+              />
+            </div>
         }
       </Board>
     );

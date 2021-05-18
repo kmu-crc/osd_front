@@ -53,35 +53,34 @@ const Container = styled.div`
     .category {
       width: 100%;
     }
-    ._title{
-      color:black;
-      width:max-content;
-      
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      font-family:Noto Sans KR;
-      font-weight:600;
-      font-size:${market_style.font.size.normal3};
+    ._title {
+      color: black;
+      width: max-content;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Noto Sans KR;
+      font-weight: 600;
+      font-size: ${market_style.font.size.normal3};
     }
     .sort {
       width: 300px;
     }
     .request {
       width: 300px;
-      display:flex;
+      display: flex;
     }
   }
-  @media only screen and (max-width: 800px) and (min-width: 500px){
+  @media only screen and (max-width: 800px) and (min-width: 500px) {
     ._wrapper{
-      margin-top:20px;
+      margin-top: 20px;
       .sort{
-        width:100%;
+        width: 100%;
       }
     }
   }
 `;
-const target = `designer`;
+
 export default class DesignerList extends Component {
   constructor(props) {
     super(props);
@@ -93,29 +92,29 @@ export default class DesignerList extends Component {
   }
   handleCate1 = (value) => {
     const { sort } = this.props;
-    this.props.history.push(`/${target}/${sort}/${value}`);
+    this.props.history.push(`/designer/${sort}/${value}`);
   }
   handleCate2 = (parent, value) => {
     const { sort, } = this.props;
-    this.props.history.push(`/${target}/${sort}/${parent}/${value}`);
+    this.props.history.push(`/designer/${sort}/${parent}/${value}`);
   }
   handleCate3 = (parent, value) => {
     const { sort, cate1, } = this.props;
-    this.props.history.push(`/${target}/${sort}/${cate1}/${parent}/${value}`);
+    this.props.history.push(`/designer/${sort}/${cate1}/${parent}/${value}`);
   }
   resetCate = () => {
-    this.props.history.push(`/${target}/${this.props.sort}`);
+    this.props.history.push(`/designer/${this.props.sort}`);
   }
   sortChange = (_, { value }) => {
     const { cate1, cate2, cate3 } = this.props;
-    this.props.history.push(`${target}/${value}/${cate1}/${cate2}/${cate3}`);
+    this.props.history.push(`/designer/${value}/${cate1}/${cate2}/${cate3}`);
   }
 
   render() {
     const { category1, category2, category3 } = this.props;
     const { cate1, cate2, cate3 } = this.props;
     const { sort } = this.props;
-    
+
     return (<React.Fragment>
       <Content top={20}>
         <Container>

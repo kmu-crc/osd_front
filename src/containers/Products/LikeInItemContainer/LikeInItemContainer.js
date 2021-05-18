@@ -33,11 +33,10 @@ const Board = styled.div`
   }
 `
 class LikeInItemContainer extends Component {
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
     this.state = {
-      page:0,
+      page: 0, per: 6,
     }
     this.goPage = this.goPage.bind(this);
   }
@@ -49,42 +48,41 @@ class LikeInItemContainer extends Component {
     return this.props.GetLikeInItemRequest(this.props.id, page);
   }
   goPage = async (pagenum) => {
-    await this.setState({ page:pagenum });
+    await this.setState({ page: pagenum });
     this.props.GetLikeInItemRequest(this.props.id, pagenum);
   };
   render() {
-    console.log("test-----",this.props);
-    const { page } = this.state;
-    const lastPage = parseInt(this.props.allPage / 6, 10);
-    return(
+    const { page, per } = this.state;
+    const lastPage = parseInt((this.props.allPage / per) + (this.props.allPage % per ? 1 : 0), 10);
+    return (
       <Board>
-      <div className="title_">관심 아이템</div>
-      <div className="lineBox"><div className="line"/></div>
+        <div className="title_">관심 아이템</div>
+        <div className="lineBox"><div className="line" /></div>
 
-      <PagingList getListRequest={this.getList}
-                    type="sales"
-                    ListComponent={Item_myDetail}
-                    dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
-                    mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom"/>
+        <PagingList getListRequest={this.getList}
+          type="sales"
+          ListComponent={Item_myDetail}
+          dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
+          mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom" />
         {
-        lastPage==0?null:
-        <div className="pagenation">
-        <Pagination
-          activePage={page + 1}
-          boundaryRange={0}
-          defaultActivePage={1}
-          ellipsisItem={null}
-          firstItem={null}
-          lastItem={null}
-          siblingRange={1}
-          totalPages={lastPage}
-          // pointing
-          secondary
-          onPageChange={(event, { activePage }) => {
-            this.goPage(activePage - 1);
-          }}
-        />
-        </div>
+          lastPage == 0 ? null :
+            <div className="pagenation">
+              <Pagination
+                activePage={page + 1}
+                boundaryRange={0}
+                defaultActivePage={1}
+                ellipsisItem={null}
+                firstItem={null}
+                lastItem={null}
+                siblingRange={1}
+                totalPages={lastPage}
+                // pointing
+                secondary
+                onPageChange={(event, { activePage }) => {
+                  this.goPage(activePage - 1);
+                }}
+              />
+            </div>
         }
       </Board>
 
@@ -102,8 +100,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     GetLikeInItemRequest: (id, page) => {
-        return dispatch(GetLikeInItemRequest(id, page))
-      }
+      return dispatch(GetLikeInItemRequest(id, page))
+    }
   };
 };
 

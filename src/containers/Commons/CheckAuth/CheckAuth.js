@@ -30,7 +30,7 @@ export default function CheckAuth(Components) {
       GetSession("market").then((token) => {
         this.props.CheckTokenRequest(token).then(async data => {
           await this.setState({ valid: true });
-          Socket.emit("live socket id",this.props.userInfo&&this.props.userInfo.uid)          // console.log(data);
+          Socket.emit("live socket id", this.props.userInfo && this.props.userInfo.uid)          // console.log(data);
           // if (data && data.info) {
           //   if (!data.info.isDetail) {
           //     if (this.props.location.pathname === "/inserUserDetail") {

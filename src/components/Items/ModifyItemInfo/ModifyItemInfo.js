@@ -513,6 +513,7 @@ class ModifyItemInfo extends Component {
     this.editGridEditorName = this.editGridEditorName.bind(this);
     this.newGridEditorName = this.newGridEditorName.bind(this);
     this.updateListHeader = this.updateListHeader.bind(this);
+    this.onHandleAdditionalMaxNumber = this.onHandleAdditionalMaxNumber.bind(this);
   };
   async componentDidMount() {
     const { ItemDetail } = this.props;
@@ -680,6 +681,12 @@ class ModifyItemInfo extends Component {
   async onHandleAdditionalText(event) {
     let copy = { ...this.state.additional };
     copy[event.target.name] = event.target.value;
+    await this.setState({ additional: copy });
+  };
+  async onHandleAdditionalMaxNumber(event, max_limit) {
+    let copy = { ...this.state.additional };
+    const { value } = event.target;
+    copy[event.target.name] = value > max_limit ? max_limit : value;
     await this.setState({ additional: copy });
   };
   async getPriceValue(value) {
@@ -991,7 +998,7 @@ class ModifyItemInfo extends Component {
                   </Field>
 
                   <Field title="최대 수강인원">
-                    <InputNumberText width={100} onChange={this.onHandleAdditionalText} min="0" name="max_students" value={this.state.additional.max_students || 0} />&nbsp;명&nbsp;
+                    <InputNumberText width={100} onBlur={e => this.onHandleAdditionalMaxNumber(e, 1000)} onChange={e => this.onHandleAdditionalMaxNumber(e, 1000)} min="1" max="1000" name="max_students" value={this.state.additional.max_students} />&nbsp;명&nbsp;
                   </Field>
 
                   <Field title="수강생 모집기간">
