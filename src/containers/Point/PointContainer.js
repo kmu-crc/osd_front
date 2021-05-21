@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Point from "components/Point";
+import Point_mobile from "mobileComponents/Point_mobile"
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { GetMyPointRequest, GetHistoryRequest, PointUpRequest } from "actions/Point";
@@ -22,7 +23,16 @@ class PointContainer extends Component {
     }
   }
   render() {
-    return (<Point {...this.props} />);
+    return (
+    <React.Fragment>
+      {
+        window.innerWidth>=500?
+        <Point {...this.props} />
+        :
+        <Point_mobile {...this.props}/>        
+      }
+    </React.Fragment>
+    );
   }
 }
 

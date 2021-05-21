@@ -254,9 +254,9 @@ class WriteReviewModal extends Component {
         }
     };
     async onClickWriteReview(event){
-
+        console.log(this.props.payment_id,this.state.comment,this.state.score);
         // let list = [];
-        const list = await Promise.all(this.state.thumbnail.map(async(item,index)=>{
+        let list = await Promise.all(this.state.thumbnail.map(async(item,index)=>{
             console.log(item);
             if(item.indexOf("https://s3")==-1){
                     const file = this.state.files[index];
@@ -269,7 +269,14 @@ class WriteReviewModal extends Component {
         }));
 
         // return;
-        this.props.requestReview(this.props.payment_id,this.state.comment,this.state.score,list.join());
+        this.props.requestReview(this.props.payment_id,this.state.comment,this.state.score,list.join())
+        this.setState({
+            thumbnail:[],
+            files:[],
+            comment:"",
+            score:0,
+            result:[],
+        })
         // if(this.state.thumbnail&&this.state.thumbnail.length>0){
         //     new Promise((resolve)=>{this.state.thumbnail.forEach(async(item,index)=>{
         //         const file = this.state.files[index];
@@ -301,7 +308,6 @@ class WriteReviewModal extends Component {
         // this.props.requestReview(this.props.payment_id,this.state.comment,this.state.score,list.join());
     }
     render() {
-        console.log(this.props);
         const RenderStar = () => {
             return <Rating size="tiny" name="score" icon='star' defaultRating={parseInt(5, 10)} maxRating={5} disabled />
           }

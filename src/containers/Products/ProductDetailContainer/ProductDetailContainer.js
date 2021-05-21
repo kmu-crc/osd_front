@@ -3,14 +3,14 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ItemDetail from "components/Items/ItemDetail";
 import ItemDetail_mobile from "mobileComponents/ItemDetail_mobile";
-
 import Loading from "components/Commons/Loading";
 import {
   GetProductCountRequest, GetLikeProductRequest,
   UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest, addCartRequest, GetDidYouBuyItRequest
 } from "actions/Product";
-import { CreateItemPaymentRequest,  /*GetItemPaymentRequest*/ } from "actions/Payment";
-import { GetItemDetailRequest, ClearItemStepsRequest } from "actions/Item";
+import { CreateItemPaymentRequest,  GetItemPaymentRequest } from "actions/Payment";
+import { GetTotalItemReviewRequest } from "actions/Review";
+import { GetItemDetailRequest, ClearItemStepsRequest, CreateItemReviewRequest,GetItemReviewRequest } from "actions/Item";
 import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 import { GetMyPointRequest, } from "actions/Point";
 import { alert } from "components/Commons/Alert/Alert";
@@ -28,14 +28,15 @@ class ProductDetailContainer extends Component {
     this.Payment = this.Payment.bind(this);
   }
   componentDidMount() {
-    // this.props.ClearItemStepsRequest();
-
     this.props.GetItemDetailRequest(this.props.id, this.props.token)
       .then(this.props.userInfo && this.props.GetDidYouBuyItRequest(this.props.id, this.props.userInfo.uid))
       .then(this.props.GetLikeProductRequest(this.props.id, this.props.token))
+      .then(this.props.GetTotalItemReviewRequest(this.props.id))
       .then(
         this.props.userInfo &&
         this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token));
+
+      this.props.userInfo && this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0);
   }
   Payment(item, option) {
     this.props.CreateItemPaymentRequest(
@@ -98,6 +99,8 @@ const mapStateToProps = (state) => ({
   valid: state.Authentication.status.valid,
   token: state.Authentication.status.token,
   Point: state.Point.status.Point,
+  total: state.ReviewList.status.ItemReviewTotal,
+  payment: state.Payment.status.Payment,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -112,7 +115,11 @@ const mapDispatchToProps = (dispatch) => ({
   addCartRequest: (items, token) => dispatch(addCartRequest(items, token)),
   GetMyPointRequest: (id, token) => dispatch(GetMyPointRequest(id, token)),
   CreateItemPaymentRequest: (data, id, token) => dispatch(CreateItemPaymentRequest(data, id, token)),
+  GetTotalItemReviewRequest: (id) => dispatch(GetTotalItemReviewRequest(id)),
   ClearItemStepsRequest: () => dispatch(ClearItemStepsRequest()),
+  GetItemPaymentRequest: (id, token, page) => dispatch(GetItemPaymentRequest(id, token, page)),
+  CreateItemReviewRequest: (data, id, token) => dispatch(CreateItemReviewRequest(data, id, token)),
+  GetItemReviewRequest: (id, page) => dispatch(GetItemReviewRequest(id, page)),
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductDetailContainer));
