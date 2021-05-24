@@ -8,9 +8,7 @@ const style = {
 }
 export const PdfViewer = ({ pdf, id }) => {
   return (<React.Fragment>
-    {/* {pdf} */}
     <iframe
-      // src={`${window.location.origin}/web/viewer.html?file=${pdf}`}
       src={`/web/viewer.html?file=${pdf}`}
       style={style}
     ></iframe>
