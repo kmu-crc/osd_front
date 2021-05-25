@@ -85,7 +85,7 @@ const NormalBox = styled.div`
   .pagenation{
     width:100%;
     display:flex;
-    margin-top:20px;
+    margin-top:10px;
     justify-content:center;
   }
 `

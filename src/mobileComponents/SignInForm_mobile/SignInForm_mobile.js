@@ -137,7 +137,7 @@ class SignInForm_mobile extends Component {
       console.log(data);
       if (data.type === "AUTH_SIGNIN_IS_NOT_MEMBER") {
         this.setState({err:true});
-        await alert("opendesign회원이 아닙니다.");
+        await alert("OpenDesignWorld회원이 아닙니다.");
         this.setState({err:false});
         return;
       } else if (data.type === "AUTH_SIGNIN_IS_NOT_PASSWORD") {

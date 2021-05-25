@@ -11,6 +11,7 @@ import AlarmContainer from "containers/Commons/AlarmContainer";
 import { alert } from "components/Commons/Alert/Alert";
 import market_style from "market_style";
 import mini_logo from "source/newlogo_small.png"
+import profile_mobile from "source/profile_mobile.svg"
 const BottomMenuContainer = styled.div`
   width:100%;
   height:60px;
@@ -35,6 +36,7 @@ const BottomMenuContainer = styled.div`
     background-image: url(${props=>props.face});
     background-size:cover;
   }
+
   .homeButton{
     width:50px;
     height:50px;
@@ -57,6 +59,12 @@ const BottomMenuContainer = styled.div`
       font-weight:500;
     }
   }
+`
+const ProfileIcon = styled.div`
+  min-width:21px;
+  min-height:28px;
+  background-image:url(${profile_mobile});
+  background-size:cover;
 `
 class Header_mobile extends Component {
   constructor(props) {
@@ -178,7 +186,12 @@ class Header_mobile extends Component {
             :
             <div className="homeButton" onClick={()=>window.location.href="/"}/>
             }
-            <div onClick={()=>{window.location.href="/myPage"}} className="face"></div>
+            {
+              this.props.token==null?
+              <ProfileIcon onClick={()=>window.location.href="/signin"}/>
+              :
+              <div onClick={()=>{window.location.href="/myPage"}} className="face"></div>
+            }
         </BottomMenuContainer>
       </React.Fragment>
     )

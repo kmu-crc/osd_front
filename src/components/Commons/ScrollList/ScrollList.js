@@ -5,6 +5,7 @@ import styled from "styled-components";
 import market_style from "market_style";
 // CSS STYLING
 const ScrollContainer = styled.div`
+  width:100%;
   .wrapper_{
     width:100%;
   }
