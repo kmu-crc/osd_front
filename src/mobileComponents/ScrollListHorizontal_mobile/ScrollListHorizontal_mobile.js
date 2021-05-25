@@ -4,14 +4,14 @@ import arrow_new from "source/arrow_new.png";
 
 const SliderBox = styled.div`
   width:100%;
-  height:250px;
+  height:max-content;
   scroll-behavior:smooth;
   display:flex;
   .wrapper_top{
     overflow-y:auto;
     scroll-behavior:smooth;
     display:flex;
-    padding-left:15px;
+    // padding-left:15px;
     padding-right:5px;
     .item{
       margin-right:10px;

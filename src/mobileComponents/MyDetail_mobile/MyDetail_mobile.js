@@ -31,14 +31,12 @@ const Wrapper = styled.div`
 
   .profile{
     width:100%;
-    height:120px;
+    height:195px;
     border-radius:10px;
     border:1px solid #eaeaea;
     box-shadow: 2px 2px 5px #00000029;
-    display:flex;
-
-    align-items:center;
     padding:10px;
+    .container{width:100%;display:flex;}
       .red{color:red;}
       .thumbnail{
         min-width:100px;
@@ -47,6 +45,22 @@ const Wrapper = styled.div`
         background-image:url(${props => props.face == null ? noimg : props.face});      
         background-position:center;
         background-size:cover;
+      }
+      .button{
+        width:100%;
+        height:max-content;
+        margin-top:20px;
+        .item{
+          width:33%;
+          display:flex;
+          justify-content:center;
+          text-align:center;
+          align-items:center;
+          font-size:${market_style.font.size.small1};
+          font-weight:500;
+        }
+        .marginLeft{margin-left:1%;}
+        .borderLine{border-left:1px solid #eaeaea;border-right:1px solid #eaeaea;}
       }
       .info{
         width:100%;
@@ -116,6 +130,7 @@ const Wrapper = styled.div`
       font-weight:500;
       color:black;
     }
+    .red{color:red;}
     .hrline{
       width:100%;
       border:1px solid #E9E9E9;
@@ -192,21 +207,30 @@ class MyDetail_mobile extends Component {
       <React.Fragment>
         <Wrapper face={MyDetail.thumbnail == null ? noimg : MyDetail.thumbnail}>
           <div className="profile">
+              <div className="container">
               <div className="thumbnail"/>
               <div className="info">
                   <div className="summary">
                       <div className="nickName">{MyDetail.nick_name}</div>
                       <div className="category">등록 아이템 {MyDetail.count}&nbsp;|&nbsp;<span className="red">♥</span>{(MyDetail && MyDetail.like) || 0}</div>
                   </div>
-                  <div className="logged" onClick={this.logout}>로그아웃</div>
+                  {/* <div className="logged" onClick={this.logout}>로그아웃</div> */}
+              </div>
+              </div>
+              <div className="button">
+                  <div className="item" onClick={this.onClickCreateDesigner}>디자이너<br/>등록/관리</div>
+                  <div className="item marginLeft borderLine" onClick={this.onClickCreateMaker}>메이커<br/>등록/관리</div>
+                  <div className="item">본인인증</div>
               </div>
           </div>
-          <div className="button">
+          {/* <div className="button">
               <div className="piece" onClick={this.onClickCreateDesigner}>디자이너<br/>등록/관리</div>
               <div className="piece marginLeft marginRight" onClick={this.onClickCreateMaker}>메이커<br/>등록/관리</div>
               <div className="piece">본인인증</div>
-          </div>
+          </div> */}
           <div className="navi">
+              <div className="menu red" onClick={this.logout}>로그아웃</div>
+              <div className="hrline"/>
               <div className="menu">내 포인트 관리</div>
               <div className="hrline"/>
               <div className="menu">내 정보 수정</div>

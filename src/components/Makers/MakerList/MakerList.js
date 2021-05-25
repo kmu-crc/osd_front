@@ -8,9 +8,6 @@ import Category from "components/Commons/Category";
 import market_style from "market_style";
 
 const Wrapper = styled.div`
-*{
-  // border:1px solid black;
-}
   width: 100%;
   display: flex;
   flex-direction: row;
