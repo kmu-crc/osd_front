@@ -30,10 +30,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    GetMakerListRequest: (page, sort) => (
-        dispatch(GetMakerListRequest(page, sort))),
-    GetMakerTotalCountRequest: (category1, category2) => (
-        dispatch(GetMakerTotalCountRequest(category1, category2)))
+    GetMakerListRequest: (page, sort, cate1, cate2, cate3, keyword) => dispatch(GetMakerListRequest(page, sort, cate1, cate2, cate3, keyword)),
+    GetMakerTotalCountRequest: (category1, category2) => dispatch(GetMakerTotalCountRequest(category1, category2))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MakerListContainer);

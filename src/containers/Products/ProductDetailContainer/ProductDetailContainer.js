@@ -11,10 +11,12 @@ import {
 import { CreateItemPaymentRequest,  GetItemPaymentRequest } from "actions/Payment";
 import { GetTotalItemReviewRequest } from "actions/Review";
 import { GetItemDetailRequest, ClearItemStepsRequest, CreateItemReviewRequest,GetItemReviewRequest } from "actions/Item";
+
 import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 import { GetMyPointRequest, } from "actions/Point";
 import { alert } from "components/Commons/Alert/Alert";
 import styled from "styled-components";
+
 const Wrapper = styled.div`
   margin:20px 30px
 `
@@ -25,10 +27,37 @@ const Mobile_wrapper = styled.div`
 class ProductDetailContainer extends Component {
   constructor(props) {
     super(props);
+    this.state = { loading: false };
     this.Payment = this.Payment.bind(this);
   }
   componentDidMount() {
+
+    this.setState({ loading: true });
     this.props.GetItemDetailRequest(this.props.id, this.props.token)
+      .then(({ ItemDetail }) => {
+
+        if (ItemDetail.success == false) {
+          this.BadAccess()
+          return
+        }
+
+        const { visible, active, private: is_private, members } = ItemDetail
+        const { userInfo } = this.props
+
+        if (visible === 0) {
+          this.BadAccess()
+          return
+        }
+
+        if (active === 0) { }
+
+        const yours = members && members.filter(mem => mem.user_id === userInfo && userInfo.uid)
+
+        if (is_private && yours == false) {
+          this.ThisIsPrivateItem()
+        }
+
+      })
       .then(this.props.userInfo && this.props.GetDidYouBuyItRequest(this.props.id, this.props.userInfo.uid))
       .then(this.props.GetLikeProductRequest(this.props.id, this.props.token))
       .then(this.props.GetTotalItemReviewRequest(this.props.id))
@@ -37,6 +66,11 @@ class ProductDetailContainer extends Component {
         this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token));
 
       this.props.userInfo && this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0);
+
+//       .then(this.props.userIfno && this.props.GetLikeProductRequest(this.props.id, this.props.token))
+//       .then(this.props.userInfo && this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token))
+//       .then(() => this.setState({ loading: false }))
+
   }
   Payment(item, option) {
     this.props.CreateItemPaymentRequest(
@@ -53,11 +87,10 @@ class ProductDetailContainer extends Component {
             // window.location.href = `/productDetail/${item.item_id}`;
             await alert("구입이 완료되었습니다. [내 정보] > [구입 아이템]에서 확인하실 수 있습니다.");
             window.location.href = `/myPage/`;
-
           }
         }
       })
-  };
+  }
   async BadAccess() {
     await alert("잘못된 접근입니다.");
     window.location.href = `/product`;
@@ -68,24 +101,20 @@ class ProductDetailContainer extends Component {
   }
 
   render() {
-    console.log(this.props);
-    const yours = this.props.ItemDetail.members && this.props.ItemDetail.members.filter(mem => mem.user_id === this.props.userInfo && this.props.userInfo.uid);
-    return (
-      this.props.ItemDetail ?
-      this.props.ItemDetail.private === 1 && !yours ?
-        this.ThisIsPrivateItem() :
-        (
-          window.innerWidth>=500?
-          <Wrapper>
-          <ItemDetail purchase={this.Payment} itemId={this.props.ItemDetail.item_id} item={this.props.ItemDetail} {...this.props} />
-          </Wrapper>
-          :
-          <Mobile_wrapper>
-          <ItemDetail_mobile purchase={this.Payment} itemId={this.props.ItemDetail.item_id} item={this.props.ItemDetail} {...this.props} />
-          </Mobile_wrapper>
-        )
-      : <Loading />
-      )
+    const { loading } = this.state
+
+    return loading
+
+      ? <Loading />
+
+      : <Wrapper>
+        <ItemDetail
+          purchase={this.Payment}
+          itemId={this.props.ItemDetail.item_id}
+          item={this.props.ItemDetail}
+          {...this.props}
+        />
+      </Wrapper>
   }
 }
 

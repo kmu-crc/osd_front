@@ -25,6 +25,9 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
 import ReviewDetailModal from "components/Commons/ReviewDetailModal";
 import WriteReviewModal from "components/Commons/WriteReviewModal"
+import LectureItemComponent from "./LectureItemComponent"
+
+
 const Wrapper = styled.div`
 
   width:100%;
@@ -729,7 +732,7 @@ class ItemDetail extends Component {
         /> */}
         <Wrapper>
           <div className="profileBox">
-            <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg}/>
+            <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg} />
             <ItemInfo face={item.who || who}>
               <div className="flex-align-column line">
                 <div className="flex spaceBetween">
@@ -829,6 +832,9 @@ class ItemDetail extends Component {
             </ItemInfo>
 
           </div>
+
+          {/* special component */}
+          {item.type === 7 ? <LectureItemComponent max={item.max_students} current={1} /> : null}
 
           {/* item-contents */}
           {item &&

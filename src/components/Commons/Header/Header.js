@@ -215,12 +215,12 @@ const LoginBox = styled.div`
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = { logged: false, alarms: {}, active: false, keyword:""};
+    this.state = { logged: false, alarms: {}, active: false, keyword: "" };
     this.getNews = this.getNews.bind(this);
     this.submitEnter = this.submitEnter.bind(this);
     this.saveKeyword = this.saveKeyword.bind(this);
     this.onClickMessageIcon = this.onClickMessageIcon.bind(this);
-    this.onClickSearch=this.onClickSearch.bind(this);
+    this.onClickSearch = this.onClickSearch.bind(this);
     this.onClickEvent = this.onClickEvent.bind(this);
   }
   componentDidMount() {
@@ -235,44 +235,44 @@ class Header extends Component {
     }
     return true;
   }
-  onClickEvent(event){
-    if(event.target.id !== "popmenu")this.setState({active:false});
+  onClickEvent(event) {
+    if (event.target.id !== "popmenu") this.setState({ active: false });
   }
-  searchlist=()=>{
-    
+  searchlist = () => {
+
   }
-  onClickSearch=async(event)=>{
+  onClickSearch = async (event) => {
     const location = window.location.pathname;
 
     const designerActive = (location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1) && (location.indexOf(`/request`) === -1)
     const makerActive = (location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) && (location.indexOf(`/request`) === -1)
-    const itemActive = (location.indexOf("/product") !== -1 || (location.indexOf("/createproduct") !== -1)|| (location.indexOf("/productModify") !== -1)|| location.indexOf("/productDetail") !== -1) && (location.indexOf(`/request`) === -1)
+    const itemActive = (location.indexOf("/product") !== -1 || (location.indexOf("/createproduct") !== -1) || (location.indexOf("/productModify") !== -1) || location.indexOf("/productDetail") !== -1) && (location.indexOf(`/request`) === -1)
     let searchtype = designerActive ? "designer" : makerActive ? "maker" : itemActive ? "item" : null;
     console.log(this.state.keyword);
-    let countItem =-1;
-    let countMaker=-1;
-    let countDesigner=-1;
+    let countItem = -1;
+    let countMaker = -1;
+    let countDesigner = -1;
     await this.props.GetItemSearchCountRequest(this.props.sort, this.props.cate1, this.props.cate2, this.state.keyword)
-    .then((data)=>{console.log(data);countItem=data.searchCount==null?-1:data.searchCount;});
+      .then((data) => { console.log(data); countItem = data.searchCount == null ? -1 : data.searchCount; });
     await this.props.GetMakerSearchCountRequest(this.props.sort, this.props.cate1, this.props.cate2, this.state.keyword)
-    .then((data)=>{console.log(data);countMaker=data.searchCount==null?-1:data.searchCount;});
+      .then((data) => { console.log(data); countMaker = data.searchCount == null ? -1 : data.searchCount; });
     await this.props.GetDesignerSearchCountRequest(this.props.sort, this.props.cate1, this.props.cate2, this.state.keyword)
-    .then((data)=>{console.log(data);countDesigner=data.searchCount==null?-1:data.searchCount;});
-    if(makerActive){
-      searchtype=countMaker>0?"maker":
-      countDesigner>0?"designer":
-      countItem>0?"item":
-      "item";
-    }else if(itemActive){
-      searchtype=countItem>0?"item":
-      countDesigner>0?"designer":
-      countMaker>0?"maker":
-      "item";
-    }else{
-        searchtype=countDesigner>0?"designer":
-        countMaker>0?"maker":
-        countItem>0?"item":
-        "item";
+      .then((data) => { console.log(data); countDesigner = data.searchCount == null ? -1 : data.searchCount; });
+    if (makerActive) {
+      searchtype = countMaker > 0 ? "maker" :
+        countDesigner > 0 ? "designer" :
+          countItem > 0 ? "item" :
+            "item";
+    } else if (itemActive) {
+      searchtype = countItem > 0 ? "item" :
+        countDesigner > 0 ? "designer" :
+          countMaker > 0 ? "maker" :
+            "item";
+    } else {
+      searchtype = countDesigner > 0 ? "designer" :
+        countMaker > 0 ? "maker" :
+          countItem > 0 ? "item" :
+            "item";
     }
     console.log(searchtype);
 
@@ -324,106 +324,111 @@ class Header extends Component {
     // active variables
     const designerActive = (location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1) && (location.indexOf(`/request`) === -1)
     const makerActive = (location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) && (location.indexOf(`/request`) === -1)
-    const itemActive = (location.indexOf("/product") !== -1 || (location.indexOf("/createproduct") !== -1)|| (location.indexOf("/productModify") !== -1)|| location.indexOf("/productDetail") !== -1) && (location.indexOf(`/request`) === -1)
+    const itemActive = (location.indexOf("/product") !== -1 || (location.indexOf("/createproduct") !== -1) || (location.indexOf("/productModify") !== -1) || location.indexOf("/productDetail") !== -1) && (location.indexOf(`/request`) === -1)
     const requestActive = (location.indexOf("/request") !== -1)
     const searchtype = designerActive ? "designer" : makerActive ? "maker" : itemActive ? "item" : null;
 
-    const pattern_eng= /[a-zA-Z]/;
+    const pattern_eng = /[a-zA-Z]/;
     return (
-    <HeaderContainer>
+      <HeaderContainer>
 
 
-      {/*  */}
-      <div className="betweenMenu">
-      <div className="left_menu">
-      <HeaderItem>
-          <div className="logo_box"
-          onClick={()=>window.location.href="/"}/>
-      </HeaderItem>
-      {/*  */}
-      <HeaderItem>
-        <Link id="designer"
-          onClick={()=>{
-            window.location.href="/designer"
-          }}
-          // to={`/designer`}
-          className={designerActive ? "active" : ""}>
-          디자이너</Link>
-      </HeaderItem>
-      {/*  */}
-      <HeaderItem>
-        <Link id="maker" 
-            onClick={()=>{
-              window.location.href="/maker"
-            }}
-          className={makerActive ? "active" : ""}>
-          메이커</Link>
-      </HeaderItem>
-      {/*  */}
-      <HeaderItem>
-        <Link id="product" 
-           onClick={()=>{
-             window.location.href="/product"
-            }}
-          className={itemActive ? "active" : ""}>
-          아이템</Link>
-      </HeaderItem>
-      {/*  */}
-      <HeaderItem>
-        <Link id="request" 
-           onClick={()=>{
-             window.location.href="/request/designer"
-            }}
-          className={requestActive ? "active" : ""}>
-          게시판
+        {/*  */}
+        <div className="betweenMenu">
+          <div className="left_menu">
+            <HeaderItem>
+              <div className="logo_box"
+                onClick={() => window.location.href = "/"} />
+            </HeaderItem>
+            {/*  */}
+            <HeaderItem>
+              <Link id="designer"
+                // onClick={() => {
+                //   window.location.href = "/designer"
+                // }}
+                to="/designer"
+                className={designerActive ? "active" : ""}>
+                디자이너</Link>
+            </HeaderItem>
+            {/*  */}
+            <HeaderItem>
+              <Link id="maker"
+                // onClick={() => {
+                //   window.location.href = "/maker"
+                // }}
+                to="/maker"
+                className={makerActive ? "active" : ""}>
+                메이커</Link>
+            </HeaderItem>
+            {/*  */}
+            <HeaderItem>
+              <Link id="product"
+                // onClick={() => {
+                //   window.location.href = "/product"
+                // }}
+                to="/product"
+                className={itemActive ? "active" : ""}>
+                아이템</Link>
+            </HeaderItem>
+            {/*  */}
+            <HeaderItem>
+              <Link id="request"
+                // onClick={() => {
+                //   window.location.href = "/request/designer"
+                // }}
+                to="/request/designer"
+                className={requestActive ? "active" : ""}>
+                게시판
           </Link>
-      </HeaderItem>
-      </div>
-
-      <div className="right_menu">
-        {valid && userInfo
-          ? (<LoginBox>
-            <div className="iconBox" >
-              <AlarmContainer />
-            </div>
-
-            <div className="iconBox" onClick={this.onClickMessageIcon}>
-              <Icon className="grey envelope" size="large" />
-            </div>
-            <div className="addItem" onClick={()=>{window.location.href="/createProduct"}}><div className="_text">아이템 등록</div></div>
-            <div onClick={async () => await this.setState({ active: !this.state.active })} style={{ display: "flex",alignItems:"center", flexDirection: "row", cursor: "pointer" }}>
-              <div  style={{ width: "23px", height: "23px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
-              <div  className="userNickname" style={{ width: "max-content", marginLeft: "5px",fontFamily:market_style.font.family,
-               fontSize:market_style.font.size.small1 }}>
-                <TextFormat txt={userInfo.nickName} chars={pattern_eng.test(userInfo.nickName)?6:3} />
-                </div>
-              {this.state.active ?
-                <UserMenu id="popmenu">
-                  <Link to={`/mypage`}>
-                    <div className="item" id="popmenu">내 정보</div>
-                  </Link>
-                  <div onClick={this.logout} className="item" id="popmenu">로그아웃</div>
-                </UserMenu>
-                : null}
-            </div>
-          </LoginBox>)
-          : (<LoginBox>
-                <div className="login_text"><Link to={`/signin`}>로그인</Link></div>
-            </LoginBox>)}
-      </div>
-      </div>
-      <div className="center_menu">
-        {location.indexOf("/search") !== -1 ? null :
-        <HeaderItem className="search">
-          <div className="search-icon-wrapper">
-            <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
-            <Link to={`/search/${searchtype}/update/${this.state.keyword}`} id="searchLink">
-              <img alt="icon" src={Zoom} id="searchbox" className="search-icon" onClick={this.onClickSearch}/>
-            </Link>
+            </HeaderItem>
           </div>
-        </HeaderItem>}
-      </div>
-    </HeaderContainer >)
+
+          <div className="right_menu">
+            {valid && userInfo
+              ? (<LoginBox>
+                <div className="iconBox" >
+                  <AlarmContainer />
+                </div>
+
+                <div className="iconBox" onClick={this.onClickMessageIcon}>
+                  <Icon className="grey envelope" size="large" />
+                </div>
+                <div className="addItem" onClick={() => { window.location.href = "/createProduct" }}><div className="_text">아이템 등록</div></div>
+                <div onClick={async () => await this.setState({ active: !this.state.active })} style={{ display: "flex", alignItems: "center", flexDirection: "row", cursor: "pointer" }}>
+                  <div style={{ width: "23px", height: "23px", borderRadius: "35px", background: "#EEE", backgroundImage: `url(${face})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+                  <div className="userNickname" style={{
+                    width: "max-content", marginLeft: "5px", fontFamily: market_style.font.family,
+                    fontSize: market_style.font.size.small1
+                  }}>
+                    <TextFormat txt={userInfo.nickName} chars={pattern_eng.test(userInfo.nickName) ? 6 : 3} />
+                  </div>
+                  {this.state.active ?
+                    <UserMenu id="popmenu">
+                      <Link to={`/mypage`}>
+                        <div className="item" id="popmenu">내 정보</div>
+                      </Link>
+                      <div onClick={this.logout} className="item" id="popmenu">로그아웃</div>
+                    </UserMenu>
+                    : null}
+                </div>
+              </LoginBox>)
+              : (<LoginBox>
+                <div className="login_text"><Link to={`/signin`}>로그인</Link></div>
+              </LoginBox>)}
+          </div>
+        </div>
+        <div className="center_menu">
+          {location.indexOf("/search") !== -1 ? null :
+            <HeaderItem className="search">
+              <div className="search-icon-wrapper">
+                <input className="input-style" onChange={this.saveKeyword} onKeyDown={this.submitEnter} />
+                <Link to={`/search/${searchtype}/update/${this.state.keyword}`} id="searchLink">
+                  <img alt="icon" src={Zoom} id="searchbox" className="search-icon" onClick={this.onClickSearch} />
+                </Link>
+              </div>
+            </HeaderItem>}
+        </div>
+      </HeaderContainer >)
   };
 };
 
