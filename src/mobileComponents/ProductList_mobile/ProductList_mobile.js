@@ -71,7 +71,7 @@ export default class ProductList_mobile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sort:null,cate1:null,cate2:null,cate3:null,
+      sort:2,cate1:null,cate2:null,cate3:null,
     }
     this.handleCate1 = this.handleCate1.bind(this);
     this.handleCate2 = this.handleCate2.bind(this);

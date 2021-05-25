@@ -139,11 +139,12 @@ const Wrapper = styled.div`
 
 `
 
+
 class MyDetail_mobile extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { selectMenu: parseInt(this.props.index,10) }
+    this.state = { selectMenu: parseInt(this.props.index,10)}
     this.onClickMenu = this.onClickMenu.bind(this);
     this.onClickCreateDesigner = this.onClickCreateDesigner.bind(this);
     this.onClickCreateMaker = this.onClickCreateMaker.bind(this);
@@ -200,62 +201,68 @@ class MyDetail_mobile extends Component {
   render() {
 
     const { MyDetail } = this.props;
-    console.log("MyDetail", this.props);
+    console.log("MyDetail", window.location.pathname.replace("/mypage/",""));
     const { selectMenu } = this.state;
-
+    const path = window.location.pathname.replace("/mypage/","");
+    const index = (path=="/myPage"||path=="/mypage")?null:parseInt(path,10);
+    console.log(index);
     return (
       <React.Fragment>
+        {
+        index ==null?
         <Wrapper face={MyDetail.thumbnail == null ? noimg : MyDetail.thumbnail}>
-          <div className="profile">
-              <div className="container">
-              <div className="thumbnail"/>
-              <div className="info">
-                  <div className="summary">
-                      <div className="nickName">{MyDetail.nick_name}</div>
-                      <div className="category">등록 아이템 {MyDetail.count}&nbsp;|&nbsp;<span className="red">♥</span>{(MyDetail && MyDetail.like) || 0}</div>
-                  </div>
-                  {/* <div className="logged" onClick={this.logout}>로그아웃</div> */}
-              </div>
-              </div>
-              <div className="button">
-                  <div className="item" onClick={this.onClickCreateDesigner}>디자이너<br/>등록/관리</div>
-                  <div className="item marginLeft borderLine" onClick={this.onClickCreateMaker}>메이커<br/>등록/관리</div>
-                  <div className="item">본인인증</div>
-              </div>
-          </div>
-          {/* <div className="button">
-              <div className="piece" onClick={this.onClickCreateDesigner}>디자이너<br/>등록/관리</div>
-              <div className="piece marginLeft marginRight" onClick={this.onClickCreateMaker}>메이커<br/>등록/관리</div>
-              <div className="piece">본인인증</div>
-          </div> */}
-          <div className="navi">
-              <div className="menu red" onClick={this.logout}>로그아웃</div>
-              <div className="hrline"/>
-              <div className="menu">내 포인트 관리</div>
-              <div className="hrline"/>
-              <div className="menu">내 정보 수정</div>
-              <div className="hrline"/>
-              <div className="menu">구입 아이템</div>
-              <div className="hrline"/>
-              <div className="menu">판매 아이템</div>
-              <div className="hrline"/>
-              <div className="menu">의뢰 아이템</div>
-              <div className="hrline"/>
-              <div className="menu">등록 아이템</div>
-              <div className="hrline"/>
-              <div className="menu">관심 아이템</div>
-              <div className="hrline"/>
-              <div className="menu">관심 디자이너</div>
-              <div className="hrline"/>
-              <div className="menu">관심 메이커</div>
-              <div className="hrline"/>
-              <div className="menu">참여 프로젝트</div>
-              <div className="hrline"/>
-              <div className="menu">디자인 의뢰</div>
-              <div className="hrline"/>
-              <div className="menu">메이커 의뢰</div>
-          </div>
-        </Wrapper>
+        <div className="profile">
+            <div className="container">
+            <div className="thumbnail"/>
+            <div className="info">
+                <div className="summary">
+                    <div className="nickName">{MyDetail.nick_name}</div>
+                    <div className="category">등록 아이템 {MyDetail.count}&nbsp;|&nbsp;<span className="red">♥</span>{(MyDetail && MyDetail.like) || 0}</div>
+                </div>
+            </div>
+            </div>
+            <div className="button">
+                <div className="item" onClick={this.onClickCreateDesigner}>디자이너<br/>등록/관리</div>
+                <div className="item marginLeft borderLine" onClick={this.onClickCreateMaker}>메이커<br/>등록/관리</div>
+                <div className="item">본인인증</div>
+            </div>
+        </div>
+        <div className="navi">
+            <div className="menu red" onClick={this.logout}>로그아웃</div>
+            <div className="hrline"/>
+            <div className="menu" onClick={()=>window.location.href="/mypage/10"}>내 포인트 관리</div>
+            <div className="hrline"/>
+            <div className="menu" onClick={()=>window.location.href="/mypage/9"}>내 정보 수정</div>
+            <div className="hrline"/>
+            <div className="menu">구입 아이템</div>
+            <div className="hrline"/>
+            <div className="menu">판매 아이템</div>
+            <div className="hrline"/>
+            <div className="menu">의뢰 아이템</div>
+            <div className="hrline"/>
+            <div className="menu">등록 아이템</div>
+            <div className="hrline"/>
+            <div className="menu">관심 아이템</div>
+            <div className="hrline"/>
+            <div className="menu">관심 디자이너</div>
+            <div className="hrline"/>
+            <div className="menu">관심 메이커</div>
+            <div className="hrline"/>
+            <div className="menu">참여 프로젝트</div>
+            <div className="hrline"/>
+            <div className="menu">디자인 의뢰</div>
+            <div className="hrline"/>
+            <div className="menu">메이커 의뢰</div>
+        </div>
+      </Wrapper>
+      :index == 10?
+        <React.Fragment>
+          <MyPointStatusContainer/>
+        </React.Fragment>
+      :index == 9?
+          <ModifyMyDetailContainer/>
+      :null
+      }
       </React.Fragment >
     );
   }

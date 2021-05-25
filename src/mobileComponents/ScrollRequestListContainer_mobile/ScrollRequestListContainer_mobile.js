@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetRequestListRequest } from "actions/Request";
-import ScrollBoardList from "components/Commons/ScrollBoardList";
-import RequestElement from "components/Request/RequestListElement";
+import ScrollBoardList_mobile from "mobileComponents/ScrollBoardList_mobile";
+import RequestListElement_mobile from "components/Request/RequestListElement_mobile";
 
-class ScrollRequestListContainer extends Component {
+class ScrollRequestListContainer_mobile extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.type !== prevProps.type || this.props.sort !== prevProps.sort || this.props.cate1 !== prevProps.cate1 || this.props.cate2 !== prevProps.cate2 || this.props.cate3 !== prevProps.cate3 || this.props.keyword !== prevProps.keyword) {
       this.getList(0);
@@ -14,30 +14,34 @@ class ScrollRequestListContainer extends Component {
     this.getList(0);
   }
   getList = (page) => {
+    console.log(this.props.type, page, this.props.cate1, this.props.cate2, this.props.cate3, this.props.sort, this.props.keyword)
     return this.props.GetRequestListRequest(this.props.type, page, this.props.cate1, this.props.cate2, this.props.cate3, this.props.sort, this.props.keyword);
   }
 
   render() {
-    console.log(this.props);
     return (
-      <ScrollBoardList
-        total={this.props.Total}
+      <React.Fragment>
+      <ScrollBoardList_mobile
+        total={this.props.Count}
         dataList={this.props.dataList}
+        dataListAdded={this.props.dataListAdded}
         getListRequest={this.getList}
-        ListComponent={RequestElement}
+        ListComponent={RequestListElement_mobile}
+        type={this.props.type}
       />
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  dataList: state.RequestList.status.List,
   dataListAdded: state.RequestList.status.ListAdded,
-  Total: state.RequestList.status.Total,
+  dataList: state.RequestList.status.List,
+  Count: state.RequestList.status.Total,
 });
 const mapDispatchToProps = (dispatch) => ({
   GetRequestListRequest: (type, page, cate1, cate2, cate3, sort, keyword) =>
     dispatch(GetRequestListRequest(type, page, cate1, cate2, cate3, sort, keyword)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ScrollRequestListContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ScrollRequestListContainer_mobile);

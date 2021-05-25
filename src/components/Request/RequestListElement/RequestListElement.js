@@ -143,10 +143,8 @@ const ThumbnailWriter = styled.div`
 class DesignerBoardElement extends Component {
   render() {
     const item = this.props.data;
-    console.log("item:", item);
     // const Element = () =>
     const userLink = item.type=="designer"?"/designerDetail/"+item.expert_id:"/makerDetail/"+item.expert_id;
-    console.log(userLink);
     return (
       <React.Fragment>
         <ListElement left={item.status === "response" ? 25 : 0}>

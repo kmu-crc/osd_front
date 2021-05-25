@@ -1,0 +1,1 @@
+export { default } from "./ItemQuestionContainer_mobile";

@@ -10,6 +10,8 @@ import { Icon } from "semantic-ui-react";
 import AlarmContainer from "containers/Commons/AlarmContainer";
 import { alert } from "components/Commons/Alert/Alert";
 import market_style from "market_style";
+import mini_logo from "source/newlogo_small.png"
+import profile_mobile from "source/profile_mobile.svg"
 const BottomMenuContainer = styled.div`
   width:100%;
   height:60px;
@@ -20,10 +22,11 @@ const BottomMenuContainer = styled.div`
   z-index:888;
   display:flex;
   justify-content:space-between;
+  align-items:center;
   padding:10px 50px;
   .icon_wrapper{
-    width:25px;
-    height:20px;
+    width:max-content;
+    height:max-content;
   }
   .face{
     width:36px;
@@ -31,6 +34,13 @@ const BottomMenuContainer = styled.div`
     border-radius:50%;
     background-color:#e9e9e9;
     background-image: url(${props=>props.face});
+    background-size:cover;
+  }
+
+  .homeButton{
+    width:50px;
+    height:50px;
+    background-image: url(${mini_logo});
     background-size:cover;
   }
   .addItemButton{
@@ -49,6 +59,12 @@ const BottomMenuContainer = styled.div`
       font-weight:500;
     }
   }
+`
+const ProfileIcon = styled.div`
+  min-width:21px;
+  min-height:28px;
+  background-image:url(${profile_mobile});
+  background-size:cover;
 `
 class Header_mobile extends Component {
   constructor(props) {
@@ -155,17 +171,27 @@ class Header_mobile extends Component {
     window.location.href = "/message";
   }
   render() {
-
+    const isHome = window.location.pathname == "/"?true:false;
     return (
       <React.Fragment>
         <BottomMenuContainer face={this.props.userInfo&&this.props.userInfo.thumbnail&&this.props.userInfo.thumbnail.s_img}>
             <div className="icon_wrapper">
               <Icon className="grey list" size="big"/> 
             </div>
+            { 
+            isHome?
             <div onClick={()=>{window.location.href="/createProduct"}} className="addItemButton">
-              <div className="text">아이템 등록하기</div>
+            <div className="text">아이템 등록하기</div>
             </div>
-            <div onClick={()=>{window.location.href="/myPage"}} className="face"></div>
+            :
+            <div className="homeButton" onClick={()=>window.location.href="/"}/>
+            }
+            {
+              this.props.token==null?
+              <ProfileIcon onClick={()=>window.location.href="/signin"}/>
+              :
+              <div onClick={()=>{window.location.href="/myPage"}} className="face"></div>
+            }
         </BottomMenuContainer>
       </React.Fragment>
     )
