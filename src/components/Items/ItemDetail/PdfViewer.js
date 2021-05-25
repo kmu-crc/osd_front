@@ -1,21 +1,16 @@
-import React from 'react';
-import styled from 'styled-components';
-
-const PDFwrapper = styled.div`
-  width: 100%;
-  &.fixed-height {
-    height: 750px;
-  }
-  background-color: #EFEFEF;
-  border: 1px dashed #707070;
-  overflow-y: hidden;
-`
-const ZoomBox = styled.div`
-  display:flex;
-  width:100%;
-`
-
-export const PdfViewer = (props) => {
-	return (<div> PDF뷰어 수정중입니다.  </div>)
+import React from 'react'
+const style = {
+  width: "100%",
+  minHeight: "300px",
+  height: "650px",
+  border: "1px solid #707070",
+  solid: "#0000CC",
 }
-
+export const PdfViewer = ({ pdf, id }) => {
+  return (<React.Fragment>
+    <iframe
+      src={`/web/viewer.html?file=${pdf}`}
+      style={style}
+    ></iframe>
+  </React.Fragment>)
+}
