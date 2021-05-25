@@ -17,7 +17,7 @@ const ReviewBox = styled.div`
 `;
 
 const ContentsBox = styled.div`
-  min-width:103%;
+  min-width:100%;
   display:flex;
   flex-wrap:wrap;
 
@@ -33,6 +33,16 @@ const ContentsBox = styled.div`
     display:flex;
     justify-content:center;
   }
+  .viewmore{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color:#F7F7F7;
+    padding:5px;
+    border-radius:5px;
+    color:#A5A5A5;
+  }
   @media only screen and (min-width: 1366px){
     height:300px;
   }
@@ -41,22 +51,17 @@ const ContentsBox = styled.div`
   }
 `
 const Wrapper_ = styled.div`
-  width:600px;
-  min-width:390px;
+  width:100%;
   height:113px;
   display:flex;
   color:#707070;
-  margin-right:30px;
-  margin-bottom:10px;
   margin-top:10px;
   .wrapper{
     display:flex;
+    justify-content:space-between;
     .line{
       margin-bottom: 10x;
       font-size:${market_style.font.size.small1};
-    }
-    .marginRight{
-      margin-right:49px;
     }
     .nick_{
       width:max-content;
@@ -70,16 +75,16 @@ const Wrapper_ = styled.div`
   }
 
   .content{
-    width:100%;
     height:100%;
-    margin-left:10px;
+    padding-left:10px;
     .row{
       width: max-content;
       margin-bottom: 10x;
       font-size:${market_style.font.size.small1};
     }
     .text_{
-      margin-top:28px;
+      height:60px;
+      margin-top:25px;
       margin-bottom: 10px;
       overflow:hidden;
       text-overflow:ellipsis;
@@ -101,11 +106,11 @@ const Thumbnail = styled.div`
   background-size: cover;
   background-position: center center;
 `;
-class DesignerReviewContainer extends Component {
+class DesignerReviewContainer_mobile extends Component {
   constructor(props){
     super(props);
     this.state={
-      page:0,
+      page:0,viewmore:false,
     }
   }
   componentDidMount() {
@@ -113,7 +118,7 @@ class DesignerReviewContainer extends Component {
   }
   getList = page =>
   {
-  this.setState({page:page+1});
+  this.setState({page:page+1,viewmore:true});
   this.props.GetDesignerReviewListRequest(this.props.id, page);
   } 
   render() {
@@ -122,13 +127,30 @@ class DesignerReviewContainer extends Component {
     }
     const allpage = this.props.count;
     const lastPage = parseInt(this.props.count / 4, 10);
-    console.log(this.props.dataList);
+    console.log(this.props.dataListAdded);
     return (
       <React.Fragment>
         
       <ContentsBox>
             { this.props.count != 0?
-              this.props.dataList.map((item,index)=>{
+              this.props.dataListAdded.map((item,index)=>{
+                if(index>1)return null;
+                return (
+                  <Wrapper_ onClick={() => this.props.handler(item)}>
+                    <Thumbnail imageURL={item.m_img} />
+                    <div className="content">
+                      <div className="wrapper">
+                      <div className="nick_ line marginRight">{item.nick_name}</div>
+                      <div className="row"><RenderingStar score={item.score}/></div>
+                      </div>
+                      <div className="text_">{item.comment && item.comment.slice(0, 40)}{item.comment && item.comment.length > 40 ? "..." : ""}</div>
+                    </div>
+                  </Wrapper_>)
+              }):<div className="blank">리뷰 없음</div>
+            }
+            { this.state.viewmore&&this.props.count != 0&&
+              this.props.dataListAdded.map((item,index)=>{
+                if(index<2)return null;
                 return (
                   <Wrapper_ onClick={() => this.props.handler(item)}>
                     <Thumbnail imageURL={item.m_img} />
@@ -140,29 +162,43 @@ class DesignerReviewContainer extends Component {
                       <div className="text_">{item.comment && item.comment.slice(0, 50)}{item.comment && item.comment.length > 64 ? "..." : ""}</div>
                     </div>
                   </Wrapper_>)
-              }):<div className="blank">리뷰 없음</div>
+              })
             }
-            <div className="pagenation">
-            { this.props.count >4?
-                        <Pagination
-                        activePage={this.state.page}
-                        boundaryRange={0}
-                        defaultActivePage={1}
-                        ellipsisItem={null}
-                        firstItem={null}
-                        lastItem={null}
-                        siblingRange={1}
-                        totalPages={lastPage + 1}
-                        secondary
-                        onPageChange={(event, { activePage }) => {
-                          this.getList(activePage - 1);
-                        }}
-                      />:null
-              }
-            </div>
+            {this.props.dataList.length > 2&&<div className="viewmore" onClick={()=>this.getList(this.state.page)}>▾</div>}
       </ContentsBox>
       </React.Fragment>
-
+        // 리뷰목록
+        // <ReviewBox
+        // isScroll={this.props.dataListAdded.length>2?true:false}
+        // >
+        //   <ScrollList
+        //     handler={this.props.handler}
+        //     scrollId={"review-scroller"}
+        //     cols={2}
+        //     type="review"
+        //     getListRequest={this.getList}
+        //     ListComponent={Review}
+        //     dataList={this.props.dataList}
+        //     dataListAdded={this.props.dataListAdded} />
+        // </ReviewBox>
+        // <div className="pagenation">
+        // { this.props.count >4?
+        //             <Pagination
+        //             activePage={this.state.page}
+        //             boundaryRange={0}
+        //             defaultActivePage={1}
+        //             ellipsisItem={null}
+        //             firstItem={null}
+        //             lastItem={null}
+        //             siblingRange={1}
+        //             totalPages={lastPage + 1}
+        //             secondary
+        //             onPageChange={(event, { activePage }) => {
+        //               this.getList(activePage - 1);
+        //             }}
+        //           />:null
+        //   }
+        // </div>
     )
   }
 }
@@ -177,4 +213,4 @@ const mapDispatchToProps = (dispatch) => ({
   GetDesignerReviewListRequest: (id, page) => dispatch(GetDesignerReviewListRequest(id, page)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DesignerReviewContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(DesignerReviewContainer_mobile);

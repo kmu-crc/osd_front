@@ -8,8 +8,8 @@ import TextFormat from "modules/TextFormat";
 import market_style from "market_style";
 
 const Wrapper = styled.div`
-  width:194px;
-  height:253px;
+  width:172px;
+  height:216px;
   border-radius:10px;
   border:1px solid #eaeaea;
   box-shadow: 2px 2px 5px #00000029;
@@ -18,8 +18,8 @@ const Wrapper = styled.div`
   flex-direction:column;
   align-items:cemter;
   .face{
-    width:174px;
-    height:174px;
+    width:150px;
+    height:150px;
     background-image: url(${props=>props.face});
     background-size:cover;
     border-radius:50%;

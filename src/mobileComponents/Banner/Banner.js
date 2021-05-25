@@ -12,27 +12,35 @@ import { alert } from "components/Commons/Alert/Alert";
 import market_style from "market_style";
 import OWD from "source/OWD.png";
 const BannerWrapper = styled.div`
-  width:100%;
-  height:206px;
+  width:${window.outerWidth}px;
+  height:220px;
   border-radius:0px 0px 100px 0px;
   background-color:#F7F7F7;
   display:flex;
-  align-items:center;
+  .wrapper{
+    margin-top:27px;
+    margin-left:10px;
+    margin-right:54px;
+    width:100%;
+    height:max-content;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
   .char{
-    width:171px;
-    height:152px;
+    width:128px;
+    height:max-content;
     font-family:AG초특태고딕,Noto Sans KR;
     font-weight:1000;
     font-size:40px;
-    line-height:50px;
+    line-height:45px;
     color:black;
-    margin-left:20px;
   }
   .logo{
     width:100px;
     height:100px;
     background-image: url(${OWD});
-    margin-left:58px;
+    background-size:cover;
   }
 `
 class Banner extends Component {
@@ -43,8 +51,10 @@ class Banner extends Component {
     return (
       <React.Fragment>
         <BannerWrapper>
-          <div className="char">OPEN<br/>DESIGN<br/>WORLD</div>
-          <div className="logo"/>
+          <div className="wrapper">
+            <div className="char">OPEN<br/>DESIGN<br/>WORLD</div>
+            <div className="logo"/>
+          </div>
         </BannerWrapper>
       </React.Fragment>
     )

@@ -529,7 +529,7 @@ const ItemContents = styled.div`
     height: 510px;
     padding-top: 15px;
     word-wrap: break-word;
-    overflow: hidden;
+    overflow: auto;
   }
 `;
 

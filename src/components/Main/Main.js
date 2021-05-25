@@ -12,6 +12,11 @@ import market_style from "market_style";
 const Margin = 1 / 3 * 45;
 const MainContainer = styled.div`
 `;
+const Mobile_Wrapper = styled.div`
+  width:375px;
+  margin:0px auto;
+  padding-left:10px;
+`
 const Wrapper = styled.div`
   width: 100%;
 `;
@@ -36,7 +41,6 @@ const Head_mobile = styled.div`
   font-size: ${market_style.font.size.normal3};
   margin-top:${props=>props.marginTop+"px"};
   margin-bottom:10px;
-  margin-left:25px; 
   font-family: Noto Sans KR;
   letter-spacing: 0;
   color: #C1C1C1;
@@ -48,7 +52,9 @@ class Main extends Component {
     return (<MainContainer>
 
       {/* <Wrapper> */}
+      <Wrapper>
         <SliderContainer />
+      </Wrapper>
       {/* </Wrapper> */}
       {
         window.innerWidth>=500?
@@ -67,20 +73,20 @@ class Main extends Component {
         </React.Fragment>
         :
         <React.Fragment>
-          <Wrapper>
+          <Mobile_Wrapper>
             <Head_mobile marginTop={10}>
                     인기 디자이너&nbsp;
                     <span style={{fontSize:market_style.font.size.smal3}}>|</span>
                     &nbsp;메이커
               </Head_mobile>
             <ScrollTopDesigner_mobile/>
-          </Wrapper>
-          <Wrapper>
-              <Head_mobile marginTop={20}>
+          </Mobile_Wrapper>
+          <Mobile_Wrapper>
+              <Head_mobile marginTop={15}>
                     인기 아이템
               </Head_mobile>
               <ScrollTopItem_mobile/>
-          </Wrapper>
+          </Mobile_Wrapper>
         </React.Fragment>
       }
 

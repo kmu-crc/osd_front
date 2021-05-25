@@ -5,6 +5,7 @@ import styled from "styled-components";
 import market_style from "market_style";
 // CSS STYLING
 const ScrollContainer = styled.div`
+  width:100%;
   .wrapper_{
     width:100%;
   }
@@ -14,11 +15,15 @@ const ListContainer = styled.div`
   width: 100%;
   display:flex;
   .designer{
-    margin-left:10px;
+    margin-right:10px;
+    margin-bottom:20px;
+  }
+  .maker{
+    margin-right:10px;
     margin-bottom:20px;
   }
   .item{
-    margin-left:10px;
+    margin-right:10px;
     margin-bottom:15px;
   }
   @media only screen and (min-width: 500px) and (max-width:1366px){

@@ -13,8 +13,8 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
 
 const Wrapper = styled.div`
-  width:194px;
-  height:244px;
+  width:172px;
+  height:241px;
   box-shadow: 2px 2px 5px #00000029;
   border-radius:10px;
   border:1px solid #eaeaea;
@@ -27,13 +27,14 @@ const Wrapper = styled.div`
     cursor:pointer;
   }
   .thumbnail{
-    width:170px;
+    width:152px;
     height:140px;
     background-image: url(${props=>props.img});
     background-size : cover;
   }
   .title{
     width:100%;
+    height:22px;
     margin-top:5px;
     font-size:${market_style.font.size.small1};
     font-weight:800;
@@ -41,6 +42,7 @@ const Wrapper = styled.div`
   }
   .summaryBox{
     width:100%;
+    height:19px;
     display:flex;
     align-items:center;
     margin-top:5px;

@@ -8,8 +8,8 @@ import TextFormat from "modules/TextFormat";
 import market_style from "market_style";
 
 const Wrapper = styled.div`
-  width:170px;
-  height:224px;
+  width:150px;
+  height:204px;
   border-radius:10px;
   border:1px solid #eaeaea;
   box-shadow: 2px 2px 5px #00000029;
@@ -18,16 +18,16 @@ const Wrapper = styled.div`
   flex-direction:column;
   align-items:cemter;
   .face{
+    width:130px;
+    height:130px;
     background-image: url(${props=>props.face});
     background-size:cover;
     border-radius:50%;
-    width:150px;
-    height:150px;
   }
   .nickName{
     width:100%;
     font-size:${market_style.font.size.small1};
-    font-weight:800;
+    font-weight:500;
     color:black;
     text-align:center;
     margin-top:5px;
@@ -37,7 +37,7 @@ const Wrapper = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    margin-top:5px;
+    margin-top:7px;
     .category{
       font-size:${market_style.font.size.small1};
     }
