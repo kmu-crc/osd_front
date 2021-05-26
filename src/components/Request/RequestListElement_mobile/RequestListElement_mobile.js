@@ -68,10 +68,15 @@ const ThumbnailWriter = styled.div`
 class RequestListElement_mobile extends Component {
   render() {
     const item = this.props.data;
-    const userLink = item.type=="designer"?"/designerDetail/"+item.expert_id:"/makerDetail/"+item.expert_id;
+    const userLink = this.props.type=="designer"?"/designerDetail/"+item.uid
+                    :this.props.type=="maker"?"/makerDetail/"+item.uid
+                    :this.props.type=="payment"?"/productPurchase/"+item.item_id+"/"+item.uid
+                    :this.props.type=="request"?"/requestDetail/"+item.uid
+                    :null;
+    console.log(userLink)
     return (
       <React.Fragment>
-        <Link  style={{  display: "flex", flexDirection: "row" }} to={"/requestDetail/" + item.uid}>
+        <Link  style={{  display: "flex", flexDirection: "row" }} to={userLink}>
         <Content>
           {
             item.status == "request"?
@@ -84,9 +89,9 @@ class RequestListElement_mobile extends Component {
             </React.Fragment>
             :null  
           }
-          <div className="title">{item.title || "글 제목"}</div>
+          <div className="title">{item.title||item.payment_title || "글 제목"}</div>
           <div className="sub">
-            <ThumbnailWriter src={item.imgURL} />
+            <ThumbnailWriter src={item.imgURL||item.s_img} />
             <div className="writer">{item.nick_name}</div>
             <div className="date">{DateFormat(item.create_time)}</div>
           </div>

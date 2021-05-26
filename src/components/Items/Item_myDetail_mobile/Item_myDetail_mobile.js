@@ -23,13 +23,15 @@ const Wrapper = styled.div`
   justify-content:center;
   align-items:center;
   padding:13px 12px;
+  position:relative;
   *{
     cursor:pointer;
   }
   .thumbnail{
     width:152px;
     height:140px;
-    background-image: url(${props=>props.img});
+    background-color:#eaeaea;
+    // background-image: url(${props=>props.img});
     background-size : cover;
   }
   .title{
@@ -42,11 +44,10 @@ const Wrapper = styled.div`
   }
   .summaryBox{
     width:100%;
-    height:19px;
     display:flex;
     align-items:center;
-    margin-top:5px;
     justify-content:center;
+    margin-top:5px;
     font-size:${market_style.font.size.mini2};
     .owner{
       width:max-content;
@@ -54,27 +55,32 @@ const Wrapper = styled.div`
       overflow:hidden;
       text-overflow:ellipsis;
       white-space:nowrap;
-      font-size:${market_style.font.size.small1};
+      font-size:${market_style.font.size.mini2};
     }
     .line{
-      margin-right:10px;
-      margin-left:10px;
+      margin-right:5px;
+      margin-left:5px;
     }
   }
-  .point{
+  .date{
     width:100%;
+    color:red;
+    font-size:${market_style.font.size.mini2};
+    display:flex;
+    justify-content:center;
+    margin-top:5px;
+  }
+  .point{
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:${market_style.font.size.small1};
-    font-weight:800;
-    margin-top:5px;
+    font-size:${market_style.font.size.mini2};
   }
 `
 const PrivateLabel = styled.div`
   position: absolute;
-  right: 10px;
-  bottom: 60px;
+  right: 15px;
+  bottom: 95px;
   width: max-content;
   padding: 5px 10px;
   background-color: gray;
@@ -82,7 +88,7 @@ const PrivateLabel = styled.div`
   border-radius: 15px;
 `;
 const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 };
-class Item_mobile extends Component {
+class Item_myDetail_mobile extends Component {
   Keeper = () => {
     const item = this.props.data;
     if (item.uid) {
@@ -113,23 +119,25 @@ class Item_mobile extends Component {
         <div className="thumbnail"/>
         <div className="title"><TextFormat txt={item.title} /></div>
         <div className="summaryBox">
-          <div className="owner">{item.userName}</div>
+          <div className="owner">{item.nick_name}</div>
           <div className="line">|</div>
-          <RenderingStar/>
+          <div className="point">
+          {PointFormat(item.price / (parseInt(item.price)>9999?10000:1000) || 0)}{parseInt(item.price)>9999?"만 point":" point"}
+          </div>
         </div>
-        <div className="point">
-        {PointFormat(item.price / (parseInt(item.price)>9999?10000:1000) || 0)}{parseInt(item.price)>9999?"만 point":" point"}
-        </div>
-        {/* {item.custom && item.isPurchased === 0 ?
+        <div className="date">{date}</div>
+       
+        {item.custom && item.isPurchased === 0 ?
           <PrivateLabel onClick={() => this.props.confirm(item.payment_id)}>
             <div>구매확인</div>
-          </PrivateLabel> : null} */}
+          </PrivateLabel> 
+         : null}
       </Wrapper>
     )
   }
 }
 
-export default Item_mobile;
+export default Item_myDetail_mobile;
 {/* <Wrapper onClick={this.Keeper}>
 <ItemPic img={img} />
 <TextWrapper>

@@ -1,39 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyPaymentRequest } from "actions/Payment";
-import Item_purchase from "components/Items/Item_purchase";
-import PagingList from "components/Commons/PagingList";
+import Item_mobile from "components/Items/Item_mobile";
+import PagingList_mobile from "mobileComponents/PagingList_mobile";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
-
-
-const Board = styled.div`
-  margin:-20px -50px -20px -50px;
-  display:flex;
-  flex-direction:column;
-  .title_{
-    font-family:Noto Sans KR;
-    font-size:18px;
-    color:black;
+import market_style from "market_style";
+const Wrapper = styled.div`
+  max-width:375px;
+  width:100%;
+  padding:0px 0px 10px 10px;
+  .header{
     width:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-  }
-  .lineBox{
-    width:100%;
-    padding:10px 38px 10px 38px;
-    .line{
-      width:100%;
-      border:1px solid #efefef;
-    }
+    font-size:${market_style.font.size.normal3};
+    font-weight:800;
+    color:#c1c1c1;
+    text-align:center;
+    margin-bottom:10px;
+    margin-top:1px;
   }
   .pagenation{
     display:flex;
     justify-content:center;
   }
 `
-class MyPaymentContainer extends Component {
+class MyPaymentContainer_mobile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,13 +46,13 @@ class MyPaymentContainer extends Component {
   render() {
     const { page, per } = this.state;
     const lastPage = parseInt((this.props.allPage / per) + (this.props.allPage % per ? 1 : 0), 10);
+    console.log(this.props);
     return (
-      <Board>
-        <div className="title_">구입 아이템</div>
-        <div className="lineBox"><div className="line" /></div>
-        <PagingList
+      <Wrapper>
+        <div className="header">구입 아이템</div>
+        <PagingList_mobile
           getListRequest={this.getList}
-          ListComponent={Item_purchase}
+          ListComponent={Item_mobile}
           type="sales"
           isSmall={true}
           dataList={this.props.dataList}
@@ -86,7 +77,7 @@ class MyPaymentContainer extends Component {
               />
             </div>
         }
-      </Board>
+      </Wrapper>
 
     );
   }
@@ -101,4 +92,4 @@ const mapDispatchToProps = (dispatch) => ({
   GetMyPaymentRequest: (token, page) => dispatch(GetMyPaymentRequest(token, page)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyPaymentContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(MyPaymentContainer_mobile);
