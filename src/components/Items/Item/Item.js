@@ -115,6 +115,17 @@ font-size:${market_style.font.size.tiny1};
 font-weight:100;
   color:red;
 `
+const StatusTape = styled.div`
+  position: absolute;
+  bottom: 100px;
+  width: 50px;
+  height: 25px;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 23px;
+  color: red;
+  background-color: white;
+`;
 const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 };
 class Item extends Component {
   Keeper = () => {
@@ -132,19 +143,21 @@ class Item extends Component {
   }
   render() {
     const item = this.props.data || empty;
-    const date = new Date(item.create_time).getFullYear() + '/' + (parseInt(new Date(item.create_time).getMonth(),10)+1) + '/' + new Date(item.create_time).getDate();
+    const date = new Date(item.create_time).getFullYear() + '/' + (parseInt(new Date(item.create_time).getMonth(), 10) + 1) + '/' + new Date(item.create_time).getDate();
     const img = item ? item.thumbnail : noimg;
     console.log(this.props);
-    const RenderingStar = ()=>{
-      return( 
-      <div style={{display:"flex", alignItems:"center"}}>
-      <Rating name="score" icon='star' defaultRating={parseInt(item.score,10)||0} maxRating={5} disabled />
-      <div className="avg">({item.avg})</div>
-      </div>)
+    const RenderingStar = () => {
+      return (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Rating name="score" icon='star' defaultRating={parseInt(item.score, 10) || 0} maxRating={5} disabled />
+          <div className="avg">({item.avg})</div>
+        </div>)
     }
     return (
       // const ItemContent = () =>
       <Wrapper onClick={this.Keeper}>
+        {/* status tape */}
+        {item.status === "SOLD_OUT" ? <StatusTape>{item.type === 8 ? "마감" : "매진"}</StatusTape> : null}
         {/* picture */}
         <ItemPic img={img} />
         {/* text */}
@@ -169,10 +182,10 @@ class Item extends Component {
         </TypeText>
         </TypeWrapper> */}
         <NumberWrapper>
-          <div className="price">{PointFormat(item.price / (parseInt(item.price)>9999?10000:1000) || 0)}{parseInt(item.price)>9999?"만 point":" point"}</div>
+          <div className="price">{PointFormat(item.price / (parseInt(item.price) > 9999 ? 10000 : 1000) || 0)}{parseInt(item.price) > 9999 ? "만 point" : " point"}</div>
           <div className="score">
             {/* {Star(item.score + 0.5)}({NumberFormat(item.reviews)}) */}
-            <RenderingStar/>
+            <RenderingStar />
           </div>
         </NumberWrapper>
         {item.custom && item.isPurchased === 0 ?

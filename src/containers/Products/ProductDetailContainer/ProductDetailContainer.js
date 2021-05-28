@@ -96,14 +96,24 @@ class ProductDetailContainer extends Component {
 
       ? <Loading />
 
-      : <Wrapper>
-        <ItemDetail
-          purchase={this.Payment}
-          itemId={this.props.ItemDetail.item_id}
-          item={this.props.ItemDetail}
-          {...this.props}
-        />
-      </Wrapper>
+      :
+
+      // <Wrapper>
+      //   <ItemDetail
+      //     purchase={this.Payment}
+      //     itemId={this.props.ItemDetail.item_id}
+      //     item={this.props.ItemDetail}
+      //     {...this.props}
+      //   />
+      // </Wrapper>
+      window.innerWidth >= 500 ?
+        <Wrapper>
+          <ItemDetail purchase={this.Payment} itemId={this.props.ItemDetail.item_id} item={this.props.ItemDetail} {...this.props} />
+        </Wrapper>
+        :
+        <Mobile_wrapper>
+          <ItemDetail_mobile purchase={this.Payment} itemId={this.props.ItemDetail.item_id} item={this.props.ItemDetail} {...this.props} />
+        </Mobile_wrapper>
   }
 }
 
