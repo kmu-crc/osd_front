@@ -65,11 +65,11 @@ class ProductDetailContainer extends Component {
         this.props.userInfo &&
         this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token));
 
-      this.props.userInfo && this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0);
+      this.props.userInfo && this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0)
 
 //       .then(this.props.userIfno && this.props.GetLikeProductRequest(this.props.id, this.props.token))
 //       .then(this.props.userInfo && this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token))
-//       .then(() => this.setState({ loading: false }))
+      .then(() => this.setState({ loading: false }))
 
   }
   Payment(item, option) {
@@ -107,14 +107,24 @@ class ProductDetailContainer extends Component {
 
       ? <Loading />
 
-      : <Wrapper>
-        <ItemDetail
-          purchase={this.Payment}
-          itemId={this.props.ItemDetail.item_id}
-          item={this.props.ItemDetail}
-          {...this.props}
-        />
-      </Wrapper>
+      :window.innerWidth>=500?
+      <Wrapper>
+      <ItemDetail
+        purchase={this.Payment}
+        itemId={this.props.ItemDetail.item_id}
+        item={this.props.ItemDetail}
+        {...this.props}
+      />
+    </Wrapper>
+    :
+    <Mobile_wrapper>
+      <ItemDetail_mobile
+        purchase={this.Payment}
+        itemId={this.props.ItemDetail.item_id}
+        item={this.props.ItemDetail}
+        {...this.props}
+      />
+    </Mobile_wrapper>
   }
 }
 

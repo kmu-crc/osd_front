@@ -76,7 +76,7 @@ class ScrollBoardList_mobile extends Component {
               {this.props.dataListAdded.map((content, index) => (
                 // <React.Fragment>
                 <div key={index}>
-                  <ListComponent data={content} confirm={this.props.confirm} handler={this.props.handler} />
+                  <ListComponent type={this.props.type} data={content} confirm={this.props.confirm} handler={this.props.handler} />
                 </div>
                 // </React.Fragment>
               ))}

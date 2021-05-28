@@ -115,6 +115,9 @@ const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", 
 class Item_myDetail extends Component {
   Keeper = () => {
     const item = this.props.data;
+    if(this.props.type=="sales"){
+      window.location.href = `/requestDetail/${item.response_id}`;
+    }
     if (item.uid) {
       const yours = item.members && item.members.filter(mem => mem.user_id === this.props.userInfo && this.props.userInfo.uid);
       if (item.private && !yours) {

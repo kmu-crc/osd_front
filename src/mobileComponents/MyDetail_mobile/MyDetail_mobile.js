@@ -6,13 +6,13 @@ import adddesigner from "source/adddesigner.svg";
 import addmaker from "source/addmaker.svg";
 import confirmMe from "source/confirmMe.svg";
 
+import MyPaymentContainer_mobile from "mobileComponents/MyPaymentContainer_mobile";
+import MySalesContainer_mobile from "mobileComponents/MySalesContainer_mobile";
 import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer/LikeInDesignerContainer";
 import LikeInMakerContainer from "containers/Maker/LikeInMakerContainer/LikeInMakerContainer";
 import LikeInItemContainer from "containers/Products/LikeInItemContainer/LikeInItemContainer";
-import MyPaymentContainer from "containers/Payment/MyPaymentContainer";
-import MySalesContainer from "containers/Payment/MySalesContainer";
-import MyRequestItemContainer from "containers/Payment/MyRequestItemContainer";
-import UploadItemContainer from "containers/Items/UploadItemContainer/UploadItemContainer";
+import MyRequestItemContainer_mobile from "mobileComponents/MyRequestItemContainer_mobile";
+import UploadItemContainer_mobile from "mobileComponents/UploadItemContainer_mobile";
 import MyProjectItemContainer from "containers/Items/MyProjectItemContainer/MyProjectItemContainer";
 import MyUploadDesignReqBoardContainer from "components/Request/MyUploadDesignReqBoardContainer/MyUploadDesignReqBoardContainer";
 import MyUploadMakerReqBoardContainer from "components/Request/MyUploadMakerReqBoardContainer/MyUploadMakerReqBoardContainer";
@@ -234,13 +234,13 @@ class MyDetail_mobile extends Component {
             <div className="hrline"/>
             <div className="menu" onClick={()=>window.location.href="/mypage/9"}>내 정보 수정</div>
             <div className="hrline"/>
-            <div className="menu">구입 아이템</div>
+            <div className="menu" onClick={()=>window.location.href="/mypage/0"}>구입 아이템</div>
             <div className="hrline"/>
-            <div className="menu">판매 아이템</div>
+            <div className="menu" onClick={()=>window.location.href="/mypage/11"}>판매 아이템</div>
             <div className="hrline"/>
-            <div className="menu">의뢰 아이템</div>
+            <div className="menu" onClick={()=>window.location.href="/mypage/8"}>의뢰 아이템</div>
             <div className="hrline"/>
-            <div className="menu">등록 아이템</div>
+            <div className="menu" onClick={()=>window.location.href="/mypage/7"}>등록 아이템</div>
             <div className="hrline"/>
             <div className="menu">관심 아이템</div>
             <div className="hrline"/>
@@ -261,7 +261,16 @@ class MyDetail_mobile extends Component {
         </React.Fragment>
       :index == 9?
           <ModifyMyDetailContainer/>
-      :null
+      :index == 0?
+          <MyPaymentContainer_mobile  allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.payment_count} id={this.props.userInfo.uid}/>
+      :index == 11?
+        <MySalesContainer_mobile allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.saleItem_count} id={this.props.userInfo.uid} />
+      :index == 8?
+        <MyRequestItemContainer_mobile allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.itemRequest_count} id={this.props.userInfo.uid} /> 
+      :index == 7?
+        <UploadItemContainer_mobile allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.registerItem_count} id={this.props.userInfo.uid} />
+      :
+      null
       }
       </React.Fragment >
     );

@@ -27,7 +27,7 @@ class ScrollRequestListContainer_mobile extends Component {
         dataListAdded={this.props.dataListAdded}
         getListRequest={this.getList}
         ListComponent={RequestListElement_mobile}
-        type={this.props.type}
+        type={"request"}
       />
       </React.Fragment>
     );
