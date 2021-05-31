@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetMyUploadItemRequest } from "actions/Item";
+import { GetMyProjectItemRequest } from "actions/Item";
 import Item_myDetail_mobile from "components/Items/Item_myDetail_mobile";
 import PagingList_mobile from "mobileComponents/PagingList_mobile";
+import ScrollList from "components/Commons/ScrollList";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
 import market_style from "market_style";
@@ -51,42 +52,38 @@ const Board = styled.div`
     justify-content:center;
   }
 `
-class UploadItemContainer_mobile extends Component {
+class MyProjectItemContainer_mobile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 0, per: 6,
+      page: 0, per: 8,
     }
     this.goPage = this.goPage.bind(this);
   }
   componentWillMount() {
-    this.props.GetMyUploadItemRequest(this.props.id, this.props.token, 0);
+    this.props.GetMyProjectItemRequest(this.props.id, this.props.token, 0);
   }
-
-  getList = (page) =>
-    this.props.GetMyUploadItemRequest(this.props.id, this.props.token, page);
-
-
-  goPage = async (pagenum) => {
-    await this.setState({ page: pagenum });
-    this.props.GetMyUploadItemRequest(this.props.id, this.props.token, pagenum);
+  goPage = async (page) => {
+    await this.setState({ page: page });
+    this.props.GetMyProjectItemRequest(this.props.id, this.props.token, page);
   };
+  getList = (page) =>
+    this.props.GetMyProjectItemRequest(this.props.id, this.props.token, page);
+
+
   render() {
     const { page, per } = this.state;
-    const lastPage = parseInt((this.props.allPage / per) + (this.props.allPage % per ? 1 : 0), 10);
-    console.log(this.props);
-    return (
+    const lastPage = parseInt((this.props.allPage / per) + (this.props.allPage % per ? 1 : 0), 10); return (
       <Wrapper>
-        <div className="header">등록 아이템</div>
-        <PagingList_mobile
-          getListRequest={this.getList}
+        <div className="header">관심 아이템</div>
+        <PagingList_mobile getListRequest={this.getList}
+          type="sales_Expert"
           ListComponent={Item_myDetail_mobile}
-          type="sales"
-          isSmall={true}
           dataList={this.props.dataList}
-          dataListAdded={this.props.dataListAdded} />
+          dataListAdded={this.props.dataListAdded}
+          mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom" />
         {
-          lastPage <=1? null :
+          lastPage == 0 ? null :
             <div className="pagenation">
               <Pagination
                 activePage={page + 1}
@@ -112,11 +109,11 @@ class UploadItemContainer_mobile extends Component {
 
 const mapStateToProps = (state) => ({
   token: state.Authentication.status.token,
-  dataList: state.UploadItem.status.MyUploadItem,
-  dataListAdded: state.UploadItem.status.MyUploadItemAdded,
+  dataList: state.MyProjectItem.status.MyProjectItem,
+  dataListAdded: state.MyProjectItem.status.MyProjectItemAdded,
 });
 const mapDispatchToProps = (dispatch) => ({
-  GetMyUploadItemRequest: (id, token, page) => dispatch(GetMyUploadItemRequest(id, token, page)),
+  GetMyProjectItemRequest: (id, token, page) => dispatch(GetMyProjectItemRequest(id, token, page)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UploadItemContainer_mobile);
+export default connect(mapStateToProps, mapDispatchToProps)(MyProjectItemContainer_mobile);

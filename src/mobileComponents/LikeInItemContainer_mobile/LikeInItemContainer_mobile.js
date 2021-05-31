@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetMyUploadItemRequest } from "actions/Item";
-import Item_myDetail_mobile from "components/Items/Item_myDetail_mobile";
+import { GetLikeInItemRequest } from "actions/Product";
 import PagingList_mobile from "mobileComponents/PagingList_mobile";
+import Item_myDetail_mobile from "components/Items/Item_myDetail_mobile";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
 import market_style from "market_style";
@@ -51,7 +51,7 @@ const Board = styled.div`
     justify-content:center;
   }
 `
-class UploadItemContainer_mobile extends Component {
+class LikeInItemContainer_mobile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -60,33 +60,30 @@ class UploadItemContainer_mobile extends Component {
     this.goPage = this.goPage.bind(this);
   }
   componentWillMount() {
-    this.props.GetMyUploadItemRequest(this.props.id, this.props.token, 0);
+    this.props.GetLikeInItemRequest(this.props.id, 0);
   }
 
-  getList = (page) =>
-    this.props.GetMyUploadItemRequest(this.props.id, this.props.token, page);
-
-
+  getList = (page) => {
+    return this.props.GetLikeInItemRequest(this.props.id, page);
+  }
   goPage = async (pagenum) => {
     await this.setState({ page: pagenum });
-    this.props.GetMyUploadItemRequest(this.props.id, this.props.token, pagenum);
+    this.props.GetLikeInItemRequest(this.props.id, pagenum);
   };
   render() {
     const { page, per } = this.state;
     const lastPage = parseInt((this.props.allPage / per) + (this.props.allPage % per ? 1 : 0), 10);
-    console.log(this.props);
     return (
       <Wrapper>
-        <div className="header">등록 아이템</div>
-        <PagingList_mobile
-          getListRequest={this.getList}
-          ListComponent={Item_myDetail_mobile}
+        <div className="header">관심 아이템</div>
+
+        <PagingList_mobile getListRequest={this.getList}
           type="sales"
-          isSmall={true}
-          dataList={this.props.dataList}
-          dataListAdded={this.props.dataListAdded} />
+          ListComponent={Item_myDetail_mobile}
+          dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
+          mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom" />
         {
-          lastPage <=1? null :
+          lastPage <= 1 ? null :
             <div className="pagenation">
               <Pagination
                 activePage={page + 1}
@@ -97,7 +94,6 @@ class UploadItemContainer_mobile extends Component {
                 lastItem={null}
                 siblingRange={1}
                 totalPages={lastPage}
-                // pointing
                 secondary
                 onPageChange={(event, { activePage }) => {
                   this.goPage(activePage - 1);
@@ -106,17 +102,24 @@ class UploadItemContainer_mobile extends Component {
             </div>
         }
       </Wrapper>
+
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  token: state.Authentication.status.token,
-  dataList: state.UploadItem.status.MyUploadItem,
-  dataListAdded: state.UploadItem.status.MyUploadItemAdded,
-});
-const mapDispatchToProps = (dispatch) => ({
-  GetMyUploadItemRequest: (id, token, page) => dispatch(GetMyUploadItemRequest(id, token, page)),
-});
+const mapStateToProps = (state) => {
+  return {
+    dataList: state.ItemDetail.status.LikeInItem,
+    dataListAdded: state.ItemDetail.status.LikeInItemAdded
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(UploadItemContainer_mobile);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    GetLikeInItemRequest: (id, page) => {
+      return dispatch(GetLikeInItemRequest(id, page))
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LikeInItemContainer_mobile);
