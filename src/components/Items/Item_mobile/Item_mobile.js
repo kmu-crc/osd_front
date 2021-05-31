@@ -71,7 +71,16 @@ const Wrapper = styled.div`
     margin-top:5px;
   }
 `
-
+const PrivateLabel = styled.div`
+  position: absolute;
+  right: 10px;
+  bottom: 60px;
+  width: max-content;
+  padding: 5px 10px;
+  background-color: gray;
+  color: white;
+  border-radius: 15px;
+`;
 const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 };
 class Item_mobile extends Component {
   Keeper = () => {
@@ -111,6 +120,10 @@ class Item_mobile extends Component {
         <div className="point">
         {PointFormat(item.price / (parseInt(item.price)>9999?10000:1000) || 0)}{parseInt(item.price)>9999?"만 point":" point"}
         </div>
+        {/* {item.custom && item.isPurchased === 0 ?
+          <PrivateLabel onClick={() => this.props.confirm(item.payment_id)}>
+            <div>구매확인</div>
+          </PrivateLabel> : null} */}
       </Wrapper>
     )
   }

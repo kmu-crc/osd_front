@@ -10,6 +10,7 @@ import ItemStepContainer from "containers/Items/ItemStepContainer";
 import ItemQuestionContainer from "containers/Items/ItemQuestionContainer";
 import ItemReviewContainer from "containers/Items/ItemReviewContainer";
 import PointFormat from "modules/PointFormat";
+import ItemReview from "components/Items/ItemReview";
 // import ReviewDetailModal from "components/Commons/ReviewDetailModal";
 // import WriteReviewModal from "components/Commons/WriteReviewModal"
 
@@ -22,7 +23,10 @@ import { Link } from "react-router-dom";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
+import ReviewDetailModal from "components/Commons/ReviewDetailModal";
+import WriteReviewModal from "components/Commons/WriteReviewModal"
 import LectureItemComponent from "./LectureItemComponent"
+
 
 const Wrapper = styled.div`
 
@@ -255,15 +259,45 @@ const CoverGrident = styled.div`
 const Review = styled.div`
 width: 100%;
 height:max-content;
-max-height:366px;
 padding:10px 25px 20px 25px;
 box-shadow: 3px 3px 5px #0000001A;
 border:1px solid #eaeaea;
 border-radius: 20px;
 background: #ffffff;
-.hrLine{
+.title {
+  display:flex;
+  color:black;
+  justify-content:space-between;
+  align-items:center;
+  height:27px;
   width:100%;
-  border:2px solid #efefef;
+  font-size:${market_style.font.size.normal1};
+  font-weight: 500;
+  text-align: center;
+  .blank{
+    width:150px;
+    height:30px;
+  }
+  .write_button{
+    width:150px;
+    height:30px;
+    border:1px solid red;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+    .text{
+      font-size:${market_style.font.size.small1};
+        color:#707070;
+    }
+  }
+}
+.hrline{
+  width:100%;
+  border:1px solid #efefef;
+}
+.margin_bottom{
+  margin-bottom:10px;
 }
 `
 const QuestionBoard = styled.div`
@@ -550,6 +584,9 @@ class ItemDetail extends Component {
     this.selectMethod = this.selectMethod.bind(this);
     this.gotoChargePoint = this.gotoChargePoint.bind(this);
     this.purchaseThisItem = this.purchaseThisItem.bind(this);
+    this.checkPermission = this.checkPermission.bind(this);
+    // this.requestReview = this.requestReview.bind(this);
+    // this.reset = this.reset.bind(this);
   };
   componentWillUpdate(nextProps) {
     if (this.props.like !== nextProps.like) {
@@ -595,13 +632,56 @@ class ItemDetail extends Component {
   purchaseThisItem() {
     this.props.purchase(this.props.item);
   }
+  async checkPermission() {
+    if (this.props.userInfo == null) {
+        await alert("로그인 해주세요.");
+        return false;
+    }
+    return true
+};
+// async reset() {
+//   console.log("change review writing");
 
+//   await this.setState({
+//       reply: false,
+//       targetId: null,
+//       this_comment: "",
+//       this_reply: "",
+//       page: 0,
+//       review_writing: false,
+//       review_selected: -1,
+//       score: 0,
+//       // ing: false
+//   });
+// };
+//   requestReview(id,comment,score,thumbnail) {
+//     console.log(id,comment,score,thumbnail);
+//     if (this.checkPermission() === false)
+//         return;
+//     if (comment.length > 0)
+//         {
+//           this.props.CreateItemReviewRequest({score:score, comment: comment, payment_id: id, thumbnail:thumbnail},this.props.id,this.props.token)
+//           .then(res =>{
+//             this.props.GetItemReviewRequest(this.props.match.params.id, 0);
+//           })
+//           .then(
+//               this.props.userInfo &&
+//               this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0))
+//           .then(()=>
+//               this.props.GetTotalItemReviewRequest(this.props.id))
+//         }
+//     this.setState({writeReview:false})
+//     console.log("change review writing");
+//     this.reset();
+//     this.props.refresh && this.props.refresh();
+// };
   render() {
     const item = this.props.item;
     const { expandingContent, expandingReview, expandingBoard } = this.state;
     const { score } = this.props.item;
     let tag = this.props.ItemDetail.tag + "";
-    console.log(this.props);
+    const { review, payment, userInfo, user_id } = this.props;
+    const master = user_id === (userInfo && userInfo.uid);
 
     const isWrapperContent = window.document.getElementById("detail_board") &&
       window.document.getElementById("detail_board").scrollHeight > window.document.getElementById("detail_board").clientHeight;
@@ -637,6 +717,19 @@ class ItemDetail extends Component {
     }
     return item ?
       <React.Fragment>
+        {/* <ReviewDetailModal 
+            open={this.state.reviewDetail}
+            close={() => this.setState({ reviewDetail: false })}
+            detail={this.state.detail}
+        />
+        <WriteReviewModal 
+            open={this.state.writeReview}
+            close={() => this.setState({ writeReview: false })}
+            modify={this.state.detail}
+            requestReview = {(uid,comment,score,thumbnail_list) => this.requestReview(uid,comment,score,thumbnail_list)}
+            payment_id={payment&&payment.length>0&&payment[0].uid}
+            {...this.props}
+        /> */}
         <Wrapper>
           <div className="profileBox">
             <ItemImages main={item.thumbnail ? item.thumbnail.l_img : noimg} />
@@ -645,9 +738,6 @@ class ItemDetail extends Component {
                 <div className="flex spaceBetween">
                   <div className="title">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
                   <div className="expert">
-                    {/* {(this.props.userInfo && item.members && item.members.length > 0 && this.state.isShowmember)
-                    ? <MemberListBox />
-                    : null} */}
                     <div className="who" />
                     <div className="nick" onClick={() => this.setState({ isShowmember: !this.state.isShowmember })}>{item.userName}
                       {this.props.userInfo && item.members && item.members.length > 0
@@ -777,11 +867,33 @@ class ItemDetail extends Component {
           {/* review and board */}
           <div className="row">
             <Review>
+              <div className="title margin_bottom">
+                <div className="blank"/>
+                리뷰({this.props.total})
+                {
+                    payment && payment.length > 0 ?
+                    <div className="write_button" onClick={()=>{this.setState({writeReview:true})}}>
+                        <div className="text">리뷰 쓰기</div>
+                    </div> 
+                    :
+                    <div className="blank"/>
+                }
+              </div>
+              <div className="hrline margin_bottom" />
               <ItemReviewContainer
+                id={this.props.id}
                 user_id={item.user_id}
                 detail={this.state.detail}
-                handler={detail => this.setState({ reviewdetail: true, detail: detail })}
-                isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} />
+                writeReview={this.state.writeReview}
+                showWriteReview = {(open)=>this.setState({writeReview:open})}
+                total={this.props.total}
+                update={()=>{
+                  this.props.GetItemPaymentRequest(this.props.id, this.props.token, 0)
+                  .then(()=>{
+                    this.props.GetTotalItemReviewRequest(this.props.id);
+                  })
+                }}
+                />
             </Review>
           </div>
 

@@ -41,7 +41,7 @@ class RequestDetailContainer extends Component {
       {
         payment_title: Detail.title,
         payment_price: Detail.price,
-        response_id: Detail.uid
+        response_id: Detail.uid,
       },
       "custom",
       this.props.token)

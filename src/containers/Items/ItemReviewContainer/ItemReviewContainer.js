@@ -2,23 +2,23 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ItemReview from "components/Items/ItemReview";
-import { GetItemReviewRequest, CreateItemReviewRequest, /*DeleteItemReviewRequest*/ } from "actions/Item";
-import { GetItemPaymentRequest } from "actions/Payment";
+// import { GetItemReviewRequest, CreateItemReviewRequest, /*DeleteItemReviewRequest*/ } from "actions/Item";
+// import { GetItemPaymentRequest } from "actions/Payment";
+import { CreateItemReviewRequest} from "actions/Item";
+import { GetItemReviewRequest } from "actions/Review";
 import styled from "styled-components";
 import market_style from "market_style";
 import noimg from "source/noimg.png";
 import { Rating } from 'semantic-ui-react'
 import { Pagination } from 'semantic-ui-react'
-const ReviewBox = styled.div`
-    // height: 100%;
-    // overflow:${props=>props.isScroll?"overlay":"hidden"};
-`;
+import WriteReviewModal from "components/Commons/WriteReviewModal"
+import ReviewDetailModal from "components/Commons/ReviewDetailModal";
+
 const ContentsBox = styled.div`
   min-width:103%;
   display:flex;
   flex-wrap:wrap;
-  height:max-content;
-  max-height:300px;
+
   .blank{
     width:97%;
     height:50px;
@@ -30,12 +30,17 @@ const ContentsBox = styled.div`
     width:100%;
     display:flex;
     justify-content:center;
-    border:1px soild black;
+  }
+  @media only screen and (min-width: 1366px){
+    height:300px;
+  }
+  @media only screen and (min-width: 500px) and (max-height:1366px){
+    height:max-content;
   }
 `
 const Wrapper_ = styled.div`
-  min-width:600px;
-  max-width:600px;
+  width:600px;
+  min-width:390px;
   height:113px;
   display:flex;
   color:#707070;
@@ -66,7 +71,7 @@ const Wrapper_ = styled.div`
     width:100%;
     height:100%;
     margin-left:10px;
-    .row{
+    .row_{
       width: max-content;
       margin-bottom: 10x;
       font-size:${market_style.font.size.small1};
@@ -94,58 +99,93 @@ const Thumbnail = styled.div`
   background-size: cover;
   background-position: center center;
 `;
+
 class ItemReviewContainer extends Component {
-    constructor(props) {
-        super(props);
-        this.state={
-            page:0,
-          }
-        this.requestReview = this.requestReview.bind(this);
-        this.getData = this.getData.bind(this);
-        this.refresh = this.refresh.bind(this);
+    constructor(props){
+      super(props);
+      this.state = {
+        page:0,reviewDetail:false,detail:null,
+      }
     }
     componentDidMount() {
-        this.props.GetItemReviewRequest(this.props.match.params.id, 0)
-        .then(
-            ()=>{
-                console.log(this.props.review.length);
-                return this.props.isExpanding(this.props.review.length>1?true:false);
-            }
-        )
-        this.props.userInfo && this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0);
+      this.props.GetItemReviewRequest(this.props.id,0);
     }
-    refresh() {
-        this.props.GetItemReviewRequest(this.props.match.params.id, 0);
-        this.props.userInfo && this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0);
-    }
-    getList = page =>{
-        this.setState({page:page+1});
-        this.props.GetMakerReviewListRequest(this.props.id, page);
-    }
-    requestReview(data) {
-        this.props.CreateItemReviewRequest(data, this.props.match.params.id, this.props.token)
-            .then(res =>
-                res.data.success &&
-                this.props.GetItemReviewRequest(this.props.match.params.id, 0))
-            .then(
-                this.props.userInfo &&
-                this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0))
-
-    }
-    getData(page) {
-        this.props.GetItemReviewRequest(this.props.match.params.id, page);
+    getList = page =>
+    {
+    this.setState({page:page+1});
+    this.props.GetItemReviewRequest(this.props.id, page);
+    } 
+    onSubmitReview = (id,comment,score,thumbnail)=>{
+      if(comment.length>0){
+         this.props.CreateItemReviewRequest({score:score, comment: comment, payment_id: id, thumbnail:thumbnail},this.props.id,this.props.token)
+         .then(()=>{
+          this.props.GetItemReviewRequest(this.props.match.params.id, 0);
+         }).then(()=>{
+           this.props.update();
+         })
+      }
+      this.props.showWriteReview(false);
+      this.setState({detail:null,page:0});
+      return;
     }
     render() {
+      const { payment } = this.props;
+      const RenderingStar = (props)=>{
+        return <Rating name="score" size="tiny" icon='star' defaultRating={parseInt(props.score,10)||0} maxRating={5} disabled/>
+      }
+      const lastPage = parseInt(this.props.total / 4, 10);
+      console.log(this.props);
         return (
-            <ReviewBox>
-            <ItemReview
-            refresh={this.refresh}
-            handler={this.props.handler}
-            id={this.props.match.params.id}
-            getData={this.getData}
-            request={this.requestReview}
-            {...this.props} />
-            </ReviewBox>
+          <React.Fragment>
+            <ReviewDetailModal 
+                open={this.state.reviewDetail}
+                close={() => this.setState({ reviewDetail: false })}
+                detail={this.state.detail}
+            />
+            <WriteReviewModal 
+                open={this.props.writeReview}
+                close={() => this.props.showWriteReview(false)}
+                modify={this.state.detail}
+                requestReview = {(uid,comment,score,thumbnail_list) => this.onSubmitReview(uid,comment,score,thumbnail_list)}
+                payment_id={payment&&payment.length>0&&payment[0].uid}
+                {...this.props}
+            />
+            <ContentsBox>
+                  { this.props.total != 0?
+                    this.props.dataList.map((item,index)=>{
+                      return (
+                        <Wrapper_ onClick={() => {this.setState({detail:item,reviewDetail:true})}}>
+                          <Thumbnail imageURL={item.m_img} />
+                          <div className="content">
+                            <div className="wrapper">
+                            <div className="nick_ line marginRight">{item.nick_name}</div>
+                            <div className="row_"><RenderingStar score={item.score}/></div>
+                            </div>
+                            <div className="text_">{item.comment && item.comment.slice(0, 50)}{item.comment && item.comment.length > 64 ? "..." : ""}</div>
+                          </div>
+                        </Wrapper_>)
+                    }):<div className="blank">리뷰 없음</div>
+                  }
+                  <div className="pagenation">
+                  { this.props.total >4?
+                              <Pagination
+                              activePage={this.state.page}
+                              boundaryRange={0}
+                              defaultActivePage={1}
+                              ellipsisItem={null}
+                              firstItem={null}
+                              lastItem={null}
+                              siblingRange={1}
+                              totalPages={lastPage + 1}
+                              secondary
+                              onPageChange={(event, { activePage }) => {
+                                this.getList(activePage - 1);
+                              }}
+                            />:null
+                    }
+                  </div>
+            </ContentsBox>
+          </React.Fragment>
             );
     }
 }
@@ -154,15 +194,14 @@ const mapStateToProps = (state) => ({
     ItemDetail: state.ItemDetail.status.ItemDetail,
     payment: state.Payment.status.Payment,
     review: state.ItemReview.status.Review,
-    total: state.ItemReview.status.Total,
-    score: state.ItemReview.status.TotalScore,
     token: state.Authentication.status.token,
     userInfo: state.Authentication.status.userInfo,
+    dataList: state.ReviewList.status.ItemReviewList,
+    dataListAdded: state.ReviewList.status.ItemReviewListAdded,
 });
 const mapDispatchToProps = (dispatch) => ({
     GetItemReviewRequest: (id, page) => dispatch(GetItemReviewRequest(id, page)),
     CreateItemReviewRequest: (data, id, token) => dispatch(CreateItemReviewRequest(data, id, token)),
-    GetItemPaymentRequest: (id, token, page) => dispatch(GetItemPaymentRequest(id, token, page))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ItemReviewContainer));

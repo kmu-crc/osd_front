@@ -18,9 +18,10 @@ class ScrollRequestListContainer extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <ScrollBoardList
-        total={this.props.Count}
+        total={this.props.Total}
         dataList={this.props.dataList}
         getListRequest={this.getList}
         ListComponent={RequestElement}
@@ -31,7 +32,8 @@ class ScrollRequestListContainer extends Component {
 
 const mapStateToProps = (state) => ({
   dataList: state.RequestList.status.List,
-  Count: state.RequestList.status.Total,
+  dataListAdded: state.RequestList.status.ListAdded,
+  Total: state.RequestList.status.Total,
 });
 const mapDispatchToProps = (dispatch) => ({
   GetRequestListRequest: (type, page, cate1, cate2, cate3, sort, keyword) =>

@@ -45,7 +45,6 @@ class ScrollBoardList extends Component {
     const { total, dataList, ListComponent } = this.props;
     const { page } = this.state;
     const lastPage = parseInt(total / 10, 10);
-    // const { mobile, tablet, computer, largeScreen, widescreen, customClass, rerender } = this.props;
     console.log(this.props);
     return (
       <ScrollContainer>
@@ -53,15 +52,8 @@ class ScrollBoardList extends Component {
           dataList.map(content => <ListComponent key={content.uid} data={content} />)
           : <NoPage><div className="text">등록된 게시글이 없습니다.</div></NoPage>}
         <div style={{ width: "max-content", marginLeft: "auto", marginRight: "auto", display: "flex", flexDirection: "row" }}>
-          {/* <div style={{ width: "50px" }}>
-            {page > 0 ? <div onClick={this.goPrev}>prev</div> : null}
-          </div> */}
-          {/* <div style={{ width: "50px" }}>
-            <div style={{ textAlign: "center", borderRadius: "15px" }}>{this.state.page + 1}</div>
-          </div> */}
           <div style={{ width:"100%",marginTop:"20px" }}>
-            {10<total ?
-            // <div onClick={this.goNext}>next</div> 
+            {1<total ?
             <Pagination
                   activePage={page+1}
                   boundaryRange={0}

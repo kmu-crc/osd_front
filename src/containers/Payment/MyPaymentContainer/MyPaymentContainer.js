@@ -6,6 +6,7 @@ import PagingList from "components/Commons/PagingList";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
 
+
 const Board = styled.div`
   margin:-20px -50px -20px -50px;
   display:flex;

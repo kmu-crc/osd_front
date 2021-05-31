@@ -7,7 +7,7 @@ import Cross from "components/Commons/Cross"
 import who from "source/thumbnail.png";
 import CardSourceDetailContainer from "containers/Items/CardSourceDetailContainer";
 import ItemStepContainer from "containers/Items/ItemStepContainer";
-import ItemQuestionContainer from "containers/Items/ItemQuestionContainer";
+import ItemQuestionContainer_mobile from "mobileComponents/ItemQuestionContainer_mobile";
 import ItemReviewContainer_mobile from "mobileComponents/ItemReviewContainer_mobile";
 import PointFormat from "modules/PointFormat";
 import ConnectedMemberContainer from "containers/Items/ConnectedMemberContainer";
@@ -278,16 +278,17 @@ class ItemDetail_mobile extends Component {
           </ShadowBox>
           <Header>리뷰</Header>
           <ShadowBox>
-                ...개발중
-                {/* <ItemReviewContainer_mobile
+                <ItemReviewContainer_mobile
                 user_id={item.user_id}
                 detail={this.state.detail}
                 handler={detail => this.setState({ reviewdetail: true, detail: detail })}
-                isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} /> */}
+                isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} 
+                total={this.props.total}
+                />
           </ShadowBox>
           <Header>게시판</Header>
           <ShadowBox>
-                ...개발중
+                <ItemQuestionContainer_mobile user_id={item.user_id} isExpanding={(result) => { this.setState({ isexpandingBoard: result }) }} />
           </ShadowBox>
         </Wrapper>
       </React.Fragment>

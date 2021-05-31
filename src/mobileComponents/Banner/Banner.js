@@ -11,12 +11,14 @@ import AlarmContainer from "containers/Commons/AlarmContainer";
 import { alert } from "components/Commons/Alert/Alert";
 import market_style from "market_style";
 import OWD from "source/OWD.png";
+import Banner_mobile from "source/banner_mob.png";
 const BannerWrapper = styled.div`
   width:${window.outerWidth}px;
   height:220px;
   border-radius:0px 0px 100px 0px;
   background-color:#F7F7F7;
   display:flex;
+  justify-content:center;
   .wrapper{
     margin-top:27px;
     margin-left:10px;
@@ -42,6 +44,9 @@ const BannerWrapper = styled.div`
     background-image: url(${OWD});
     background-size:cover;
   }
+  .fullBanner{
+    width:100%;
+  }
 `
 class Banner extends Component {
   constructor(props) {
@@ -51,10 +56,11 @@ class Banner extends Component {
     return (
       <React.Fragment>
         <BannerWrapper>
-          <div className="wrapper">
+          <img src={Banner_mobile}/>
+          {/* <div className="wrapper">
             <div className="char">OPEN<br/>DESIGN<br/>WORLD</div>
             <div className="logo"/>
-          </div>
+          </div> */}
         </BannerWrapper>
       </React.Fragment>
     )
