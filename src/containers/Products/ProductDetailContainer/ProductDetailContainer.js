@@ -106,25 +106,23 @@ class ProductDetailContainer extends Component {
     return loading
 
       ? <Loading />
-
-      :window.innerWidth>=500?
-      <Wrapper>
-      <ItemDetail
-        purchase={this.Payment}
-        itemId={this.props.ItemDetail.item_id}
-        item={this.props.ItemDetail}
-        {...this.props}
-      />
-    </Wrapper>
-    :
-    <Mobile_wrapper>
-      <ItemDetail_mobile
-        purchase={this.Payment}
-        itemId={this.props.ItemDetail.item_id}
-        item={this.props.ItemDetail}
-        {...this.props}
-      />
-    </Mobile_wrapper>
+      :
+      // <Wrapper>
+      //   <ItemDetail
+      //     purchase={this.Payment}
+      //     itemId={this.props.ItemDetail.item_id}
+      //     item={this.props.ItemDetail}
+      //     {...this.props}
+      //   />
+      // </Wrapper>
+      window.innerWidth >= 500 ?
+        <Wrapper>
+          <ItemDetail purchase={this.Payment} itemId={this.props.ItemDetail.item_id} item={this.props.ItemDetail} {...this.props} />
+        </Wrapper>
+        :
+        <Mobile_wrapper>
+          <ItemDetail_mobile purchase={this.Payment} itemId={this.props.ItemDetail.item_id} item={this.props.ItemDetail} {...this.props} />
+        </Mobile_wrapper>
   }
 }
 

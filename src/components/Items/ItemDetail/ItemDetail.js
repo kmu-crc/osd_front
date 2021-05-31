@@ -799,24 +799,27 @@ class ItemDetail extends Component {
                       :
 
                       <div className="button first">
-                        <Link
-                          onClick={async (e) => {
-                            return this.props.isbuy > 0 ?
-                              await confirm("이미 구매하신 이력이 존재합니다. 계속 진행하겠습니까?") ? null : window.history.go(-1)
-                              : null
-                          }}
-                          to={{
-                            pathname: `/payment`, state: {
-                              item: this.props.item,
-                              custom: null,
-                              options: null
+                        {item.status === "SOLD_OUT" ?
+                          <div>{item.type === 8 ? "마감" : "매진"}</div> :
+                          <Link
+                            onClick={async (e) => {
+                              return this.props.isbuy > 0 ?
+                                await confirm("이미 구매하신 이력이 존재합니다. 계속 진행하겠습니까?") ? null : window.history.go(-1)
+                                : null
+                            }}
+                            to={{
+                              pathname: `/payment`, state: {
+                                item: this.props.item,
+                                custom: null,
+                                options: null
+                              }
                             }
-                          }
-                          }>
-                          <div>
-                            <div className="text">아이템 구입</div>
-                          </div>
-                        </Link>
+                            }>
+                            <div>
+                              <div className="text">아이템 구입</div>
+                            </div>
+                          </Link>
+                        }
                       </div>
                     }
                     {this.props.ItemDetail && this.props.userInfo &&

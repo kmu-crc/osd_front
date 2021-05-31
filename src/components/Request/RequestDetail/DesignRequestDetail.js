@@ -191,12 +191,13 @@ const DesignRequestDetailWrapper = styled.div`
   `;
 
 export const DesignRequestDetail = (props) => {
-  const { nick_name, title, category_level1, category_level2, tag, content, price, file_url, filename, start_date, end_date, location, ownership, } = props.Detail;
+  const { nick_name, title, type, category_level1, category_level2, tag, content, price, file_url, filename, start_date, end_date, location, ownership, } = props.Detail;
+
   console.log(props);
   return (<DesignRequestDetailWrapper>
     <div className="title">
-      {props.Detail.type === "designer" ? <p className="text"> 디자인 의뢰 상세</p> : null}
-      {props.Detail.type === "maker" ? <p className="text"> 제작 의뢰 상세</p> : null}
+      {type === "designer" ? <p className="text"> 디자인 의뢰 상세</p> : null}
+      {type === "maker" ? <p className="text"> 제작 의뢰 상세</p> : null}
     </div>
     <div className="form">
       <div className="row">
@@ -239,25 +240,24 @@ export const DesignRequestDetail = (props) => {
         <div className="content">{start_date}~{end_date}</div>
       </div>
       <div className="row">
-        {props.Detail.type === "designer" ? <div className="label">디자이너 위치</div> : null}
-        {props.Detail.type === "maker" ? <div className="label">메이커 위치</div> : null}
+        {type === "designer" ? <div className="label">디자이너 위치</div> : null}
+        {type === "maker" ? <div className="label">메이커 위치</div> : null}
         <div className="content">{LocationList[location || 15].text}</div>
       </div>
       <div className="row">
-          {
-            props.Detail.type === "designer" ?
-            <div className="label">디자인 소유권</div>
-            :<div className="label">제작 소유권</div>
-          }
+        {type === "designer" ?
+          <div className="label">디자인 소유권</div>
+          : <div className="label">제작 소유권</div>
+        }
         <div className="content">{ownership <= 0 ? "의뢰자" : "디자이너"}</div>
       </div>
     </div>
     <div className="bottom">
       {(props.userInfo && props.userInfo.uid) == (props.Detail && props.Detail.client_id) ?
-        <button onClick={() => window.location.href = `/ModifyrequestTo${props.Detail.type == "designer" ? "Designer" : "Maker"}/` + props.Detail.uid} className="reply">의뢰수정</button>
+        <button onClick={() => window.location.href = `/ModifyrequestTo${type == "designer" ? "Designer" : "Maker"}/` + props.Detail.uid} className="reply">의뢰수정</button>
         :
-        <Link className="reply" to={{ pathname: `/responseTo${props.Detail.type}Req/${props.Detail.uid}`, state: { detail: props.Detail, expert: props.MyDetail } }}>
-          <button onClick={() => props.onClick(props.Detail.type, "request", false)} className="reply">의뢰응답</button>
+        <Link className="reply" to={{ pathname: `/responseTo${type}Req/${props.Detail.uid}`, state: { detail: props.Detail, expert: props.MyDetail } }}>
+          <button onClick={() => props.onClick(type, "request", false)} className="reply">의뢰응답</button>
         </Link>
       }
       <button onClick={() => props.returnToList()} className="back"> <CustomIcon style={{ transform: "rotate(180deg)" }} width="5" height="10" marginRight="20" marginLeft="20" imgURL={category_icon} /> 목록으로</button>
