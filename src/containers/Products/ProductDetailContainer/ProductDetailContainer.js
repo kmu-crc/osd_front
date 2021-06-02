@@ -25,13 +25,16 @@ const Mobile_wrapper = styled.div`
 
 class ProductDetailContainer extends Component {
   constructor(props) {
-    super(props);
-    this.state = { loading: false };
-    this.Payment = this.Payment.bind(this);
+    super(props)
+    this.state = { loading: false }
+    this.Payment = this.Payment.bind(this)
   }
   componentDidMount() {
-    this.setState({ loading: true });
-    this.props.GetItemDetailRequest(this.props.id, this.props.token)
+    this.setState({ loading: true })
+
+    const { userInfo, id, token } = this.props
+
+    this.props.GetItemDetailRequest(id, token)
       .then(({ ItemDetail }) => {
 
         if (ItemDetail.success == false) {
@@ -39,28 +42,28 @@ class ProductDetailContainer extends Component {
           return
         }
 
-        const { visible, active, private: is_private, members } = ItemDetail
-        const { userInfo } = this.props
+        const { visible, /* active, */ user_id, private: is_private, members } = ItemDetail
+        const yours = members && members.filter(mem => mem.user_id === userInfo && userInfo.uid) || user_id !== userInfo.uid
+        const notyours = !yours
 
-        if (visible === 0) {
+        // if (active === 0) { }
+
+        if (visible === 0 && notyours) {
           this.BadAccess()
           return
         }
 
-        if (active === 0) { }
-
-        const yours = members && members.filter(mem => mem.user_id === userInfo && userInfo.uid)
-
-        if (is_private && yours == false) {
+        if (is_private && notyours) {
           this.ThisIsPrivateItem()
         }
 
       })
-      .then(this.props.userInfo && this.props.GetDidYouBuyItRequest(this.props.id, this.props.userInfo.uid))
-      .then(this.props.userIfno && this.props.GetLikeProductRequest(this.props.id, this.props.token))
-      .then(this.props.userInfo && this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token))
+      .then(userInfo && this.props.GetDidYouBuyItRequest(id, userInfo.uid))
+      .then(userInfo && this.props.GetLikeProductRequest(id, token))
+      .then(userInfo && this.props.GetMyPointRequest(userInfo.uid, token))
       .then(() => this.setState({ loading: false }))
   }
+
   Payment(item, option) {
     this.props.CreateItemPaymentRequest(
       { payment_title: item.title, payment_price: item.price },
