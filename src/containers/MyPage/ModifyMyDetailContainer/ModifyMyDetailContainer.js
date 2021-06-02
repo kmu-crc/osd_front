@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyDetailRequest, ModifyUserDetailRequest } from "actions/Users/MyDetail";
 import ModifyMyDetail from "components/Users/ModifyMyDetail";
+import ModifyMyDetail_mobile from "mobileComponents/ModifyMyDetail_mobile";
 
 class ModifyMyDetailContainer extends Component {
   componentWillMount() {
@@ -9,7 +10,14 @@ class ModifyMyDetailContainer extends Component {
   }
   render() {
     return (
-      <ModifyMyDetail {...this.props} />
+      <React.Fragment>
+        {
+          window.innerWidth>=500?
+          <ModifyMyDetail {...this.props} />
+          :
+          <ModifyMyDetail_mobile {...this.props}/>
+        }
+      </React.Fragment>
     );
   }
 }

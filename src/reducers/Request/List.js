@@ -4,7 +4,7 @@ import update from "react-addons-update";
 const initialState = {
   List: { status: "INIT" },
   status: {
-    List: [], Total: 0, success: null
+    List: [],ListAdded:[], Total: 0, success: null
   }
 };
 
@@ -15,9 +15,11 @@ export const RequestList = (state, action) => {
 
   switch (action.type) {
     case types.GET_REQUEST_LIST:
-      return update(state, { status: { List: { $set: action.payload.data.requests }, Total: { $set: action.payload.data.total } } });
+      return update(state, { status: { List: { $set: action.payload.data.requests }, Total: { $set: action.payload.data.total },ListAdded: { $push: action.payload.data.requests } } });
+      case types.REQUEST_LIST_CLEAR:
+        return update(state, { status: { List: { $set: action.payload.data.requests },Total: { $set: action.payload.data.total }, ListAdded: { $set: action.payload.data.requests }} });
     case types.REQUEST_LIST_FAIL:
-      return update(state, { status: { List: { $set: action.List }, } });
+      return update(state, { status: { List: { $set: [] }, ListAdded: []}});
     case types.GET_DESIGNER_REQUEST_LIST:
       return update(state, { status: { List: { $set: action.payload.data.requests }, Total: { $set: action.payload.data.total } } });
     case types.DESIGNER_REQUEST_LIST_FAIL:

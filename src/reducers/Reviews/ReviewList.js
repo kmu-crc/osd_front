@@ -11,6 +11,9 @@ const initialState = {
         MakerTotal: 0,
         MakerList: [],
         MakerListAdded: [],
+        ItemReviewTotal:0,
+        ItemReviewList:[],
+        ItemReviewListAdded:[],
     }
 };
 
@@ -88,6 +91,40 @@ export const ReviewList = (state, action) => {
                 }
             });
 
+        case types.GET_ITEM_REVIEWLIST:
+            return update(state, {
+                status: {
+                    ItemReviewList: { $set: action.List },
+                    ItemReviewListAdded: { $push: action.List }
+                }
+            });
+        case types.GET_ITEM_REVIEWLIST_CLEAR:
+            return update(state, {
+                status: {
+                    ItemReviewList: { $set: action.List },
+                    ItemReviewListAdded: { $set: action.List }
+                }
+            });
+        case types.GET_ITEM_REVIEWLIST_FAIL:
+            return update(state, {
+                status: {
+                    ItemReviewList: { $set: action.List },
+                    ItemReviewListAdded: { $set: action.ListAdded }
+                }
+            });
+        case types.GET_TOTAL_ITEM_REVIEW:
+            return update(state, {
+                status: {
+                    ItemReviewTotal: { $set: action.Total },
+                }
+            });
+        case types.GET_TOTAL_ITEM_REVIEW_FAIL:
+            return update(state, {
+                status: {
+                    ItemReviewTotal: { $set: action.Total },
+                    success: { $set: action.error }
+                    }
+            });
         default:
             return state;
     }

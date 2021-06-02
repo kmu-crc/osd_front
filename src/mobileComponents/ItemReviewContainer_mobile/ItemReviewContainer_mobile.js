@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ItemReview from "components/Items/ItemReview";
-import { GetItemReviewRequest, CreateItemReviewRequest, /*DeleteItemReviewRequest*/ } from "actions/Item";
+import { CreateItemReviewRequest, /*DeleteItemReviewRequest*/ } from "actions/Item";
 import { GetItemPaymentRequest } from "actions/Payment";
+import { GetItemReviewRequest } from "actions/Review";
 import styled from "styled-components";
 import market_style from "market_style";
 import noimg from "source/noimg.png";
@@ -32,6 +33,17 @@ const ContentsBox = styled.div`
     width:100%;
     display:flex;
     justify-content:center;
+  }
+  .viewmore{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color:#F7F7F7;
+    padding:5px;
+    border-radius:5px;
+    color:#A5A5A5;
+    margin-top:10px;
   }
   @media only screen and (min-width: 1366px){
     height:300px;
@@ -83,6 +95,7 @@ const Wrapper_ = styled.div`
       font-weight:300;
     }
   }
+  
   cursor:pointer;
   :hover{ background-color: #EFEFEF;}
 `;
@@ -100,42 +113,16 @@ class ItemReviewContainer_mobile extends Component {
     constructor(props) {
         super(props);
         this.state={
-            page:0,
+            page:0,viewmore:false,
           }
-        this.requestReview = this.requestReview.bind(this);
-        this.getData = this.getData.bind(this);
-        this.refresh = this.refresh.bind(this);
     }
     componentDidMount() {
-        this.props.GetItemReviewRequest(this.props.match.params.id, 0)
-        .then(
-            ()=>{
-                console.log(this.props.review.length);
-                return this.props.isExpanding(this.props.review.length>1?true:false);
-            }
-        )
-        this.props.userInfo && this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0);
-    }
-    refresh() {
         this.props.GetItemReviewRequest(this.props.match.params.id, 0);
         this.props.userInfo && this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0);
     }
     getList = page =>{
-        this.setState({page:page+1});
+        this.setState({page:page+1,viewmore:true});
         this.props.GetItemReviewRequest(this.props.ItemDetail.item_id, page);
-    }
-    requestReview(data) {
-        this.props.CreateItemReviewRequest(data, this.props.match.params.id, this.props.token)
-            .then(res =>
-                res.data.success &&
-                this.props.GetItemReviewRequest(this.props.match.params.id, 0))
-            .then(
-                this.props.userInfo &&
-                this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0))
-
-    }
-    getData(page) {
-        this.props.GetItemReviewRequest(this.props.match.params.id, page);
     }
     render() {
       console.log(this.props);
@@ -146,7 +133,7 @@ class ItemReviewContainer_mobile extends Component {
           <React.Fragment>
             <ContentsBox>
                   { this.props.total != 0?
-                    this.props.review&&this.props.review.map((item,index)=>{
+                    this.props.dataListAdded&&this.props.dataListAdded.map((item,index)=>{
                       if(index>1)return null;
                       return (
                         <Wrapper_ onClick={() => this.props.handler(item)}>
@@ -162,7 +149,7 @@ class ItemReviewContainer_mobile extends Component {
                     }):<div className="blank">리뷰 없음</div>
                   }
                   { this.state.viewmore&&this.props.total != 0&&
-                    this.props.review&&this.props.review.map((item,index)=>{
+                    this.props.dataListAdded.map((item,index)=>{
                       if(index<2)return null;
                       return (
                         <Wrapper_ onClick={() => this.props.handler(item)}>
@@ -177,7 +164,7 @@ class ItemReviewContainer_mobile extends Component {
                         </Wrapper_>)
                     })
                   }
-                  {this.props.total > 2&&<div className="viewmore" onClick={()=>this.getList(this.state.page)}>▾</div>}
+                  {this.props.dataList.length > 2&&<div className="viewmore" onClick={()=>this.getList(this.state.page)}>▾</div>}
             </ContentsBox>
           </React.Fragment>
         );
@@ -185,13 +172,13 @@ class ItemReviewContainer_mobile extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    ItemDetail: state.ItemDetail.status.ItemDetail,
-    payment: state.Payment.status.Payment,
-    review: state.ItemReview.status.Review,
-    total: state.ItemReview.status.Total,
-    score: state.ItemReview.status.TotalScore,
-    token: state.Authentication.status.token,
-    userInfo: state.Authentication.status.userInfo,
+  ItemDetail: state.ItemDetail.status.ItemDetail,
+  payment: state.Payment.status.Payment,
+  review: state.ItemReview.status.Review,
+  token: state.Authentication.status.token,
+  userInfo: state.Authentication.status.userInfo,
+  dataList: state.ReviewList.status.ItemReviewList,
+  dataListAdded: state.ReviewList.status.ItemReviewListAdded,
 });
 const mapDispatchToProps = (dispatch) => ({
     GetItemReviewRequest: (id, page) => dispatch(GetItemReviewRequest(id, page)),

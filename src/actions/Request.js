@@ -67,15 +67,23 @@ export const GetRequestListRequest = (type, page, cate1, cate2, cate3, sort, key
       method: "GET"
     })
       .then(res => res.json())
-      .then(data => dispatch(GetRequestList(data || [])))
+      .then(data => {
+        console.log(data.data);
+        dispatch(page === 0 ? RequestListClear(data || []) : GetRequestList(data || []))
+      })
+      // .then(data => {
+      //   console.log(data);
+      //   dispatch(GetRequestList(data || []))
+      // })
       .catch(err => dispatch(RequestListFail()))
   }
 };
 const GetRequestList = data => ({ type: types.GET_REQUEST_LIST, payload: data });
-// const RequestListClear = data => ({ type: types.REQUEST_LIST_CLEAR, List: data });
-const RequestListFail = () => ({ type: types.REQUEST_LIST_FAIL, List: [] });
-
-
+const RequestListClear = data => ({ type: types.REQUEST_LIST_CLEAR, payload: data });
+const RequestListFail = () => ({ type: types.REQUEST_LIST_FAIL});
+export const RequestListInit = () => {
+  return dispatch =>dispatch(RequestListClear({data:{requests:[],total:0}}))
+}
 export const GetRequestTotalCountRequest = (cate1, cate2) => {
   return dispatch => {
     const url = `${host}/request/count/${cate1}/${cate2}`

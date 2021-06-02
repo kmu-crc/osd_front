@@ -341,7 +341,7 @@ PointUp = async(type) => {
   render() {
     const { Point, History, HistoryCount } = this.props;
     const { page } = this.state;
-    const lastPage = parseInt(HistoryCount / 5, 10);
+    const lastPage = parseInt(HistoryCount / 12, 10);
     let pagecount=0;
     
     //---------------------------결제관련-----------------------------------
@@ -453,7 +453,7 @@ PointUp = async(type) => {
                       )
                     }
                     )) : (<div>포인트 충전 내역 없음</div>)}
-                  {5 < HistoryCount ?
+                  {12 < HistoryCount ?
                     // <div onClick={this.goNext}>next</div> 
                     <div className="pagenation">
                       <Pagination

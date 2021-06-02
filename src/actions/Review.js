@@ -69,3 +69,42 @@ export function GetTotalCountMakerReviewRequest(id) {
 };
 const TotalMakerReview = (data) => ({ type: types.GET_TOTAL_COUNT_MAKER_REVIEW, Total: data.data });
 const TotalMakerReviewFail = (err) => ({ type: types.GET_TOTAL_COUNT_MAKER_REVIEW_FAIL, Total: 0, error: err });
+
+
+
+
+
+// GET DESIGNER REVIEW LIST
+export function GetItemReviewRequest(id, page) {
+    return (dispatch) => {
+        const url =  `${host}/item/get-review/${id}/${page}`;
+        console.log(url);
+        return fetch(url,
+            { headers: { "Content-Type": "application/json" }, method: "GET" })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                return dispatch(page === 0 ? GetItemReviewClear(data || []) : GetItemReview(data || []))
+            }
+            )
+            .catch(err => dispatch(GetItemReviewFail()))
+    }
+};
+const GetItemReview = (data) => ({ type: types.GET_ITEM_REVIEWLIST, List: data.data });
+const GetItemReviewClear = (data) => ({ type: types.GET_ITEM_REVIEWLIST_CLEAR, List: data.data, ListAdded: [] });
+const GetItemReviewFail = () => ({ type: types.GET_ITEM_REVIEWLIST_FAIL, List: [], ListAdded: [] });
+
+// GET DESIGNER REVIEW TOTAL COUNT
+export function GetTotalItemReviewRequest(id) {
+    return (dispatch) => {
+        const url =  `${host}/item/get-review-count/${id}`;
+        console.log(url);
+        return fetch(url,
+            { headers: { "Content-Type": "application/json" }, method: "GET" })
+            .then(res => res.json())
+            .then(data => dispatch(GetTotalItemReview(data)))
+            .catch(err => dispatch(GetTotalItemReviewFail(err)))
+    }
+};
+const GetTotalItemReview = (data) => ({ type: types.GET_TOTAL_ITEM_REVIEW, Total: data.data });
+const GetTotalItemReviewFail = (err) => ({ type: types.GET_TOTAL_ITEM_REVIEW_FAIL, Total: 0, error: err });
