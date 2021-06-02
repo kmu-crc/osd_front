@@ -76,8 +76,8 @@ class ProductDetailContainer extends Component {
       { payment_title: item.title, payment_price: item.price },
       item.item_id,
       this.props.token)
-      .then(async res => {
-        if (res && res.data && res.data.success) {
+      .then(async ({ data }) => {
+        if (data && data.success) {
           if (this.props.custom) {
             await alert("구입이 완료되었습니다. [내 정보] > [의뢰상품]에서 확인하실 수 있습니다.");
             window.location.href = `/myPage/`;
@@ -105,16 +105,7 @@ class ProductDetailContainer extends Component {
     return loading
 
       ? <Loading />
-      :
-      // <Wrapper>
-      //   <ItemDetail
-      //     purchase={this.Payment}
-      //     itemId={this.props.ItemDetail.item_id}
-      //     item={this.props.ItemDetail}
-      //     {...this.props}
-      //   />
-      // </Wrapper>
-      window.innerWidth >= 500 ?
+      : window.innerWidth >= 500 ?
         <Wrapper>
           <ItemDetail purchase={this.Payment} itemId={this.props.ItemDetail.item_id} item={this.props.ItemDetail} {...this.props} />
         </Wrapper>

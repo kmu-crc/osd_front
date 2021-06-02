@@ -245,7 +245,9 @@ class CardSourceDetail extends Component {
     await this.setState({ content: copyContent });
     let formData = await ContentForm(this.state, this.props.content);
     await this.setState({ loading: true });
-    await setTimeout(() => { }, 500);
+
+    // FIX IT asps
+    await setTimeout(() => { }, 1000);
 
     // PROJECT-TYPE
     if (this.props.submit) {
@@ -269,7 +271,7 @@ class CardSourceDetail extends Component {
         return;
       } else {
         if (await confirm("수정된 내용을 저장합니다.", "확인", "취소")) {
-          this.props.upDateRequest(formData, this.props.cardId, this.props.token)
+          this.props.updateRequestRightNow(formData, this.props.cardId, this.props.token)
             .then(async res => {
               if (res.data.success) {
                 // await alert("아이템 컨텐츠를 수정하였습니다.");
@@ -365,27 +367,27 @@ class CardSourceDetail extends Component {
 
         <CardSrcWrap>
           {/*<Worker workerUrl="https://unpkg.com/pdfjs-dist@2.1.266/build/pdf.worker.min.js">*/}
-            {this.props.edit ? (
-              <form onSubmit={this.onSubmit}>
-                {content.length > 0 && content.map((item, index) =>
-                  <Controller
-                    key={index}
-                    mode={this.props.mode}
-                    name={`content${index}`}
-                    type={item.type}
-                    order={index} maxOrder={content.length - 1}
-                    item={{ ...item, index }}
-                    privateItem={this.privateItem}
-                    deleteItem={this.deleteItem}
-                    getValue={this.onChangValue}
-                  />)}
+          {this.props.edit ? (
+            <form onSubmit={this.onSubmit}>
+              {content.length > 0 && content.map((item, index) =>
+                <Controller
+                  key={index}
+                  mode={this.props.mode}
+                  name={`content${index}`}
+                  type={item.type}
+                  order={index} maxOrder={content.length - 1}
+                  item={{ ...item, index }}
+                  privateItem={this.privateItem}
+                  deleteItem={this.deleteItem}
+                  getValue={this.onChangValue}
+                />)}
 
-                <AddController
-               		isProgramming={this.props.ItemDetail.is_problem === 1}
-                	mode={this.props.mode}
-                	name="addBasic" type="INIT"
-                	order={content.length > 0 ? content.length : 0}
-                	getValue={this.onAddValue} />
+              <AddController
+                isProgramming={this.props.ItemDetail.is_problem === 1}
+                mode={this.props.mode}
+                name="addBasic" type="INIT"
+                order={content.length > 0 ? content.length : 0}
+                getValue={this.onAddValue} />
 
               <ButtonContainer>
                 <EditorBottonWrapper>
