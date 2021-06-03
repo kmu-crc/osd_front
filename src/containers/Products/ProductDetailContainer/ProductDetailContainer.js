@@ -33,7 +33,11 @@ class ProductDetailContainer extends Component {
   componentDidMount() {
     this.setState({ loading: true })
 
-    const { userInfo, id, token } = this.props
+    const { userInfo, card, id, token } = this.props
+
+    if (card) {
+      alert("!")
+    }
 
     this.props.GetItemDetailRequest(id, token)
       .then(({ ItemDetail }) => {
