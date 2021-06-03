@@ -11,6 +11,7 @@ import { Dropdown } from "semantic-ui-react";
 const Wrapper =styled.div`
   width:100%;
   min-height:700px;
+  overflow-x:hidden;
   .header{
     width:100%;
     text-align:center;
@@ -56,6 +57,7 @@ const Wrapper =styled.div`
     display:flex;
     justify-content:center;
     margin-top:15px;
+    margin-left:10px;
   }
 `
 const DropBox = styled(Dropdown)`

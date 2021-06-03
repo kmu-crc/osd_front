@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ModifyDesigner from 'components/Designers/ModifyDesigner/ModifyDesigner';
+
+import ModifyDesigner_mobile from 'mobileComponents/ModifyDesigner_mobile';
 import styled from "styled-components";
 import ContentBox from "components/Commons/ContentBox";
 import { connect } from "react-redux";
@@ -13,20 +15,27 @@ margin-bottom: 100px;
 position: relative;
 z-index:3;
 `
+const Wrapper_mobile = styled.div`
+width:100%;
+padding:0px 10px;
+`
 class ModifyDesignerContainer extends Component {
   componentWillMount(){
     this.props.GetExpertDesignerDetailRequest(this.props.id);
-    //this.props.GetTopItemListRequest(0);
   }
   render() {
-    // console.log("ModifyDesignerContainer=====",this.props);
-    // GetDesignerDetailRequest(this.props.id);
-
     return(
        <React.Fragment>
-         <Wrapper>
-         <ModifyDesigner  {...this.props}/>
-         </Wrapper>
+         {
+           window.innerWidth>=500?
+           <Wrapper>
+            <ModifyDesigner  {...this.props}/>
+           </Wrapper>
+          :  
+          <Wrapper_mobile>
+            <ModifyDesigner_mobile  {...this.props}/>
+          </Wrapper_mobile>
+         }
        </React.Fragment>
     );
   }

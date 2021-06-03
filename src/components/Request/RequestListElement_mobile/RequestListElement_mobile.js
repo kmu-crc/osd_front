@@ -24,6 +24,15 @@ const Content = styled.div`
     color:black;
     margin-right:5%;
   }
+  .complete{
+    min-width:max-content;
+    color:white;
+    padding:2px 13px 1px 13px;
+    border-radius:15px;
+    background-color:#FF3838;
+    margin-right:10px;
+    font-size:${market_style.font.size.mini2};
+  }
   .reply{
     min-width:max-content;
     color:#C1C1C1;
@@ -78,7 +87,11 @@ class RequestListElement_mobile extends Component {
       <React.Fragment>
         <Link  style={{  display: "flex", flexDirection: "row" }} to={userLink}>
         <Content>
+
           {
+            item.completed === 1 && item.status === "request" ?
+            <div className="complete" >완료</div> 
+            :
             item.status == "request"?
             <div className="reply">{item.type=="designer"?"디자인":"제작"}의뢰</div>
             :
@@ -87,7 +100,7 @@ class RequestListElement_mobile extends Component {
             <img className="reply_icon" src={arrow}/>
             <div className="reply">{item.type=="designer"?"디자인":"제작"}응답</div> 
             </React.Fragment>
-            :null  
+            : null
           }
           <div className="title">{item.title||item.payment_title || "글 제목"}</div>
           <div className="sub">

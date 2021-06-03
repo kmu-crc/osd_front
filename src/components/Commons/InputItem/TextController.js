@@ -8,7 +8,8 @@ const defaultHeight = 100
 
 const EditorWrapper = styled.div`
   width: 100%;
-  height: ${defaultHeight}px;
+  // height: ${defaultHeight}px;
+  height:max-content;
   position: relative;
   margin-bottom: ${props => props.marginBottom ? props.marginBottom : 5}px;
   .copyright {

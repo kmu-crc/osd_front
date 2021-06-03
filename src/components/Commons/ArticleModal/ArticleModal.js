@@ -9,7 +9,8 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
 const WriteNormalArticleModal = styled(Modal)`
   width: ${props => props.isFullScreen && window.innerWidth || 1000}px;
-  height: ${props => props.isFullScreen && window.innerHeight - 100 || 500}px;
+  // height: ${props => props.isFullScreen && window.innerHeight - 100 || 500}px;
+  height: max-content;
   // min-width: 300px;
   // min-height: 200px;
 
@@ -53,10 +54,13 @@ const WriteNormalArticleModal = styled(Modal)`
     height:max-content;
   }
   .redButtonBox{
-    position: fixed;
-    bottom: 10px;
-    width: max-content;
-    left: 35%;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    // position: fixed;
+    // bottom: 10px;
+    // width: max-content;
+    // left: 35%;
   }
   .button{
     width:150px;
