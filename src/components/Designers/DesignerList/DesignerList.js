@@ -66,7 +66,7 @@ class DesignerList extends Component {
     rendering: true
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.GetDesignerTotalCountRequest(this.props.cate1, this.props.cate2);
   }
 
@@ -80,53 +80,57 @@ class DesignerList extends Component {
   }
 
   cate1Change = (value) => {
-    this.props.history.replace(`/designer/${this.props.sort}/${value}/null`);
+    // this.props.history.replace(`/designer/${this.props.sort}/${value}/null`);
+    this.props.history.push(`/designer/${this.props.sort}/${value}/null`);
     this.props.GetDesignerTotalCountRequest(value, null);
     this.changeState();
   }
 
   cate2Change = (cate1, value) => {
     if (cate1 && this.props.cate1 !== cate1) {
-      this.props.history.replace(`/designer/${this.props.sort}/${cate1}/${value}`);
+      // this.props.history.replace(`/designer/${this.props.sort}/${cate1}/${value}`);
+      this.props.history.push(`/designer/${this.props.sort}/${cate1}/${value}`);
     } else {
-      this.props.history.replace(`/designer/${this.props.sort}/${this.props.cate1}/${value}`);
+      // this.props.history.replace(`/designer/${this.props.sort}/${this.props.cate1}/${value}`);
+      this.props.history.push(`/designer/${this.props.sort}/${this.props.cate1}/${value}`);
     }
     this.props.GetDesignerTotalCountRequest(this.props.cate1, value);
     this.changeState();
   }
 
   sortChange = (e, { value }) => {
-    this.props.history.replace(`/designer/${value}/${this.props.cate1}/${this.props.cate2}`);
+    // this.props.history.replace(`/designer/${value}/${this.props.cate1}/${this.props.cate2}`);
+    this.props.history.push(`/designer/${value}/${this.props.cate1}/${this.props.cate2}`);
     this.changeState();
   }
 
-  render(){
-    const {sort, cate1, cate2} = this.props;
+  render() {
+    const { sort, cate1, cate2 } = this.props;
     const Header = () => {
       const cate1List = this.props.category1;
       const cate2List = this.props.category2;
 
       if (cate1List && cate1List.length !== 0 && cate2List && cate2List.length !== 0) {
         const cate1Name = this.props.cate1 && this.props.cate1 !== "null"
-                          ? cate1List[this.props.cate1]
-                          : null;
+          ? cate1List[this.props.cate1]
+          : null;
         const n = parseInt(this.props.cate1, 10);
         const cate2Name = this.props.cate2 && this.props.cate2 !== "null"
-                          ? cate2List[n].filter(sub => sub.value === this.props.cate2)
-                          : null;
+          ? cate2List[n].filter(sub => sub.value === this.props.cate2)
+          : null;
         return (
           <Head>
             <span>디자이너 </span>
             {this.props.cate1 && this.props.cate1 !== "null" &&
-              <span> > {cate1Name.text} </span>
+              <span> &gt; {cate1Name.text} </span>
             }
             {this.props.cate2 && this.props.cate2 !== "null" &&
-              <span> > {cate2Name.length !== 0 && cate2Name[0].text}</span>
+              <span> &gt; {cate2Name.length !== 0 && cate2Name[0].text}</span>
             }
             <span> ({NumberFormat(this.props.Count)})</span>
             <div className="Sorting">
               <Sorting handleClick={this.sortChange}
-                       placeholder={sort}/>
+                placeholder={sort} />
             </div>
           </Head>
         );
@@ -135,27 +139,27 @@ class DesignerList extends Component {
       }
     };
 
-    return(
+    return (
       <div>
         <MenuWrap>
           <Content>
             <Wrapper>
               <MenuContainer devided="vertically" padded={true} columns={2}>
                 <Grid.Row stretched={false}>
-                <CategoryContainer  handleCate1={this.cate1Change}
-                                    handleCate2={this.cate2Change}
-                                    cate1={this.props.cate1}
-                                    cate2={this.props.cate2}/>
+                  <CategoryContainer handleCate1={this.cate1Change}
+                    handleCate2={this.cate2Change}
+                    cate1={this.props.cate1}
+                    cate2={this.props.cate2} />
                 </Grid.Row>
               </MenuContainer>
             </Wrapper>
           </Content>
         </MenuWrap>
         <Content>
-          <Header/>
+          <Header />
           <Wrapper className="listWrap">
             {this.state.rendering &&
-            <ScrollDesignerListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history}/>}
+              <ScrollDesignerListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}
           </Wrapper>
         </Content>
       </div>
