@@ -2,15 +2,8 @@ import React, { Component } from "react";
 import CreateProductFormContainer from "containers/Products/CreateProductFormContainer";
 import Loading from "components/Commons/Loading";
 import styled from "styled-components";
-import ContentBox from "components/Commons/ContentBox";
 
-const Wrapper = styled(ContentBox)`
-  width:100%;
-  margin-top:20px;
-  margin-bottom: 100px;
-  position: relative;
-  z-index:3;
-`;
+
 
 class CreateItem extends Component {
   constructor(props) {
@@ -23,10 +16,7 @@ class CreateItem extends Component {
   render() {
     return (
       <React.Fragment>
-        <Wrapper>
           <CreateProductFormContainer keep={this.props.keep} setLoader={this.setLoader} />
-        </Wrapper>
-        {this.state.loading && <Loading />}
       </React.Fragment>
     );
   }

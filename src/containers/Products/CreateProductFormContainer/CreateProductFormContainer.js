@@ -2,18 +2,37 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import CreateProductForm from "components/Products/CreateProductForm";
+import CreateProductForm_mobile from "mobileComponents/CreateProductForm_mobile";
 import { CreateDesignRequest } from "actions/Products/CreateProduct";
 import { SearchMemberRequest } from "actions/Commons/Search";
+import styled from "styled-components";
+import ContentBox from "components/Commons/ContentBox";
 
+const Wrapper = styled(ContentBox)`
+  width:100%;
+  margin-top:20px;
+  margin-bottom: 100px;
+  position: relative;
+  z-index:3;
+`;
+const Wrapper_mobile = styled.div`
+  padding:0px 10px;
+`;
 class CreateProductFormContainer extends Component {
-  /*componentDidMount() { console.log("designer:", this.props, this.props.keep == null); if (this.props.keep == null) { // if (this.props.userInfo.isDesigner === 0 || this.props.userInfo.isMaker === 0) { //   alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요."); //   this.props.history.push("/myPage"); //   ; // } } }*/
 
   render() {
     return (
       <React.Fragment>
-        {/* {this.props.keep// || this.props.userInfo.isDesigner === 1 || this.props.userInfo.isMaker === 1 ?*/}
-        <CreateProductForm {...this.props} />
-        {/* : <p style={{ color: "#FFF" }}> 권한을 확인 중입니다.</p>} */}
+        {
+          window.innerWidth>=500?
+          <Wrapper>
+          <CreateProductForm {...this.props} />
+          </Wrapper>
+          :
+          <Wrapper_mobile>
+          <CreateProductForm_mobile {...this.props}/>
+          </Wrapper_mobile>
+        }
       </React.Fragment>
     )
   }

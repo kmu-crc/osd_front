@@ -6,7 +6,7 @@ import CheckBox2 from "components/Commons/CheckBox";
 // import { LocalGridEditor } from "components/GridEditor/LocalGridEditor";
 import { AddController, InputContent, InputCalendar, Controller, InputTag, RadioType } from "components/Commons/InputItem";
 import SearchDesignMemberContainer from "containers/Commons/SearchMemberContainer";
-import { InputPriceNew } from "components/Commons/InputItem/InputPriceNew";
+import { InputPriceNew, InputPriceNew_mobile } from "components/Commons/InputItem";
 import Loading from "components/Commons/Loading";
 import CardSourceDetailContainer from "containers/Items/CardSourceDetailContainer";
 import ItemStepContainer from "containers/Items/ItemStepContainer";
@@ -17,6 +17,27 @@ import _ from 'lodash';
 import market_style from "market_style";
 import { Icon } from "semantic-ui-react";
 
+const fashion = [
+  { order: 0, title: "Ideation" },
+  { order: 1, title: "Purpose" },
+  { order: 2, title: "Design" },
+  { order: 3, title: "Mock-up" },
+  { order: 4, title: "Establish" },
+];
+const software = [
+  { order: 0, title: "기획" },
+  { order: 1, title: "요구사항 분석" },
+  { order: 2, title: "소프트웨어 설계" },
+  { order: 3, title: "시스템 구현" },
+  { order: 4, title: "시스템 테스트 및 평가" },
+];
+const engineering = [
+  { order: 0, title: "기획" },
+  { order: 1, title: "시스템 분석" },
+  { order: 2, title: "시스템 설계" },
+  { order: 3, title: "시스템 구현" },
+  { order: 4, title: "시스템 테스트 및 평가" },
+];
 const ItemType = [
   { text: "디자인", value: 0 },
   { text: "프로젝트", value: 1 },
@@ -28,6 +49,210 @@ const ItemType = [
   { text: "지적재산권", value: 6 },
   { text: "제작품", value: 7 }
 ];
+const Wrapper = styled.div`
+  width:100%;
+  .header{
+    width:100%;
+    text-align:center;
+    font-size:${market_style.font.size.normal2};
+    font-weight:800;
+    color:#c1c1c1;
+    margin-bottom:10px;
+  }
+  .redButton{
+    width:100%;
+    border:2px solid #ff3838;
+    border-radius:10px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:red;
+    font-weight:800;
+    padding:4px 0px 4px 0px;
+  }
+  .allRed{background-color:red;color:white;box-shadow:2px 2px 5px #00000029;}
+  .greyButton{
+    width:100%;
+    border-radius:10px;
+    background-color:#F7F7F7;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:black;
+    padding:4px 0px 5px 0px;
+  }
+  .allGrey{background-color:#707070;color:white;box-shadow:2px 2px 5px #00000029;}
+  .marginTop2{margin-top:10px;}
+`
+const ModifyButton = styled.div`
+  width:100%;
+  height:30px;
+  border-radius:10px;
+  background-color:#F7F7F7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:${market_style.font.size.small1};
+  font-weight:500;
+  color:${props=>props.select==true?"red":"black"};
+`
+const ShadowBox = styled.div`
+  width:100%;
+  height:max-content;
+  border-radius:10px;
+  box-shadow: ${props=>props.ShadowOpacity==null?"2px 2px 5px #00000029":"none"};
+  border:${props=>props.ShadowOpacity==null?"1px solid #eaeaea":"none"};
+  padding:10px;
+  margin-bottom:10px;
+  padding-bottom:10px;
+
+  .title{
+    width:100%;
+    text-align:center;
+    font-size:${market_style.font.size.small1};
+    font-weight:800;
+    color:#c1c1c1;
+    margin-bottom:10px;
+  }
+  .row{
+    width:100%;
+  }
+  .label{
+    min-width:100px;
+  }
+  .paddingNormal{padding:10px;}
+  .marginTop1{margin-top:5px;}
+  .marginTop2{margin-top:10px;}
+  .marginTop3{margin-top:20px;}
+  .marginRight{margin-right:10px;}
+  .fontBig{font-size:${market_style.font.size.small1};font-weight:800;}
+  .font{font-size:${market_style.font.size.small1};font-weight:500;}
+  .fontNormal{font-size:${market_style.font.size.small1};font-weight:400;}
+  .fontSmall{font-size:${market_style.font.size.mini2};font-weight:400;}
+  .black{color:black;}
+  .flex{display:flex;}
+  .flexWrap{flex-wrap:wrap;}
+  .justifyCenter{justify-content:center;}
+  .alignCenter{align-items:center;}
+  .spaceBetween{justify-content:space-between;}
+  .flexEnd{justify-content:flex-end;}
+  .column{flex-direction:column;}
+  .textRight{text-align:right;}
+  .maxContent{min-width:max-content;}
+  .ellipsis{width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .thumbnail{
+    min-width:108px;
+    min-height:100px;
+    background-color:#E9E9E9;
+    background-image:url(${props=>props.face});
+    background-size:cover;
+    margin-right:10px;
+  }
+
+`
+const Button = styled.div`
+  width:${props=>props.width==null?"100%":props.width+"px"};
+  height:35px;
+  background-color:${props=>props.bgColor == null?"red":props.bgColor};
+  color:${props=>props.fontColor == null?"white":props.fontColor};
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:10px;
+  box-shadow: 2px 2px 3px #00000019;
+  font-size:${market_style.font.size.small1};
+  font-weight:500;
+  margin-bottom:10px;
+  `
+const DropBox = styled(Dropdown)`
+    min-width:110px !important;
+    max-height:31px !important;   
+    display:flex !important;
+    align-items:center !important; 
+    background-color:#E9E9E9 !important;
+    margin-right:9px;
+    font-size:${market_style.font.size.mini2};
+    border-radius:10px !important;
+    position:relative !important;
+`;
+const EditorContainer = styled.div`
+    padding-top: ${props => props.mobile ? 0 : 35}px;
+    .steps {
+        display: flex;
+    }
+    .step {
+        margin-right: 10px;
+    }
+    .create-step {
+        width: max-content;
+    }
+`;
+const EditorWrapperMobile = styled.div`
+    margin-top: 10px;
+    padding-bottom: 5px;
+    width: 100%;
+
+    .step-wrapper {
+        width: max-content;
+        margin: auto;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+
+        .more-button {
+          position: absolute;
+          right: -50px;
+        }
+        .more-menu {
+          position: absolute;
+          border: 2px solid #707070;
+          border-radius: 5px;
+          box-shadow: 2.5px 2.5px #EFEFEF;
+          background-color: white;
+          width: 150px;
+          right: -50px;
+          top: 30px;
+          display: none;
+          ul {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+          }
+          li {
+              padding: 10px;
+              font-size: 1rem;
+              color: #707070;
+              font-weight: 500;
+          }
+          &.active {
+            display: block;
+          }
+        }
+    }
+    .navigation {
+        position: relative;
+        .normal {
+            position: absolute;
+            top: 50px;
+        }
+        .left {
+            left: 5px;
+        }
+        .right {
+            right: 5px;
+        }
+    }
+    .cards-wrapper {
+        width: max-content;
+        margin: auto;
+        .card {
+            margin: 15px;
+        }
+    }
+`;
+
+
 const MainBox = styled.div`
   width:100%;
   .title{
@@ -46,6 +271,9 @@ const MainBox = styled.div`
   .centering{
     justify-content:center; 
   }
+  .justifyCenter{
+    jusify-content:center;
+  }
   .marginTop{
     margin-top:20px; 
   }
@@ -59,29 +287,6 @@ const MainBox = styled.div`
     color: #FF0000;
     cursor: default;
   }
-  .tabMenu{
-    margin-top:15px;
-    margin-bottom:15px;
-    width:100%;
-    height:35px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    border: 1px dashed #707070;
-    .items{
-      cursor:pointer;
-      font-size:${market_style.font.size.small1};
-    }
-    .marginRight{
-      margin-right:70px;
-    }
-    .redText{
-      color:red;
-    }
-    .blackText{
-      color:black;
-    }
-  }
   @media only screen and (min-width: 1000px) and (max-width:1366px){
     .flexWrap{
       flex-wrap:nowrap;
@@ -93,6 +298,191 @@ const MainBox = styled.div`
     }
   }
 `;
+
+const FormBox = styled.div`
+  width:100%;
+  max-width:${props => props.width != null ? props.width + "px" : "100%"};
+  height:${props => props.height != null ? props.height + "px" : "max-content"};
+  box-shadow: ${props => props.boxShadow == null ? "" : "5px 5px 10px #00000029"};
+  margin-top: ${props => props.marginTop || 0}px;
+  margin-bottom: ${props => props.marginBottom || 0}px;
+  border-radius: 20px;
+  padding: ${props => props.padding == null ? "30px 50px" : props.padding};
+  border:1px solid #eaeaea;
+
+  .FormBoxScroll{
+    position: relative;
+    padding:0px 15px 0px 0px;
+    width:100%;
+    height:100%;
+    overflow-Y:overlay;
+    overflow-X:hidden;
+  }
+  .flexWrapBox{
+    width:100%;
+    display:flex;
+    flex-wrap:wrap;
+  }
+  .maxWidth{
+    width:100%;
+  }
+  .contentWrap{
+  }
+  .Vcentering{
+    align-items:center;
+  }
+  .inputBox{
+    width:330px;
+    height:max-content;
+  }
+  .wrapper{
+    width:100%;
+    height:max-content;
+  }
+  .margin_bottom{
+    margin-bottom:20px;
+  }
+  .margin_zero{
+    margin:0px;
+  }
+  .flex{
+    display:flex;
+  }
+  .cursor{
+    cursor:pointer;
+  }
+  .innerWraper{
+    width:100%;
+    margin-bottom:26px;
+    display:flex;
+  }
+  .label{
+    width:141px;
+    font-family: Noto Sans KR;
+    font-weight: 500;
+    min-width:157px;
+  }
+  .label_centering{
+    text-align:center;
+  }
+  .index{
+    width:30px;
+    height:30px;
+    color:#707070;
+  }
+  .remove-margin{
+    // margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  & .title-input {
+    width: 35%;
+    height: 31px;
+    background: #E9E9E9 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    text-align: left;
+    font: normal normal 300 13px/19px Noto Sans KR;
+    letter-spacing: 0px;
+    color: #000; //#707070;
+    padding: 2px 0px 3px 11px;
+    margin-bottom:10px;
+    margin-right:10px;
+  }
+  .checkbox_wrapper{
+    width:max-content;
+    height:25px;
+    display:flex;
+    align-items:center;
+    .checkbox{
+      width:max-content;
+      height:25px;
+      margin-right:5px;
+    }
+    .text{
+      height:max-content;
+    }
+  }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    padding:27px;
+  }
+`;
+const DescirptionText = styled.div`
+font-size:${market_style.font.size.mini2};
+  color:#707070;
+`;
+const InputNumberText = styled.input.attrs({ type: "number" })`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:31px;
+  border-radius:10px;
+  font-family:Noto Sans KR;
+  font-size:${market_style.font.size.mini2};
+  background-color:#E9E9E9;
+  outline:none;
+  border:0px;
+  padding: 0.67857143em 1em;
+  font-weight:300;
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+`;
+const InputText = styled.input.attrs({ type: "text" })`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:31px;
+  border-radius:10px;
+  font-family:Noto Sans KR;
+  font-size:${market_style.font.size.small1};
+  background-color:#E9E9E9;
+  outline:none;
+  border:0px;
+  padding: 0.67857143em 1em;
+  font-weight:300;
+`;
+const InputTextarea = styled.textarea`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
+  border-radius:10px;
+  font-family:Noto Sans KR;
+  font-size:${market_style.font.size.mini2};
+  background-color:#E9E9E9;
+  outline:none;
+  border:0px;
+  readonly;
+  resize:none;
+  padding: 0.67857143em 1em;
+  font-weight:300;
+`;
+const EditorWrapper = styled.div`
+  width:100%;
+  .title {
+    width: 100%;
+    text-align:center;
+    color: #707070;
+    font-size:${market_style.font.size.normal1};
+    font-weight: 300;
+    margin-top: 25px;
+    margin-bottom: 15px;
+  }
+  .editor{
+    width:100%;
+    opacity: .75;
+    overflow: auto;
+  }
+`;
+const InfoContentChooseItemType = styled.div`
+  border: 1px dashed gray;
+  padding: 25px;
+  width: 100%;
+  border-radius: 20px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  font-size:${market_style.font.size.small1};
+  color: #707070;
+`;
+
 const ButtonBox = styled.div`
   width: max-content;
   margin-left: auto;
@@ -153,211 +543,6 @@ const Thumbnail = styled.div`
   justify-content: center;
   align-items: center;
   cursor:pointer;
-`;
-const FormBox = styled.div`
-  width:100%;
-  max-width:${props => props.width != null ? props.width + "px" : "100%"};
-  height:${props => props.height != null ? props.height + "px" : "max-content"};
-  box-shadow: ${props => props.boxShadow == null ? "" : "5px 5px 10px #00000029"};
-  margin-top: ${props => props.marginTop || 0}px;
-  margin-bottom: ${props => props.marginBottom || 0}px;
-  border-radius: 20px;
-  padding: ${props => props.padding == null ? "30px 50px" : props.padding};
-  border:1px solid #eaeaea;
-
-  .FormBoxScroll{
-    position: relative;
-    padding:0px 15px 0px 0px;
-    width:100%;
-    height:100%;
-    overflow-Y:overlay;
-    overflow-X:hidden;
-  }
-  .flexWrapBox{
-    width:100%;
-    display:flex;
-    flex-wrap:wrap;
-  }
-  .maxWidth{
-    width:100%;
-  }
-  .contentWrap{
-  }
-  .Vcentering{
-    align-items:center;
-  }
-  .inputBox{
-    width:330px;
-    height:max-content;
-  }
-  .wrapper{
-    width:100%;
-    height:max-content;
-  }
-  .margin_bottom{
-    margin-bottom:20px;
-  }
-  .margin_zero{
-    margin:0px;
-  }
-  .flex{
-    display:flex;
-  }
-  .innerWraper{
-    width:100%;
-    margin-bottom:26px;
-    display:flex;
-  }
-  .label{
-    width:141px;
-    font-family: Noto Sans KR;
-    font-weight: 500;
-    min-width:157px;
-  }
-  .label_centering{
-    text-align:center;
-  }
-  .index{
-    width:30px;
-    height:30px;
-    color:#707070;
-  }
-  .remove-margin{
-    // margin-top: 10px;
-    margin-bottom: 10px;
-  }
-  .cursor {
-    cursor: pointer;
-  }
-  @media only screen and (min-width: 500px) and (max-width:1000px){
-    padding:27px;
-  }
-`;
-const DescirptionText = styled.div`
-font-size:${market_style.font.size.mini2};
-color:#707070;
-`;
-const InputText = styled.input.attrs({ type: "text" })`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:31px;
-  border-radius:10px;
-  font-family:Noto Sans KR;
-  font-size:${market_style.font.size.mini2};
-  background-color:#E9E9E9;
-  outline:none;
-  border:0px;
-  padding: 0.67857143em 1em;
-  font-weight:300;
-`;
-const InputTextarea = styled.textarea`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:${props => props.height == null ? 100 + "%" : props.height + "px"};
-  border-radius:10px;
-  font-family:Noto Sans KR;
-  font-size:${market_style.font.size.mini2};
-  background-color:#E9E9E9;
-  outline:none;
-  border:0px;
-  readonly;
-  resize:none;
-  padding: 0.67857143em 1em;
-  font-weight:300;
-
-`;
-const DropBox = styled(Dropdown)`
-    width:160px;
-    min-width:100px !important;
-    min-height:31px !important;
-    max-height:31px !important;   
-    display:flex !important;
-    align-items:center !important; 
-    background-color:#E9E9E9 !important;
-    margin-right:10px;
-    font-size:${market_style.font.size.small1};
-    border-radius:10px !important;
-    position:relative !important;
-    .icon{
-      width:max-content !important;
-      height:max-content !important;
-      padding:6px !important;
-    }
-    .menu{
-      height:max-content;
-      max-height:113px !important;
-      z-index:9999 !important;
-
-    }
-    .
-`;
-const Margin = styled.div`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:${props => props.height == null ? 100 + "%" : props.height + "px"}
-`;
-const InfoContentChooseItemType = styled.div`
-  border: 1px dashed gray;
-  padding: 25px;
-  width: 860px;
-  border-radius: 20px;
-  line-height: 28px;
-  text-align: center;
-  margin-top: 76px;
-  margin-left: auto;
-  margin-right: auto;
-  font-size:${market_style.font.size.giant1};
-  color: #707070;
-`;
-const DeleteMenu = styled.div`
-  position: abolute;
-  width: 280px;
-  padding: 25px;
-  border-radius: 25px;
-  background: white;
-  font-size: 28px;
-  // line-height: 56px;
-  text-align: center;
-  font-family: Noto Sans KR;
-  opacity:0.6;
-  .active{
-    color: red;
-  }
-  .mousePointer{
-    cursor:pointer;
-  }
-  &:hover{
-    opacity:1;
-  }
-`;
-const NaviMenu = styled.div`
-  position: abolute;
-  width: 280px;
-  padding: 25px;
-  border: 1px solid blue;
-  border-radius: 25px;
-  background: white;
-  font-size: 28px;
-  line-height: 56px;
-  text-align: center;
-  font-family: Noto Sans KR;
-  
-  .active{
-    color: red;
-  }
-  .mousePointer{
-    cursor:pointer;
-  }
-`;
-const NoInviteMemberBox = styled.div`
-  margin-left: 167px;
-  // margin-top: 30px;
-  font-size:${market_style.font.size.normal3};
-  font-weight: 500;
-  font-family: Noto Sans KR;
-  color: #707070;
-  display:flex;
-  .textLabel {
-        margin - left: 35px;
-      vertical-align: top;
-    }
 `;
 class Field extends Component {
   render() {
@@ -453,26 +638,9 @@ const ItemContents = styled.div`
     }
   }
 `;
-const InputNumberText = styled.input.attrs({ type: "number" })`
-  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-  height:31px;
-  border-radius:10px;
-  font-family:Noto Sans KR;
-  font-size:${market_style.font.size.mini2};
-  background-color:#E9E9E9;
-  outline:none;
-  border:0px;
-  padding: 0.67857143em 1em;
-  font-weight:300;
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-`;
 
 
-class ModifyItemInfo extends Component {
+class ModifyItemInfo_mobile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -750,115 +918,69 @@ class ModifyItemInfo extends Component {
     const Mandatory = () => <span className="font_red" title="필수사항입니다."> * </span>
     const { ItemDetail: item } = this.props;
     console.log("ITEM::", this.props);
-    return (<MainBox>
-      {this.state.loading ? <Loading /> : null}
-
-      {/* 타이틀 */}
-      <div className="title">아이템 수정</div>
-      <div className="tabMenu">
-        <div className={`items marginRight ${tab == "basic" ? "redText" : "blackText"}`}
-          onClick={() => this.setState({ tab: "basic" })}> 기본/추가정보 변경</div>
-        <div className={`items marginRight ${tab == "contents" ? "redText" : "blackText"}`}
-          onClick={() => this.setState({ tab: "contents" })}>컨텐츠 변경</div>
-        <div className={`items ${tab == "delete" ? "redText" : "blackText"}`}
-          onClick={this.deleteThisItem}>아이템 삭제</div>
-      </div>
-      {/* <NaviMenu>
-        <div className={tab === "basic" ? "active mousePointer" : "mousePointer"} onClick={() => this.setState({ tab: "basic" })}>기본/추가정보 변경</div>
-        <div className={tab === "contents" ? "active mousePointer" : "mousePointer"} onClick={() => this.setState({ tab: "contents" })}>컨텐츠 변경</div>
-      </NaviMenu>
-      <DeleteMenu>
-        <div className={tab === "delete" ? "active mousePointer" : "mousePointer"} onClick={this.deleteThisItem}>아이템 삭제</div>
-      </DeleteMenu> */}
-
-      {/* 공통/기본입력사항 */}
-      {tab === "basic" ?
-        (<div className="contentsBox flexWrap">
-          <ThumbnailBox>
-            <div className="label">썸네일 이미지<Mandatory /></div>
-            <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/*" />
-            <label htmlFor="file">
-              <Thumbnail img={this.state.thumbnail}>
-                {this.state.thumbnail ? null : <div>첨부하기</div>}
-              </Thumbnail>
-            </label>
-          </ThumbnailBox>
-
-          <FormBox height={302} marginBottom={20} boxShadow={true}>
-            <div className="FormBoxScroll">
-              <div className="contentWrap">
-                <div className="wrapper flex margin_bottom">
-                  <div className="label">아이템명<Mandatory /></div>
-                  <InputText width={330} name="title" value={this.state.title || ""} onChange={this.onChangeValue} />
+    return (
+      <React.Fragment>
+        <Wrapper>
+          <div className="header">아이템 수정</div>
+          <ShadowBox face={this.state.thumbnail}>
+            <div className="row flex alignCenter">
+              <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/*" />
+              <div className="thumbnail"/>
+              <div className="row">
+                <div className="flex alignCenter">
+                  <div className="fontNormal maxContent marginRight">제목</div>
+                  <InputText placeholder="제목을 입력하세요" name="title" value={this.state.title || ""} onChange={this.onChangeValue} />
                 </div>
-
-                <div className="wrapper flex margin_bottom">
-                  <div className="label">카테고리<Mandatory /></div>
-                  <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
-                  <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
-                  {parseInt(this.state.category_level2, 10) === 42 ?
-                    <React.Fragment>
-                      <DropBox id="category_level3" value={this.state.category_level3} selection options={category3} placeholder="언어선택" onChange={this.onClickCategorylevel3} />
-                      <div style={{ disply: "flex", alignItems: "center" }}>
-                        <CheckBox2 onChange={() => this.setState({ is_problem: !this.state.is_problem, })} checked={this.state.is_problem} />
-                        <div style={{ marginLeft: "30px" }}>문제 등록기능을 사용합니다.</div>
-                      </div>
-                    </React.Fragment>
-                    : null}
-                </div>
-                <div className="wrapper flex margin_bottom">
-                  <div className="label">태그</div>
-                  <div>
-                    <InputTag width={330} taglist={this.state.tag} getValue={this.onHandleReturnedTags} />
-                  </div>
-                </div>
-
-                <div className="wrapper flex">
-                  <div className="label">아이템 유형<span className="font_red">*</span></div>
-                  <div title={"(아이템 유형을 변경하실 수 없습니다.)"}>
-                    {ItemType.map(itemtype => (itemtype.value === this.state.itemType && itemtype.text))}
-                  </div>
-                  {/* <DropBox selection value={this.state.itemType} options={ItemType} placeholder="아이템 유형" onChange={this.onClickItemType} /> */}
-                </div>
-
-                {/* <div className="wrapper flex">
-                <div onClick={this.deleteThisItem}
-                  style={{ cursor: "default", width: "max-content", marginLeft: "auto", marginRight: "60px" }}>
-                  <div style={{ textAlign: "center", fontSize: "28px", color: "red" }}>아이템삭제</div>
-                </div>
-              </div> */}
-              </div>
+                <label htmlFor="file">
+                <div className="redButton marginTop2">썸네일 등록</div>
+                </label>
             </div>
-          </FormBox>
-        </div>) : null}
-
-      {/* additional */}
-      {tab === "basic" ?
-        (<div className="contentsBox centering">
-          <FormBox boxShadow={true}>
-            <div className="contentWrap">
-
-              {itemType === 0 ?
-                //<ItemDesign return={this.onHandleAdditional} /> 
+            </div>
+          </ShadowBox>
+          <ShadowBox>
+              <ModifyButton select={tab=="basic"?true:false} 
+                onClick={() => this.setState({ tab: "basic" })}> 기본/추가정보 변경</ModifyButton>
+              <ModifyButton className="marginTop2" select={tab=="contents"?true:false} 
+                onClick={() => this.setState({ tab: "contents" })}>컨텐츠 변경</ModifyButton>
+              <ModifyButton className="marginTop2" select={tab=="delete"?true:false} 
+                onClick={this.deleteThisItem}>아이템 삭제</ModifyButton>
+          </ShadowBox>
+          {tab=="basic"?
+         <React.Fragment>
+          <ShadowBox ShadowOpacity={true}>
+            <div className="row flex marginTop3 alignCenter">
+              <div className="label font black">카테고리</div>
+                <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
+                <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
+            </div>
+            <div className="row flex marginTop3 alignCenter">
+              <div className="label font black">태그</div>
+                <InputTag taglist={this.state.tag} getValue={this.onHandleReturnedTags} />
+            </div>
+            <div className="row flex marginTop3 alignCenter">
+              <div className="label font black">아이템 유형</div>
+              {ItemType.map(itemtype => (itemtype.value === this.state.itemType && itemtype.text))}
+            </div>
+            {itemType === 0 ?
                 <React.Fragment>
-                  <Field title="설명">
-                    <InputTextarea
-                      onChange={this.onHandleAdditionalText}
-                      value={(this.state.additional && this.state.additional.description.replace(/<br \/>/gi, '\n')) || ""}
-                      name="description"
-                      height={60} />
-                  </Field>
-                  <Field isMargin={false} isCentering={true} title="구입 비용">
-                    <InputPriceNew
-                      getValue={this.getPriceValue}
-                      name="price"
-                      price={this.state.additional.price}
-                    />
-                  </Field>
+                  <div className="row flex marginTop3">
+                    <div className="label font black">설명</div>
+                    <InputTextarea placeholder="설명을 입력하세요" 
+                    onChange={this.onHandleAdditionalText}
+                    value={(this.state.additional && this.state.additional.description.replace(/<br \/>/gi, '\n')) || ""}
+                    name="description"
+                    height={60} />
+                  </div>
+                  <div className="row flex marginTop3">
+                    <div className="label font black marginTop1">구입 비용</div>
+                    <InputPriceNew_mobile name="price" 
+                    getValue={this.getPriceValue}
+                    name="price"
+                    price={this.state.additional.price}/>
+                  </div>
                 </React.Fragment> : null}
 
               {itemType === 1 ?
-                //  <ItemProject return={this.onHandleAdditional} /> 
                 <React.Fragment>
                   <Field title="설명">
                     <InputTextarea
@@ -876,11 +998,6 @@ class ModifyItemInfo extends Component {
                           className="searchRect"
                           onChangeMembers={this.onHandleAdditionalMember} />
                         : null}
-                      {/* LEAVE ME ALONE */}
-                      {/* <NoInviteMemberBox>
-                          <CheckBox2 onChange={() => this.setState({ alone: !this.state.alone, members: [] })} checked={this.state.alone} />
-                          <div className="textLabel">멤버를 초대하지 않습니다.</div>
-                        </NoInviteMemberBox> */}
                     </div>
                   </Field>
                   <Field title="내용 공개 여부">
@@ -901,13 +1018,9 @@ class ModifyItemInfo extends Component {
                 </React.Fragment> : null}
 
               {itemType === 2 ?
-                // <ItemConsulting return={this.onHandleAdditional} /> 
                 (<React.Fragment>
                   <Field title="설명">
                     <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
-                  {/* <Field title="자문/상담 방법"> 온라인 */}
-                  {/* <RadioType checked={1} return={this.onHandleReturn} name="contact-method" Options={typeOnOff} /> */}
-                  {/* </Field> */}
                   <Field title="내용 공개 여부">
                     <RadioType
                       return={this.onHandleRadio}
@@ -920,7 +1033,6 @@ class ModifyItemInfo extends Component {
                 </React.Fragment>) : null}
 
               {itemType === 3 ?
-                // <ItemExperience return={this.onHandleAdditional} /> 
                 (<React.Fragment>
                   <Field title="설명">
                     <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
@@ -930,18 +1042,15 @@ class ModifyItemInfo extends Component {
                 </React.Fragment>) : null}
 
               {itemType === 4 ?
-                // <ItemInfoData return={this.onHandleAdditional} /> 
                 (<React.Fragment>
                   <Field title="설명">
                     <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
                   <Field isMargin={false} isCentering={true} title="구입 비용">
                     <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
-                    {/* <InputText onChange={this.onHandleChange} name="price" width={370} /> */}
                   </Field>
                 </React.Fragment>) : null}
 
               {itemType === 5 ?
-                // <ItemIdea return={this.onHandleAdditional} /> 
                 (<React.Fragment>
                   <Field title="설명">
                     <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
@@ -951,7 +1060,6 @@ class ModifyItemInfo extends Component {
                 </React.Fragment>) : null}
 
               {itemType === 6 ?
-                // <ItemPatent return={this.onHandleAdditional} /> 
                 (<React.Fragment>
                   <Field title="설명">
                     <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
@@ -976,19 +1084,18 @@ class ModifyItemInfo extends Component {
                 </React.Fragment >) : null}
 
               {itemType === 7 ?
-                // <ItemProduct return={this.onHandleAdditional} /> 
-                (<React.Fragment>
-                  <Field title="설명">
-                    <InputTextarea id="description" onChange={this.onHandleAdditionalText}
-                      value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
-                  {/* <Field title="상세 이미지">
-                        <div style={{ display: "flex", flexDirection: "column" }}>
-                          <ThumbnailList return={this.onHandleImageList} width={650} />
-                          <Context >(이미지 최대 10장 업로드 가능)</Context></div></Field> */}
-                  <Field isMargin={false} isCentering={true} title="구입 비용">
-                    <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
-                  </Field>
-                </React.Fragment>)
+                (
+                <React.Fragment>
+                  <div className="row flex marginTop3">
+                    <div className="label font black">설명</div>
+                    <InputTextarea placeholder="설명을 입력하세요" onChange={this.onHandleAdditionalText} name="description" value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={100}  />
+                  </div>
+                  <div className="row flex marginTop3">
+                    <div className="label font black marginTop1">구입 비용</div>
+                    <InputPriceNew_mobile name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
+                  </div>
+                </React.Fragment>
+                )
                 : null}
 
               {itemType === 8 ?
@@ -1025,15 +1132,12 @@ class ModifyItemInfo extends Component {
                   </Field>
                 </React.Fragment>)
                 : null}
-
-            </div>
-          </FormBox>
-        </div>) : null}
-
-      {/* // 아이템 상세정보 입력 폼 */}
-      {tab === "contents" ?
-
-        <React.Fragment>
+          </ShadowBox>
+          </React.Fragment>
+          :null}
+          {
+            tab=="contents"?
+          <React.Fragment>
           {item &&
             item.headers &&
             item.headers.length > 0 &&
@@ -1071,52 +1175,333 @@ class ModifyItemInfo extends Component {
                   </ItemContents>
                 </div>)
               })}
-          {/* {itemType === 8 ?
-            <FormBox boxShadow={true} marginTop={25}>
-              <div className="flexWrapBox Vcentering cursor"
-                onClick={(e) => this.newGridEditorName()}>
-                <Icon name="plus" size='tiny' color='red' /><div className="label">템플릿 추가</div></div>
-            </FormBox> : null} */}
         </React.Fragment>
-        : null
-      }
+            :null
+          }
 
-      {/* 버튼 */}
-      {
+        {
         itemType > -1 && tab === "basic" ?
-          (<ButtonBox className="buttonBox" >
-            <RedButton
-              text={"수정된 내용을 저장합니다."}
-              width={150} height={30} fontSize={market_style.font.size.small1}
-              okText="확인"
-              cancelText="취소"
-              value={"저장하기"}
-
-              onClick={this.onSubmit}
-              disabled={!this.state.ismodified}
-              isConfirm={true} />
-
-            <GrayButton
-              text={"수정된 내용이 저장되지 않습니다."}
-              width={150} height={30} fontSize={market_style.font.size.small1}
+          (<div className="row">
+            <div className="redButton allRed "
+              onClick={this.onSubmit}>저장하기</div>
+            <div className="greyButton allGrey marginTop2"
               value={"취소하기"}
-              okText="확인"
-              cancelText="취소"
-              onClick={this.onCancel}
-              isConfirm={false} />
+              onClick={this.onCancel}>취소하기</div>
+          </div>) : null
+        }
+        </Wrapper>
+      </React.Fragment>
+            // <MainBox>
+    //   {this.state.loading ? <Loading /> : null}
+    //   <div className="title">아이템 수정</div>
+    //   <div className="tabMenu">
+    //     <div className={`items marginRight ${tab == "basic" ? "redText" : "blackText"}`}
+    //       onClick={() => this.setState({ tab: "basic" })}> 기본/추가정보 변경</div>
+    //     <div className={`items marginRight ${tab == "contents" ? "redText" : "blackText"}`}
+    //       onClick={() => this.setState({ tab: "contents" })}>컨텐츠 변경</div>
+    //     <div className={`items ${tab == "delete" ? "redText" : "blackText"}`}
+    //       onClick={this.deleteThisItem}>아이템 삭제</div>
+    //   </div>
+    //   {tab === "basic" ?
+    //     (<div className="contentsBox flexWrap">
+    //       <ThumbnailBox>
+    //         <div className="label">썸네일 이미지<Mandatory /></div>
+    //         <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/*" />
+    //         <label htmlFor="file">
+    //           <Thumbnail img={this.state.thumbnail}>
+    //             {this.state.thumbnail ? null : <div>첨부하기</div>}
+    //           </Thumbnail>
+    //         </label>
+    //       </ThumbnailBox>
 
-            {/* <RedButton onClick={this.onSubmit}>수정하기</RedButton> */}
-            {/* <RedButton gray onClick={() => {
-            if (window.confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {
-              window.history.back();
-            }
-          }}>취소</RedButton> */}
-          </ButtonBox>) : null
-      }
-    </MainBox >);
-  };
+    //       <FormBox height={302} marginBottom={20} boxShadow={true}>
+    //         <div className="FormBoxScroll">
+    //           <div className="contentWrap">
+    //             <div className="wrapper flex margin_bottom">
+    //               <div className="label">아이템명<Mandatory /></div>
+    //               <InputText width={330} name="title" value={this.state.title || ""} onChange={this.onChangeValue} />
+    //             </div>
+
+    //             <div className="wrapper flex margin_bottom">
+    //               <div className="label">카테고리<Mandatory /></div>
+    //               <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
+    //               <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
+    //               {parseInt(this.state.category_level2, 10) === 42 ?
+    //                 <React.Fragment>
+    //                   <DropBox id="category_level3" value={this.state.category_level3} selection options={category3} placeholder="언어선택" onChange={this.onClickCategorylevel3} />
+    //                   <div style={{ disply: "flex", alignItems: "center" }}>
+    //                     <CheckBox2 onChange={() => this.setState({ is_problem: !this.state.is_problem, })} checked={this.state.is_problem} />
+    //                     <div style={{ marginLeft: "30px" }}>문제 등록기능을 사용합니다.</div>
+    //                   </div>
+    //                 </React.Fragment>
+    //                 : null}
+    //             </div>
+    //             <div className="wrapper flex margin_bottom">
+    //               <div className="label">태그</div>
+    //               <div>
+    //                 <InputTag width={330} taglist={this.state.tag} getValue={this.onHandleReturnedTags} />
+    //               </div>
+    //             </div>
+
+    //             <div className="wrapper flex">
+    //               <div className="label">아이템 유형<span className="font_red">*</span></div>
+    //               <div title={"(아이템 유형을 변경하실 수 없습니다.)"}>
+    //                 {ItemType.map(itemtype => (itemtype.value === this.state.itemType && itemtype.text))}
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </FormBox>
+    //     </div>) : null}
+
+    //   {/* additional */}
+    //   {tab === "basic" ?
+    //     (<div className="contentsBox centering">
+    //       <FormBox boxShadow={true}>
+    //         <div className="contentWrap">
+
+    //           {itemType === 0 ?
+    //             <React.Fragment>
+    //               <Field title="설명">
+    //                 <InputTextarea
+    //                   onChange={this.onHandleAdditionalText}
+    //                   value={(this.state.additional && this.state.additional.description.replace(/<br \/>/gi, '\n')) || ""}
+    //                   name="description"
+    //                   height={60} />
+    //               </Field>
+    //               <Field isMargin={false} isCentering={true} title="구입 비용">
+    //                 <InputPriceNew
+    //                   getValue={this.getPriceValue}
+    //                   name="price"
+    //                   price={this.state.additional.price}
+    //                 />
+    //               </Field>
+    //             </React.Fragment> : null}
+
+    //           {itemType === 1 ?
+    //             <React.Fragment>
+    //               <Field title="설명">
+    //                 <InputTextarea
+    //                   onChange={this.onHandleAdditionalText}
+    //                   value={(this.state.additional && this.state.additional.description.replace(/<br \/>/gi, '\n')) || ""}
+    //                   name="description"
+    //                   height={60} ></InputTextarea>
+    //               </Field>
+    //               <Field title="팀원 초대">
+    //                 <div className="inputBox">
+    //                   {!this.state.alone ?
+    //                     <SearchDesignMemberContainer
+    //                       originalMember={
+    //                         (this.state.additional && this.state.additional.members.filter(user => user.uid !== this.props.userInfo.uid)) || []}
+    //                       className="searchRect"
+    //                       onChangeMembers={this.onHandleAdditionalMember} />
+    //                     : null}
+    //                 </div>
+    //               </Field>
+    //               <Field title="내용 공개 여부">
+    //                 <RadioType
+    //                   return={this.onHandleRadio}
+    //                   default={this.state.additional.public === "yes" ? "예" : "아니오"}
+    //                   name="public"
+    //                   Options={["예", "아니오"]} />
+    //               </Field>
+    //               <Field isMargin={false} isCentering={true} title="구입 비용">
+    //                 <InputPriceNew
+
+    //                   getValue={this.getPriceValue}
+    //                   name="price"
+    //                   price={this.state.additional.price}
+    //                 />
+    //               </Field>
+    //             </React.Fragment> : null}
+
+    //           {itemType === 2 ?
+    //             (<React.Fragment>
+    //               <Field title="설명">
+    //                 <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
+    //               <Field title="내용 공개 여부">
+    //                 <RadioType
+    //                   return={this.onHandleRadio}
+    //                   default={this.state.additional.public === "yes" ? "예" : "아니오"}
+    //                   name="public"
+    //                   Options={["예", "아니오"]} /></Field>
+    //               <Field isMargin={false} isCentering={true} title="자문/상담 비용">
+    //                 <InputPriceNew placeholder="시간당" name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
+    //               </Field>
+    //             </React.Fragment>) : null}
+
+    //           {itemType === 3 ?
+    //             (<React.Fragment>
+    //               <Field title="설명">
+    //                 <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
+    //               <Field isMargin={false} isCentering={true} title="구입 비용">
+    //                 <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
+    //               </Field>
+    //             </React.Fragment>) : null}
+
+    //           {itemType === 4 ?
+    //             (<React.Fragment>
+    //               <Field title="설명">
+    //                 <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
+    //               <Field isMargin={false} isCentering={true} title="구입 비용">
+    //                 <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
+    //               </Field>
+    //             </React.Fragment>) : null}
+
+    //           {itemType === 5 ?
+    //             (<React.Fragment>
+    //               <Field title="설명">
+    //                 <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
+    //               <Field isMargin={false} isCentering={true} title="구입 비용">
+    //                 <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
+    //               </Field>
+    //             </React.Fragment>) : null}
+
+    //           {itemType === 6 ?
+    //             (<React.Fragment>
+    //               <Field title="설명">
+    //                 <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
+    //               <Field title="내용">
+    //                 <div style={{ display: "flex", flexDirection: "column" }}>
+    //                   {this.state.content.length > 0 &&
+    //                     this.state.content.map((item, index) =>
+    //                       <Controller key={index} type={item.type} item={item} order={index}
+    //                         deleteItem={this.deleteItem} name={`content${index}`} getValue={this.onChangValue} />)}
+    //                   <DescirptionText>※ 특허청에 등록된 원본 파일을 올려주세요.</DescirptionText>
+    //                   <AddController onlyfile type="INIT" order={0} name="addBasic" getValue={this.onAddValue} />
+    //                 </div></Field>
+    //               <Field title="판매 방식 선택">
+    //                 <RadioType
+    //                   return={this.onHandleReturn}
+    //                   default={this.state.additional["selling-type"]}
+    //                   name="selling-type"
+    //                   Options={["양도", "독점 사용권", "일반 사용권"]} /></Field>
+    //               <Field isMargin={false} isCentering={true} title="구입 비용">
+    //                 <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
+    //               </Field>
+    //             </React.Fragment >) : null}
+
+    //           {itemType === 7 ?
+    //             (<React.Fragment>
+    //               <Field title="설명">
+    //                 <InputTextarea id="description" onChange={this.onHandleAdditionalText}
+    //                   value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
+    //               <Field isMargin={false} isCentering={true} title="구입 비용">
+    //                 <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
+    //               </Field>
+    //             </React.Fragment>)
+    //             : null}
+
+    //           {itemType === 8 ?
+    //             (<React.Fragment>
+    //               <Field title="설명">
+    //                 <InputTextarea placeholder="설명을 입력하세요" onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} />
+    //               </Field>
+
+    //               <Field title="최대 수강인원">
+    //                 <InputNumberText width={100} onBlur={e => this.onHandleAdditionalMaxNumber(e, 1000)} onChange={e => this.onHandleAdditionalMaxNumber(e, 1000)} min="1" max="1000" name="max_students" value={this.state.additional.max_students} />&nbsp;명&nbsp;
+    //               </Field>
+
+    //               <Field title="수강생 모집기간">
+    //                 <CheckBox2 onChange={async () => {
+    //                   let copy = { ...this.state.additional };
+    //                   copy.recruit_always = !this.state.additional.recruit_always;
+    //                   await this.setState({ additional: copy });
+    //                 }}
+    //                   checked={this.state.additional.recruit_always} />&nbsp;상시모집&nbsp;&nbsp;
+    //                   {!this.state.additional.recruit_always
+    //                   ? <InputCalendar
+    //                     name="calendar"
+    //                     startDate={this.state.additional.start_date}
+    //                     endDate={this.state.additional.end_date}
+    //                     getStartDateValue={this.getStartDateValue}
+    //                     getEndDateValue={this.getEndDateValue}
+    //                     getDayDateValue={this.getDayDateValue}
+    //                   />
+    //                   : null}
+    //               </Field>
+
+    //               <Field isMargin={false} isCentering={true} title="수강료">
+    //                 <InputPriceNew getValue={this.getPriceValue} name="price" />
+    //               </Field>
+    //             </React.Fragment>)
+    //             : null}
+
+    //         </div>
+    //       </FormBox>
+    //     </div>) : null}
+    //   {tab === "contents" ?
+
+    //     <React.Fragment>
+    //       {item &&
+    //         item.headers &&
+    //         item.headers.length > 0 &&
+    //         item.headers.map(
+    //           (head, index) => {
+    //             return (<div key={index} className="row" style={{ marginBottom: "30px" }}>
+    //               <ItemContents>
+    //                 <div className="header">
+    //                   <div className="title" style={{ display: "flex" }}>
+    //                     {itemType === 8 ?
+    //                       <React.Fragment>
+    //                         <input
+    //                           className="title-input"
+    //                           value={(this.state.listname && this.state.listname[index]) || ""}
+    //                           onChange={e => this.onChangeListName(e, index)}
+    //                         />
+    //                         <button
+    //                           className={`edit ${(this.state.listname && this.state.listname[index]) === head.name && "disabled"}`}
+    //                           disabled={(this.state.listname && this.state.listname[index]) === head.name}
+    //                           onClick={e => this.editGridEditorName(head, index)}>수정</button>
+    //                         <div style={{ marginLeft: "15px", display: "flex", height: "max-content",display:"flex",alignItems:"center"}}>
+    //                           <CheckBox2 onChange={() => this.updateListHeader(head)} checked={head.type === "practice" || head.type === "copied"} />
+    //                           <div style={{ width: "max-content", font: "normal normal 300 13px/19px Noto Sans KR"}}>파생가능</div>
+    //                         </div>
+    //                       </React.Fragment>
+    //                       : "아이템 상세내용"}
+    //                   </div>
+    //                 </div>
+    //                 <div className="editor-wrapper">
+    //                   {head.editor_type === "project"
+    //                     ? <ItemStepContainer index={index} header={head} editor={true} /> : null}
+    //                   {head.editor_type === "blog"
+    //                     ? <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} /> : null}
+    //                 </div>
+    //               </ItemContents>
+    //             </div>)
+    //           })}
+    //     </React.Fragment>
+    //     : null
+    //   }
+    //   {
+    //     itemType > -1 && tab === "basic" ?
+    //       (<ButtonBox className="buttonBox" >
+    //         <RedButton
+    //           text={"수정된 내용을 저장합니다."}
+    //           width={150} height={30} fontSize={market_style.font.size.small1}
+    //           okText="확인"
+    //           cancelText="취소"
+    //           value={"저장하기"}
+
+    //           onClick={this.onSubmit}
+    //           disabled={!this.state.ismodified}
+    //           isConfirm={true} />
+
+    //         <GrayButton
+    //           text={"수정된 내용이 저장되지 않습니다."}
+    //           width={150} height={30} fontSize={market_style.font.size.small1}
+    //           value={"취소하기"}
+    //           okText="확인"
+    //           cancelText="취소"
+    //           onClick={this.onCancel}
+    //           isConfirm={false} />
+    //       </ButtonBox>) : null
+    //   }
+    // </MainBox >
+    )
+  }
 };
-export default ModifyItemInfo;
+export default ModifyItemInfo_mobile;
 
 class ItemContentEditor extends Component {
   constructor(props) {
