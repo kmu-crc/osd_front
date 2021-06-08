@@ -84,7 +84,7 @@ class App extends Component {
             <Route path="/createProduct" component={RequiresPayUser(CreateProductPage)} />
             <Route path="/createProduct/redirected" component={RequiresPayUser(CreateProductPage)} />
             <Route path="/productModify/:id" component={RequiresAuth(RequiresPayUser(ModifyItemPage))} />
-            <Route path="/productDetail/:id" component={ProductDetailPage} />
+            <Route path="/productDetail/:id/:card?" component={ProductDetailPage} />
 
             {/*PURCHASE*/}
             <Route path="/productPurchase/:id/:payment" component={RequiresAuth(RequiresPayUser(ProductPurchasePage))} />

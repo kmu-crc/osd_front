@@ -28,6 +28,10 @@ const ControllerWrap = styled.div`
     content: "";
     clear: both;
   }
+  &.contentWrap {
+    z-index: 100;
+  }
+  
 `;
 //const UpBtn = styled.button`
 //  display: none;
@@ -228,5 +232,4 @@ export class Controller extends Component {
     );
   }
 }
-
 

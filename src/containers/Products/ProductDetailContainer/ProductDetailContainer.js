@@ -8,9 +8,9 @@ import {
   GetProductCountRequest, GetLikeProductRequest,
   UpdateProductViewRequest, LikeProductRequest, UnlikeProductRequest, addCartRequest, GetDidYouBuyItRequest
 } from "actions/Product";
-import { CreateItemPaymentRequest,  GetItemPaymentRequest } from "actions/Payment";
+import { CreateItemPaymentRequest, GetItemPaymentRequest } from "actions/Payment";
 import { GetTotalItemReviewRequest } from "actions/Review";
-import { GetItemDetailRequest, ClearItemStepsRequest, CreateItemReviewRequest,GetItemReviewRequest } from "actions/Item";
+import { GetItemDetailRequest, ClearItemStepsRequest, CreateItemReviewRequest, GetItemReviewRequest } from "actions/Item";
 
 import { DeleteProductRequest } from "actions/Products/DeleteProduct";
 import { GetMyPointRequest, } from "actions/Point";
@@ -26,14 +26,20 @@ const Mobile_wrapper = styled.div`
 
 class ProductDetailContainer extends Component {
   constructor(props) {
-    super(props);
-    this.state = { loading: false };
-    this.Payment = this.Payment.bind(this);
+    super(props)
+    this.state = { loading: false }
+    this.Payment = this.Payment.bind(this)
   }
   componentDidMount() {
+    this.setState({ loading: true })
 
-    this.setState({ loading: true });
-    this.props.GetItemDetailRequest(this.props.id, this.props.token)
+    const { userInfo, card, id, token } = this.props
+
+    if (card) {
+      alert("!")
+    }
+
+    this.props.GetItemDetailRequest(id, token)
       .then(({ ItemDetail }) => {
 
         if (ItemDetail.success == false) {
@@ -41,44 +47,41 @@ class ProductDetailContainer extends Component {
           return
         }
 
-        const { visible, active, private: is_private, members } = ItemDetail
-        const { userInfo } = this.props
+        const { visible, /* active, */ user_id, private: is_private, members } = ItemDetail
+        const yours = members && members.filter(mem => mem.user_id === userInfo && userInfo.uid) || user_id !== userInfo.uid
+        const notyours = !yours
 
-        if (visible === 0) {
+        // if (active === 0) { }
+
+        if (visible === 0 && notyours) {
           this.BadAccess()
           return
         }
 
-        if (active === 0) { }
-
-        const yours = members && members.filter(mem => mem.user_id === userInfo && userInfo.uid)
-
-        if (is_private && yours == false) {
+        if (is_private && notyours) {
           this.ThisIsPrivateItem()
         }
 
       })
-      .then(this.props.userInfo && this.props.GetDidYouBuyItRequest(this.props.id, this.props.userInfo.uid))
-      .then(this.props.GetLikeProductRequest(this.props.id, this.props.token))
-      .then(this.props.GetTotalItemReviewRequest(this.props.id))
-      .then(
-        this.props.userInfo &&
-        this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token));
-
-      this.props.userInfo && this.props.GetItemPaymentRequest(this.props.match.params.id, this.props.token, 0)
-
-//       .then(this.props.userIfno && this.props.GetLikeProductRequest(this.props.id, this.props.token))
-//       .then(this.props.userInfo && this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token))
+      .then(userInfo && this.props.GetDidYouBuyItRequest(id, userInfo.uid))
+      .then(userInfo && this.props.GetLikeProductRequest(id, token))
+      .then(userInfo && this.props.GetMyPointRequest(userInfo.uid, token))
+      .then(this.props.GetTotalItemReviewRequest(id))
+      .then(userInfo && this.props.GetMyPointRequest(userInfo.uid, token))
+      .then(userInfo && this.props.GetItemPaymentRequest(this.props.match.params.id, token, 0))
+      //       .then(this.props.userIfno && this.props.GetLikeProductRequest(this.props.id, this.props.token))
+      //       .then(this.props.userInfo && this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token))
       .then(() => this.setState({ loading: false }))
 
   }
+
   Payment(item, option) {
     this.props.CreateItemPaymentRequest(
       { payment_title: item.title, payment_price: item.price },
       item.item_id,
       this.props.token)
-      .then(async res => {
-        if (res && res.data && res.data.success) {
+      .then(async ({ data }) => {
+        if (data && data.success) {
           if (this.props.custom) {
             await alert("구입이 완료되었습니다. [내 정보] > [의뢰상품]에서 확인하실 수 있습니다.");
             window.location.href = `/myPage/`;
@@ -106,16 +109,7 @@ class ProductDetailContainer extends Component {
     return loading
 
       ? <Loading />
-      :
-      // <Wrapper>
-      //   <ItemDetail
-      //     purchase={this.Payment}
-      //     itemId={this.props.ItemDetail.item_id}
-      //     item={this.props.ItemDetail}
-      //     {...this.props}
-      //   />
-      // </Wrapper>
-      window.innerWidth >= 500 ?
+      : window.innerWidth >= 500 ?
         <Wrapper>
           <ItemDetail purchase={this.Payment} itemId={this.props.ItemDetail.item_id} item={this.props.ItemDetail} {...this.props} />
         </Wrapper>

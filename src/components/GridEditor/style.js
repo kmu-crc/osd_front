@@ -24,11 +24,13 @@ export const CommentWrapper = styled.div`
 }
 `;
 export const CardDialog = styled(Modal)`
-width:100% !important;
-max-width:1000px !important;
-border-radius:20px !important; 
-padding:30px 50px !important;
-margin-bottom:30px !important;
+width: 100% !important;
+max-width: 1000px !important;
+border-radius: 20px !important; 
+padding: 30px 50px !important;
+margin-bottom: 30px !important;
+z-index: 100;
+
 ::-webkit-scrollbar {
     position: absolute;
     width: 3.9px;
@@ -392,10 +394,4 @@ export const EditCardHeaderContainer = styled.div`
        cursor: pointer;
    }
 }
-`;
-export const BlankSpace = styled.div`
-width: 250px;
-height: 250px;
-background-color: "white";
-borderRadius: 15px
-`;
+`
