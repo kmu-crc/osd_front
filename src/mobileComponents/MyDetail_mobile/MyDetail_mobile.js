@@ -8,14 +8,14 @@ import confirmMe from "source/confirmMe.svg";
 
 import MyPaymentContainer_mobile from "mobileComponents/MyPaymentContainer_mobile";
 import MySalesContainer_mobile from "mobileComponents/MySalesContainer_mobile";
-import LikeInDesignerContainer from "containers/Designer/LikeInDesignerContainer/LikeInDesignerContainer";
-import LikeInMakerContainer from "containers/Maker/LikeInMakerContainer/LikeInMakerContainer";
-import LikeInItemContainer from "containers/Products/LikeInItemContainer/LikeInItemContainer";
+import LikeInDesignerContainer_mobile from "mobileComponents/LikeInDesignerContainer_mobile";
+import LikeInMakerContainer_mobile from "mobileComponents/LikeInMakerContainer_mobile";
+import LikeInItemContainer_mobile from "mobileComponents/LikeInItemContainer_mobile";
 import MyRequestItemContainer_mobile from "mobileComponents/MyRequestItemContainer_mobile";
 import UploadItemContainer_mobile from "mobileComponents/UploadItemContainer_mobile";
-import MyProjectItemContainer from "containers/Items/MyProjectItemContainer/MyProjectItemContainer";
-import MyUploadDesignReqBoardContainer from "components/Request/MyUploadDesignReqBoardContainer/MyUploadDesignReqBoardContainer";
-import MyUploadMakerReqBoardContainer from "components/Request/MyUploadMakerReqBoardContainer/MyUploadMakerReqBoardContainer";
+import MyProjectItemContainer_mobile from "mobileComponents/MyProjectItemContainer_mobile";
+import MyUploadDesignReqBoardContainer_mobile from "mobileComponents/MyUploadDesignReqBoardContainer_mobile";
+import MyUploadMakerReqBoardContainer_mobile from "mobileComponents/MyUploadMakerReqBoardContainer_mobile";
 import ModifyMyDetailContainer from "containers/MyPage/ModifyMyDetailContainer/ModifyMyDetailContainer";
 import MyPointStatusContainer from "containers/Point/PointContainer";
 
@@ -242,17 +242,17 @@ class MyDetail_mobile extends Component {
             <div className="hrline"/>
             <div className="menu" onClick={()=>window.location.href="/mypage/7"}>등록 아이템</div>
             <div className="hrline"/>
-            <div className="menu">관심 아이템</div>
+            <div className="menu" onClick={()=>window.location.href="/mypage/1"}>관심 아이템</div>
             <div className="hrline"/>
-            <div className="menu">관심 디자이너</div>
+            <div className="menu" onClick={()=>window.location.href="/mypage/2"}>관심 디자이너</div>
             <div className="hrline"/>
-            <div className="menu">관심 메이커</div>
+            <div className="menu" onClick={()=>window.location.href="/mypage/3"}>관심 메이커</div>
             <div className="hrline"/>
-            <div className="menu">참여 프로젝트</div>
+            <div className="menu" onClick={()=>window.location.href="/mypage/4"}>참여 프로젝트</div>
             <div className="hrline"/>
-            <div className="menu">디자인 의뢰</div>
+            <div className="menu" onClick={()=>window.location.href="/mypage/5"}>디자인 의뢰</div>
             <div className="hrline"/>
-            <div className="menu">메이커 의뢰</div>
+            <div className="menu" onClick={()=>window.location.href="/mypage/6"}>메이커 의뢰</div>
         </div>
       </Wrapper>
       :index == 10?
@@ -269,6 +269,18 @@ class MyDetail_mobile extends Component {
         <MyRequestItemContainer_mobile allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.itemRequest_count} id={this.props.userInfo.uid} /> 
       :index == 7?
         <UploadItemContainer_mobile allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.registerItem_count} id={this.props.userInfo.uid} />
+      :index == 1?
+        <LikeInItemContainer_mobile allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.likeItem_count} id={this.props.userInfo.uid} />
+      :index == 2?
+        <LikeInDesignerContainer_mobile allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.likeDesigner_count} id={this.props.userInfo.uid} />
+      :index == 3?
+        <LikeInMakerContainer_mobile allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.likeDesigner_count} id={this.props.userInfo.uid} />
+      :index == 4?
+        <MyProjectItemContainer_mobile id={this.props.userInfo.uid} />
+      :index == 5?
+        <MyUploadDesignReqBoardContainer_mobile allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.requestDesigner_count} id={this.props.userInfo.uid} />
+      :index == 6?
+        <MyUploadMakerReqBoardContainer_mobile allPage={MyDetail && MyDetail.allCount && MyDetail.allCount.requestDesigner_count} id={this.props.userInfo.uid} />
       :
       null
       }

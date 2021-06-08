@@ -11,6 +11,7 @@ export * from "./InputPrice";
 export * from "./InputContent";
 export * from "./InputCalendar";
 export * from "./InputPriceNew";
+export * from "./InputPriceNew_mobile";
 export * from "./InputFile";
 export * from "./AddPoint";
 export * from "./ProblemController";

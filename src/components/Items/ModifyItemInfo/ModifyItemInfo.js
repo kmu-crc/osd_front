@@ -1066,7 +1066,7 @@ class ModifyItemInfo extends Component {
                       {head.editor_type === "project"
                         ? <ItemStepContainer index={index} header={head} editor={true} /> : null}
                       {head.editor_type === "blog"
-                        ? <CardSourceDetailContainer bought={item.bought} isCancel cardId={item.cardId} /> : null}
+                        ? <CardSourceDetailContainer edit={true} bought={item.bought} isCancel cardId={item.cardId} /> : null}
                     </div>
                   </ItemContents>
                 </div>)

@@ -92,7 +92,7 @@ class MyRequestItemContainer_mobile extends Component {
           getListRequest={this.getList}
           ListComponent={Item_myDetail_mobile}
           confirm={this.confirm}
-          type="sales"
+          type="request"
           dataList={this.props.dataList}
           dataListAdded={this.props.dataListAdded} />
         {

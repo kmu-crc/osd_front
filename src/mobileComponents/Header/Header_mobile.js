@@ -12,7 +12,7 @@ import { alert } from "components/Commons/Alert/Alert";
 import market_style from "market_style";
 const HeaderContainer = styled.div`
   position: fixed;
-  z-index:9999;
+  z-index:997;
   width:100%;
   height:45px;
   display:flex;

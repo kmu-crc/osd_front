@@ -3,9 +3,22 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { DeleteItemRequest, UpdateItemRequest, GetItemDetailRequest, UpdateItemListRequest, UpdateItemListHeaderRequest, CreateItemListHeaderRequest } from "actions/Item";
 import ModifyItemInfo from "components/Items/ModifyItemInfo";
-// import { SearchMemberRequest } from "actions/Commons/Search";
+import ModifyItemInfo_mobile from "mobileComponents/ModifyItemInfo_mobile";
+import styled from "styled-components";
+import ContentBox from "components/Commons/ContentBox";
 import { alert } from "components/Commons/Alert/Alert";
-// import { confirm } from "components/Commons/Confirm/Confirm";
+
+const Wrapper = styled(ContentBox)`
+  width:100%;
+  margin-top:20px;
+  margin-bottom: 100px;
+  position: relative;
+  z-index:3;
+`;
+const Wrapper_mobile = styled.div`
+  padding:0px 10px;
+`
+
 class ModifyItemFormContainer extends Component {
   state = {
     valid: false
@@ -27,8 +40,17 @@ class ModifyItemFormContainer extends Component {
     const { valid } = this.state;
     return (
       <React.Fragment>
+
         {valid
-          ? <ModifyItemInfo {...this.props} />
+          ? 
+          window.innerWidth>=500?
+          <Wrapper>
+          <ModifyItemInfo {...this.props} />
+          </Wrapper>
+          :
+          <Wrapper_mobile>
+          <ModifyItemInfo_mobile {...this.props} />
+          </Wrapper_mobile>
           : <p style={{ color: "#FFF" }}> 수정권한을 확인 중입니다.</p>}
       </React.Fragment>
     )

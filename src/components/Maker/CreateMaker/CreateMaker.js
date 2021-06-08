@@ -64,7 +64,27 @@ const MainBox = styled.div`
       }
     }
 `;
-
+const Career = styled.div`
+  .row{
+    width:100%;
+    display:flex;
+    align-items:center;
+    margin-bottom:10px;
+  }
+  .text_wrapper{
+    width:100%;
+  }
+  .number{
+    min-width:37px;
+    font-size:${market_style.font.size.mini2};
+  }
+  .career_label{
+    min-width:48px;
+    font-size:${market_style.font.size.small1};
+    font-weight:500;
+  }
+  .close{width:100%;text-align:right;}
+`
 
 const ThumbnailBox = styled.div`
   *{
@@ -726,20 +746,30 @@ class CreateCareer extends Component {
     console.log("careerlog", this.state);
     return (
       <React.Fragment>
-
-        <div className="careerBox">
-          <div className="number_wrapper">{leadingZeros(this.props.number, 2)}</div>
-          <div className="text_wrapper">
-            <InputText  value={this.state.task} onChange={this.onChangeTask} />
+        <Career>
+          <div className="row">
+            <div className="number">{leadingZeros(this.props.number, 2)}</div>
+            <div className="career_label">업무</div>
+            <div className="text_wrapper">
+              <InputText value={this.state.task} onChange={this.onChangeTask}/>
+            </div>
           </div>
-          <div className="text_wrapper">
-            <InputText value={this.state.during} onChange={this.onChangeDuring} />
+          <div className="row">
+            <div className="number"/>
+            <div className="career_label">기간</div>
+            <div className="text_wrapper">
+            <InputText value={this.state.during} onChange={this.onChangeDuring}/>
+            </div>
           </div>
-          <div className="text_wrapper">
-            <InputText value={this.state.explain} onChange={this.onChangeExplain} />
+          <div className="row">
+            <div className="number"/>
+            <div className="career_label">내용</div>
+            <div className="text_wrapper">
+            <InputText value={this.state.explain} onChange={this.onChangeExplain}/>
+            </div>
           </div>
           <div className="close" onClick={this.onDeleteAll}>x</div>
-        </div>
+        </Career>
       </React.Fragment>
     );
   }

@@ -19,7 +19,7 @@ const BottomMenuContainer = styled.div`
   position:fixed;
   will-change: transform;
   bottom:0px;
-  z-index:888;
+  z-index:998;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -175,7 +175,7 @@ class Header_mobile extends Component {
     return (
       <React.Fragment>
         <BottomMenuContainer face={this.props.userInfo&&this.props.userInfo.thumbnail&&this.props.userInfo.thumbnail.s_img}>
-            <div className="icon_wrapper">
+            <div className="icon_wrapper" onClick={()=>this.props.onClickMenu()}>
               <Icon className="grey list" size="big"/> 
             </div>
             { 

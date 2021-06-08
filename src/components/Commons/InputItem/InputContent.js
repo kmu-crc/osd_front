@@ -136,6 +136,27 @@ const ControllerWrap = styled.div`
     list-style: none;
   }
 `;
+const ControllerWrap_mobile = styled.div`
+  width:100%;
+  border-radius:10px;
+  box-shadow: 2px 2px 5px #00000029;
+  padding:10px;
+  .marginBottom{margin-bottom:10px;}
+  .button{
+    background-color:#F7F7F7;
+    border-radius:10px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+    height:30px;
+  }
+`
+const NewController_mobile = styled.div`
+  color:red;
+  font-size:${market_style.font.size.small1};
+  font-weight:500;
+`;
 const NewController = styled.li`
   width: max-content;
   color: #FF0000;
@@ -155,6 +176,7 @@ const NewController = styled.li`
   text-align: center;
   cursor: pointer;
 `;
+
 
 class AddContent extends Component {
   constructor(props) {
@@ -185,6 +207,10 @@ class AddContent extends Component {
   }
   render() {
     return (
+      <React.Fragment>
+        {
+          window.innerWidth>=500?
+        
       <ControllerWrap>
         <div className="innerBox">
           <NewController className="first txt" onClick={() => this.addContent("FILE")} width="max-content" minWidth="116px" height="29px">파일 등록</NewController>
@@ -197,6 +223,17 @@ class AddContent extends Component {
         {this.state.type === "FILE" &&
           <FileController item={this.state} getValue={this.returnData} />}
       </ControllerWrap>
+      :
+      <ControllerWrap_mobile>
+          <NewController_mobile className="button marginBottom" onClick={() => this.addContent("FILE")} width="max-content" minWidth="116px" height="29px">파일 등록</NewController_mobile>
+          <NewController_mobile className="button marginBottom" onClick={() => this.addContent("TEXT")} width="max-content" minWidth="134px" height="29px">텍스트 입력</NewController_mobile>
+          {this.props.order === 0 && this.props.projectable ?
+            <NewController_mobile className="button" width="max-content" height="29px">
+              <div onClick={this.changeType} className="txt">템플릿 선택하기</div>
+            </NewController_mobile>:null}
+      </ControllerWrap_mobile>
+    }
+      </React.Fragment>
     );
   }
 };

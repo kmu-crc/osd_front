@@ -240,6 +240,11 @@ class ItemDetail_mobile extends Component {
           <RedButton isLike={this.state.isLike} onClick={this.onClickLike}>
             {this.state.isLike == true? "관심 항목":"관심 항목 등록"}
           </RedButton>
+          {item.user_id === (this.props.userInfo && this.props.userInfo.uid) ?
+          <RedButton isLike={true} onClick={this.modifyThisItem}>
+            아이템 수정
+          </RedButton>
+          :
           <Link
             onClick={async (e) => {
               return this.props.isbuy > 0 ?
@@ -258,7 +263,7 @@ class ItemDetail_mobile extends Component {
             아이템 구입
           </RedButton>
           </Link>
-
+          }
           <Header>아이템 상세내용</Header>
           <ShadowBox>
             {item &&

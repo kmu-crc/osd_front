@@ -12,6 +12,14 @@ const ListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  .request{
+    justify-content: space-around;
+    padding: 0px;
+    margin-bottom:15px;
+    &:nth-child(2n+1){
+      margin-right:10px;
+    }
+  }
   .sales{
     justify-content: space-around;
     padding: 0px;
@@ -20,7 +28,14 @@ const ListContainer = styled.div`
       margin-right:10px;
     }
   }
-
+  .sales_Expert{
+    justify-content: space-around;
+    padding: 0px;
+    margin-bottom:15px;
+    &:nth-child(2n+1){
+      margin-right:10px;
+    }
+  }
   @media only screen and (min-width: 500px) and (max-width: 740px) {
     justify-content:center;
   }

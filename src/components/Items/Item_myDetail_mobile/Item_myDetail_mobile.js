@@ -31,7 +31,7 @@ const Wrapper = styled.div`
     width:152px;
     height:140px;
     background-color:#eaeaea;
-    // background-image: url(${props=>props.img});
+    background-image: url(${props=>props.img});
     background-size : cover;
   }
   .title{
@@ -91,6 +91,10 @@ const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", 
 class Item_myDetail_mobile extends Component {
   Keeper = () => {
     const item = this.props.data;
+    console.log(this.props);
+    if(this.props.type=="request"){
+      window.location.href = `/requestDetail/${item.response_id}`
+    }
     if (item.uid) {
       const yours = item.members && item.members.filter(mem => mem.user_id === this.props.userInfo && this.props.userInfo.uid);
       if (item.private && !yours) {
@@ -119,7 +123,7 @@ class Item_myDetail_mobile extends Component {
         <div className="thumbnail"/>
         <div className="title"><TextFormat txt={item.title} /></div>
         <div className="summaryBox">
-          <div className="owner">{item.nick_name}</div>
+          <div className="owner">{item.nick_name||item.userName}</div>
           <div className="line">|</div>
           <div className="point">
           {PointFormat(item.price / (parseInt(item.price)>9999?10000:1000) || 0)}{parseInt(item.price)>9999?"만 point":" point"}
