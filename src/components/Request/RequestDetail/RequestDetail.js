@@ -119,21 +119,23 @@ export default class Detail extends Component {
       .catch(err => console.log("에러발생" + err));
   }
   render() {
-    const { Detail, MyDetail, userInfo } = this.props;
+    const { Detail, MyDetail, userInfo, category1, category2,
+      isPurchased, purchase, confirm,
+    } = this.props;
     if (Detail == null || Detail.length === 0) return (<Loading />);
 
     const level1 = Detail.status === "response" ? Detail.request.category_level1 : Detail.category_level1;
     const level2 = Detail.status === "response" ? Detail.request.category_level2 : Detail.category_level2;
-    const category_level1 = this.props.category1 && this.props.category1[level1 - 1] && this.props.category1[level1 - 1].text;
-    const category_level2 = (level2 && this.props.category2 && this.props.category2.filter(cate => cate.value === level2)[0].text) || "";
+    const category_level1 = category1 && category1[level1 - 1] && category1[level1 - 1].text;
+    const category_level2 = (level2 && category2 && category2.filter(cate => cate.value === level2)[0].text) || "";
 
     console.log(this.props);
-    console.log("내용:", this.props.Detail && this.props.Detail.content);
+
     return (<React.Fragment>
       {this.state.write ?
         <ArticleModal
-          title={this.props.Detail && this.props.Detail.title}
-          content={this.props.Detail && this.props.Detail.content}
+          title={Detail && Detail.title}
+          content={Detail && Detail.content}
           write={this.state.write}
           handlerModal={(write) => { this.setState({ write: write }) }}
           isModify={true}
@@ -160,9 +162,9 @@ export default class Detail extends Component {
           returnToList={() => this.returnToList()}
           onClick={() => this.onClickResponse()}
           userInfo={userInfo}
-          isPurchased={this.props.isPurchased}
-          purchase={this.props.purchase}
-          confirm={this.props.confirm}
+          isPurchased={isPurchased}
+          purchase={purchase}
+          confirm={confirm}
           category_level1={category_level1}
           category_level2={category_level2}
         /> : null}
@@ -178,20 +180,25 @@ export default class Detail extends Component {
             <div className="form">
               <div className="row">
                 <div className="label">제목</div>
-                <div className="content">{this.props.Detail && this.props.Detail.title}</div>
+                <div className="content">{Detail && Detail.title}</div>
               </div>
               <div className="row">
                 <div className="label">작성자</div>
-                <div className="content">{this.props.Detail && this.props.Detail.nick_name}</div>
+                <div className="content">{Detail && Detail.nick_name}</div>
               </div>
               <div className="row">
                 <div className="label">내용</div>
-                <div className="content" dangerouslySetInnerHTML={{ __html: this.props.Detail && this.props.Detail.content }} />
+                <div className="content" dangerouslySetInnerHTML={{ __html: Detail && Detail.content }} />
               </div>
             </div>
             <div className="buttonBox">
-              <RedButton width={150} height={30} fontSize={market_style.font.size.small1} okText="확인" cancelText="취소" value={"수정하기"} onClick={() => this.setState({ write: true })} isConfirm={false} />
-              <GrayButton width={150} height={30} fontSize={market_style.font.size.small1} text={"삭제하시겠습니까?"} value={"삭제하기"} onClick={() => { this.props.DeleteRequestRequest(this.props.id, this.props.token); window.location.href = "/request/designer" }} isConfirm={true}></GrayButton>
+              {(Detail.user_id === userInfo.uid)
+                ? <React.Fragment>
+                  <RedButton width={150} height={30} fontSize={market_style.font.size.small1} okText="확인" cancelText="취소" value={"수정하기"} onClick={() => this.setState({ write: true })} isConfirm={false} />
+                  <GrayButton width={150} height={30} fontSize={market_style.font.size.small1} text={"삭제하시겠습니까?"} value={"삭제하기"} onClick={() => { this.props.DeleteRequestRequest(this.props.id, this.props.token); window.location.href = "/request/designer" }} isConfirm={true}></GrayButton>
+                </React.Fragment>
+                : null
+              }
             </div>
           </NormalWrapper>
         </React.Fragment>

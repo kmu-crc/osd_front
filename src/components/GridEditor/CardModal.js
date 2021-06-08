@@ -20,7 +20,8 @@ import Loading from "components/Commons/Loading";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { Icon } from 'semantic-ui-react'
-import { BlankSpace, EditCardHeaderContainer, CardDialog, ContentBorder,/*CommentWrapper,*/ } from "./style";
+
+import { EditCardHeaderContainer, CardDialog, ContentBorder,/*CommentWrapper,*/ } from "./style";
 
 class CardModal extends Component {
     constructor(props) {
@@ -132,117 +133,91 @@ class CardModal extends Component {
     };
     render() {
         const { card } = this.props;
-        console.log(this.state, this.props);
 
         return (
-            !card ? (
-                <div>{card}loading</div>
-            ) :
-                <React.Fragment>
-                    <div style={{ zIndex: 100 }}>
-                        <CardDialog open={this.props.open} onClose={this.onClose}>
-                            {/* <div className="close-box" onClick={this.onClose} >
-                            <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
-                        </div> */}
-                            {this.state.loading && <Loading />}
-                            <div className="content-wrapper" >
-                                {this.state.edit
-                                    ? <React.Fragment>
-                                        <EditCardHeaderContainer>
-                                            <div className="edit-header-container">
-                                                <div className="edit-card-info">
-                                                    <div onClick={() => { this.setState({ private: !this.state.private }) }}
-                                                        className={`icon_style ${this.state.private == true ? "borderRed" : "borderGrey"}`}>
-                                                        <Icon size='mini' name={`${this.state.private == true ? "lock" : "lock open"}`} color={`${this.state.private == true ? "red" : "grey"}`} />
-                                                    </div>컨텐츠 정보수정
-                                            </div>
-                                                <div onClick={this.onClose} className="close_">
-                                                    <Cross angle={45} color={"#000000"} weight={1} width={14} height={14} />
-                                                </div>
-                                            </div>
-                                            <div className="hrline" />
-                                            <div className="edit-header-thumbnail">
-                                                <div className="thumbnail-txt">이미지</div>
-                                                <FormThumbnailEx style={{ marginBottom: "0px", width: "200px", height: "200px", borderRadius: "10px", backgroundColor: "#EFEFEF" }}
-                                                    name="thumbnail" image={this.state.thumbnail} placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]} />
-                                            </div>
-                                            <div className="edit-header-title">
-                                                <div className="title-txt">제목</div>
-                                                <input className="title-input-style" name="title" onChange={this.onChangeTitle} value={this.state.title} maxLength="20" placeholder="제목을 입력해주세요." />
-                                            </div>
-                                            <div className="edit-header-description marginBottom">
-                                                <div className="description-txt">설명</div>
-                                                <input className="description-input-style" name="description" onChange={this.onChangeDescription} value={this.state.description} maxLength="1000" placeholder="설명을 입력해주세요." />
-                                            </div>
-                                        </EditCardHeaderContainer>
-                                    </React.Fragment>
-                                    :
-                                    <React.Fragment>
-                                        <div className="card-header-first">
-                                            <div className="header-title">{card.title}</div>
-                                            <div className="header-update">
-                                                <div className="update_">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div>
-                                                <div onClick={this.onClose} className="close_">
-                                                    <Cross angle={45} color={"#000000"} weight={1} width={14} height={14} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {/* <div className="card-header-first">
-                                        <div className="header-title">{card.title}</div>
-                                        <div className="header-edit-button">
-                                            {this.props.edit ?
-                                                <React.Fragment>
-                                                    <button className="edit-btn" onClick={() => this.setState({ edit: !this.state.edit, title: card.title, content: card.content })} >수정하기</button>
-                                                    <button className="cancel-btn" onClick={(event) => this.removeCard(event)} >삭제하기</button>
-                                                </React.Fragment> : undefined}
-                                        </div>
+            card
+                ? <CardDialog open={this.props.open} onClose={this.onClose}>
+
+                    {this.state.loading && <Loading />}
+
+                    <div className="content-wrapper" >
+                        {this.state.edit
+                            ? <EditCardHeaderContainer>
+                                <div className="edit-header-container">
+                                    <div className="edit-card-info">
+                                        <div onClick={() => { this.setState({ private: !this.state.private }) }}
+                                            className={`icon_style ${this.state.private == true ? "borderRed" : "borderGrey"}`}>
+                                            <Icon size='mini' name={`${this.state.private == true ? "lock" : "lock open"}`} color={`${this.state.private == true ? "red" : "grey"}`} />
+                                        </div>컨텐츠 정보수정
                                     </div>
-                                    <div className="card-header-second" >
-                                        <div className="contents"><TextFormat txt={card.content || ""} chars={25} /></div>
-                                        <div className="nick-name">{card.nick_name}</div>
-                                        <div className="update-time">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div>
-                                    </div> */}
-                                    </React.Fragment>}
-
-                                <ContentBorder />
-
-                                <div className="content">
-                                    <CardSourceDetailContainer
-                                        bought={this.props.bought}
-                                        isTeam={this.props.isTeam}
-                                        submit={this.handleHeaderSubmit}
-                                        handleCancel={this.onCloseEditMode}
-                                        handleCloseEdit={this.onOnlyCloseEditMode}
-                                        edit={this.state.edit}
-                                        card={card}
-                                        cardId={card.uid}
-                                        closeEdit={this.onCloseEditMode}
-                                        openEdit={this.onChangeEditMode}
-                                        handlerModifyContent={this.handlerModifyContent}
-                                        isCancel
-                                        mode="project"
-                                        isModify={
-                                            this.props.card.private == this.state.private &&
-                                            this.props.card.title == this.state.title &&
-                                            this.props.card.description == this.state.description &&
-                                            this.props.card.thumbnail == this.state.thumbnail &&
-                                            this.state.modifyresult == false}
-                                    />
+                                    <div onClick={this.onClose} className="close_">
+                                        <Cross angle={45} color={"#000000"} weight={1} width={14} height={14} />
+                                    </div>
                                 </div>
-                                {
-                                    this.props.edit && this.state.isEditing == false ?
-                                        <div className="modifyRgn">
-                                            <div className="redBtn" onClick={() => this.setState({ edit: !this.state.edit, isEditing: !this.state.isEditing, title: card.title, content: card.content })}>수정하기</div>
-                                            <div className="greyBtn" onClick={(event) => this.removeCard(event)}>삭제하기</div>
-                                        </div>
-                                        :
-                                        null
-                                }
+                                <div className="hrline" />
+                                <div className="edit-header-thumbnail">
+                                    <div className="thumbnail-txt">이미지</div>
+                                    <FormThumbnailEx style={{ marginBottom: "0px", width: "200px", height: "200px", borderRadius: "10px", backgroundColor: "#EFEFEF" }}
+                                        name="thumbnail" image={this.state.thumbnail} placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]} />
+                                </div>
+                                <div className="edit-header-title">
+                                    <div className="title-txt">제목</div>
+                                    <input className="title-input-style" name="title" onChange={this.onChangeTitle} value={this.state.title} maxLength="20" placeholder="제목을 입력해주세요." />
+                                </div>
+                                <div className="edit-header-description marginBottom">
+                                    <div className="description-txt">설명</div>
+                                    <input className="description-input-style" name="description" onChange={this.onChangeDescription} value={this.state.description} maxLength="1000" placeholder="설명을 입력해주세요." />
+                                </div>
+                            </EditCardHeaderContainer>
+                            :
+                            <div className="card-header-first">
+                                <div className="header-title">{card.title}</div>
+                                <div className="header-update">
+                                    <div className="update_">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div>
+                                    <div onClick={this.onClose} className="close_">
+                                        <Cross angle={45} color={"#000000"} weight={1} width={14} height={14} />
+                                    </div>
+                                </div>
+                            </div>}
+
+                        <ContentBorder />
+
+                        <div className="content">
+                            <CardSourceDetailContainer
+                                bought={this.props.bought}
+                                isTeam={this.props.isTeam}
+                                submit={this.handleHeaderSubmit}
+                                handleCancel={this.onCloseEditMode}
+                                handleCloseEdit={this.onOnlyCloseEditMode}
+                                edit={this.state.edit}
+                                card={card}
+                                cardId={card.uid}
+                                closeEdit={this.onCloseEditMode}
+                                openEdit={this.onChangeEditMode}
+                                handlerModifyContent={this.handlerModifyContent}
+                                isCancel
+                                mode="project"
+                                isModify={
+                                    (this.props.card.private == this.state.private &&
+                                        this.props.card.title == this.state.title &&
+                                        this.props.card.description == this.state.description &&
+                                        this.props.card.thumbnail == this.state.thumbnail &&
+                                        this.state.modifyresult == false)}
+                            />
+                        </div>
+                            edit:{String(this.props.edit)}<br />
+                            isEditing:{String(this.state.isEditing)}
+                        {this.props.edit && this.state.isEditing == false ?
+                            <div className="modifyRgn">
+                                <div className="redBtn" onClick={() => this.setState({ edit: !this.state.edit, isEditing: !this.state.isEditing, title: card.title, content: card.content })}>수정하기</div>
+                                <div className="greyBtn" onClick={(event) => this.removeCard(event)}>삭제하기</div>
                             </div>
-                        </CardDialog>
-                        <BlankSpace />
+                            :
+                            null}
                     </div>
-                </React.Fragment>
+                </CardDialog>
+
+                : <div>{card}loading</div>
         )
     }
 }
@@ -251,20 +226,19 @@ const mapStateToProps = state => ({
     userInfo: state.Authentication.status.userInfo,
     token: state.Authentication.status.token,
     detail: state.ItemContent.status.ItemContent,
-});
+})
 
 const mapDispatchToProps = dispatch => ({
-    DeleteItemCardRequest: (board_id, card_id, token) => dispatch(DeleteItemCardRequest(board_id, card_id, token)),
     // GetItemStepsRequest: (id, token) => dispatch(GetItemStepsRequest(id, token)),
-
-    UpdateCardSourceRequest: (data, card_id, token) => { return dispatch(UpdateCardSourceRequest(data, card_id, token)); },
-    UpdateCardTitleRequest: (data, token, id) => { return dispatch(UpdateCardTitleRequest(data, token, id)); },
-    UpdateCardContentRequest: (data, token, id) => { return dispatch(UpdateCardContentRequest(data, token, id)); },
-    UpdateCardImagesRequest: (data, token, id) => { return dispatch(UpdateCardImagesRequest(data, token, id)); },
-    GetDesignBoardRequest: (id) => { return dispatch(GetDesignBoardRequest(id)); },
-    GetCardDetailRequest: id => { return dispatch(GetCardDetailRequest(id)); },
-    UpdateDesignTime: (id, token) => { return dispatch(UpdateDesignTime(id, token)); },
-    GetDesignDetailRequest: (id, token) => { return dispatch(GetDesignDetailRequest(id, token)); },
-});
+    DeleteItemCardRequest: (board_id, card_id, token) => dispatch(DeleteItemCardRequest(board_id, card_id, token)),
+    UpdateCardSourceRequest: (data, card_id, token) => dispatch(UpdateCardSourceRequest(data, card_id, token)),
+    UpdateCardTitleRequest: (data, token, id) => dispatch(UpdateCardTitleRequest(data, token, id)),
+    UpdateCardContentRequest: (data, token, id) => dispatch(UpdateCardContentRequest(data, token, id)),
+    UpdateCardImagesRequest: (data, token, id) => dispatch(UpdateCardImagesRequest(data, token, id)),
+    GetDesignDetailRequest: (id, token) => dispatch(GetDesignDetailRequest(id, token)),
+    UpdateDesignTime: (id, token) => dispatch(UpdateDesignTime(id, token)),
+    GetCardDetailRequest: id => dispatch(GetCardDetailRequest(id)),
+    GetDesignBoardRequest: (id) => dispatch(GetDesignBoardRequest(id)),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardModal);
