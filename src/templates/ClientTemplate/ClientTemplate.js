@@ -177,7 +177,7 @@ class ClientTemplate extends Component {
             <div className="mobileWidth">
               {this.props.children}
             </div>
-            <BottomMenuContainer/>
+            <BottomMenuContainer onClickMenu={this.onClickMenu}/>
           </React.Fragment>
           :
           <React.Fragment>
