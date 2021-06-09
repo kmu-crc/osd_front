@@ -170,6 +170,7 @@ class Header_mobile extends Component {
   onClickMessageIcon() {
     window.location.href = "/message";
   }
+
   render() {
     const isHome = window.location.pathname == "/"?true:false;
     return (
