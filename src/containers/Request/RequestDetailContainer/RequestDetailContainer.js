@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import RequestDetail from "components/Request/RequestDetail";
+import RequestDetail_mobile from "mobileComponents/RequestDetail_mobile/RequestDetail_mobile";
 import { GetRequestDetailRequest,UpdateRequestRequest, DeleteRequestRequest } from "actions/Request";
 import { GetThisPurchasedRequest, UpdatePaymentRequest, CreateItemPaymentRequest } from "actions/Payment";
 import bg from "source/design_bg.jpg";
@@ -58,11 +59,21 @@ class RequestDetailContainer extends Component {
 
     return (
       <React.Fragment>
-          <RequestDetail
-            {...this.props}
-            purchase={this.Purchase}
-            confirm={this.ConfirmPayment}
-          />
+        {
+         window.innerWidth>=500?
+         <RequestDetail
+         {...this.props}
+         purchase={this.Purchase}
+         confirm={this.ConfirmPayment}
+         />
+          :
+          <RequestDetail_mobile
+          {...this.props}
+          purchase={this.Purchase}
+          confirm={this.ConfirmPayment}
+        />
+
+        }
       </React.Fragment>
     )
   }

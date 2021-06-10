@@ -256,9 +256,12 @@ export const DesignRequestDetail = (props) => {
       {(props.userInfo && props.userInfo.uid) == (props.Detail && props.Detail.client_id) ?
         <button onClick={() => window.location.href = `/ModifyrequestTo${type == "designer" ? "Designer" : "Maker"}/` + props.Detail.uid} className="reply">의뢰수정</button>
         :
+        props.userInfo?
         <Link className="reply" to={{ pathname: `/responseTo${type}Req/${props.Detail.uid}`, state: { detail: props.Detail, expert: props.MyDetail } }}>
-          <button onClick={() => props.onClick(type, "request", false)} className="reply">의뢰응답</button>
+          {/* <button onClick={() => props.onClick(type, "request", false)} className="reply">의뢰응답</button> */}
+          <button className="reply">의뢰응답</button>
         </Link>
+        :null
       }
       <button onClick={() => props.returnToList()} className="back"> <CustomIcon style={{ transform: "rotate(180deg)" }} width="5" height="10" marginRight="20" marginLeft="20" imgURL={category_icon} /> 목록으로</button>
     </div>
