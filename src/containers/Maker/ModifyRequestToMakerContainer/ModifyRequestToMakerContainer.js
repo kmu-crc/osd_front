@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ModifyRequestToMaker from "components/Makers/ModifyRequestToMaker/ModifyRequestToMaker";
+import ModifyRequestToMaker_mobile from "mobileComponents/ModifyRequestToMaker_mobile";
 import { connect } from "react-redux";
 import { GetRequestDetailRequest } from "actions/Request";
 import { UpdateRequestRequest,DeleteRequestRequest } from "actions/Request";
@@ -9,8 +10,16 @@ class ModifyRequestToMakerContainer extends Component {
     this.props.GetRequestDetailRequest(this.props.id)
   }
   render() {
-    console.log(this.props.Detail);
-    return (<ModifyRequestToMaker {...this.props}/>)
+    return (
+      <React.Fragment>
+        {
+          window.innerWidth>=500?
+          <ModifyRequestToMaker {...this.props}/>
+          :
+          <ModifyRequestToMaker_mobile {...this.props}/>
+        }
+      </React.Fragment>
+    )
   }
 }
 const mapStateToProps = (state) => ({

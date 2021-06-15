@@ -246,7 +246,9 @@ export const DesignRequestDetail_mobile = (props) => {
            </div>
         </ShadowBox>
         <div className="buttonBox">
-          <div className="redButton" onClick={() => window.location.href = `/ModifyrequestTo${type == "designer" ? "Designer" : "Maker"}/` + props.Detail.uid}>의뢰응답</div>    
+          <Link className="reply" to={{ pathname: `/responseTo${type}Req/${props.Detail.uid}`, state: { detail: props.Detail, expert: props.MyDetail } }}>
+            <div className="redButton" >의뢰응답</div>    
+          </Link>
           <div className="greyButton" onClick={() => props.returnToList()} >목록으로</div>    
         </div>
       </Wrapper>

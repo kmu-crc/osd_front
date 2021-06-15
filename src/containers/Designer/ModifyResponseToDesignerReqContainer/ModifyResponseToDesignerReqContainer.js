@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ModifyResponseToDesignerReq from "components/Request/ModifyResponseToDesignerReq/ModifyResponseToDesignerReq.js";
+import ModifyResponseToDesignerReq_mobile from "mobileComponents/ModifyResponseToDesignerReq_mobile";
 import { connect } from "react-redux";
 import { UpdateRequestRequest,GetRequestDetailRequest } from "actions/Request";
 
@@ -8,7 +9,16 @@ class ModifyResponseToDesignerReqContainer extends Component {
     this.props.GetRequestDetailRequest(this.props.id);
   }
   render() {
-    return (<ModifyResponseToDesignerReq {...this.props} />)
+    return (
+      <React.Fragment>
+        {
+          window.innerWidth>=500?
+          <ModifyResponseToDesignerReq {...this.props} />
+          :
+          <ModifyResponseToDesignerReq_mobile {...this.props} />
+        }
+      </React.Fragment>
+    )
   }
 }
 

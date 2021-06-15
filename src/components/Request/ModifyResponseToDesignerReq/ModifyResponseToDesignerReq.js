@@ -11,10 +11,6 @@ import { alert } from "components/Commons/Alert/Alert";
 import market_style from "market_style";
 import { InputTagNew, InputFile, InputPriceNew, InputCalendar } from "components/Commons/InputItem";
 
-
-// import { Dropdown } from "semantic-ui-react"
-// import { confirm } from "components/Commons/Confirm/Confirm";
-
 const LocationList = [
   { value: 0, text: "서울특별시" },
   { value: 1, text: "부산광역시" },

@@ -492,8 +492,17 @@ export const DesignResponseDetail_mobile = (props) => {
           </div>
         </ShadowBox>
         <div className="buttonBox">
-        {props.userInfo && props.isPurchased === false && props.userInfo.uid === props.client_id ?
-            <div className="redButton" onClick={props.purchase} >의뢰구입</div> : null}
+            {
+              props.userInfo &&
+                props.userInfo && props.userInfo.uid == props.expert_id ?
+                <div className="redButton" onClick={() => {
+                  window.location.href = `${props.type == "designer" ? "/modifyResponseToDesignerReq" : "/modifyResponseToMakerReq"}/${props.uid}`
+                }
+                } >응답수정</div> : null
+
+            }
+            {props.userInfo && props.isPurchased === false && props.userInfo.uid === props.client_id ?
+                <div className="redButton" onClick={props.purchase} >의뢰구입</div> : null}
             <div className="greyButton" onClick={() => props.returnToList()} >목록으로</div>    
         </div>
       </Wrapper>

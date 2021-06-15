@@ -1,11 +1,25 @@
 import React, { Component } from 'react';
 import ResponseToDesignerReq from "components/Request/ResponseToDesignerReq";
+import ResponseToDesignerReq_mobile from "mobileComponents/ResponseToDesignerReq_mobile";
 import { connect } from "react-redux";
 import { CreateRequestRequest } from "actions/Request";
 
+
 class ResponseToDesignerReqContainer extends Component {
+  componentDidMount(){
+    console.log(this.props)
+  }
   render() {
-    return (<ResponseToDesignerReq {...this.props} />)
+    return (
+      <React.Fragment>
+        {
+          window.innerWidth>=500?
+          <ResponseToDesignerReq {...this.props} />
+          :
+          <ResponseToDesignerReq_mobile {...this.props}/>
+        }
+      </React.Fragment>
+    )
   }
 }
 

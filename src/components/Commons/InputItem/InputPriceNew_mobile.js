@@ -18,6 +18,7 @@ const FormBox = styled.div`
         align-items:center;
     }
     .buttonbox{
+        margin-left:5px;
         margin-right:50px;
         min-width:max-content;
         display: flex;
@@ -56,7 +57,7 @@ const Button = styled.button`
     cursor:pointer;
     background: none;
     font-size:13px;
-    width: ${props => props.width ? props.width : 59}px;
+    width: ${props => props.width ? props.width : 55}px;
     max-width: 100px;
     height: 31px;
 

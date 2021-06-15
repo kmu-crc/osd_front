@@ -164,7 +164,7 @@ export class InputTag extends Component {
             }
         }
     }
-    onChangeValue = (event) => {
+    onChangeValue = async(event) => {
         var pattern = /^[a-zA-Zㄱ-힣0-9]*$/;
         if (event.target.value.match(pattern)) {
             this.setState({ value: event.target.value });
