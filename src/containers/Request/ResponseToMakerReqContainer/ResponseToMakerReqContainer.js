@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
 import ResponseToMakerReq from "components/Makers/ResponseToMakerReq";
+import ResponseToMakerReq_mobile from "mobileComponents/ResponseToMakerReq_mobile";
 import { connect } from "react-redux";
 import { CreateRequestRequest } from "actions/Request";
 
 class ResponseToMakerReqContainer extends Component {
   render() {
-    return (<ResponseToMakerReq {...this.props} />)
+    return (
+    <React.Fragment>
+      {
+        window.innerWidth>=500?
+        <ResponseToMakerReq {...this.props} />
+        :
+        <ResponseToMakerReq_mobile {...this.props}/>
+      }
+    </React.Fragment>
+    )
   }
 };
 

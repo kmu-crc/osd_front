@@ -62,6 +62,9 @@ const Wrapper = styled.div`
     color:#c1c1c1;
     margin-bottom:10px;
   }
+  .buttonBox{
+    width:100%;
+  }
   .redButton{
     width:100%;
     border:2px solid #ff3838;
@@ -72,6 +75,16 @@ const Wrapper = styled.div`
     color:red;
     font-weight:800;
     padding:4px 0px 4px 0px;
+  }
+  .greyButton{
+    width:100%;
+    border-radius:10px;
+    background-color:#F7F7F7;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:black;
+    padding:4px 0px 5px 0px;
   }
 `
 const ShadowBox = styled.div`

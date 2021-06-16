@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ModifyRequestToDesigner from "components/Request/ModifyRequestToDesigner";
+import ModifyRequestToDesigner_mobile from "mobileComponents/ModifyRequestToDesigner_mobile";
 import { connect } from "react-redux";
 import { GetRequestDetailRequest } from "actions/Request";
 import { UpdateRequestRequest,DeleteRequestRequest } from "actions/Request";
@@ -10,7 +11,16 @@ class ModifyRequestToDesignerContainer extends Component {
   }
   render() {
     // console.log(this.props);
-    return (<ModifyRequestToDesigner {...this.props}/>)
+    return (
+      <React.Fragment>
+        {
+          window.innerWidth>=500?
+          <ModifyRequestToDesigner {...this.props}/>
+          :
+          <ModifyRequestToDesigner_mobile {...this.props}/>
+        }
+      </React.Fragment>
+    )
   }
 
   

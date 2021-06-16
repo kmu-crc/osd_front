@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import RequestToMaker from "components/Makers/RequestToMaker";
+import RequestToMaker_mobile from "mobileComponents/RequestToMaker_mobile";
 import { CreateRequestRequest } from "actions/Request";
 
 class RequestToMakerContainer extends Component {
@@ -8,7 +9,16 @@ class RequestToMakerContainer extends Component {
     // alert(this.props.id);
   }
   render() {
-    return (<RequestToMaker {...this.props} />)
+    return (
+    <React.Fragment>
+      {
+        window.innerWidth>=500?
+        <RequestToMaker {...this.props} />
+        :
+        <RequestToMaker_mobile {...this.props}/>
+      }
+    </React.Fragment>
+    )
   }
 }
 

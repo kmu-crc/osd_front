@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Loading from "components/Commons/Loading";
-import { DesignRequestDetail } from "./DesignRequestDetail";
-import { DesignResponseDetail } from "./DesignResponseDetail";
+import { DesignRequestDetail_mobile } from "./DesignRequestDetail_mobile";
+import { DesignResponseDetail_mobile } from "./DesignResponseDetail_mobile";
 import styled from "styled-components"
 import ArticleModal from "components/Commons/ArticleModal/ArticleModal";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
@@ -145,22 +145,22 @@ export default class Detail extends Component {
       }
       {/* REQUEST DETAIL */}
       {Detail.status === "request"
-        ? <DesignRequestDetail
+        ? <DesignRequestDetail_mobile
           Detail={Detail}
           userInfo={userInfo}
           MyDetail={MyDetail}
           returnToList={() => this.returnToList()}
-          onClick={() => this.props.onClickResponse()}
+          onClick={() => this.onClickResponse()}
           category_level1={category_level1}
           category_level2={category_level2}
         /> : null}
 
       {/* RESPONSE DETAIL */}
       {Detail.status === "response"
-        ? <DesignResponseDetail
+        ? <DesignResponseDetail_mobile
           {...Detail}
           returnToList={() => this.returnToList()}
-          onClick={() => this.props.onClickResponse()}
+          onClick={() => this.onClickResponse()}
           userInfo={userInfo}
           isPurchased={isPurchased}
           purchase={purchase}

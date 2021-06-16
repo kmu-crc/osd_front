@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ModifyResponseToMakerReq from "components/Makers/ModifyResponseToMakerReq/ModifyResponseToMakerReq.js";
+import ModifyResponseToMakerReq_mobile from "mobileComponents/ModifyResponseToMakerReq_mobile";
 import { connect } from "react-redux";
 import { UpdateRequestRequest,GetRequestDetailRequest } from "actions/Request";
 
@@ -8,7 +9,16 @@ class ModifyResponseToMakerReqContainer  extends Component {
     this.props.GetRequestDetailRequest(this.props.id);
   }
   render() {
-    return (<ModifyResponseToMakerReq {...this.props} />)
+    return (
+      <React.Fragment>
+        {
+          window.innerWidth>=500?
+          <ModifyResponseToMakerReq {...this.props} />
+          :
+          <ModifyResponseToMakerReq_mobile {...this.props} />
+        }
+      </React.Fragment>
+    )
   }
 };
 

@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import RequestToDesigner from "components/Request/RequestToDesigner";
+import RequestToDesigner_mobile from "mobileComponents/RequestToDesigner_mobile";
 import { CreateRequestRequest } from "actions/Request";
 
 class RequestToDesignerContainer extends Component {
   render() {
-    return (<RequestToDesigner {...this.props} />)
+    return (
+    <React.Fragment>
+      {
+        window.innerWidth>=500?
+        <RequestToDesigner {...this.props} />
+        :
+        <RequestToDesigner_mobile {...this.props}/>
+      }
+    </React.Fragment>
+    )
   }
 }
 

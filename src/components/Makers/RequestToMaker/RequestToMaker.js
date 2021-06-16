@@ -205,6 +205,19 @@ const InputText = styled.input.attrs({ type: "text" })`
   padding: 0.67857143em 1em;
 
 `;
+const InputNumber = styled.input.attrs({ type: "number" })`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:31px;
+  border-radius:26px;
+  font-family:Noto Sans KR;
+  font-size:${market_style.font.size.small1};
+  background-color:#E9E9E9;
+  margin-right:21px;
+  outline:none;
+  border:0px;
+  padding: 0.67857143em 1em;
+  text-align:center;
+`;
 const DropBox = styled(Dropdown)`
   width: 180px !important;
   height: 31px !important;
@@ -465,7 +478,7 @@ class RequestToMaker extends Component {
           <div className="row">
             <div className="label">수량</div>
             <div className="content max-width">
-            <InputText onChange={this.onChangeAmount} value={this.state.amount} width={80} />
+            <InputNumber onChange={this.onChangeAmount} value={this.state.amount} width={80} />
             </div>
           </div>
 
