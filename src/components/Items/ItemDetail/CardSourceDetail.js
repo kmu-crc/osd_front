@@ -1,18 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-// import Button from "components/Commons/Button";
 import FileIcon from "components/Commons/FileIcon";
 import Loading from "components/Commons/Loading";
 import { AddController, Controller, ProblemController } from "components/Commons/InputItem";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
-//import { Worker } from '@react-pdf-viewer/core';
-//import pdfJS from 'pdfjs-dist/build/pdf.min.js';
-//https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js
-//import { pdfjs } from 'react-pdf';
-//pdfJS.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfJS.version}/pdf.worker.min.js`;
-
 
 const ContentForm = async (data, oldData) => {
   let formData = {
@@ -37,148 +30,12 @@ const ContentForm = async (data, oldData) => {
   });
   return formData;
 }
-const CardSrcWrap = styled.div`
-  background-color: #fff;
-  margin: auto;
-  & form {
-    margin: 20px 0;
-  }
-  & .ui.loader {
-    top: auto;
-    bottom: 70vh;
-  }
-`;
-const ViewContent = styled.div`
-  position: relative;
-  .imgContent{
-    img{
-      max-width: 100%;
-    }
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-  .LinkFileName {
-    line-height: 70px;
-    font-size:${market_style.font.size.normal3};
-  }
-  .iconWrap {
-    display: block;
-    &::after {
-      display: block;
-      content: "";
-      clear: both;
-    }
-    margin-bottom: 2rem;
-  }
-  .textWrap{
-    margin-bottom: 2rem;
-  }
-  & .goEdit {
-    display: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-  &:hover .goEdit {
-    display: block;
-  }
-`;
-const Nodata = styled.div`
-  text-align: center;
-`;
-const ButtonContainer = styled.div`
-  margin-bottom: 35px;
-  margin-left: auto;
-  margin-right: auto;
-  .content-edit-wrapper {
-    width: max-content;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .content-edit-button {
-    width: max-content;
-    padding: 7px;
-    padding-bottom: 1px;
-    border: none;
-    border-bottom: 1px solid red;
-    color: #FF0000;
-    font-size:${market_style.font.size.normal3};
-    font-weight: 500;
-    background: none;
-    cursor: pointer;
-  }
-  .content-add-wrapper {
-    width: max-content;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .content-add-button {
-    width: max-content;
-    border: none;
-    padding: 7px;
-    padding-bottom: 1px;
-    border-bottom: 1px solid red;
-    color: #FF0000;
-    font-size:${market_style.font.size.normal3};
-    font-weight: 500;
-    background: none;
-    cursor: pointer;
-  }
-`;
-const EditorBottonWrapper = styled.div`
-    width: max-content;
-    margin: auto;
-    margin-top: 10px;
-    padding: 15px;
-    background: #FFFFFF;
-    border-radius: 25px;
-    z-index: 907;
-    .submit {
-      margin-left: 5px;
-      background: none;
-      border: none;
-      width: max-content;
-      padding: 7px;
-      padding-bottom: 1px;
-      color: #FF0000;
-      font-size:${market_style.font.size.normal3};
-      font-weight: 500;
-      cursor: pointer;
-      :hover{
-        background-color: #DDD;
-        border-radius: 25px;
-      }
-    }
-    .cancel {
-      margin-left: 10px;
-      background: none;
-      border: none;
-      width: max-content;
-      padding: 7px;
-      padding-bottom: 1px;
-      color: #707070;
-      font-size:${market_style.font.size.normal3};
-      font-weight: 500;
-      cursor: pointer;
-      :hover{
-        background-color: #DDD;
-        border-radius: 25px;
-      }
-    }
-`;
-const PrivateContentWrapper = styled.div`
-  width:100%;
-  padding: 25px 10px;
-  margin-right:50px;
-  margin-bottom:20px;
-  margin-top:20px;
-  border-radius: 15px;
-  line-height: 35px;
-  text-align: center;
-  font-size:${market_style.font.size.giant2};
-  color: #707070;
-  background-color: #EFEFEF;
-`;
+const CardSrcWrap = styled.div`background-color: #fff; margin: auto; & form { margin: 20px 0; } & .ui.loader { top: auto; bottom: 70vh; }`;
+const ViewContent = styled.div`position: relative; .imgContent{ img{ max-width: 100%; } text-align: center; margin-bottom: 2rem; } .LinkFileName { line-height: 70px; font-size:${market_style.font.size.normal3}; } .iconWrap { display: block; &::after { display: block; content: ""; clear: both; } margin-bottom: 2rem; } .textWrap{ margin-bottom: 2rem; } & .goEdit { display: none; position: absolute; top: 0; right: 0; } &:hover .goEdit { display: block; }`;
+const Nodata = styled.div`text-align: center;`;
+const ButtonContainer = styled.div`margin-bottom: 35px; margin-left: auto; margin-right: auto; .content-edit-wrapper { width: max-content; margin-left: auto; margin-right: auto; } .content-edit-button { width: max-content; padding: 7px; padding-bottom: 1px; border: none; border-bottom: 1px solid red; color: #FF0000; font-size:${market_style.font.size.normal3}; font-weight: 500; background: none; cursor: pointer; } .content-add-wrapper { width: max-content; margin-left: auto; margin-right: auto; } .content-add-button { width: max-content; border: none; padding: 7px; padding-bottom: 1px; border-bottom: 1px solid red; color: #FF0000; font-size:${market_style.font.size.normal3}; font-weight: 500; background: none; cursor: pointer; }`;
+const EditorBottonWrapper = styled.div`width: max-content; margin: auto; margin-top: 10px; padding: 15px; background: #FFFFFF; border-radius: 25px; z-index: 907; .submit { margin-left: 5px; background: none; border: none; width: max-content; padding: 7px; padding-bottom: 1px; color: #FF0000; font-size:${market_style.font.size.normal3}; font-weight: 500; cursor: pointer; :hover{ background-color: #DDD; border-radius: 25px; } } .cancel { margin-left: 10px; background: none; border: none; width: max-content; padding: 7px; padding-bottom: 1px; color: #707070; font-size:${market_style.font.size.normal3}; font-weight: 500; cursor: pointer; :hover{ background-color: #DDD; border-radius: 25px; } }`;
+const PrivateContentWrapper = styled.div`width:100%; padding: 25px 10px; margin-right:50px; margin-bottom:20px; margin-top:20px; border-radius: 15px; line-height: 35px; text-align: center; font-size:${market_style.font.size.giant2}; color: #707070; background-color: #EFEFEF;`;
 
 class CardSourceDetail extends Component {
   constructor(props) {
@@ -226,6 +83,8 @@ class CardSourceDetail extends Component {
     );
     await this.setState({ content: newContent });
     this.props.handlerModifyContent && this.props.handlerModifyContent();
+
+
   };
   onSubmit = async e => {
     e.preventDefault();
@@ -245,6 +104,7 @@ class CardSourceDetail extends Component {
     await this.setState({ content: copyContent });
     let formData = await ContentForm(this.state, this.props.content);
     await this.setState({ loading: true });
+
 
     // FIX IT asps
     await setTimeout(() => { }, 1000);
@@ -282,8 +142,9 @@ class CardSourceDetail extends Component {
       }
     }
     await this.setState({ loading: false });
-  };
 
+
+  };
 
   bindPrivate = contents => {
     console.log("modify1");
@@ -348,6 +209,8 @@ class CardSourceDetail extends Component {
     );
     await this.setState({ content: copyContent });
     this.props.handlerModifyContent && this.props.handlerModifyContent();
+
+
   };
   IsJsonString = (str) => {
     try {
@@ -366,7 +229,7 @@ class CardSourceDetail extends Component {
         {loading ? <Loading /> : null}
 
         <CardSrcWrap>
-          {/*<Worker workerUrl="https://unpkg.com/pdfjs-dist@2.1.266/build/pdf.worker.min.js">*/}
+          {/*<Worker workerUrl="<https://unpkg.com/pdfjs-dist@2.1.266/build/pdf.worker.min.js>">*/}
           {this.props.edit ? (
             <form onSubmit={this.onSubmit}>
               {content.length > 0 && content.map((item, index) =>
@@ -408,7 +271,7 @@ class CardSourceDetail extends Component {
                     <PrivateContentWrapper key={index}>
                       {item.count}개의 비공개 항목이 있습니다.<br />
                       이 항목{item.count > 1 ? "들" : ""}을 열람하시고 싶으시다면 이 아이템을 구매해주세요.
-                      </PrivateContentWrapper> :
+                    </PrivateContentWrapper> :
                     // <PrivateContent count={item.count} key={index} /> :
                     item.content_type === "FILE" && item.data_type === "image" ? (
                       <div className="imgContent" key={index}>
@@ -439,15 +302,17 @@ class CardSourceDetail extends Component {
               </ViewContent>
             ) : (<Nodata>
               {/*{
-                this.props.isTeam === 1 
-                ? <Button round={true} color="Primary" size="small" onClick={this.props.openEdit}>업로드</Button>
-                : <div>등록된 컨텐츠가 없습니다.</div>
-              }*/}
+            this.props.isTeam === 1
+            ? <Button round={true} color="Primary" size="small" onClick={this.props.openEdit}>업로드</Button>
+            : <div>등록된 컨텐츠가 없습니다.</div>
+          }*/}
             </Nodata>) : null}
           {/* </Worker> */}
         </CardSrcWrap>
       </React.Fragment>
     );
+
+
   }
 }
 
