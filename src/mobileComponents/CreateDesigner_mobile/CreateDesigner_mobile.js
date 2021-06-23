@@ -484,23 +484,51 @@ class CreateCareer extends Component {
     return (
       <React.Fragment>
 
-        <div className="careerBox">
-          <div className="number_wrapper">{leadingZeros(this.props.number, 2)}</div>
+      <Career>
+        <div className="row">
+          <div className="number">{leadingZeros(this.props.number, 2)}</div>
+          <div className="career_label">업무</div>
           <div className="text_wrapper">
-            <InputText  value={this.state.task} onChange={this.onChangeTask} />
+            <InputText value={this.state.task} onChange={this.onChangeTask}/>
           </div>
-          <div className="text_wrapper">
-            <InputText value={this.state.during} onChange={this.onChangeDuring} />
-          </div>
-          <div className="text_wrapper">
-            <InputText value={this.state.explain} onChange={this.onChangeExplain} />
-          </div>
-          <div className="close" onClick={this.onDeleteAll}>x</div>
         </div>
-      </React.Fragment>
+        <div className="row">
+          <div className="number"/>
+          <div className="career_label">기간</div>
+          <div className="text_wrapper">
+          <InputText value={this.state.during} onChange={this.onChangeDuring} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="number"/>
+          <div className="career_label">내용</div>
+          <div className="text_wrapper">
+          <InputText value={this.state.explain} onChange={this.onChangeExplain} />
+          </div>
+        </div>
+        <div className="close" onClick={this.onDeleteAll}>x</div>
+      </Career>
+    </React.Fragment>
     );
   }
 }
+
+{/* <React.Fragment>
+
+<div className="careerBox">
+  <div className="number_wrapper">{leadingZeros(this.props.number, 2)}</div>
+  <div className="text_wrapper">
+    업무<InputText  value={this.state.task} onChange={this.onChangeTask} />
+  </div>
+  <div className="text_wrapper">
+    <InputText value={this.state.during} onChange={this.onChangeDuring} />
+  </div>
+  <div className="text_wrapper">
+    <InputText value={this.state.explain} onChange={this.onChangeExplain} />
+  </div>
+  <div className="close" onClick={this.onDeleteAll}>x</div>
+</div>
+</React.Fragment> */}
 {/* <MainBox>
 <div className="title">디자이너 등록</div>
 <div className="contentsBox flexWrap">

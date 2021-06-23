@@ -19,6 +19,16 @@ import market_style from "market_style";
 const Wrapper = styled.div`
   width:100%;
 `
+const ReviewButton = styled.div`
+  width:100px;
+  height:26px;
+  padding:4px 20px 5px 20px;
+  border:1px solid red;
+  color:red;
+  font-weight:400;
+  font-size:${market_style.font.size.small1};
+
+`
 const ShadowBox = styled.div`
   width:100%;
   height:max-content;
@@ -69,6 +79,9 @@ const Header = styled.div`
   font-size:${market_style.font.size.normal3};
   color:#c1c1c1;
   font-weight:800;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 `
 const TagPiece = styled.div`
     width: max-content;
@@ -172,6 +185,7 @@ class ItemDetail_mobile extends Component {
   render() {
     const item = this.props.item;
     const { expandingContent, expandingReview, expandingBoard } = this.state;
+    const { review, payment, userInfo, user_id } = this.props;
     const { score } = this.props.item;
     let tag = this.props.ItemDetail.tag + "";
     console.log(this.props);
@@ -180,7 +194,9 @@ class ItemDetail_mobile extends Component {
       return <Rating size="small" name="score" icon='star' defaultRating={parseInt(score, 10)} maxRating={5} disabled />
     }
     return(
+      
       <React.Fragment>
+        
         <Wrapper>
           <ShadowBox img={item.thumbnail ? item.thumbnail.l_img : noimg} face={item.who||who}>
             <div className="wrap flex">
@@ -281,14 +297,28 @@ class ItemDetail_mobile extends Component {
                       </div>
               )}
           </ShadowBox>
-          <Header>리뷰</Header>
+          <Header>리뷰
+              {
+                    payment && payment.length > 0 ?
+                    <ReviewButton onClick={()=>{this.setState({writeReview:true})}}>리뷰 쓰기</ReviewButton>
+                    :
+                    <div className="blank"/>
+                }
+          </Header>
           <ShadowBox>
-                <ItemReviewContainer_mobile
+          <ItemReviewContainer_mobile
+                id={this.props.id}
                 user_id={item.user_id}
                 detail={this.state.detail}
-                handler={detail => this.setState({ reviewdetail: true, detail: detail })}
-                isExpanding={(result) => { this.setState({ isexpandingReview: result }) }} 
+                writeReview={this.state.writeReview}
+                showWriteReview = {(open)=>this.setState({writeReview:open})}
                 total={this.props.total}
+                update={()=>{
+                  this.props.GetItemPaymentRequest(this.props.id, this.props.token, 0)
+                  .then(()=>{
+                    this.props.GetTotalItemReviewRequest(this.props.id);
+                  })
+                }}
                 />
           </ShadowBox>
           <Header>게시판</Header>

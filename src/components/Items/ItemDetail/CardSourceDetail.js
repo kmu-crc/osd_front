@@ -30,12 +30,172 @@ const ContentForm = async (data, oldData) => {
   });
   return formData;
 }
-const CardSrcWrap = styled.div`background-color: #fff; margin: auto; & form { margin: 20px 0; } & .ui.loader { top: auto; bottom: 70vh; }`;
-const ViewContent = styled.div`position: relative; .imgContent{ img{ max-width: 100%; } text-align: center; margin-bottom: 2rem; } .LinkFileName { line-height: 70px; font-size:${market_style.font.size.normal3}; } .iconWrap { display: block; &::after { display: block; content: ""; clear: both; } margin-bottom: 2rem; } .textWrap{ margin-bottom: 2rem; } & .goEdit { display: none; position: absolute; top: 0; right: 0; } &:hover .goEdit { display: block; }`;
-const Nodata = styled.div`text-align: center;`;
-const ButtonContainer = styled.div`margin-bottom: 35px; margin-left: auto; margin-right: auto; .content-edit-wrapper { width: max-content; margin-left: auto; margin-right: auto; } .content-edit-button { width: max-content; padding: 7px; padding-bottom: 1px; border: none; border-bottom: 1px solid red; color: #FF0000; font-size:${market_style.font.size.normal3}; font-weight: 500; background: none; cursor: pointer; } .content-add-wrapper { width: max-content; margin-left: auto; margin-right: auto; } .content-add-button { width: max-content; border: none; padding: 7px; padding-bottom: 1px; border-bottom: 1px solid red; color: #FF0000; font-size:${market_style.font.size.normal3}; font-weight: 500; background: none; cursor: pointer; }`;
-const EditorBottonWrapper = styled.div`width: max-content; margin: auto; margin-top: 10px; padding: 15px; background: #FFFFFF; border-radius: 25px; z-index: 907; .submit { margin-left: 5px; background: none; border: none; width: max-content; padding: 7px; padding-bottom: 1px; color: #FF0000; font-size:${market_style.font.size.normal3}; font-weight: 500; cursor: pointer; :hover{ background-color: #DDD; border-radius: 25px; } } .cancel { margin-left: 10px; background: none; border: none; width: max-content; padding: 7px; padding-bottom: 1px; color: #707070; font-size:${market_style.font.size.normal3}; font-weight: 500; cursor: pointer; :hover{ background-color: #DDD; border-radius: 25px; } }`;
-const PrivateContentWrapper = styled.div`width:100%; padding: 25px 10px; margin-right:50px; margin-bottom:20px; margin-top:20px; border-radius: 15px; line-height: 35px; text-align: center; font-size:${market_style.font.size.giant2}; color: #707070; background-color: #EFEFEF;`;
+
+const CardSrcWrap = styled.div`
+  background-color: #fff;
+  margin: auto;
+  & form {
+    margin: 20px 0;
+  }
+  & .ui.loader {
+    top: auto;
+    bottom: 70vh;
+  }
+`;
+const ViewContent = styled.div`
+  position: relative;
+  .imgContent{
+    img{
+      max-width: 100%;
+    }
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .LinkFileName {
+    line-height: 70px;
+    font-size:${market_style.font.size.normal3};
+  }
+  .iconWrap {
+    display: block;
+    &::after {
+      display: block;
+      content: "";
+      clear: both;
+    }
+    margin-bottom: 2rem;
+  }
+  .textWrap{
+    height:max-content;
+    margin-bottom: 2rem;
+    word-break:break-all;
+  }
+  & .goEdit {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  &:hover .goEdit {
+    display: block;
+  }
+`;
+const Nodata = styled.div`
+  text-align: center;
+`;
+const ButtonContainer = styled.div`
+  margin-bottom: 35px;
+  margin-left: auto;
+  margin-right: auto;
+  .content-edit-wrapper {
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .content-edit-button {
+    width: max-content;
+    padding: 7px;
+    padding-bottom: 1px;
+    border: none;
+    border-bottom: 1px solid red;
+    color: #FF0000;
+    font-size:${market_style.font.size.normal3};
+    font-weight: 500;
+    background: none;
+    cursor: pointer;
+  }
+  .content-add-wrapper {
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .content-add-button {
+    width: max-content;
+    border: none;
+    padding: 7px;
+    padding-bottom: 1px;
+    border-bottom: 1px solid red;
+    color: #FF0000;
+    font-size:${market_style.font.size.normal3};
+    font-weight: 500;
+    background: none;
+    cursor: pointer;
+  }
+`;
+const EditorBottonWrapper = styled.div`
+    width: max-content;
+    margin: auto;
+    margin-top: 10px;
+    padding: 15px;
+    background: #FFFFFF;
+    border-radius: 25px;
+    z-index: 907;
+    .submit {
+      margin-left: 5px;
+      background: none;
+      border: none;
+      width: max-content;
+      padding: 7px;
+      padding-bottom: 1px;
+      color: #FF0000;
+      font-size:${market_style.font.size.normal3};
+      font-weight: 500;
+      cursor: pointer;
+      :hover{
+        background-color: #DDD;
+        border-radius: 25px;
+      }
+    }
+    .cancel {
+      margin-left: 10px;
+      background: none;
+      border: none;
+      width: max-content;
+      padding: 7px;
+      padding-bottom: 1px;
+      color: #707070;
+      font-size:${market_style.font.size.normal3};
+      font-weight: 500;
+      cursor: pointer;
+      :hover{
+        background-color: #DDD;
+        border-radius: 25px;
+      }
+    }
+`;
+const EditorBottonWrapper_mobile = styled.div`
+    width: 100%;
+    z-index: 907;
+    .button{
+      width:100%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-weight:500;
+      color:white;
+      padding:7px;
+      border-radius:10px;
+      font-weight:500;
+      margin-top:10px;
+      border:none;
+      outline:none;
+      box-shadow: 2px 2px 3px #00000019;
+    }
+    .red{background-color:red;}
+    .grey{background-color:#707070;}
+`;
+const PrivateContentWrapper = styled.div`
+  width:100%;
+  padding: 25px 10px;
+  margin-right:50px;
+  margin-bottom:20px;
+  margin-top:20px;
+  border-radius: 15px;
+  line-height: 35px;
+  text-align: center;
+  font-size:${market_style.font.size.giant2};
+  color: #707070;
+  background-color: #EFEFEF;
+`;
 
 class CardSourceDetail extends Component {
   constructor(props) {
@@ -223,13 +383,11 @@ class CardSourceDetail extends Component {
 
   render() {
     const { loading, content } = this.state;
-    console.log("check:::", this.props.ItemDetail);
     return (
       <React.Fragment>
         {loading ? <Loading /> : null}
 
         <CardSrcWrap>
-          {/*<Worker workerUrl="<https://unpkg.com/pdfjs-dist@2.1.266/build/pdf.worker.min.js>">*/}
           {this.props.edit ? (
             <form onSubmit={this.onSubmit}>
               {content.length > 0 && content.map((item, index) =>
@@ -244,7 +402,9 @@ class CardSourceDetail extends Component {
                   deleteItem={this.deleteItem}
                   getValue={this.onChangValue}
                 />)}
-
+              {
+                
+              }
               <AddController
                 isProgramming={this.props.ItemDetail.is_problem === 1}
                 mode={this.props.mode}
@@ -253,12 +413,22 @@ class CardSourceDetail extends Component {
                 getValue={this.onAddValue} />
 
               <ButtonContainer>
-                <EditorBottonWrapper>
+                {
+                  window.innerWidth>=500?
+                  <EditorBottonWrapper>
                   <button onClick={this.onSubmit} className="submit" type="button">
                     <i className="icon outline save" />저장하기</button>
                   <button onClick={() => { this.setState({ content: this.props.content || "" }); this.props.handleCancel == null ? window.history.go(-1) : this.props.handleCancel() }} className="cancel" type="button">
                     <i className="icon trash" />취소하기</button>
-                </EditorBottonWrapper>
+                  </EditorBottonWrapper>
+                  :
+                  <EditorBottonWrapper_mobile>
+                  <button onClick={this.onSubmit} className="red button" type="button">
+                    <i className="icon outline save" />저장하기</button>
+                  <button onClick={() => { this.setState({ content: this.props.content || "" }); this.props.handleCancel == null ? window.history.go(-1) : this.props.handleCancel() }} className="grey button" type="button">
+                    <i className="icon trash" />취소하기</button>
+                  </EditorBottonWrapper_mobile>
+                }
               </ButtonContainer>
             </form>
           ) : null}
@@ -301,19 +471,11 @@ class CardSourceDetail extends Component {
                 )}
               </ViewContent>
             ) : (<Nodata>
-              {/*{
-            this.props.isTeam === 1
-            ? <Button round={true} color="Primary" size="small" onClick={this.props.openEdit}>업로드</Button>
-            : <div>등록된 컨텐츠가 없습니다.</div>
-          }*/}
             </Nodata>) : null}
-          {/* </Worker> */}
         </CardSrcWrap>
       </React.Fragment>
-    );
-
-
+    )
   }
 }
 
-export default CardSourceDetail;
+export default CardSourceDetail

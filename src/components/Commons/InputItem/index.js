@@ -3,6 +3,7 @@ export * from "./InputTagNew";
 export * from "./ThumbnailList";
 export * from "./RadioType";
 export * from "./AddController";
+export * from "./AddController_mobile";
 export * from "./FileController";
 export * from "./Controller";
 export * from "./EmbController";

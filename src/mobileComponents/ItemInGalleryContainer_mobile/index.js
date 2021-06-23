@@ -1,0 +1,1 @@
+export { default } from "./ItemInGalleryContainer_mobile";

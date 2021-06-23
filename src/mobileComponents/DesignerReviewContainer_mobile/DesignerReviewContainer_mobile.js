@@ -167,38 +167,6 @@ class DesignerReviewContainer_mobile extends Component {
             {this.props.dataList.length > 2&&<div className="viewmore" onClick={()=>this.getList(this.state.page)}>▾</div>}
       </ContentsBox>
       </React.Fragment>
-        // 리뷰목록
-        // <ReviewBox
-        // isScroll={this.props.dataListAdded.length>2?true:false}
-        // >
-        //   <ScrollList
-        //     handler={this.props.handler}
-        //     scrollId={"review-scroller"}
-        //     cols={2}
-        //     type="review"
-        //     getListRequest={this.getList}
-        //     ListComponent={Review}
-        //     dataList={this.props.dataList}
-        //     dataListAdded={this.props.dataListAdded} />
-        // </ReviewBox>
-        // <div className="pagenation">
-        // { this.props.count >4?
-        //             <Pagination
-        //             activePage={this.state.page}
-        //             boundaryRange={0}
-        //             defaultActivePage={1}
-        //             ellipsisItem={null}
-        //             firstItem={null}
-        //             lastItem={null}
-        //             siblingRange={1}
-        //             totalPages={lastPage + 1}
-        //             secondary
-        //             onPageChange={(event, { activePage }) => {
-        //               this.getList(activePage - 1);
-        //             }}
-        //           />:null
-        //   }
-        // </div>
     )
   }
 }

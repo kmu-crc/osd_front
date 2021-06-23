@@ -2,31 +2,16 @@ import React, { Component } from 'react';
 import { CreateStep } from "./GridTools";
 import styled from 'styled-components';
 import CardModal from "./CardModal";
+import CardModal_mobile from "./CardModal_mobile"
 import NewStepModal from "./NewStepModal";
 import EditStepModal from "./EditStepModal";
 import NewCardModal from "./NewCardModal";
+import NewCardModal_mobile from "./NewCardModal_mobile";
 import arrow from "source/arrow.svg";
 import SortableDesignSteps from "./SortableDesignSteps";
 import osdcss from "StyleGuide";
 import { alert } from "components/Commons/Alert/Alert";
-// import { ReactHeight } from 'react-height';
-// import { confirm } from "components/Commons/Confirm/Confirm";
 
-const LeftWhitePane = styled.div`
-    position: absolute;
-    z-index: 830;
-    width: ${props => props.width}px;
-    height: ${props => props.height}px;
-    left: ${props => props.left}px;
-    right: ${props => props.right}px;
-    background: transparent linear-gradient(90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 0) 50%, rgba(255,255,255, 0) 100%);
-    backgroundRepeat: no-repeat;
-    @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
-    and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
-        background: transparent linear-gradient(-90deg, rgba(255,255,255, 0) 20%,rgba(255,255,255, 1) 70%);
-    }
-
-`;
 const RightWhitePane = styled.div`
     position: absolute;
     z-index: 830;
@@ -158,19 +143,6 @@ class GridEditor extends Component {
             }
             if (this.temp.current.scrollLeft > 0) { this.setState({ left: true }); }
         }
-        // this.setState({
-        //     w: window.innerWidth < osdcss.resolutions.LargeMaxWidth
-        //         ? window.innerWidth
-        //         : osdcss.resolutions.LargeMaxWidth
-        // });
-        // if (this.temp) {
-        //     if (this.temp.current.scrollWidth - this.temp.current.scrollLeft < this.state.w) {
-        //         this.setState({ right: false });
-        //     } else {
-        //         this.setState({ right: true });
-        //     }
-        //     if (this.temp.current.scrollLeft > 0) { this.setState({ left: true }); }
-        // }
     }
     createNewCard(row, boardId) {
         this.setState({ row: row, boardId: row.id, newcard: true });
@@ -299,9 +271,6 @@ class GridEditor extends Component {
             return true;
         }
         // if (nextProps.DesignDetailStepCard && nextProps.DesignDetailStepCard.uid != null && this.props.DesignDetailStepCard !== nextProps.DesignDetailStepCard) {
-        // console.log(nextProps.DesignDetailStepCard.uid, "i got it", nextProps.DesignDetailStepCard, this.props.DesignDetailStepCard, typeof this.props.DesignDetailStepCard);
-        // this.setState({ cardDetail: nextProps.DesignDetailStepCard });
-        // }
     }
     async handleReturn(data) {
         console.log(data);
@@ -321,9 +290,7 @@ class GridEditor extends Component {
             {itemId ?
                 <React.Fragment>
                     {left ?
-                        // <LeftWhitePane width={43} height={h} background="transparent linear-gradient(0deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%)">
                         <Arrow angle="0deg" top={5} gap={0} left={3} onClick={this.ScrollLeft} />
-                        // </LeftWhitePane>
                         : null}
 
                     {right ?
@@ -333,18 +300,28 @@ class GridEditor extends Component {
                         : null}
 
                     {editor && newcard ?
+                        window.innerWidth>=500?
                         <NewCardModal
                             GetItemStepsRequest={this.props.GetItemStepsRequest}
-
-                            // boardId={boardId}
-                            // order={steps.length}
                             isTeam={editor}
                             itemId={this.props.itemId}
                             open={newcard}
                             row={row}
                             return={this.handleReturn}
                             close={() => this.setState({ newcard: false })}
-                        /> : null}
+                        /> 
+                        :
+                        <NewCardModal_mobile
+                            GetItemStepsRequest={this.props.GetItemStepsRequest}
+                            isTeam={editor}
+                            itemId={this.props.itemId}
+                            open={newcard}
+                            row={row}
+                            return={this.handleReturn}
+                            close={() => this.setState({ newcard: false })}
+                         /> 
+                         :
+                         null}
 
 
                     {editor && newstep ?
@@ -366,8 +343,6 @@ class GridEditor extends Component {
                             EditStep={this.EditStep}
                             close={this.CloseEditStep}
                         /> : null}
-
-                    {/* <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}> */}
                     <GridEditorWrapper ref={this.grid} id="herehere!">
                         <div style={{ width: window.innerWidth + "px" }} className="Editor" ref={this.temp}>
                             {/* ------------단계 ------------*/}
@@ -397,18 +372,29 @@ class GridEditor extends Component {
 
 
                     {card ?
+                        window.innerWidth>=500?
                         <CardModal
                             GetItemStepsRequest={this.props.GetItemStepsRequest}
                             bought={this.props.bought}
                             open={card} close={() => this.setState({ card: false })}
-                            edit={editor} //userInfo && (userInfo.uid === cardDetail.user_id)}
+                            edit={editor} 
                             card={cardDetail}
                             isTeam={editor}
-                            // title={title}
                             boardId={boardId}
                             itemId={itemId}
-                        /> : null}
-                    {/* </ReactHeight> */}
+                        /> 
+                        :
+                        <CardModal_mobile
+                            GetItemStepsRequest={this.props.GetItemStepsRequest}
+                            bought={this.props.bought}
+                            open={card} close={() => this.setState({ card: false })}
+                            edit={editor} 
+                            card={cardDetail}
+                            isTeam={editor}
+                            boardId={boardId}
+                            itemId={itemId}
+                        /> 
+                        : null}
                 </React.Fragment>
 
 
