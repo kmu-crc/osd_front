@@ -1,3 +1,4 @@
+
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -10,6 +11,9 @@ import market_style from "market_style";
 import noimg from "source/noimg.png";
 import { Rating } from 'semantic-ui-react'
 import { Pagination } from 'semantic-ui-react'
+import WriteReviewModal_mobile from "mobileComponents/WriteReviewModal_mobile"
+import ReviewDetailModal_mobile from "mobileComponents/ReviewDetailModal_mobile"
+
 const ReviewBox = styled.div`
     min-width:103%;
     height: 100%;
@@ -124,26 +128,53 @@ class ItemReviewContainer_mobile extends Component {
         this.setState({page:page+1,viewmore:true});
         this.props.GetItemReviewRequest(this.props.ItemDetail.item_id, page);
     }
+    onSubmitReview = (id,comment,score,thumbnail)=>{
+      if(comment.length>0){
+         this.props.CreateItemReviewRequest({score:score, comment: comment, payment_id: id, thumbnail:thumbnail},this.props.id,this.props.token)
+         .then(()=>{
+          this.props.GetItemReviewRequest(this.props.match.params.id, 0);
+         }).then(()=>{
+           this.props.update();
+         })
+      }
+      this.props.showWriteReview(false);
+      this.setState({detail:null,page:0});
+      return;
+    }
     render() {
       console.log(this.props);
+      const { payment } = this.props;
       const RenderingStar = (props)=>{
         return <Rating name="score" size="tiny" icon='star' defaultRating={parseInt(props.score,10)||0} maxRating={5} disabled/>
       }
       return (
           <React.Fragment>
+            <ReviewDetailModal_mobile 
+                open={this.state.reviewDetail}
+                close={() => this.setState({ reviewDetail: false })}
+                detail={this.state.detail}
+            />
+            <WriteReviewModal_mobile 
+                open={this.props.writeReview}
+                close={() => this.props.showWriteReview(false)}
+                modify={this.state.detail}
+                requestReview = {(uid,comment,score,thumbnail_list) => this.onSubmitReview(uid,comment,score,thumbnail_list)}
+                payment_id={payment&&payment.length>0&&payment[0].uid}
+                {...this.props}
+            />
             <ContentsBox>
                   { this.props.total != 0?
                     this.props.dataListAdded&&this.props.dataListAdded.map((item,index)=>{
                       if(index>1)return null;
                       return (
-                        <Wrapper_ onClick={() => this.props.handler(item)}>
+                        <Wrapper_ onClick={() => {this.setState({detail:item,reviewDetail:true})}}>
                           <Thumbnail imageURL={item.m_img} />
                           <div className="content">
                             <div className="wrapper">
                             <div className="nick_ line marginRight">{item.nick_name}</div>
-                            <div className="row"><RenderingStar score={item.score}/></div>
+                            <div className="row_"><RenderingStar score={item.score}/></div>
                             </div>
-                            <div className="text_">{item.comment && item.comment.slice(0, 40)}{item.comment && item.comment.length > 40 ? "..." : ""}</div>
+                            <div className="text_">{item.comment && item.comment.slice(0, 50)}{item.comment && item.comment.length > 64 ? "..." : ""}</div>
                           </div>
                         </Wrapper_>)
                     }):<div className="blank">리뷰 없음</div>
@@ -152,12 +183,12 @@ class ItemReviewContainer_mobile extends Component {
                     this.props.dataListAdded.map((item,index)=>{
                       if(index<2)return null;
                       return (
-                        <Wrapper_ onClick={() => this.props.handler(item)}>
+                        <Wrapper_ onClick={() => {this.setState({detail:item,reviewDetail:true})}}>
                           <Thumbnail imageURL={item.m_img} />
                           <div className="content">
                             <div className="wrapper">
                             <div className="nick_ line marginRight">{item.nick_name}</div>
-                            <div className="row"><RenderingStar score={item.score}/></div>
+                            <div className="row_"><RenderingStar score={item.score}/></div>
                             </div>
                             <div className="text_">{item.comment && item.comment.slice(0, 50)}{item.comment && item.comment.length > 64 ? "..." : ""}</div>
                           </div>

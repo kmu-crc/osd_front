@@ -51,6 +51,12 @@ const ListContainer = styled.div`
     margin: ${props => props.isSmall == true ? "0px 0px 35px 30px" : "0px 0px 35px 30px"};
     padding: 0px;
   }
+  .gallery{
+    justify-content: space-around;
+    margin:0px 5px 10px 0px;
+    padding: 0px;
+
+  }
   @media only screen and (min-width: 500px) and (max-width:1366px){
     justify-content:center;
   }

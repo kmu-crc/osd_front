@@ -445,7 +445,6 @@ class NewCardModal extends Component {
                             </div>
                         </div>
                     </div>
-                    {/* <div onClick={this.submit}>click!</div> */}
                 </NewCardDialogWrapper>
                 <BlankSpace />
             </React.Fragment >

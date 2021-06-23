@@ -54,6 +54,30 @@ const NewController = styled.li`
   cursor: pointer;
 `;
 
+const ControllerWrap_mobile = styled.div`
+  width:100%;
+  padding:10px;
+  box-shadow: 1px 1px 5px #00000029;
+  .innerBox {
+  }
+  .marginBottom{
+    margin-bottom:10px;
+  };
+`;
+const NewController_mobile = styled.li`
+  width:100%;
+  height:30px;
+  color: #FF0000;
+  font-size: ${market_style.font.size.small1};
+  font-weight: 500;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background-color:#F7F7F7;
+  border-radius:10px;
+`;
+
+
 export class AddController extends Component {
   state = {
     type: null,
@@ -64,11 +88,6 @@ export class AddController extends Component {
   addContent = async (type) => {
     if (type === "FILE") {
       await this.setState({ type, order: this.props.order, content: "", initClick: true, private: 0 });
-      // 처음 fileController가 동작하기 위해서는 initClick가 true여야 하지만 한번 동작한 후에는 false 바뀌어야
-      // 최종적으로 저장을 눌렀을때 파일 선택창이 반복해서 뜨지않는다.
-      // 조금 걱정되는것은 현재 타이머를 걸어 0.1초 뒤에 initClick를 false로 바꿔주게 해놨는데
-      // 나중에 컴퓨터사양이 느리거나 인터넷이 느린곳에서 오작동할 우려가 있다....
-      // 좀 더 지켜봐야할 것 같다.
       setTimeout(() => {
         this.setState({ initClick: false });
       }, 100);
@@ -92,14 +111,27 @@ export class AddController extends Component {
   }
   render() {
     return (
-      <ControllerWrap>
-        <div className="innerBox" >
-          {this.props.onlytext ? null : <NewController onClick={() => this.addContent("FILE")} className="first" width="max-content" height="29px">파일 등록</NewController>}
-          {this.props.onlyfile ? null : <NewController onClick={() => this.addContent("TEXT")} width="max-content" height="29px">텍스트 입력</NewController>}
-          {this.props.isProgramming ? <NewController onClick={() => this.addContent("PROBLEM")} widht="max-content" height="29px">문제 등록</NewController> : null}
-        </div>
-        {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
-      </ControllerWrap>
+      <React.Fragment>
+        {window.innerWidth>=500?
+                <ControllerWrap>
+                <div className="innerBox" >
+                  {this.props.onlytext ? null : <NewController onClick={() => this.addContent("FILE")} className="first" width="max-content" height="29px">파일 등록</NewController>}
+                  {this.props.onlyfile ? null : <NewController onClick={() => this.addContent("TEXT")} width="max-content" height="29px">텍스트 입력</NewController>}
+                  {this.props.isProgramming ? <NewController onClick={() => this.addContent("PROBLEM")} widht="max-content" height="29px">문제 등록</NewController> : null}
+                </div>
+                {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
+              </ControllerWrap>
+              :
+              <ControllerWrap_mobile>
+              <div className="innerBox" >
+                {this.props.onlytext ? null : <NewController_mobile onClick={() => this.addContent("FILE")} className="marginBottom" width="max-content" height="29px">파일 등록</NewController_mobile>}
+                {this.props.onlyfile ? null : <NewController_mobile onClick={() => this.addContent("TEXT")} className="marginBottom" width="max-content" height="29px">텍스트 입력</NewController_mobile>}
+                {this.props.isProgramming ? <NewController_mobile onClick={() => this.addContent("PROBLEM")} widht="max-content" height="29px">문제 등록</NewController_mobile> : null}
+              </div>
+              {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
+            </ControllerWrap_mobile>
+        }
+      </React.Fragment>
     );
   }
 }

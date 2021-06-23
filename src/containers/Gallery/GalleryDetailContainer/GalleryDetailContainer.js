@@ -3,9 +3,13 @@ import { connect } from 'react-redux';
 import { GetGalleryDetailRequest } from "actions/Gallery";
 // import GroupDetail from "components/Groups/GroupDetail";
 import GalleryDetail from "components/Gallery/GalleryDetail/GalleryDetail";
+import GalleryDetail_mobile from "mobileComponents/GalleryDetail_mobile";
 import styled from "styled-components";
 const Wrapper = styled.div`
   margin:20px 30px
+`
+const Wrapper_mobile = styled.div`
+  margin:0px 10px;
 `
 class GalleryDetailContainer extends Component {
   componentDidMount(){
@@ -13,9 +17,19 @@ class GalleryDetailContainer extends Component {
   }
   render() {
     return(
-      <Wrapper>
-      <GalleryDetail {...this.props}/>
-      </Wrapper>
+      <React.Fragment>
+        {
+          window.innerWidth>=500?
+          <Wrapper>
+          <GalleryDetail {...this.props}/>
+          </Wrapper>
+          :
+          <Wrapper_mobile>
+          <GalleryDetail_mobile {...this.props}/>
+          </Wrapper_mobile>
+        
+        }
+      </React.Fragment>
     );
   }
 }

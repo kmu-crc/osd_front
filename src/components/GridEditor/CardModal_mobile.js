@@ -14,16 +14,31 @@ import CardSourceDetailContainer from 'containers/Items/CardSourceDetailContaine
 
 import DateFormat from "modules/DateFormat";
 import Cross from "components/Commons/Cross";
-import { FormThumbnailEx } from "components/Commons/FormItems";
+import { FormThumbnailEx,FormThumbnailEx_mini } from "components/Commons/FormItems";
 import { ValidationGroup } from "modules/FormControl";
 import Loading from "components/Commons/Loading";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { Icon } from 'semantic-ui-react'
 
-import { EditCardHeaderContainer, CardDialog, ContentBorder,/*CommentWrapper,*/ } from "./style";
+import { EditCardHeaderContainer, CardDialog,CardDialog_mobile, ContentBorder,ContentBorder_mobile/*CommentWrapper,*/ } from "./style";
+import styled from "styled-components";
+import market_style from "market_style";
 
-class CardModal extends Component {
+const InputText = styled.input.attrs({ type: "text" })`
+  width:${props => props.width == null ? 100 + "%" : props.width + "px"};
+  height:31px;
+  border-radius:10px;
+  font-family:Noto Sans KR;
+  font-size:${market_style.font.size.small};
+  background-color:#E9E9E9;
+  outline:none;
+  border:0px;
+  padding: 5px 15px 4px 15px;
+  font-weight:300;
+`;
+
+class CardModal_mobile extends Component {
     constructor(props) {
         super(props);
         this.state = { sroll: false, edit: false, isEditing: false, title: "", description: "", content: [], modifyresult: false, private: false }
@@ -133,17 +148,40 @@ class CardModal extends Component {
     };
     render() {
         const { card } = this.props;
-
+        console.log(this.props);
         return (
             card
-                ? <CardDialog open={this.props.open} onClose={this.onClose}>
+                ? <CardDialog_mobile open={this.props.open} onClose={this.onClose}>
 
                     {this.state.loading && <Loading />}
 
                     <div className="content-wrapper" >
                         {this.state.edit
-                            ? <EditCardHeaderContainer>
-                                <div className="edit-header-container">
+                            ? 
+                            <React.Fragment>
+                                <div className="row flex alignCenter justifyBetween">
+                                    <div className="flex alignCenter">
+                                        <div className={`lock_`} onClick={() => { this.setState({ private: !this.state.private }) }}>
+                                            <Icon size='mini' name={`${this.state.private == true ? "lock" : "lock open"}`} color={"white"} />
+                                        </div>
+                                        <div className="title_">컨텐츠 정보수정</div>  
+                                    </div>  
+                                    <Cross onClick={this.onClose} angle={45} color={"#000000"} weight={1} width={25} height={25} />
+                                </div>
+                                <div className="row hrline"/>
+                                <div className="row flex">
+                                    <div className="label">썸네일</div>
+                                    <FormThumbnailEx_mini name="thumbnail" image={this.state.thumbnail} placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]} />                                </div>
+                                <div className="row flex alignCenter">
+                                    <div className="label">제목</div>
+                                    <InputText className="input-style" name="title" onChange={this.onChangeTitle} value={this.state.title} maxLength="20" placeholder="제목을 입력해주세요." />
+                                </div>
+                                <div className="row flex alignCenter marginTop1">
+                                    <div className="label">설명</div>
+                                    <InputText className="input-style" name="description" onChange={this.onChangeDescription} value={this.state.description} maxLength="1000" placeholder="설명을 입력해주세요."  />
+                                </div>
+                                
+                                {/* <div className="edit-header-container">
                                     <div className="edit-card-info">
                                         <div onClick={() => { this.setState({ private: !this.state.private }) }}
                                             className={`icon_style ${this.state.private == true ? "borderRed" : "borderGrey"}`}>
@@ -167,21 +205,19 @@ class CardModal extends Component {
                                 <div className="edit-header-description marginBottom">
                                     <div className="description-txt">설명</div>
                                     <input className="description-input-style" name="description" onChange={this.onChangeDescription} value={this.state.description} maxLength="1000" placeholder="설명을 입력해주세요." />
-                                </div>
-                            </EditCardHeaderContainer>
+                                </div> */}
+                            </React.Fragment>
                             :
                             <div className="card-header-first">
                                 <div className="header-title">{card.title}</div>
                                 <div className="header-update">
-                                    <div className="update_">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div>
+                                    <div className="update_">{card.nick_name}(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div>
                                     <div onClick={this.onClose} className="close_">
-                                        <Cross angle={45} color={"#000000"} weight={1} width={14} height={14} />
+                                        <Cross angle={45} color={"#000000"} weight={1} width={25} height={25} />
                                     </div>
                                 </div>
                             </div>}
-
-                        <ContentBorder />
-
+                        <div className="row hrline marginTop1"/>
                         <div className="content">
                             <CardSourceDetailContainer
                                 bought={this.props.bought}
@@ -205,8 +241,6 @@ class CardModal extends Component {
                                         this.state.modifyresult == false)}
                             />
                         </div>
-                            {/* edit:{String(this.props.edit)}<br />
-                            isEditing:{String(this.state.isEditing)} */}
                         {this.props.edit && this.state.isEditing == false ?
                             <div className="modifyRgn">
                                 <div className="redBtn" onClick={() => this.setState({ edit: !this.state.edit, isEditing: !this.state.isEditing, title: card.title, content: card.content })}>수정하기</div>
@@ -215,7 +249,7 @@ class CardModal extends Component {
                             :
                             null}
                     </div>
-                </CardDialog>
+                </CardDialog_mobile>
 
                 : <div>{card}loading</div>
         )
@@ -241,4 +275,4 @@ const mapDispatchToProps = dispatch => ({
     GetDesignBoardRequest: (id) => dispatch(GetDesignBoardRequest(id)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardModal);
+export default connect(mapStateToProps, mapDispatchToProps)(CardModal_mobile);

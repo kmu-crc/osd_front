@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import CreateGroup from "components/Groups/CreateGroup";
+import CreateGroup_mobile from "mobileComponents/CreateGroup_mobile";
 import { CreateNewGroupRequest } from "actions/Group";
 import { GetAllHaveInItemRequest } from "actions/Product";
 import { GetHaveInGalleryRequest } from "actions/Gallery";
@@ -44,6 +45,30 @@ const GalleryModal = styled(Modal)`
     height:max-content !important;
   }
 `
+
+const GalleryModal_mobile = styled(Modal)`
+  margin:0px 10px;
+  padding:4px 10px 20px 10px !important;
+  border-radius:10px !important;
+  .content{
+    padding:0px !important;
+  }
+  .title_{
+    width:100%;
+    padding:12px;
+    font-size:${market_style.font.size.small1};
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:black;
+    font-weight:500;
+  }
+  .hrline{
+    width:100%;
+    border:1px solid #EFEFEF;
+    margin-bottom:10px;
+  }
+`
 class CreateGroupContainer extends Component {
   constructor(props){
     super(props);
@@ -64,16 +89,26 @@ class CreateGroupContainer extends Component {
   }
   render() {
     return(
-      <GalleryModal open={this.props.open}>
-        <GalleryModal.Content>
-        <div className="titleBox">
-            <div className="title">갤러리 등록</div>
-            {/* <div className="title pointer" onClick={()=>{this.handleShowModal(false)}}>x</div> */}
-          </div>
+      <React.Fragment>
+        {
+          window.innerWidth>=500?
+          <GalleryModal open={this.props.open}>
+          <GalleryModal.Content>
+          <div className="titleBox">
+              <div className="title">갤러리 등록</div>
+            </div>
+          <div className="hrline"/>
+            <CreateGroup handleShowModal={this.handleShowModal}   {...this.props} />
+          </GalleryModal.Content>
+        </GalleryModal>
+        :
+        <GalleryModal_mobile open={this.props.open}>
+        <div className="title_">갤러리 등록</div>
         <div className="hrline"/>
-          <CreateGroup handleShowModal={this.handleShowModal}   {...this.props} />
-        </GalleryModal.Content>
-      </GalleryModal>
+          <CreateGroup_mobile handleShowModal={this.handleShowModal}   {...this.props} />
+        </GalleryModal_mobile>
+        }
+      </React.Fragment>
     );
   }
 }

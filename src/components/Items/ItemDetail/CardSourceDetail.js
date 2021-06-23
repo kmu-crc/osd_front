@@ -71,7 +71,9 @@ const ViewContent = styled.div`
     margin-bottom: 2rem;
   }
   .textWrap{
+    height:max-content;
     margin-bottom: 2rem;
+    word-break:break-all;
   }
   & .goEdit {
     display: none;
@@ -165,6 +167,27 @@ const EditorBottonWrapper = styled.div`
         border-radius: 25px;
       }
     }
+`;
+const EditorBottonWrapper_mobile = styled.div`
+    width: 100%;
+    z-index: 907;
+    .button{
+      width:100%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-weight:500;
+      color:white;
+      padding:7px;
+      border-radius:10px;
+      font-weight:500;
+      margin-top:10px;
+      border:none;
+      outline:none;
+      box-shadow: 2px 2px 3px #00000019;
+    }
+    .red{background-color:red;}
+    .grey{background-color:#707070;}
 `;
 const PrivateContentWrapper = styled.div`
   width:100%;
@@ -381,7 +404,9 @@ class CardSourceDetail extends Component {
                   deleteItem={this.deleteItem}
                   getValue={this.onChangValue}
                 />)}
-
+              {
+                
+              }
               <AddController
                 isProgramming={this.props.ItemDetail.is_problem === 1}
                 mode={this.props.mode}
@@ -390,12 +415,22 @@ class CardSourceDetail extends Component {
                 getValue={this.onAddValue} />
 
               <ButtonContainer>
-                <EditorBottonWrapper>
+                {
+                  window.innerWidth>=500?
+                  <EditorBottonWrapper>
                   <button onClick={this.onSubmit} className="submit" type="button">
                     <i className="icon outline save" />저장하기</button>
                   <button onClick={() => { this.setState({ content: this.props.content || "" }); this.props.handleCancel == null ? window.history.go(-1) : this.props.handleCancel() }} className="cancel" type="button">
                     <i className="icon trash" />취소하기</button>
-                </EditorBottonWrapper>
+                  </EditorBottonWrapper>
+                  :
+                  <EditorBottonWrapper_mobile>
+                  <button onClick={this.onSubmit} className="red button" type="button">
+                    <i className="icon outline save" />저장하기</button>
+                  <button onClick={() => { this.setState({ content: this.props.content || "" }); this.props.handleCancel == null ? window.history.go(-1) : this.props.handleCancel() }} className="grey button" type="button">
+                    <i className="icon trash" />취소하기</button>
+                  </EditorBottonWrapper_mobile>
+                }
               </ButtonContainer>
             </form>
           ) : null}
@@ -438,11 +473,6 @@ class CardSourceDetail extends Component {
                 )}
               </ViewContent>
             ) : (<Nodata>
-              {/*{
-                this.props.isTeam === 1 
-                ? <Button round={true} color="Primary" size="small" onClick={this.props.openEdit}>업로드</Button>
-                : <div>등록된 컨텐츠가 없습니다.</div>
-              }*/}
             </Nodata>) : null}
           {/* </Worker> */}
         </CardSrcWrap>

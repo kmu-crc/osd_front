@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import ItemPurchase from "components/Items/ItemPurchase";
+import ItemPurchase_mobile from "mobileComponents/ItemPurchase_mobile";
 import Loading from "components/Commons/Loading";
 import {
   // GetProductDetailRequest,
@@ -47,8 +48,6 @@ class ProductPurchaseContainer extends Component {
             await alert("구입이 완료되었습니다. [내 정보] > [의뢰상품]에서 확인하실 수 있습니다.");
             window.location.href = `/myPage/`;
           } else {
-            // alert("구입이 완료되었습니다. 해당 상품의 리뷰를 작성해주세요.");
-            // window.location.href = `/productDetail/${item.item_id}`;
             await alert("구입이 완료되었습니다. [내 정보] > [구입 아이템]에서 확인하실 수 있습니다.");
             window.location.href = `/myPage/`;
 
@@ -67,14 +66,29 @@ class ProductPurchaseContainer extends Component {
 
   render() {
     const yours = this.props.ItemDetail.members && this.props.ItemDetail.members.filter(mem => mem.user_id === this.props.userInfo && this.props.userInfo.uid);
-    return this.props.ItemDetail ?
-      // this.props.isbuy && this.props.isbuy === 1 ?
-      this.props.ItemDetail.private === 1 && !yours ?
-        this.ThisIsPrivateItem() :
-        <Wrapper>
-        <ItemPurchase purchase={this.Payment} itemId={this.props.ItemDetail.item_id} item={this.props.ItemDetail} {...this.props} />
-        </Wrapper>
-      : <Loading />
+    return(
+      <React.Fragment>
+        {
+          window.innerWidth>=500?
+          this.props.ItemDetail ?
+          this.props.ItemDetail.private === 1 && !yours ?
+            this.ThisIsPrivateItem() :
+            <Wrapper>
+            <ItemPurchase purchase={this.Payment} itemId={this.props.ItemDetail.item_id} item={this.props.ItemDetail} {...this.props} />
+            </Wrapper>
+          : <Loading />
+          :
+          this.props.ItemDetail ?
+          this.props.ItemDetail.private === 1 && !yours ?
+            this.ThisIsPrivateItem() :
+            <Wrapper>
+            {/* <ItemPurchase_mobile purchase={this.Payment} itemId={this.props.ItemDetail.item_id} item={this.props.ItemDetail} {...this.props} /> */}
+            </Wrapper>
+          : <Loading />
+        }
+      </React.Fragment>
+    ) 
+
   }
 }
 

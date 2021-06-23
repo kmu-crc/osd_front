@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyPaymentRequest } from "actions/Payment";
-import Item_mobile from "components/Items/Item_mobile";
+import Item_mobile2 from "components/Items/Item_mobile2";
 import PagingList_mobile from "mobileComponents/PagingList_mobile";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
@@ -52,7 +52,7 @@ class MyPaymentContainer_mobile extends Component {
         <div className="header">구입 아이템</div>
         <PagingList_mobile
           getListRequest={this.getList}
-          ListComponent={Item_mobile}
+          ListComponent={Item_mobile2}
           type="sales"
           isSmall={true}
           dataList={this.props.dataList}

@@ -242,13 +242,6 @@ class CreateGroup extends Component {
     if(this.props.open !== nextProps.open){
       this.setState({open:nextProps.open})
     }
-    // if(this.props.dataList!=nextProps.dataList){
-    //   let count = 0;
-    //   const itemList = nextProps.dataList.length<0?{value:0,text:"없음"}:nextProps.dataList.map((item,index)=>{
-    //     return({value:count++,text:item.title,key:item.uid});
-    //   });
-    //   this.setState({dropList:itemList});
-    // }
   }
 
   onChangeExplain(event) {
@@ -319,13 +312,6 @@ class CreateGroup extends Component {
     )
     console.log(itemList,itemList.filter(item=>[{value}.value].includes(item.uid)),{value}.value);
     this.setState({selectItemList:this.state.selectItemList.concat(itemList.filter(item=>[{value}.value].includes(item.uid)))});
-    // this.setState({selectItemList:this.state.selectItemList.concat({value:this.props.dataList[{value}.value].uid,number:{value}.value})});
-    // return;
-    // console.log(this.state.dropList);
-    // let copy = [...this.state.dropList];
-    // copy.splice(value,copy.length==0?-1:1);
-    // // list.slice(0, deleteIdx).concat(this.state.selectItemList.slice(parseInt(deleteIdx, 10) + 1, length)
-    // this.setState({dropList:copy,selectItemList:this.state.selectItemList.concat({value:this.props.dataList[{value}.value].uid,number:{value}.value})});
   }
   onDeleteTag = async (event) => {
     const deleteIdx = event.target.id;
@@ -355,15 +341,6 @@ class CreateGroup extends Component {
           </TagPiece>
       )
     });
-    // const TagBox = this.state.selectItemList.map((item, index) => {
-    //   return (
-    //       <TagPiece key={index}>
-    //           <div className="label">{this.props.dataList[item.number].title}</div>
-    //           <div id={index} onClick={this.onDeleteTag} className="close">x</div>
-    //       </TagPiece>
-    //   );
-    // })
-
     return (
       <React.Fragment>
 
