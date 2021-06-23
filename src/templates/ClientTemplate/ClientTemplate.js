@@ -26,6 +26,7 @@ const Container = styled.div`
   .mobile-wrapper{
     width:375px;
     overflow-y:auto;
+    overflow-x:hidden;
   }
   .marginAuto{
     margin:0px auto;

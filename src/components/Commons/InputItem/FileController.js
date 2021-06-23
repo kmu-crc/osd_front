@@ -55,8 +55,8 @@ export class FileController extends Component {
     console.log("componentDidMount");
     if (this.props.item) {
       await this.setInit({ ...this.props.item });
-      if (this.props.item.initClick) {
-        console.log("1");
+      if (this.props.item.index==null&&this.props.item.initClick) {
+        console.log(this.props)
         this.state.target.click();
       }
     }

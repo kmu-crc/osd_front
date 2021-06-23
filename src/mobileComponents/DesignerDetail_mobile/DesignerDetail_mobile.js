@@ -8,6 +8,7 @@ import DesignerReviewContainer_mobile from "mobileComponents/DesignerReviewConta
 import DesignerRequestBoardContainer_mobile from "mobileComponents/DesignerRequestBoardContainer_mobile";
 import ArticleModal from "components/Commons/ArticleModal/ArticleModal";
 import market_style from "market_style";
+import ReviewDetailModal_mobile from "mobileComponents/ReviewDetailModal_mobile";
 
 const LocationList = [
   { value: 0, text: "서울특별시" },
@@ -226,6 +227,8 @@ class DesignerDetail_mobile extends Component {
     console.log(this.props);
     return (
       <React.Fragment>
+              {this.state.reviewdetail ? <ReviewDetailModal_mobile open={this.state.reviewdetail} close={() => this.setState({ reviewdetail: false })} detail={this.state.detail} /> : null}
+
         <ShadowBox face={this.state.thumbnail}>
           <div className="row flex">
             <div className="thumbnail"/>

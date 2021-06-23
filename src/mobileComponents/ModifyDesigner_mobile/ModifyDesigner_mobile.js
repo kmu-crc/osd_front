@@ -434,7 +434,7 @@ class ModifyDesigner_mobile extends Component {
         {this.state.open && <CreateGroupContainer id={this.props.id} handleIsModify={this.handlerIsGalleryModify} handleShowModal={this.handleShowModal} open={this.state.open} />}
         <Wrapper>
           <div className="header">디자이너 관리</div>
-          <ShadowBox face={this.state.thumbnail}t>
+          <ShadowBox face={this.state.thumbnail}>
             <div className="row flex alignCenter">
             <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
               <div className="thumbnail"/>

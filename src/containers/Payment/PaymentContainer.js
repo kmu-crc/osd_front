@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Payment from 'components/Payment/Payment';
+import Payment_mobile from 'mobileComponents/Payment_mobile';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { GetMyPointRequest, } from "actions/Point";
@@ -27,8 +28,6 @@ class PaymentContainer extends Component {
             await alert("구입이 완료되었습니다. [내 정보] > [의뢰상품]에서 확인하실 수 있습니다.");
             window.location.href = `/myPage/`;
           } else {
-            // alert("구입이 완료되었습니다. 해당 상품의 리뷰를 작성해주세요.");
-            // window.location.href = `/productDetail/${this.props.item.item_id}`;
             await alert("구입이 완료되었습니다. [내 정보] > [구입 아이템]에서 확인하실 수 있습니다.");
             window.location.href = `/myPage/`;
 
@@ -46,7 +45,16 @@ class PaymentContainer extends Component {
     if (item == null) {
       this.BadAccess();
     }
-    return (<Payment purchase={this.Payment} {...this.props} />);
+    return (
+    <React.Fragment>
+      {
+        window.innerWidth>=500?
+        <Payment purchase={this.Payment} {...this.props} />
+        :
+        <Payment_mobile purchase={this.Payment} {...this.props} />
+      }
+    </React.Fragment>
+    );
   }
 }
 

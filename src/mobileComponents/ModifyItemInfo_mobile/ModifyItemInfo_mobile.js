@@ -581,8 +581,8 @@ const ItemContents = styled.div`
       letter-spacing: 0px;
     }
     .title-input {
-      width: 100%;
-      min-width: 820px;
+      width: 50%;
+      // min-width: 820px;
       height: 31px;
       background: #E9E9E9 0% 0% no-repeat padding-box;
       border-radius: 10px;
@@ -1146,7 +1146,7 @@ class ModifyItemInfo_mobile extends Component {
                 return (<div key={index} className="row" style={{ marginBottom: "30px" }}>
                   <ItemContents>
                     <div className="header">
-                      <div className="title" style={{ display: "flex" }}>
+                      <div className="title" style={{ display: "flex",flexWrap:"wrap" }}>
                         {itemType === 8 ?
                           <React.Fragment>
                             <input
@@ -1155,10 +1155,11 @@ class ModifyItemInfo_mobile extends Component {
                               onChange={e => this.onChangeListName(e, index)}
                             />
                             <button
+                              style={{marginRight:"15px"}}
                               className={`edit ${(this.state.listname && this.state.listname[index]) === head.name && "disabled"}`}
                               disabled={(this.state.listname && this.state.listname[index]) === head.name}
                               onClick={e => this.editGridEditorName(head, index)}>수정</button>
-                            <div style={{ marginLeft: "15px", display: "flex", height: "max-content",display:"flex",alignItems:"center"}}>
+                            <div style={{ display: "flex", height: "max-content",display:"flex",alignItems:"center"}}>
                               <CheckBox2 onChange={() => this.updateListHeader(head)} checked={head.type === "practice" || head.type === "copied"} />
                               <div style={{ width: "max-content", font: "normal normal 300 13px/19px Noto Sans KR"}}>파생가능</div>
                             </div>
