@@ -270,7 +270,7 @@ class RequestToDesigner_mobile extends Component {
                 </div>
             </div>
             <div className="row flex marginTop3">
-                <div className="label2">희망 비용</div>
+                <div className="label">희망 비용</div>
                 <div className="row">
                   <InputPriceNew_mobile name="price" getValue={this.getPriceValue} />
                 </div>

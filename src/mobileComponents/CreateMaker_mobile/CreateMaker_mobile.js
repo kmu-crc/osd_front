@@ -130,6 +130,7 @@ const ShadowBox = styled.div`
     min-width:100px;
     min-height:100px;
     border-radius:50%;
+    background-color:#efefef;
     background-image:url(${props=>props.face});
     background-size:cover;
     margin-right:10px;

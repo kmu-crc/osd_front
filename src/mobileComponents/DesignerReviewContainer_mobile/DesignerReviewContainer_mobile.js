@@ -42,6 +42,8 @@ const ContentsBox = styled.div`
     padding:5px;
     border-radius:5px;
     color:#A5A5A5;
+    margin-top:5
+    px;
   }
   @media only screen and (min-width: 1366px){
     height:300px;

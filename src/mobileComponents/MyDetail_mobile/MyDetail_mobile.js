@@ -252,7 +252,7 @@ class MyDetail_mobile extends Component {
             <div className="hrline"/>
             <div className="menu" onClick={()=>window.location.href="/mypage/5"}>디자인 의뢰</div>
             <div className="hrline"/>
-            <div className="menu" onClick={()=>window.location.href="/mypage/6"}>메이커 의뢰</div>
+            <div className="menu" onClick={()=>window.location.href="/mypage/6"}>제작 의뢰</div>
         </div>
       </Wrapper>
       :index == 10?
