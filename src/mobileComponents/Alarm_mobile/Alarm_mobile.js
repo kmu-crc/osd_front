@@ -167,3 +167,115 @@ export default class Alarm_mobile extends Component {
     }
 }
 
+
+
+
+
+
+
+
+// <button type="button" style={{}} ref={ref => (this.alarm = ref)} >
+//     {/* {this.props.children} */}
+//     {unread > 0 ?
+//         <RedCircle>
+//             <div className="text__">{NumberFormat(unread)}</div>
+//         </RedCircle> : null}
+//     {this.state.active && (
+//         <AlarmDropDown innerWidth={window.innerWidth}>
+//             {alarms == null || alarms.length === 0 ? (
+//                 <AlarmItem>
+//                     {/* <div style={{ width: "2%", backgroundColor: "blue" }}>&nbsp;</div> */}
+//                     <div style={{ paddingLeft: "5px" }}><Icon name="calendar outline" /></div>
+//                     <div><h4>알림이 없습니다.</h4></div>
+//                 </AlarmItem>
+//             ) : (
+//                 <div>
+//                     {unread > 0 &&
+//                         <AllAlarmRead style={{ display: "flex", flexDirection: "row", justifyContent: "left" }} onClick={this.allAlarmConfirm}>
+//                             {/* <div style={{ width: "2%", backgroundColor: "red" }}>&nbsp;</div>
+//                       <div><Icon name="check square" /></div> */}
+//                             <div className="allread"><div className="text">모두읽음처리</div></div>
+//                         </AllAlarmRead>
+//                     }
+//                     {converted && converted.length > 0 && converted.map((item, index) => {
+//                         console.log(item)
+//                         const alarmtype = this.showButton(item)
+//                         const alarmItem = JSON.parse(item.content);
+//                         let imgURL = noimg;
+//                         let locationURL = null;
+//                         switch (item.type) {
+//                             case "ITEM_PURCHASED_TO_EXPERT":
+//                             case "ITEM_PURCHASED_TO_USER":
+//                             case "ITEM_QUESTION_TO_OWNER":
+//                                 locationURL = "/productDetail/" + item.detail.itemId;
+//                                 break;
+//                             case "ITEM_RESPONSE_TO_DESIGNER":
+//                             case "ITEM_REQUEST_TO_DESIGNER":
+//                                 locationURL = "/designerDetail/" + item.to;
+//                                 break;
+//                             case "ITEM_RESPONSE_TO_MAKER":
+//                             case "ITEM_REQUEST_TO_MAKER":
+//                                 locationURL = "/makerDetail/" + item.to;
+//                                 break;
+//                             default:
+//                                 locationURL = null;
+//                                 break;
+//                         }
+//                         switch (item.type) {
+//                             case "ITEM_PURCHASED_TO_EXPERT":
+//                             case "ITEM_QUESTION_TO_OWNER":
+//                             case "ITEM_PURCHASED_TO_USER":
+//                             case "ITEM_LIKE_TO_OWNER":
+//                                 imgURL = alarmItem == null ? noimg : alarmItem.itemThumbnail == null ? noimg : alarmItem.itemThumbnail.m_img;
+//                                 break;
+//                             case "ITEM_RESPONSE_TO_DESIGNER":
+//                             case "ITEM_RESPONSE_TO_MAKER":
+//                                 imgURL = alarmItem == null ? noimg : alarmItem.toThumbnail == null ? noimg : alarmItem.toThumbnail.m_img;
+//                                 break;
+//                             case "ITEM_REQUEST_TO_DESIGNER":
+//                             case "ITEM_REQUEST_TO_MAKER":
+//                             case "ITEM_REVIEW_TO_OWNER":
+//                             case "ITEM_LIKE_TO_DESIGNER":
+//                             case "ITEM_LIKE_TO_MAKER":
+//                                 imgURL = alarmItem == null ? noimg : alarmItem.fromThumbnail == null ? noimg : alarmItem.fromThumbnail.m_img;
+//                                 break;
+//                             default:
+//                                 imgURL = noimg;
+//                         }
+//                         return (
+//                             <AlarmItem key={index} className={item.confirm ? "confirm" : "unconfirm"} onClick={() => alarmtype ? null : this.alarmConfirm(item.uid, locationURL)}>
+//                                 <div style={item.confirm ? { width: "1%", height: "12px", backgroundColor: "#EAA" } : { width: "1%", height: "12px", backgroundColor: "red" }}>&nbsp;</div>
+//                                 <div style={{ paddingLeft: "3px" }} >
+//                                     <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "left" }}>
+//                                         <div>
+//                                         </div>
+//                                     </div>
+//                                     <div style={{ height: "100%", display: "flex" }}>
+//                                         <div style={{ verticalAlign: "middle", paddingLeft: "3px", display: "flex", flexDirection: "column", alignItems: "space-between", justifyContent: "space-between" }}>
+//                                             <div style={{ width: "100%", fontSize: market_style.font.size.tiny1 }}>{this.getMessageText(item)}</div>
+//                                             <div style={{ display: "flex" }}>
+//                                                 <div style={{ fontSize: market_style.font.size.tiny1, color: "#960A0E" }}>{DateFormat(item.create_time)}</div>
+//                                             </div>
+//                                         </div>
+//                                         {/* { item.type=="ITEN_REQUEST_TO_DESIGNER"||
+//                                         item.type=="ITEN_REQUEST_TO_MAKER"?
+//                                         <React.Fragment>
+//                                           <ResponseMsg width={72} height={72}>
+//                                             <div onClick={()=>{window.location.href=item.type==ITEN_REQUEST_TO_DESIGNER?"":"";}} style={{fontSize:"13px",color:"red"}}>의뢰 응답</div>
+//                                           </ResponseMsg>
+//                                         </React.Fragment>
+//                                         : */}
+//                                         <CustomIcon imgURL={imgURL} width={72} height={72} />
+//                                         {/* } */}
+
+//                                     </div>
+//                                 </div>
+//                             </AlarmItem>
+//                         )
+//                     })}
+//                 </div>
+//             )
+//             }
+//         </AlarmDropDown>
+//     )}
+// </button>
