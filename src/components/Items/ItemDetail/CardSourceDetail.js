@@ -1,18 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-// import Button from "components/Commons/Button";
 import FileIcon from "components/Commons/FileIcon";
 import Loading from "components/Commons/Loading";
 import { AddController, Controller, ProblemController } from "components/Commons/InputItem";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
-//import { Worker } from '@react-pdf-viewer/core';
-//import pdfJS from 'pdfjs-dist/build/pdf.min.js';
-//https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js
-//import { pdfjs } from 'react-pdf';
-//pdfJS.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfJS.version}/pdf.worker.min.js`;
-
 
 const ContentForm = async (data, oldData) => {
   let formData = {
@@ -37,6 +30,7 @@ const ContentForm = async (data, oldData) => {
   });
   return formData;
 }
+
 const CardSrcWrap = styled.div`
   background-color: #fff;
   margin: auto;
@@ -249,6 +243,8 @@ class CardSourceDetail extends Component {
     );
     await this.setState({ content: newContent });
     this.props.handlerModifyContent && this.props.handlerModifyContent();
+
+
   };
   onSubmit = async e => {
     e.preventDefault();
@@ -268,6 +264,7 @@ class CardSourceDetail extends Component {
     await this.setState({ content: copyContent });
     let formData = await ContentForm(this.state, this.props.content);
     await this.setState({ loading: true });
+
 
     // FIX IT asps
     await setTimeout(() => { }, 1000);
@@ -305,8 +302,9 @@ class CardSourceDetail extends Component {
       }
     }
     await this.setState({ loading: false });
-  };
 
+
+  };
 
   bindPrivate = contents => {
     console.log("modify1");
@@ -371,6 +369,8 @@ class CardSourceDetail extends Component {
     );
     await this.setState({ content: copyContent });
     this.props.handlerModifyContent && this.props.handlerModifyContent();
+
+
   };
   IsJsonString = (str) => {
     try {
@@ -383,13 +383,11 @@ class CardSourceDetail extends Component {
 
   render() {
     const { loading, content } = this.state;
-    console.log("check:::", this.props.ItemDetail);
     return (
       <React.Fragment>
         {loading ? <Loading /> : null}
 
         <CardSrcWrap>
-          {/*<Worker workerUrl="https://unpkg.com/pdfjs-dist@2.1.266/build/pdf.worker.min.js">*/}
           {this.props.edit ? (
             <form onSubmit={this.onSubmit}>
               {content.length > 0 && content.map((item, index) =>
@@ -443,7 +441,7 @@ class CardSourceDetail extends Component {
                     <PrivateContentWrapper key={index}>
                       {item.count}개의 비공개 항목이 있습니다.<br />
                       이 항목{item.count > 1 ? "들" : ""}을 열람하시고 싶으시다면 이 아이템을 구매해주세요.
-                      </PrivateContentWrapper> :
+                    </PrivateContentWrapper> :
                     // <PrivateContent count={item.count} key={index} /> :
                     item.content_type === "FILE" && item.data_type === "image" ? (
                       <div className="imgContent" key={index}>
@@ -474,11 +472,10 @@ class CardSourceDetail extends Component {
               </ViewContent>
             ) : (<Nodata>
             </Nodata>) : null}
-          {/* </Worker> */}
         </CardSrcWrap>
       </React.Fragment>
-    );
+    )
   }
 }
 
-export default CardSourceDetail;
+export default CardSourceDetail
