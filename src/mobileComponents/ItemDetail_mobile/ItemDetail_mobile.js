@@ -42,6 +42,7 @@ const ShadowBox = styled.div`
   .marginBottom{margin-bottom:5px;}
   .padding{padding:10px;}
   .flex{display:flex;}
+  .hCenter{justify-content:center;}
   .vCenter{align-items:center;}
   .flexWrap{flex-wrap:wrap;}
   .fontBig{font-size:${market_style.font.size.small1};font-weight:800;}

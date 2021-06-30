@@ -481,10 +481,10 @@ class ModifyDesigner_mobile extends Component {
           </ShadowBox>
           <ShadowBox>
           <div className="title">갤러리</div>
+          <div className="greyButton" onClick={this.handleShowModal}>갤러리 등록</div>
           <div className="contensts">
               {<HaveInGalleryContainer_mobile handlerIsGalleryModify={this.handlerIsGalleryModify} id={this.props.id} isModify={true} />}
           </div>
-          <div className="greyButton" onClick={this.handleShowModal}>갤러리 등록</div>
           </ShadowBox>
         </Wrapper>
         <Button onClick={this.state.isModify==false?null:this.onSubmit} background={this.state.isModify==true?"red":"#707070"} color="white">저장하기</Button>

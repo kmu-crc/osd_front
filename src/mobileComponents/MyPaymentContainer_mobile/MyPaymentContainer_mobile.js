@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyPaymentRequest } from "actions/Payment";
-import Item_mobile2 from "components/Items/Item_mobile2";
+import Item_myDetail_mobile from "components/Items/Item_myDetail_mobile";
 import PagingList_mobile from "mobileComponents/PagingList_mobile";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
 import market_style from "market_style";
+
 const Wrapper = styled.div`
   max-width:375px;
   width:100%;
@@ -52,7 +53,7 @@ class MyPaymentContainer_mobile extends Component {
         <div className="header">구입 아이템</div>
         <PagingList_mobile
           getListRequest={this.getList}
-          ListComponent={Item_mobile2}
+          ListComponent={Item_myDetail_mobile}
           type="sales"
           isSmall={true}
           dataList={this.props.dataList}

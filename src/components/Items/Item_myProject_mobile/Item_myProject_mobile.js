@@ -71,7 +71,6 @@ const Wrapper = styled.div`
     margin-top:5px;
   }
   .point{
-    min-width:max-content;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -89,16 +88,20 @@ const PrivateLabel = styled.div`
   border-radius: 15px;
 `;
 const empty = { thumbnail: '', title: '로딩중...', userName: "로딩중...", price: 999, unit: 'won', score: 4.0, reviews: 999 };
-class Item_myDetail_mobile extends Component {
+class Item_myProject_mobile extends Component {
   Keeper = () => {
     const item = this.props.data;
+    console.log(this.props);
+    if(this.props.type=="request"){
+      window.location.href = `/requestDetail/${item.response_id}`
+    }
     if (item.uid) {
       const yours = item.members && item.members.filter(mem => mem.user_id === this.props.userInfo && this.props.userInfo.uid);
       if (item.private && !yours) {
         // alert("비공개!");
         return;
       } else {
-        window.location.href = `/productPurchase/${item.item_id}/${item.payment_id}`;
+        window.location.href = `/productDetail/${item.uid}`;
       }
     }
     // () => item.uid ? item.private ? alert("비공개!") : null : alert("이 아이템의 상세내용을 가져올 수 없습니다.")
@@ -138,7 +141,7 @@ class Item_myDetail_mobile extends Component {
   }
 }
 
-export default Item_myDetail_mobile;
+export default Item_myProject_mobile;
 {/* <Wrapper onClick={this.Keeper}>
 <ItemPic img={img} />
 <TextWrapper>
