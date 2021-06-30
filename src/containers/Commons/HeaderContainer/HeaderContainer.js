@@ -16,6 +16,8 @@ class HeaderContainer extends Component {
       {
         window.innerWidth >= 500?
         <Header {...this.props}/> :
+        window.location.pathname == "/message"?
+        null:
         <Header_mobile {...this.props}/> 
       }
       </React.Fragment>

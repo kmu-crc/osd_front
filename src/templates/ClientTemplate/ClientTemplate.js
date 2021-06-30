@@ -8,20 +8,18 @@ import Footer from "components/Commons/Footer/Footer"
 import market_style from "market_style";
 import Logo from "source/OWD_2x.png";
 
-const Templete = styled.div`
-  height:100%;
-`
 const Container = styled.div`
   margin: auto;
   background: #ffffff;
   padding-bottom:60px;
   padding-top:${props=>props.isMobile==true?"50px":"0px"};
+  overflow:hidden;
   .children-wrapper{
     width:100%;
+    height:100%;
     overflow-y:auto;
   }
   .mobileWidth{
-    border:1px solid black;
     width:100%;
   }
   .mobile-wrapper{
@@ -167,7 +165,7 @@ class ClientTemplate extends Component {
         <React.Fragment>
         <Notice />
         <HeaderContainer active={this.props.isActive} />
-        <Container isMobile={window.innerWidth>=500?false:true}>
+        <Container isMobile={window.innerWidth>=500?false:window.location.pathname=="/message"?false:true}>
           {
           window.innerWidth>=500?
           <div className="children-wrapper">

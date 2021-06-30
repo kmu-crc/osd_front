@@ -143,6 +143,48 @@ export class FormInput extends Component {
     );
   }
 }
+export class FormInput_mobile extends Component {
+  state = {
+    status: "SUCCESS",
+    message: null,
+    value: "",
+  }
+  componentWillMount() {
+    if (this.props.value) {
+      this.setState({ value: this.props.value });
+    }
+    if (!this.props.validates) {
+      this.setState({ status: "SUCCESS" });
+    }
+  }
+
+
+
+  onChangeValue = (event) => {
+    const target = event.target;
+    this.setState({ value: target.value });
+    checkValidate(target.value, this.props.validates).then(data => {
+      if(this.props.getValue && data.status === "SUCCESS") this.props.getValue(target.value);
+      // if(this.props.onBlur && data.status === "SUCCESS") this.props.onBlur();
+      this.setState(data);
+    })
+  }
+
+  render() {
+    const { type, name, placeholder } = this.props;
+    let newProps = {...this.props};
+    delete newProps.getValue;
+    delete newProps.onChange;
+    return (
+      <div>
+        <input
+        style={{ width:"100%",height:"25px",outline:"none",backgroundColor:"#e9e9e9",border:"none",borderRadius:"26px",paddingLeft:"20px"}}
+        status={this.state.status} {...newProps} type={type} name={name} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
+        {this.state.status == null ? <span>{this.state.message}</span> : null}
+      </div>
+    );
+  }
+}
 
 export class FormRadio extends Component {
   state = {

@@ -322,16 +322,6 @@ const SendMessageTextarea = styled.div`
     height:100%;
   }
 `;
-//const ProfileDetail = styled.div`
-//  width: 100px;
-//  background: #F9F9F9;
-//  display: none;
-//  &.expand {
-//    display: block;
-//    border-radius: 0 25px 25px 0;
-//  }
-//
-//`;
 const Face = styled.div`
   background-image: url(${props => props.img ? props.img : who});
   min-width: 45px;
