@@ -35,36 +35,36 @@ class CardModal extends Component {
     componentDidMount() {
         const { card } = this.props;
         this.setState({ thumbnail: card.thumbnail, title: card.title, description: card.description, private: card.private == true ? true : false });
-
-    };
+    }
     async componentDidUpdate(prevProps, prevState) {
         if (prevProps.card !== this.props.card) {
-            await alert("card");
-            return true;
+            // await alert("card");
+            return true
         }
-    };
+    }
     onChangeValueThumbnail = async data => {
-        let obj = {};
+        let obj = {}
         if (data.target) {
-            obj[data.target.name] = data;
-            await this.setState(obj);
+            obj[data.target.name] = data
+            await this.setState(obj)
         }
-    };
+    }
+
     onChangeTitle = event => {
-        this.setState({ [event.target.name]: event.target.value });
-        console.log(this.state.title);
-    };
+        this.setState({ [event.target.name]: event.target.value })
+    }
+
     onChangeDescription = event => {
         if (event.target) {
-            this.setState({ description: event.target.value });
+            this.setState({ description: event.target.value })
         }
-    };
+    }
+
     handleHeaderSubmit = passingContent => {
-        let files = null;
-        console.log(passingContent)
-        // return;
+        let files = null
         ValidationGroup(this.state, false)
             .then(async data => {
+
                 files = data && data.files;
                 // let thumbnail = { img: files && files[0].value, file_name: files && files[0].name };
                 const pack = {
@@ -79,8 +79,7 @@ class CardModal extends Component {
                         updateContent: passingContent.updateContent || []
                     }
                 };
-                // console.log(pack);
-                // return;
+
                 await this.props.UpdateCardSourceRequest(pack, this.props.card.uid, this.props.token)
                     .then(this.props.GetItemStepsRequest(this.props.itemId, this.props.token))
                     .catch(async err => await alert(err + '와 같은 이유로 카드수정에 실패하셨습니다. 관리자에게 문의해주시기 바랍니다.'));
@@ -207,7 +206,7 @@ class CardModal extends Component {
                                         this.state.modifyresult == false)}
                             />
                         </div>
-                            {/* edit:{String(this.props.edit)}<br />
+                        {/* edit:{String(this.props.edit)}<br />
                             isEditing:{String(this.state.isEditing)} */}
                         {this.props.edit && this.state.isEditing == false ?
                             <div className="modifyRgn">

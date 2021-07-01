@@ -24,19 +24,19 @@ import market_style from "market_style";
 //   }
 // `;
 
-const CustomIcon =styled.div`
+const CustomIcon = styled.div`
 border:1px solid #efefef;
 min-width:${props => props.width}px;
 max-width:${props => props.width}px;
 min-height:${props => props.height}px;
 max-height:${props => props.height}px;
-background-image:url(${props=>props.imgURL});
+background-image:url(${props => props.imgURL});
 background-repeat: no-repeat;
 background-size: cover;
 padding:${props => props.padding}px;
-margin-right:${props=>props.marginRight==null?"13":props.marginRight}px;
-margin-left:${props=>props.marginLeft==null?"13":props.marginLeft}px;
-display:${props=>props.isNon===true?"none":"block"}
+margin-right:${props => props.marginRight == null ? "13" : props.marginRight}px;
+margin-left:${props => props.marginLeft == null ? "13" : props.marginLeft}px;
+display:${props => props.isNon === true ? "none" : "block"}
 `
 // const ResponseMsg =styled.div`
 // min-width:${props => props.width}px;
@@ -58,7 +58,7 @@ const AlarmDropDown = styled.ul`
   overflow-y: scroll;
   overflow-x: hidden;
   top: 50px;
-  right: ${props=>props.innerWidth>=500?"255px":"20px"};
+  right: ${props => props.innerWidth >= 500 ? "255px" : "20px"};
   background-color: white;
   padding:10px;
   // transform: translateX(-50%);
@@ -68,7 +68,7 @@ const AlarmDropDown = styled.ul`
   z-index: 999;
 
 `;
-const AllAlarmRead=styled.li`
+const AllAlarmRead = styled.li`
     border-bottom: 1px solid #efefef;
     text-align: left;
     position: relative;
@@ -166,16 +166,16 @@ export default class Alarm extends Component {
   openAlarmHandler = e => {
     this.setState({ active: !this.state.active });
   };
-  alarmConfirm = (id,url) => {
+  alarmConfirm = (id, url) => {
     this.props.socket.emit("confirm", { uid: this.props.userInfo.uid, alarmId: id });
     console.log(url);
-    if(url == null){
+    if (url == null) {
       window.location.reload();
-    }else{
-      window.location.href=url;
+    } else {
+      window.location.href = url;
     }
   };
-  allAlarmConfirm = async() => {
+  allAlarmConfirm = async () => {
     await alert('모든 알림들을 읽음으로 표시합니다.');
     this.props.socket.emit("allConfirm", { user_id: this.props.userInfo.uid });
     window.location.reload();
@@ -241,7 +241,7 @@ export default class Alarm extends Component {
     const converted = this.parseAlarms(alarms);
     // console.log(converted);
     return (
-      <button type="button" style={{ background: "none", border: "none", outline:"none"}} onClick={this.openAlarmHandler} onBlur={this.onAlarmHandler} ref={ref => (this.alarm = ref)} >
+      <button type="button" style={{ background: "none", border: "none", outline: "none" }} onClick={this.openAlarmHandler} onBlur={this.onAlarmHandler} ref={ref => (this.alarm = ref)} >
         {/* {this.props.children} */}
         {unread > 0 ?
           <RedCircle>
@@ -250,7 +250,7 @@ export default class Alarm extends Component {
         <Icon className="grey alarm" size="large" />
 
         {this.state.active && (
-          <AlarmDropDown innerWidth = {window.innerWidth}>
+          <AlarmDropDown innerWidth={window.innerWidth}>
             {alarms == null || alarms.length === 0 ? (
               <AlarmItem>
                 {/* <div style={{ width: "2%", backgroundColor: "blue" }}>&nbsp;</div> */}
@@ -258,74 +258,75 @@ export default class Alarm extends Component {
                 <div><h4>알림이 없습니다.</h4></div>
               </AlarmItem>
             ) : (
-                <div>
-                  {unread > 0 &&
-                    <AllAlarmRead style={{ display: "flex", flexDirection: "row", justifyContent: "left" }} onClick={this.allAlarmConfirm}>
-                      {/* <div style={{ width: "2%", backgroundColor: "red" }}>&nbsp;</div>
+              <div>
+                {unread > 0 &&
+                  <AllAlarmRead style={{ display: "flex", flexDirection: "row", justifyContent: "left" }} onClick={this.allAlarmConfirm}>
+                    {/* <div style={{ width: "2%", backgroundColor: "red" }}>&nbsp;</div>
                       <div><Icon name="check square" /></div> */}
-                      <div className="allread"><div className="text">모두읽음처리</div></div>
-                    </AllAlarmRead>
+                    <div className="allread"><div className="text">모두읽음처리</div></div>
+                  </AllAlarmRead>
+                }
+                {converted && converted.length > 0 && converted.map((item, index) => {
+                  return null
+                  const alarmtype = this.showButton(item)
+                  const alarmItem = JSON.parse(item.content);
+                  let imgURL = noimg;
+                  let locationURL = null;
+                  switch (item.type) {
+                    case "ITEM_PURCHASED_TO_EXPERT":
+                    case "ITEM_PURCHASED_TO_USER":
+                    case "ITEM_QUESTION_TO_OWNER":
+                      locationURL = "/productDetail/" + item.detail.itemId;
+                      break;
+                    case "ITEM_RESPONSE_TO_DESIGNER":
+                    case "ITEM_REQUEST_TO_DESIGNER":
+                      locationURL = "/designerDetail/" + item.to;
+                      break;
+                    case "ITEM_RESPONSE_TO_MAKER":
+                    case "ITEM_REQUEST_TO_MAKER":
+                      locationURL = "/makerDetail/" + item.to;
+                      break;
+                    default:
+                      locationURL = null;
+                      break;
                   }
-                  {converted && converted.length > 0 && converted.map((item, index) => {
-                    const alarmtype = this.showButton(item)
-                    const alarmItem = JSON.parse(item.content);
-                    let imgURL = noimg;
-                    let locationURL = null;
-                    switch(item.type){
-                      case "ITEM_PURCHASED_TO_EXPERT":
-                      case "ITEM_PURCHASED_TO_USER":
-                      case "ITEM_QUESTION_TO_OWNER": 
-                        locationURL = "/productDetail/"+item.detail.itemId;
-                        break;
-                      case "ITEM_RESPONSE_TO_DESIGNER":
-                      case "ITEM_REQUEST_TO_DESIGNER": 
-                        locationURL = "/designerDetail/"+item.to;
-                        break;
-                      case "ITEM_RESPONSE_TO_MAKER": 
-                      case "ITEM_REQUEST_TO_MAKER": 
-                        locationURL = "/makerDetail/"+item.to;
-                        break;
-                      default:
-                        locationURL = null;
-                        break;
-                    }
-                    switch (item.type) {
-                      case "ITEM_PURCHASED_TO_EXPERT": 
-                      case "ITEM_QUESTION_TO_OWNER": 
-                      case "ITEM_PURCHASED_TO_USER":
-                      case "ITEM_LIKE_TO_OWNER": 
-                        imgURL=alarmItem==null?noimg:alarmItem.itemThumbnail==null?noimg:alarmItem.itemThumbnail.m_img; 
-                        break;
-                      case "ITEM_RESPONSE_TO_DESIGNER":
-                      case "ITEM_RESPONSE_TO_MAKER": 
-                        imgURL=alarmItem==null?noimg:alarmItem.toThumbnail==null?noimg:alarmItem.toThumbnail.m_img; 
-                        break;
-                      case "ITEM_REQUEST_TO_DESIGNER": 
-                      case "ITEM_REQUEST_TO_MAKER": 
-                      case "ITEM_REVIEW_TO_OWNER": 
-                      case "ITEM_LIKE_TO_DESIGNER": 
-                      case "ITEM_LIKE_TO_MAKER":
-                        imgURL=alarmItem==null?noimg:alarmItem.fromThumbnail==null?noimg:alarmItem.fromThumbnail.m_img; 
-                        break;
-                      default:
-                        imgURL = noimg;
-                    }
-                    return (
-                      <AlarmItem key={index} className={item.confirm ? "confirm" : "unconfirm"} onClick={() => alarmtype ? null : this.alarmConfirm(item.uid,locationURL)}>
-                        <div style={item.confirm ? { width: "1%", height:"12px", backgroundColor: "#EAA" } : { width: "1%", height:"12px", backgroundColor: "red" }}>&nbsp;</div>
-                        <div style={{ paddingLeft: "3px" }} >
-                          <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "left" }}>
-                            <div>
+                  switch (item.type) {
+                    case "ITEM_PURCHASED_TO_EXPERT":
+                    case "ITEM_QUESTION_TO_OWNER":
+                    case "ITEM_PURCHASED_TO_USER":
+                    case "ITEM_LIKE_TO_OWNER":
+                      imgURL = alarmItem == null ? noimg : alarmItem.itemThumbnail == null ? noimg : alarmItem.itemThumbnail.m_img;
+                      break;
+                    case "ITEM_RESPONSE_TO_DESIGNER":
+                    case "ITEM_RESPONSE_TO_MAKER":
+                      imgURL = alarmItem == null ? noimg : alarmItem.toThumbnail == null ? noimg : alarmItem.toThumbnail.m_img;
+                      break;
+                    case "ITEM_REQUEST_TO_DESIGNER":
+                    case "ITEM_REQUEST_TO_MAKER":
+                    case "ITEM_REVIEW_TO_OWNER":
+                    case "ITEM_LIKE_TO_DESIGNER":
+                    case "ITEM_LIKE_TO_MAKER":
+                      imgURL = alarmItem == null ? noimg : alarmItem.fromThumbnail == null ? noimg : alarmItem.fromThumbnail.m_img;
+                      break;
+                    default:
+                      imgURL = noimg;
+                  }
+                  return (
+                    <AlarmItem key={index} className={item.confirm ? "confirm" : "unconfirm"} onClick={() => alarmtype ? null : this.alarmConfirm(item.uid, locationURL)}>
+                      <div style={item.confirm ? { width: "1%", height: "12px", backgroundColor: "#EAA" } : { width: "1%", height: "12px", backgroundColor: "red" }}>&nbsp;</div>
+                      <div style={{ paddingLeft: "3px" }} >
+                        <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "left" }}>
+                          <div>
+                          </div>
+                        </div>
+                        <div style={{ height: "100%", display: "flex" }}>
+                          <div style={{ verticalAlign: "middle", paddingLeft: "3px", display: "flex", flexDirection: "column", alignItems: "space-between", justifyContent: "space-between" }}>
+                            <div style={{ width: "100%", fontSize: market_style.font.size.tiny1 }}>{this.getMessageText(item)}</div>
+                            <div style={{ display: "flex" }}>
+                              <div style={{ fontSize: market_style.font.size.tiny1, color: "#960A0E" }}>{DateFormat(item.create_time)}</div>
                             </div>
                           </div>
-                          <div style={{height: "100%", display: "flex" }}>
-                            <div style={{ verticalAlign: "middle", paddingLeft: "3px", display:"flex", flexDirection:"column",alignItems:"space-between",justifyContent:"space-between" }}>
-                              <div style={{ width: "100%", fontSize: market_style.font.size.tiny1 }}>{this.getMessageText(item)}</div>
-                              <div style={{display: "flex" }}>
-                                <div style={{ fontSize: market_style.font.size.tiny1, color: "#960A0E" }}>{DateFormat(item.create_time)}</div>
-                              </div>
-                            </div>
-                            {/* { item.type=="ITEN_REQUEST_TO_DESIGNER"||
+                          {/* { item.type=="ITEN_REQUEST_TO_DESIGNER"||
                             item.type=="ITEN_REQUEST_TO_MAKER"?
                             <React.Fragment>
                               <ResponseMsg width={72} height={72}>
@@ -333,16 +334,16 @@ export default class Alarm extends Component {
                               </ResponseMsg>
                             </React.Fragment>
                             : */}
-                              <CustomIcon imgURL={imgURL} width={72} height={72}/>
-                            {/* } */}
-                            
-                          </div>
+                          <CustomIcon imgURL={imgURL} width={72} height={72} />
+                          {/* } */}
+
                         </div>
-                      </AlarmItem>
-                    )
-                  })}
-                </div>
-              )
+                      </div>
+                    </AlarmItem>
+                  )
+                })}
+              </div>
+            )
             }
           </AlarmDropDown>
         )}

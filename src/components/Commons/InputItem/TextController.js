@@ -3,6 +3,12 @@ import SunEditor, { buttonList } from 'suneditor-react'
 import { css } from "styled-components"
 import 'suneditor/dist/css/suneditor.min.css'
 
+// 
+// import React from 'react';
+// export const TextController = props => {
+//   return(<div>text editor</div>)
+// }
+
 const EditorDefaultStyle = css`
   font-family: Noto Sans KR; //cursive; 
   font-size: 1.25rem;

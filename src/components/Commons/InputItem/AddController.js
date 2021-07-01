@@ -87,10 +87,10 @@ export class AddController extends Component {
   }
   addContent = async (type) => {
     if (type === "FILE") {
-      await this.setState({ type, order: this.props.order, content: "", initClick: true, private: 0 });
-      setTimeout(() => {
-        this.setState({ initClick: false });
-      }, 100);
+      await this.setState({ type, order: this.props.order, content: "", initClick: false, private: 0 });
+      // setTimeout(() => {
+      //   this.setState({ initClick: false });
+      // }, 100);
     }
     if (type === "TEXT") {
       await this.setState({ type, order: this.props.order, content: "" });
@@ -112,24 +112,24 @@ export class AddController extends Component {
   render() {
     return (
       <React.Fragment>
-        {window.innerWidth>=500?
-                <ControllerWrap>
-                <div className="innerBox" >
-                  {this.props.onlytext ? null : <NewController onClick={() => this.addContent("FILE")} className="first" width="max-content" height="29px">파일 등록</NewController>}
-                  {this.props.onlyfile ? null : <NewController onClick={() => this.addContent("TEXT")} width="max-content" height="29px">텍스트 입력</NewController>}
-                  {this.props.isProgramming ? <NewController onClick={() => this.addContent("PROBLEM")} widht="max-content" height="29px">문제 등록</NewController> : null}
-                </div>
-                {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
-              </ControllerWrap>
-              :
-              <ControllerWrap_mobile>
-              <div className="innerBox" >
-                {this.props.onlytext ? null : <NewController_mobile onClick={() => this.addContent("FILE")} className="marginBottom" width="max-content" height="29px">파일 등록</NewController_mobile>}
-                {this.props.onlyfile ? null : <NewController_mobile onClick={() => this.addContent("TEXT")} className="marginBottom" width="max-content" height="29px">텍스트 입력</NewController_mobile>}
-                {this.props.isProgramming ? <NewController_mobile onClick={() => this.addContent("PROBLEM")} widht="max-content" height="29px">문제 등록</NewController_mobile> : null}
-              </div>
-              {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />}
-            </ControllerWrap_mobile>
+        {window.innerWidth >= 500 ?
+          <ControllerWrap>
+            <div className="innerBox" >
+              {this.props.onlytext ? null : <NewController onClick={() => this.addContent("FILE")} className="first" width="max-content" height="29px">파일 등록</NewController>}
+              {this.props.onlyfile ? null : <NewController onClick={() => this.addContent("TEXT")} width="max-content" height="29px">텍스트 입력</NewController>}
+              {this.props.isProgramming ? <NewController onClick={() => this.addContent("PROBLEM")} widht="max-content" height="29px">문제 등록</NewController> : null}
+            </div>
+            {/* {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />} */}
+          </ControllerWrap>
+          :
+          <ControllerWrap_mobile>
+            <div className="innerBox" >
+              {this.props.onlytext ? null : <NewController_mobile onClick={() => this.addContent("FILE")} className="marginBottom" width="max-content" height="29px">파일 등록</NewController_mobile>}
+              {this.props.onlyfile ? null : <NewController_mobile onClick={() => this.addContent("TEXT")} className="marginBottom" width="max-content" height="29px">텍스트 입력</NewController_mobile>}
+              {this.props.isProgramming ? <NewController_mobile onClick={() => this.addContent("PROBLEM")} widht="max-content" height="29px">문제 등록</NewController_mobile> : null}
+            </div>
+            {/* {this.state.type === "FILE" && <FileController item={this.state} getValue={this.returnData} />} */}
+          </ControllerWrap_mobile>
         }
       </React.Fragment>
     );
