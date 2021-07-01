@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyProjectItemRequest } from "actions/Item";
-import Item_myDetail_mobile from "components/Items/Item_myDetail_mobile";
+import Item_myProject_mobile from "components/Items/Item_myProject_mobile";
 import PagingList_mobile from "mobileComponents/PagingList_mobile";
 import ScrollList from "components/Commons/ScrollList";
 import styled from "styled-components";
@@ -75,10 +75,10 @@ class MyProjectItemContainer_mobile extends Component {
     const { page, per } = this.state;
     const lastPage = parseInt((this.props.allPage / per) + (this.props.allPage % per ? 1 : 0), 10); return (
       <Wrapper>
-        <div className="header">관심 아이템</div>
+        <div className="header">참여 프로젝트</div>
         <PagingList_mobile getListRequest={this.getList}
           type="sales_Expert"
-          ListComponent={Item_myDetail_mobile}
+          ListComponent={Item_myProject_mobile}
           dataList={this.props.dataList}
           dataListAdded={this.props.dataListAdded}
           mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom" />

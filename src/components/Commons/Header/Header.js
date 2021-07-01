@@ -404,7 +404,7 @@ class Header extends Component {
                   </div>
                   {this.state.active ?
                     <UserMenu id="popmenu">
-                      <Link to={`/mypage`}>
+                      <Link to={`/myPage`}>
                         <div className="item" id="popmenu">내 정보</div>
                       </Link>
                       <div onClick={this.logout} className="item" id="popmenu">로그아웃</div>

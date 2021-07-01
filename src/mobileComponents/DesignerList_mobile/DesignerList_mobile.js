@@ -44,7 +44,7 @@ const Wrapper =styled.div`
     display:flex;
     justify-content:space-between;
     margin-top:15px;
-    padding:0px 20px;
+    padding:0px 0px 0px 15px;
     .category{
 
     }
@@ -72,7 +72,7 @@ export default class DesignerList_mobile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sort:2,cate1:null,cate2:null,cate3:null,
+      sort:2,cate1:parseInt(this.props.cate1,10)||null,cate2:parseInt(this.props.cate2,10)||null,cate3:parseInt(this.props.cate3,10)||null,
     }
     this.handleCate1 = this.handleCate1.bind(this);
     this.handleCate2 = this.handleCate2.bind(this);
@@ -106,6 +106,7 @@ export default class DesignerList_mobile extends Component {
   }
 
   render() {
+    console.log(this.props,this.state);
     let { category1, category2, category3 } = this.props;
     category2 = this.state.cate1==null?[]:category2.filter(item=>item.parent == this.state.cate1);
     category3 = this.state.cate2==null?[]:category3.filter(item=>item.parent == this.state.cate2);

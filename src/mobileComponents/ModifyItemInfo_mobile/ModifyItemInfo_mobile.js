@@ -982,14 +982,16 @@ class ModifyItemInfo_mobile extends Component {
 
               {itemType === 1 ?
                 <React.Fragment>
-                  <Field title="설명">
+                  <div className="row flex marginTop3">
+                    <div className="label font black">설명</div>
                     <InputTextarea
                       onChange={this.onHandleAdditionalText}
                       value={(this.state.additional && this.state.additional.description.replace(/<br \/>/gi, '\n')) || ""}
                       name="description"
                       height={60} ></InputTextarea>
-                  </Field>
-                  <Field title="팀원 초대">
+                  </div>
+                  <div className="row flex marginTop3">
+                    <div className="label font black">팀원 초대</div>
                     <div className="inputBox">
                       {!this.state.alone ?
                         <SearchDesignMemberContainer
@@ -999,71 +1001,89 @@ class ModifyItemInfo_mobile extends Component {
                           onChangeMembers={this.onHandleAdditionalMember} />
                         : null}
                     </div>
-                  </Field>
-                  <Field title="내용 공개 여부">
+                  </div>
+                  <div className="row flex marginTop3">
+                    <div className="label font black">내용 공개 여부</div>
                     <RadioType
                       return={this.onHandleRadio}
                       default={this.state.additional.public === "yes" ? "예" : "아니오"}
                       name="public"
                       Options={["예", "아니오"]} />
-                  </Field>
-                  <Field isMargin={false} isCentering={true} title="구입 비용">
+                  </div>
+                  <div className="row flex marginTop3">
+                    <div className="label font black marginTop1">구입 비용</div>
                     <InputPriceNew
 
                       getValue={this.getPriceValue}
                       name="price"
                       price={this.state.additional.price}
                     />
-                  </Field>
+                  </div>
                 </React.Fragment> : null}
 
               {itemType === 2 ?
                 (<React.Fragment>
-                  <Field title="설명">
-                    <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
-                  <Field title="내용 공개 여부">
+                  <div className="row flex marginTop3">
+                    <div className="label font black">설명</div>
+                    <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea>
+                  </div>
+                  <div className="row flex marginTop3">
+                    <div className="label font black">내용 공개 여부</div>
                     <RadioType
                       return={this.onHandleRadio}
                       default={this.state.additional.public === "yes" ? "예" : "아니오"}
                       name="public"
-                      Options={["예", "아니오"]} /></Field>
-                  <Field isMargin={false} isCentering={true} title="자문/상담 비용">
+                      Options={["예", "아니오"]} /></div>
+                  <div className="row flex marginTop3">
+                    <div className="label font black">자문/상담 비용</div>
                     <InputPriceNew placeholder="시간당" name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
-                  </Field>
+                  </div>
                 </React.Fragment>) : null}
 
               {itemType === 3 ?
                 (<React.Fragment>
-                  <Field title="설명">
-                    <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
-                  <Field isMargin={false} isCentering={true} title="구입 비용">
+                  <div className="row flex marginTop3">
+                    <div className="label font black">설명</div>
+                    <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea>
+                  </div>
+                  <div className="row flex marginTop3">
+                    <div className="label font black marginTop1">구입 비용</div>
                     <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
-                  </Field>
+                  </div>
                 </React.Fragment>) : null}
 
               {itemType === 4 ?
                 (<React.Fragment>
-                  <Field title="설명">
-                    <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
-                  <Field isMargin={false} isCentering={true} title="구입 비용">
+                 <div className="row flex marginTop3">
+                    <div className="label font black">설명</div>
+                    <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea>
+                  </div>
+                  <div className="row flex marginTop3">
+                    <div className="label font black marginTop1">구입 비용</div>
                     <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
-                  </Field>
+                  </div>
                 </React.Fragment>) : null}
 
               {itemType === 5 ?
                 (<React.Fragment>
-                  <Field title="설명">
-                    <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
-                  <Field isMargin={false} isCentering={true} title="구입 비용">
+                   <div className="row flex marginTop3">
+                    <div className="label font black">설명</div>
+                    <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea>
+                  </div>
+                  <div className="row flex marginTop3">
+                    <div className="label font black marginTop1">구입 비용</div>
                     <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
-                  </Field>
+                  </div>
                 </React.Fragment>) : null}
 
               {itemType === 6 ?
                 (<React.Fragment>
-                  <Field title="설명">
-                    <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea></Field>
-                  <Field title="내용">
+                  <div className="row flex marginTop3">
+                    <div className="label font black">설명</div>
+                    <InputTextarea onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} ></InputTextarea>
+                  </div>
+                  <div className="row flex marginTop3">
+                    <div className="label font black">내용</div>
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       {this.state.content.length > 0 &&
                         this.state.content.map((item, index) =>
@@ -1071,16 +1091,20 @@ class ModifyItemInfo_mobile extends Component {
                             deleteItem={this.deleteItem} name={`content${index}`} getValue={this.onChangValue} />)}
                       <DescirptionText>※ 특허청에 등록된 원본 파일을 올려주세요.</DescirptionText>
                       <AddController onlyfile type="INIT" order={0} name="addBasic" getValue={this.onAddValue} />
-                    </div></Field>
-                  <Field title="판매 방식 선택">
+                    </div>
+                  </div>
+                  <div className="row flex marginTop3">
+                    <div className="label font black marginTop1">판매 방식 선택</div>
                     <RadioType
                       return={this.onHandleReturn}
                       default={this.state.additional["selling-type"]}
                       name="selling-type"
-                      Options={["양도", "독점 사용권", "일반 사용권"]} /></Field>
-                  <Field isMargin={false} isCentering={true} title="구입 비용">
+                      Options={["양도", "독점 사용권", "일반 사용권"]} />
+                  </div>
+                  <div className="row flex marginTop3">
+                    <div className="label font black marginTop1">구입 비용</div>
                     <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
-                  </Field>
+                  </div>
                 </React.Fragment >) : null}
 
               {itemType === 7 ?
@@ -1092,7 +1116,7 @@ class ModifyItemInfo_mobile extends Component {
                   </div>
                   <div className="row flex marginTop3">
                     <div className="label font black marginTop1">구입 비용</div>
-                    <InputPriceNew_mobile name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
+                    <InputPriceNew name="price" getValue={this.getPriceValue} price={this.state.additional.price} />
                   </div>
                 </React.Fragment>
                 )
@@ -1100,20 +1124,26 @@ class ModifyItemInfo_mobile extends Component {
 
               {itemType === 8 ?
                 (<React.Fragment>
-                  <Field title="설명">
+                  <div className="row flex marginTop3">
+                    <div className="label font black">설명</div>
                     <InputTextarea placeholder="설명을 입력하세요" onChange={this.onHandleAdditionalText} value={this.state.additional.description.replace(/<br \/>/gi, '\n')} name="description" height={60} />
-                  </Field>
+                  </div>
 
-                  <Field title="최대 수강인원">
+                  <div className="row flex marginTop3">
+                    <div className="label font black marginTop1">최대 수강인원</div>
                     <InputNumberText width={100} onBlur={e => this.onHandleAdditionalMaxNumber(e, 1000)} onChange={e => this.onHandleAdditionalMaxNumber(e, 1000)} min="1" max="1000" name="max_students" value={this.state.additional.max_students} />&nbsp;명&nbsp;
-                  </Field>
+                  </div>
 
-                  <Field title="수강생 모집기간">
+                  <div className="row flex marginTop3">
+                    <div className="label font black marginTop1">수강생 모집기간</div>
+                    <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    <div>
                     <CheckBox2 onChange={async () => {
                       let copy = { ...this.state.additional };
                       copy.recruit_always = !this.state.additional.recruit_always;
                       await this.setState({ additional: copy });
                     }}
+                    
                       checked={this.state.additional.recruit_always} />&nbsp;상시모집&nbsp;&nbsp;
                       {!this.state.additional.recruit_always
                       ? <InputCalendar
@@ -1124,12 +1154,15 @@ class ModifyItemInfo_mobile extends Component {
                         getEndDateValue={this.getEndDateValue}
                         getDayDateValue={this.getDayDateValue}
                       />
+                      
                       : null}
-                  </Field>
-
-                  <Field isMargin={false} isCentering={true} title="수강료">
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row flex marginTop3">
+                    <div className="label font black marginTop1">구입 비용</div>
                     <InputPriceNew getValue={this.getPriceValue} name="price" />
-                  </Field>
+                  </div>
                 </React.Fragment>)
                 : null}
           </ShadowBox>

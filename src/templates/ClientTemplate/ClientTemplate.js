@@ -15,12 +15,13 @@ const Container = styled.div`
   margin: auto;
   background: #ffffff;
   padding-bottom:60px;
-  padding-top:${props=>props.isMobile==true?"45px":"0px"};
+  padding-top:${props=>props.isMobile==true?"50px":"0px"};
   .children-wrapper{
     width:100%;
     overflow-y:auto;
   }
   .mobileWidth{
+    border:1px solid black;
     width:100%;
   }
   .mobile-wrapper{

@@ -129,6 +129,7 @@ const ShadowBox = styled.div`
     min-width:100px;
     min-height:100px;
     border-radius:50%;
+    background-color:#efefef;
     background-image:url(${props=>props.face});
     background-size:cover;
     margin-right:10px;
@@ -184,7 +185,7 @@ class CreateDesigner_mobile extends Component {
     super(props);
     this.state = {
       getready: false,
-      thumbnail: null, thumbnail_name: null,
+      thumbnail: this.props.userInfo&&this.props.userInfo.thumbnail.s_img||null, thumbnail_name: null,
       category_level1: 0, category_level2: -1, location: null,
       explain: "", tag: [],
       // career: [{ number: 0, task: "", explain: "", during: "" }],
@@ -320,18 +321,6 @@ class CreateDesigner_mobile extends Component {
           });
         }
       })
-      // .then(
-      //   this.props.CreateDesignRequest(this.props.keep.item, this.props.token)
-      //     .then(result => {
-      //       if (result.success) {
-      //         alert("아이템이 등록되었습니다.");
-      //         console.log("result", result);
-      //         window.location.href = `/mypage`;
-      //       } else {
-      //         alert("아이템 등록에 실패했습니다.");
-      //       }
-      //     })
-      // )
       .catch(async e => {
         console.log("실패", e);
         await alert("다시 시도해주세요");
@@ -351,12 +340,11 @@ class CreateDesigner_mobile extends Component {
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
-    console.log("category:", category1, this.state.category_level1, category2, this.props.category2);
+    console.log(this.props);
 
     return (
       <React.Fragment>
         {this.props.keep ? "redirected" : null}
-        {/* {this.state.open && <CreateGroupContainer id={this.props.id} handleIsModify={this.handlerIsGalleryModify} handleShowModal={this.handleShowModal} open={this.state.open} />} */}
         <Wrapper>
           <div className="header">디자이너 등록</div>
           <ShadowBox face={this.state.thumbnail}t>
@@ -404,13 +392,6 @@ class CreateDesigner_mobile extends Component {
                 })}
                 <div className="greyButton" onClick={this.onClickAddCareer}>경험 추가</div>
           </ShadowBox>
-          {/* <ShadowBox>
-          <div className="title">갤러리</div>
-          <div className="contensts">
-              {<HaveInGalleryContainer_mobile handlerIsGalleryModify={this.handlerIsGalleryModify} id={this.props.id} isModify={true} />}
-          </div>
-          <div className="greyButton" onClick={this.handleShowModal}>갤러리 등록</div>
-          </ShadowBox> */}
         </Wrapper>
         <Button onClick={this.onSubmit} background="red" color="white">저장하기</Button>
         <Button onClick={this.onClickCancel} background="#707070" color="white">취소하기</Button>

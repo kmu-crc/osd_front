@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyUploadItemRequest } from "actions/Item";
-import Item_myDetail_mobile from "components/Items/Item_myDetail_mobile";
+import Item_mobile from "components/Items/Item_mobile";
 import PagingList_mobile from "mobileComponents/PagingList_mobile";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
@@ -80,7 +80,7 @@ class UploadItemContainer_mobile extends Component {
         <div className="header">등록 아이템</div>
         <PagingList_mobile
           getListRequest={this.getList}
-          ListComponent={Item_myDetail_mobile}
+          ListComponent={Item_mobile}
           type="sales"
           isSmall={true}
           dataList={this.props.dataList}

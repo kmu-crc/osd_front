@@ -129,8 +129,8 @@ const ShadowBox = styled.div`
     width:150px;
     height:35px;
     border-radius:20px;
-    background-color:#e9e9e9;
-    color:black;
+    background-color:#707070;
+    color:white;
     display:flex;
     justify-content:center;
     align-items:center;

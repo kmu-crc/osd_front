@@ -19,7 +19,9 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   margin:20px 30px
 `
-
+const Wrapper_mobile = styled.div`
+  margin:0px 10px
+`
 class ProductPurchaseContainer extends Component {
   constructor(props) {
     super(props);
@@ -46,10 +48,10 @@ class ProductPurchaseContainer extends Component {
         if (res && res.data && res.data.success) {
           if (this.props.custom) {
             await alert("구입이 완료되었습니다. [내 정보] > [의뢰상품]에서 확인하실 수 있습니다.");
-            window.location.href = `/myPage/`;
+            window.location.href = `/myPage`;
           } else {
             await alert("구입이 완료되었습니다. [내 정보] > [구입 아이템]에서 확인하실 수 있습니다.");
-            window.location.href = `/myPage/`;
+            window.location.href = `/myPage`;
 
           }
         }
@@ -81,9 +83,9 @@ class ProductPurchaseContainer extends Component {
           this.props.ItemDetail ?
           this.props.ItemDetail.private === 1 && !yours ?
             this.ThisIsPrivateItem() :
-            <Wrapper>
-            {/* <ItemPurchase_mobile purchase={this.Payment} itemId={this.props.ItemDetail.item_id} item={this.props.ItemDetail} {...this.props} /> */}
-            </Wrapper>
+            <Wrapper_mobile>
+            <ItemPurchase_mobile purchase={this.Payment} itemId={this.props.ItemDetail.item_id} item={this.props.ItemDetail} {...this.props} />
+            </Wrapper_mobile>
           : <Loading />
         }
       </React.Fragment>

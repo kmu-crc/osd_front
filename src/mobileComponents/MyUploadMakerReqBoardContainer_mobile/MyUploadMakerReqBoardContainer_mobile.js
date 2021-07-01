@@ -50,7 +50,7 @@ class MyUploadMakerReqBoardContainer_mobile extends Component {
     const lastPage = parseInt((this.props.allPage / per) + (this.props.allPage % per ? 1 : 0), 10)
     return (
       <Wrapper>
-        <div className="header">메이커 의뢰</div>
+        <div className="header">제작 의뢰</div>
         {this.props.Count!=0?<div className="line"/>:null}
         <ScrollBoardList_mobile
         total={this.props.Count}

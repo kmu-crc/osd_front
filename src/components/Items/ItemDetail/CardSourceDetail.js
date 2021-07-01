@@ -100,6 +100,7 @@ export default class CardSourceDetail extends Component {
     let formData = await ContentForm(this.state, this.props.content)
     await this.setState({ loading: true })
 
+
     // FIX IT asps
     await setTimeout(() => { }, 1000)
 
@@ -298,7 +299,6 @@ export default class CardSourceDetail extends Component {
                     ) : null
                 )}
               </ViewContent>
-
               : <Nodata></Nodata>
             : null}
         </CardSrcWrap>
