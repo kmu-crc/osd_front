@@ -69,7 +69,7 @@ const GridEditorWrapper = styled.div`
         // padding-right: 250px;
         // margin-top: 30px;
     }
-    @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
+    @media only screen and (min-width : ${500}px) 
     and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
         margin-left:60px;
     }

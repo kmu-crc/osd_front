@@ -61,6 +61,8 @@ class CardModal extends Component {
     };
     handleHeaderSubmit = passingContent => {
         let files = null;
+        console.log(passingContent)
+        // return;
         ValidationGroup(this.state, false)
             .then(async data => {
                 files = data && data.files;

@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   margin:20px 30px
 `
 const Mobile_wrapper = styled.div`
-  margin:0px 10px;
+  margin:0px;
 `
 
 class ProductDetailContainer extends Component {

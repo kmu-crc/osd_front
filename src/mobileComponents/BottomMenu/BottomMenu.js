@@ -36,7 +36,10 @@ const BottomMenuContainer = styled.div`
     background-image: url(${props=>props.face});
     background-size:cover;
   }
-
+  .edgeZero{
+    margin:0px;
+    padding:0px;
+  }
   .homeButton{
     width:50px;
     height:50px;
@@ -177,7 +180,8 @@ class Header_mobile extends Component {
       <React.Fragment>
         <BottomMenuContainer face={this.props.userInfo&&this.props.userInfo.thumbnail&&this.props.userInfo.thumbnail.s_img}>
             <div className="icon_wrapper" onClick={()=>this.props.onClickMenu()}>
-              <Icon className="grey list" size="big"/> 
+              <Icon className="grey edgeZero list" size="big"/> 
+              <div className="">menu</div>
             </div>
             { 
             isHome?

@@ -271,15 +271,14 @@ const CreateItemCardFailure = error => ({ type: types.CREATE_CARD_FAILURE, succe
 
 // MODIFY CARD
 export const UpdateCardSourceRequest = (data, card_id, token) => {
-  console.log(data);
+  console.log("this!!!!!!!");
+  // console.log(data);
+  // return;
   return dispatch => {
     dispatch(UpdateItemSource());
     console.log("request", data);
     return fetch(`${host}/item/detail/updateCardAllData/${card_id}`, {
-      headers: {
-        "x-access-token": token,
-        "Content-Type": "application/json"
-      },
+      headers: { "x-access-token": token, 'Content-Type': 'application/json' },
       method: "POST",
       body: JSON.stringify(data)
     })
