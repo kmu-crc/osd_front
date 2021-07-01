@@ -310,86 +310,100 @@ class NewCardModal extends Component {
     state = {
         loading: false, scroll: false, edit: false, title: "", description: "", hook: false,
         content: [],
-    };
+    }
     handleCancel = async (obj) => {
         if ((obj != null && typeof obj === "object" && obj.length > 0) || this.state.title !== "" || this.state.content !== "") {
             if (!await confirm("작업중인 데이터는 저장되지 않습니다. 그래도 하시겠습니까?")) {
-                return;
+                return
             }
         }
-        this.onClose();
+        this.onClose()
     };
     onClose = () => {
-        this.props.close();
+        this.props.close()
     };
     onChangeValueThumbnail = async data => {
-        let obj = {};
+        let obj = {}
         if (data.target) {
-            obj[data.target.name] = data;
-            await this.setState(obj);
+            obj[data.target.name] = data
+            await this.setState(obj)
         }
     };
     onChangeTitle = event => {
         if (event.target) {
-            this.setState({ title: event.target.value });
+            this.setState({ title: event.target.value })
         }
     };
     onChangeDescription = event => {
         if (event.target) {
-            this.setState({ description: event.target.value });
+            this.setState({ description: event.target.value })
         }
     };
     saveTemporary = async (obj) => {
-        await this.setState({ card_content: obj });
-        this.submit();
-    };
+        await this.setState({ card_content: obj })
+        this.submit()
+    }
     handleResetHook = async () => {
-        await this.setState({ hook: false });
-    };
-    submit = async () => {
+        await this.setState({ hook: false })
+    }
+    submit = async (data) => {
         if (!this.state.title || this.state.title === "") {
-            await alert("컨텐츠의 제목을 입력하세요.");
-            return;
+            await alert("컨텐츠의 제목을 입력하세요.")
+            return
         }
+        let files = null
+        // await ValidationGroup(this.state, false)
+        //     .then(async data => {
+        //         files = await data && data.files;
+        //         const dummy = {
+        //             title: this.state.title,
+        //             files: files,
+        //             // thumbnail: thumbnail, 
+        //             description: this.state.description,
+        //             data: { deleteContent: [], newContent: this.state.content, updateContent: [] }
+        //         };
+        //         console.log(dummy)
+        //     })
+        // return
         // new card
-        let files = null;
-        this.setState({ loading: true });
+
+        this.setState({ loading: true })
         await ValidationGroup(this.state, false)
             .then(async data => {
-                files = await data && data.files;
+                files = await data && data.files
                 // let thumbnail = files ? { img: files && files[0].value, file_name: files && files[0].name } : null;
 
                 await this.props.CreateItemCardRequest({ title: this.state.title, order: this.props.row.order }, this.props.itemId, this.props.row.id, this.props.token)
                     .then(async res => {
-                        console.log(res);
+                        console.log(res)
                         if (res.success) {
-                            const card_id = res.card;
+                            const card_id = res.card
                             const send_data = {
                                 title: this.state.title,
                                 files: files,
                                 // thumbnail: thumbnail, 
                                 description: this.state.description,
                                 data: { deleteContent: [], newContent: this.state.content, updateContent: [] }
-                            };
+                            }
                             this.props.UpdateCardSourceRequest(send_data, card_id, this.props.token)
                                 .then(async () => {
-                                    await this.setState({ loading: false });
-                                    await this.props.GetItemStepsRequest(this.props.itemId, this.props.token);
-                                    this.onClose();
+                                    await this.setState({ loading: false })
+                                    await this.props.GetItemStepsRequest(this.props.itemId, this.props.token)
+                                    this.onClose()
                                 })
-                                .catch(async err => await alert(err + '와 같은 이유로 작업을 완료할 수 없습니다.'));
+                                .catch(async err => await alert(err + '와 같은 이유로 작업을 완료할 수 없습니다.'))
                         } else {
-                            await alert("새로운 카드를 추가하는데 실패했습니다. 잠시후 다시 시도해주세요.");
+                            await alert("새로운 카드를 추가하는데 실패했습니다. 잠시후 다시 시도해주세요.")
                         }
                     })
-                    .catch(async err => await alert(err));
+                    .catch(async err => await alert(err))
             });
     };
     handleCapture = (data) => {
-        this.setState({ content: data });
+        this.setState({ content: data })
     }
     render() {
-        const { hook } = this.state;
+        const { hook } = this.state
         return (
             <React.Fragment>
                 <NewCardDialogWrapper open={this.props.open} onClose={this.props.close}>
@@ -465,4 +479,4 @@ const mapDispatchToProps = (dispatch) => ({
     GetDesignDetailRequest: (id, token) => dispatch(GetDesignDetailRequest(id, token)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewCardModal);
+export default connect(mapStateToProps, mapDispatchToProps)(NewCardModal)

@@ -5,6 +5,7 @@ export * from "./RadioType";
 export * from "./AddController";
 export * from "./AddController_mobile";
 export * from "./FileController";
+export * from "./FileController2";
 export * from "./Controller";
 export * from "./EmbController";
 export * from "./TextController";
