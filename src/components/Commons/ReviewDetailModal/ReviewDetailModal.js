@@ -7,13 +7,14 @@ import Star from "components/Commons/Star";
 import { Rating } from 'semantic-ui-react'
 import arrow from "source/rightarrow.svg";
 import market_style from "market_style";
-const AddPic = styled.div`
-    min-width:${props=>props.width}px;
-    min-height:${props=>props.height}px;
-    max-width:${props=>props.width}px;
-    max-height:${props=>props.height}px;
 
-    margin-right:${props=>props.marginRight==null?0:props.marginRight}px;
+const AddPic = styled.div`
+    min-width:${props => props.width}px;
+    min-height:${props => props.height}px;
+    max-width:${props => props.width}px;
+    max-height:${props => props.height}px;
+
+    margin-right:${props => props.marginRight == null ? 0 : props.marginRight}px;
     background-color: #e6e6e6;
     background-image: url(${props => props.img});
     background-size:cover;
@@ -27,10 +28,10 @@ const AddPic = styled.div`
     }
 `
 const CustomButton = styled.div`
-    min-width:${props=>props.width}px;
-    min-height:${props=>props.height}px;
-    max-width:${props=>props.width}px;
-    max-height:${props=>props.height}px;
+    min-width:${props => props.width}px;
+    min-height:${props => props.height}px;
+    max-width:${props => props.width}px;
+    max-height:${props => props.height}px;
     background-image: url(${props => props.img});
     background-size:cover;
     border-radius:5px;
@@ -38,7 +39,7 @@ const CustomButton = styled.div`
     justify-content:center;
     align-items:center;
     cursor:pointer;
-    transform:rotate(${props=>props.rotate==null?0:props.rotate}deg);
+    transform:rotate(${props => props.rotate == null ? 0 : props.rotate}deg);
     .text{
         font-size:${market_style.font.size.samll1};
         color:white;
@@ -169,49 +170,49 @@ class ReviewDetailModal extends Component {
     render() {
         const { detail } = this.props;
         console.log(detail);
-        const thumbnail_list = detail&&detail.thumbnail&&detail.thumbnail.length>0?
-        detail.thumbnail.split(","):[];
+        const thumbnail_list = detail && detail.thumbnail && detail.thumbnail.length > 0 ?
+            detail.thumbnail.split(",") : [];
         const RenderStar = () => {
-            return <Rating size="tiny" name="score" icon='star' defaultRating={parseInt(this.props&&this.props.detail&&this.props.detail.score, 10)} maxRating={5} disabled />
-          }
+            return <Rating size="tiny" name="score" icon='star' defaultRating={parseInt(this.props && this.props.detail && this.props.detail.score, 10)} maxRating={5} disabled />
+        }
         return (
             <React.Fragment>
-                    <Dialog open={this.props.open} onClose={this.props.close} img={detail&&detail.thumbnail_url || noimg}>
+                <Dialog open={this.props.open} onClose={this.props.close} img={detail && detail.thumbnail_url || noimg}>
                     <div className="close-box" onClick={this.props.close}>
                         <Cross angle={45} color={"#707070"} weight={1} width={20} height={20} />
                     </div>
                     <div className="starscore">
-                    <RenderStar />
+                        <RenderStar />
                     </div>
                     <div className="basicInfo">
                         <div className="left">
-                            <div className="nickName">{detail&&detail.nick_name}</div>
+                            <div className="nickName">{detail && detail.nick_name}</div>
                             <div>|</div>
-                            <div className="productName">{detail&&detail.title}</div>
+                            <div className="productName">{detail && detail.title}</div>
                         </div>
                         <div className="right">
                             <div className="create_time">
                                 {
-                                    new Date(detail&&detail.create_time).getFullYear()+"."
-                                    +((new Date(detail&&detail.create_time).getMonth()+1)<10?'0'+(new Date(detail&&detail.create_time).getMonth()+1):(new Date(detail&&detail.create_time).getMonth()+1))+"."
-                                    +(new Date(detail&&detail.create_time).getDate()<10?'0'+new Date(detail&&detail.create_time).getDate():new Date(detail&&detail.create_time).getDate())
+                                    new Date(detail && detail.create_time).getFullYear() + "."
+                                    + ((new Date(detail && detail.create_time).getMonth() + 1) < 10 ? '0' + (new Date(detail && detail.create_time).getMonth() + 1) : (new Date(detail && detail.create_time).getMonth() + 1)) + "."
+                                    + (new Date(detail && detail.create_time).getDate() < 10 ? '0' + new Date(detail && detail.create_time).getDate() : new Date(detail && detail.create_time).getDate())
                                 }
                             </div>
                         </div>
                     </div>
-                    <div className={`review-content ${thumbnail_list.length>1?"flex_column":null}`}>
-                        {thumbnail_list.length>0?<div id="pic_list" className={`pic_list ${thumbnail_list.length==0?"width100":thumbnail_list.length>1?"width100":"maxContent"}`}>
+                    <div className={`review-content ${thumbnail_list.length > 1 ? "flex_column" : null}`}>
+                        {thumbnail_list.length > 0 ? <div id="pic_list" className={`pic_list ${thumbnail_list.length == 0 ? "width100" : thumbnail_list.length > 1 ? "width100" : "maxContent"}`}>
                             {
-                                thumbnail_list.map((item,index)=>{
-                                    console.log("this.props",item);
-                                    return(<AddPic key={index} width={350} height={350} img={item} marginRight={20}/>);
+                                thumbnail_list.map((item, index) => {
+                                    console.log("this.props", item);
+                                    return (<AddPic key={index} width={350} height={350} img={item} marginRight={20} />);
                                 })
                             }
-                            {thumbnail_list.length>=3?<span className="btn"><CustomButton rotate={180}  onClick={()=>{document.getElementById("pic_list").scrollBy(document.getElementById("pic_list").scrollLeft-800,0)}} img={arrow} width={29} height={59} style={{position:"absolute",left:"0px",top:"160px"}}/></span>:null}
-                            {thumbnail_list.length>=3?<span className="btn"><CustomButton  onClick={()=>{document.getElementById("pic_list").scrollBy(document.getElementById("pic_list").scrollLeft+400,0)}} img={arrow} width={29} height={59} style={{position:"absolute",right:"0px",top:"160px"}}/></span>:null}
-                        </div>:thumbnail_list.length==0?null:<AddPic  width={378} height={384} img={thumbnail_list[0]}/>}
-                        <div className={`comment ${thumbnail_list.length==0?"margin1":thumbnail_list.length>1?"margin2":"margin3"}`}>
-                            {detail&&detail.comment}
+                            {thumbnail_list.length >= 3 ? <span className="btn"><CustomButton rotate={180} onClick={() => { document.getElementById("pic_list").scrollBy(document.getElementById("pic_list").scrollLeft - 800, 0) }} img={arrow} width={29} height={59} style={{ position: "absolute", left: "0px", top: "160px" }} /></span> : null}
+                            {thumbnail_list.length >= 3 ? <span className="btn"><CustomButton onClick={() => { document.getElementById("pic_list").scrollBy(document.getElementById("pic_list").scrollLeft + 400, 0) }} img={arrow} width={29} height={59} style={{ position: "absolute", right: "0px", top: "160px" }} /></span> : null}
+                        </div> : thumbnail_list.length == 0 ? null : <AddPic width={378} height={384} img={thumbnail_list[0]} />}
+                        <div className={`comment ${thumbnail_list.length == 0 ? "margin1" : thumbnail_list.length > 1 ? "margin2" : "margin3"}`}>
+                            {detail && detail.comment}
                         </div>
                     </div>
                 </Dialog>

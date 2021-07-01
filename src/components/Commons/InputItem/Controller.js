@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import styled from "styled-components";
 // import { TextControllerClassic as TextController } from "components/Commons/InputItem/TextControllerClassic";
 import { TextController as TextController } from "components/Commons/InputItem";
-import { FileController } from "components/Commons/InputItem/FileController";
+import { FileController } from "components/Commons/InputItem/FileController2";
+// import { FileController } from "components/Commons/InputItem/FileController";
 import { ProblemController } from "components/Commons/InputItem/ProblemController";
 
 // import { EmbController } from "components/Commons/InputItem/EmbController";
@@ -118,6 +119,7 @@ export class Controller extends Component {
     this.state = { type: "INIT", order: 0, click: false, private: 0 };
     this.InitClick = this.InitClick.bind(this);
     this.onChangeValue = this.onChangeValue.bind(this);
+    this.onChangeFile = this.onChangeFile.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.moveDownItem = this.moveDownItem.bind(this);
     this.moveUpItem = this.moveUpItem.bind(this);
@@ -141,6 +143,11 @@ export class Controller extends Component {
       await this.props.getValue({ ...this.props.item, content: data.content });
     }
   };
+  async onChangeFile(data) {
+    if (this.props.getValue) {
+      await this.props.getValue({ ...data })
+    }
+  }
   async privateItem(event) {
     if (this.props.privateItem) {
       if (await confirm("선택하신 항목을 비공개로 설정하시겠습니까?")) {
@@ -185,7 +192,7 @@ export class Controller extends Component {
       <ControllerWrap>
         <div className="contentWrap">
           {/* {item.private === 1 ? "(비공개 항목으로 설정되어 있습니다.)" : null} */}
-          {item.type === "FILE" ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeValue} deleteItem={this.deleteItem} setController={this.setController} /> : null}
+          {item.type === "FILE" ? <FileController item={item} name="source" initClick={this.state.click} getValue={this.onChangeFile} deleteItem={this.deleteItem} /> : null}
           {item.type === "TEXT" ? <TextController item={item} initClick={this.state.click} private={item.private} name={name} getValue={this.onChangeValue} deleteItem={this.deleteItem} /> : null}
           {/* {item.type === "EMBED" ? <EmbController /> : null} */}
           {item.type === "PROBLEM" ? <ProblemController item={item} getValue={this.onChangeValue} confirmed={this.confirmed} onCancel={this.cancelItem} /> : null}
