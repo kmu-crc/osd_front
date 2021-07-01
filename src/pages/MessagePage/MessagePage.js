@@ -6,8 +6,8 @@ class MessagePage extends Component {
     return (
       <MessageListContainer
         history={this.props.history}
-        id={this.props.match.params.id ? this.props.match.params.id : null}
-        name={this.props.match.params.name ? this.props.match.params.name : null} />
+        group_id={this.props.match.params.group_id ? this.props.match.params.group_id : null}
+        />
     );
   }
 }

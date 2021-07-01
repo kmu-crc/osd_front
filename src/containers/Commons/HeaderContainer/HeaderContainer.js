@@ -13,11 +13,13 @@ class HeaderContainer extends Component {
   render() {
     return (
       <React.Fragment>
-        {
-          window.innerWidth >= 500 ?
-            <Header {...this.props} /> :
-            <Header_mobile {...this.props} />
-        }
+      {
+        window.innerWidth >= 500?
+        <Header {...this.props}/> :
+        window.location.pathname == "/message"?
+        null:
+        <Header_mobile {...this.props}/> 
+      }
       </React.Fragment>
     );
   }

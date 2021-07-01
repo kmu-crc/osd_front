@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import MessageDetail from "components/Messages/MessageDetail";
+import MessageDetail_mobile from "mobileComponents/MessageDetail_mobile";
+
 import { GetMyMsgDetailRequest, GetMyMessageDetailClear } from "actions/Message";
 
 class MessageDetailContainer extends Component {
@@ -10,7 +12,10 @@ class MessageDetailContainer extends Component {
         {this.props.id === -1 ?
         <p>메시지 내용이 없습니다.</p>
         :
-        <MessageDetail {...this.props}/>
+        window.innerWidth>=500?
+          <MessageDetail {...this.props}/>
+          :
+          <MessageDetail_mobile {...this.props}/>
         }
       </div>
     );
