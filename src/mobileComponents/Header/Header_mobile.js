@@ -18,9 +18,9 @@ const HeaderContainer = styled.div`
   display:flex;
   align-items:center;
   padding:10px 15px;
-  background-color:${props=>props.isMain==false?'#F7F7F7':'white'};
+  // background-color:${props=>props.isMain==false?'#F7F7F7':'white'};
   .search_wrapper{
-    width:310px;
+    width:${props=>props.width==null?"310px":props.width};
     height:100%;
     position:relative;
     .search{
@@ -40,12 +40,13 @@ const HeaderContainer = styled.div`
     align-items:center;
     margin-left:20px;
   }
+
 `
 const InputText = styled.input.attrs({ type: "text" })`
   width:100%;
   height:25px;
   border-radius:22px;
-  background-color:#E9E9E9;
+  background-color:#eaeaea;
   outline:none;
   border:0px;
   padding:0px 30px 0px 10px;
@@ -61,10 +62,15 @@ class Header_mobile extends Component {
     this.onClickMessageIcon = this.onClickMessageIcon.bind(this);
     this.onClickSearch=this.onClickSearch.bind(this);
     this.onClickEvent = this.onClickEvent.bind(this);
+    this.handleScroll=this.handleScroll.bind(this);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll, true);
   }
   componentDidMount() {
     this.getNews();
     window.addEventListener("click", this.onClickEvent, true);
+    window.addEventListener("scroll", this.handleScroll, true);
   }
   componentDidUpdate(nextProps) {
     if (this.props !== nextProps) {
@@ -73,6 +79,11 @@ class Header_mobile extends Component {
       }
     }
     return true;
+  }
+  handleScroll(){
+    console.log("?",document.getElementById("mobileWrap").scrollTop);
+    
+    
   }
   onClickEvent(event){
     if(event.target.id !== "popmenu")this.setState({active:false});
@@ -168,16 +179,24 @@ class Header_mobile extends Component {
     const searchtype = designerActive ? "designer" : makerActive ? "maker" : itemActive ? "item" : null;
 
     const pattern_eng= /[a-zA-Z]/;
+    console.log(userInfo);
     return (
-        <HeaderContainer isMain={window.location.pathname=='/'?false:true}>
+        <HeaderContainer id="headerWrapper" onScroll={()=>{console.log("?")}} isMain={window.location.pathname=='/'?false:true} width={userInfo==null?"100%":"310px"}>
           <div className="search_wrapper">
             <InputText onChange={this.saveKeyword} onKeyDown={this.submitEnter}/>
             <Link to={`/search/${searchtype}/update/${this.state.keyword}`} id="searchLink">
               <img alt="icon" src={Zoom} id="searchBox" className="search" onClick={this.onClickSearch}/>
             </Link>
           </div>
-          <div className="icon_wrapper" ><AlarmContainer /></div>
-          <div className="icon_wrapper" onClick={this.onClickMessageIcon}><Icon className="grey envelope" size="large" /></div>
+          {
+            userInfo == null?
+            null
+            :
+            <React.Fragment>
+              <div className="icon_wrapper" ><AlarmContainer /></div>
+              <div className="icon_wrapper" onClick={this.onClickMessageIcon}><Icon className="grey envelope" size="large" /></div>
+            </React.Fragment>
+          }
         </HeaderContainer>
     )
   };

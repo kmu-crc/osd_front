@@ -24,7 +24,6 @@ const Container = styled.div`
   }
   .mobile-wrapper{
     width:375px;
-    overflow-y:auto;
     overflow-x:hidden;
   }
   .marginAuto{
@@ -44,6 +43,7 @@ const Container = styled.div`
       width:100%;
     }
   }
+
 `
 const fadein = keyframes`
   0% {
@@ -165,7 +165,7 @@ class ClientTemplate extends Component {
         <React.Fragment>
         <Notice />
         <HeaderContainer active={this.props.isActive} />
-        <Container isMobile={window.innerWidth>=500?false:window.location.pathname=="/message"?false:true}>
+        <Container isMobile={window.innerWidth>=500?false:window.location.pathname=="/message"?false:window.location.pathname=="/"?false:true}>
           {
           window.innerWidth>=500?
           <div className="children-wrapper">
@@ -174,14 +174,14 @@ class ClientTemplate extends Component {
           :
           window.location.pathname=="/"?
           <React.Fragment>
-            <div className="mobileWidth">
+            <div id="mobileWrap" className="mobile-wrapper">
               {this.props.children}
             </div>
             <BottomMenuContainer onClickMenu={this.onClickMenu}/>
           </React.Fragment>
           :
           <React.Fragment>
-          <div className="mobile-wrapper marginAuto">
+          <div id="mobileWrap"  className="mobile-wrapper marginAuto">
             {this.props.children}
           </div>
           <BottomMenuContainer onClickMenu={this.onClickMenu}/>

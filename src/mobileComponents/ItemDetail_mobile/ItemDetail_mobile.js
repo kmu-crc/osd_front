@@ -18,6 +18,7 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
 const Wrapper = styled.div`
   width:100%;
+  padding:0px 10px;
 `
 const ReviewButton = styled.div`
   width:100px;
@@ -36,6 +37,8 @@ const ShadowBox = styled.div`
   border-radius:10px;
   box-shadow: 2px 2px 5px #00000029;
   padding:15px 10px;
+  display:flex;
+  flex-direction:column;
   .row{width:100%;}
   .marginLeft{margin-left:10px;}
   .marginTop{margin-top:10px;}
@@ -48,6 +51,8 @@ const ShadowBox = styled.div`
   .fontBig{font-size:${market_style.font.size.small1};font-weight:800;}
   .fontNormal{font-size:${market_style.font.size.small1};}
   .bold{font-weight:500;}
+  .ellipsis{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .column{display:flex;flex-direction:column;}
   .face{
     min-width:25px;
     min-height:25px;
@@ -58,7 +63,8 @@ const ShadowBox = styled.div`
   }
   .profile{
     .margin-left:10px;
-    width:100%;
+    min-width:145px;
+    width:95%;
     height:140px;
     display:flex;
     flex-direction:column;
@@ -68,6 +74,8 @@ const ShadowBox = styled.div`
   .thumbnail{
     min-width:152px;
     min-height:140px;
+    max-width:152px;
+    max-height:140px;
     background-size:cover;
     background-color:#e9e9e9;
     background-image:url(${props =>props.img==null?noimg:props.img});
@@ -200,11 +208,11 @@ class ItemDetail_mobile extends Component {
         
         <Wrapper>
           <ShadowBox img={item.thumbnail ? item.thumbnail.l_img : noimg} face={item.who||who}>
-            <div className="wrap flex">
+            <div className="row flex">
               <div className="thumbnail"/>
               <div className="profile">
                 <div className="row marginLeft">
-                  <div className="fontBig">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
+                  <div className="fontBig ellipsis row">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
                   <div className="flex vCenter marginTop">
                     <div className="face"/>
                     <div className="fontNormal">

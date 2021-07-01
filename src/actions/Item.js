@@ -275,10 +275,7 @@ export const UpdateCardSourceRequest = (data, card_id, token) => {
     // console.log("DEBUG:", { data, card_id, token })
     dispatch(UpdateItemSource())
     return fetch(`${host}/item/detail/updateCardAllData/${card_id}`, {
-      headers: {
-        "x-access-token": token,
-        "Content-Type": "application/json"
-      },
+      headers: { "x-access-token": token, 'Content-Type': 'application/json' },
       method: "POST",
       body: JSON.stringify(data)
     })
