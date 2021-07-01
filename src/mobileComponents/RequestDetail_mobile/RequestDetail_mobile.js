@@ -6,85 +6,100 @@ import styled from "styled-components"
 import ArticleModal from "components/Commons/ArticleModal/ArticleModal";
 import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import market_style from "market_style";
-
-const NormalWrapper = styled.div`
-  padding:0px 30px;
-  margin-bottom:30px;
-  .title {
-    margin-top: 20px;
-    margin-bottom: 15px;
-    .text {
-      width: max-content;
-      margin: auto;
-      font: normal normal bold 20px/29px Noto Sans KR;
-      letter-spacing: 0px;
-      color: #000000;
-      text-align: center;
-    }
-  }
+const Wrapper = styled.div`
+  width:100%;
+  padding:10px;
   .buttonBox{
-    display:flex;
-    justify-content:center;
-    margin-top:20px;
+    margin-top:10px;
   }
-  .form {
-    width: 100%;
-    height:max-content;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow: 3px 3px 5px #0000001A;
-    border: 0.25px solid #eaeaea;
-    border-radius: 20px;
-    padding: 40px 100px;
-
-    .row {
-      display: flex;
-      flex-direction: row;
-      flex-wrap:wrap;
-      
-      .label {
-        height: 22px;
-        min-width: 140px;
-        text-align: left;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        border-right: 1px solid #707070;
-
-        text-align: left;
-        font: normal normal medium 15px/22px Noto Sans KR;
-        letter-spacing: 0px;
-        color: #707070;
-
-        margin-right: 94px;
-        margin-bottom:5px;
-      }
-
-      .content {
-        width: 100%;
-        max-width: max-content;
-        margin-bottom: 31px;
-        
-        text-align: left;
-        font: normal normal normal 15px/22px Noto Sans KR;
-        letter-spacing: 0px;
-        color: #000000;
-      }
-    }
+`
+const Button = styled.div`
+  width:100%;
+  height:35px;
+  border-radius:10px;
+  background-color:${props=>props.background==null?"red":props.background};
+  color:${props=>props.color==null?"white":props.color};
+  box-shadow: 2px 2px 3px #00000019;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:${market_style.font.size.small1};
+  font-weight:500;
+  margin-top:10px;
+`
+const ShadowBox = styled.div`
+  width:100%;
+  height:max-content;
+  border-radius:10px;
+  box-shadow: 2px 2px 5px #00000029;
+  border:1px solid #eaeaea;
+  padding:10px 20px;
+  .title{
+    width:100%;
+    text-align:center;
+    font-size:${market_style.font.size.small1};
+    font-weight:800;
+    color:#c1c1c1;
+    margin-bottom:10px;
   }
-}
-@media only screen and (min-width: 500px) and (max-width:1000px){
+  .row{
+    width:100%;
+  }
+  .label_{
+    min-width:85px;
+    height:22px;
+    border-right:1px solid #707070;
+    margin-right:20px;
+    font-family:${market_style.font.size.small1};
+    font-weight:700;
+    color:#707070;
+  }
+  .padding{padding-left:10px;padding-right:10px;}
+  .paddingNormal{padding:5px 10px;}
+  .marginTop1{margin-top:5px;}
+  .marginTop2{margin-top:10px;}
+  .marginTop3{margin-top:20px;}
+  .fontBig{font-size:${market_style.font.size.small1};font-weight:800;}
+  .fontNormal{font-size:${market_style.font.size.small1};font-weight:400;}
+  .fontSmall{font-size:${market_style.font.size.mini2};font-weight:400;}
+  .black{color:black;}
+  .flex{display:flex;}
+  .flexWrap{flex-wrap:wrap;}
+  .justifyCenter{justify-content:center;}
+  .alignCenter{align-items:center;}
+  .spaceBetween{justify-content:space-between;}
+  .flexEnd{justify-content:flex-end;}
+  .column{flex-direction:column;}
+  .textRight{text-align:right;}
+  .ellipsis{width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
-  .form{
-    padding:40px 10%;
-    .row{
-      .label{
-        margin-right: 30px;
-      }
-    }
+  .attach-file {
+    width:100%;
+    height: 19px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    font: normal normal normal 13px/19px Noto Sans KR;
+    letter-spacing: 0px;
+    color: #FF0000;
+
+  .attach-link {
+    width: 150px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+   } 
+
+  .attach-arrow {
+    width: 10px;
+    height: 10px;
+    border-left:1px solid red;
+    border-bottom:1px solid red;
+    margin-right: 15px;
+    margin-left: 4px;
   }
 }
 `
-
 export default class Detail extends Component {
   constructor(props) {
     super(props);
@@ -171,37 +186,32 @@ export default class Detail extends Component {
 
       {/* NORMAL DETAIL */}
       {Detail.status === "normal"
-        ? <React.Fragment>
-          <NormalWrapper>
-            <div className="title">
-              <p className="text">게시글</p>
-            </div>
-
-            <div className="form">
-              <div className="row">
-                <div className="label">제목</div>
+        ? <Wrapper>
+          <ShadowBox>
+            <div className="title black">게시글</div>
+              <div className="row flex marginTop3">
+                <div className="label_">제목</div>
                 <div className="content">{Detail && Detail.title}</div>
               </div>
-              <div className="row">
-                <div className="label">작성자</div>
+              <div className="row flex marginTop3">
+                <div className="label_">작성자</div>
                 <div className="content">{Detail && Detail.nick_name}</div>
               </div>
-              <div className="row">
-                <div className="label">내용</div>
+              <div className="row flex marginTop3">
+                <div className="label_">내용</div>
                 <div className="content" dangerouslySetInnerHTML={{ __html: Detail && Detail.content }} />
               </div>
-            </div>
-            <div className="buttonBox">
-              {(Detail.user_id === userInfo.uid)
+          </ShadowBox>
+          <div className="buttonBox">
+              {userInfo&&(Detail.user_id === userInfo.uid)
                 ? <React.Fragment>
-                  <RedButton width={150} height={30} fontSize={market_style.font.size.small1} okText="확인" cancelText="취소" value={"수정하기"} onClick={() => this.setState({ write: true })} isConfirm={false} />
-                  <GrayButton width={150} height={30} fontSize={market_style.font.size.small1} text={"삭제하시겠습니까?"} value={"삭제하기"} onClick={() => { this.props.DeleteRequestRequest(this.props.id, this.props.token); window.location.href = "/request/designer" }} isConfirm={true}></GrayButton>
+                          <Button onClick={() => this.setState({ write: true })}  background="red" color="white">수정하기</Button>
+                          <Button onClick={() => { this.props.DeleteRequestRequest(this.props.id, this.props.token); window.location.href = "/request/designer" }}  background="#707070" color="white">삭제하기</Button>
                 </React.Fragment>
                 : null
               }
-            </div>
-          </NormalWrapper>
-        </React.Fragment>
+          </div>
+        </Wrapper>
         : null}
 
     </React.Fragment>);

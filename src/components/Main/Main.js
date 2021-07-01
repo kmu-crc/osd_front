@@ -11,6 +11,7 @@ import market_style from "market_style";
 // CSS STYLE
 const Margin = 1 / 3 * 45;
 const MainContainer = styled.div`
+  width:${window.innerWidth}px;
 `;
 const Mobile_Wrapper = styled.div`
   width:375px;

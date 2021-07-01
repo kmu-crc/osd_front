@@ -116,7 +116,7 @@ class App extends Component {
             <Route path="/Privacy/:page" component={FooterPage} />
             <Route path="/Info/:page" component={FooterPage} />
             <Route path="/search/:type?/:sort?/:keyword?" component={SearchPage} />
-            <Route path="/message/:id?/:name?" component={RequiresAuth(MessagePage)} />
+            <Route path="/message/:group_id?" component={RequiresAuth(MessagePage)} />
             <Route path="/resetPw" component={ResetPwPage} />
             <Route path="/payment" component={RequiresAuth(PaymentPage)} />
             <Route path="/cart" component={CartPage} />
