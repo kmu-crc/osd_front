@@ -69,6 +69,7 @@ export class FileController extends Component {
 
   render() {
     const { loading, fileUrl, is_image, file_name, extension, file_type } = this.state
+    console.log("FILE-CONTROLLER:", this.state, this.props)
 
     return (<FileWrap>
       {file_name
