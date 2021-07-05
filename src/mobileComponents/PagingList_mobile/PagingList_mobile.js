@@ -56,7 +56,7 @@ const NoData = styled.div`
   padding: 57px 20px 57px 0px;
   text-align: center;
   font-size:${market_style.font.size.normal1};
-  color:red;
+  color:#FF3838;
   font-family: Noto Sans KR;
   font-weight: 500;
   // border: 1px dashed gray;

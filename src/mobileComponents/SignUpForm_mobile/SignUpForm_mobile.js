@@ -53,7 +53,7 @@ const MainBox = styled.div`
   }
   .marginRight{margin-right:30px;}
   .fontSmall{font-size:${market_style.font.size.mini2};}
-  .red{color:red;}
+  .red{color:#FF3838;}
   .flex{display:flex;align-items:center;}
   
 `
@@ -77,9 +77,9 @@ const RedButton = styled.div`
   width:${props=>props.width==null?"100%":props.width+"px"};
   height:${props=>props.height==null?"100%":props.height+"px"};
   color:${props=>props.color==null?"white":props.color};
-  background-color:${props=>props.bgColor==null?"red":props.bgColor};
+  background-color:${props=>props.bgColor==null?"#FF3838":props.bgColor};
   border-radius:${props=>props.borderRadius==null?"0px":props.borderRadius+"px"};
-  border:2px solid red;
+  border:2px solid #FF3838;
   display:flex;
   align-items:center;
   justify-content:center;

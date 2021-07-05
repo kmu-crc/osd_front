@@ -66,7 +66,7 @@ const Dialog = styled(Modal)`
         margin-top:20px;
     }
     .marginRight{margin-right:15px;}
-    .red{background-color:red;}
+    .red{background-color:#FF3838;}
     .grey{background-color:grey;}
     .button{
         width:160px;

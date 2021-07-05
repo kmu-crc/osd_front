@@ -198,7 +198,7 @@ const Detail = styled.div`
       border-radius:20px;
       font-family:${market_style.font.size.small1};
       font-weight:500;
-      background-color:red;
+      background-color:#FF3838;
       border:none;
       outline:none;
     }

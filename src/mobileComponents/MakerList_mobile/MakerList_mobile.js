@@ -34,8 +34,8 @@ const Wrapper =styled.div`
         justify-content:center;
         font-size:${market_style.font.size.small1};
         font-weight:500;
-        color:red;
-        border:2px solid red;
+        color:#FF3838;
+        border:2px solid #FF3838;
         border-radius:5px;
         box-shadow: 2px 2px 3px #00000019;
       }

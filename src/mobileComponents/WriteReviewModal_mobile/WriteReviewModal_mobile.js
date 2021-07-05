@@ -50,7 +50,7 @@ const WriteDialogMobile = styled(Modal)`
         width:100%;
         margin-top:20px;
         .okButton{
-            background-color:red;
+            background-color:#FF3838;
             width:100%;
             height:35px;
             border-radius:10px;

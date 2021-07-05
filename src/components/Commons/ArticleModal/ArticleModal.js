@@ -39,6 +39,7 @@ const WriteNormalArticleModal = styled(Modal)`
     height:max-content;
   }
   .editorBox{
+    margin-top:15px;
     width:100%;
   }
   .form{
@@ -47,6 +48,7 @@ const WriteNormalArticleModal = styled(Modal)`
       margin-bottom:15px;
       display:flex;
   }
+  .block{display:block;}
   .align_item_center{
     align-items:center;
   }
@@ -167,7 +169,7 @@ class ArticleModal extends Component {
               name="title"
             />
           </div>
-          <div className="form form_height">
+          <div className="form form_height block">
             <div className="title_label ">내용<Mandatory /></div>
             <div className="editorBox">
               <TextController

@@ -77,12 +77,12 @@ const RedButton = styled.div`
   height:35px;
   display:flex;
   border-radius:10px;
-  border:${props=>props.isLike==true?null:"2px solid red"};
+  border:${props=>props.isLike==true?null:"2px solid #FF3838"};
   box-shadow: 2px 2px 3px #00000019;
   justify-content:center;
   align-items:center;
-  background-color:${props=>props.isLike==true?"red":"white"};
-  color:${props=>props.isLike==true?"white":"red"};
+  background-color:${props=>props.isLike==true?"#FF3838":"white"};
+  color:${props=>props.isLike==true?"white":"#FF3838"};
   font-size:${market_style.font.size.small1};
   font-weight:800;
   margin-top:10px;
@@ -234,7 +234,7 @@ class DesignerDetail_mobile extends Component {
             <div className="thumbnail"/>
             <div className="row flex column justifyCenter">
                  <div className="fontBig black">{this.state.nick_name}</div>
-                 <div className="fontNormal marginTop1">{categoryName}&nbsp;|&nbsp;<span style={{color:"red"}}>♥</span>{likeCount || 0}</div>
+                 <div className="fontNormal marginTop1">{categoryName}&nbsp;|&nbsp;<span style={{color:"#FF3838"}}>♥</span>{likeCount || 0}</div>
                  <div className="fontSmall marginTop1">
                     {new Date(this.state.create_time).getFullYear()+"년"
                     +(new Date(this.state.create_time).getMonth()+1)+"월"

@@ -286,7 +286,7 @@ export default class Alarm extends Component {
                     }
                     return (
                       <AlarmItem key={index} className={item.confirm ? "confirm" : "unconfirm"} onClick={() => alarmtype ? null : this.alarmConfirm(item.uid,locationURL)}>
-                        <div style={item.confirm ? { width: "1%", height:"12px", backgroundColor: "#EAA" } : { width: "1%", height:"12px", backgroundColor: "red" }}>&nbsp;</div>
+                        <div style={item.confirm ? { width: "1%", height:"12px", backgroundColor: "#EAA" } : { width: "1%", height:"12px", backgroundColor: "#FF3838" }}>&nbsp;</div>
                         <div style={{ paddingLeft: "3px" }} >
                           <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "left" }}>
                             <div>

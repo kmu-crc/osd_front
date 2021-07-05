@@ -14,7 +14,7 @@ export const NewAlarmCircle = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
-    background-color: red;
+    background-color: #FF3838;
     border-radius: 100%;
     .count {
         text-align: center;

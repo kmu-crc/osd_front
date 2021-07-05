@@ -70,7 +70,7 @@ margin-top:100px;
         color:black;
       }
       .red_text{
-        color:red;
+        color:#FF3838;
         cursor:pointer;
       }
     }

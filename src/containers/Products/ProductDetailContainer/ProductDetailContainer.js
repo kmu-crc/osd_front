@@ -83,13 +83,13 @@ class ProductDetailContainer extends Component {
       .then(async ({ data }) => {
         if (data && data.success) {
           if (this.props.custom) {
-            await alert("구입이 완료되었습니다. [내 정보] > [의뢰상품]에서 확인하실 수 있습니다.");
-            window.location.href = `/myPage/`;
+            await alert("구입이 완료되었습니다. [내 정보] > [의뢰 아이템]에서 확인하실 수 있습니다.");
+            window.location.href = `/myPage/8`;
           } else {
             // alert("구입이 완료되었습니다. 해당 상품의 리뷰를 작성해주세요.");
             // window.location.href = `/productDetail/${item.item_id}`;
             await alert("구입이 완료되었습니다. [내 정보] > [구입 아이템]에서 확인하실 수 있습니다.");
-            window.location.href = `/myPage/`;
+            window.location.href = `/mypage/0`;
           }
         }
       })

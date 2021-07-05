@@ -38,7 +38,7 @@ const Wrapper= styled.div`
     align-items:center;
     color:white;
     border-radius:10px;
-    background-color:red;
+    background-color:##FF3838;
     margin-right:15px;
     font-size:${market_style.font.size.small1};
     font-weight:500;

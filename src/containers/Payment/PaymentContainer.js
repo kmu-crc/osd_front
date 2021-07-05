@@ -25,11 +25,11 @@ class PaymentContainer extends Component {
         console.log(res.data.success);
         if (res.data.success) {
           if (this.props.custom) {
-            await alert("구입이 완료되었습니다. [내 정보] > [의뢰상품]에서 확인하실 수 있습니다.");
-            window.location.href = `/myPage/`;
+            await alert("구입이 완료되었습니다. [내 정보] > [의뢰 아이템]에서 확인하실 수 있습니다.");
+            window.location.href = `/mypage/8`;
           } else {
             await alert("구입이 완료되었습니다. [내 정보] > [구입 아이템]에서 확인하실 수 있습니다.");
-            window.location.href = `/myPage/`;
+            window.location.href = `/mypage/0`;
 
           }
         }

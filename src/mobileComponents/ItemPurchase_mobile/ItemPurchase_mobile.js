@@ -81,8 +81,8 @@ const ReviewButton = styled.div`
   width:100px;
   height:26px;
   padding:4px 20px 5px 20px;
-  border:1px solid red;
-  color:red;
+  border:1px solid #FF3838;
+  color:#FF3838;
   font-weight:400;
   font-size:${market_style.font.size.small1};
 
@@ -215,7 +215,7 @@ const CustomButton = styled.div`
     justify-content:center;
     align-items:center;
     color:white;
-    background-color:red; 
+    background-color:#FF3838; 
     font-weight:500;
     border-radius:20px;
 `

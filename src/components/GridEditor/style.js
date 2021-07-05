@@ -173,8 +173,11 @@ padding:15px 10px;
            display:flex;
            align-items:center;
            .update_{
-               font-size:${market_style.font.size.mini2};
-               font-weight:300;
+            width:180px;
+            font-size:${market_style.font.size.mini1};
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
            }
            .close_{
                margin-left:10px;
@@ -291,7 +294,11 @@ z-index: 100;
            display:flex;
            align-items:center;
            .update_{
-               font-size:${market_style.font.size.mini2};
+               width:150px;
+               font-size:${market_style.font.size.mini1};
+               overflow: hidden;
+               text-overflow: ellipsis;
+               white-space: nowrap;
            }
            .close_{
                margin-left:50px;

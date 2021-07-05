@@ -24,8 +24,8 @@ const ReviewButton = styled.div`
   width:100px;
   height:26px;
   padding:4px 20px 5px 20px;
-  border:1px solid red;
-  color:red;
+  border:1px solid #FF3838;
+  color:#FF3838;
   font-weight:400;
   font-size:${market_style.font.size.small1};
 
@@ -117,12 +117,12 @@ const RedButton = styled.div`
   height:35px;
   display:flex;
   border-radius:10px;
-  border:${props=>props.isLike==true?null:"2px solid red"};
+  border:${props=>props.isLike==true?null:"2px solid #FF3838"};
   box-shadow: 2px 2px 3px #00000019;
   justify-content:center;
   align-items:center;
-  background-color:${props=>props.isLike==true?"red":"white"};
-  color:${props=>props.isLike==true?"white":"red"};
+  background-color:${props=>props.isLike==true?"#FF3838":"white"};
+  color:${props=>props.isLike==true?"white":"#FF3838"};
   font-size:${market_style.font.size.small1};
   font-weight:800;
   margin-top:10px;

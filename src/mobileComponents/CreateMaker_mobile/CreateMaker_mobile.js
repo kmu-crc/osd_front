@@ -45,7 +45,7 @@ const Wrapper = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    color:red;
+    color:#FF3838;
     font-weight:800;
     padding:4px 0px 4px 0px;
   }
@@ -54,7 +54,7 @@ const Button = styled.div`
   width:100%;
   height:35px;
   border-radius:10px;
-  background-color:${props=>props.background==null?"red":props.background};
+  background-color:${props=>props.background==null?"#FF3838":props.background};
   color:${props=>props.color==null?"white":props.color};
   box-shadow: 2px 2px 3px #00000019;
   display:flex;
@@ -434,7 +434,7 @@ class CreateMaker_mobile extends Component {
           <div className="greyButton" onClick={this.handleShowModal}>갤러리 등록</div>
           </ShadowBox> */}
         </Wrapper>
-        <Button onClick={this.onSubmit} background="red" color="white">저장하기</Button>
+        <Button onClick={this.onSubmit} background="#FF3838" color="white">저장하기</Button>
         <Button onClick={this.onClickCancel} background="#707070" color="white">취소하기</Button>
       </React.Fragment>
     );

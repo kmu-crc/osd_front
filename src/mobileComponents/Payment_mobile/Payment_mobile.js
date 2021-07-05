@@ -36,7 +36,7 @@ const Wrapper = styled.div`
       .textRight{text-align:right;}
       .ellipsis{width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
       .colorGrey{color:#707070;}
-      .colorRed{color:red;}
+      .colorRed{color:#FF3838;}
       .colorBlack{color:black;}
       .thumbnail{
         min-width:152px;

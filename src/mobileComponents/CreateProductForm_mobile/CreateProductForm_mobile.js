@@ -72,7 +72,7 @@ const Wrapper = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    color:red;
+    color:#FF3838;
     font-weight:800;
     padding:4px 0px 4px 0px;
   }
@@ -153,7 +153,7 @@ const ShadowBox = styled.div`
 const Button = styled.div`
   width:${props=>props.width==null?"100%":props.width+"px"};
   height:35px;
-  background-color:${props=>props.bgColor == null?"red":props.bgColor};
+  background-color:${props=>props.bgColor == null?"#FF3838":props.bgColor};
   color:${props=>props.fontColor == null?"white":props.fontColor};
   display:flex;
   justify-content:center;
@@ -342,7 +342,7 @@ const DesignElement = styled.div`
     .update-time { 
       margin-top: 5px;
       font-weight: 300;
-      border: 1px solid red;
+      border: 1px solid #FF3838;
       width: max-content;
       height: 25px;
       font-size:${market_style.font.size.small3};
@@ -809,7 +809,7 @@ class CreateProductForm_mobile extends Component {
                내용을 입력해주신 후 아이템을 등록해주세요.</InfoContentChooseItemType>}
           </div>
           </ShadowBox>
-          <Button bgColor="red" fontColor="white" onClick={this.onSubmit} >등록하기</Button>
+          <Button bgColor="#FF3838" fontColor="white" onClick={this.onSubmit} >등록하기</Button>
           <Button bgColor="#707070" fontColor="white"
               onClick={async () => {
                 if (await confirm("이전페이지로 돌아가며, 작업한 모든 내용은 사라집니다.")) {

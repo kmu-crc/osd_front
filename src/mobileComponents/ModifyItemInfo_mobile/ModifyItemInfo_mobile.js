@@ -66,11 +66,11 @@ const Wrapper = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    color:red;
+    color:#FF3838;
     font-weight:800;
     padding:4px 0px 4px 0px;
   }
-  .allRed{background-color:red;color:white;box-shadow:2px 2px 5px #00000029;}
+  .allRed{background-color:#FF3838;color:white;box-shadow:2px 2px 5px #00000029;}
   .greyButton{
     width:100%;
     border-radius:10px;
@@ -94,7 +94,7 @@ const ModifyButton = styled.div`
   justify-content:center;
   font-size:${market_style.font.size.small1};
   font-weight:500;
-  color:${props=>props.select==true?"red":"black"};
+  color:${props=>props.select==true?"#FF3838":"black"};
 `
 const ShadowBox = styled.div`
   width:100%;
@@ -153,7 +153,7 @@ const ShadowBox = styled.div`
 const Button = styled.div`
   width:${props=>props.width==null?"100%":props.width+"px"};
   height:35px;
-  background-color:${props=>props.bgColor == null?"red":props.bgColor};
+  background-color:${props=>props.bgColor == null?"#FF3838":props.bgColor};
   color:${props=>props.fontColor == null?"white":props.fontColor};
   display:flex;
   justify-content:center;
@@ -625,7 +625,7 @@ const ItemContents = styled.div`
       margin-left: 10px;
       width: 120px;
       height: 31px;
-      background-color: red;
+      background-color: #FF3838;
       font: normal normal 300 13px/19px Noto Sans KR;
       color: white;
       border: none;
