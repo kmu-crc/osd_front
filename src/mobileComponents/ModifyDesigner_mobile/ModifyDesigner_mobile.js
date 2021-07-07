@@ -134,6 +134,7 @@ const ShadowBox = styled.div`
     background-size:cover;
     margin-right:10px;
   }
+  .marginBottom1{margin-bottom:10px;}
   .greyButton{
     width:100%;
     border-radius:10px;
@@ -481,7 +482,7 @@ class ModifyDesigner_mobile extends Component {
           </ShadowBox>
           <ShadowBox>
           <div className="title">갤러리</div>
-          <div className="greyButton" onClick={this.handleShowModal}>갤러리 등록</div>
+          <div className="greyButton marginBottom1" onClick={this.handleShowModal}>갤러리 등록</div>
           <div className="contensts">
               {<HaveInGalleryContainer_mobile handlerIsGalleryModify={this.handlerIsGalleryModify} id={this.props.id} isModify={true} />}
           </div>

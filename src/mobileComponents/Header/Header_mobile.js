@@ -46,7 +46,8 @@ const InputText = styled.input.attrs({ type: "text" })`
   width:100%;
   height:25px;
   border-radius:22px;
-  background-color:#eaeaea;
+  background-color:${props=>props.isMain==false?'#eaeaea':'white'};
+  box-shadow: 2px 2px 5px #00000029;
   outline:none;
   border:0px;
   padding:0px 30px 0px 10px;
@@ -179,14 +180,24 @@ class Header_mobile extends Component {
     const searchtype = designerActive ? "designer" : makerActive ? "maker" : itemActive ? "item" : null;
 
     const pattern_eng= /[a-zA-Z]/;
-    console.log(userInfo);
+    console.log(window.location.pathname.includes("/search/"));
     return (
-        <HeaderContainer id="headerWrapper" onScroll={()=>{console.log("?")}} isMain={window.location.pathname=='/'?false:true} width={userInfo==null?"100%":"310px"}>
+        <HeaderContainer id="headerWrapper" onScroll={()=>{console.log("?")}} isMain={window.location.pathname=='/'?true:false} width={userInfo==null?"100%":"310px"}>
           <div className="search_wrapper">
-            <InputText onChange={this.saveKeyword} onKeyDown={this.submitEnter}/>
-            <Link to={`/search/${searchtype}/update/${this.state.keyword}`} id="searchLink">
-              <img alt="icon" src={Zoom} id="searchBox" className="search" onClick={this.onClickSearch}/>
-            </Link>
+            {
+              window.location.pathname.includes("/search/")==true
+              ||window.location.pathname.includes("/signup")==true
+              ||window.location.pathname.includes("/signin")==true
+              ||window.location.pathname.includes("/resetPW")==true?
+              null
+              :
+              <React.Fragment>
+                  <InputText isMain={window.location.pathname=='/'?true:false} onChange={this.saveKeyword} onKeyDown={this.submitEnter}/>
+                  <Link to={`/search/${searchtype}/update/${this.state.keyword}`} id="searchLink">
+                    <img alt="icon" src={Zoom} id="searchBox" className="search" onClick={this.onClickSearch}/>
+                  </Link>
+              </React.Fragment>
+            }
           </div>
           {
             userInfo == null?

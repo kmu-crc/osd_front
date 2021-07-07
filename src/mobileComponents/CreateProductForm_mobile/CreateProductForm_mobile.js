@@ -107,6 +107,7 @@ const ShadowBox = styled.div`
   .row{
     width:100%;
   }
+  .row2{width:70%;}
   .label{
     min-width:100px;
   }
@@ -115,6 +116,7 @@ const ShadowBox = styled.div`
   .marginTop2{margin-top:10px;}
   .marginTop3{margin-top:20px;}
   .marginRight{margin-right:10px;}
+  .marginBottom1{margin-bottom:10px;}
   .fontBig{font-size:${market_style.font.size.small1};font-weight:800;}
   .font{font-size:${market_style.font.size.small1};font-weight:500;}
   .fontNormal{font-size:${market_style.font.size.small1};font-weight:400;}
@@ -147,6 +149,15 @@ const ShadowBox = styled.div`
     align-items:center;
     color:black;
     padding:4px 0px 5px 0px;
+  }
+  .checkbox_wrapper{
+    display:flex;
+    align-items:center;
+    margin-left:10px;
+    .text{
+      min-width:max-content;
+      margin-left:10px;
+    }
   }
 `
 
@@ -538,7 +549,7 @@ const FormBox = styled.div`
     margin-bottom: 10px;
   }
   & .title-input {
-    width: 35%;
+    width: 100%;
     height: 31px;
     background: #E9E9E9 0% 0% no-repeat padding-box;
     border-radius: 10px;
@@ -553,16 +564,19 @@ const FormBox = styled.div`
     margin-right:10px;
   }
   .checkbox_wrapper{
+    border:1px solid black;
+    margin-right:10px;
+    margin-left:10px;
     width:max-content;
     height:25px;
     display:flex;
-    align-items:center;
     .checkbox{
       width:max-content;
       height:25px;
       margin-right:5px;
     }
     .text{
+      width:max-content;
       height:max-content;
     }
   }
@@ -773,7 +787,7 @@ class CreateProductForm_mobile extends Component {
               <div className="thumbnail"/>
               <div className="row">
                 <div className="flex alignCenter">
-                  <div className="fontNormal maxContent marginRight">제목</div>
+                  <div className="fontNormal maxContent marginRight">제목<sup style={{color:"red"}}>*</sup></div>
                   <InputText placeholder="제목을 입력하세요" name="title" value={this.state.title || ""} onChange={this.onChangeValue} />
                   {/* <span className="fontBig black">{this.props.userInfo.nickName}</span> */}
                 </div>
@@ -785,7 +799,7 @@ class CreateProductForm_mobile extends Component {
           </ShadowBox>
           <ShadowBox ShadowOpacity={true}>
             <div className="row flex marginTop3 alignCenter">
-              <div className="label font black">카테고리</div>
+              <div className="label font black">카테고리<sup style={{color:"red"}}>*</sup></div>
                 <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
                 <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
             </div>
@@ -794,7 +808,7 @@ class CreateProductForm_mobile extends Component {
               <InputTag placeholder="태그를 입력하고 [enter]키를 누르세요" getValue={this.onHandleReturnedTags} />
             </div>
             <div className="row flex marginTop3 alignCenter">
-              <div className="label font black">아이템 유형</div>
+              <div className="label font black">아이템 유형<sup style={{color:"red"}}>*</sup></div>
               <DropBox upward selection options={ItemType} placeholder="아이템 유형" onChange={this.onClickItemType} />
             </div>
             <div className="row flex alignCenter">
@@ -1035,20 +1049,25 @@ class ItemTypeForm extends Component {
               {itemType === 8 ? <ItemLecture return={this.onHandleAdditional} /> : null}
             </div>
           {headers && headers.map((head, index) =>
-            <div className="marginTop3">
-              {itemType === 8 ? <div style={{ display: "flex" }}>
-                <input onChange={(e) => {
-                  const copy = headers.map((_head, _index) => {
-                    if (index === _index) {
-                      _head.name = e.target.value;
-                    }
-                    return _head;
-                  });
-                  this.setState({ headers: copy });
-                }} value={head.name} className="title-input" placeholder="강의내용" />
+            <div className="marginTop3 ">
+              {itemType === 8 ? <div style={{ display: "flex" }} className="marginBottom1">
+                <div className="row2">
+                <InputText 
+                      onChange={(e) => {
+                        const copy = headers.map((_head, _index) => {
+                            if (index === _index) {
+                            _head.name = e.target.value;
+                          }
+                          return _head;
+                        });
+                        this.setState({ headers: copy });
+                      }} 
+                      value={head.name} 
+                      placeholder="강의내용" 
+                />
+                </div>
                 <label>
                   <div className="checkbox_wrapper">
-                    <div className="checkbox">
                       <CheckBox2
                         onChange={() => {
                           const copy = headers.map((_head, _index) => {
@@ -1060,7 +1079,7 @@ class ItemTypeForm extends Component {
                           this.setState({ headers: copy });
                         }}
                         checked={head.is_practice}
-                      /></div>
+                      />
                     <div className="text">파생가능</div>
                   </div>
                 </label>
@@ -1595,10 +1614,10 @@ class ItemLecture extends Component {
           <InputNumberText width={100} onBlur={(e) => { if (e.target.value > 1000) { this.setState({ max_students: 1000 }); } }} onChange={this.onHandleMaxStudent} min="1" max="1000" name="max_students" value={max_students} />&nbsp;명&nbsp;
         </div>
         <div className="row flex marginTop3">
-          <div className="label font black marginTop1">수강생 모집기간</div>
+          <div className="label font black marginTop1">모집기간</div>
           <div style={{ display: "flex", flexWrap: "wrap" }}>
-            <div>
-              <CheckBox2 onChange={() => this.setState({ recruit_always: !recruit_always, })} checked={recruit_always} /></div>&nbsp;상시모집&nbsp;&nbsp;
+            <div style={{display:"flex",alignItems:"center"}}>
+              <CheckBox2 onChange={() => this.setState({ recruit_always: !recruit_always, })} checked={recruit_always} />&nbsp;상시모집&nbsp;&nbsp;</div>
           <div style={{ marginTop: "10px" }}>
               {!recruit_always
                 ? <InputCalendar

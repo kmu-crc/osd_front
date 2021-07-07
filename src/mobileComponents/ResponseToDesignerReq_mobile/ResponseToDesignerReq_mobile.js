@@ -30,19 +30,20 @@ const LocationList = [
   { value: 15, text: "제한없음" },
 ];
 const Wrapper =styled.div`
+width:100%;
+min-height:700px;
+overflow-x:hidden;
+padding:0px 10px;
+.header{
   width:100%;
-  min-height:700px;
-  overflow-x:hidden;
-  padding:0px 10px;
-  .header{
-    width:100%;
-    text-align:center;
-    font-size:${market_style.font.size.normal2};
-    font-weight:800;
-    color:#c1c1c1;
-    margin-top:3px;
-    margin-bottom:10px;
-  }
+  height:29px;
+  text-align:center;
+  font-size:${market_style.font.size.normal2};
+  font-weight:800;
+  color:#c1c1c1;
+  margin-top:3px;
+  margin-bottom:10px;
+}
   .redButton{
     width:100%;
     height:35px;
@@ -269,7 +270,7 @@ class ResponseToDesignerReq_mobile extends Component {
     })
     return (
       <React.Fragment>
-              <Wrapper>
+        <Wrapper>
         <div className="header">
           {detail.type === "designer" ? "디자인 의뢰 응답" : null}
         </div>
@@ -295,7 +296,12 @@ class ResponseToDesignerReq_mobile extends Component {
            <div className="row flex marginTop3">
               <div className="label">태그</div>
               <div className="flex flexWrap">
-                {detail && detail.tag && detail.tag.split(",").map((item, index) =><TagPiece key={item + index} >{item}</TagPiece>)}
+                {
+                detail == null || detail.tag == null?
+                "태그 없음"
+                :
+                detail && detail.tag && detail.tag.split(",").map((item, index) =><TagPiece key={item + index} >{item}</TagPiece>)
+                }
               </div>
            </div>
            <div className="row flex marginTop3">

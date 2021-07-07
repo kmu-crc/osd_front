@@ -261,10 +261,10 @@ class Payment extends Component {
                                         <div className="row_label">상품 금액</div>
                                         <div className="row_content font_small">{item.price/(item.price>9999?10000:1)|| 0}{item.price>9999?"만":""}{unit}</div>
                                     </Row>
-                                    <Row>
+                                    {/* <Row>
                                         <div className="row_label">배송비</div>
                                         <div className="row_content font_small">0{unit}</div>
-                                    </Row>
+                                    </Row> */}
                                 </div>
                             </div>
                                 <div className="sub_Box border_gray_left">

@@ -204,7 +204,7 @@ class ModifyMyDetail_mobile extends Component {
     return (
       <React.Fragment>
         <Wrapper>
-          <div className="header">내 정보</div>
+          <div className="header">내 정보 수정</div>
           <Profile thumbnail={this.state.thumbnail}>
             <div className="thumbnail"/>
             <input hidden onChange={this.handleOnChangeThumbnail} id="file_" type="file" />

@@ -5,7 +5,7 @@ import Cross from "components/Commons/Cross";
 import noimg from "source/noimg.png";
 import Star from "components/Commons/Star";
 import { Rating } from 'semantic-ui-react'
-import arrow from "source/rightarrow.svg";
+import arrow from "source/review_arrow.svg";
 import market_style from "market_style";
 const AddPic = styled.div`
     min-width:${props=>props.width}px;
@@ -51,7 +51,8 @@ const Dialog = styled(Modal)`
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 5px 5px 10px #00000029;
     opacity: 1;
-    padding:13px 10px !important;
+    padding:13px 10px 20px 10px !important;
+    border-radius:10px !important;
     ::-webkit-scrollbar {
         position: absolute;
         width: 3.9px;
@@ -109,6 +110,14 @@ const Dialog = styled(Modal)`
     }
     .flex_column{
         flex-direction:column;
+    }
+    .grad1{
+        opacity:0.5;
+        background: transparent linear-gradient(270deg, #FFFFFF00 0%, #FFFFFF95 50%, #FFFFFF 100%) 0% 0% no-repeat padding-box;    
+    }
+    .grad2{
+        opacity:0.5;
+        background: transparent linear-gradient(90deg, #FFFFFF00 0%, #FFFFFF95 50%, #FFFFFF 100%) 0% 0% no-repeat padding-box;    
     }
     .review-content{
         width:100%;
@@ -226,8 +235,21 @@ class ReviewDetailModal extends Component {
                                     return(<AddPic key={index} width={180} height={180} img={item} marginRight={20}/>);
                                 })
                             }
-                            {thumbnail_list.length>=2?<span className="btn"><CustomButton rotate={180}  onClick={()=>{document.getElementById("pic_list").scrollBy(document.getElementById("pic_list").scrollLeft-800,0)}} img={arrow} width={29} height={59} style={{position:"absolute",left:"0px",top:"60px"}}/></span>:null}
-                            {thumbnail_list.length>=2?<span className="btn"><CustomButton  onClick={()=>{document.getElementById("pic_list").scrollBy(document.getElementById("pic_list").scrollLeft+400,0)}} img={arrow} width={29} height={59} style={{position:"absolute",right:"0px",top:"60px"}}/></span>:null}
+                            {thumbnail_list.length>=2?
+                            <div className="grad1"  style={{position:"absolute",width:"60px",height:"100%"}}>
+                                <CustomButton width={10} height={20} rotate={180}  
+                                             onClick={()=>{document.getElementById("pic_list").scrollBy(document.getElementById("pic_list").scrollLeft-800,0)}} 
+                                             img={arrow} style={{position:"absolute",left:"10px",top:"80px"}}/>
+                            </div>
+                            :null}
+                            {
+                            thumbnail_list.length>=2?
+                            <div className="grad2" style={{position:"absolute",right:"0px",width:"60px",height:"100%"}}>
+                                <CustomButton width={10} height={20}  
+                                onClick={()=>{document.getElementById("pic_list").scrollBy(document.getElementById("pic_list").scrollLeft+400,0)}} 
+                                img={arrow}  style={{ position:"absolute",right:"10px",top:"80px"}}/>
+                                </div>
+                            :null}
                         </div>:thumbnail_list.length==0?null:<AddPic  width={300} height={300}img={thumbnail_list[0]}/>}
                         
                     </div>

@@ -1,6 +1,6 @@
 // import React from 'react'
 import styled from 'styled-components'
-import { Modal } from "semantic-ui-react"
+import { Modal,Transition } from "semantic-ui-react"
 
 
 export const AlarmWrapper = styled.div`

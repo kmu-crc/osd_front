@@ -218,7 +218,14 @@ export const DesignRequestDetail = (props) => {
       </div>
       <div className="row">
         <div className="label">태그</div>
-        <div className="content taglist">{tag && tag.split(",").map((t, index) => <p key={t + index} className="tag">{t}</p>)}</div>
+        <div className="content taglist">
+          {
+            tag== null || tag.length==0?
+            "태그 없음"
+            :
+            tag && tag.split(",").map((t, index) => <p key={t + index} className="tag">{t}</p>)
+          }
+        </div>
       </div>
       <div className="row">
         <div className="label">의뢰 내용</div>

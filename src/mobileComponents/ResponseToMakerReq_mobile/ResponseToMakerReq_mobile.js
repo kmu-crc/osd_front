@@ -314,7 +314,12 @@ class ResponseToMakerReq_mobile extends Component {
            <div className="row flex marginTop3">
               <div className="label">태그</div>
               <div className="flex flexWrap">
-                {detail && detail.tag && detail.tag.split(",").map((item, index) =><TagPiece key={item + index} >{item}</TagPiece>)}
+                {
+                  detail == null || detail.tag == null ?
+                  "태그 없음"
+                  :
+                  detail && detail.tag && detail.tag.split(",").map((item, index) =><TagPiece key={item + index} >{item}</TagPiece>)
+                }
               </div>
            </div>
            <div className="row flex marginTop3">

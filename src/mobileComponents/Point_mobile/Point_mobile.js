@@ -62,7 +62,7 @@ const NormalBox = styled.div`
   }
   .tableRow{
     width:100%;
-    height:32px;
+    height:42px;
     border-bottom:1px solid #E9E9E9;
     display:flex;
     .textLeft{text-align:left;}

@@ -314,7 +314,12 @@ class ModifyResponseToMakerReq_mobile extends Component {
            <div className="row flex marginTop3">
               <div className="label">태그</div>
               <div className="flex flexWrap">
-                {request && request.tag && request.tag.split(",").map((item, index) =><TagPiece key={item + index} >{item}</TagPiece>)}
+                {
+                request == null || request.tag == null?
+                "태그 없음"
+                :
+                request && request.tag && request.tag.split(",").map((item, index) =><TagPiece key={item + index} >{item}</TagPiece>)
+                }
               </div>
            </div>
            <div className="row flex marginTop3">

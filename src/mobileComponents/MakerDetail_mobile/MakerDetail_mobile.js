@@ -268,6 +268,12 @@ class MakerDetail_mobile extends Component {
                 <div className="fontBig black">태그</div>
                 <div className="row flex flexWrap fontNormal marginTop1">
                   {
+                    this.state.tag == null ?
+                    "태그 없음"
+                    :
+                    null
+                  }
+                  {
                     typeof this.state.tag === "string"
                       ? this.state.tag.split(",").map((item, index) =>
                         item ? <TagPiece key={index}>{item}</TagPiece> : null)
@@ -314,7 +320,10 @@ class MakerDetail_mobile extends Component {
         </ShadowBox>
         <RedButton isLike={this.state.isLike} onClick={this.onClickisLike}>관심 디자이너 등록</RedButton>
         {
-          this.state.career&&this.state.career.length==0
+          this.state.experience&&
+          this.state.experience.split("/")&&
+          ((this.state.experience.split("/").length>0&&this.state.experience.split("/")[0]=="0,,,")||
+          this.state.experience.split("/").length<=0)
           ?
           null
           :

@@ -253,6 +253,9 @@ class DesignerDetail_mobile extends Component {
                 <div className="fontBig black">태그</div>
                 <div className="row flex flexWrap fontNormal marginTop1">
                     {
+                      this.state.tag == null || this.state.tag.length == 0?
+                      "태그 없음"
+                      :
                       this.state.tag.map((item, index) => {
                         return (
                           <TagPiece key={index}>
@@ -266,6 +269,17 @@ class DesignerDetail_mobile extends Component {
           <div className="marginTop2"/>
         </ShadowBox>
         <RedButton isLike={this.state.isLike} onClick={this.onClickisLike}>관심 디자이너 등록</RedButton>
+        {
+        (this.state.career&&this.state.career.length>0
+        &&
+        (this.state.career[0].number=="0"
+        &&this.state.career[0].task==""
+        &&this.state.career[0].explain==""
+        &&this.state.career[0].during==""))
+        ||this.state.career&&this.state.career.length<=0
+        ?
+        null:
+        <React.Fragment>
         <Header>디자인 경험</Header>
         <ShadowBox>
           <div className="row paddingNormal">
@@ -282,6 +296,8 @@ class DesignerDetail_mobile extends Component {
           })}
           </div>
         </ShadowBox>
+        </React.Fragment>
+        }
         <Header>디자인 아이템</Header>
         <div>
           <HaveInItemContainer_mobile id={this.props.id} />

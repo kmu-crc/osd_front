@@ -1,9 +1,9 @@
 import * as types from "actions/ActionTypes";
 import host from "config";
 
-export const GetDesignListRequest = (page, sort, cate1, cate2, keyword) => {
+export const GetDesignListRequest = (page, sort, cate1, cate2, cate3, keyword) => {
   return (dispatch) => {
-    const url = `${host}/item/list/${page}/${sort}/${cate1}/${cate2}/${keyword}`;
+    const url = `${host}/item/list/${page}/${sort}/${cate1}/${cate2}/${cate3}/${keyword}`;
     console.log(url);
     return fetch(url, {
       headers: { "Content-Type": "application/json" },

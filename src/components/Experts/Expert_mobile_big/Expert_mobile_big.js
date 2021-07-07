@@ -13,24 +13,30 @@ const Wrapper = styled.div`
   border-radius:10px;
   border:1px solid #eaeaea;
   box-shadow: 2px 2px 5px #00000029;
-  padding:10px;
+  padding:5px 10px;
   display:flex;
   flex-direction:column;
   align-items:cemter;
   .face{
-    width:150px;
-    height:150px;
+    min-width:150px;
+    min-height:150px;
+    max-width:150px;
+    max-height:150px;
     background-image: url(${props=>props.face});
     background-size:cover;
     border-radius:50%;
   }
   .nickName{
     width:100%;
+    min-height:22px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
     font-size:${market_style.font.size.small1};
     font-weight:800;
     color:black;
     text-align:center;
-    margin-top:10px;
+    margin-top:5px;
   } 
   .bottomBox{
     width:100%;

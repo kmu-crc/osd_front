@@ -18,6 +18,7 @@ class ScrollMakerListContainer extends Component {
     return this.props.GetMakerListRequest(page, this.props.sort, this.props.cate1, this.props.cate2, this.props.cate3, this.props.keyword);
   }
   render() {
+    console.log("=====",this.props.sort, this.props.cate1, this.props.cate2, this.props.cate3, this.props.keyword);
     return (
 
       <ScrollList
@@ -40,9 +41,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetMakerListRequest: (page, sort, categoryLevel1, categoryLevel2, categoryLevel3, keyword) => {
-      return dispatch(GetMakerListRequest(page, sort, categoryLevel1, categoryLevel2, categoryLevel3, keyword))
-    }
+    GetMakerListRequest: (page, sort, cate1, cate2, cate3, keyword) => dispatch(GetMakerListRequest(page, sort, cate1, cate2, cate3, keyword)),
   };
 };
 

@@ -399,7 +399,11 @@ class ModifyResponseToMakerReq extends Component {
             <div className="label">태그</div>
             <div className="content">
               <TagList>
-                {request && request.tag && request.tag.split(",").map((item, index) =>
+                {
+                  request == null || request.tag == null || request.tag.length==0?
+                  "태그 없음"
+                  :
+                  request && request.tag && request.tag.split(",").map((item, index) =>
                   <TagPiece key={index}>
                     {item}
                   </TagPiece>

@@ -44,12 +44,13 @@ const ReplyBox= styled.div`
     align-items:center;
     cursor:pointer;
     .number{
-        min-width:96px;
+        min-width:35px;
+        margin-right:10px;
     }
     .comment{
         display:flex;
         width:100%;
-        margin-right:35px;
+        margin-right:10px;
         overflow:hidden;
         .commentText{
             width:100%;
@@ -63,15 +64,15 @@ const ReplyBox= styled.div`
     }
     .nickname{
         min-width:100px;
-        margin-right:35px;
+        margin-right:20px;
         text-align:right;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
     .createtime{
-        min-width:100px;
-        margin-left:100px;
+        min-width:max-content;
+        margin-left:0px;
     }
     &:hover{
         .comment{
@@ -145,6 +146,7 @@ const Page = styled.div`
 //    outline:none;
 //`
 const ReplyForm = styled.textarea`
+
         width:100%;
         height:60px;
         outline:none;

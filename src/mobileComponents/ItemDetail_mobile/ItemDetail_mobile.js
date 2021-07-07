@@ -21,7 +21,8 @@ const Wrapper = styled.div`
   padding:0px 10px;
 `
 const ReviewButton = styled.div`
-  width:100px;
+  width:max-content;
+  min-width:100px;
   height:26px;
   padding:4px 20px 5px 20px;
   border:1px solid #FF3838;
@@ -43,6 +44,7 @@ const ShadowBox = styled.div`
   .marginLeft{margin-left:10px;}
   .marginTop{margin-top:10px;}
   .marginBottom{margin-bottom:5px;}
+  .paddingRight{padding-right:10px;}
   .padding{padding:10px;}
   .flex{display:flex;}
   .hCenter{justify-content:center;}
@@ -70,7 +72,14 @@ const ShadowBox = styled.div`
     flex-direction:column;
     justify-content:space-between;
   }
-
+  .detail{
+    width:100%;
+    margin-right:20px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    height:max-content;
+    min-height:300px;
+  }
   .thumbnail{
     min-width:152px;
     min-height:140px;
@@ -208,14 +217,16 @@ class ItemDetail_mobile extends Component {
         
         <Wrapper>
           <ShadowBox img={item.thumbnail ? item.thumbnail.l_img : noimg} face={item.who||who}>
+          <div className="row flex column">
+
             <div className="row flex">
               <div className="thumbnail"/>
               <div className="profile">
                 <div className="row marginLeft">
-                  <div className="fontBig ellipsis row">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
+                  <div className="fontBig ellipsis row paddingRight">{this.props.ProductDetail == null ? item.title : this.props.ProductDetail.title}</div>
                   <div className="flex vCenter marginTop">
                     <div className="face"/>
-                    <div className="fontNormal">
+                    <div className="fontNormal paddingRight">
                         {item.userName}
                         {this.props.userInfo && item.members && item.members.length > 0
                         ?
@@ -251,6 +262,9 @@ class ItemDetail_mobile extends Component {
                 <div className="fontBig marginTop marginBottom">태그</div>
                 <div className="row flex flexWrap">
                       {
+                        tag == null || tag.length == 0?
+                        "태그 없음"
+                        :
                         tag.indexOf(",") == -1 ? null : tag.split(",").map((item, index) => {
                           return (
                             <TagPiece key={index}>
@@ -261,6 +275,7 @@ class ItemDetail_mobile extends Component {
                       }
                 </div>
               </div>
+          </div>
           </ShadowBox>
           <RedButton isLike={this.state.isLike} onClick={this.onClickLike}>
             {this.state.isLike == true? "관심 항목":"관심 항목 등록"}
@@ -291,6 +306,7 @@ class ItemDetail_mobile extends Component {
           }
           <Header>아이템 상세내용</Header>
           <ShadowBox>
+            <div className="detail">
             {item &&
               item.headers &&
               item.headers.length > 0 &&
@@ -305,6 +321,7 @@ class ItemDetail_mobile extends Component {
                           : null}
                       </div>
               )}
+              </div>
           </ShadowBox>
           <Header>리뷰
               {

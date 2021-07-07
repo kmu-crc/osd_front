@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  GetDesignListRequest: (page, sort, categoryLevel1, categoryLevel2, keyword) => dispatch(GetDesignListRequest(page, sort, categoryLevel1, categoryLevel2, keyword))
+  GetDesignListRequest: (page, sort, categoryLevel1, categoryLevel2, categoryLevel3, keyword) => dispatch(GetDesignListRequest(page, sort, categoryLevel1, categoryLevel2, categoryLevel3, keyword))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScrollDesignListContainer);

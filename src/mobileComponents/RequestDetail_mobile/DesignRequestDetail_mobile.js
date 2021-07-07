@@ -30,6 +30,7 @@ const Wrapper =styled.div`
   padding:0px 10px;
   .header{
     width:100%;
+    height:29px;
     text-align:center;
     font-size:${market_style.font.size.normal2};
     font-weight:800;
@@ -74,6 +75,7 @@ const ShadowBox = styled.div`
   box-shadow: 2px 2px 5px #00000029;
   border:1px solid #eaeaea;
   padding:20px;
+  margin-bottom:15px;
   .row{
     width:100%;
   }
@@ -209,7 +211,12 @@ export const DesignRequestDetail_mobile = (props) => {
            <div className="row flex marginTop3">
               <div className="label">태그</div>
               <div className="flex flexWrap">
-                {tag && tag.split(",").map((t, index) => <TagPiece key={t + index} >{t}</TagPiece>)}
+                {
+                tag == null ?
+                "태그 없음"
+                :
+                tag && tag.split(",").map((t, index) => <TagPiece key={t + index} >{t}</TagPiece>)
+                }
               </div>
            </div>
            <div className="row flex marginTop3">
@@ -246,9 +253,13 @@ export const DesignRequestDetail_mobile = (props) => {
            </div>
         </ShadowBox>
         <div className="buttonBox">
+        {(props.userInfo && props.userInfo.uid) == (props.Detail && props.Detail.client_id) ?
+          <div onClick={() => window.location.href = `/ModifyrequestTo${type == "designer" ? "Designer" : "Maker"}/` + props.Detail.uid} className="redButton">의뢰수정</div>
+          :
           <Link className="reply" to={{ pathname: `/responseTo${type}Req/${props.Detail.uid}`, state: { detail: props.Detail, expert: props.MyDetail } }}>
             <div className="redButton" >의뢰응답</div>    
           </Link>
+        }
           <div className="greyButton" onClick={() => props.returnToList()} >목록으로</div>    
         </div>
       </Wrapper>

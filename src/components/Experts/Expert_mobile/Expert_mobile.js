@@ -20,6 +20,10 @@ const Wrapper = styled.div`
   .face{
     width:130px;
     height:130px;
+    min-height:22px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
     background-image: url(${props=>props.face});
     background-size:cover;
     border-radius:50%;
@@ -37,7 +41,7 @@ const Wrapper = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    margin-top:7px;
+    margin-top:5px;
     .category{
       font-size:${market_style.font.size.small1};
     }

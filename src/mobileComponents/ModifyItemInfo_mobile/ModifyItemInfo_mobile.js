@@ -928,7 +928,7 @@ class ModifyItemInfo_mobile extends Component {
               <div className="thumbnail"/>
               <div className="row">
                 <div className="flex alignCenter">
-                  <div className="fontNormal maxContent marginRight">제목</div>
+                  <div className="fontNormal maxContent marginRight">제목<sup style={{color:"red"}}>*</sup></div>
                   <InputText placeholder="제목을 입력하세요" name="title" value={this.state.title || ""} onChange={this.onChangeValue} />
                 </div>
                 <label htmlFor="file">
@@ -949,7 +949,7 @@ class ModifyItemInfo_mobile extends Component {
          <React.Fragment>
           <ShadowBox ShadowOpacity={true}>
             <div className="row flex marginTop3 alignCenter">
-              <div className="label font black">카테고리</div>
+              <div className="label font black">카테고리<sup style={{color:"red"}}>*</sup></div>
                 <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
                 <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
             </div>
@@ -958,7 +958,7 @@ class ModifyItemInfo_mobile extends Component {
                 <InputTag taglist={this.state.tag} getValue={this.onHandleReturnedTags} />
             </div>
             <div className="row flex marginTop3 alignCenter">
-              <div className="label font black">아이템 유형</div>
+              <div className="label font black">아이템 유형<sup style={{color:"red"}}>*</sup></div>
               {ItemType.map(itemtype => (itemtype.value === this.state.itemType && itemtype.text))}
             </div>
             {itemType === 0 ?
@@ -1135,16 +1135,17 @@ class ModifyItemInfo_mobile extends Component {
                   </div>
 
                   <div className="row flex marginTop3">
-                    <div className="label font black marginTop1">수강생 모집기간</div>
+                    <div className="label font black marginTop1">모집기간</div>
                     <div style={{ display: "flex", flexWrap: "wrap" }}>
                     <div>
+                    <div style={{display:"flex",alignItems:"center"}}>
                     <CheckBox2 onChange={async () => {
                       let copy = { ...this.state.additional };
                       copy.recruit_always = !this.state.additional.recruit_always;
                       await this.setState({ additional: copy });
                     }}
                     
-                      checked={this.state.additional.recruit_always} />&nbsp;상시모집&nbsp;&nbsp;
+                      checked={this.state.additional.recruit_always} />&nbsp;상시모집&nbsp;&nbsp;</div>
                       {!this.state.additional.recruit_always
                       ? <InputCalendar
                         name="calendar"

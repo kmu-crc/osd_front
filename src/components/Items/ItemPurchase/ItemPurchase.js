@@ -782,18 +782,6 @@ class ItemPurchase extends Component {
                       {item.type === 6 ? "지적재산권" : null}
                       {item.type === 7 ? "제작품" : null}
                     </div>
-                    {/* <div className="title marginBottom">태그</div>
-                    <div className="flex flex-wrap">
-                      {
-                        tag.indexOf(",") == -1 ? null : tag.split(",").map((item, index) => {
-                          return (
-                            <TagPiece key={index}>
-                              {item}
-                            </TagPiece>
-                          );
-                        })
-                      }
-                    </div> */}
                   </div>
                 </Introduction>
               </div>
