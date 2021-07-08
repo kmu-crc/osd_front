@@ -1,6 +1,6 @@
 // import React from 'react'
 import styled from 'styled-components'
-import { Modal } from "semantic-ui-react"
+import { Modal,Transition } from "semantic-ui-react"
 
 
 export const AlarmWrapper = styled.div`
@@ -14,7 +14,7 @@ export const NewAlarmCircle = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
-    background-color: red;
+    background-color: #FF3838;
     border-radius: 100%;
     .count {
         text-align: center;

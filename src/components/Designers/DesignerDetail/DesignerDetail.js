@@ -708,6 +708,9 @@ class DesignerDetail extends Component {
             <div className="title">태그</div>
             <div className="text flex flexWrap">
               {
+                this.state.tag.length == 0 ||this.state.tag==null ?
+                "태그 없음"
+                :
                 this.state.tag.map((item, index) => {
                   return (
                     <TagPiece key={index}>
@@ -733,10 +736,6 @@ class DesignerDetail extends Component {
         ?
         null:
         <AdditionalInfo height={190} mTop={20}>
-          {
-                    console.log(this.state.career)
-
-          }
           <div className="title margin_bottom">디자인 경험</div>
         <div className="wrapItem">
         <ExpTable>

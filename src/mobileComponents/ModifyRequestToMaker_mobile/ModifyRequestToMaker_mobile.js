@@ -31,7 +31,7 @@ const Button = styled.div`
   width:100%;
   height:35px;
   border-radius:10px;
-  background-color:${props=>props.background==null?"red":props.background};
+  background-color:${props=>props.background==null?"#FF3838":props.background};
   color:${props=>props.color==null?"white":props.color};
   box-shadow: 2px 2px 3px #00000019;
   display:flex;
@@ -77,7 +77,7 @@ const ShadowBox = styled.div`
   .flexEnd{justify-content:flex-end;}
   .column{flex-direction:column;}
   .textRight{text-align:right;}
-  .red{color:red;}
+  .red{color:#FF3838;}
   .ellipsis{width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 }
 `
@@ -331,7 +331,7 @@ class ModifyRequestToMaker_mobile extends Component {
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
-    const Mandatory = () => <span style={{ color: "red" }} title="필수사항입니다.">*</span>
+    const Mandatory = () => <span style={{ color: "#FF3838" }} title="필수사항입니다.">*</span>
 
     return (
       <React.Fragment>
@@ -422,7 +422,7 @@ class ModifyRequestToMaker_mobile extends Component {
             </div>
           </ShadowBox>
           <div className="buttonBox">
-          <Button onClick={this.onSubmit} background={"red"} color="white">등록하기</Button>
+          <Button onClick={this.onSubmit} background={"#FF3838"} color="white">등록하기</Button>
           <Button onClick={() => { window.history.back() }} background="#707070" color="white">취소하기</Button>
           <Button onClick={this.onClickDelete} background="#707070" color="white">삭제하기</Button>
           </div>

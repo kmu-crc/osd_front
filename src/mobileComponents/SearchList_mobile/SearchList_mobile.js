@@ -4,22 +4,21 @@ import Sorting from "components/Commons/Sorting";
 import ContentBox from "components/Commons/ContentBox";
 import StyleGuide from "StyleGuide";
 import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown";
-import ScrollItemListContainer from "containers/Products/ScrollProductListContainer";
-import ScrollMakerListContainer from "containers/Maker/ScrollMakerListContainer";
-import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer";
+import ScrollProductListContainer_mobile from "mobileComponents/ScrollProductListContainer_mobile";
+import ScrollMakerListContainer_mobile from "mobileComponents/ScrollMakerListContainer_mobile";
+import ScrollDesignerListContainer_mobile from "mobileComponents/ScrollDesignerListContainer_mobile";
 import { alert } from "components/Commons/Alert/Alert";
 import market_style from "market_style";
-// import { Grid } from "semantic-ui-react";
-// import { confirm } from "components/Commons/Confirm/Confirm";
-// css styling
 
 const MainBox = styled.div`
 
 ` 
-const Wrapper = styled.div`
-  width: 102%;
-  overflow:hidden;
-  padding:${props=>props.marginType=="item"?"0px 13em":"0px 15em"};
+const Wrapper_ = styled.div`
+  width:100%;
+  display:flex;
+  justify-content:center;
+  margin-top:15px;
+  // padding:${props=>props.marginType=="item"?"0px 13em":"0px 15em"};
   & ul {
     margin-top: 30px;
   }
@@ -28,31 +27,12 @@ const Wrapper = styled.div`
     margin-left: auto;
     margin-right: 25px;
   }
-  @media only screen and (min-width: 600px) and (max-width:1366px){
-    padding:${props=>props.marginType=="item"?"0px 3em":"0px 7em"};
-
-  }
-@media only screen and (min-width: 0px) and (max-width:600px){
-  padding:${props=>props.marginType=="item"?"0px":"0px 5em"};
-}
 `;
-const Content = styled.div`
-  overflow:hidden;
-`
-// const Content = styled(ContentBox)`
-// @media only screen and (max-width: 991px) and (min-width: 768px){
-//   & .ui.grid>.row{
-//     margin-left: 6.25% !important;
-//   }
-//   }
-// `;
 const ImgWrapper = styled.div`
   width: 100%;
   height: max-content;
   margin-bottom:7px;
   margin-top:15px;
-  // position: relative;
-  // border-top: 1px solid rgba(0,0,0,0.2);
 `;
 
 const Title = styled.div`
@@ -91,27 +71,21 @@ const Title = styled.div`
   }
   & .searchBtn .icon {
     font-size: ${market_style.font.size.small3};
-    color: ${StyleGuide.color.gey.basic};
+    color: ${StyleGuide.color.geyScale.basic};
   }
 `;
 
 const MenuWrap = styled.div`
-
+  width:100%;
   background-color: white;
   margin-bottom: 15px;
-  padding:0px 213px;
+  padding:0px 10px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   .dropstyle{
     min-width:max-content;
     height:max-content;
-  }
-  @media only screen and (min-width: 600px) and (max-width:1120px){
-    padding:0px 7em;
-  }
-  @media only screen and (min-width: 0px) and (max-width:600px){
-    padding:0px 20%;
   }
 `;
 
@@ -121,7 +95,7 @@ const type = [
   { key: "maker", value: "maker", text: "메이커" }
 ];
 
-class SearchList extends Component {
+class SearchList_mobile extends Component {
   state = {
     rendering: true,
     keyword: ""
@@ -246,24 +220,19 @@ class SearchList extends Component {
                   placeholder={typetext}
                   options={type}
                   onChange={this.typeChange} />
-              <div className="left">
-                <Sorting
-                  handleClick={this.sortChange}
-                  placeholder={this.props.sort} />
-              </div>
         </MenuWrap>
-        <Content>
+        <div>
           {this.state.rendering &&
-            <Wrapper marginType={this.props.type}>
-              {this.props.type === "designer" ? <ScrollDesignerListContainer isSmall={true} sort={this.props.sort} keyword={this.props.keyword} /> : null}
-              {this.props.type === "maker" ? <ScrollMakerListContainer isSmall={true} sort={this.props.sort} keyword={this.props.keyword} /> : null}
-              {this.props.type === "item" ? <ScrollItemListContainer isSearch={true} isSmall={true} sort={this.props.sort} keyword={this.props.keyword} /> : null}
-            </Wrapper>
+            <Wrapper_ marginType={this.props.type}>
+              {this.props.type === "designer" ? <ScrollDesignerListContainer_mobile isSmall={true} sort={this.props.sort} keyword={this.props.keyword} /> : null}
+              {this.props.type === "maker" ? <ScrollMakerListContainer_mobile isSmall={true} sort={this.props.sort} keyword={this.props.keyword} /> : null}
+              {this.props.type === "item" ? <ScrollProductListContainer_mobile isSearch={true} isSmall={true} sort={this.props.sort} keyword={this.props.keyword} /> : null}
+            </Wrapper_>
           }
-        </Content>
+        </div>
       </MainBox>
     )
   }
 }
 
-export default SearchList;
+export default SearchList_mobile;

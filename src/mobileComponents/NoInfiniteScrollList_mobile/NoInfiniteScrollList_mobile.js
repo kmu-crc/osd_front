@@ -54,10 +54,10 @@ const NoData = styled.div`
   justify-content:center;
   align-items:center;
   width: max-content;
-  padding: 57px 20px 57px 0px;
+  padding: 57px 20px 57px 20px;
   text-align: center;
   font-size:${market_style.font.size.normal1};
-  color:red;
+  color:#FF3838;
   font-family: Noto Sans KR;
   font-weight: 500;
 `;

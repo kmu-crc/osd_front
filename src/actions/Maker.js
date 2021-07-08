@@ -2,9 +2,9 @@ import * as types from "actions/ActionTypes";
 import host from "config";
 
 // NORMAL
-export const GetMakerListRequest = (page, sort, cate1, cate2, keyword) => {
+export const GetMakerListRequest = (page, sort, cate1, cate2, cate3, keyword) => {
   return (dispatch) => {
-    const url = `${host}/maker/list/${page}/${sort}/${cate1}/${cate2}/${keyword}`;
+    const url = `${host}/maker/list/${page}/${sort}/${cate1}/${cate2}/${cate3}/${keyword}`
     return fetch(url, {
       headers: { "Content-Type": "application/json" },
       method: "GET"

@@ -19,13 +19,15 @@ class ScrollDesignerListContainer extends Component {
   }
 
   render() {
+    console.log(this.props.sort, this.props.cate1, this.props.cate2, this.props.cate3, this.props.keyword);
     return (
       <ScrollList
-        getListRequest={this.getList}
         isSmall={this.props.isSmall}
+        getListRequest={this.getList}
         ListComponent={this.props.isSmall == true ? Expert_small : Expert}
         type="designer"
-        dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
+        dataList={this.props.dataList} 
+        dataListAdded={this.props.dataListAdded}
       />
     );
   }

@@ -34,9 +34,10 @@ const MainBox = styled.div`
   .marginBottom1{margin-bottom:10px;}
   .marginBottom2{margin-bottom:50px;}
   .alignCenter{align-items:center;}
+  .bold{font-weight:600;}
   .row{
     width:100%;
-    margin-bottom:20px;
+    margin-bottom:10px;
     display:flex;
     align-items:center;
   }
@@ -53,8 +54,14 @@ const MainBox = styled.div`
   }
   .marginRight{margin-right:30px;}
   .fontSmall{font-size:${market_style.font.size.mini2};}
-  .red{color:red;}
+  .red{color:#FF3838;}
   .flex{display:flex;align-items:center;}
+  .content2{
+    height:19px;
+    display:flex;
+    align-items:center;
+    margin-bottom:5px;
+  }
   
 `
 const InputText = styled.input`
@@ -77,9 +84,9 @@ const RedButton = styled.div`
   width:${props=>props.width==null?"100%":props.width+"px"};
   height:${props=>props.height==null?"100%":props.height+"px"};
   color:${props=>props.color==null?"white":props.color};
-  background-color:${props=>props.bgColor==null?"red":props.bgColor};
+  background-color:${props=>props.bgColor==null?"#FF3838":props.bgColor};
   border-radius:${props=>props.borderRadius==null?"0px":props.borderRadius+"px"};
-  border:2px solid red;
+  border:2px solid #FF3838;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -298,10 +305,10 @@ class SignUpForm_mobile extends Component {
                 placeholder="휴대폰 번호를 입력하세요."
                 onChange={this.onChangePhone} />
             </div>
-            <CustomBox height={2} />
+            <CustomBox height={2} marginTop={14}/>
             <div className="row alignCenter">
               <div className="label"><div className="red">이용약관</div></div>
-              <div className=""><CheckBox onChange={this.onCheckAllOk} checked={this.state.checkAllOk} id="allOk" />전체동의</div>
+              <div className="bold"><CheckBox onChange={this.onCheckAllOk} checked={this.state.checkAllOk} id="allOk" />전체동의</div>
             </div>
             <div className="row2 alignCenter">
               <div className="label" />
@@ -318,7 +325,7 @@ class SignUpForm_mobile extends Component {
             <div className="row2">
             <CustomButton borderRadius={10} onClick={this.onSubmit}
               width={396}
-              height={30}
+              height={35}
               bgColor={"#FF3838"}
               fontColor={"white"}>가입하기</CustomButton>
             </div>

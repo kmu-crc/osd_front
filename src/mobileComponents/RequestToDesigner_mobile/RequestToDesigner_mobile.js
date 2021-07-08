@@ -75,7 +75,7 @@ const ShadowBox = styled.div`
   .flexEnd{justify-content:flex-end;}
   .column{flex-direction:column;}
   .textRight{text-align:right;}
-  .red{color:red;}
+  .red{color:#FF3838;}
   .ellipsis{width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 }
 `
@@ -215,7 +215,7 @@ class RequestToDesigner_mobile extends Component {
   render() {
     const category1 = this.props.category1 || [{ text: "_", value: -1 }];
     const category2 = (this.state.category_level1 && this.props.category2 && this.props.category2.filter(item => item.parent === this.state.category_level1)) || [{ text: "_", value: -1 }];
-    const Mandatory = () => <span style={{ color: "red" }} title="필수사항입니다.">*</span>
+    const Mandatory = () => <span style={{ color: "#FF3838" }} title="필수사항입니다.">*</span>
 
     console.log(this.props);
     const { userInfo } = this.props;
@@ -304,7 +304,7 @@ class RequestToDesigner_mobile extends Component {
             </div>
           </ShadowBox>
           <div className="buttonBox">
-          <Button onClick={this.onSubmit} background={"red"} color="white">등록하기</Button>
+          <Button onClick={this.onSubmit} background={"#FF3838"} color="white">등록하기</Button>
           <Button onClick={() => { window.history.back() }} background="#707070" color="white">취소하기</Button>
           </div>
         </Wrapper>

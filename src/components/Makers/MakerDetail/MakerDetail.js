@@ -674,6 +674,12 @@ class MakerDetail extends Component {
                 <div className="title">태그</div>
                 <div className="text flex flexWrap">
                   {
+                    this.state.tag==null||this.state.tag.length==0?
+                    "태그없음"
+                    :
+                    null
+                  }
+                  {
                     typeof this.state.tag === "string"
                       ? this.state.tag.split(",").map((item, index) =>
                         item ? <TagPiece key={index}>{item}</TagPiece> : null)
@@ -684,6 +690,9 @@ class MakerDetail extends Component {
                 <div className="title">보유기술</div>
                 <div className="text flex flexWrap">
                   {
+                    this.state.technique==null||this.state.technique.length==0?
+                    "태그없음"
+                    :
                     this.state.technique.map((item, index) => {
                       return (
                         <TagPiece key={index}>
@@ -696,6 +705,9 @@ class MakerDetail extends Component {
                 <div className="title">보유장비</div>
                 <div className="text flex flexWrap">
                   {
+                    this.state.equipment==null||this.state.equipment.length==0?
+                    "태그없음"
+                    :
                     this.state.equipment.map((item, index) => {
                       return (
                         <TagPiece key={index}>

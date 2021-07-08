@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetLikeInItemRequest } from "actions/Product";
 import PagingList_mobile from "mobileComponents/PagingList_mobile";
-import Item_myDetail_mobile from "components/Items/Item_myDetail_mobile";
+import Item_mobile from "components/Items/Item_mobile";
 import styled from "styled-components";
 import { Pagination } from 'semantic-ui-react'
 import market_style from "market_style";
@@ -79,7 +79,7 @@ class LikeInItemContainer_mobile extends Component {
 
         <PagingList_mobile getListRequest={this.getList}
           type="sales"
-          ListComponent={Item_myDetail_mobile}
+          ListComponent={Item_mobile}
           dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
           mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom" />
         {

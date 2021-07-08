@@ -57,11 +57,11 @@ const Profile = styled.div`
     width:162px;
     height:30px;
     border-radius:10px;
-    border:2px solid red;
+    border:2px solid #FF3838;
     display:flex;
     align-items:center;
     justify-content:center;
-    color:red;
+    color:#FF3838;
     font-size:${market_style.font.size.small1};
   }
 `
@@ -83,7 +83,7 @@ const RedButton = styled.div`
   box-shadow: 2px 2px 3px #00000019;
   justify-content:center;
   align-items:center;
-  background-color:red;
+  background-color:#FF3838;
   color:white;
   font-size:${market_style.font.size.small1};
   font-weight:800;
@@ -204,7 +204,7 @@ class ModifyMyDetail_mobile extends Component {
     return (
       <React.Fragment>
         <Wrapper>
-          <div className="header">내 정보</div>
+          <div className="header">내 정보 수정</div>
           <Profile thumbnail={this.state.thumbnail}>
             <div className="thumbnail"/>
             <input hidden onChange={this.handleOnChangeThumbnail} id="file_" type="file" />

@@ -78,7 +78,7 @@ class LikeInDesignerContainer_mobile extends Component {
         <div className="header">관심 디자이너</div>
 
         <PagingList_mobile getListRequest={this.getList}
-          type="sales_Expert"
+          type="designer"
           ListComponent={Expert_mobile_big}
           dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
           mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom" />

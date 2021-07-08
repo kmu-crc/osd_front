@@ -31,8 +31,8 @@ const Wrapper = styled.div`
   .marginBotton2{margin-bottom:20px;}
 
   .active{
-    background-color:red;
-    border:2px solid red;
+    background-color:#FF3838;
+    border:2px solid #FF3838;
     color:white;
   }
   .none{
@@ -62,7 +62,7 @@ const NormalBox = styled.div`
   }
   .tableRow{
     width:100%;
-    height:32px;
+    height:42px;
     border-bottom:1px solid #E9E9E9;
     display:flex;
     .textLeft{text-align:left;}
@@ -102,7 +102,7 @@ const ShadowBox = styled.div`
   .vCenter{align-items:center;}
   .mypoint{
     font-size:${market_style.font.size.small1};
-    color:red;
+    color:#FF3838;
   }
 
   .label{
@@ -136,7 +136,7 @@ const ShadowBox = styled.div`
     align-items:center;
   }
   .payActive{
-    background-color:red;
+    background-color:#FF3838;
     color:white;
   }
 `
@@ -155,12 +155,12 @@ const RedButton = styled.div`
   height:35px;
   display:flex;
   border-radius:10px;
-  border:${props=>props.isRed==true?null:"2px solid red"};
+  border:${props=>props.isRed==true?null:"2px solid #FF3838"};
   box-shadow: 2px 2px 3px #00000019;
   justify-content:center;
   align-items:center;
-  background-color:${props=>props.isRed==true?"red":"white"};
-  color:${props=>props.isRed==true?"white":"red"};
+  background-color:${props=>props.isRed==true?"#FF3838":"white"};
+  color:${props=>props.isRed==true?"white":"#FF3838"};
   font-size:${market_style.font.size.small1};
   font-weight:800;
   margin-top:20px;

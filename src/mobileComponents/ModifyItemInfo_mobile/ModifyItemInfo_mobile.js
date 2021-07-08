@@ -66,11 +66,11 @@ const Wrapper = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    color:red;
+    color:#FF3838;
     font-weight:800;
     padding:4px 0px 4px 0px;
   }
-  .allRed{background-color:red;color:white;box-shadow:2px 2px 5px #00000029;}
+  .allRed{background-color:#FF3838;color:white;box-shadow:2px 2px 5px #00000029;}
   .greyButton{
     width:100%;
     border-radius:10px;
@@ -94,7 +94,7 @@ const ModifyButton = styled.div`
   justify-content:center;
   font-size:${market_style.font.size.small1};
   font-weight:500;
-  color:${props=>props.select==true?"red":"black"};
+  color:${props=>props.select==true?"#FF3838":"black"};
 `
 const ShadowBox = styled.div`
   width:100%;
@@ -153,7 +153,7 @@ const ShadowBox = styled.div`
 const Button = styled.div`
   width:${props=>props.width==null?"100%":props.width+"px"};
   height:35px;
-  background-color:${props=>props.bgColor == null?"red":props.bgColor};
+  background-color:${props=>props.bgColor == null?"#FF3838":props.bgColor};
   color:${props=>props.fontColor == null?"white":props.fontColor};
   display:flex;
   justify-content:center;
@@ -625,7 +625,7 @@ const ItemContents = styled.div`
       margin-left: 10px;
       width: 120px;
       height: 31px;
-      background-color: red;
+      background-color: #FF3838;
       font: normal normal 300 13px/19px Noto Sans KR;
       color: white;
       border: none;
@@ -928,7 +928,7 @@ class ModifyItemInfo_mobile extends Component {
               <div className="thumbnail"/>
               <div className="row">
                 <div className="flex alignCenter">
-                  <div className="fontNormal maxContent marginRight">제목</div>
+                  <div className="fontNormal maxContent marginRight">제목<sup style={{color:"red"}}>*</sup></div>
                   <InputText placeholder="제목을 입력하세요" name="title" value={this.state.title || ""} onChange={this.onChangeValue} />
                 </div>
                 <label htmlFor="file">
@@ -949,7 +949,7 @@ class ModifyItemInfo_mobile extends Component {
          <React.Fragment>
           <ShadowBox ShadowOpacity={true}>
             <div className="row flex marginTop3 alignCenter">
-              <div className="label font black">카테고리</div>
+              <div className="label font black">카테고리<sup style={{color:"red"}}>*</sup></div>
                 <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
                 <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
             </div>
@@ -958,7 +958,7 @@ class ModifyItemInfo_mobile extends Component {
                 <InputTag taglist={this.state.tag} getValue={this.onHandleReturnedTags} />
             </div>
             <div className="row flex marginTop3 alignCenter">
-              <div className="label font black">아이템 유형</div>
+              <div className="label font black">아이템 유형<sup style={{color:"red"}}>*</sup></div>
               {ItemType.map(itemtype => (itemtype.value === this.state.itemType && itemtype.text))}
             </div>
             {itemType === 0 ?
@@ -1135,16 +1135,17 @@ class ModifyItemInfo_mobile extends Component {
                   </div>
 
                   <div className="row flex marginTop3">
-                    <div className="label font black marginTop1">수강생 모집기간</div>
+                    <div className="label font black marginTop1">모집기간</div>
                     <div style={{ display: "flex", flexWrap: "wrap" }}>
                     <div>
+                    <div style={{display:"flex",alignItems:"center"}}>
                     <CheckBox2 onChange={async () => {
                       let copy = { ...this.state.additional };
                       copy.recruit_always = !this.state.additional.recruit_always;
                       await this.setState({ additional: copy });
                     }}
                     
-                      checked={this.state.additional.recruit_always} />&nbsp;상시모집&nbsp;&nbsp;
+                      checked={this.state.additional.recruit_always} />&nbsp;상시모집&nbsp;&nbsp;</div>
                       {!this.state.additional.recruit_always
                       ? <InputCalendar
                         name="calendar"

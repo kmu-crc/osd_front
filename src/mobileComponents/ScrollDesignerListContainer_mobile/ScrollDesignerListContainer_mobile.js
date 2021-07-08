@@ -3,6 +3,13 @@ import { connect } from "react-redux";
 import { GetDesignerListRequest } from "actions/Designer";
 import ScrollList_mobile from "mobileComponents/ScrollList_mobile";
 import Expert_mobile_big from "components/Experts/Expert_mobile_big";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  width:100%;
+  display:flex;
+  margin-left:8px;
+`
 
 class ScrollDesignerListContainer_mobile
  extends Component {
@@ -20,12 +27,14 @@ class ScrollDesignerListContainer_mobile
 
   render() {
     return (
+      <Wrapper>
       <ScrollList_mobile
         getListRequest={this.getList}
         ListComponent={Expert_mobile_big}
         type="designer"
         dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
       />
+      </Wrapper>
     );
   }
 }

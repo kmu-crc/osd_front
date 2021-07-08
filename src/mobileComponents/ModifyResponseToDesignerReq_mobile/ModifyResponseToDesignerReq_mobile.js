@@ -50,7 +50,7 @@ const Wrapper =styled.div`
     color:white;
     box-shadow: 2px 2px 3px #00000019;
     margin-top:15px;
-    background-color:red;
+    background-color:#FF3838;
     border-radius:10px;
     font-size:${market_style.font.size.small1};
   }
@@ -117,7 +117,7 @@ const ShadowBox = styled.div`
   .column{flex-direction:column;}
   .textRight{text-align:right;}
   .ellipsis{width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .red{color:red;}
+  .red{color:#FF3838;}
 }
 `
 const RedButton = styled.div`
@@ -125,12 +125,12 @@ const RedButton = styled.div`
   height:35px;
   display:flex;
   border-radius:10px;
-  border:${props=>props.isLike==true?null:"2px solid red"};
+  border:${props=>props.isLike==true?null:"2px solid #FF3838"};
   box-shadow: 2px 2px 3px #00000019;
   justify-content:center;
   align-items:center;
-  background-color:${props=>props.isLike==true?"red":"white"};
-  color:${props=>props.isLike==true?"white":"red"};
+  background-color:${props=>props.isLike==true?"#FF3838":"white"};
+  color:${props=>props.isLike==true?"white":"#FF3838"};
   font-size:${market_style.font.size.small1};
   font-weight:800;
   margin-top:10px;
@@ -170,7 +170,7 @@ const CustomIcon = styled.div`
   width:100%;
   height:35px;
   border-radius:10px;
-  background-color:${props=>props.background==null?"red":props.background};
+  background-color:${props=>props.background==null?"#FF3838":props.background};
   color:${props=>props.color==null?"white":props.color};
   box-shadow: 2px 2px 3px #00000019;
   display:flex;
@@ -305,7 +305,12 @@ class ModifyResponseToDesignerReq_mobile extends Component {
            <div className="row flex marginTop3">
               <div className="label">태그</div>
               <div className="flex flexWrap">
-                {request && request.tag && request.tag.split(",").map((item, index) =><TagPiece key={item + index} >{item}</TagPiece>)}
+                {
+                request == null || request.tag == null?
+                "태그 없음"
+                :
+                request && request.tag && request.tag.split(",").map((item, index) =><TagPiece key={item + index} >{item}</TagPiece>)
+                }
               </div>
            </div>
            <div className="row flex marginTop3">
@@ -374,7 +379,7 @@ class ModifyResponseToDesignerReq_mobile extends Component {
                 </div>
             </div>
         </ShadowBox>
-          <Button onClick={this.onSubmit} background={"red"} color="white">수정하기</Button>
+          <Button onClick={this.onSubmit} background={"#FF3838"} color="white">수정하기</Button>
           <Button onClick={() => { window.history.back() }} background="#707070" color="white">취소하기</Button>
         </Wrapper>
       </React.Fragment>

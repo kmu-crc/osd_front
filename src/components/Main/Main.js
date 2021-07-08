@@ -8,6 +8,8 @@ import ScrollTopItem_mobile from "mobileComponents/ScrollTopItem_mobile";
 import SliderContainer from "containers/Commons/SliderContainer";
 import market_style from "market_style";
 
+import arrow_right from "source/arrow_right_new.svg"
+
 // CSS STYLE
 const Margin = 1 / 3 * 45;
 const MainContainer = styled.div`
@@ -36,7 +38,8 @@ const Head = styled.div`
   opacity: 1;
 `;
 const Head_mobile = styled.div`
-  width: max-content;
+
+  width: 100%;
   text-align: left;
   font-weight: 700;
   font-size: ${market_style.font.size.normal3};
@@ -46,6 +49,24 @@ const Head_mobile = styled.div`
   letter-spacing: 0;
   color: #C1C1C1;
   opacity: 1;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  .seeall{
+    width:max-content;
+    font-size:${market_style.font.size.mini2};
+    color:#707070;
+    display:flex;
+    align-items:center;
+    height:19px;
+  }
+  .arrow{
+    background-image:url(${arrow_right});
+    background-size:contain;
+    width:6px;
+    height:10px;
+    margin-right:10px;
+  }
 `
 
 class Main extends Component {
@@ -76,15 +97,22 @@ class Main extends Component {
         <React.Fragment>
           <Mobile_Wrapper>
             <Head_mobile marginTop={10}>
+                    <div>
                     인기 디자이너&nbsp;
                     <span style={{fontSize:market_style.font.size.smal3}}>|</span>
                     &nbsp;메이커
+                    </div>
+                    <div onClick={()=>{window.location.href="/designer"}} className="seeall">전체보기&nbsp;<div className="arrow"/></div>
               </Head_mobile>
             <ScrollTopDesigner_mobile/>
           </Mobile_Wrapper>
           <Mobile_Wrapper>
               <Head_mobile marginTop={15}>
+                    <div>
                     인기 아이템
+                    </div>
+                    <div onClick={()=>{window.location.href="/product"}} className="seeall">전체보기&nbsp;<div className="arrow"/></div>
+
               </Head_mobile>
               <ScrollTopItem_mobile/>
           </Mobile_Wrapper>

@@ -8,7 +8,7 @@ import market_style from "market_style";
 const Wrapper = styled.div`
 border:1px solid black;
 *{
-  border:1px solid red;
+  border:1px solid #FF3838;
 }
 width:100%;
 height:max-content;

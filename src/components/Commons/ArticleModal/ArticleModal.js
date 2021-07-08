@@ -9,15 +9,12 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
 const WriteNormalArticleModal = styled(Modal)`
   width: ${props => props.isFullScreen && window.innerWidth || 1000}px;
-  // height: ${props => props.isFullScreen && window.innerHeight - 100 || 500}px;
   height: max-content;
-  // min-width: 300px;
-  // min-height: 200px;
 
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
   border-radius: 15px !important;
-  padding: 20px 33px;
+  padding: 20px 10px;
   
   .upper-box{
     width: 100%;
@@ -39,6 +36,7 @@ const WriteNormalArticleModal = styled(Modal)`
     height:max-content;
   }
   .editorBox{
+    margin-top:15px;
     width:100%;
   }
   .form{
@@ -47,6 +45,7 @@ const WriteNormalArticleModal = styled(Modal)`
       margin-bottom:15px;
       display:flex;
   }
+  .block{display:block;}
   .align_item_center{
     align-items:center;
   }
@@ -167,7 +166,7 @@ class ArticleModal extends Component {
               name="title"
             />
           </div>
-          <div className="form form_height">
+          <div className="form form_height block">
             <div className="title_label ">내용<Mandatory /></div>
             <div className="editorBox">
               <TextController
@@ -176,7 +175,7 @@ class ArticleModal extends Component {
                 item={{ content: content }}
                 name={"content"}
                 getValue={async (data) => { this.setState({ content: data }) }}
-                height={200}
+                height={180}
               />
             </div>
           </div>

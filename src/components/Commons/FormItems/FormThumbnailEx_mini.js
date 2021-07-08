@@ -14,7 +14,7 @@ const InputWrap = styled.div`
     height: 25px;
   }
   .find{
-    width:100px;
+    width:max-content;
     padding:5px 21px 4px 21px;
     border-radius:16px;
     border:1px solid red;

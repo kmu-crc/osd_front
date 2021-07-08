@@ -6,7 +6,7 @@ import { PxToVH, PxToVW } from "modules/PxtoViewport";
 
 export const Container = styled.div`
     *{ font-family:Noto Sans KR; }
-    *{ border: 1px solid red; }
+    *{ border: 1px solid #FF3838; }
     display: flex;
     justify-content: center;
     margin-top: ${PxToVH(35)}vh;
@@ -199,7 +199,7 @@ export const Chatting = styled.div`
       .button-style{
         min-width:60px;
         min-height:40px;
-        background-color: red;
+        background-color: #FF3838;
         width: 35px;
         height: 35px;
         display:flex;

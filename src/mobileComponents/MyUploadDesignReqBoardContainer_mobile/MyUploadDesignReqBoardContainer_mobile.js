@@ -59,7 +59,7 @@ class MyUploadDesignReqBoardContainer_mobile extends Component {
         dataListAdded={this.props.dataListAdded}
         getListRequest={this.getList}
         ListComponent={RequestListElement_mobile}
-        type={"payment"}
+        type={"request"}
        />
       </Wrapper>
     )

@@ -36,7 +36,7 @@ const Wrapper = styled.div`
       .textRight{text-align:right;}
       .ellipsis{width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
       .colorGrey{color:#707070;}
-      .colorRed{color:red;}
+      .colorRed{color:#FF3838;}
       .colorBlack{color:black;}
       .thumbnail{
         min-width:152px;
@@ -116,10 +116,10 @@ class Payment_mobile extends Component {
                         <div className="colorGrey fontNormal marginRight1">상품 금액</div>
                         <div className="colorBlack fontNormal">{item.price/(item.price>9999?10000:1)|| 0}{item.price>9999?"만":""}{unit}</div>
                     </div>
-                    <div className="row flex marginTop4half">
+                    {/* <div className="row flex marginTop4half">
                         <div className="colorGrey fontNormal marginRight1">배송비</div>
                         <div className="colorBlack fontNormal">0{unit}</div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="row marginTop5 flex">
                    <div className="fontBig marginRight1">결제 정보&nbsp;&nbsp;&nbsp;|</div>

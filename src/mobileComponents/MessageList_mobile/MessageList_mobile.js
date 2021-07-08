@@ -198,7 +198,7 @@ const Detail = styled.div`
       border-radius:20px;
       font-family:${market_style.font.size.small1};
       font-weight:500;
-      background-color:red;
+      background-color:#FF3838;
       border:none;
       outline:none;
     }
@@ -413,7 +413,7 @@ class MessageList_mobile extends Component {
                 <div className="search_label">대화상대 검색</div>
                 <div className="search_input">
                 <FormInput_mobile
-                          type="text" name="search" placeholder={window.innerWidth > 700 ? "찾고자 하는 회원의 닉네임을 입력해 주세요." : "닉네임 검색"} validates={["MinLength2"]} getValue={this.getValue} value={this.state.searchform} />            <img alt="icon" src={Zoom} id="searchBox" className="zoomicon" onClick={this.onClickSearch}/>
+                          type="text" name="search" placeholder={"회원의 닉네임을 입력해주세요"} validates={["MinLength2"]} getValue={this.getValue} value={this.state.searchform} />            <img alt="icon" src={Zoom} id="searchBox" className="zoomicon" onClick={this.onClickSearch}/>
                 </div>
             </div>
               <div className="search_list" style={this.state.openMember ? { display: "block" } : { display: "none" }}>

@@ -86,7 +86,7 @@ const ProfileBox = styled.div`
     .fontMini{font-size:${market_style.font.size.mini2};}
     .fontStyleNormal{font-family:Noto Sans KR; font-weight:500;}
     .fontStyleLight{font-family:Noto Sans KR; font-weight:200;}
-    .red{color:red;}
+    .red{color:#FF3838;}
     .normal{color:#060000;}
     .nickName{
       text-align:center;
@@ -258,7 +258,7 @@ const BoardBox = styled.div`
         text-align:right;
       }
       .redText{
-        color:red;
+        color:#FF3838;
         cursor:pointer;
       }
       .title {

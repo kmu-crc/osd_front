@@ -77,12 +77,12 @@ const RedButton = styled.div`
   height:35px;
   display:flex;
   border-radius:10px;
-  border:${props=>props.isLike==true?null:"2px solid red"};
+  border:${props=>props.isLike==true?null:"2px solid #FF3838"};
   box-shadow: 2px 2px 3px #00000019;
   justify-content:center;
   align-items:center;
-  background-color:${props=>props.isLike==true?"red":"white"};
-  color:${props=>props.isLike==true?"white":"red"};
+  background-color:${props=>props.isLike==true?"#FF3838":"white"};
+  color:${props=>props.isLike==true?"white":"#FF3838"};
   font-size:${market_style.font.size.small1};
   font-weight:800;
   margin-top:10px;
@@ -234,7 +234,7 @@ class DesignerDetail_mobile extends Component {
             <div className="thumbnail"/>
             <div className="row flex column justifyCenter">
                  <div className="fontBig black">{this.state.nick_name}</div>
-                 <div className="fontNormal marginTop1">{categoryName}&nbsp;|&nbsp;<span style={{color:"red"}}>♥</span>{likeCount || 0}</div>
+                 <div className="fontNormal marginTop1">{categoryName}&nbsp;|&nbsp;<span style={{color:"#FF3838"}}>♥</span>{likeCount || 0}</div>
                  <div className="fontSmall marginTop1">
                     {new Date(this.state.create_time).getFullYear()+"년"
                     +(new Date(this.state.create_time).getMonth()+1)+"월"
@@ -253,6 +253,9 @@ class DesignerDetail_mobile extends Component {
                 <div className="fontBig black">태그</div>
                 <div className="row flex flexWrap fontNormal marginTop1">
                     {
+                      this.state.tag == null || this.state.tag.length == 0?
+                      "태그 없음"
+                      :
                       this.state.tag.map((item, index) => {
                         return (
                           <TagPiece key={index}>
@@ -266,6 +269,17 @@ class DesignerDetail_mobile extends Component {
           <div className="marginTop2"/>
         </ShadowBox>
         <RedButton isLike={this.state.isLike} onClick={this.onClickisLike}>관심 디자이너 등록</RedButton>
+        {
+        (this.state.career&&this.state.career.length>0
+        &&
+        (this.state.career[0].number=="0"
+        &&this.state.career[0].task==""
+        &&this.state.career[0].explain==""
+        &&this.state.career[0].during==""))
+        ||this.state.career&&this.state.career.length<=0
+        ?
+        null:
+        <React.Fragment>
         <Header>디자인 경험</Header>
         <ShadowBox>
           <div className="row paddingNormal">
@@ -282,6 +296,8 @@ class DesignerDetail_mobile extends Component {
           })}
           </div>
         </ShadowBox>
+        </React.Fragment>
+        }
         <Header>디자인 아이템</Header>
         <div>
           <HaveInItemContainer_mobile id={this.props.id} />

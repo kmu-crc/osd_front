@@ -43,7 +43,7 @@ const MainBox = styled.div`
   }
   .marginRight{margin-right:30px;}
   .fontSmall{font-size:${market_style.font.size.mini2};}
-  .red{color:red;}
+  .red{color:#FF3838;}
   .flex{display:flex;align-items:center;}
   
 `
@@ -67,9 +67,9 @@ const RedButton = styled.div`
   width:${props=>props.width==null?"100%":props.width+"px"};
   height:${props=>props.height==null?"100%":props.height+"px"};
   color:${props=>props.color==null?"white":props.color};
-  background-color:${props=>props.bgColor==null?"red":props.bgColor};
+  background-color:${props=>props.bgColor==null?"#FF3838":props.bgColor};
   border-radius:${props=>props.borderRadius==null?"0px":props.borderRadius+"px"};
-  border:2px solid red;
+  border:2px solid #FF3838;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -208,10 +208,10 @@ class SignInForm_mobile extends Component {
             <div className="fontSmall flex"><CheckBox checked={this.state.saveLogin} onChange={this.onCheckSaveLogin} id="saveLogin" />로그인 상태 유지</div>
           </div>
           <div className="maxRow marginBottom1">
-            <RedButton onClick={this.onSubmit} height={35} bgColor="red" borderRadius={10}>로그인</RedButton>
+            <RedButton onClick={this.onSubmit} height={35} bgColor="#FF3838" borderRadius={10}>로그인</RedButton>
           </div>
           <div className="maxRow spaceBetween flex">
-            <RedButton onClick={this.onClickSignUp}  width={194} height={30} color="red" bgColor="white">회원 가입</RedButton>
+            <RedButton onClick={this.onClickSignUp}  width={194} height={30} color="#FF3838" bgColor="white">회원 가입</RedButton>
             <div onClick={()=>{window.location.href="/resetPW"}} className="red fontSmall">비밀번호 찾기</div>
           </div>
           </div>

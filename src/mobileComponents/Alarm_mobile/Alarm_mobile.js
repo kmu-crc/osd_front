@@ -4,6 +4,7 @@ import TextSlicer from "modules/TextSlicer"
 import { alert } from "components/Commons/Alert/Alert"
 import { AlarmWrapper, NewAlarmCircle, AlarmModal } from "./style"
 import Cross from "components/Commons/Cross"
+import { Transition } from "semantic-ui-react"
 
 
 export default class Alarm_mobile extends Component {
@@ -139,7 +140,7 @@ export default class Alarm_mobile extends Component {
                     <Icon className="grey alarm" size="large" />
 
                 </AlarmWrapper>
-
+                <Transition visible={alarm_list} animation='scale' duration={500}>
                 <AlarmModal open={alarm_list} onClose={this.onCloseModal}>
 
                     <div className="top-menu-bar">
@@ -162,7 +163,7 @@ export default class Alarm_mobile extends Component {
                     </div>
 
                 </AlarmModal>
-
+                </Transition>
             </React.Fragment>)
     }
 }

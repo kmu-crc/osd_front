@@ -157,8 +157,8 @@ const Wrapper = styled.div`
       margin-right: 16px;
       margin-left: 4px;
       
-      border-left: 1px solid red;
-      border-bottom: 1px solid red;
+      border-left: 1px solid #FF3838;
+      border-bottom: 1px solid #FF3838;
     }
   }
   
@@ -732,7 +732,11 @@ class ResponseToDesignerReq extends Component {
             <div className="label">태그</div>
             <div className="content">
               <TagList>
-                {detail && detail.tag && detail.tag.split(",").map((item, index) =>
+                {
+                  detail == null || detail.tag == null || detail.tag.length == 0?
+                  "태그 없음"
+                  :
+                  detail && detail.tag && detail.tag.split(",").map((item, index) =>
                   <TagPiece key={index}>
                     {item}
                   </TagPiece>

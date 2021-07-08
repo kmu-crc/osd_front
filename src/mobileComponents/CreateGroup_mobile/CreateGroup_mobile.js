@@ -4,7 +4,6 @@ import { Dropdown } from "semantic-ui-react"
 import noimg from "source/noimg.png";
 import { alert } from "components/Commons/Alert/Alert";
 import { confirm } from "components/Commons/Confirm/Confirm";
-import { RedButton, GrayButton } from "components/Commons/CustomButton"
 import market_style from "market_style";
 const Wrapper= styled.div`
   .row{width:100%;display:flex;}
@@ -30,7 +29,7 @@ const Wrapper= styled.div`
     justify-content:center;
     align-items:center;
   }
-  .redButton{
+  .redButton_{
     min-width:160px;
     height:30px;
     display:flex;
@@ -38,10 +37,10 @@ const Wrapper= styled.div`
     align-items:center;
     color:white;
     border-radius:10px;
-    background-color:red;
     margin-right:15px;
     font-size:${market_style.font.size.small1};
     font-weight:500;
+    background-color:#FF3838;
   }
   .greyButton{
     min-width:160px;
@@ -269,7 +268,7 @@ class CreateGroup_mobile extends Component {
               <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={345} height={154} />
           </div>
           <div className="row marginTop1">
-            <div className="label2">아이템</div>
+            <div className="label2">아이템1</div>
               <DropBox onChange={this.onSelectItem} id="itemDropBox" selection 
                options={itemList&&itemList.map((item,index)=>{
                  return(
@@ -279,7 +278,7 @@ class CreateGroup_mobile extends Component {
               {console.log(itemList)}
           </div>
           <div className="row flex justifyCenter marginTop2">
-               <div className="redButton" onClick={this.onSubmit}>등록하기</div>
+               <div className="redButton_" onClick={this.onSubmit}>등록하기</div>
                <div className="greyButton" onClick={this.onClickClose}>취소하기</div>
           </div>
         </Wrapper>

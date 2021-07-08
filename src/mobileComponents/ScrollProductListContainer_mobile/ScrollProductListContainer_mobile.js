@@ -7,8 +7,7 @@ import ScrollList_mobile from "mobileComponents/ScrollList_mobile";
 const Wrapper = styled.div`
   width:100%;
   display:flex;
-  // justify-content:center;
-  padding-left:${props=>props.isSearch==null?"8px":"10px"};
+  margin-left:8px;
 `
 class ScrollProductListContainer_mobile extends Component {
   componentDidUpdate(prevProps) {
@@ -48,8 +47,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetDesignListRequest: (page, sort, categoryLevel1, categoryLevel2, keyword) => {
-      return dispatch(GetDesignListRequest(page, sort, categoryLevel1, categoryLevel2, keyword))
+    GetDesignListRequest: (page, sort, categoryLevel1, categoryLevel2, categoryLevel3, keyword) => {
+      return dispatch(GetDesignListRequest(page, sort, categoryLevel1, categoryLevel2, categoryLevel3, keyword))
     }
   };
 };

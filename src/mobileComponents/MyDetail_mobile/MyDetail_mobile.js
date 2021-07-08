@@ -37,7 +37,7 @@ const Wrapper = styled.div`
     box-shadow: 2px 2px 5px #00000029;
     padding:10px;
     .container{width:100%;display:flex;}
-      .red{color:red;}
+      .red{color:#FF3838;}
       .thumbnail{
         min-width:100px;
         min-height:100px;
@@ -130,7 +130,7 @@ const Wrapper = styled.div`
       font-weight:500;
       color:black;
     }
-    .red{color:red;}
+    .red{color:#FF3838;}
     .hrline{
       width:100%;
       border:1px solid #E9E9E9;
@@ -230,7 +230,7 @@ class MyDetail_mobile extends Component {
         <div className="navi">
             <div className="menu red" onClick={this.logout}>로그아웃</div>
             <div className="hrline"/>
-            <div className="menu" onClick={()=>window.location.href="/mypage/10"}>내 포인트 관리</div>
+            <div className="menu" onClick={()=>{window.location.href="/mypage/10"}}>내 포인트 관리</div>
             <div className="hrline"/>
             <div className="menu" onClick={()=>window.location.href="/mypage/9"}>내 정보 수정</div>
             <div className="hrline"/>

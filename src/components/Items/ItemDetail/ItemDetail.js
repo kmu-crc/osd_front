@@ -769,6 +769,9 @@ class ItemDetail extends Component {
                     <div className="title marginBottom">태그</div>
                     <div className="flex flex-wrap">
                       {
+                        tag.length == 0 ||tag==null ?
+                        "태그 없음"
+                        :
                         tag.indexOf(",") == -1 ? null : tag.split(",").map((item, index) => {
                           return (
                             <TagPiece key={index}>

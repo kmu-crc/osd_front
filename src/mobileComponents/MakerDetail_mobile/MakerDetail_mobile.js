@@ -55,6 +55,7 @@ const ShadowBox = styled.div`
   .flexEnd{justify-content:flex-end;}
   .column{flex-direction:column;}
   .textRight{text-align:right;}
+  // .hrline{width:100%;border-bottom:1px solid #eaeaea;}
   .ellipsis{width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .thumbnail{
     min-width:100px;
@@ -78,12 +79,12 @@ const RedButton = styled.div`
   height:35px;
   display:flex;
   border-radius:10px;
-  border:${props=>props.isLike==true?null:"2px solid red"};
+  border:${props=>props.isLike==true?null:"2px solid #FF3838"};
   box-shadow: 2px 2px 3px #00000019;
   justify-content:center;
   align-items:center;
-  background-color:${props=>props.isLike==true?"red":"white"};
-  color:${props=>props.isLike==true?"white":"red"};
+  background-color:${props=>props.isLike==true?"#FF3838":"white"};
+  color:${props=>props.isLike==true?"white":"#FF3838"};
   font-size:${market_style.font.size.small1};
   font-weight:800;
   margin-top:10px;
@@ -143,6 +144,47 @@ class MakerDetail_mobile extends Component {
     if (this.props.like !== nextProps.like) {
       this.setState({ isLike: nextProps.like });
     }
+    if (
+      this.props.MakerViewDetail.image !== nextProps.MakerViewDetail.image ||
+      this.props.MakerViewDetail.nick_name !== nextProps.MakerViewDetail.nick_name ||
+      this.props.MakerViewDetail.user_id !== nextProps.MakerViewDetail.user_id ||
+      this.props.MakerViewDetail.description !== nextProps.MakerViewDetail.description ||
+      this.props.MakerViewDetail.location !== nextProps.MakerViewDetail.location ||
+      this.props.MakerViewDetail.category_level1 !== nextProps.MakerViewDetail.category_level1 ||
+      this.props.MakerViewDetail.category_level2 !== nextProps.MakerViewDetail.category_level2 ||
+      this.props.MakerViewDetail.tag !== nextProps.MakerViewDetail.tag ||
+      this.props.MakerViewDetail.experience !== nextProps.MakerViewDetail.experience ||
+      this.props.MakerViewDetail.score !== nextProps.MakerViewDetail.score ||
+      this.props.like !== nextProps.like) {
+
+      const careerRow = nextProps.MakerViewDetail.experience==""||nextProps.MakerViewDetail.experience==null?null:nextProps.MakerViewDetail.experience.split("/");
+      careerRow.pop();
+      const careerList = careerRow.map((item, index) => {
+        const piece = item.split(",");
+        // console.log("piece:::",piece[0],piece[1],piece[2],piece[3]);
+        return (
+          { number: piece[0], task: piece[1], explain: piece[2], during: piece[3] }
+        );
+      });
+      const tag = nextProps.MakerViewDetail.tag.split(",");
+      tag.pop();
+
+      this.setState({
+        isLike: nextProps.like,
+        thumbnail: nextProps.MakerViewDetail.image,
+        nick_name: nextProps.MakerViewDetail.nick_name,
+        user_id: nextProps.MakerViewDetail.user_id,
+        explain: nextProps.MakerViewDetail.description,
+        location: nextProps.MakerViewDetail.location,
+        category_level1: nextProps.MakerViewDetail.category_level1,
+        category_level2: nextProps.MakerViewDetail.category_level2,
+        tag: tag,
+        career: careerList,
+        score: nextProps.MakerViewDetail.score,
+        create_time:nextProps.MakerViewDetail.create_time,
+        update_time:nextProps.MakerViewDetail.update_time,
+      })
+    };
   }
 
   onClickRequest(event) {
@@ -207,7 +249,7 @@ class MakerDetail_mobile extends Component {
             <div className="thumbnail"/>
             <div className="row flex column justifyCenter">
                  <div className="fontBig black">{this.state.nick_name}</div>
-                 <div className="fontNormal marginTop1">{categoryName}&nbsp;|&nbsp;<span style={{color:"red"}}>♥</span>{likeCount || 0}</div>
+                 <div className="fontNormal marginTop1">{categoryName}&nbsp;|&nbsp;<span style={{color:"#FF3838"}}>♥</span>{likeCount || 0}</div>
                  <div className="fontSmall marginTop1">
                     {new Date(this.state.create_time).getFullYear()+"년"
                     +(new Date(this.state.create_time).getMonth()+1)+"월"
@@ -225,6 +267,12 @@ class MakerDetail_mobile extends Component {
           <div className="row padding marginTop3">
                 <div className="fontBig black">태그</div>
                 <div className="row flex flexWrap fontNormal marginTop1">
+                  {
+                    this.state.tag == null ?
+                    "태그 없음"
+                    :
+                    null
+                  }
                   {
                     typeof this.state.tag === "string"
                       ? this.state.tag.split(",").map((item, index) =>
@@ -272,23 +320,27 @@ class MakerDetail_mobile extends Component {
         </ShadowBox>
         <RedButton isLike={this.state.isLike} onClick={this.onClickisLike}>관심 디자이너 등록</RedButton>
         {
-          this.state.career&&this.state.career.length==0
+          this.state.experience&&
+          this.state.experience.split("/")&&
+          ((this.state.experience.split("/").length>0&&this.state.experience.split("/")[0]=="0,,,")||
+          this.state.experience.split("/").length<=0)
           ?
           null
           :
           <React.Fragment>
-          <Header>디자인 경험</Header>
+          <Header>제작 경험</Header>
           <ShadowBox>
             <div className="row paddingNormal">
             {this.state.career.map((item, index) => {
               console.log(item);
               return (
                 <div className="row marginTop2">
-                  <div className="row flex spaceBetween">
-                    <div className="fontNormal ellipsis">{item.task}</div>
+                  <div className="flex spaceBetween">
+                    <div className="fontBig ellipsis">{item.task}</div>
                     <div className="fontNormal ellipsis textRight">{item.explain}</div>
                   </div>
-                  <div className="row flex flexEnd fontSmall">{item.during}</div>
+                  <div className="row flex flexEnd fontSmall">기간&nbsp;&nbsp;{item.during}</div>
+                  <div className="row hrline"/>
                 </div>
               );
             })}

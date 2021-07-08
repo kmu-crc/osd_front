@@ -52,6 +52,9 @@ const MessageWrapper = styled.div`
     align-items:flex-end;
     border-radius:30px;
     font-size:${market_style.font.size.small1};
+    .text_{
+      height:22px;
+    }
   }
   .file_bubble{
     max-width:400px;
@@ -65,8 +68,10 @@ const MessageWrapper = styled.div`
   }
   .msg_time{
     width:max-content;
-    height:max-content;
+    height:19px;
     font-size:${market_style.font.size.mini2};
+    margin-top:3px;
+    padding:0px 10px;
   }
   .timeWrapper{
     display:flex;
@@ -81,8 +86,8 @@ const ReviewButton = styled.div`
   width:100px;
   height:26px;
   padding:4px 20px 5px 20px;
-  border:1px solid red;
-  color:red;
+  border:1px solid #FF3838;
+  color:#FF3838;
   font-weight:400;
   font-size:${market_style.font.size.small1};
 
@@ -215,7 +220,7 @@ const CustomButton = styled.div`
     justify-content:center;
     align-items:center;
     color:white;
-    background-color:red; 
+    background-color:#FF3838; 
     font-weight:500;
     border-radius:20px;
 `
@@ -391,6 +396,9 @@ class ItemPurchase_mobile extends Component {
                 <div className="fontBig marginTop2 marginBottom">태그</div>
                 <div className="row flex flexWrap">
                       {
+                        tag == null || tag.length == 0 ?
+                        "태그 없음"
+                        :
                         tag.indexOf(",") == -1 ? null : tag.split(",").map((item, index) => {
                           return (
                             <TagPiece key={index}>
@@ -452,7 +460,7 @@ class ItemPurchase_mobile extends Component {
                                 item.filename == null ?
                                   <React.Fragment>
                                     <div className="array">
-                                    <div className="msg_bubble">{item.message}</div>
+                                    <div className="msg_bubble"><div className="text_">{item.message}</div></div>
                                     <div className="msg_time">{msgTime}</div>
                                     </div>
                                   </React.Fragment>

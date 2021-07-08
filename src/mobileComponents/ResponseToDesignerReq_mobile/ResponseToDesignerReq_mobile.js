@@ -30,19 +30,20 @@ const LocationList = [
   { value: 15, text: "제한없음" },
 ];
 const Wrapper =styled.div`
+width:100%;
+min-height:700px;
+overflow-x:hidden;
+padding:0px 10px;
+.header{
   width:100%;
-  min-height:700px;
-  overflow-x:hidden;
-  padding:0px 10px;
-  .header{
-    width:100%;
-    text-align:center;
-    font-size:${market_style.font.size.normal2};
-    font-weight:800;
-    color:#c1c1c1;
-    margin-top:3px;
-    margin-bottom:10px;
-  }
+  height:29px;
+  text-align:center;
+  font-size:${market_style.font.size.normal2};
+  font-weight:800;
+  color:#c1c1c1;
+  margin-top:3px;
+  margin-bottom:10px;
+}
   .redButton{
     width:100%;
     height:35px;
@@ -53,7 +54,7 @@ const Wrapper =styled.div`
     color:white;
     box-shadow: 2px 2px 3px #00000019;
     margin-top:15px;
-    background-color:red;
+    background-color:#FF3838;
     border-radius:10px;
     font-size:${market_style.font.size.small1};
   }
@@ -120,7 +121,7 @@ const ShadowBox = styled.div`
   .column{flex-direction:column;}
   .textRight{text-align:right;}
   .ellipsis{width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .red{color:red;}
+  .red{color:#FF3838;}
 }
 `
 const RedButton = styled.div`
@@ -132,8 +133,8 @@ const RedButton = styled.div`
   box-shadow: 2px 2px 3px #00000019;
   justify-content:center;
   align-items:center;
-  background-color:${props=>props.isLike==true?"red":"white"};
-  color:${props=>props.isLike==true?"white":"red"};
+  background-color:${props=>props.isLike==true?"#FF3838":"white"};
+  color:${props=>props.isLike==true?"white":"#FF3838"};
   font-size:${market_style.font.size.small1};
   font-weight:800;
   margin-top:10px;
@@ -173,7 +174,7 @@ const CustomIcon = styled.div`
   width:100%;
   height:35px;
   border-radius:10px;
-  background-color:${props=>props.background==null?"red":props.background};
+  background-color:${props=>props.background==null?"#FF3838":props.background};
   color:${props=>props.color==null?"white":props.color};
   box-shadow: 2px 2px 3px #00000019;
   display:flex;
@@ -269,7 +270,7 @@ class ResponseToDesignerReq_mobile extends Component {
     })
     return (
       <React.Fragment>
-              <Wrapper>
+        <Wrapper>
         <div className="header">
           {detail.type === "designer" ? "디자인 의뢰 응답" : null}
         </div>
@@ -295,7 +296,12 @@ class ResponseToDesignerReq_mobile extends Component {
            <div className="row flex marginTop3">
               <div className="label">태그</div>
               <div className="flex flexWrap">
-                {detail && detail.tag && detail.tag.split(",").map((item, index) =><TagPiece key={item + index} >{item}</TagPiece>)}
+                {
+                detail == null || detail.tag == null?
+                "태그 없음"
+                :
+                detail && detail.tag && detail.tag.split(",").map((item, index) =><TagPiece key={item + index} >{item}</TagPiece>)
+                }
               </div>
            </div>
            <div className="row flex marginTop3">

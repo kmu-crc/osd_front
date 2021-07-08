@@ -41,14 +41,14 @@ const Wrapper = styled.div`
     justify-content:center;
     align-items:center;
     border-radius:10px;
-    border:2px solid red;
-    color:red;
+    border:2px solid #FF3838;
+    color:#FF3838;
     box-shadow: 2px 2px 3px #00000019;
     font-size:${market_style.font.size.small1};
     font-weight:500;
   }
   .active{
-    background-color:red;
+    background-color:#FF3838;
     color:white;
   }
   .list{

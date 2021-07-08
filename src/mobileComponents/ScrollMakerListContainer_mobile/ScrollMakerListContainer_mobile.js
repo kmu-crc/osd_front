@@ -5,6 +5,13 @@ import ScrollList_mobile from "mobileComponents/ScrollList_mobile";
 import Expert from "components/Experts/Expert";
 import Expert_small from "components/Experts/Expert_small";
 import Expert_mobile_big from "components/Experts/Expert_mobile_big";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  width:100%;
+  display:flex;
+  margin-left:8px;
+`
 
 class ScrollMakerListContainer_mobile
  extends Component {
@@ -22,12 +29,14 @@ class ScrollMakerListContainer_mobile
 
   render() {
     return (
+      <Wrapper>
       <ScrollList_mobile
         getListRequest={this.getList}
         ListComponent={Expert_mobile_big}
         type="maker"
         dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
       />
+      </Wrapper>
     );
   }
 }
@@ -41,9 +50,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    GetMakerListRequest: (page, sort, categoryLevel1, categoryLevel2, categoryLevel3, keyword) => {
-      return dispatch(GetMakerListRequest(page, sort, categoryLevel1, categoryLevel2, categoryLevel3, keyword))
-    }
+    GetMakerListRequest: (page, sort, cate1, cate2, cate3, keyword) => dispatch(GetMakerListRequest(page, sort, cate1, cate2, cate3, keyword)),
   };
 };
 

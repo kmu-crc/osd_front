@@ -17,7 +17,7 @@ const Button = styled.div`
   width:100%;
   height:35px;
   border-radius:10px;
-  background-color:${props=>props.background==null?"red":props.background};
+  background-color:${props=>props.background==null?"#FF3838":props.background};
   color:${props=>props.color==null?"white":props.color};
   box-shadow: 2px 2px 3px #00000019;
   display:flex;
@@ -56,6 +56,7 @@ const ShadowBox = styled.div`
   }
   .padding{padding-left:10px;padding-right:10px;}
   .paddingNormal{padding:5px 10px;}
+  .paddingNormal2{padding:5px 0px 25px 10px;}
   .marginTop1{margin-top:5px;}
   .marginTop2{margin-top:10px;}
   .marginTop3{margin-top:20px;}
@@ -93,8 +94,8 @@ const ShadowBox = styled.div`
   .attach-arrow {
     width: 10px;
     height: 10px;
-    border-left:1px solid red;
-    border-bottom:1px solid red;
+    border-left:1px solid #FF3838;
+    border-bottom:1px solid #FF3838;
     margin-right: 15px;
     margin-left: 4px;
   }
@@ -142,7 +143,7 @@ export default class Detail extends Component {
     const level1 = Detail.status === "response" ? Detail.request.category_level1 : Detail.category_level1;
     const level2 = Detail.status === "response" ? Detail.request.category_level2 : Detail.category_level2;
     const category_level1 = category1 && category1[level1 - 1] && category1[level1 - 1].text;
-    const category_level2 = (level2 && category2 && category2.filter(cate => cate.value === level2)[0].text) || "";
+    const category_level2 = (level2 && category2 && category2.filter(cate => cate.value === level2)[0]&&category2.filter(cate => cate.value === level2)[0].text) || "";
 
     console.log(this.props);
 
@@ -188,6 +189,7 @@ export default class Detail extends Component {
       {Detail.status === "normal"
         ? <Wrapper>
           <ShadowBox>
+            <div className="row paddingNormal2">
             <div className="title black">게시글</div>
               <div className="row flex marginTop3">
                 <div className="label_">제목</div>
@@ -201,11 +203,12 @@ export default class Detail extends Component {
                 <div className="label_">내용</div>
                 <div className="content" dangerouslySetInnerHTML={{ __html: Detail && Detail.content }} />
               </div>
+              </div>
           </ShadowBox>
           <div className="buttonBox">
               {userInfo&&(Detail.user_id === userInfo.uid)
                 ? <React.Fragment>
-                          <Button onClick={() => this.setState({ write: true })}  background="red" color="white">수정하기</Button>
+                          <Button onClick={() => this.setState({ write: true })}  background="#FF3838" color="white">수정하기</Button>
                           <Button onClick={() => { this.props.DeleteRequestRequest(this.props.id, this.props.token); window.location.href = "/request/designer" }}  background="#707070" color="white">삭제하기</Button>
                 </React.Fragment>
                 : null

@@ -190,7 +190,7 @@ class EditStepModal extends Component {
                     <NewStepDialog onKeyDown={this.handleKeyDown} open={this.props.open} onClose={this.onClose}>
                     <div className="header_">
                         <div className="blankbox"/>
-                        <div className="header_text">새 단계</div>
+                        <div className="header_text">단계 이름 수정</div>
                         <div className="blankbox" onClick={this.onClose}>
                             <Cross style={{cursor:"pointer"}} angle={45} color={"#000000"} weight={1} width={20} height={20}/>
                         </div>
@@ -206,7 +206,7 @@ class EditStepModal extends Component {
                     </NewStepDialog>
                     :
                     <NewStepDialog_mobile onKeyDown={this.handleKeyDown} open={this.props.open} onClose={this.onClose}>
-                    <div className="title marginBottom">새 단계</div>
+                    <div className="title marginBottom">단계 이름 수정</div>
                     <div className="blankbox" onClick={this.onClose}>
                         <Cross style={{cursor:"pointer"}} angle={45} color={"#000000"} weight={1} width={20} height={20}/>
                     </div>
