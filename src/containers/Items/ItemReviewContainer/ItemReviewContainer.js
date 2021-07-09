@@ -146,6 +146,7 @@ class ItemReviewContainer extends Component {
                 open={this.props.writeReview}
                 close={() => this.props.showWriteReview(false)}
                 modify={this.state.detail}
+                detail={this.state.detail}
                 requestReview = {(uid,comment,score,thumbnail_list) => this.onSubmitReview(uid,comment,score,thumbnail_list)}
                 payment_id={payment&&payment.length>0&&payment[0].uid}
                 {...this.props}

@@ -133,7 +133,7 @@ const Detail = styled.div`
   font-family:Noto Sans KR;
 }
   display:${props=>props.visible==true?"block":"none"};
-  z-index:998;
+  z-index:997;
   position:fixed;
   width:${window.innerWidth}px;
   height:${window.innerHeight-100}px;

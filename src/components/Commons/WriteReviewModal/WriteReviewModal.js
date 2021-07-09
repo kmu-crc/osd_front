@@ -226,6 +226,21 @@ class WriteReviewModal extends Component {
         this.handleOnChangeScore = this.handleOnChangeScore.bind(this);
         this.onClickWriteReview = this.onClickWriteReview.bind(this);
     }
+    componentDidUpdate(nextProps){
+
+        if(this.props.detail!=nextProps.detail){
+            const { detail } = this.props;
+            const thumbnail_list = detail&&detail.thumbnail&&detail.thumbnail.length>0?
+            detail.thumbnail.split(","):[];
+
+            this.setState({
+                thumbnail:detail.thumbnail_list,
+                score:detail.score,
+                comment:detail.comment
+            })
+    
+        }
+    }
     handleOnChangeComment(event){
         this.setState({comment:event.target.value});
     }
@@ -277,37 +292,9 @@ class WriteReviewModal extends Component {
             score:0,
             result:[],
         })
-        // if(this.state.thumbnail&&this.state.thumbnail.length>0){
-        //     new Promise((resolve)=>{this.state.thumbnail.forEach(async(item,index)=>{
-        //         const file = this.state.files[index];
-        //         // if(item.indexOf("https://s3")==-1){
-        //             const s3path = await FileUploadRequest([file]);
-        //             await list.push(s3path.path);
-        //             console.log("######"+index);
-        //             // await this.setState({result:this.state.result.concat(s3path.path)});
-        //         // }else{
-        //             // await list.push(item);
-        //             // console.log("@@@@@"+index);
-        //             // await this.setState({result:this.state.result.concat(item)});
-        //         // }
-        //     }
-        //     )
-        //     resolve(true);
-        // }).then(()=>console.log(list));  
-        // }
-        // await this.state.thumbnail&&this.state.thumbnail.length>0&&
-        //     this.state.thumbnail.forEach(async(item,index)=>{
-        //         const file = this.state.files[index];
-        //         if(item.indexOf("https://s3.")==-1){
-        //             const s3path = await FileUploadRequest([file]);
-        //             await list.concat(s3path.path);
-        //         }else{
-        //             await list.concat(item);
-        //         }
-        //     })
-        // this.props.requestReview(this.props.payment_id,this.state.comment,this.state.score,list.join());
     }
     render() {
+
         const RenderStar = () => {
             return <Rating size="tiny" name="score" icon='star' defaultRating={parseInt(5, 10)} maxRating={5} disabled />
           }
@@ -381,7 +368,7 @@ class WriteReviewModal extends Component {
                         </div>
 
                         </div>
-                        <TextArea placeholder="리뷰를 작성해주세요" onChange={this.handleOnChangeComment}/>
+                        <TextArea value={this.state.comment} placeholder="리뷰를 작성해주세요" onChange={this.handleOnChangeComment}/>
                     </div>
                     <div className="buttonbox">
                         <ReviewButton onClick={this.onClickWriteReview}><div className="text">작성 완료</div></ReviewButton>

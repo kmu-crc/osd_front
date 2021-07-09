@@ -43,19 +43,20 @@ padding:15px 10px;
 .justifyBetween{justify-content:space-between;}
 .marginTop1{margin-top:10px;}
 .lock_{
-    // min-width:25px;
+    min-width:40px;
     // min-height:25px;
-    // max-width:25px;
+    max-width:40px;
     // max-height:25px;
     // border-radius:50%;
     // margin-right:10px;
     // background-color:#AFAFAF;
     display:flex;
     justify-content:center;
-    flex-direction:column;
     align-items:center;
-    font-size:${market_style.font.size.tiny1};
 
+}
+.lockmsg{
+    font-size:5px;
 }
 .title_{
     height:max-content;
@@ -176,6 +177,7 @@ padding:15px 10px;
            display:flex;
            align-items:center;
            .update_{
+            text-align:right;
             width:180px;
             font-size:${market_style.font.size.mini1};
             overflow: hidden;

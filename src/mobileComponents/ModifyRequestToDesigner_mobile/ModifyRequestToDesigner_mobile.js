@@ -200,7 +200,7 @@ class ModifyRequestToDesigner_mobile extends Component {
     }
   }
   async onClickCategorylevel1(event, { value }) {
-    await this.setState({ category_level1: { value }.value });
+    await this.setState({ category_level1: { value }.value,category_level2:0 });
     this.checkModify();
   }
   async onClickCategorylevel2(event, { value }) {

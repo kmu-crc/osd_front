@@ -307,7 +307,7 @@ class ModifyMaker_mobile extends Component {
     return true;
   }
   async onClickCategorylevel1(event, { value }) {
-    await this.setState({ category_level1: { value }.value });
+    await this.setState({ category_level1: { value }.value, category_level2:0 });
     this.checkModify();
   }
   async onClickCategorylevel2(event, { value }) {
@@ -551,9 +551,9 @@ class ModifyMaker_mobile extends Component {
           </ShadowBox>
           <ShadowBox>
           <div className="title">갤러리</div>
-          <div className="greyButton" onClick={this.handleShowModal}>갤러리 등록</div>
-          <div className="contensts">
-              {<HaveInGalleryContainer_mobile handlerIsGalleryModify={this.handlerIsGalleryModify} id={this.props.id} isModify={true} />}
+          <div className="greyButton " onClick={this.handleShowModal}>갤러리 등록</div>
+          <div className="contensts marginTop2">
+              {<HaveInGalleryContainer_mobile handlerIsGalleryModify={this.handlerIsGalleryModify} id={this.props.id} isModify={true}  />}
           </div>
           </ShadowBox>
         </Wrapper>

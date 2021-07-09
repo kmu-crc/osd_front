@@ -612,17 +612,17 @@ class ModifyItemInfo extends Component {
     window.location.href = `/productDetail/${this.props.id}`
   }
   async onClickCategorylevel1(event, { value }) {
-    await this.setState({ category_level1: value });
+    await this.setState({ category_level1:  { value }.value,category_level2:0,category_level3:0 });
     this.setState({ ismodified: await this.isModify() });
 
   };
   async onClickCategorylevel2(event, { value }) {
-    await this.setState({ category_level2: value });
+    await this.setState({ category_level2:  { value }.value, category_level3:0 });
     this.setState({ ismodified: await this.isModify() });
 
   };
   async onClickCategorylevel3(event, { value }) {
-    await this.setState({ category_level3: value });
+    await this.setState({ category_level3:  { value }.value });
     this.setState({ ismodified: await this.isModify() });
 
   }

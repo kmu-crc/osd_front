@@ -161,11 +161,13 @@ class CardModal_mobile extends Component {
                             <React.Fragment>
                                 <div className="row flex alignCenter justifyBetween">
                                     <div className="flex alignCenter">
-                                        <div className={`lock_`} onClick={() => { this.setState({ private: !this.state.private }) }}>
-                                            <Icon size='small' name={`${this.state.private == true ? "toggle off" : "toggle on"}`} color={"white"} />
-                                        </div>
-                                        {/* <div>{this.state.private == true ? "lock" : "unlock"}</div> */}
                                         <div className="title_">컨텐츠 정보수정</div>  
+                                        <div style={{display:"flex",flexDirection:"column",alignItems:"center",marginLeft:"10px"}}>
+                                        <div className={`lock_`} onClick={() => { this.setState({ private: !this.state.private }) }}>
+                                            <Icon size='large' color={"white"} name={`${this.state.private == true ? "toggle on" : "toggle off"}`}  />
+                                        </div>
+                                        <div className="lockmsg">{this.state.private == true ? "lock" : "unlock"}</div>
+                                        </div>
                                     </div>  
                                     <Cross onClick={this.onClose} angle={45} color={"#000000"} weight={1} width={25} height={25} />
                                 </div>

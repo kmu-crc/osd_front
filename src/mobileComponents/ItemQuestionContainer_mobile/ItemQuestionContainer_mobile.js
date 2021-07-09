@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import ItemQuestion from "components/Items/ItemQuestion";
+import ItemQuestion_mobile from "mobileComponents/ItemQuestion_mobile";
 import { GetItemQuestionRequest, CreateItemQuestionRequest, /*DeleteItemQuestionRequest*/ } from "actions/Item";
 
 class ItemQuestionContainer_mobile extends Component {
@@ -31,7 +31,7 @@ class ItemQuestionContainer_mobile extends Component {
     render() {
         return (
             <React.Fragment>
-                <ItemQuestion id={this.props.match.params.id} getData={this.getData} request={this.requestQuestion} {...this.props} />
+                <ItemQuestion_mobile id={this.props.match.params.id} getData={this.getData} request={this.requestQuestion} {...this.props} />
             </React.Fragment>
         );
     }

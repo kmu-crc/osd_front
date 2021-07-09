@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import TextFormat from 'modules/TextFormat';
 import noimg from "source/noimg.png";
+import ModifyGroupInfoContainer from "containers/Groups/ModifyGroupInfoContainer/ModifyGroupInfoContainer"
 import market_style from "market_style";
+
 
 const Wrapper = styled.div`
   *{
@@ -49,28 +51,38 @@ const TextWrapper = styled.div`
   }
 `;
 const empty = { thumbnail: '', group_id: null, user_id: null, nick_name: "", title: '로딩중...', description: '로딩중...' };
-class Gallery_mobile extends Component {
+class ModifyGallery_mobile extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      open: false,
+    }
     this.onClickCard = this.onClickCard.bind(this);
+    this.handleShowModal = this.handleShowModal.bind(this);
   }
   onClickCard(event) {
-    window.location.href = "/galleryDetail/" + this.props.data.uid;
+    console.log(this.state.open);
+    this.setState({ open: true })
   }
-  render() {
+  handleShowModal(value) {
+    this.setState({ open: false })
+  }
 
+  render() {
+    // console.log(this.props.handler);
     const item = this.props.data || empty;
     return (
-      <Wrapper onClick={this.onClickCard}>
-        {/* picture */}
-        <ItemPic img={(item && item.thumbnail) || noimg} />
-        {/* text */}
-        <TextWrapper>
-          <div className="title"><TextFormat txt={item.title || "...로딩중"} /></div>
-        </TextWrapper>
-      </Wrapper>
+      <React.Fragment>
+        {this.state.open ? <ModifyGroupInfoContainer handlerIsGalleryModify={this.props.handler} handleShowModal={this.handleShowModal} id={this.props.data.uid} open={this.state.open} /> : null}
+        <Wrapper onClick={this.onClickCard}>
+          <ItemPic img={(item && item.thumbnail) || noimg} />
+          <TextWrapper>
+            <div className="title"><TextFormat txt={item.title || "...로딩중"} /></div>
+          </TextWrapper>
+        </Wrapper>
+      </React.Fragment>
     )
   }
 }
 
-export default Gallery_mobile;
+export default ModifyGallery_mobile;

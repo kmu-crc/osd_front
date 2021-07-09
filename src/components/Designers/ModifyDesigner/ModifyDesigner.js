@@ -508,7 +508,7 @@ class ModifyDesigner extends Component {
     this.checkModify();
   }
   async onClickCategorylevel1(event, { value }) {
-    await this.setState({ category_level1: { value }.value });
+    await this.setState({ category_level1: { value }.value,category2:0, });
     this.checkModify();
   }
   async onClickCategorylevel2(event, { value }) {

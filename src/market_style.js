@@ -20,6 +20,7 @@ const market_style = {
             // giant1:"27px",
             // giant2:"28px",
             // giant3:"29px",
+            
             tiny1:"9px",
             tiny2:"10px",
             tiny3:"11px",

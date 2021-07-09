@@ -166,6 +166,7 @@ const Button = styled.div`
   `
 const DropBox = styled(Dropdown)`
     min-width:110px !important;
+    max-width:110px;
     max-height:31px !important;   
     display:flex !important;
     align-items:center !important; 
@@ -780,17 +781,17 @@ class ModifyItemInfo_mobile extends Component {
     window.location.href = `/productDetail/${this.props.id}`
   }
   async onClickCategorylevel1(event, { value }) {
-    await this.setState({ category_level1: value });
+    await this.setState({ category_level1:  { value }.value,category_level2:0,category_level3:0 });
     this.setState({ ismodified: await this.isModify() });
 
   };
   async onClickCategorylevel2(event, { value }) {
-    await this.setState({ category_level2: value });
+    await this.setState({ category_level2:  { value }.value, category_level3:0 });
     this.setState({ ismodified: await this.isModify() });
 
   };
   async onClickCategorylevel3(event, { value }) {
-    await this.setState({ category_level3: value });
+    await this.setState({ category_level3:  { value }.value });
     this.setState({ ismodified: await this.isModify() });
 
   }
@@ -948,10 +949,25 @@ class ModifyItemInfo_mobile extends Component {
           {tab=="basic"?
          <React.Fragment>
           <ShadowBox ShadowOpacity={true}>
-            <div className="row flex marginTop3 alignCenter">
+            <div className="row flex marginTop3">
               <div className="label font black">카테고리<sup style={{color:"red"}}>*</sup></div>
+              <div className="row column">
+              <div className="row flex">
                 <DropBox id="category_level1" value={this.state.category_level1} selection options={category1} placeholder="대분류" onChange={this.onClickCategorylevel1} />
                 <DropBox id="category_level2" value={this.state.category_level2} selection options={category2} placeholder="소분류" onChange={this.onClickCategorylevel2} />
+              </div>
+              <div className="row marginTop2">
+                    {parseInt(this.state.category_level2, 10) === 42 ?
+                    <React.Fragment>
+                      <DropBox id="category_level3" value={this.state.category_level3} selection options={category3} placeholder="언어선택" onChange={this.onClickCategorylevel3} />
+                      <div style={{ display: "flex", alignItems: "center", marginTop:"10px"}}>
+                        <CheckBox2 onChange={() => this.setState({ is_problem: !this.state.is_problem, })} checked={this.state.is_problem} />
+                        <div>문제 등록기능을 사용합니다.</div>
+                      </div>
+                    </React.Fragment>
+                    : null}
+              </div>
+              </div>
             </div>
             <div className="row flex marginTop3 alignCenter">
               <div className="label font black">태그</div>
