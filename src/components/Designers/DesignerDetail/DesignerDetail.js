@@ -645,16 +645,17 @@ class DesignerDetail extends Component {
     const { write } = this.state;
     let categoryName = this.props.category1 && this.props.category2 &&
       this.state.category_level2 < 1 ?
-      this.props.category1[parseInt(this.state.category_level1, 10)]
-      && this.props.category1[parseInt(this.state.category_level1, 10)].text
+      (this.props.category1[parseInt(this.state.category_level1-1, 10)]
+      && this.props.category1[parseInt(this.state.category_level1-1, 10)].text)
       : null;
-
+    
     this.props.category2 && this.props.category2.map((item, index) => {
       if (item.parent === this.state.category_level1 && item.value === this.state.category_level2) {
         categoryName = item.text;
       }
       return item;
     })
+
 
     console.log(categoryName);
     console.log(this.props);

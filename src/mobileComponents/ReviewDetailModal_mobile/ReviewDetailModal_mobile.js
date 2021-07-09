@@ -256,10 +256,7 @@ class ReviewDetailModal extends Component {
                     <div className={`comment ${thumbnail_list.length==0?"margin1":thumbnail_list.length>1?"margin2":"margin3"}`}>
                             {detail&&detail.comment}
                     </div>
-                    {/* <div className="row">
-                         <div className="red button marginRight" >수정하기</div>
-                         <div className="grey button">삭제하기</div>
-                    </div> */}
+
                 </Dialog>
             </React.Fragment>
         )

@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 import { Dropdown } from "semantic-ui-react"
 import noimg from "source/noimg.png";
+import { RedButton, GrayButton } from "components/Commons/CustomButton";
 import { alert } from "components/Commons/Alert/Alert";
-import { confirm } from "components/Commons/Confirm/Confirm";
 import market_style from "market_style";
 const Wrapper= styled.div`
   .row{width:100%;display:flex;}
@@ -134,12 +134,12 @@ const TagList = styled.div`
     display: flex;
     flex-wrap: wrap;
 `;
-class CreateGroup_mobile extends Component {
+class ModifyGroup_mobile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectItemList:[],
-      title:null, thumbnail: null, thumbnail_name: null, explain: "",dropList:[],
+      selectItemList: [],
+      title: null, thumbnail: null, thumbnail_name: null, explain: "",isModify:false,
     }
     this.handleOnChangeThumbnail = this.handleOnChangeThumbnail.bind(this);
     this.onChangeExplain = this.onChangeExplain.bind(this);
@@ -147,43 +147,113 @@ class CreateGroup_mobile extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onSelectItem = this.onSelectItem.bind(this);
     this.onClickClose = this.onClickClose.bind(this);
-  }
 
-  componentDidMount() {
-    if (this.props.keep) {
-      this.setState(this.props.keep.designer);
-      this.setState({ getready: true });
+  }
+  componentWillUpdate(nextProps) {
+    if (this.props.galleryDetail && (
+      this.props.galleryDetail.title !== nextProps.galleryDetail.title ||
+      this.props.galleryDetail.explain !== nextProps.galleryDetail.explain ||
+      this.props.galleryDetail.thumbnail !== nextProps.galleryDetail.thumbnail ||
+      this.props.galleryDetail.itemList !== nextProps.galleryDetail.itemList
+    )) {
+
+
+      this.setState({
+        title: nextProps.galleryDetail.title,
+        explain: nextProps.galleryDetail.description,
+        thumbnail: nextProps.galleryDetail.thumbnail,
+      })
+      if (nextProps.dataList.length > 0) {
+        this.setState({selectItemList:nextProps.galleryDetail.itemList})
+      }
+
     }
   }
-
-  componentWillUpdate(nextProps){
-    if(this.props.open !== nextProps.open){
-      this.setState({open:nextProps.open})
+  checkModify=()=>{
+    if (this.props.galleryDetail.title == this.state.title||
+      this.props.galleryDetail.description == this.state.explain||
+      this.props.galleryDetail.thumbnail == this.state.thumbnail
+    ) {
+      this.setState({isModify:true});
+    }
+    else if(this.props.galleryDetail.itemList.length==this.state.selectItemList.length){
+      this.props.galleryDetail.itemList.map((item,index)=>{
+        if(this.state.selectItemList[index].value!=item.value){
+          this.setState({isModify:true});
+        }
+      })
     }
   }
-
   onChangeExplain(event) {
-    this.setState({ explain: event.target.value })
+    this.setState({ explain: event.target.value });
+    this.checkModify();
   }
   onChangeTitle(event) {
-    this.setState({ title: event.target.value })
+    this.setState({ title: event.target.value });
+    this.checkModify();
   }
   async handleOnChangeThumbnail(event) {
     event.preventDefault();
     const reader = new FileReader();
     const file = event.target.files[0];
-    reader.onloadend = async() => {
-      await this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
+    reader.onloadend = () => {
+      this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
     }
-    console.log(file.name);
     if (event.target.files[0]) {
       await reader.readAsDataURL(file);
     }
+    this.checkModify();
   }
+  onClickClose(event) {
+    this.props.handleShowModal(false);
+  }
+  onDelete = async e => {
+    this.props.DeleteGroupRequest(this.props.id, this.props.token)
+      .then(async res => {
+        const result = res.type;
+        if (result === "DETELE_GROUP_SUCCESS") {
+          console.log(this.props.id);
+          this.props.GetHaveInGalleryRequest(this.props.userInfo.uid, 0);
+          this.props.handlerIsGalleryModify();
+          this.props.handleShowModal(false);
+        } else {
+          await alert("다시 시도해주세요");
+        }
+      })
+      .catch(async e => {
+        await alert("다시 시도해주세요");
+        this.setState({
+          loading: false
+        });
+      });
 
+  }
   onSubmit = async e => {
 
     e.preventDefault();
+    if (this.props.galleryDetail.title == this.state.title&&
+      this.props.galleryDetail.description == this.state.explain&&
+      this.props.galleryDetail.thumbnail == this.state.thumbnail
+    ) {
+      if(this.props.galleryDetail.itemList.length==this.state.selectItemList.length){
+        let isModify=false;
+        this.props.galleryDetail.itemList.map((item,index)=>{
+          console.log(item);
+          if(this.state.selectItemList[index].value!=item.value){
+          isModify=true;
+          }
+        })
+          if(isModify==false){
+            await alert("수정된 내용이 없습니다.")
+            return;
+          }
+
+      
+      }
+        
+     
+    }
+
     const data = {
       files: [],
       user_id: this.props.userInfo.uid,
@@ -193,34 +263,41 @@ class CreateGroup_mobile extends Component {
     }
     let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
     await data.files.push(file);
-    console.log(data);
+    // console.log(data);
 
     if (this.state.thumbnail != null || this.state.thumbnail !== "") {
       await data.files.push(file);
     }
-    this.props.CreateNewGroupRequest(data, this.props.token)
-      .then(async res => {
-        console.log("res", res.res);
-        const result = res.type;
-        console.log(res);
-        if (result === "CREATE_NEW_GROUP_SUCCESS") {
-          this.props.GetHaveInGalleryRequest(this.props.id,0);
-          this.props.handleShowModal(false);
-          this.props.handleIsModify();
 
+    if (data.files.length <= 0 || data.files[0].value === this.props.galleryDetail.thumbnail) {
+      delete data.files;
+    }
+    this.props.UpdateGroupRequest(this.props.id, data, this.props.token)
+      .then(async res => {
+        // console.log("res", res.res);
+        const result = res.type;
+        // console.log(res);
+        if (result === "UPDATE_GROUP_SUCCESS") {
+          console.log(this.props.id);
+          this.props.GetHaveInGalleryRequest(this.props.userInfo.uid, 0);
+          // alert("정보가 수정되었습니다.");
+          this.props.handleShowModal(false);
+          console.log(this.props.handlerIsGalleryModify)
+          this.props.handlerIsGalleryModify();
         } else {
           await alert("다시 시도해주세요!");
         }
       })
       .catch(async e => {
-        console.log("실패", e);
+        // console.log("실패", e);
         await alert("다시 시도해주세요");
         this.setState({
           loading: false
         });
       });
   };
-  onSelectItem(event,{value}){
+
+ onSelectItem(event, { value }) {
     const itemList = this.props.dataList.length<0?[]:this.props.dataList.filter(item=>{
       return(
           !this.state.selectItemList.map(tag=>tag.uid).includes(item.uid)
@@ -229,6 +306,7 @@ class CreateGroup_mobile extends Component {
     )
     console.log(itemList,itemList.filter(item=>[{value}.value].includes(item.uid)),{value}.value);
     this.setState({selectItemList:this.state.selectItemList.concat(itemList.filter(item=>[{value}.value].includes(item.uid)))});
+    this.checkModify();
   }
   onDeleteTag = async (event) => {
     const deleteIdx = event.target.id;
@@ -238,13 +316,10 @@ class CreateGroup_mobile extends Component {
     this.setState({
       selectItemList: list.slice(0, deleteIdx).concat(this.state.selectItemList.slice(parseInt(deleteIdx, 10) + 1, length))
     });
-  }
-  onClickClose(event){
-    this.props.handleShowModal(false);
+    this.checkModify();
   }
   render() {
     const itemList = this.props.dataList.length<0?[]:this.props.dataList.filter(item=>{
-      console.log(this.state.selectItemList,item.uid);
       if(this.state.selectItemList.length>0)
         return !this.state.selectItemList.map(tag=>tag.uid).includes(item.uid)
       return item;
@@ -260,7 +335,7 @@ class CreateGroup_mobile extends Component {
     });
     return (
       <React.Fragment>
-        {this.props.keep ? "redirected" : null}
+         {this.props.keep ? "redirected" : null}
         <Wrapper image={this.state.thumbnail}>
           <div className="row marginTop1">
             <div className="label1">갤러리 썸네일</div>
@@ -296,268 +371,63 @@ class CreateGroup_mobile extends Component {
           <div className="row2 marginTop2">
                <div className="redButton_" onClick={this.onSubmit}>등록하기</div>
                <div className="greyButton" onClick={this.onClickClose}>취소하기</div>
+               <div className="greyButton" onClick={this.onDelete}>삭제하기</div>
           </div>
         </Wrapper>
       </React.Fragment>
     );
   };
 }
-export default CreateGroup_mobile;
+export default ModifyGroup_mobile;
 
 
-// const MainBox = styled.div`
-//   width:100%;
-//   height:100%;
-//   .titleBox{
-//     display:flex;
-//     justify-content:space-between;
-//   }
-//   .pointer{
-//     cursor:pointer;
-//   }
-//   .title{
-//     width:max-content;
-//     font-family:Noto Sans KR, Medium;
-//     font-size:${market_style.font.size.normal1};
-//     font-weight:500;
-//     color:black;
-//   }
-//   .hrline{
-//     width:100%;
-//     border:1px solid #EFEFEF;
-//     margin-top:10px;
-//   }
-//     .contentBox{
-//       width:100%;
-//       display:flex;
-//       justify-content:center;
-//       margin-top:20px;
-//       flex-wrap:wrap;
-//     }
-
-// `;
-
-// const ThumbnailBox = styled.div`
-//   *{
-//     font-family:Noto Sans KR;
-//     font-weight:500;
-//   }
-//   box-shadow: 3px 3px 5px #0000001A;
-//   border:1px solid #eaeaea;
-//   border-radius: 20px;
-//   padding:24px 18px 34px 18px;
-//   margin-right:20px;
-//   margin-bottom:20px;
-//   .label{
-//     display:flex;
-//     justify-content:center;
-//     width:100%;
-//     font-size:${market_style.font.size.small1};
-//     margin-bottom:20px;
-//   }
-// `;
-// const Thumbnail = styled.div`
-//   cursor:pointer;
-//   width:264px;
-//   height:229px;
-//   display:flex;
-//   justify-content:center;
-//   align-items:center;
-//   background-color:#efefef;
-//   background-image: ${props => `url(${props.imageURL == null ? null : props.imageURL})`};
-//   background-size: cover;
-//   background-position: center center;
-//   .label{
-//     width:max-content;
-//     height:max-content;
-//     font-size:${market_style.font.size.small1};
-//     color:#707070;
-//     font-weight:400;
-//   }
-// `;
-// const FormBox = styled.div`
-//   max-width:521px;
-//   width:100%;
-//   height:329px;
-//   box-shadow: 3px 3px 5px #0000001A;
-//   border:1px solid #eaeaea;
-//   border-radius: 20px;
-//   padding:33px;
-//   .board{
-//     width:100%;
-//     height:102%;
-//     overflow-Y:auto;
-//     overflow-X:hidden;
-//   }
-//   .wrapper{
-//     width:100%;
-//     display:flex;
-//     align-items:center;
-//     margin-bottom:20px;
-//   }
-//   .alignTop{
-//     align-items:flex-start;
-//   }
-//   .wrapper_noflex{
-//     width:100%;
-//     margin-bottom:70px;
-//   }
-//   .margin_zero{
-//     margin:0px;
-//   }
-//   .margin_bottom{
-//     margin-bottom:30px;
-//   }
-//   .flex{
-//     display:flex;
-//   }
-//   .column{
-//     flex-direction:column;
-//   }
-//   .innerWraper{
-//     width:100%;
-//     margin-bottom:26px;
-//     display:flex;
-//   }
-//   .label{
-//     font-family:Noto Sans KR;
-//     font-weight:500;
-//     font-size:${market_style.font.size.small1};
-//     min-width:104px;
-    
-//   }
-//   .label_centering{
-//     text-align:center;
-//   }
-//   .index{
-//     width:30px;
-//     height:30px;
-//     color:#707070;
-//   }
-
-// `;
-// const InputText = styled.input.attrs({ type: "text" })`
-//   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-//   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
-//   border-radius:10px;
-//   font-family:Noto Sans KR;
-//   font-size:${market_style.font.size.mini2};
-//   background-color:#E9E9E9;
-//   outline:none;
-//   border:0px;
-//   padding: 0.67857143em 1em;
-//   font-weight:300;
-// `;
-// const InputTextarea = styled.textarea`
-//   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-//   height:${props => props.height == null ? 100 + "%" : props.height + "px"};
-//   border-radius:10px;
-//   font-family:Noto Sans KR;
-//   font-size:${market_style.font.size.mini2};
-//   background-color:#E9E9E9;
-//   outline:none;
-//   border:0px;
-//   readonly;
-//   resize:none;
-//   padding: 0.67857143em 1em;
-//   font-weight:300;
-// `;
-// const TagPiece = styled.div`
-//     width: max-content;
-//     min-width: 30px;
-//     max-width:200px;
-//     height:31px;
-    
-//     background-color: #EFEFEF;
-//     margin-top:5px;
-//     margin-right: 5px;
-//     margin-bottom: 5px;
-//     color: #707070;
-//     padding: 5px;
-//     padding-left: 10px;
-//     padding-right: 10px;
-//     border-radius: 15px;
-//     display: flex;
-//     justify-content: space-between;
-//     .label{
-//       width:100%;
-//       overflow:hidden;
-//       text-overflow:ellipsis;
-//       white-space:nowrap;
-//     }
-//     .close {
-//         margin-left: 10px;
-//         width: max-content;
-//         height: max-content;
-//         padding: 0px 2px;
-//         cursor:pointer;
-//     }
-// `;
-
-// const Margin = styled.div`
-//   width:${props => props.width == null ? 100 + "%" : props.width + "px"};
-//   height:${props => props.height == null ? 100 + "%" : props.height + "px"}
-// `;
-// const DropBox = styled(Dropdown)`
-//     min-width:133px !important;
-//     min-height:31px !important;
-//     background-color:#E9E9E9 !important;
-//     margin-right:10px;
-//     z-index:999;
-//     border-radius:10px !important;
-// `;
-// const TagList = styled.div`
-//     width: 100%;
-//     display: flex;
-//     flex-wrap: wrap;
-// `;
+// {this.props.keep ? "redirected" : null}
 
 // <MainBox>
-// <div className="contentBox">
-//   <ThumbnailBox>
+//   <div className="contentBox">
+//     <ThumbnailBox>
 //     <div className="label">갤러리 썸네일</div>
-//     <input hidden onChange={this.handleOnChangeThumbnail} id="file_" type="file" />
-//     <label htmlFor="file_">
-//       <Thumbnail imageURL={this.state.thumbnail} >
-//         <div className="label">
-//        {this.state.thumbnail==null?"첨부":""}
-//        </div>
-//       </Thumbnail>
-//     </label>
-//   </ThumbnailBox>
-
-
-//   <FormBox>
-//   <div className="board">
-//   <div className="wrapper flex">
-//       <div className="label">이름</div>
-//       <InputText onChange={this.onChangeTitle} value={this.state.title} placeholder="이름을 입력해주세요" width={345} height={31} />
-//     </div>
-//     <div className="wrapper flex alignTop">
-//       <div className="label">설명</div>
-//       <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={345} height={154} />
-//     </div>
-//     <div className="wrapper flex margin_zero">
-//       <div className="label">아이템</div>
-//       <DropBox onChange={this.onSelectItem} id="itemDropBox" selection 
-//                options={itemList&&itemList.map((item,index)=>{
-//                  return(
-//                    {value:item.uid,text:item.title,key:index}
-//                  )
-//                })}/>
-//       {console.log(itemList)}
-//     </div>
-//     <div className="wrapper flex margin_zero">
-//       <div className="label"/>
-//       <TagList>
-//             {TagBox}
-//       </TagList>
-//     </div>
-//     </div>
-//   </FormBox>
+//       <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
+//       <label htmlFor="file">
+//         {this.state.thumbnail == null ?
+//           <div className="thumbnail"><div>첨부</div></div>
+//           :
+//           <Thumbnail imageURL={this.state.thumbnail} />
+//         }
+//       </label>
+//     </ThumbnailBox>
+//     <FormBox>
+//     <div className="board">
+//     <div className="wrapper flex">
+//         <div className="label">이름</div>
+//         <InputText onChange={this.onChangeTitle} value={this.state.title} placeholder="이름을 입력해주세요" width={345} height={31} />
+//       </div>
+//       <div className="wrapper flex alignTop">
+//         <div className="label">설명</div>
+//         <InputTextarea onChange={this.onChangeExplain} value={this.state.explain} placeholder="설명을 입력해주세요" width={345} height={154} />
+//       </div>
+//       <div className="wrapper flex margin_zero">
+//         <div className="label">아이템</div>
+//         <DropBox onChange={this.onSelectItem} id="itemDropBox" selection 
+//                  options={itemList&&itemList.map((item,index)=>{
+//                    return(
+//                      {value:item.uid,text:item.title,key:index}
+//                    )
+//                  })}/>
+//       </div>
+//       <div className="wrapper flex margin_zero">
+//         <div className="label"/>
+//         <TagList>
+//               {TagBox}
+//         </TagList>
+//       </div>
+//       </div>
+//     </FormBox>
 //   </div>
 //   <div className="contentBox">
-//   <RedButton width={150} height={30} fontSize={15}  value={"등록하기"}  onClick={this.onSubmit}/>
-//   <GrayButton width={150} height={30} fontSize={15} text={"취소하시겠습니까?"} value={"취소하기"} onClick={this.onClickClose} isConfirm={true}></GrayButton>
+//     <RedButton   width={150} height={30} fontSize={15}  text={"수정된 내용을 저장합니다."} value={"저장하기"} disabled={!this.state.isModify} okText="확인" cancelText="취소" onClick={this.onSubmit} isConfirm={false} />
+//     <GrayButton  fontColor={"#707070"} isWhite={true} width={150} height={30} fontSize={15} text={"수정된 내용이 저장되지 않습니다."} value={"취소하기"} okText="확인" cancelText="취소"  onClick={this.onClickClose} isConfirm={true} />
+//     <GrayButton  fontColor={"#707070"} isWhite={true} width={150} height={30} fontSize={15} text={"갤러리를 삭제합니다."} value={"삭제하기"} okText="확인" cancelText="취소"  onClick={this.onDelete} isConfirm={true} />
+//     <div className="blankButton"/>
 //   </div>
 // </MainBox>

@@ -29,10 +29,10 @@ const InputWrap = styled.div`
     margin-left:10px;
   }
   .text{
-    width:100%;
+    width:max-content;
     margin-top: 10px;
     font-weight: 300;
-    font-size: ${market_style.font.size.mini2};
+    font-size: ${market_style.font.size.mini1};
     color: #707070;
   }
 `;

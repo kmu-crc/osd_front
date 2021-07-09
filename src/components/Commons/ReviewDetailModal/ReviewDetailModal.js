@@ -155,6 +155,24 @@ const Dialog = styled(Modal)`
     
     }
 
+    .buttonBox{
+        display:flex;
+        justify-content:center;
+        margin-top:10px;
+        .redBtn{
+            color:red;
+            text-decoration:underline;
+            font-size:${market_style.font.size.small1};
+            margin-right:5px;
+        }
+        .deleteBtn{
+            color:#707070;
+            text-decoration:underline;
+            font-size:${market_style.font.size.small1};
+            margin-left:5px;
+        }
+    }
+
     &:hover{
         .review-content{
             .pic_list{
@@ -215,6 +233,10 @@ class ReviewDetailModal extends Component {
                             {detail && detail.comment}
                         </div>
                     </div>
+                    {/* <div className="buttonBox">
+                            <div className="redBtn">수정하기</div>
+                            <div className="deleteBtn">삭제하기</div>
+                    </div> */}
                 </Dialog>
             </React.Fragment>
         )

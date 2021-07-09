@@ -212,10 +212,10 @@ class DesignerDetail_mobile extends Component {
     const { write } = this.state;
     let categoryName = this.props.category1 && this.props.category2 &&
       this.state.category_level2 < 1 ?
-      this.props.category1[parseInt(this.state.category_level1, 10)]
-      && this.props.category1[parseInt(this.state.category_level1, 10)].text
+      (this.props.category1[parseInt(this.state.category_level1-1, 10)]
+      && this.props.category1[parseInt(this.state.category_level1-1, 10)].text)
       : null;
-
+    
     this.props.category2 && this.props.category2.map((item, index) => {
       if (item.parent === this.state.category_level1 && item.value === this.state.category_level2) {
         categoryName = item.text;
@@ -268,7 +268,13 @@ class DesignerDetail_mobile extends Component {
           </div>
           <div className="marginTop2"/>
         </ShadowBox>
-        <RedButton isLike={this.state.isLike} onClick={this.onClickisLike}>관심 디자이너 등록</RedButton>
+        {
+          this.props.userInfo&&
+          this.props.id == this.props.userInfo.uid?
+          null
+          :
+          <RedButton isLike={this.state.isLike} onClick={this.onClickisLike}>관심 디자이너 등록</RedButton>
+        }
         {
         (this.state.career&&this.state.career.length>0
         &&

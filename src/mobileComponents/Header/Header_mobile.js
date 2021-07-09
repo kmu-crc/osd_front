@@ -18,8 +18,9 @@ const HeaderContainer = styled.div`
   display:flex;
   align-items:center;
   padding:10px 15px;
-  // background-color:${props=>props.isMain==false?'#F7F7F7':'white'};
-  .search_wrapper{
+  animation: ${props=>props.headerOn==true?"fadein":"fadeout"} 1s;
+  animation-fill-mode: forwards;
+    .search_wrapper{
     width:${props=>props.width==null?"310px":props.width};
     height:100%;
     position:relative;
@@ -41,6 +42,24 @@ const HeaderContainer = styled.div`
     margin-left:20px;
   }
 
+  @keyframes fadein {
+    from {
+      background-color:rgba( 255, 255, 255, 0 );
+    }
+    to {
+      background-color:rgba( 255, 255, 255, 1 );
+    }
+  }
+  @keyframes fadeout {
+    from {
+      background-color:rgba( 255, 255, 255, 1 );
+    }
+    to {
+      background-color:rgba( 255, 255, 255, 0 );
+    }
+  }
+
+
 `
 const InputText = styled.input.attrs({ type: "text" })`
   width:100%;
@@ -56,7 +75,7 @@ const InputText = styled.input.attrs({ type: "text" })`
 class Header_mobile extends Component {
   constructor(props) {
     super(props);
-    this.state = { logged: false, alarms: {}, active: false, keyword:""};
+    this.state = { logged: false, alarms: {}, active: false, keyword:"",headerOn:false};
     this.getNews = this.getNews.bind(this);
     this.submitEnter = this.submitEnter.bind(this);
     this.saveKeyword = this.saveKeyword.bind(this);
@@ -82,9 +101,7 @@ class Header_mobile extends Component {
     return true;
   }
   handleScroll(){
-    console.log("?",document.getElementById("mobileWrap").scrollTop);
-    
-    
+    this.setState({headerOn:window.scrollY>50?true:false})
   }
   onClickEvent(event){
     if(event.target.id !== "popmenu")this.setState({active:false});
@@ -182,7 +199,7 @@ class Header_mobile extends Component {
     const pattern_eng= /[a-zA-Z]/;
     console.log(window.location.pathname.includes("/search/"));
     return (
-        <HeaderContainer id="headerWrapper" onScroll={()=>{console.log("?")}} isMain={window.location.pathname=='/'?true:false} width={userInfo==null?"100%":"310px"}>
+        <HeaderContainer headerOn={this.state.headerOn} className="red" id="headerWrapper" onScroll={()=>{console.log("?")}} isMain={window.location.pathname=='/'?true:false} width={userInfo==null?"100%":"310px"}>
           <div className="search_wrapper">
             {
               window.location.pathname.includes("/search/")==true

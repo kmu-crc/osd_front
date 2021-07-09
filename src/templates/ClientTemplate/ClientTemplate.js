@@ -14,6 +14,7 @@ const Container = styled.div`
   padding-bottom:60px;
   padding-top:${props=>props.isMobile==true?"50px":"0px"};
   overflow:hidden;
+
   .children-wrapper{
     width:100%;
     height:100%;
@@ -117,6 +118,16 @@ const Menu = styled.div`
         color:black;
         margin-bottom:15px;
       }
+      .footer{
+        margin-top:20px;
+        margin-left:10px;
+        .text_{
+
+          color:#707070;
+          font-size:${market_style.font.size.mini2};
+          font-weight:300;
+        }
+      }
     }
 
     // ani
@@ -157,6 +168,10 @@ class ClientTemplate extends Component {
                   <div className="menu" onClick={()=>window.location.href="/maker"}>메이커</div>
                   <div className="menu" onClick={()=>window.location.href="/product"}>아이템</div>
                   <div className="menu" onClick={()=>window.location.href="/request/designer"}>게시판</div>
+                  <div className="footer">
+                    <div className="text_" onClick={()=>window.location.href="/footerPara"}>이용약관</div>
+                    <div className="text_" onClick={()=>window.location.href="/footerPrivacy"}>개인정보보호정책</div>
+                  </div>
                 </div>
               </Menu>
           </React.Fragment>
@@ -165,7 +180,7 @@ class ClientTemplate extends Component {
         <React.Fragment>
         <Notice />
         <HeaderContainer active={this.props.isActive} />
-        <Container isMobile={window.innerWidth>=500?false:window.location.pathname=="/message"?false:window.location.pathname=="/"?false:true}>
+        <Container id="allWrapper" isMobile={window.innerWidth>=500?false:window.location.pathname=="/message"?false:window.location.pathname=="/"?false:true}>
           {
           window.innerWidth>=500?
           <div className="children-wrapper">

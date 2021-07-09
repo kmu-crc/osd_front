@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { GetHaveInGalleryRequest } from "actions/Gallery";
 import ScrollList from "mobileComponents/NoInfiniteScrollList_mobile/NoInfiniteScrollList_mobile";
 import Gallery_mobile from "components/Gallery/Gallery_mobile/Gallery_mobile";
-import ModifyGallery from "components/Gallery/ModifyGallery/ModifyGallery";
+import ModifyGallery_mobile from "mobileComponents/ModifyGallery_mobile/ModifyGallery_mobile";
 import styled from "styled-components";
 const ScrollBox = styled.div`
     min-width:100%;
@@ -24,13 +24,14 @@ class HaveInGalleryContainer_mobile extends Component {
   }
 
   render() {
+    console.log("isModify==",this.props.isModify)
     return (
       <ScrollBox
       isScroll={this.props.dataListAdded.length>4?true:false}
       >
         <ScrollList
-          cols={8} type="gallery" getListRequest={this.getList} ListComponent={Gallery_mobile}
-          dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} handler={this.props.handlerIsGalleryModify} /> 
+          cols={8} type="gallery" getListRequest={this.getList} ListComponent={this.props.isModify === true ? ModifyGallery_mobile : Gallery_mobile}
+          dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} handler={this.props.handlerIsGalleryModify} />
       </ScrollBox>
 
 
