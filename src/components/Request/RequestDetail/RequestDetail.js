@@ -192,7 +192,7 @@ export default class Detail extends Component {
               </div>
             </div>
             <div className="buttonBox">
-              {(Detail.user_id === userInfo.uid)
+              {(Detail&&userInfo&&Detail.user_id === userInfo.uid)
                 ? <React.Fragment>
                   <RedButton width={150} height={30} fontSize={market_style.font.size.small1} okText="확인" cancelText="취소" value={"수정하기"} onClick={() => this.setState({ write: true })} isConfirm={false} />
                   <GrayButton width={150} height={30} fontSize={market_style.font.size.small1} text={"삭제하시겠습니까?"} value={"삭제하기"} onClick={() => { this.props.DeleteRequestRequest(this.props.id, this.props.token); window.location.href = "/request/designer" }} isConfirm={true}></GrayButton>

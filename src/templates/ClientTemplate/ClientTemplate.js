@@ -18,13 +18,18 @@ const Container = styled.div`
   .children-wrapper{
     width:100%;
     height:100%;
-    overflow-y:auto;
+    // overflow-y:auto;
   }
   .mobileWidth{
     width:100%;
   }
   .mobile-wrapper{
-    width:375px;
+    width:${window.innerWidth}px;
+    // width:375px;
+    overflow-x:hidden;
+  }
+  .main-mobile-wrapper{
+    width:100%;
     overflow-x:hidden;
   }
   .marginAuto{
@@ -189,7 +194,7 @@ class ClientTemplate extends Component {
           :
           window.location.pathname=="/"?
           <React.Fragment>
-            <div id="mobileWrap" className="mobile-wrapper">
+            <div id="mobileWrap" className="main-mobile-wrapper">
               {this.props.children}
             </div>
             <BottomMenuContainer onClickMenu={this.onClickMenu}/>

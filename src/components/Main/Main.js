@@ -13,9 +13,10 @@ import arrow_right from "source/arrow_right_new.svg"
 // CSS STYLE
 const Margin = 1 / 3 * 45;
 const MainContainer = styled.div`
-  width:${window.innerWidth}px;
+  // width:${window.innerWidth}px;
 `;
 const Mobile_Wrapper = styled.div`
+// border:1px solid black;
   width:375px;
   margin:0px auto;
   padding-left:10px;
@@ -74,9 +75,17 @@ class Main extends Component {
     return (<MainContainer>
 
       {/* <Wrapper> */}
-      <Wrapper>
-        <SliderContainer />
+      {
+        window.innerWidth>=500?
+        <Wrapper>
+          <SliderContainer />
+        </Wrapper>
+        :
+        <Wrapper>
+          <SliderContainer />
       </Wrapper>
+      }
+
       {/* </Wrapper> */}
       {
         window.innerWidth>=500?

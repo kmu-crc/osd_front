@@ -322,11 +322,29 @@ class Header extends Component {
     const face = (userInfo && userInfo.thumbnail && userInfo.thumbnail.s_img) || NoFace;
 
     // active variables
-    const designerActive = (location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1) && (location.indexOf(`/request`) === -1)
-    const makerActive = (location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) && (location.indexOf(`/request`) === -1)
-    const itemActive = (location.indexOf("/product") !== -1 || (location.indexOf("/createproduct") !== -1) || (location.indexOf("/productModify") !== -1) || location.indexOf("/productDetail") !== -1) && (location.indexOf(`/request`) === -1)
-    const requestActive = (location.indexOf("/request") !== -1)
+    // const designerActive = (location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1) && (location.indexOf(`/request`) === -1)
+    // const makerActive = (location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) && (location.indexOf(`/request`) === -1)
+    // const itemActive = (location.indexOf("/product") !== -1 || (location.indexOf("/createproduct") !== -1) || (location.indexOf("/productModify") !== -1) || location.indexOf("/productDetail") !== -1) && (location.indexOf(`/request`) === -1)
+    // const requestActive = (location.indexOf("/request") !== -1)
+
+    let designerActive = (location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1) && (location.indexOf(`/request`) === -1)
+    let makerActive = (location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) && (location.indexOf(`/request`) === -1)
+    let itemActive = (location.indexOf("/product") !== -1 || (location.indexOf("/createproduct") !== -1) || (location.indexOf("/productModify") !== -1) || location.indexOf("/productDetail") !== -1) && (location.indexOf(`/request`) === -1)
+    let requestActive = (location.indexOf("/request") !== -1)
     const searchtype = designerActive ? "designer" : makerActive ? "maker" : itemActive ? "item" : null;
+
+    if(location.indexOf("/requestToDesigner/")!==-1&&location.indexOf("/requestToDesigner/null")==-1){
+      designerActive = true;
+      makerActive=false;
+      itemActive=false;
+      requestActive=false;
+    }
+    if(location.indexOf("/requestToMaker/")!==-1&&location.indexOf("/requestToMaker/null")==-1){
+      designerActive = false;
+      makerActive=true;
+      itemActive=false;
+      requestActive=false;
+    }
 
     const pattern_eng = /[a-zA-Z]/;
     return (
