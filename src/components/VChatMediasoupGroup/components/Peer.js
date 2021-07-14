@@ -122,7 +122,7 @@ const Peer = (props) => {
 			<div
 				onClick={() => {
 					if (videoConsumer && videoConsumer.track) {
-						const stream = new MediaStream;
+						const stream = new MediaStream();
 						stream.addTrack(videoConsumer.track)
 						props.clicked(peer, stream);
 					}
@@ -130,7 +130,7 @@ const Peer = (props) => {
 
 				<PeerView
 					peer={peer}
-					share={videoConsumer && videoConsumer.appData && videoConsumer.appData.share || false}
+					share={(videoConsumer && videoConsumer.appData && videoConsumer.appData.share) || false}
 					audioConsumerId={audioConsumer ? audioConsumer.id : null}
 					videoConsumerId={videoConsumer ? videoConsumer.id : null}
 					audioRtpParameters={audioConsumer ? audioConsumer.rtpParameters : null}
@@ -147,17 +147,17 @@ const Peer = (props) => {
 					audioMuted={audioMuted}
 					audioEnabled={audioEnabled}
 					videoVisible={videoVisible}
-					videoMultiLayer={videoConsumer && videoConsumer.type !== 'simple'}
+					videoMultiLayer={(videoConsumer && videoConsumer.type) !== 'simple'}
 					audioCodec={audioConsumer ? audioConsumer.codec : null}
 					videoCodec={videoConsumer ? videoConsumer.codec : null}
 					audioScore={audioConsumer ? audioConsumer.score : null}
 					videoScore={videoConsumer ? videoConsumer.score : null}
-					// faceDetection={faceDetection}
 					onChangeVideoPreferredLayers={(spatialLayer, temporalLayer) => { roomClient.setConsumerPreferredLayers(videoConsumer.id, spatialLayer, temporalLayer); }}
 					onChangeVideoPriority={(priority) => { roomClient.setConsumerPriority(videoConsumer.id, priority); }}
 					onRequestKeyFrame={() => { roomClient.requestConsumerKeyFrame(videoConsumer.id); }}
-					// onStatsClick={onSetStatsPeerId}
-					nick_name={info && info.nick_name || "[손님]" + peer.displayName}
+					nick_name={(info && info.nick_name) || ("[손님]" + peer.displayName)}
+				// onStatsClick={onSetStatsPeerId}
+				// faceDetection={faceDetection}
 				/>
 			</div>
 

@@ -44,9 +44,16 @@ const ChildrenContainer = styled.div`
 `;
 
 class ClientTemplate extends Component {
-  state = { scroll: false, whensmall: 256 * 2, larger: false, hidemenu: false, prevScroll: 0, screenWidth: window.innerWidth }
+  state = {
+    scroll: false,
+    whensmall: 256 * 2,
+    larger: false,
+    hidemenu: false,
+    prevScroll: 0,
+    screenWidth: window.innerWidth,
+  }
   componentDidMount() {
-    window.addEventListener("resize", this.handleResize, false);
+    window.addEventListener("resize", this.handleResize, false)
   }
   onClose = e => {
     if (this.props.isActive !== "INIT") {
@@ -62,9 +69,9 @@ class ClientTemplate extends Component {
     const prevScrollPos = this.state.prevScroll
     const { hidemenu, whensmall } = this.state
     if (window.location.pathname === "/message") {
-      this.setState({ larger: true });
-      this.setState({ hidemenu: false });
-      return;
+      this.setState({ larger: true })
+      this.setState({ hidemenu: false })
+      return
     }
     if (hidemenu === false) {
       if (currentScrollPos > 25) {
@@ -92,12 +99,12 @@ class ClientTemplate extends Component {
   }
   handleResize = () => {
     this.setState({ screenWidth: window.innerWidth })
-  };
+  }
   render() {
     const { scroll, hidemenu, larger } = this.state
     const scroll_style = (scroll ? "partial-scroll-on " : "partical-scroll-none ")
     const hidemenu_style = (hidemenu ? "hidemenu " : "")
-    const larger_style = (larger ? "larger " : "");
+    const larger_style = (larger ? "larger " : "")
 
     return (
       <MenuContext.Provider value={{ hidemenu, larger }}>

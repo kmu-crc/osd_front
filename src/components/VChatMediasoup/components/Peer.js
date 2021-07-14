@@ -1,14 +1,14 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import * as appPropTypes from './appPropTypes';
-import { withRoomContext } from '../RoomContext';
-import * as stateActions from '../redux/stateActions';
-import PeerView from './PeerView';
-import styled from "styled-components";
-import who from "source/thumbnail.png";
-import icon_remote_mic_white_off from 'resources/images/icon_remote_mic_white_off.svg';
-import icon_remote_webcam_white_off from 'resources/images/icon_remote_webcam_white_off.svg';
+import React from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import * as appPropTypes from './appPropTypes'
+import { withRoomContext } from '../RoomContext'
+import * as stateActions from '../redux/stateActions'
+import PeerView from './PeerView'
+import styled from "styled-components"
+import who from "source/thumbnail.png"
+import icon_remote_mic_white_off from 'resources/images/icon_remote_mic_white_off.svg'
+import icon_remote_webcam_white_off from 'resources/images/icon_remote_webcam_white_off.svg'
 
 const DivPeer = styled.div`
 	width: 250px;
@@ -70,7 +70,7 @@ const DivPeer = styled.div`
 			}
 		}	
 	}
-`;
+`
 const Thumbnail = styled.div`
 	position: absolute;
 	right: 1rem;
@@ -83,7 +83,7 @@ const Thumbnail = styled.div`
 	background-position: center center;
 	background-Image: url(${props => props.img});
 	z-index: 500;
-`;
+`
 
 const Peer = (props) => {
 	const {
@@ -122,15 +122,15 @@ const Peer = (props) => {
 			<div
 				onClick={() => {
 					if (videoConsumer && videoConsumer.track) {
-						const stream = new MediaStream;
+						const stream = new MediaStream()
 						stream.addTrack(videoConsumer.track)
-						props.clicked(peer, stream);
+						props.clicked(peer, stream)
 					}
 				}}>
 
 				<PeerView
 					peer={peer}
-					share={videoConsumer && videoConsumer.appData && videoConsumer.appData.share || false}
+					share={(videoConsumer && videoConsumer.appData && videoConsumer.appData.share) || false}
 					audioConsumerId={audioConsumer ? audioConsumer.id : null}
 					videoConsumerId={videoConsumer ? videoConsumer.id : null}
 					audioRtpParameters={audioConsumer ? audioConsumer.rtpParameters : null}
@@ -152,57 +152,51 @@ const Peer = (props) => {
 					videoCodec={videoConsumer ? videoConsumer.codec : null}
 					audioScore={audioConsumer ? audioConsumer.score : null}
 					videoScore={videoConsumer ? videoConsumer.score : null}
-					// faceDetection={faceDetection}
-					onChangeVideoPreferredLayers={(spatialLayer, temporalLayer) => { roomClient.setConsumerPreferredLayers(videoConsumer.id, spatialLayer, temporalLayer); }}
-					onChangeVideoPriority={(priority) => { roomClient.setConsumerPriority(videoConsumer.id, priority); }}
-					onRequestKeyFrame={() => { roomClient.requestConsumerKeyFrame(videoConsumer.id); }}
-					// onStatsClick={onSetStatsPeerId}
-					nick_name={info && info.nick_name || "[손님]" + peer.displayName}
+					onChangeVideoPreferredLayers={(spatialLayer, temporalLayer) => { roomClient.setConsumerPreferredLayers(videoConsumer.id, spatialLayer, temporalLayer) }}
+					onChangeVideoPriority={(priority) => { roomClient.setConsumerPriority(videoConsumer.id, priority) }}
+					onRequestKeyFrame={() => { roomClient.requestConsumerKeyFrame(videoConsumer.id) }}
+					nick_name={(info && info.nick_name) || ("[초대]" + peer.displayName)}
+				// onStatsClick={onSetStatsPeerId}
+				// faceDetection={faceDetection}
 				/>
 			</div>
 
 		</DivPeer>
-	);
-};
+	)
+}
 
-Peer.propTypes =
-{
+Peer.propTypes = {
+	audioMuted: PropTypes.bool,
 	roomClient: PropTypes.any.isRequired,
 	peer: appPropTypes.Peer.isRequired,
 	audioConsumer: appPropTypes.Consumer,
 	videoConsumer: appPropTypes.Consumer,
-	audioMuted: PropTypes.bool,
-	faceDetection: PropTypes.bool.isRequired,
-	onSetStatsPeerId: PropTypes.func.isRequired
-};
+	onSetStatsPeerId: PropTypes.func.isRequired,
+	// faceDetection: PropTypes.bool.isRequired,
+}
 
 const mapStateToProps = (state, { id }) => {
-	const me = state.me;
-	const peer = state.peers[id];
+	const me = state.me
+	const peer = state.peers[id]
 	const consumersArray = peer.consumers
-		.map((consumerId) => state.consumers[consumerId]);
+		.map((consumerId) => state.consumers[consumerId])
 	const audioConsumer =
-		consumersArray.find((consumer) => consumer.track.kind === 'audio');
+		consumersArray.find((consumer) => consumer.track.kind === 'audio')
 	const videoConsumer =
-		consumersArray.find((consumer) => consumer.track.kind === 'video');
+		consumersArray.find((consumer) => consumer.track.kind === 'video')
 	return {
 		peer,
 		audioConsumer,
 		videoConsumer,
 		audioMuted: me.audioMuted,
 		faceDetection: state.room.faceDetection
-	};
-};
+	}
+}
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		onSetStatsPeerId: (peerId) => dispatch(stateActions.setRoomStatsPeerId(peerId))
-	};
-};
+const mapDispatchToProps = (dispatch) => ({
+	onSetStatsPeerId: (peerId) => dispatch(stateActions.setRoomStatsPeerId(peerId))
+})
 
-const PeerContainer = withRoomContext(connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Peer));
+const PeerContainer = withRoomContext(connect(mapStateToProps, mapDispatchToProps)(Peer))
 
-export default PeerContainer;
+export default PeerContainer
