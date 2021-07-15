@@ -16,7 +16,7 @@ const MainContainer = styled.div`
   // width:${window.innerWidth}px;
 `;
 const Mobile_Wrapper = styled.div`
-// border:1px solid black;
+// border:1px solid black
   width:375px;
   margin:0px auto;
   padding-left:10px;

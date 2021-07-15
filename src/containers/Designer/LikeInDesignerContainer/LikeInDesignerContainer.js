@@ -61,7 +61,7 @@ class LikeInDesignerContainer extends Component {
         <div className="lineBox"><div className="line" /></div>
 
         <PagingList getListRequest={this.getList}
-          type="sales_Expert"
+          type="designer"
           ListComponent={Expert_small}
           dataList={this.props.dataList} dataListAdded={this.props.dataListAdded}
           mobile={16} tablet={8} computer={8} largeScreen={5} widescreen={2} customClass="largeCustom" />

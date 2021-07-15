@@ -825,7 +825,11 @@ class ItemDetail extends Component {
                         }
                       </div>
                     }
-                    {this.props.ItemDetail && this.props.userInfo &&
+                    {
+                    this.props.userInfo == null?
+                    null
+                    :
+                    this.props.ItemDetail && this.props.userInfo &&
                       this.props.ItemDetail.user_id == this.props.userInfo.uid ? null : this.state.isLike === false ?
                       <div className="button second" onClick={this.onClickLike}>
                         <div className="text">관심항목추가</div></div>
@@ -840,7 +844,7 @@ class ItemDetail extends Component {
           </div>
 
           {/* special component */}
-          {item.type === 7 ? <LectureItemComponent max={item.max_students} current={1} /> : null}
+          {/* {item.type === 7 ? <LectureItemComponent max={item.max_students} current={1} /> : null} */}
 
           {/* item-contents */}
           {item &&

@@ -318,7 +318,12 @@ class MakerDetail_mobile extends Component {
           </div>
           <div className="marginTop2"/>
         </ShadowBox>
-        <RedButton isLike={this.state.isLike} onClick={this.onClickisLike}>관심 디자이너 등록</RedButton>
+        {
+        this.props.userInfo==null?
+        null
+        :
+        <RedButton isLike={this.state.isLike} onClick={this.onClickisLike}>{this.state.isLike==true?"관심 메이커":"관심 메이커 등록"}</RedButton>
+        }
         {
           this.state.experience&&
           this.state.experience.split("/")&&

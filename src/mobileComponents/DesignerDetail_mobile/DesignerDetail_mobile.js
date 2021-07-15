@@ -273,7 +273,10 @@ class DesignerDetail_mobile extends Component {
           this.props.id == this.props.userInfo.uid?
           null
           :
-          <RedButton isLike={this.state.isLike} onClick={this.onClickisLike}>관심 디자이너 등록</RedButton>
+          this.props.userInfo==null?
+          null
+          :
+          <RedButton isLike={this.state.isLike} onClick={this.onClickisLike}>{this.state.isLike==true?"관심 디자이너":"관심 디자이너 등록"}</RedButton>
         }
         {
         (this.state.career&&this.state.career.length>0

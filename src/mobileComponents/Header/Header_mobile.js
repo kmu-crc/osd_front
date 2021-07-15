@@ -30,7 +30,7 @@ const HeaderContainer = styled.div`
       right:5px;
       width:20px;
       height:20px;
-      opacity: .2;
+      opacity: .9;
     }
   }
   .icon_wrapper{

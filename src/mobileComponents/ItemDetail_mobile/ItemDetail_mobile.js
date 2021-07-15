@@ -277,9 +277,16 @@ class ItemDetail_mobile extends Component {
               </div>
           </div>
           </ShadowBox>
-          <RedButton isLike={this.state.isLike} onClick={this.onClickLike}>
+          {
+            this.props.userInfo==null
+            ||item.user_id === (this.props.userInfo && this.props.userInfo.uid) 
+            ?
+            null:
+            <RedButton isLike={this.state.isLike} onClick={this.onClickLike}>
             {this.state.isLike == true? "관심 항목":"관심 항목 등록"}
           </RedButton>
+  
+          }
           {item.user_id === (this.props.userInfo && this.props.userInfo.uid) ?
           <RedButton isLike={true} onClick={this.modifyThisItem}>
             아이템 수정
