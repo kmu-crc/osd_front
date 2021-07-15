@@ -181,7 +181,7 @@ const Introduction = styled.div`
       margin-top: 5px;
       font-size:${market_style.font.size.small1};
       font-weight: 300;
-      margin-bottom:25px;
+      margin-bottom:23px;
       overflow: hidden;
       color:black;
     }
@@ -645,7 +645,11 @@ class MakerDetail extends Component {
                     <div className="category"><TextFormat txt={categoryName || "전체"} chars={32} /></div>
               </div>
               <div className="like_Wrapper">
-                {this.state.isLike === false ?
+                {
+                this.props.userInfo==null?
+                null
+                :
+                this.state.isLike === false ?
                   <div onClick={this.onClickisLike} className="unlike">♡</div>
                   :
                   <div onClick={this.onClickisLike} className="like">♥</div>

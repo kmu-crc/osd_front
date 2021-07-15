@@ -45,6 +45,7 @@ const TextWrapper = styled.div`
   flex-direction:column;
   align-items:center;
   .nick {
+    height:22px;
     margin-top:5px;
     text-align:center;
     width:100%;

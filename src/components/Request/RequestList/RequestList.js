@@ -210,6 +210,8 @@ const CreateNormalArticleButton = styled.div`
         padding:4px 39px 4px 39px;
     }
     .font{
+
+      min-width:max-content;
       font-size:${market_style.font.size.small1};
       color:white;
     }
