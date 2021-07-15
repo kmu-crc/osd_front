@@ -818,7 +818,7 @@ class DesignerDetail extends Component {
               createNoneRequest={(title,content)=>this.createNoneRequest(title,content)}
             />
             :
-            this.props.userInfo==null?null:
+            this.props.userInfo==null||this.props.userInfo.uid == this.props.id?null:
             <CreateRequest>
               <div className="button_reverse" onClick={this.onClickRequest}>
                 <div className="font">디자인 의뢰</div>

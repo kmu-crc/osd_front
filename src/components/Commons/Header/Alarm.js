@@ -261,13 +261,11 @@ export default class Alarm extends Component {
               <div>
                 {unread > 0 &&
                   <AllAlarmRead style={{ display: "flex", flexDirection: "row", justifyContent: "left" }} onClick={this.allAlarmConfirm}>
-                    {/* <div style={{ width: "2%", backgroundColor: "red" }}>&nbsp;</div>
-                      <div><Icon name="check square" /></div> */}
                     <div className="allread"><div className="text">모두읽음처리</div></div>
                   </AllAlarmRead>
                 }
                 {converted && converted.length > 0 && converted.map((item, index) => {
-                  return null
+                  // return null
                   const alarmtype = this.showButton(item)
                   const alarmItem = JSON.parse(item.content);
                   let imgURL = noimg;
