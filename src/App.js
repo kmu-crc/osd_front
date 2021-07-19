@@ -25,14 +25,14 @@ import RequiresAuth from "containers/Commons/RequiresAuth"
 import NotFoundPage from "pages/NotFoundPage"
 import FooterPrivacy from "components/Commons/FooterPrivacy"
 import FooterPara from "components/Commons/FooterTerm"
-import Notice from "components/Header/Notice";
-import CheckAuth from "containers/Commons/CheckAuth";
-import VChatDesignPage from "pages/VChat2Page";
-import VChatGroupPage from "pages/VChatGroupPage";
-import ChatDesignPage from "pages/ChatPage";
-import ChatGroupPage from "pages/ChatGroupPage";
-import CodeViewPage from "pages/CodeViewPage";
-import PdfViewPage from "pages/PdfViewPage";
+import Notice from "components/Header/Notice"
+import CheckAuth from "containers/Commons/CheckAuth"
+import VChatDesignPage from "pages/VChat2Page"
+import VChatGroupPage from "pages/VChatGroupPage"
+import ChatDesignPage from "pages/ChatPage"
+import ChatGroupPage from "pages/ChatGroupPage"
+import CodeViewPage from "pages/CodeViewPage"
+import PdfViewPage from "pages/PdfViewPage"
 
 class App extends Component {
   render() {
@@ -83,4 +83,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App

@@ -41,7 +41,7 @@ const Thumbnail = styled.div`
 	background-position: center center;
 	background-Image: url(${props => props.img});
 	z-index: 501;
-`;
+`
 const Control = styled.div`
 	position: absolute;
 	z-index: 10;
@@ -143,14 +143,13 @@ const Control = styled.div`
 			}
 		}
 	}
-`;
+`
 
 class Me extends React.Component {
 	constructor(props) {
-		super(props);
-
-		this._mounted = false;
-		this._rootNode = null;
+		super(props)
+		this._mounted = false
+		this._rootNode = null
 	}
 
 	render() {
@@ -162,36 +161,36 @@ class Me extends React.Component {
 			videoProducer,
 			faceDetection,
 			onSetStatsPeerId
-		} = this.props;
+		} = this.props
 
-		let micState;
+		let micState
 
 		if (!me.canSendMic)
-			micState = 'unsupported';
+			micState = 'unsupported'
 		else if (!audioProducer)
-			micState = 'unsupported';
+			micState = 'unsupported'
 		else if (!audioProducer.paused)
-			micState = 'on';
+			micState = 'on'
 		else
-			micState = 'off';
+			micState = 'off'
 
-		let webcamState;
+		let webcamState
 
 		if (!me.canSendWebcam)
-			webcamState = 'unsupported';
+			webcamState = 'unsupported'
 		else if (videoProducer && videoProducer.type !== 'share')
-			webcamState = 'on';
+			webcamState = 'on'
 		else
-			webcamState = 'off';
+			webcamState = 'off'
 
-		let changeWebcamState;
+		let changeWebcamState
 
 		if (Boolean(videoProducer) && videoProducer.type !== 'share' && me.canChangeWebcam)
-			changeWebcamState = 'on';
+			changeWebcamState = 'on'
 		else
-			changeWebcamState = 'unsupported';
+			changeWebcamState = 'unsupported'
 
-		const videoVisible = Boolean(videoProducer) && !videoProducer.paused;
+		const videoVisible = Boolean(videoProducer) && !videoProducer.paused
 
 		return (
 			<DivME
@@ -210,26 +209,26 @@ class Me extends React.Component {
 							onClick={() => {
 								micState === 'on'
 									? roomClient.muteMic()
-									: roomClient.unmuteMic();
+									: roomClient.unmuteMic()
 							}} />
 
 						<div
 							className={`button webcam ${webcamState} ${me.webcamInProgress || me.shareInProgress ? "disabled" : ""}`}
 							onClick={() => {
 								if (videoProducer && videoProducer.type === "share") {
-									roomClient.disableShare();
-									roomClient.checkEnabledWebcam();
-									return;
+									roomClient.disableShare()
+									roomClient.checkEnabledWebcam()
+									return
 								}
 								if (webcamState === 'on') {
-									cookiesManager.setDevices({ webcamEnabled: false });
-									roomClient.disableWebcam();
+									cookiesManager.setDevices({ webcamEnabled: false })
+									roomClient.disableWebcam()
 									return
 								}
 								else {
-									cookiesManager.setDevices({ webcamEnabled: true });
-									roomClient.enableWebcam();
-									return;
+									cookiesManager.setDevices({ webcamEnabled: true })
+									roomClient.enableWebcam()
+									return
 								}
 							}}
 						/>
@@ -248,9 +247,9 @@ class Me extends React.Component {
 				<div
 					onClick={() => {
 						if (videoProducer && videoProducer.track) {
-							const stream = new MediaStream;
-							stream.addTrack(videoProducer.track);
-							this.props.clicked(me, stream);
+							const stream = new MediaStream
+							stream.addTrack(videoProducer.track)
+							this.props.clicked(me, stream)
 						}
 					}}
 				>
@@ -286,26 +285,26 @@ class Me extends React.Component {
 					delayUpdate={50}
 				/> */}
 			</DivME >
-		);
+		)
 	}
 
 	componentDidMount() {
-		this._mounted = true;
+		this._mounted = true
 
 		setTimeout(() => {
 			if (!this._mounted || this.props.me.displayNameSet)
-				return;
+				return
 
-			ReactTooltip.show(this._rootNode);
-		}, 4000);
+			ReactTooltip.show(this._rootNode)
+		}, 4000)
 
 	}
 	componentWillUnmount() {
-		this._mounted = false;
+		this._mounted = false
 	}
 	componentDidUpdate(prevProps) {
 		if (!prevProps.me.displayNameSet && this.props.me.displayNameSet) {
-			ReactTooltip.hide(this._rootNode);
+			ReactTooltip.hide(this._rootNode)
 		}
 	}
 }
@@ -322,22 +321,22 @@ class Me extends React.Component {
 // };
 
 const mapStateToProps = (state) => {
-	const producersArray = Object.values(state.producers);
-	const audioProducer = producersArray.find((producer) => producer.track.kind === 'audio');
-	const videoProducer = producersArray.find((producer) => producer.track.kind === 'video');
+	const producersArray = Object.values(state.producers)
+	const audioProducer = producersArray.find((producer) => producer.track.kind === 'audio')
+	const videoProducer = producersArray.find((producer) => producer.track.kind === 'video')
 	return {
 		connected: state.room.state === 'connected',
 		me: state.me,
 		audioProducer: audioProducer,
 		videoProducer: videoProducer,
 		// faceDetection: state.room.faceDetection
-	};
-};
+	}
+}
 
 // const mapDispatchToProps = (dispatch) => ({
 // 	// onSetStatsPeerId: (peerId) => dispatch(stateActions.setRoomStatsPeerId(peerId))
-// });
+// })
 
-const MeContainer = withRoomContext(connect(mapStateToProps, null /*mapDispatchToProps*/)(Me));
+const MeContainer = withRoomContext(connect(mapStateToProps, null /*mapDispatchToProps*/)(Me))
 
-export default MeContainer;
+export default MeContainer

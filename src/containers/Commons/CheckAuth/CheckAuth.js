@@ -28,7 +28,7 @@ export default function CheckAuth(Components) {
         this.props.CheckTokenRequest(token).then(data => {
           // console.log(data);
           if (data && data.info) {
-            if (!data.info.isDetail||data.info.thumbnail==null) {
+            if (!data.info.isDetail || data.info.thumbnail == null) {
               if (this.props.location.pathname === "/insertUserDetail") {
                 this.setState({ valid: true })
               } else {
@@ -38,11 +38,11 @@ export default function CheckAuth(Components) {
             else {
               this.setState({ valid: true })
             }
-          } 
+          }
           else {
             this.setState({ valid: true })
           }
-          
+
         })
       }).catch(data => {
         this.props.SignOutRequest()

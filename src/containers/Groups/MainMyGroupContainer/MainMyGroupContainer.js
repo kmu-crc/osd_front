@@ -13,10 +13,10 @@ const Head = styled.div`
   text-align: center;
   margin-top: 27px;
   margin-bottom: 27px;
-`;
-const ScrollListContainer = styled.div`
-    padding-left:20px;
-`;
+`
+// const ScrollListContainer = styled.div`
+//  padding-left:20px;
+// `
 class MainMyGroupContainer extends Component {
   componentWillMount() {
     this.props.token &&
