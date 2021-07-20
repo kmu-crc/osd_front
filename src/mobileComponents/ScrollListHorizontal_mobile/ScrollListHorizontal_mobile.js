@@ -15,6 +15,7 @@ const SliderBox = styled.div`
     padding-right:5px;
     .item{
       margin-right:10px;
+      margin-bottom:10px;
     }
   }
   .wrapper_top{

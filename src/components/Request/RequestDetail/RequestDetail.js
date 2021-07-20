@@ -124,8 +124,8 @@ export default class Detail extends Component {
     } = this.props;
     if (Detail == null || Detail.length === 0) return (<Loading />);
 
-    const level1 = Detail.status === "response" ? Detail.request.category_level1 : Detail.category_level1;
-    const level2 = Detail.status === "response" ? Detail.request.category_level2 : Detail.category_level2;
+    const level1 = Detail.status === "response" ? Detail.Request&&Detail.request.category_level1 : Detail.category_level1;
+    const level2 = Detail.status === "response" ? Detail.Request&&Detail.request.category_level2 : Detail.category_level2;
     const category_level1 = category1 && category1[level1 - 1] && category1[level1 - 1].text;
     const category_level2 = (level2 && category2 && category2.filter(cate => cate.value === level2)[0].text) || "";
 
@@ -153,6 +153,8 @@ export default class Detail extends Component {
           onClick={() => this.props.onClickResponse()}
           category_level1={category_level1}
           category_level2={category_level2}
+          category1={this.props.category1}
+          category2={this.props.category2}
         /> : null}
 
       {/* RESPONSE DETAIL */}
@@ -167,6 +169,8 @@ export default class Detail extends Component {
           confirm={confirm}
           category_level1={category_level1}
           category_level2={category_level2}
+          category1={this.props.category1}
+          category2={this.props.category2}
         /> : null}
 
       {/* NORMAL DETAIL */}

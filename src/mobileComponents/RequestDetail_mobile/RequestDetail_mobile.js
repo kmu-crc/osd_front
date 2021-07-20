@@ -139,9 +139,8 @@ export default class Detail extends Component {
       isPurchased, purchase, confirm,
     } = this.props;
     if (Detail == null || Detail.length === 0) return (<Loading />);
-
-    const level1 = Detail.status === "response" ? Detail.request.category_level1 : Detail.category_level1;
-    const level2 = Detail.status === "response" ? Detail.request.category_level2 : Detail.category_level2;
+    const level1 = Detail&&Detail.status === "response" ? Detail.request.category_level1 : Detail.category_level1==null?0:Detail.category_level1;
+    const level2 = Detail&&Detail.status === "response" ? Detail.request.category_level2 : Detail.category_level2==null?0:Detail.category_level2;
     const category_level1 = category1 && category1[level1 - 1] && category1[level1 - 1].text;
     const category_level2 = (level2 && category2 && category2.filter(cate => cate.value === level2)[0]&&category2.filter(cate => cate.value === level2)[0].text) || "";
 

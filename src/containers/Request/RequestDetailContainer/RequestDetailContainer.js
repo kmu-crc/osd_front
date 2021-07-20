@@ -36,8 +36,6 @@ class RequestDetailContainer extends Component {
   };
   Purchase() {
     const { Detail } = this.props;
-    console.log(this.props);
-
     this.props.CreateItemPaymentRequest(
       {
         payment_title: Detail.title,
@@ -61,7 +59,7 @@ class RequestDetailContainer extends Component {
       <React.Fragment>
         {
          window.innerWidth>=500?
-         <RequestDetail
+        <RequestDetail
          {...this.props}
          purchase={this.Purchase}
          confirm={this.ConfirmPayment}

@@ -96,6 +96,7 @@ const ShadowBox = styled.div`
   .fontBig{font-size:${market_style.font.size.small1};font-weight:800;}
   .fontNormal{font-size:${market_style.font.size.small1};font-weight:400;}
   .fontSmall{font-size:${market_style.font.size.mini2};font-weight:400;}
+  .fontMini{font-size:${market_style.font.size.mini3};font-weight:400;}
   .black{color:black;}
   .flex{display:flex;}
   .flexWrap{flex-wrap:wrap;}
@@ -202,10 +203,10 @@ export const DesignRequestDetail_mobile = (props) => {
            </div>
            <div className="row flex marginTop3">
               <div className="label">카테고리</div>
-              <div className="fontNomal flex alignCenter">
-               {category_level1}
-               {category_level2 ? <CustomIcon width="5" height="10" marginRight="20" marginLeft="20" imgURL={category_icon} /> : null}
-               {category_level2 ? category_level2 : null}
+              <div className="fontMini flex alignCenter">
+               <div style={{minWidth:"max-content"}}>{category_level1}</div>
+               {category_level2 ? <CustomIcon width="5" height="10" marginRight="10" marginLeft="10" imgURL={category_icon} /> : null}
+               <div style={{minWidth:"max-content"}}>{category_level2 ? category_level2 : "전체"}</div>
               </div>
            </div>
            <div className="row flex marginTop3">
