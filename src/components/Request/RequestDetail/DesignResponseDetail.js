@@ -245,9 +245,9 @@ export const DesignResponseDetail = (props) => {
         <div className="row">
           <div className="label">카테고리</div>
           <div className="content flex-and-middle">
-            {category_level1}
-            {category_level2 ? <CustomIcon width="5" height="10" marginRight="20" marginLeft="20" imgURL={category_icon} /> : null}
-            {category_level2 ? category_level2 : null}
+          {props.category1&&props.category1[category_level1-1]&&props.category1[category_level1-1].text}
+          {category_level2 ? <CustomIcon width="5" height="10" marginRight="20" marginLeft="20" imgURL={category_icon} /> : null}
+          {category_level2 ? props.category2&&props.category2[category_level2-1]&&props.category2[category_level2-1].text: "전체"}
           </div>
         </div>
         <div className="row">

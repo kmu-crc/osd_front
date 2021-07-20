@@ -234,7 +234,7 @@ const Container = styled.div`
 const ListElement = styled.div`
   width:100%;
   height:36px;
-  border: 1px solid #eaeaea;
+  border: 1px solid #d7d7d7;
   margin-top:10px;
   padding:6px 54px 6px 54px;
   display:flex;

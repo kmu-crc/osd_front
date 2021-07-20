@@ -48,7 +48,7 @@ const Content = styled(ContentBox)`
 const ListElement = styled.div`
   width:100%;
   height:36px;
-  border: 1px solid #eaeaea;
+  border: 1px solid #d7d7d7;
   padding:6px 54px 6px 40px;
   display:flex;
   margin-bottom:10px;

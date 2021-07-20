@@ -27,7 +27,7 @@ export const TextController = props => {
       autoFocus={true}
       setOptions={{ // height: props.height || defaultHeight,
         buttonList: [
-          ['fullScreen'],
+          // ['fullScreen'],
           ['undo', 'redo', 'font', 'fontSize', 'formatBlock', 'lineHeight'],
           ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
           '/',

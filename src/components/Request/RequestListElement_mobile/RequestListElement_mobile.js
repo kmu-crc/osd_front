@@ -8,7 +8,7 @@ import market_style from "market_style";
 import arrow from "source/arrow_reply.svg";
 const Content = styled.div`
   width:100%;
-  border-bottom:1px solid #eaeaea;
+  border-bottom:1px solid #d7d7d7;
   display:flex;
   align-items:center;
   justify-content:space-between;

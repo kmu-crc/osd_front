@@ -14,7 +14,7 @@ import market_style from "market_style";
 const ListElement = styled.div`
   width:100%;
   height:38px;
-  border:1px solid #EFEFEF;
+  border:1px solid #d7d7d7;
   margin-bottom:10px;
   display:flex;
   align-items:center;

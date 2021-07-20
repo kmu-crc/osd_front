@@ -805,6 +805,7 @@ class DesignerDetail extends Component {
         </div>
       </AdditionalInfo>
       {/*리뷰자세히*/}
+      
       {this.state.reviewdetail ? <ReviewDetailModal open={this.state.reviewdetail} close={() => this.setState({ reviewdetail: false })} detail={this.state.detail} /> : null}
 
         <DesignerBoard mTop={20}>
@@ -816,11 +817,11 @@ class DesignerDetail extends Component {
             <DesignerRequestBoardContainer id={parseInt(this.props.id, 10)} />
           </div>
 
-          {write ?
+          {/* {write ?
             <ArticleModal
               write={this.state.write}
-              handlerModal = {(write)=>{this.setState({write:write})}}
-              createNoneRequest={(title,content)=>this.createNoneRequest(title,content)}
+              handlerModal={(write) => { this.setState({ write: write }) }}
+              createNoneRequest={(title, content) => this.createNoneRequest(title, content)}
             />
             :
             this.props.userInfo==null||this.props.userInfo.uid == this.props.id?null:
@@ -832,6 +833,23 @@ class DesignerDetail extends Component {
                 <div className="font" >게시글 작성</div>
               </div>
             </CreateRequest>
+          } */}
+
+          {write ?
+            <ArticleModal
+              write={this.state.write}
+              handlerModal={(write) => { this.setState({ write: write }) }}
+              createNoneRequest={(title, content) => this.createNoneRequest(title, content)}
+            /> /*<WriteNormalArticleModal open={write} onClose={() => this.setState({ write: false, title: "", comment: "" })}> <div className="close-box" onClick={() => this.setState({ write: false, title: "", comment: "" })}> <Cross style={{cursor:"pointer"}} angle={45} color={"#000000"} weight={3} width={15} height={15} /> </div> <div className="form align_item_center"> <div className="title_label">제목</div> <TitleForm value={this.state.title || ""} onChange={event => this.setState({ [event.target.name]: event.target.value })} name="title" /> </div> <div className="form form_height"> <div className="title_label ">내용</div> <TextControllerClassic item={{content:this.state.content}} name={"comment"} getValue={this.onChangValue} width="750" editheight="240" initClick={this.state.click} deleteItem={this.deleteItem} /> <CommentForm value={this.state.comment || ""} onChange={event => this.setState({ [event.target.name]: event.target.value })} name="comment" /> </div> <div className="form redButtonBox"> <div className="redButton" onClick={this.createNoneRequest} > <div className="btnText" >작성하기</div> </div> </div> </WriteNormalArticleModal>*/
+            :
+            this.props.userInfo == null ? null :
+              <CreateRequest onClick={() => {
+                this.setState({ write: true, content: "" })
+              }}>
+                <div className="button">
+                  <div className="font">게시글 작성</div>
+                </div>
+              </CreateRequest>
           }
         </DesignerBoard>
 

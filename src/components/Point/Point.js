@@ -317,7 +317,7 @@ PointUp = async(type) => {
     }
     this.props.PointUpRequest(
       { id: this.props.userInfo.uid, token: this.props.token },
-      { point: this.state.point * -1 * 1000, type: type }
+      { point: this.state.point *-1, type: type }
     ).then(() => {
       this.props.GetMyPointRequest(this.props.userInfo.uid, this.props.token);
       this.props.GetHistoryRequest(this.props.userInfo.uid, 0, this.props.token);

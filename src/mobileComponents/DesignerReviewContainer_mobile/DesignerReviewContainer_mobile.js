@@ -68,11 +68,14 @@ const Wrapper_ = styled.div`
     .nick_{
       width:max-content;
       max-width:100px;
+      height:20px;
+      border:1px solid black;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
       font-size:${market_style.font.size.small1};
       font-weight:500;
+      margin-right:20px;
     }
   }
 

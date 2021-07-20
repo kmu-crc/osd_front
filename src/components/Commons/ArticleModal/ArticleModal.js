@@ -38,6 +38,18 @@ const WriteNormalArticleModal = styled(Modal)`
   .editorBox{
     margin-top:15px;
     width:100%;
+    .se-container{
+      position:relative !important;
+    }
+    .sun-editor-common{
+      position:absolute;
+      top:0px !important;
+    }
+    // *{
+    //   position:relative !important;
+
+    //   // top:0px !important;
+    // }
   }
   .form{
       width:100%;
@@ -175,7 +187,7 @@ class ArticleModal extends Component {
                 item={{ content: content }}
                 name={"content"}
                 getValue={async (data) => { this.setState({ content: data }) }}
-                height={180}
+                height={window.innerWidth>=500?250:350}
               />
             </div>
           </div>

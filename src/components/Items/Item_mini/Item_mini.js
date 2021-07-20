@@ -60,6 +60,7 @@ const TextWrapper = styled.div`
   }
   .author {
     width:60px;
+    height:20px;
     display: flex;
     justify-content:flex-end;
     color:#707070;

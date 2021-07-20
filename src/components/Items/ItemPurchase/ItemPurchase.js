@@ -307,7 +307,7 @@ const Introduction = styled.div`
 const ItemContents = styled.div`
   width: 100%;
   height:max-content;
-  max-height: 585px;
+  // max-height: 585px;
   background: #FFFFFF;
   box-shadow: 3px 3px 5px #0000001A;
   border: 0.25px solid #eaeaea;
@@ -335,10 +335,12 @@ const ItemContents = styled.div`
       opacity: 0.95;
     }
     width: 99%;
-    height: 510px;
+    height:max-content;
+    max-height: 800px;
     padding-top: 15px;
     word-wrap: break-word;
     overflow: hidden;
+    overflow-y:auto;
   }
   .message-wrapper {
     width: 100%;
