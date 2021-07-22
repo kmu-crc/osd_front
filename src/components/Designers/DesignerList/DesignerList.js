@@ -45,7 +45,7 @@ const Container = styled.div`
   width:100%;
   padding:0px 30px 0px 30px;
   ._wrapper{
-    margin-bottom:20px;
+    margin-bottom:15px;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -116,7 +116,7 @@ export default class DesignerList extends Component {
     const { sort } = this.props;
 
     return (<React.Fragment>
-      <Content top={20}>
+      <Content top={15}>
         <Container>
           <div className="category">
             <Category // which="디자이너"

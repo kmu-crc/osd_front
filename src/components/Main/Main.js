@@ -25,14 +25,15 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 const Head = styled.div`
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom:10px;
+  // margin-left: auto;
+  // margin-right: auto;
+  margin-left:30px;
+  margin-bottom:23px;
   margin-top:${props=>props.marginTop+"px"};
   width: max-content;
   text-align: left;
   font-weight: 700;
-  font-size: ${market_style.font.size.normal3};
+  font-size: ${market_style.font.size.big2};
   font-family: Noto Sans KR;
   letter-spacing: 0;
   color: #060000;
@@ -91,14 +92,14 @@ class Main extends Component {
         window.innerWidth>=500?
         <React.Fragment>
                 <Wrapper>
-                  <Head marginTop={20}>인기 디자이너&nbsp;
+                  <Head marginTop={26}>인기 디자이너&nbsp;
                   <span style={{fontSize:market_style.font.size.smal3}}>|</span>
                   &nbsp;메이커</Head>
                 <ScrollTopDesignerContainer />
               </Wrapper>
 
               <Wrapper>
-                <Head marginTop={10}>인기 아이템</Head>
+                <Head marginTop={49}>인기 아이템</Head>
                 <ScrollTopProductContainer />
               </Wrapper>
         </React.Fragment>

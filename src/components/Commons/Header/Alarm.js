@@ -8,6 +8,8 @@ import TextSlicer from "modules/TextSlicer"
 import noimg from "source/noimg.png";
 import { alert } from "components/Commons/Alert/Alert";
 import market_style from "market_style";
+import AlarmIcon from "source/alarm.svg";
+
 // const Btn = styled.button`
 //   padding: 0.75em 1.5em;
 //   width: 50%;
@@ -83,6 +85,31 @@ const AllAlarmRead = styled.li`
         font-size: ${market_style.font.size.mini2};
       }
     }
+`
+const AlarmBox = styled.div`
+  display:flex;
+  align-items:center;
+  .alarmIcon{
+    min-width:29px;
+    min-height:29px;
+    max-width:29px;
+    max-height:29px;
+    object-fit:contain;
+  }
+  .alarmNumber{
+    min-width:22px;
+    min-height:22px;
+    max-width:22px;
+    max-height:22px;
+    background-color:red;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding-top:3px;
+    font-size:${market_style.font.size.mini2};
+    color:white;
+    border-radius:50%;
+  }
 `
 const AlarmItem = styled.li`
   border-bottom: 1px solid #efefef;
@@ -243,12 +270,21 @@ export default class Alarm extends Component {
     return (
       <button type="button" style={{ background: "none", border: "none", outline: "none" }} onClick={this.openAlarmHandler} onBlur={this.onAlarmHandler} ref={ref => (this.alarm = ref)} >
         {/* {this.props.children} */}
-        {unread > 0 ?
+        {/* {unread > 0 ?
           <RedCircle>
             <div className="text__">{NumberFormat(unread)}</div>
-          </RedCircle> : null}
-        <Icon className="grey alarm" size="large" />
-
+          </RedCircle> : null} */}
+        {/* <Icon className="grey alarm" size="large" /> */}
+        <AlarmBox>
+          <img className="alarmIcon" src={AlarmIcon}/>
+          {
+            unread>0?
+            <div className="alarmNumber">{NumberFormat(unread)}</div>
+            :
+            null
+          }
+          
+        </AlarmBox>
         {this.state.active && (
           <AlarmDropDown innerWidth={window.innerWidth}>
             {alarms == null || alarms.length === 0 ? (
