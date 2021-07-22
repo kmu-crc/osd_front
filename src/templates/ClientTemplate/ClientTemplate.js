@@ -49,6 +49,11 @@ const Container = styled.div`
       width:100%;
     }
   }
+  @media only screen and (min-width: 500px) and (max-width:1000px){
+    .children-wrapper{
+      padding-top:20px;
+    }
+  }
 
 `
 const fadein = keyframes`
@@ -185,7 +190,9 @@ class ClientTemplate extends Component {
         <React.Fragment>
         <Notice />
         <HeaderContainer active={this.props.isActive} />
-        <Container id="allWrapper" isMobile={window.innerWidth>=500?false:window.location.pathname=="/message"?false:window.location.pathname=="/"?false:true}>
+        <Container id="allWrapper" 
+        isSmall={window.innerWidth>=500&&window.innerWidth<700?true:false}
+        isMobile={window.innerWidth>=500?false:window.location.pathname=="/message"?false:window.location.pathname=="/"?false:true}>
           {
           window.innerWidth>=500?
           <div className="children-wrapper">

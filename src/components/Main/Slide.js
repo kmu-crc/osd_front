@@ -9,6 +9,7 @@ import market_style from "market_style";
 import Banner_new from "source/banner210324_new.png";
 import { Link } from "react-router-dom";
 import Zoom from "source/baseline_search_black_48dp.png";
+import blue_banner from "source/blue_banner-1.png" 
 
 const BannerBox = styled.div`
   width:100%;
@@ -98,7 +99,7 @@ export default class MainSlide extends Component {
     const searchtype = designerActive ? "designer" : makerActive ? "maker" : itemActive ? "item" : null;
     return (
       <BannerBox>
-        <img src={Banner_new} className="banner_img"/>
+        <img src={blue_banner} className="banner_img"/>
       </BannerBox>
     );
   }
