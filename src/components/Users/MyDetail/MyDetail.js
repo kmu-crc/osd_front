@@ -160,6 +160,7 @@ margin-left:20px;
     height:15px;
     font-size:${market_style.font.size.small3};
     display:flex;
+    align-items:center;
     cursor:pointer;
   }
 }
