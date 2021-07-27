@@ -132,9 +132,9 @@ export default class MakerList extends Component {
           </div>
           <div className="_wrapper">
             <div className="request">
-              <RequestButton>
+              {/* <RequestButton>
                 <Link to={`/request/maker`}>메이커 게시판</Link>
-              </RequestButton>
+              </RequestButton> */}
               {
                 this.props.userInfo != null ?
                   <RequestButton>

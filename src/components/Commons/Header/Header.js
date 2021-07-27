@@ -23,6 +23,7 @@ const HeaderContainer = styled.div`
   align-items:center;
   justify-content:space-between;
   margin:0 auto;
+  position:relative;
   // flex-wrap:wrap;
   .marketLogo{
     min-width:51px;
