@@ -117,7 +117,7 @@ export default class MakerList_mobile extends Component {
     return (
     <React.Fragment>
       <Wrapper>
-        <div className="header"><Link to={`/${target}`}>메이커</Link></div>
+        {/* <div className="header"><Link to={`/${target}`}>메이커</Link></div> */}
         <div className="buttonBox">
         <Link to={`/request/${target}`}><div className="redButton marginRight">메이커 게시판</div></Link>
         {

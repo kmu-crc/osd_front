@@ -118,7 +118,7 @@ export default class DesignerList_mobile extends Component {
       <Wrapper>
         <div className="header"><Link to={`/designer`}>디자이너</Link></div>
         <div className="buttonBox">
-        <Link to={`/request/designer`}><div className="redButton marginRight">디자이너 게시판</div></Link>
+        {/* <Link to={`/request/designer`}><div className="redButton marginRight">디자이너 게시판</div></Link> */}
         {
                 this.props.userInfo != null ?
                     <Link to={`/requestToDesigner/null`}><div className="redButton">디자인 의뢰</div></Link>

@@ -134,9 +134,9 @@ export default class DesignerList extends Component {
           </div>
           <div className="_wrapper">
             <div className="request">
-              <RequestButton>
+              {/* <RequestButton>
                 <Link to={`/request/designer`}>디자이너 게시판</Link>
-              </RequestButton>
+              </RequestButton> */}
               {
                 this.props.userInfo != null ?
                   <RequestButton>
