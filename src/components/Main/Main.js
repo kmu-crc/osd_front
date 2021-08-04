@@ -11,7 +11,7 @@ import MainMyGroupListContainer from "containers/Groups/MainMyGroupContainer";
 import opendesign_style from 'opendesign_style';
 
 import new_banner_step1 from "source/new_banner_step1.png";
-import new_banner_upper from "source/new_banner_upper.png";
+import new_banner_upper01 from "source/new_banner_upper01.png";
 const Banner= styled.div`
   width:100%;
   height:100%;
@@ -22,15 +22,19 @@ const Banner= styled.div`
   }
   .wrapper{
     position:absolute;
-    top:560px;
+    top:730px;
     right:74px;
+    width:600px;
+    height:200px;
     margin-left:130px;
   }
   .detail{
-    width:100%;
-    height:333px;
-    position:relative;
+    width:286px%;
+    height:51px;
+    position:absolute;
     object-fit:contain;
+    bottom:10px;
+    right:30px;
   }
 
   .button_detail{
@@ -139,8 +143,8 @@ export default class Main extends Component {
         <Banner slider={new_banner_step1}>
           <img src={new_banner_step1} className="slider" />
           <div className="wrapper">
-            <img src={new_banner_upper} className="detail"/>
-            <div className="button_detail"></div>
+            {/* <img src={new_banner_upper01} className="detail"/> */}
+            {/* <div className="button_detail"></div> */}
           </div>
         </Banner>
       </React.Fragment>
