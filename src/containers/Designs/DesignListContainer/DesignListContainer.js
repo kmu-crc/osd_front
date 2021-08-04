@@ -10,69 +10,19 @@ import styled from 'styled-components';
 import opendesign_style from "opendesign_style";
 
 const Wrapper = styled.div`
-position:relative;
-.orderBox{
-  width:max-content;
-  height:max-content;
-}
-margin-top:100px;
-@media only screen and (max-width : 900px) {
-margin-top:150px;
-}
+  width:110%;
+  display:flex;
+  .category_wrapper{
+    margin-top:124px
+    margin-left:140px;
+    margin-right:54px;
+  }
+  .scroll_wrapper{
+    margin-top:146px;
+    margin-bottom:100px;
+    overflow-y:scroll;
+  }
 `
-const TextWrapper = styled.div`
-width:100%;
-display:flex;
-justify-content:center;
-align-items:center;
-top: 25px;
-font-size: 25px;
-font-family: Noto Sans KR;
-font-weight: 700;
-color: red;
-cursor: pointer;
-// margin-top:100px;
-@media only screen and (max-width : 900px) {
-// margin-top:150px;
-}
-.title{
-width:300px;
-text-align:center;
-}
-`;
-const WrapperSub = styled.div`
-    display:flex;
-    padding-left:36px;
-    padding-right:45px;
-`
-const JoinDesignContainer = styled.div`
-width:200px;
-display:flex;
-align-items:center;
-.joinDesign{
-    background: #707070 0% 0% no-repeat padding-box;
-    border-radius: 18px;
-    width:max-content;
-    height:29px;
-    text-align: left;
-    font-size: 20px;
-    cursor: pointer;
-    font-family: Noto Sans KR;
-    font-weight:500;
-    color: white;
-    padding:4px 16px;
-}
-
-`;
-const ScrollListContainer = styled.div`
-    padding-top: 30px;
-    padding-bottom: 68px;
-
-    padding-left:20px;
-`;
-const BlankDiv = styled.div`
-    padding-top: 50px;
-`;
 class DesignListContainer extends Component {
   constructor(props) {
     super(props);
@@ -222,34 +172,22 @@ class DesignListContainer extends Component {
   render() {
     const { main_category, this_category, sub_category,third_category, reload, this_order } = this.state
     const { category1, category2, category3, Count, status } = this.props;
-    // console.log(this.props.category3);
-    return (<React.Fragment>
-      <Wrapper>
-
-        <Category thirdcategory_clicked={this.handleChangeThirdCategory} subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
-          category1={category1} category2={this.state.category2} category3={this.state.category3} main_selected={main_category} sub_selected={sub_category} third_selected={third_category} />
-        <WrapperSub>
-
-        <JoinDesignContainer>
-          {/* <div className="joinDesign" /> */}
-        </JoinDesignContainer>
-        <TextWrapper centerPos={this.state.screenWidth} onClick={() => this.changeCategory(main_category)}>
-          <div className="title"> {(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count})</div>
-        </TextWrapper>
-        <div className="orderBox">
-          <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
-        </div>
-        </WrapperSub>
-
-        <ScrollListContainer>
+    return(
+      <React.Fragment>
+        <Wrapper>
+          <div className="category_wrapper">
+            <Category thirdcategory_clicked={this.handleChangeThirdCategory} subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
+            category1={category1} category2={this.state.category2} category3={this.state.category3} main_selected={main_category} sub_selected={sub_category} third_selected={third_category} />
+          </div>
+          <div className="scroll_wrapper">
           {status === "INIT"
             ? <Loading />
             : <ScrollList {...opendesign_style.design_margin} reload={reload} handleReload={this.handleReload}
               type="design" dataList={this.props.DesignList} dataListAdded={this.props.DesignListAdded} getListRequest={this.getList} />}
-        </ScrollListContainer>
-        <BlankDiv />
-      </Wrapper>
-    </React.Fragment>)
+          </div>
+        </Wrapper>
+      </React.Fragment>
+    )
   }
 }
 
@@ -281,3 +219,96 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DesignListContainer);
+
+
+// return (<React.Fragment>
+//   <Wrapper>
+
+//     <Category thirdcategory_clicked={this.handleChangeThirdCategory} subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
+//       category1={category1} category2={this.state.category2} category3={this.state.category3} main_selected={main_category} sub_selected={sub_category} third_selected={third_category} />
+//     <WrapperSub>
+
+//     <JoinDesignContainer>
+//     </JoinDesignContainer>
+//     <TextWrapper centerPos={this.state.screenWidth} onClick={() => this.changeCategory(main_category)}>
+//       <div className="title"> {(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count})</div>
+//     </TextWrapper>
+//     <div className="orderBox">
+//       <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
+//     </div>
+//     </WrapperSub>
+
+//     <ScrollListContainer>
+//       {status === "INIT"
+//         ? <Loading />
+//         : <ScrollList {...opendesign_style.design_margin} reload={reload} handleReload={this.handleReload}
+//           type="design" dataList={this.props.DesignList} dataListAdded={this.props.DesignListAdded} getListRequest={this.getList} />}
+//     </ScrollListContainer>
+//     <BlankDiv />
+//   </Wrapper>
+// </React.Fragment>)
+
+// const Wrapper = styled.div`
+// position:relative;
+// .orderBox{
+//   width:max-content;
+//   height:max-content;
+// }
+// // margin-top:100px;
+// // @media only screen and (max-width : 900px) {
+// // margin-top:150px;
+// // }
+// `
+// const TextWrapper = styled.div`
+// width:100%;
+// display:flex;
+// justify-content:center;
+// align-items:center;
+// top: 25px;
+// font-size: 25px;
+// font-family: Noto Sans KR;
+// font-weight: 700;
+// color: red;
+// cursor: pointer;
+// // margin-top:100px;
+// @media only screen and (max-width : 900px) {
+// // margin-top:150px;
+// }
+// .title{
+// width:300px;
+// text-align:center;
+// }
+// `;
+// const WrapperSub = styled.div`
+//     display:flex;
+//     padding-left:36px;
+//     padding-right:45px;
+// `
+// const JoinDesignContainer = styled.div`
+// width:200px;
+// display:flex;
+// align-items:center;
+// .joinDesign{
+//     background: #707070 0% 0% no-repeat padding-box;
+//     border-radius: 18px;
+//     width:max-content;
+//     height:29px;
+//     text-align: left;
+//     font-size: 20px;
+//     cursor: pointer;
+//     font-family: Noto Sans KR;
+//     font-weight:500;
+//     color: white;
+//     padding:4px 16px;
+// }
+
+// `;
+// const ScrollListContainer = styled.div`
+//     padding-top: 30px;
+//     padding-bottom: 68px;
+
+//     padding-left:20px;
+// `;
+// const BlankDiv = styled.div`
+//     padding-top: 50px;
+// `;

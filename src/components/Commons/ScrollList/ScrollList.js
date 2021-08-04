@@ -4,6 +4,7 @@ import Group from "components/Groups/Group";
 import Designer from "components/Designers/Designer";
 import styled from "styled-components";
 import osdcss from "opendesign_style";
+import new_logo_arrow_down from "source/new_logo_arrow_down.svg";
 // @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
 //   margin-right: ${props =>
 //     props.type === "design" ? osdcss.design_margin.small.marginRightLast :
@@ -12,37 +13,50 @@ import osdcss from "opendesign_style";
 // }
 // css 
 const FlexContainer = styled.div`
-// *{border: 1px solid blue;}
   width: 100%;
+  min-height:900px;
   padding: 0;
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
-    width: 330px;
+  position:relative;
+  // position:relative;
+  // @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
+  //   width: 330px;
+  // }
+  // @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
+  //   margin-left: ${props => props.type === "design" ? 100 : props.type === "group" ? 215 : 67}px;
+  //   width: ${osdcss.resolutions.MediumMaxWidth}px;
+  // }
+  // @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {
+  //   margin-left: ${props => props.type === "design" ? 9 : props.type === "group" ? 11 : 12}px;
+  //   width: ${osdcss.resolutions.LargeMaxWidth}px;
+  // }
+  // @media only screen and (min-width : ${osdcss.resolutions.LargeMaxWidth}px) {
+  //   margin-left: ${props => props.type === "design" ? 9 : props.type === "group" ? 11 : 12}px;
+  //   width: ${osdcss.resolutions.LargeMaxWidth}px;
+  // }
+  //   @media only screen and (min-width : 780px) and (max-width:1440px) {
+  //     overflow-x: overlay;
+  //   }
+  //   @media only screen and (min-width : 360px) and (max-width:780px) {
+  //     overflow-x: overlay;
+  //   }
+  .addList {
+    width:100%;
+    height:354px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:absolute;
+    bottom:0px;
+    z-index:999;
+    background: transparent linear-gradient(0deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 0) 100%);
+    cursor:pointer;
   }
-  @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
-    margin-left: ${props => props.type === "design" ? 100 : props.type === "group" ? 215 : 67}px;
-    width: ${osdcss.resolutions.MediumMaxWidth}px;
+  .icon{
+    width:77px;
+    height:53px;
   }
-  @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {
-    margin-left: ${props => props.type === "design" ? 9 : props.type === "group" ? 11 : 12}px;
-    width: ${osdcss.resolutions.LargeMaxWidth}px;
-  }
-  @media only screen and (min-width : ${osdcss.resolutions.LargeMaxWidth}px) {
-    margin-left: ${props => props.type === "design" ? 9 : props.type === "group" ? 11 : 12}px;
-    width: ${osdcss.resolutions.LargeMaxWidth}px;
-  }
-    @media only screen and (min-width : 780px) and (max-width:1440px) {
-      overflow-x: overlay;
-    }
-    @media only screen and (min-width : 360px) and (max-width:780px) {
-      overflow-x: overlay;
-    }
-
 `;
 const FlexBox = styled.div`
-    // border:1px solid black;
   flex: 0 0 ${props => props.width}px;
   width: ${props => props.width}px;
   margin-bottom: ${props => props.marginBottom}px;
@@ -50,32 +64,34 @@ const FlexBox = styled.div`
   &.bottom-last {
     margin-bottom: ${props => props.marginBottomLast}px;
   }
-  &.right-last {
-    @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
-      margin-right: ${props =>
-    props.type === "design" ? osdcss.design_margin.medium.marginRightLast :
-      props.type === "group" ? osdcss.group_margin.medium.marginRightLast :
-        props.type === "designer" ? osdcss.designer_margin.medium.marginRightLast : 0}px;
-    }
-    @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {
-      margin-right: ${props =>
-    props.type === "design" ? osdcss.design_margin.large.marginRightLast :
-      props.type === "group" ? osdcss.group_margin.large.marginRightLast :
-        props.type === "designer" ? osdcss.designer_margin.large.marginRightLast : 0}px;
-    }
-    @media only screen and (min-width : ${osdcss.resolutions.LargeMaxWidth}px){
-      margin-right: ${props =>
-    props.type === "design" ? osdcss.design_margin.big.marginRightLast :
-      props.type === "group" ? osdcss.group_margin.big.marginRightLast :
-        props.type === "designer" ? osdcss.designer_margin.big.marginRightLast : 0}px;
-    }
-  }
+
   display: inline-block;
   position: relative;
-  @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
-    margin-right: 0px;
-  }
+
 `;
+// &.right-last {
+//   @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
+//     margin-right: ${props =>
+//   props.type === "design" ? osdcss.design_margin.medium.marginRightLast :
+//     props.type === "group" ? osdcss.group_margin.medium.marginRightLast :
+//       props.type === "designer" ? osdcss.designer_margin.medium.marginRightLast : 0}px;
+//   }
+//   @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {
+//     margin-right: ${props =>
+//   props.type === "design" ? osdcss.design_margin.large.marginRightLast :
+//     props.type === "group" ? osdcss.group_margin.large.marginRightLast :
+//       props.type === "designer" ? osdcss.designer_margin.large.marginRightLast : 0}px;
+//   }
+//   @media only screen and (min-width : ${osdcss.resolutions.LargeMaxWidth}px){
+//     margin-right: ${props =>
+//   props.type === "design" ? osdcss.design_margin.big.marginRightLast :
+//     props.type === "group" ? osdcss.group_margin.big.marginRightLast :
+//       props.type === "designer" ? osdcss.designer_margin.big.marginRightLast : 0}px;
+//   }
+// }
+// @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
+//   margin-right: 0px;
+// }
 const OutBtn = styled.button`
   position: absolute;
   top: 0;
@@ -122,17 +138,17 @@ class ScrollList extends Component {
   componentDidMount() {
     !this.props.manual && window.addEventListener("scroll", this.handleScroll, true);
     this.props.manual && this.getLoadData();
-    window.addEventListener("resize", this.handleResize, false);
+    // window.addEventListener("resize", this.handleResize, false);
     this.getColumnNumber(this.props.type);
   };
   componentWillUnmount() {
     !this.props.manual && window.removeEventListener("scroll", this.handleScroll, true);
     window.removeEventListener("resize", this.handleResize, false);
   };
-  handleScroll = (e) => {
-    const reach = e.target.scrollTop + e.target.clientHeight > e.target.scrollHeight - this.state.gap;
-    reach && this.state.hasMore && this.state.loading === false && this.getLoadData();
-  };
+  // handleScroll = (e) => {
+  //   const reach = e.target.scrollTop + e.target.clientHeight > e.target.scrollHeight - this.state.gap;
+  //   reach && this.state.hasMore && this.state.loading === false && this.getLoadData();
+  // };
   getLoadData = async () => {
     const { dataList } = this.props;
     if (!this.props.getListRequest) return;
@@ -201,7 +217,7 @@ class ScrollList extends Component {
   render() {
     const { type, manual, handleAccept, handleReject, height, width, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded, rejectText } = this.props;
     const { hasMore, loading, cols } = this.state;
-    // console.log("onload:", this.state.page);
+    console.log("onload:", cols);
     return (dataListAdded && dataListAdded.length > 0 ?
       <FlexContainer
         cols={cols}
@@ -210,11 +226,11 @@ class ScrollList extends Component {
         onLoad={() => {
           const { loading, page } = this.state;
           let footer = document.getElementById("footer-div");
-          footer = footer.getBoundingClientRect();
-          const box = this.myRef.current.getBoundingClientRect();
-          if (loading == false && page === 0 && this.myRef &&footer.y> box.y + box.height ) {
-            this.getLoadData();
-          }
+          // footer = footer.getBoundingClientRect();
+          // const box = this.myRef.current.getBoundingClientRect();
+          // if (loading == false && page === 0 && this.myRef &&footer.y> box.y + box.height ) {
+          //   this.getLoadData();
+          // }
         }} >
         {dataListAdded.map((item, i) => {
           // console.log(item);
@@ -235,6 +251,7 @@ class ScrollList extends Component {
           {/* <i className="material-icons">arrow_drop_down</i> */}
         </ScrollIcon>}
         {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>}
+        <div className="addList" onClick={this.getLoadData}><img className="icon" src={new_logo_arrow_down}/></div>
       </FlexContainer> : null
       // <NoData>{type === "design" ? "디자인이" : type === "group" ? "그룹이" : "디자이너가"} 없습니다.</NoData>)
     )

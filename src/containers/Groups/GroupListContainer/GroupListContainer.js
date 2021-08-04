@@ -8,72 +8,20 @@ import Loading from "components/Commons/Loading";
 import osdstyle from "opendesign_style";
 
 const Wrapper = styled.div`
-
-  position:relative;
-  .orderBox{
-    width:max-content;
-    height:max-content;
+  width:110%;
+  display:flex;
+  .category_wrapper{
+    min-width:170px;
+    margin-top:124px
+    margin-left:140px;
+    margin-right:54px;
   }
-  // margin-top:100px;
-  margin-top:71px;
-  @media only screen and (max-width : 900px) {
-  margin-top:150px;
+  .scroll_wrapper{
+    margin-top:146px;
+    margin-bottom:100px;
+    overflow-y:scroll;
   }
 `
-const TextWrapper = styled.div`
-    width:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    top: 25px;
-    font-size: 25px;
-    font-family: Noto Sans KR;
-    font-weight: 700;
-    color: red;
-    cursor: pointer;
-    // margin-top:100px;
-    @media only screen and (max-width : 900px) {
-    // margin-top:150px;
-    }
-    .title{
-    width:300px;
-    text-align:center;
-    }
-`;
-const WrapperSub = styled.div`
-    display:flex;
-    padding-left:36px;
-    padding-right:45px;
-`
-const JoinGroupContainer = styled.div`
-    display:flex;
-    align-items:center;
-    .joinGroup{
-        background: #707070 0% 0% no-repeat padding-box;
-        border-radius: 18px;
-        width:max-content;
-        height:29px;
-        text-align: left;
-        font-size: 20px;
-        cursor: pointer;
-        font-family: Noto Sans KR;
-        font-weight:500;
-        color: white;
-        padding:4px 16px;
-    }
-
-`;
-const ScrollListContainer = styled.div`
-    padding-top: 30px;
-    padding-bottom: 68px;
-
-    padding-left:20px;
-`;
-
-const BlankDiv = styled.div`
-    padding-top: 50px;
-`;
-
 class GroupListContainer extends Component {
 
   constructor(props) {
@@ -129,30 +77,19 @@ class GroupListContainer extends Component {
     return (
       <React.Fragment>
         <Wrapper>
-          <WrapperSub>
-          <JoinGroupContainer>
-            <div className="joinGroup" onClick={() => this.createGroup()}>그룹 등록하기</div>
-          </JoinGroupContainer>
-          <TextWrapper centerPos={this.state.screenWidth}>
-            <div className="title">그룹({count})</div>
-          </TextWrapper>
-          <div className="orderBox">
-            <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
-          </div>
-          </WrapperSub>
-          <ScrollListContainer id="list">
+        <div className="category_wrapper"/>
+        <div className="scroll_wrapper">
             {this.props.status === "INIT"
-              ? <Loading />
-              : <ScrollList
-                {...osdstyle.group_margin}
-                type="group"
-                reload={reload}
-                handleReload={this.handleReload}
-                dataList={dataList}
-                dataListAdded={dataListAdded}
-                getListRequest={this.getList} />}
-          </ScrollListContainer>
-          <BlankDiv />
+            ? <Loading />
+            : <ScrollList
+              {...osdstyle.group_margin}
+              type="group"
+              reload={reload}
+              handleReload={this.handleReload}
+              dataList={dataList}
+              dataListAdded={dataListAdded}
+              getListRequest={this.getList} />}
+          </div>
         </Wrapper>
       </React.Fragment>
     )
@@ -181,3 +118,96 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupListContainer)
+{/* <Wrapper>
+<WrapperSub>
+<JoinGroupContainer>
+  <div className="joinGroup" onClick={() => this.createGroup()}>그룹 등록하기</div>
+</JoinGroupContainer>
+<TextWrapper centerPos={this.state.screenWidth}>
+  <div className="title">그룹({count})</div>
+</TextWrapper>
+<div className="orderBox">
+  <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
+</div>
+</WrapperSub>
+<ScrollListContainer id="list">
+  {this.props.status === "INIT"
+    ? <Loading />
+    : <ScrollList
+      {...osdstyle.group_margin}
+      type="group"
+      reload={reload}
+      handleReload={this.handleReload}
+      dataList={dataList}
+      dataListAdded={dataListAdded}
+      getListRequest={this.getList} />}
+</ScrollListContainer>
+<BlankDiv />
+</Wrapper> */}
+
+// const Wrapper = styled.div`
+
+//   position:relative;
+//   .orderBox{
+//     width:max-content;
+//     height:max-content;
+//   }
+//   // margin-top:100px;
+//   margin-top:71px;
+//   @media only screen and (max-width : 900px) {
+//   margin-top:150px;
+//   }
+// `
+// const TextWrapper = styled.div`
+//     width:100%;
+//     display:flex;
+//     justify-content:center;
+//     align-items:center;
+//     top: 25px;
+//     font-size: 25px;
+//     font-family: Noto Sans KR;
+//     font-weight: 700;
+//     color: red;
+//     cursor: pointer;
+//     // margin-top:100px;
+//     @media only screen and (max-width : 900px) {
+//     // margin-top:150px;
+//     }
+//     .title{
+//     width:300px;
+//     text-align:center;
+//     }
+// `;
+// const WrapperSub = styled.div`
+//     display:flex;
+//     padding-left:36px;
+//     padding-right:45px;
+// `
+// const JoinGroupContainer = styled.div`
+//     display:flex;
+//     align-items:center;
+//     .joinGroup{
+//         background: #707070 0% 0% no-repeat padding-box;
+//         border-radius: 18px;
+//         width:max-content;
+//         height:29px;
+//         text-align: left;
+//         font-size: 20px;
+//         cursor: pointer;
+//         font-family: Noto Sans KR;
+//         font-weight:500;
+//         color: white;
+//         padding:4px 16px;
+//     }
+
+// `;
+// const ScrollListContainer = styled.div`
+//     padding-top: 30px;
+//     padding-bottom: 68px;
+
+//     padding-left:20px;
+// `;
+
+// const BlankDiv = styled.div`
+//     padding-top: 50px;
+// `;

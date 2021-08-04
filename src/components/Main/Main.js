@@ -10,69 +10,105 @@ import MainMyDesignListContainer from "containers/Designs/MainMyDesignContainer"
 import MainMyGroupListContainer from "containers/Groups/MainMyGroupContainer";
 import opendesign_style from 'opendesign_style';
 
-const BannerWrapper = styled.div`
-  // width: ${props => props.width}px;
+import new_banner_step1 from "source/new_banner_step1.png";
+import new_banner_upper from "source/new_banner_upper.png";
+const Banner= styled.div`
   width:100%;
-  height: 349.5px;
-  margin-top: 15px;
-  margin-bottom: 25px;
-  background: url(${props => props.img});
-  background-repeat: no-repeat;
-  background-size: 100% 349.5px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  @media only screen and (min-width : 1920){
-    width:1920px;
-  }
-  @media only screen and (min-width : 0px) and (max-width:1920px) {
-    background-size:cover;
-    background-position:center center;
-  }
-  @media only screen and (max-width : 480px){
-      margin-top:50px;
-      background-size:100%;
-      height:max-content;
-  }
-`;
-const Context = styled.div`
-  width: 504px;
-  height: 196px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  .red_label{
-    font-size:26px;
-    font: normal normal 900 26px/38px Noto Sans KR;
-    color:red;
-    text-align: center;
-  }
-  .black_label{
-    font: normal normal 18px/27px Noto Sans KR;
-    letter-spacing: 0px;
-    text-align: center;
-    font-size:18px;
-    color:#707070;
-    text-align: center;
-  }
-  @media only screen and (min-width : 0px) and (max-width:500px) {
+  height:100%;
+  .slider{
     width:100%;
-    background-size: contain;
+    height:1080px;
+    object-fit:cover;
   }
-`;
-const Head = styled.div`
-  font: normal normal bold 23px/34px Noto Sans KR;
-  color: ${opendesign_style.color.grayScale.scale7};
-  // font-size: ${opendesign_style.font.size.heading2};
-  line-height: ${opendesign_style.font.size.heading2};
-  text-align: center;
-  margin-top: 27px;
-  margin-bottom: 27px;
-`;
-const ScrollListContainer = styled.div`
-    padding-left:20px;
-`;
+  .wrapper{
+    position:absolute;
+    top:560px;
+    right:74px;
+    margin-left:130px;
+  }
+  .detail{
+    width:100%;
+    height:333px;
+    position:relative;
+    object-fit:contain;
+  }
+
+  .button_detail{
+    width:153px;
+    height:55px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    position:absolute;
+    top:55%;
+    right:4%;
+  }
+`
+
+// const BannerWrapper = styled.div`
+//   // width: ${props => props.width}px;
+//   width:100%;
+//   height: 349.5px;
+//   margin-top: 15px;
+//   margin-bottom: 25px;
+//   background: url(${props => props.img});
+//   background-repeat: no-repeat;
+//   background-size: 100% 349.5px;
+//   display:flex;
+//   justify-content:center;
+//   align-items:center;
+//   @media only screen and (min-width : 1920){
+//     width:1920px;
+//   }
+//   @media only screen and (min-width : 0px) and (max-width:1920px) {
+//     background-size:cover;
+//     background-position:center center;
+//   }
+//   @media only screen and (max-width : 480px){
+//       margin-top:50px;
+//       background-size:100%;
+//       height:max-content;
+//   }
+// `;
+// const Context = styled.div`
+//   width: 504px;
+//   height: 196px;
+//   display:flex;
+//   flex-direction:column;
+//   align-items:center;
+//   justify-content:center;
+//   .red_label{
+//     font-size:26px;
+//     font: normal normal 900 26px/38px Noto Sans KR;
+//     color:red;
+//     text-align: center;
+//   }
+//   .black_label{
+//     font: normal normal 18px/27px Noto Sans KR;
+//     letter-spacing: 0px;
+//     text-align: center;
+//     font-size:18px;
+//     color:#707070;
+//     text-align: center;
+//   }
+//   @media only screen and (min-width : 0px) and (max-width:500px) {
+//     width:100%;
+//     background-size: contain;
+//   }
+// `;
+// const Head = styled.div`
+//   font: normal normal bold 23px/34px Noto Sans KR;
+//   color: ${opendesign_style.color.grayScale.scale7};
+//   // font-size: ${opendesign_style.font.size.heading2};
+//   line-height: ${opendesign_style.font.size.heading2};
+//   text-align: center;
+//   margin-top: 27px;
+//   margin-bottom: 27px;
+// `;
+// const ScrollListContainer = styled.div`
+//     padding-left:20px;
+// `;
 export default class Main extends Component {
   constructor(props) {
     super(props);
@@ -100,8 +136,19 @@ export default class Main extends Component {
     const { heroSize } = this.state;
     return (
       <React.Fragment>
-        <BannerWrapper width={heroSize === 'l' ? 1920 : heroSize === 'm' ? 1440 : 360} img={heroSize === 'l' ? hero1920 : heroSize === 'm' ? hero1440 : hero360}>
-          {/* <Context /> */}
+        <Banner slider={new_banner_step1}>
+          <img src={new_banner_step1} className="slider" />
+          <div className="wrapper">
+            <img src={new_banner_upper} className="detail"/>
+            <div className="button_detail"></div>
+          </div>
+        </Banner>
+      </React.Fragment>
+    )
+  }
+}
+
+        {/* <BannerWrapper width={heroSize === 'l' ? 1920 : heroSize === 'm' ? 1440 : 360} img={heroSize === 'l' ? hero1920 : heroSize === 'm' ? hero1440 : hero360}>
           <Context>
           <div className="red_label">OPEN SOURCE DESIGN</div><br/><br/>
           <div className="black_label">오픈 소스 기반 플랫폼을 통해 다양한 사람들과 함께<br/>
@@ -122,8 +169,4 @@ export default class Main extends Component {
         <Head>인기 디자인</Head>
         <ScrollListContainer>
         <TopDesignListContainer />
-        </ScrollListContainer>
-      </React.Fragment>
-    )
-  }
-}
+        </ScrollListContainer> */}

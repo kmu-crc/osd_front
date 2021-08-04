@@ -533,7 +533,7 @@ class ModifyDesignMobile extends Component {
       loading: false, designId: null, isMyDesign: false, editor: false,
       basic: false, additional: false, content: false, step: 0, title: "", explanation: "",
       showSearch: false, thumbnail: noimg, thumbnail_name: "", grid: false,
-      categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [], license1: false, license2: false, license3: false,
+      categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [], license1: true, license2: false, license3: false,
     }
     this.addMember = this.addMember.bind(this);
     this.removeMember = this.removeMember.bind(this);
@@ -859,7 +859,7 @@ class ModifyDesignMobile extends Component {
                       <CheckBox2
                         checked={this.state.license3 ? true : false} type="checkbox"
                         onChange={this.onCheckedLicense03} />
-                      <span className="textLabel">추후에 수정이 가능합니다.</span>
+                      <span className="textLabel">수정이 가능합니다.</span>
                     </div>
                   </div>
                 </LicenseBox>

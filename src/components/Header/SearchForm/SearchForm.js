@@ -1,56 +1,86 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import zoom from "source/zoom.svg"
+import zoom_red from "source/new_logo_zoom_red.svg";
 // import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
-const flag_MaxWidth = 1440;
-const flag_MinWidth = 480;
+// const flag_MaxWidth = 1440;
+// const flag_MinWidth = 480;
+// const SearchContainer = styled.div`
+//     display: ${props => props.visible};
+//     background-color: #FFFFFF;
+//     border-radius: 20px;
+//     border: 1.5px solid #707070;
+//     position:relative;
+//     overflow:hidden;
+//     width: 350px;
+//     min-width:150px;
+//     height: 36px;
+//     @media only screen and (min-width : ${flag_MinWidth}px) and (max-width : ${flag_MaxWidth}px) {
+//         width:${props => (350 - (flag_MaxWidth - props.formSize)) > 36 ? (350 - (flag_MaxWidth - props.formSize)) : 36}px;
+//     }
+//     @media only screen and (max-width : 1024px) {
+//         min-width:90%;
+//     }
+//     @media only screen and (max-width : ${flag_MinWidth}px) {
+//         width: 90%;
+//     }
+//     @media only screen and (min-width : ${flag_MaxWidth}px) {
+//         width: 350px;
+//     }
+
+//     &:focus{
+//         outline: 1.5px solid red;
+//     }
+//     input {
+//         outline: none;
+//         width: 80%;
+//         border: none;
+//         margin: 5px 10px;
+//     }
+//     .shadow_button{
+//         width:21px;
+//         height:21px;
+//         position: absolute;
+//         top:3px;
+//         right:12px;
+
+//         background: url(${zoom});
+//         background-size: contain;
+//         background-repeat: no-repeat;
+//         cursor: pointer;
+//     }
+// `;
 const SearchContainer = styled.div`
-    display: ${props => props.visible};
-    background-color: #FFFFFF;
-    border-radius: 20px;
-    border: 1.5px solid #707070;
-    position:relative;
-    overflow:hidden;
-    width: 350px;
-    min-width:150px;
-    height: 36px;
-    @media only screen and (min-width : ${flag_MinWidth}px) and (max-width : ${flag_MaxWidth}px) {
-        width:${props => (350 - (flag_MaxWidth - props.formSize)) > 36 ? (350 - (flag_MaxWidth - props.formSize)) : 36}px;
+    // border:1px solid black;
+    width:579px;
+    // max-width:579px;
+    // min-width:100px;
+    height:40px;
+    border-bottom:2px solid white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:5px 0px;
+    .searchbox{
+        width:80%;
+        font-size:23px;
+        font-family:SpoqaHanSans;
+        border:none;
+        outline:none;
+        background:transparent;
+        color:white;
+        &:placeholder{
+            color:white;
+        }
     }
-    @media only screen and (max-width : 1024px) {
-        min-width:90%;
-    }
-    @media only screen and (max-width : ${flag_MinWidth}px) {
-        width: 90%;
-    }
-    @media only screen and (min-width : ${flag_MaxWidth}px) {
-        width: 350px;
+    .icon_zoom{
+        width:38px;
+        height:38px;
     }
 
-    &:focus{
-        outline: 1.5px solid red;
-    }
-    input {
-        outline: none;
-        width: 80%;
-        border: none;
-        margin: 5px 10px;
-    }
-    .shadow_button{
-        width:21px;
-        height:21px;
-        position: absolute;
-        top:3px;
-        right:12px;
-
-        background: url(${zoom});
-        background-size: contain;
-        background-repeat: no-repeat;
-        cursor: pointer;
-    }
-`;
+`
 class SearchForm extends Component {
     state = {
         searchKeyword: "",
@@ -97,8 +127,10 @@ class SearchForm extends Component {
     render() {
         return (
             <SearchContainer formSize={this.props.formWidth} visible={this.props.visible === 1 ? "block" : "none"} >
-                <div className="shadow_button" onClick={this.onClickedIcon} />
-                <input id="searchbox" type="text" placeholder={this.props.formWidth > 1200 ? "Search..." : ""} maxLength="100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword} />
+                <input className="searchbox" id="searchbox" type="text" placeholder="새로운 디자인을 찾아보세요!" maxLength="100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword} />
+                <img src={zoom_red} className="icon_zoom"/>
+                {/* <div className="shadow_button" onClick={this.onClickedIcon} />
+                <input id="searchbox" type="text" placeholder={this.props.formWidth > 1200 ? "Search..." : ""} maxLength="100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword} /> */}
             </SearchContainer>)
     }
 }
