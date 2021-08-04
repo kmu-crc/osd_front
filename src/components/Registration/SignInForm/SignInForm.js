@@ -22,10 +22,7 @@ class SignInForm extends Component {
       window.location.replace("/")
     } else {
       if (window.location.href.search("signin") !== -1) {
-        // window.history.go(-1)
-        // .then(window.location.reload())
       } else {
-        // window.location.reload()
       }
     }
   }
@@ -35,7 +32,6 @@ class SignInForm extends Component {
   signout = () => {
     SetSession("opendesign_token", null)
       .then(data => {
-        // console.log("data:", data)
         this.props.SignOutRequest()
         this.setState({ sign_modal: false })
         window.location.reload()
@@ -46,8 +42,6 @@ class SignInForm extends Component {
     return (
       <SignInModal open={this.state.signin_modal} CheckEmailRequest={this.props.CheckEmailRequest}
         FindPwRequest={this.props.FindPwRequest} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />
-      // <form onSubmit={this.onSubmit}>
-      // </form>
     );
   }
 }

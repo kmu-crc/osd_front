@@ -655,7 +655,7 @@ class ModifyDesign extends Component {
       loading: false, designId: null, isMyDesign: false, editor: false,is_problem:false,
       basic: false, additional: false, content: false, step: 0, title: "", explanation: "",
       showSearch: false, thumbnail: noimg, thumbnail_name: "", grid: false,
-      categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [], license1: false, license2: false, license3: false,
+      categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [], license1: true, license2: false, license3: false,
     }
     this.addMember = this.addMember.bind(this);
     this.removeMember = this.removeMember.bind(this);
@@ -1044,7 +1044,7 @@ class ModifyDesign extends Component {
                         <div className="textLabel">원작자를 표시합니다.</div></div>
                       <div className="licenseItem">
                         <div><CheckBox2 onChange={this.onCheckedLicense03} checked={this.state.license3 ? true : false} type="checkbox" /></div>
-                        <div className="textLabel">추후에 수정이 가능합니다.</div></div>
+                        <div className="textLabel">수정이 가능합니다.</div></div>
                     </div>
                   </LicenseBox>
                   {/* hr line */}

@@ -4,7 +4,8 @@ import ClientTemplate from "templates/ClientTemplate";
 
 class SignInPage extends Component {
   render() {
-    return (<ClientTemplate>
+    return (
+    <ClientTemplate>
       <SignInContainer history={this.props.history} />
     </ClientTemplate>
     )

@@ -102,6 +102,7 @@ const MainBox = styled.div`
     .flexBox{display:flex;}
     .algin_right{text-align:right;}
     .margin_top{margin-top:15px;}
+    .margin_top1{margin-top:10px;}
     .margin_bottom{margin-bottom:10px;}
     .margin_bottom_small{margin-bottom:5px;}
     .alignItem_end{align-items:flex-end;}
@@ -1222,7 +1223,7 @@ class DesignInfo extends Component {
 
                             }                           
                             {isMyDesign === false &&
-                                <div className="flexBox margin_top">
+                                <div className="flexBox margin_top1">
                                     {editor === false ?
                                         DesignDetail && DesignDetail.waitingStatus === 1 ?
                                             <div className="_txt transparent_btn font_red font_fit font_big">가입승인 대기중</div>
@@ -1234,13 +1235,13 @@ class DesignInfo extends Component {
                                     <CustomIcon iconName={iEdit} />
                                 </div>
                                 :
-                                <div className="cursor_pointer flexBox margin_top alignItem_end" onClick={this.like} >
+                                <div className="cursor_pointer flexBox margin_top1 alignItem_end" onClick={this.like} >
                                     <div className="_txt font_midBig font_fit margin_bottom_small" >관심 디자인 {like ? "취소하기" : "등록하기"}</div>
                                     <CustomIcon like_opacity={like ? 1 : 0.45} iconName={thumbup} />
                                 </div>}
                             {isMyDesign === true ?
                                 null :
-                                <div className="cursor_pointer flexBox margin_top alignItem_end" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>
+                                <div className="cursor_pointer flexBox margin_top1 alignItem_end" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>
                                     <div className="_txt font_midBig font_fit margin_bottom_small">메시지 보내기</div>
                                     <CustomIcon iconName={email} />
                                 </div>}

@@ -140,7 +140,7 @@ class DesignerList extends Component {
     };
 
     return (
-      <div>
+      <React.Fragment>
         <MenuWrap>
           <Content>
             <Wrapper>
@@ -162,7 +162,7 @@ class DesignerList extends Component {
               <ScrollDesignerListContainer sort={sort} cate1={cate1} cate2={cate2} history={this.props.history} />}
           </Wrapper>
         </Content>
-      </div>
+      </React.Fragment>
     );
   }
 }

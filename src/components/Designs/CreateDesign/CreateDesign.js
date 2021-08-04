@@ -805,7 +805,7 @@ class CreateDesign extends Component {
       categoryLevel1: null,
       categoryLevel2: null, categoryLevel3: null,
       alone: true, members: [], addmem: [], delmem: [],
-      license1: false, license2: true, license3: false,
+      license1: true, license2: true, license3: false,
       type: null, template: null,is_problem:false,
     };
     this.addMember = this.addMember.bind(this);
@@ -1363,7 +1363,7 @@ class CreateDesign extends Component {
                   <div className="licenseList">
                     <div className="licenseItem"><CheckBox2 checked={this.state.license1} onChange={this.onCheckedLicense01} /><span className="textLabel">상업적으로 이용이 가능합니다.</span></div>
                     <div className="licenseItem"><CheckBox2 checked={this.state.license2} onChange={this.onCheckedLicense02} /><span className="textLabel disabled">원작자를 표시합니다.</span></div>
-                    <div className="licenseItem"><CheckBox2 checked={this.state.license3} onChange={this.onCheckedLicense03} /><span className="textLabel">추후에 수정이 가능합니다.</span></div>
+                    <div className="licenseItem"><CheckBox2 checked={this.state.license3} onChange={this.onCheckedLicense03} /><span className="textLabel">수정이 가능합니다.</span></div>
                   </div>
                 </LicenseBox>
               </ContentsBox>

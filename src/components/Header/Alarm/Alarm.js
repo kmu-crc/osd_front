@@ -7,12 +7,13 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import { geturl } from "config";
 import opendesign_style from "opendesign_style"
+import new_logo_notifications from "source/new_logo_notifications.svg"
 
 const AlarmIcon = styled.div`
-    width: 34px;
-    height: 34px;
-    opacity: 0.5;
-    background: url(${iAlarm}); 
+    width: 44px;
+    height: 44px;
+    opacity: 1;
+    background: url(${new_logo_notifications}); 
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
@@ -25,8 +26,8 @@ const AlarmList = styled.div`
     z-index: 999;
     position: absolute;
     pointer-events: auto;
-    top: 60px;
-    left:0px;
+    top: 50px;
+    right:0px;
     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
     and (max-width : ${1024}px) {
         left:-150px;

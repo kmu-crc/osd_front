@@ -243,7 +243,7 @@ class MessageDetail extends Component {
     const arrMsg = list && list.length > 0 ? list.map(item => {
       let isMyMsg = true;
       if (item.from_user_id !== myId) isMyMsg = false;
-      console.log(item.message);
+      // console.log(item.message);
       return (
         <React.Fragment key={item.uid}>
           <LoadMessage isMyMsg={isMyMsg} msgText={item.message === "" ? "\u00a0" : item.message} updateTime={CheckedTime(item.create_time)} />

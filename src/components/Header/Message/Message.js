@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import iMsg from "source/email.png"
+import new_logo_mail from "source/new_logo_mail.svg";
 import styled from 'styled-components'
 
 
 const MsgIcon = styled.div`
-width:34px;
-height:34px;
-background: url(${iMsg}); 
+width:44px;
+height:44px;
+background: url(${new_logo_mail}); 
 background-size:contain;
 background-repeat: no-repeat;
 background-position: center center;
