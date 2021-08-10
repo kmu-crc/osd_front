@@ -61,7 +61,7 @@ const MenuBox = styled.div`
         width:100%;
         text-align:center;
         font-size:18px;
-        font-family:SpoqaHanSans;
+        font-family: Spoqa Han Sans;
         color:white;
         padding-top:13px;
         padding-bottom:14px;

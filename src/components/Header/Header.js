@@ -29,6 +29,9 @@ const HeaderMenu = styled.div`
     justify-content:space-between;
     align-items:center;
     z-index:888;
+    * {
+        font-family: Noto Sans KR;
+    }
     .wrap{
         display:flex;
         align-items:center;
