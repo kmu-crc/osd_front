@@ -70,7 +70,7 @@ const SearchContainer = styled.div`
     .searchbox{
         width:80%;
         font-size:23px;
-        font-family:SpoqaHanSans;
+        font-family:Spoqa Han Sans;
         border:none;
         outline:none;
         background:transparent;

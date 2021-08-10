@@ -84,6 +84,7 @@
     "react-app-polyfill": "^1.0.6",
     "react-awesome-modal": "^2.0.5",
     "react-confirm": "^0.1.20",
+    "react-cookie": "^4.0.3",
     "react-cookies": "^0.1.1",
     "react-dev-utils": "^9.1.0",
     "react-dom": "^16.11.0",
