@@ -11,30 +11,46 @@ import MainMyGroupListContainer from "containers/Groups/MainMyGroupContainer";
 import opendesign_style from 'opendesign_style';
 
 import new_banner_step1 from "source/new_banner_step1.png";
+import new_banner_step2 from "source/new_banner_step2.png";
 import new_banner_upper01 from "source/new_banner_upper01.png";
+import { Settings } from "material-ui-icons";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+
+const Wrapper= styled.div`
+  position:relative;
+  .slick-track{
+    overflow:hidden;
+  }
+  .slick-dots{
+    z-index:888;
+    bottom:50px;
+  }
+`
 const Banner= styled.div`
   width:100%;
   height:100%;
-  .slider{
-    width:100%;
-    height:1080px;
+  // position:relative;
+  overflow-y:hidden;
+  .slider_{
+    min-width:1920px;
+    max-width:100%;
+    height:100%;
+    // height:300px;
     object-fit:cover;
   }
-  .wrapper{
+  .wrapper_{
     position:absolute;
-    top:730px;
-    right:74px;
-    width:600px;
-    height:200px;
-    margin-left:130px;
+    // top:80%;
+    // left:70%;
+    top:865px;
+    left:1342px;
   }
   .detail{
     width:286px%;
     height:51px;
-    position:absolute;
     object-fit:contain;
-    bottom:10px;
-    right:30px;
   }
 
   .button_detail{
@@ -48,6 +64,51 @@ const Banner= styled.div`
     top:55%;
     right:4%;
   }
+
+  .gallery {
+    .slick-list {
+      box-shadow: 0px 3px 10px 0px darken($primary, 40%);
+  
+      img {
+        display: block;
+        filter: contrast(1.2);
+        cursor: grab;
+      }
+    }
+  
+    ul.slick-dots {
+      bottom: 0;
+      position: relative;
+      margin-top: 0.8rem;
+  
+      & > li {
+        background: $secondary;
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+  
+        &.slick-active {
+          background-color: $active;
+        }
+  
+        & > button {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          background: transparent;
+          border: none;
+  
+          &:before {
+            content: none;
+          }
+        }
+      }
+    }
+  }
+  
 `
 
 // const BannerWrapper = styled.div`
@@ -138,16 +199,42 @@ export default class Main extends Component {
   }
   render() {
     const { heroSize } = this.state;
+    const settings = { dots: true, 
+      className:"slide",
+      infinite: true, 
+      speed: 2000, 
+      slidesToShow: 1, 
+      dots:true,
+      autoplay:true,
+      autoplaySpeed:5000,
+      slidesToScroll: 1 };
     return (
-      <React.Fragment>
+      <Wrapper>
+        <Slider {...settings}>
+        <Banner slider={new_banner_step1}>
+          <img src={new_banner_step1} className="slider_" />
+          <div className="wrapper_">
+          </div>
+        </Banner>
+        <Banner slider={new_banner_step2}>
+          <img src={new_banner_step2} className="slider_" />
+          <div className="wrapper_">
+          </div>
+        </Banner> 
+        {/* <Banner slider={new_banner_step1}>
+          <img src={new_banner_step1} className="slider" />
+          <div className="wrapper">
+            <img src={new_banner_upper01} className="detail"/>
+          </div>
+        </Banner>
         <Banner slider={new_banner_step1}>
           <img src={new_banner_step1} className="slider" />
           <div className="wrapper">
-            {/* <img src={new_banner_upper01} className="detail"/> */}
-            {/* <div className="button_detail"></div> */}
+            <img src={new_banner_upper01} className="detail"/>
           </div>
-        </Banner>
-      </React.Fragment>
+        </Banner> */}
+        </Slider>
+      </Wrapper>
     )
   }
 }
