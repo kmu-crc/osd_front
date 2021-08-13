@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import zoom from "source/zoom.svg"
-import zoom_red from "source/new_logo_zoom_red.svg";
+import new_logo_zoom_red from "source/new_logo_zoom_red.svg";
+import new_logo_zoom_purple from "source/new_logo_zoom_purple.svg";
+import new_logo_zoom_green from "source/new_logo_zoom_green.svg";
+import new_logo_zoom_blue from "source/new_logo_zoom_blue.svg";
 // import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
+import Slider from "react-slick";
 
 // const flag_MaxWidth = 1440;
 // const flag_MinWidth = 480;
@@ -71,7 +75,7 @@ const SearchContainer = styled.div`
         outline:none;
         background:transparent;
         color:white;
-        &:placeholder{
+        ::placeholder{
             color:white;
         }
     }
@@ -128,7 +132,13 @@ class SearchForm extends Component {
         return (
             <SearchContainer formSize={this.props.formWidth} visible={this.props.visible === 1 ? "block" : "none"} >
                 <input className="searchbox" id="searchbox" type="text" placeholder="새로운 디자인을 찾아보세요!" maxLength="100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword} />
-                <img src={zoom_red} className="icon_zoom"/>
+                <img src={
+                    window.location.pathname.indexOf("/group")!=-1? new_logo_zoom_green
+                    :window.location.pathname.indexOf("/designer")!=-1? new_logo_zoom_purple
+                    :window.location.pathname.indexOf("/my")!=-1? new_logo_zoom_red 
+                    :window.location.pathname.indexOf("/design")!=-1? new_logo_zoom_blue
+                    :new_logo_zoom_red
+                } className="icon_zoom"/>
                 {/* <div className="shadow_button" onClick={this.onClickedIcon} />
                 <input id="searchbox" type="text" placeholder={this.props.formWidth > 1200 ? "Search..." : ""} maxLength="100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword} /> */}
             </SearchContainer>)
