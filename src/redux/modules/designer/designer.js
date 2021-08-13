@@ -38,7 +38,7 @@ const GET_RELATED_GROUP_IN_DESIGNER = "GET_RELATED_GROUP_IN_DESIGNER ";
 const GET_RELATED_GROUP_IN_DESIGNER_CLEAR = "GET_RELATED_GROUP_IN_DESIGNER_CLEAR ";
 const GET_RELATED_GROUP_IN_DESIGNER_FAIL = "GET_RELATED_GROUP_IN_DESIGNER_FAIL ";
 
-
+const GET_THE_BEST_DESIGN_IN_DESIGNER = "GET_THE_BEST_DESIGN_IN_DESIGNER";
 
 // action creator
 const GetDesignerDetail = (data) => ({ type: GET_DESIGNER_DETAIL, DesignerDetail: data });
@@ -73,7 +73,7 @@ const GetGroupInDesignerFail = () => ({ type: GET_GROUP_IN_DESIGNER_FAIL, GroupI
 const GetRelatedGroupInDesigner = (data) => ({ type: GET_RELATED_GROUP_IN_DESIGNER, RelatedGroupInDesigner: data });
 const GetRelatedGroupInDesignerClear = (data) => ({ type: GET_RELATED_GROUP_IN_DESIGNER_CLEAR, RelatedGroupInDesigner: data, RelatedGroupInGroupAdded: [] });
 const GetRelatedGroupInDesignerFail = () => ({ type: GET_RELATED_GROUP_IN_DESIGNER_FAIL, RelatedGroupInDesigner: [], RelatedGroupInGroupAdded: [] });
-
+const GetTheBestDesignInDesigner = (data) => ({ type: GET_THE_BEST_DESIGN_IN_DESIGNER, TheBestDesign: data });
 
 const initialState = {
     DesignerDetail: { status: "INIT" },
@@ -84,6 +84,7 @@ const initialState = {
         DesignerDetail: [],
         Count: { total_like: 0, total_design: 0, total_group: 0, joined_group: 0, total_view: 0 },
         DesignerCount: 0,
+        TheBestDesign: null,
         MyDesignInDesigner: [], MyDesignInDesignerAdded: [],
         DesignInDesigner: [], DesignInDesignerAdded: [],
         LikeInDesigner: [], LikeInDesignerAdded: [],
@@ -165,6 +166,8 @@ export function Designer(state, action) {
             return update(state, { status: { MyDesignInDesigner: { $set: action.MyDesignInDesigner }, MyDesignInDesignerAdded: { $set: action.MyDesignInDesigner } } });
         case MY_DESIGN_IN_DESIGNER_FAIL:
             return update(state, { status: { MyDesignInDesigner: { $set: action.MyDesignInDesigner }, MyDesignInDesignerAdded: { $set: action.MyDesignInDesignerAdded } } });
+        case GET_THE_BEST_DESIGN_IN_DESIGNER:
+            return update(state, { status: { TheBestDesign: { $set: action.TheBestDesign } } });
         default:
             return state;
     }
@@ -235,7 +238,7 @@ export function GetRelatedGroupInDesignerRequest(id, page, sort) {
                 data = []
             }
             if (page === 0) {
-                console.log("data",data);
+                console.log("data", data);
                 dispatch(GetRelatedGroupInDesignerClear(data))
                 return
             }
@@ -447,8 +450,8 @@ export function GetDesignerCountRequest(id) {
             if (!data) {
                 //console.log("no data")
                 data = { total_like: 0, total_group: 0, total_design: 0, total_favorite: 0, total_view: 0 };
-            }else{
-                console.log("data-----",data);
+            } else {
+                console.log("data-----", data);
             }
             dispatch(GetDesignerCount(data))
         }).catch((err) => {
@@ -456,3 +459,14 @@ export function GetDesignerCountRequest(id) {
         })
     }
 }
+export function GetTheBestDesignDesignerRequest(id) {
+    return (dispatch) => {
+        return fetch(`${host}/designer/getTheBestDesign/${id}`, {
+            headers: { "Content-Type": "application/json" },
+            method: "GET"
+        })
+            .then(res => res.json())
+            .then(data => dispatch(GetTheBestDesignInDesigner(data)))
+            .catch((err => console.error("err", err)));
+    };
+};

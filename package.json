@@ -20,6 +20,8 @@
     "@ckeditor/ckeditor5-react": "^1.1.3",
     "@ckeditor/ckeditor5-table": "^15.0.0",
     "@ckeditor/ckeditor5-theme-lark": "^15.0.0",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
     "@react-icons/all-files": "^4.1.0",
     "@react-pdf-viewer/core": "^2.3.2",
     "@react-pdf-viewer/default-layout": "^2.3.2",
