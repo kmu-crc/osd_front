@@ -28,7 +28,7 @@ const HeaderMenu = styled.div`
     display:flex;
     justify-content:space-between;
     align-items:center;
-    z-index:888;
+    z-index:903;
     * {
         font-family: Noto Sans KR;
     }
@@ -357,11 +357,11 @@ class Header extends Component {
             <React.Fragment>
                 {
                     window.location.pathname.indexOf("/sign") != -1?
-                    <HeaderMenu bgColor={"#912525"}>
+                <HeaderMenu bgColor={"#912525"}>
                         <div className="wrap">
-                        <div className="menu_nav" onClick={()=>this.props.onClickMenu()}>
+                        <div className="menu_nav" onClick={()=>{this.props.onClickMenu();}}>
                             {
-                                this.props.sidemenu == true?
+                                this.props.sidemenu == true&&this.props.isLogin?
                                 <img className="menu_icon" src={new_logo_menu_close}/>
                                 :<img className="menu_icon" src={new_logo_menu_open}/>
                             }
@@ -395,7 +395,6 @@ class Header extends Component {
                         {this.props.userInfo != null ? 
                             <React.Fragment>
                             <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
-                            {/* <img src={new_logo_notifications} className="icon_wrap marginRight1"/> */}
                             <div className="icon_wrap marginRight1"><AlarmContainer {...this.props} alarm={this.state.alarm} /></div>
                             </React.Fragment>
                             :null

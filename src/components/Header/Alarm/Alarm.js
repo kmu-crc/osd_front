@@ -19,15 +19,24 @@ const AlarmIcon = styled.div`
     background-position: center center;
 `;
 const AlarmList = styled.div`
-
-    height: 520px;
-    width: 380px;
+    width:285px;
+    height:593px;
+    padding:12px 14px;
     display: ${props => props.display};
     z-index: 999;
     position: absolute;
     pointer-events: auto;
     top: 50px;
     right:0px;
+
+    z-index: 904;
+    background-color: #FFFFFF;
+    box-shadow: 8px 8px 8px #0000002B;
+    font-family: Noto Sans KR;
+    .list{
+       width:100%; 
+    }
+
     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
     and (max-width : ${1024}px) {
         left:-150px;
@@ -37,34 +46,31 @@ const AlarmList = styled.div`
         width:360px;
         left:-100px;
     }
-    // right: 300px;
-    // left: ${props => props.left + "px"};
-    z-index: 904;
-    border-radius: 15px;
-    background-color: #FFFFFF;
-    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
-    font-family: Noto Sans KR;
-    
-    .list::-webkit-scrollbar {
-        position: absolute;
-        width: 3.9px;
-    }
-
-    .list::-webkit-scrollbar-thumb {
-        background: rgba(112, 112, 112, 0.45) !important;
-    }
-    .list {
-        padding-right: 36px;
-        padding-bottom: 5px;
-        height: 450px;
-        overflow-y: hidden;
-        overflow-x: hidden;
-        &:hover{
-            overflow-y: scroll;
-        }
-    }
 
 `;
+const NewListItem = styled.div`
+    border-bottom:1px solid black;
+    width:100%;
+    opacity: ${props => props.confirm ? 0.5 : 1};
+    display:flex;
+
+    .row{
+        width:100%;
+    }
+    .alarm_header{
+        width:100%;
+        height:19px;
+        font-family:Spoqa Han Sans Neo, Light;
+        font-size:10px;
+    }
+    .alarm_text{
+        width:100%;
+        height:22px;
+        font-family:Spoqa Han Sans Neo, Light;
+        font-size:10px;
+    }
+
+`
 const ListItem = styled.div`
     display: flex;
     padding-left: 15px;
@@ -383,7 +389,7 @@ class Alarm extends Component {
 
         if (item.type === "DESIGN" && item.kinds === "COMMENT") {
             return <React.Fragment>
-                <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
+                <div style={{ display: "flex", flexDirection: "row", fontSize: "10px",fontFamily:"Spoqa Han Sans Neo, Light" }}>
                     &nbsp;&nbsp;<TextFormat txt={item.reply_preview} chars={MAXLENGTH - 15} />
                 </div>
             </React.Fragment>
@@ -391,7 +397,7 @@ class Alarm extends Component {
         else if (item.type === "DESIGN" && item.kinds === "LIVE_CHAT") {
             const date = new Date();
             return <React.Fragment>
-                <div style={{ display: "flex", flexDirection: "column", fontSize: "16px" }}>
+                <div style={{ display: "flex", flexDirection: "column", fontSize: "10px",fontFamily:"Spoqa Han Sans Neo, Light" }}>
                     <TextFormat txt={item.title} chars={MAXLENGTH - 15} />
                     <div style={{ fontSize: "12px" }}>
                         {`${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDate()}일`}
@@ -408,32 +414,24 @@ class Alarm extends Component {
             </React.Fragment>
         }
         else if ((item.type === "GROUP" && item.kinds === "JOIN_withDESIGN") || (item.type === "GROUP" && item.kinds === "JOIN_withGROUP")) {
-            return <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                {/* <ArrowRtoL color={"#404040"} /> */}
-                {/* <div style={{ width: "max-content", cursor: "default" }}>가입요청</div> */}
-                {/* <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} /> */}
+            return <div style={{ display: "flex", flexDirection: "row", fontSize: "10px",fontFamily:"Spoqa Han Sans Neo, Light" }}>
                 <TextFormat txt={item.title} chars={MAXLENGTH - 15} />
             </div>
         }
         else if (item.type === "DESIGN" && item.kinds === "GETOUT") {
-            return <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                {/* <div style={{ width: "max-content", cursor: "default" }}>탈퇴</div> */}
-                {/* <ArrowLtoR color={"red"} /> */}
+            return <div style={{ display: "flex", flexDirection: "row", fontSize: "10px",fontFamily:"Spoqa Han Sans Neo, Light" }}>
                 <TextFormat txt={item.title} chars={MAXLENGTH - 15} />
             </div>
         }
         else if ((item.type === "GROUP" && item.kinds === "GROUP_DESIGN_OUT") || (item.type === "GROUP" && item.kinds === "GROUP_GROUP_OUT")) {
-            return <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
-                {/* <div style={{ width: "max-content", cursor: "default" }}>삭제</div> */}
-                {/* <ArrowLtoR color={"red"} /> */}
-                {/* <div style={{ background: `url(${targetThumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%" }} /> */}
+            return <div style={{ display: "flex", flexDirection: "row", fontSize: "10px",fontFamily:"Spoqa Han Sans Neo, Light" }}>
                 <TextFormat txt={item.title} chars={MAXLENGTH - 15} />
             </div>
         }
         else if (item.type === "DESIGN" && item.kinds === "INVITE") {
             return <React.Fragment>
                 <div style={{ width: "75%", display: "flex", justifyContent: "space-between" }}>
-                    <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
+                    <div style={{ display: "flex", flexDirection: "row", fontSize: "10px",fontFamily:"Spoqa Han Sans Neo, Light"}}>
                         <TextFormat txt={item.title} chars={MAXLENGTH - 15} />
                     </div>
                     <div style={{ width: "max-content", display: "flex", alignItems: "flex-end" }}>
@@ -462,7 +460,7 @@ class Alarm extends Component {
             //     </div>
         }
         else {
-            return <div style={{ display: "flex", flexDirection: "row", fontSize: "16px" }}>
+            return <div style={{ display: "flex", flexDirection: "row", fontSize: "10px",fontFamily:"Spoqa Han Sans Neo, Light" }}>
                 <TextFormat txt={item.title} chars={MAXLENGTH - 15} />
             </div>
         }
@@ -512,11 +510,11 @@ class Alarm extends Component {
                                 let msg = this.getMessageText(item);
 
                                 return (
-                                    <ListItem
+                                    <NewListItem
                                         key={item.uid}
                                         confirm={item.confirm}
                                         onClick={() => (item.confirm || item.kinds === "INVITE") ? null : this.alarmConfirm(item.user_id, item.uid)}>
-
+                                        {/* 
                                         <div style={{
                                             position: "relative", display: "flex", alignItems: "middle",
                                             width: "325px", paddingTop: "16.5px",
@@ -529,8 +527,12 @@ class Alarm extends Component {
                                                 <div style={{ background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%", marginRight: "15px" }} title={item.title} />
                                                 {this.getAlarmItem(item)}
                                             </div>
+                                        </div> */}
+                                        <div className="row">
+                                            <div className="alarm_header">{this.getAlarmItem(item)}</div>
+                                            <div className="alarm_text"><TextFormat txt={msg} /></div>
                                         </div>
-                                    </ListItem>)
+                                    </NewListItem>)
                             }) :
                                 <div style={{ fontWeight: "500", fontSize: "15px", textAlign: "center" }}>
                                     최근 알림이 없습니다.</div>}
@@ -546,8 +548,10 @@ class Alarm extends Component {
                     <div
                         style={{ width: "48px", position: "absolute" }}>
                         {this.props.alarm && this.props.alarm.count > 0 ?
-                            <div
-                                style={{ zIndex: "998", position: "absolute", left: "50%", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#FF0000" }} />
+                            <div style={{ position: "absolute", zIndex: "998",  left: "50%", 
+                                         width: "22px", height: "22px", borderRadius: "50%", color:"white",
+                                         display:"flex",justifyContent:"center",alignItems:"center",
+                                         backgroundColor: "#FF0000" }} >{this.props.alarm.count}</div>
                             : null}
                         <i
                             style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }}
@@ -564,3 +568,36 @@ class Alarm extends Component {
 }
 
 export default Alarm;
+
+
+{/* <div className="list">
+{alarms && alarms.length ? alarms.map((item, index) => {
+    if (item == null)
+        return <div key={"undefined" + index}></div>;
+    const thumbnail = item.thumbnail || noimg;
+    let msg = this.getMessageText(item);
+
+    return (
+        <ListItem
+            key={item.uid}
+            confirm={item.confirm}
+            onClick={() => (item.confirm || item.kinds === "INVITE") ? null : this.alarmConfirm(item.user_id, item.uid)}>
+
+            <div style={{
+                position: "relative", display: "flex", alignItems: "middle",
+                width: "325px", paddingTop: "16.5px",
+                fontSize: "17px", fontWeight: "300",
+            }}>
+                <TextFormat txt={msg} />
+            </div>
+            <div style={{ height: "19px", lineHeight: "16px", marginTop: "9px", position: "relative" }}>
+                <div style={{ display: "flex", justifyContent: "space-start" }}>
+                    <div style={{ background: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center center", minWidth: "50px", height: "50px", borderRadius: "15%", marginRight: "15px" }} title={item.title} />
+                    {this.getAlarmItem(item)}
+                </div>
+            </div>
+        </ListItem>)
+}) :
+    <div style={{ fontWeight: "500", fontSize: "15px", textAlign: "center" }}>
+        최근 알림이 없습니다.</div>}
+</div> */}

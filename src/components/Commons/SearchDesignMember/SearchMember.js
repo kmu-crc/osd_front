@@ -33,23 +33,25 @@ const SearchWrap = styled.div`
 
     .form-input {
       border:none;
-      background: #EFEFEF;
-      width: 85%;
-      height: 30px;
-      font-size: 18px;
+      background: #8E8E8E;
+      width:100%;
+      height: 41px;
+      font-size: 22px;
       margin-top: 15px;
-      margin-left: 20px;
       padding:10px;
-      border-radius:5px;
       outline:none;
+      color:white;
+      ::placeholder{
+        color:white;
+      }
       
     }
   }
 `;
 const MemberList = styled.ul`
   display: ${props => props.display};
-  width: 353px;
-  margin-left: 50px;
+  width: 100%;
+  margin-left: 0px;
   padding: 0.5rem;
   min-height: 0px;
   max-height: 300px;
@@ -111,7 +113,7 @@ class SearchMember extends Component {
   render() {
     return (
       <SearchWrap className="searchRect">
-        <FormInput className="form-input" type="text" name="search" placeholder=" 찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue} />
+        <FormInput className="form-input" type="text" name="search" placeholder="추가할 멤버의 닉네임을 입력해 주세요" validates={this.props.validates} getValue={this.getValue} />
         <div style={{ width: "100%", height: "100%", paddingLeft: "50px" }}>
           <MemberList display={this.state.open ? "block" : "none"}>
           {this.props.members && this.props.members.map((item, index) => {

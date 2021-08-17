@@ -16,6 +16,7 @@ const DesignCard = styled.div`
   width:246px;
   height:275px;
   box-shadow: 8px 8px 8px #4141411A;
+  cursor:pointer;
   .thumbnail{
      width:100%;
      min-height:207px;
