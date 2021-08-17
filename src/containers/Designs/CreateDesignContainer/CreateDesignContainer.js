@@ -34,16 +34,6 @@ class CreateDesignFormContainer extends Component {
       ? <CreateDesignMobile {...this.props} />
       : <CreateDesign {...this.props} />)
   }
-
-  // console.log("props:", this.props)
-  // return (<React.Fragment>
-  // {
-  // this.props.userInfo.is_designer === 1 ?
-  // <CreateDesign {...this.props} />
-  // : this.gotoMyModify()
-  // }
-  // </React.Fragment>)
-  // }
 }
 
 

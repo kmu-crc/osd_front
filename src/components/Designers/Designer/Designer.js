@@ -22,6 +22,7 @@ const Designer_card = styled.div`
   width:207px;
   height:308px;
   box-shadow: 8px 8px 8px #0000002B;
+  cursor:pointer;
   .thumbnailBox{
     display:flex;
     justify-content:center;

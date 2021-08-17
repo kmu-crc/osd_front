@@ -104,7 +104,7 @@ class Navigation extends Component {
             play: false,
             notice: {}, alarm: {},
             selectCate: -1,
-            screenWidth: window.innerWidth
+            screenWidth: window.innerWidth,
         };
         this.gotoCreateDesignPage = this.gotoCreateDesignPage.bind(this);
     }
@@ -163,9 +163,11 @@ class Navigation extends Component {
                     <div className="menu_exit">
                         {
                             this.props.userInfo==null?
-                            <a href="/signin">
+                            <div style={{cursor:"pointer"}} onClick={()=>{
+                                this.props.onClickLogin();
+                            }}>
                              <img src={new_logo_exit} className="exit_icon"/>
-                            </a>
+                            </div>
                             :<a href="/myPage">
                              <Profile img={this.props.userInfo.thumbnail&&this.props.userInfo.thumbnail.s_img}/>
                             </a>
