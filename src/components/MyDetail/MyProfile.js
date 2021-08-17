@@ -40,7 +40,7 @@ const Wrapper = styled.div`
         justify-content: space-between;
 
       .nick {
-        width: max-content;
+        width: 300px;
         max-width: 300px;
         height: 41px;
         text-align: center;
@@ -52,6 +52,10 @@ const Wrapper = styled.div`
         color: #000000;
         opacity: 1; 
         text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+
+        cursor: default;
       } 
       .mygroup {
         width: 70px;
@@ -176,7 +180,7 @@ const CounterWrapper = styled.div`
         text-align: left;
         font-weight: normal;
         font-size: 17px;
-        line-height: 25px;
+        // line-height: 25px;
         font-family: Spoqa Han Sans;
         letter-spacing: 0px;
         color: #000000;
@@ -214,7 +218,9 @@ export class MyProfile extends React.Component {
     gotoLikeDesigner = () => {
         this.props.changeTab("designer");
     };
-    gotoJoinGroup = () => { };
+    gotoJoinGroup = () => {
+        ;
+    };
 
     render() {
         const { userInfo, MyDetail, Count, tab } = this.props;
@@ -229,7 +235,7 @@ export class MyProfile extends React.Component {
 
             {/* nick & mygroup */}
             <div className="nick-and-mygroup">
-                <div className="nick">
+                <div className="nick" title={userInfo && userInfo.nickName}>
                     {userInfo && userInfo.nickName}</div>
                 <div className="mygroup">
                     <a onClick={this.gotoJoinGroup}>참여그룹</a></div>
@@ -249,7 +255,7 @@ export class MyProfile extends React.Component {
                 />
             </div>
 
-            {/* create design */}
+            {/* CREATE DESIGN */}
             <div className="create-design">
                 <a onClick={this.gotoCreateDesign} className="button">내 디자인 등록하기</a>
             </div>

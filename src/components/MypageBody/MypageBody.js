@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { MyMenu, MyProfile } from 'components/MyDetail';
 
 import ScrollList from "components/Commons/ScrollList"
+import Design from 'components/Designs/Design';
 // import opendesign_style from 'opendesign_style';
 // import Loading from 'components/Commons/Loading'
 // import opendesign_style from 'opendesign_style';
@@ -27,6 +28,14 @@ const MyPageWrapper = styled.div`
     .spacer-3 { 
         margin-left: 39px;
         margin-top: 62px;
+        width: 0px;
+        height: 871px;
+        border-left: 2px solid #CCCCCC;
+        opacity: 1;
+    }
+    .spacer-4 { 
+        margin-left: 39px;
+        // margin-top: 62px;
         width: 0px;
         height: 871px;
         border-left: 2px solid #CCCCCC;
@@ -119,7 +128,7 @@ const FavoriteItemListWrapper = styled.div`
 `;
 const BestDesign = styled.div`
     width: 360px;
-    
+
     .title {
         width: 168px;
         height: 40px;
@@ -131,6 +140,41 @@ const BestDesign = styled.div`
         letter-spacing: 0px;
         color: #000000;
         opacity: 1;
+    }
+    &.row {
+        display: flex;
+        flex-direction: row;
+    }
+    .create-design {
+        margin-top: 44px;
+
+        width: 346px;
+        height: 94px;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        box-shadow: 8px 8px 8px #0000002B;
+        opacity: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: default;
+
+        :hover {
+            background: #FAFAFA;
+        }
+
+        .button {
+            width: 224px;
+            height: 40px;
+            text-align: center;
+            font-weight: medium;
+            font-size: 28px;
+            line-height: 40px;
+            font-family: Spoqa Han Sans Neo;
+            letter-spacing: 0px;
+            color: #000000;
+            opacity: 1;
+            cursor: pointer;
+        }
     }
 `;
 const designmargin = {
@@ -152,22 +196,25 @@ const ItemList = ({ getList, itemList, itemListAdded, tab, order = "like", onCli
                 {tab === "design" ? "관심디자인" : null}
                 {tab === "group" ? "관심그룹" : null}
                 {tab === "designer" ? "관심디자이너" : null}
+                {tab === "manage" ? "내 디자인" : null}
             </div>
-            <div className="order">
-                <a className={`${order === "like" ? "active" : ""}`} onClick={() => onClickedOrder("like")}>
-                    <span>인기순 보기</span>
-                </a>
-                <a className={`${order === "update" ? "active" : ""}`} onClick={() => onClickedOrder("update")}>
-                    <span>최신순 보기</span>
-                </a>
-            </div>
+            {tab !== "manage" ?
+                <div className="order">
+                    <a className={`${order === "like" ? "active" : ""}`} onClick={() => onClickedOrder("like")}>
+                        <span>인기순 보기</span>
+                    </a>
+                    <a className={`${order === "update" ? "active" : ""}`} onClick={() => onClickedOrder("update")}>
+                        <span>최신순 보기</span>
+                    </a>
+                </div>
+                : null}
         </div>
         <div className="grid">
             <ScrollList
                 {...designmargin}
                 // {...opendesign_style.design_margin}
                 // {...opendesign_style.group_margin}
-                type={tab}
+                type={tab === "manage" ? "design" : tab}
                 dataList={itemList}
                 dataListAdded={itemListAdded}
                 getListRequest={getList} />
@@ -212,19 +259,23 @@ class MypageBody extends Component {
     };
     // getRelatedGroupInDesignerRequest = async (page) => { this.props.id && this.props.GetRelatedGroupInDesignerRequest(this.props.id, page, this.state.this_order.keyword); };
 
-    getDataList = tab => {
+    getDataList = async tab => {
         if (tab === "design") {
-            this.getLikeDesignList(0);
+            await this.getLikeDesignList(0);
         }
         else if (tab === "group") {
-            this.getLikeGroupList(0);
+            await this.getLikeGroupList(0);
         }
         else if (tab === "designer") {
-            this.getLikeDesignerList(0);
+            await this.getLikeDesignerList(0);
         } else if (tab === "manage") {
+            await this.props.GetTheBestDesignDesignerRequest(this.props.id);
+            await this.getMyDesignListRequest(0);
         }
     };
-
+    gotoCreateDesign = () => {
+        window.location.href = "/createdesign";
+    };
     changedOrder = async (order) => {
         await this.setState({ order: order });
         const { tab } = this.state;
@@ -235,17 +286,24 @@ class MypageBody extends Component {
         this.getDataList(tab);
     };
     render() {
-        const { MyLikeDesign, MyLikeDesigner, MyLikeDesignAdded, MyLikeDesignerAdded, MyGroup, MyGroupAdded, MyDesign, MyDesignAdded, MyLikeGroup, MyLikeGroupAdded, RelatedGroup, RelatedGroupAdded } = this.props;
-        console.log({ MyLikeDesign, MyLikeDesigner, MyLikeDesignAdded, MyLikeDesignerAdded, MyGroup, MyGroupAdded, MyDesign, MyDesignAdded, MyLikeGroup, MyLikeGroupAdded, RelatedGroup, RelatedGroupAdded });
+        const {
+            MyLikeDesign, MyLikeDesigner, MyLikeDesignAdded, MyLikeDesignerAdded,
+            MyGroup, MyGroupAdded, MyDesign, MyDesignAdded, TheBestDesign,
+            MyLikeGroup, MyLikeGroupAdded, RelatedGroup, RelatedGroupAdded } = this.props;
+        console.log({ MyLikeDesign, MyLikeDesigner, MyLikeDesignAdded, MyLikeDesignerAdded, MyGroup, MyGroupAdded, MyDesign, MyDesignAdded, TheBestDesign, MyLikeGroup, MyLikeGroupAdded, RelatedGroup, RelatedGroupAdded });
 
         const { userInfo, Count, MyDetail } = this.props;
         const { tab, order } = this.state;
-
+        console.log("====", MyDesignAdded && MyDesignAdded.filter(design => design.uid !== TheBestDesign.uid), TheBestDesign);
         return (<MyPageWrapper>
+
             <div className="spacer-1">&nbsp;</div>
+
             {/* menu */}
             <MyMenu
+                tab={tab}
                 Count={Count}
+                changeTab={this.changeTab}
                 nickName={(userInfo && userInfo.nickName) || "회원"} />
 
             <div className="spacer-2">&nbsp;</div>
@@ -254,14 +312,38 @@ class MypageBody extends Component {
 
                 ? <React.Fragment>
                     {/* best design */}
-                    <BestDesign>
-                        <div className="title"></div>
+                    <BestDesign className="row">
 
+                        <div>
+                            <div className="title">베스트 디자인</div>
+
+                            <div>
+                                {/* {TheBestDesign ? TheBestDesign.user_id : null} */}
+                                {TheBestDesign
+                                    ? <Design data={TheBestDesign} />
+                                    : null}
+
+                                <div className="create-design">
+                                    <a onClick={this.gotoCreateDesign} className="button">내 디자인 등록하기</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div className="spacer-4">&nbsp;</div>
+
+                        <div>
+                            <ItemList
+                                tab={tab}
+                                itemList={MyDesign
+                                    && MyDesign.filter(design => design.uid !== TheBestDesign.uid)}
+                                itemListAdded={MyDesignAdded
+                                    && MyDesignAdded.filter(design => design.uid !== TheBestDesign.uid)}
+                                getList={this.getLikeGroupList}
+                            />
+                        </div>
 
                     </BestDesign>
-
-                    {/* itemlist */}
-                    <ItemList />
 
                 </React.Fragment>
 

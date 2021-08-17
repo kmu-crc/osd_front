@@ -40,9 +40,13 @@ const Wrapper = styled.div`
             color: #4F4F4F;
             opacity: 1;
             cursor: pointer;
-        }
-        :hover {
-            background: #FAFAFA;
+            &.active {
+                color: #FF0000;
+            }
+            :hover {
+                background: #FAFAFA;
+                color: #FF0000;
+            }
         }
     }
     .border {
@@ -101,14 +105,14 @@ export class MyMenu extends React.Component {
         window.location.href = "/mymodify";
     };
     modifyMyDesign = () => {
-        alert('modify my design');
+        this.props.changeTab("manage");
     };
     openAlarmPopup = () => {
         alert('open alarm popup');
     };
 
     render() {
-        const { nickName, Count, } = this.props;
+        const { nickName, Count, tab, } = this.props;
 
         return (<Wrapper>
             {/* welcome */}
@@ -136,12 +140,12 @@ export class MyMenu extends React.Component {
                 <a onClick={this.logout}>로그아웃</a>
             </div>
             {/* manage my design */}
-            <div className="menu border">
-                <a onClick={this.modifyMyDesign}>내 디자인 관리</a>
+            <div className={`menu border`}>
+                <a className={`${tab === "manage" ? "active" : ""}`} onClick={this.modifyMyDesign}>내 디자인 관리</a>
             </div>
             {/* modify myinfo */}
             <div className="menu default">
-                <a onClick={this.modifyMyInfo}>회원정보 수정</a>
+                <a className={`${window.location.href.search('mymodify') > -1 ? "active" : ""}`} onClick={this.modifyMyInfo}>회원정보 수정</a>
             </div>
 
         </Wrapper>);

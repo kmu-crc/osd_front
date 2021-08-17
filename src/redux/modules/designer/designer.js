@@ -461,12 +461,12 @@ export function GetDesignerCountRequest(id) {
 }
 export function GetTheBestDesignDesignerRequest(id) {
     return (dispatch) => {
-        return fetch(`${host}/designer/getTheBestDesign/${id}`, {
+        return fetch(`${host}/designer/designerdetail/${id}/bestdesign`, {
             headers: { "Content-Type": "application/json" },
             method: "GET"
         })
             .then(res => res.json())
-            .then(data => dispatch(GetTheBestDesignInDesigner(data)))
+            .then(data => dispatch(GetTheBestDesignInDesigner((data && data[0]) || null)))
             .catch((err => console.error("err", err)));
     };
 };

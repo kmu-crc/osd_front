@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { GetMyDetailRequest, UpdateUserDetailRequest,DeleteUserRequest } from "redux/modules/personal"
+import { GetMyDetailRequest, UpdateUserDetailRequest, DeleteUserRequest } from "redux/modules/personal"
 import { GetCategoryAllRequest } from "redux/modules/category"
-import { CheckNickNameRequest,SignOutRequest } from "redux/modules/auth"
+import { CheckNickNameRequest, SignOutRequest } from "redux/modules/auth"
 
 import ModifyMyDetail from "components/Users/ModifyMyDetail"
 
@@ -19,13 +19,14 @@ class ModifyMyDetailContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    Count: state.Designer.status.Count,
+    userInfo: state.Authentication.status.userInfo,
     MyDetail: state.Personal.status.MyDetail,
     token: state.Authentication.status.token,
     category1: state.Category.status.category1,
     category2: state.Category.status.category2,
     category3: state.Category.status.category3,
     CheckNickName: state.Authentication.checkStatus.checkNickName
-
   }
 }
 

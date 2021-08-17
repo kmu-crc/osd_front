@@ -13,8 +13,8 @@ import NumberFormat from "modules/NumberFormat"
 import { geturl } from "config"
 
 const DesignCard = styled.div`
-  width:246px;
-  height:275px;
+  width: ${props => props.width || 246}px;
+  height: ${props => props.height || 275}px;
   box-shadow: 8px 8px 8px #4141411A;
   .thumbnail{
      width:100%;
@@ -112,10 +112,11 @@ class Design extends Component {
     const data = this.state.data
     const thumbnail = data.thumbnailUrl
     const isForked = this.props.forked || data.parent_design;
+    const { width, height } = this.props;
     return (
       <React.Fragment>
-        <DesignCard onClick={this.gotoDetailPage} img={(thumbnail === null ? noimg : thumbnail.l_img === null ? noimg : thumbnail.l_img)}>
-          <div className="thumbnail"/>
+        <DesignCard width={width} height={height} onClick={this.gotoDetailPage} img={(thumbnail === null ? noimg : thumbnail.l_img === null ? noimg : thumbnail.l_img)}>
+          <div className="thumbnail" />
           <div className="info">
             <div className="spaceBetween">
               <div className="design_name">{data.title}</div>
@@ -127,7 +128,7 @@ class Design extends Component {
                 <div className="count_text">{NumberFormat(data.view_count)}</div>
                 <img className="icon" alt="icon" src={iThumbUp} />
                 <div className="count_text">{NumberFormat(data.like_count)}</div>
-                <img  className="icon" alt="icon" src={iForked} />
+                <img className="icon" alt="icon" src={iForked} />
                 <div className="count_text">{NumberFormat(data.children_count) || 0}</div>
                 {/* <div className="view"><IconView width="22px" height="11px" fill="white" /></div>
                 
@@ -261,7 +262,7 @@ export default Design
 //       width: 285px;
 //       display: flex;
 //       justify-content: space-between;
-  
+
 //     }
 //   }
 

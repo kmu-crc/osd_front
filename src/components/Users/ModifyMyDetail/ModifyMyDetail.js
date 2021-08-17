@@ -1,15 +1,293 @@
+import { MyMenu } from 'components/MyDetail';
 import React from 'react';
 import styled from 'styled-components';
+import { ModifyMyProfile } from 'components/MyDetail'
+import { SetSession } from 'modules/Sessions'
+import Icon from '@material-ui/core/Icon';
 
 const Wrapper = styled.div`
+  margin-left: 100px;
+  margin-top: ${90 + 24}px;
+
+  display: flex;
+  flex–direction: rows;
+
+  .spacer-0 {
+    margin-left: 45px;
+  }
+  .info-pannel {
+    *{border: 1px solid red;}
+    height: 450px;
+  }
+  .buttons {
+    height: 58px;
+    display: flex;
+    flex-direction: row;
+    jusify-content: space-end;
+
+    *{ cursor: default; }
+
+    a, .text {
+      display: flex;
+      cursor: pointer;
+    }
+    a:last-child {
+      margin-left: 33px;
+    }
+    .cancel {
+      width: 96px;
+      height: 58px;
+      background: #FFFFFF 0% 0% no-repeat padding-box;
+      box-shadow: 8px 8px 8px #0000002B;
+      border: 1px solid #C2C2C2;
+      opacity: 1;
+
+      .text {
+        margin: auto;
+        width: 52px;
+        height: 40px;
+        text-align: center;
+        font-weight: medium;
+        font-size: 28px;
+        line-height: 40px;
+        font-family: Spoqa Han Sans Neo;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+      }
+    }
+    .edit {
+      width: 96px;
+      height: 58px;
+      background: #FF0000 0% 0% no-repeat padding-box;
+      box-shadow: 8px 8px 8px #0000002B;
+      opacity: 1;
+      .text {
+        margin: auto;
+        width: 52px;
+        height: 40px;
+        text-align: center;
+        font-weight: medium;
+        font-size: 28px;
+        line-height: 40px;
+        font-family: Spoqa Han Sans Neo;
+        letter-spacing: 0px;
+        color: #FFFFFF;
+        opacity: 1;
+      }
+    }
+  }
+  .margin-buttons { margin-top: 120px; }
+`;
+const InfoPannel = styled.div`
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+  .title {
+    width: max-content;
+    height: 40px;
+    text-align: center;
+    font-weight: medium;
+    font-size: 28px;
+    line-height: 40px;
+    font-family: Spoqa Han Sans Neo;
+    letter-spacing: 0px;
+    color: #000;
+    opacity: 1;
+  }
+  .label {
+    height: 33px;
+    text-align: left;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 33px;
+    font-family: Spoqa Han Sans;
+    letter-spacing: 0px;
+    color: #777;
+    opacity: 1;
+  }
+  .intro { width: 86px; }
+  textarea {
+    margin-top: 6px;
+    width: 811px;
+    height: 196px;
+    background: #8E8E8E 0% 0% no-repeat padding-box;
+    opacity: 1;
+
+    padding: 18px 68px 24px 56px;
+    resize: none;
+    text-align: left;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 22px;
+    font-family: Spoqa Han Sans Neo;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+  }
+  input {
+    width: 402px;
+    height: 41px;
+    background: #8E8E8E 0% 0% no-repeat padding-box;
+    opacity: 1;
+
+    padding: 4px 13px;
+    text-align: left;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 33px;
+    font-family: Spoqa Han Sans;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    border: none;
+    outline: none;
+    ::placeholder { color: #FFFFFF; }
+  }
+  .icon {
+    margin-left: 15px;
+  }
+  .intro, .pw, .pw-re, .category-label, .activity { 
+    width: 158px; 
+    margin-bottom: 34px;
+  }
+  .margin-pw { 
+    margin-top: 60px;
+  }
+  .margin-category { 
+    margin-top: 60px; 
+  }
+
+  .category {
+    select {
+      width: 309px;
+      height: 41px;
+      background: #8E8E8E 0% 0% no-repeat padding-box;
+      opacity: 1;
+
+      color: #FFF;
+    }
+  }
 `;
 
 export default class ModifyMyDetail extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { tab: "basic" };
+  }
+  changeTab = tab => {
+    window.location.href = `#${tab}`;
+    this.setState({ tab: tab });
+  };
+  deactivateAccount = async () => {
+    // let isconfirm = await confirm("정말 탈퇴하시겠습니까?", "예", "아니오");
+    // if (isconfirm) {
+    // }
+    this.props.DeleteUserRequest(this.props.token)
+      .then(() => {
+        SetSession("opendesign_token", null)
+          .then(data => {
+            this.props.SignOutRequest();
+            window.location.reload();
+          })
+      })
+      .then(() => {
+        window.location.href = "/";
+      });
+  };
+  onCancel = () => {
+    alert(false);
+  };
+  onEdit = () => {
+    alert(true);
+  };
   render() {
+    const { Count, userInfo, } = this.props;
+    const { tab } = this.state;
+
     return (<Wrapper>
+      <div className="spacer-0">&nbsp;</div>
       {/* mymenu */}
-      {/* mymenu */}
-      {/* mymenu */}
+      <div>
+        <MyMenu
+          Count={Count}
+          changeTab={this.changeTab}
+          nickName={(userInfo && userInfo.nickName) || "회원"} />
+      </div>
+
+      <div className="spacer-1"></div>
+      {/* profile */}
+      <div>
+        <ModifyMyProfile
+          tab={tab}
+          userInfo={userInfo}
+          deactivateAccount={this.deactivateAccount}
+          changeTab={this.changeTab} />
+      </div>
+
+      <div className="spacer-2"></div>
+
+      {/* info & buttons */}
+      <div>
+        <InfoPannel>
+          <div>
+            <div className="title">기본 정보</div>
+            <div className="row">
+              <div className="intro label">자기소개</div>
+              <div> <textarea /></div>
+            </div>
+          </div>
+          <div className="margin-pw">
+            <div className="title">비밀번호 변경</div>
+            <div className="row">
+              <div className="pw label">비밀번호</div>
+              <div>
+                <input placeholder="새 비밀번호를 입력해주세요." type="password" />
+                <Icon className="icon">visibility</Icon>
+              </div>
+            </div>
+            <div className="row">
+              <div className="pw-re label">비밀번호 확인</div>
+              <div>
+                <input placeholder="새 비밀번호를 다시 입력해주세요." type="password" /></div>
+            </div>
+          </div>
+
+          <div className="margin-category category">
+            <div className="title">카테고리 변경</div>
+            <div className="row">
+              <div className="category-label label">카테고리</div>
+              <select>
+                {<option>a</option>}
+              </select>
+              <select>
+                {<option>b</option>}
+              </select>
+            </div>
+          </div>
+
+          <div className="margin-category">
+            <div className="title">디자이너 활동</div>
+            <div className="row">
+              <div className="activity label">디자인 활동 여부</div>
+              <div>
+                <input type="checkbox" />
+                <Icon style={{ color: "#AAA" }}>help</Icon></div>
+            </div>
+          </div>
+        </InfoPannel>
+
+        <div className="margin-buttons buttons">
+          <a onClick={this.onCancel} className="cancel">
+            <div className="text">취소</div>
+          </a>
+          <a onClick={this.onEdit} className="edit">
+            <div className="text">수정</div>
+          </a>
+        </div>
+
+      </div>
 
     </Wrapper>)
   };
@@ -24,10 +302,8 @@ export default class ModifyMyDetail extends React.Component {
 // import SectionAdditional from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionAdditional"
 // import SectionBuziness from "components/Users/ModifyMyDetail/ModifyMyDetail/SectionBuziness"
 // import Loading from "components/Commons/Loading";
-// import { confirm } from "components/Commons/Confirm/Confirm";
 // import { alert } from "components/Commons/Alert/Alert";
 // import opendesign_style from "opendesign_style";
-// import { SetSession } from 'modules/Sessions'
 
 // const MainBanner = styled.div`
 //   width: 100%;
@@ -421,25 +697,7 @@ export default class ModifyMyDetail extends React.Component {
 //   onChangePassword = () => {
 //     this.setState({ change_password: true })
 //   }
-//   onDeleteUser = async () => {
 
-//     let isconfirm = await confirm("정말 탈퇴하시겠습니까?","예","아니오");
-//     if (isconfirm) {
-//       this.props.DeleteUserRequest(this.props.token)
-//       .then(()=>{
-//         SetSession("opendesign_token", null)
-//         .then(data => {
-//             // console.log("data:", data)
-//             this.props.SignOutRequest()
-//             this.setState({ sign_modal: false, user_popup: null })
-//             window.location.reload()
-//         })
-//       })
-//       .then(()=>{
-//         window.location.href="/"
-//       });
-//     }
-//   }
 
 //   render() {
 //     const scrollmenu = scrollmenu_data
