@@ -9,14 +9,18 @@ const Wrapper = styled.div`
   margin-left: 100px;
   margin-top: ${90 + 24}px;
 
+  // *{border: 1px solid red;}
+
   display: flex;
   flex–direction: rows;
 
-  .spacer-0 {
-    margin-left: 45px;
-  }
+  .spacer-0 { margin-left: 45px; }
+  .spacer-1 { margin-left: 56px; }
+  .spacer-2 { margin-left: 37px; }
+  .split { margin-top: 100px; border-left: 1px solid #707070; }
+  .spacer-3 { margin-left: 28px; }
+
   .info-pannel {
-    *{border: 1px solid red;}
     height: 450px;
   }
   .buttons {
@@ -80,6 +84,7 @@ const Wrapper = styled.div`
   .margin-buttons { margin-top: 120px; }
 `;
 const InfoPannel = styled.div`
+
   .row {
     display: flex;
     flex-direction: row;
@@ -158,6 +163,8 @@ const InfoPannel = styled.div`
   .margin-category { 
     margin-top: 60px; 
   }
+  .margin44 { margin-bottom: 44px;}
+  .margin22 { margin-bottom: 22px;}
 
   .category {
     select {
@@ -165,16 +172,66 @@ const InfoPannel = styled.div`
       height: 41px;
       background: #8E8E8E 0% 0% no-repeat padding-box;
       opacity: 1;
+      padding: 4px 13px;
 
       color: #FFF;
+
+      margin-right: 68px;
+      :last-child { margin-right: 0px; }
+
+      ::placeholder {
+        font-weight: normal;
+        font-size: 22px;
+        line-height: 33px;
+        font-family: Spoqa Han Sans;
+        letter-spacing: 0px;
+        color: #FFFFFF;
+        opacity: 1;
+      }
     }
+  }
+  .designer-checkbox {
+    width: 35px;
+    height: 33px;
+    background: #707070;
+    opacity: 1;
+  }
+  .triangle {
+    width: 17px;
+    height: 14px;
+    transform: matrix(-1, 0, 0, -1, 0, 0);
+    background: #F0F 0% 0% no-repeat padding-box;
+    opacity: 1;
   }
 `;
 
 export default class ModifyMyDetail extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { tab: "basic" };
+    this.state = {
+      tab: "basic",
+
+      //profile 
+      thumbnail: null, thumbnail_name: null,
+      nick: null,
+
+      // info
+      about_me: this.props.MyDetail.about_me || "",
+      // change_password: false,
+      // selected: 0,
+      // loading: false,
+      //       password: "", passwordCheck: "",
+      //       category_level1: 0, category_level2: 0, category_level3: 0,
+      //       is_designer: false, team: "", career: "", location: "", contact: "", screenWidth: window.innerWidth,
+      //       careerlist: [{ number: 0, task: "", explain: "", during: "" }],
+    };
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.MyDetail !== this.props.MyDetail && this.props.MyDetail !== null) {
+      this.setState({
+        about_me: this.props.MyDetail.about_me,
+      })
+    }
   }
   changeTab = tab => {
     window.location.href = `#${tab}`;
@@ -202,9 +259,13 @@ export default class ModifyMyDetail extends React.Component {
   onEdit = () => {
     alert(true);
   };
+  onChange = obj => {
+    this.setState(obj);
+  }
   render() {
-    const { Count, userInfo, } = this.props;
-    const { tab } = this.state;
+    const { Count, userInfo, category1, category2, } = this.props;
+    const { tab, about_me } = this.state;
+    console.log("PROPS:", this.props, "STATE:", this.state);
 
     return (<Wrapper>
       <div className="spacer-0">&nbsp;</div>
@@ -220,6 +281,7 @@ export default class ModifyMyDetail extends React.Component {
       {/* profile */}
       <div>
         <ModifyMyProfile
+          onChange={this.onChange}
           tab={tab}
           userInfo={userInfo}
           deactivateAccount={this.deactivateAccount}
@@ -227,53 +289,71 @@ export default class ModifyMyDetail extends React.Component {
       </div>
 
       <div className="spacer-2"></div>
-
+      <div className="split" />
+      <div className="spacer-3"></div>
       {/* info & buttons */}
       <div>
         <InfoPannel>
           <div>
-            <div className="title">기본 정보</div>
+            <div className="margin22 title">기본 정보</div>
             <div className="row">
               <div className="intro label">자기소개</div>
-              <div> <textarea /></div>
+              <div>
+                <textarea onChange={e => this.onChange({ about_me: e.target.value })} value={about_me} /></div>
             </div>
           </div>
           <div className="margin-pw">
-            <div className="title">비밀번호 변경</div>
+            <div className="margin44 title">비밀번호 변경</div>
             <div className="row">
               <div className="pw label">비밀번호</div>
               <div>
-                <input placeholder="새 비밀번호를 입력해주세요." type="password" />
-                <Icon className="icon">visibility</Icon>
+                <input id="pw1" placeholder="새 비밀번호를 입력해주세요." type="password" />
+                <Icon id="view-pw"
+                  onClick={(e) => {
+                    if (e.target.innerHTML === "visibility") {
+                      document.getElementById('pw1').type = "text";
+                      document.getElementById('pw2').type = "text";
+                      e.target.innerHTML = "visibility_off";
+                    } else {
+                      document.getElementById('pw1').type = "password";
+                      document.getElementById('pw2').type = "password";
+                      e.target.innerHTML = "visibility";
+                    }
+                  }} className="icon">visibility</Icon>
               </div>
             </div>
             <div className="row">
               <div className="pw-re label">비밀번호 확인</div>
               <div>
-                <input placeholder="새 비밀번호를 다시 입력해주세요." type="password" /></div>
+                <input id="pw2" placeholder="새 비밀번호를 다시 입력해주세요." type="password" /></div>
             </div>
           </div>
 
           <div className="margin-category category">
-            <div className="title">카테고리 변경</div>
+            <div className="margin44 title">카테고리 변경</div>
             <div className="row">
               <div className="category-label label">카테고리</div>
-              <select>
-                {<option>a</option>}
+              {userInfo.category1}
+              <select >
+                {category1 &&
+                  category1.map((item, index) =>
+                    <option key={index}>{item.text}</option>)}
               </select>
               <select>
-                {<option>b</option>}
+                {category2 &&
+                  category2.map((item, index) =>
+                    <option key={index}>{item.text}</option>)}
               </select>
             </div>
           </div>
 
           <div className="margin-category">
-            <div className="title">디자이너 활동</div>
+            <div className="margin44 title">디자이너 활동</div>
             <div className="row">
               <div className="activity label">디자인 활동 여부</div>
-              <div>
-                <input type="checkbox" />
-                <Icon style={{ color: "#AAA" }}>help</Icon></div>
+              <div >
+                <input className="designer-checkbox" type="checkbox" />
+                <Icon style={{ fontSize: "48px", color: "#8E8E8E" }}>help</Icon></div>
             </div>
           </div>
         </InfoPannel>
@@ -289,7 +369,7 @@ export default class ModifyMyDetail extends React.Component {
 
       </div>
 
-    </Wrapper>)
+    </Wrapper >)
   };
 };
 
@@ -470,14 +550,7 @@ export default class ModifyMyDetail extends React.Component {
 // class ModifyMyDetail extends Component {
 //   constructor(props) {
 //     super(props);
-//     this.state = {
-//       change_password: false, selected: 0, loading: false,
-//       thumbnail: "", thumbnail_name: "", nick_name: "", about_me: "",
-//       password: "", passwordCheck: "",
-//       category_level1: 0, category_level2: 0, category_level3: 0,
-//       is_designer: false, team: "", career: "", location: "", contact: "", screenWidth: window.innerWidth,
-//       careerlist: [{ number: 0, task: "", explain: "", during: "" }],
-//     }
+
 //     this.updateNickName = this.updateNickName.bind(this);
 //     this.updateIntroduce = this.updateIntroduce.bind(this);
 //     this.updateThumbnail = this.updateThumbnail.bind(this);
@@ -568,10 +641,7 @@ export default class ModifyMyDetail extends React.Component {
 
 //     if (data && data.target && data.target.name === "nick_name") {
 //       if (data.value === this.props.MyDetail.nick_name) {
-//         data.validates = ["required", "NotSpecialCharacters"];
-//       } else {
-//         data.validates = ["required", "NotSpecialCharacters", "CheckNickName"];
-//       }
+//         data.validates = ["required", "NotSpecialCharacters"]; //       } else { //         data.validates = ["required", "NotSpecialCharacters", "CheckNickName"]; //       }
 //     }
 //   };
 
