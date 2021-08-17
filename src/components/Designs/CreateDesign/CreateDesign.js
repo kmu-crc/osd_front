@@ -19,6 +19,7 @@ import Loading from "components/Commons/Loading";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 // import { geturl } from "config";
+// import { geturl } from "config";
 import templateImgDesign from "source/template-image-design.png";
 import templateImgSofware from "source/template-image-software.png";
 import templateImgEngineering from "source/template-image-engineering.png";
