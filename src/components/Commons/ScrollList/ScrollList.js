@@ -47,8 +47,8 @@ const FlexContainer = styled.div`
     justify-content:center;
     position:absolute;
     bottom:0px;
-    z-index:999;
     background: transparent linear-gradient(0deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 0) 100%);
+    z-index:890;
     cursor:pointer;
   }
   .icon{
@@ -96,18 +96,18 @@ const OutBtn = styled.button`
   position: absolute;
   top: 0;
   right: 5px;
-  z-index: 900;
+  z-index: 899;
 `;
 const AcceptBtn = styled.button`
   position: absolute;
   top: 0;
   right: 80px;
-  z-index: 900;
+  z-index: 899;
 `;
 const MoreBtn = styled.button`
   position: relative;
   left: 50%;
-  z-index: 900;
+  z-index: 899;
 `;
 const LoadingText = styled.p`
   color: #707070;

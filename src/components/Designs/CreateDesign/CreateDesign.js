@@ -24,158 +24,28 @@ import templateImgSofware from "source/template-image-software.png";
 import templateImgEngineering from "source/template-image-engineering.png";
 import templateImgEmpty from "source/template-image-empty.png";
 
-const MainBanner = styled.div`
-  width: 100%;
-  height:140px;
-  display: flex;
-  justify-content: center;
-  .title{
-    width: 196px;
-    height: 37px;
-    margin-top: 45px;
-    font-size: 25px;
-    font-family: Noto Sans KR;
-    color: #707070;
-    line-height: 37px;
-    font-weight: 700;
-  }
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-    align-items: flex-end;
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    align-items: flex-end;
-  }
-`;
-const MainSection = styled.div`
-  display: flex;
-  flex-direction: row;
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-    flex-direction: column;
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    flex-direction: column;
-  }
-`;
-const NavMenu = styled.div`
-  min-width: 433px;
-  height: 300px;
-  position: relative;
-  .menuBox {
-    width: 325px;
-    position: fixed;
-    top: 197px;
-    margin-left: 64px;    
-    background-color: #F5F4F4;
-    border-radius: 5px;
-  }
-  .menuItem{
-    height: 62px;
-    padding-left: 36px;
-    padding-top: 18px;
-    lineHeight: 29px;
-    border-bottom: ${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
-    cursor: pointer;
-  }
-  .deleteText{
-    font-family: Noto Sans KR;
-    font-size: 20px;
-    font-family: Noto Sans KR;
-    font-weight: 500;
-    text-align: left;
-    color: #FF0000;
-    border-bottom: ${props => props.borderBottom};
-  }
+import new_logo_view from "source/new_logo_view.svg";
+import new_logo_favorite from "source/new_logo_favorite.svg";
+import new_logo_share from "source/new_logo_share.svg";
 
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    .menuBox{
-      margin-left:0px;   
-      position: static; 
-    }
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    .menuBox{
-      margin-left:0px;  
-      position:static;  
-
-    }
-  }
-`;
-const MenuItem = styled.div`
-    height:62px;
-    padding-left:36px;
-    padding-top:18px;
-    lineHeight:29px;
-    border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
-    cursor:pointer;
-    .MenuText {
-      font-size:20px;
-      font-family:Noto Sans KR;
-      font-weight:300;
-      text-align:left;
-      color: ${props => props.selected ? "#FF0000" : "#707070"};
-      border-bottom:${props => props.borderBottom};
-    }
-`;
-const InputBoard = styled.div`
-  // width: ${window.innerWidth > 1920 ? 1422 : window.innerWidth - 500}px;
-  width:77%;
-  padding-bottom:100px;
-  margin-bottom:100px;
-  position:relative;
-  padding-top:45px;
-  border-radius:5px;
-  border:8px solid #F5F4F4;
-  .buttonBox{
-    width: max-content;
-    display: flex;
-    justify-content:flex-end;
-    margin-top: 21px;
-    margin-left: auto;
-    padding:10px 0px 10px 10px;
-    position:absolute;
-    right:0px;
-    bottom:0px;
-  }
-
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-    width:100%;
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    width:100%;
-  }
-`;
-const CustomButton = styled.div`
-  cursor: pointer;
-  width: 104.5px;
-  height: 44px;
+const CropperDialog = styled(Modal)`
+  max-width: ${props => props.ratio < 1.0 ? 450 : 650}px;
+  // height: ${props => props.ratio < 1.0 ? 650 : 450}px;
+  height: max-content;
+  padding:20px;
   border-radius: 5px;
-  background-color: ${props => props.isComplete ? "#FF0000" : "#707070"};
-  padding-top: 6px;
-  padding-left: 15px;
-  margin-right: 25px;
-`;
-const HRline = styled.div`
-  width: 95%;
-  margin-top: 60px;
-  margin-bottom: 67px;
-  border-bottom: 5px solid #F5F4F4;
-`;
-const BtnText = styled.p`
-  width: 74px;
-  padding: 0px;
-  font-familty: Noto Sans KR;
-  font-weight: 500;
-  line-height: 29px;
-  text-align: center;
-  font-size: 20px;
-  color: #FFFFFF;
-  cursor: pointer;
+  background-color: #FFFFFF;
+  box-shadow: 0px 3px 6px #FF0000;
+  .imagebox{
+
+  }
+  .edit-step-name-button-container {
+    display: flex;
+    width: 576px;
+    margin-left: auto;
+    margin-right: 75px;
+    margin-top: 38px;
+  }
 `;
 const PeerBox = styled.div`
   display: flex;
@@ -212,328 +82,299 @@ const PeerIcon = styled.div`
   background-size: cover;
   background-position: center center;
 `;
-//---sectionbasic---//
-const ContentsBox = styled.div`
-  padding-left: 47px;
-  display: flex;
-  flex-direction: column;
-  .title {
-    min-width: 100px;
-    height: 29px;
-    text-align: left;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 29px;
-    color: #707070;
-  }
-  .additionalTitle{
-    min-width: 167px;
-    height: 29px;
-    text-align: left;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 29px;
-    color: #707070;
-  }
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-    justify-content: center;
-    .title{
-      margin-bottom: 10px;
-    }
-    .additionalTitle{
-      margin-bottom: 10px;
-    }
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    .title{
-      margin-bottom: 10px;
-    }
-    .additionalTitle {
-      margin-bottom: 10px;
-    }
-  }
-`;
-const IsProblemBox = styled.div`
-  margin-top:10px;
-  display:flex;
-  justify-content:flex-start;
-  align-items:flex-start;
-  .check{
-  }
-  .check_label{
-    padding-top:5px;
-  }
-`
-const ImageBox = styled.div`
-  margin-left: 67px;
-  min-width: 210px;
-  min-height: 210px;
-  max-width: 210px;
-  max-height: 210px;
-  border-radius:5px;
-  background: ${props => `url(${props.imageURL})`};
-  background-size:cover;
-  background-position:center center;
-`;
-const ThumbnailBox = styled.div`
-  display:flex;
-  justify-content:flex-start;
-  flex-direction:row;
-  .explainBox{
-    margin-left:54px;
-    margin-top:100px;
-  }
-  .findThumbnailBtn{
-    width:63px;
-    height:25px;
-    cursor:pointer;
-  }
-  .findThumbnailText{
-    font-family:Noto Sans KR;
-    font-size:17px;
-    font-weight:500;
-    text-align:left;
-    line-height:25px;
-    color:#FF0000;
-    border-bottom:1.5px solid #FF000;
-    cursor:pointer;
-  }
-  .findThumbnailBox{
-    margin-left:54px;
-    margin-top:100px;
-    .thumbnailExplainText{
-      width:341px;
-      height:45px;
-      margin-top:11px;
-      font-weight:300;
-      font-size:14px;
-      color:#707070;
-      line-height:20px;
-      text-align:left;
-    }
-  }
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-    flex-direction:column;
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    flex-direction:column;
-  }
-`;
-const TitleBox = styled.div`
-  display:flex;
-    margin-top:96px;
-    justify-content:flex-start;
-    flex-direction:row;
-    .inputText{
-      width:505px;
-      height:56px;
-      margin-left:67px;
-      padding-left:22px;
-      padding-right:22px;
-      font-size:20px;
-      font-weight:300;
-      font-family:Noto Sans KR;
-      line-height:29px;
-      color:#707070;
-      border:none;
-      border-radius:5px;
-      outline:none;
-      background-color:#EFEFEF;
-    }
-    @media only screen and (min-width : 780px) and (max-width:1440px) {
-      flex-direction:column;
-      .inputText{
-        margin-left:0px;
-      }
-
-    }
-    @media only screen and (min-width : 360px) and (max-width:780px) {
-      flex-direction:column;
-      .inputText{
-        margin-left:0px;
-        width:80%;
-      }
-    }
-`;
-const ExplainBox = styled.div`
-  margin-top: 103px;
-  display: flex;
-  justify-content:flex-start;
-  flex-direction:row;
-  .inputTextareaBox {
-    width: 717px;
-    height: 244px;
-    margin-left: 70px;
-    padding: 22px 26px 34px 32px;
-    font-family: Noto Sans KR;
-    font-size: 20px;
-    font-weight: 300;
-    color: #707070;
-    line-height: 35px;
-    text-align: left;
-    outline: none;
-    border: none;
-    border-radius: 5px;
-    resize: none;
-    background-color: #EFEFEF;
-  }
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-    flex-direction:column;
-    .inputTextareaBox {
-      margin-left: 0px;
-    }
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    flex-direction:column;
-
-    .inputTextareaBox {
-      width:90%;
-      margin-left: 0px;
-    }
-  }
-`;
-//---additional--//
-const CategoryBox = styled.div`
-  width:100%;
-  display:flex;
-  justify-contant:flex-start;
-  flex-direction:row;
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-    // flex-direction:column;
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    flex-direction:column;
-  }
-`;
-const CategoryDropDown = styled(Dropdown)`
-  width:380px;
-  height:56px;     
-  border-radius:5px;
-  font-size:20px;
-  background-color:#EFEFEF !important;
-  margin-right:30px;
-  display:flex;
-  align-items:center;
-  .default{
-    font-size:16px;
-    margin-top:0px;
-  }
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    margin-top:10px;
-    width:90%;
-  }
-`;
-const InviteMemberBox = styled.div`
-  display:flex;
-  justify-content:flex-start;
-  flex-direction:row;
-  margin-top:120px;
-  .searchBox{
-  width:645px;
-  height:56px;
-  font-size:20px;
-  font-weight:500;
-  line-height:29px;
-  color:#707070;
-  border-radius:5px;
-  background-color:#EFEFEF;
-  }
-  .tipTitle{
-  width:27px;
-  height:25px;
-  margin-left:20px;
-  font-size:17px;
-  font-weight:500;
-  line-height:25px;
-  text-align:left;
-  color:#FF0000;
-  }
-  .tipDescription{  
-  margin-left:17px;
-  font-size:16px;
-  font-weight:100;
-  font-family:Noto Sans KR;
-  text-align:left;
-  line-height:25px;
-  color:#707070;
-  }      
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-  flex-direction:column;
-  .searchBox{
-  }
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-  flex-direction:column;
-  .searchBox{
-  width:92%;
-  }
-  }
-`;
 const InviteMemberListBox = styled.div`
-  margin-top:20px;
-  margin-left:167px;
   width:645px;
+  margin-left:191px;
   .memberList{
   display:flex;
   flex-wrap:wrap;
   flex-direction:row;
   }
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-  margin-left:0px;
-  width:645px;
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-  margin-left:0px;
-  width:92%;
-  }
 `;
-// const NoInviteMemberBox = styled.div`
-//   margin-left: 167px;
-//   margin-top: 30px;
-//   font-size: 20px;
-//   font-weight: 500;
-//   font-family: Noto Sans KR;
-//   color: #707070;
-//   .textLabel {
-//     margin-left: 35px;
-//     vertical-align: top;
-//   }
-// `;
-// const CheckBox = styled.input.attrs({ type: 'checkbox' })`
-//   width: 25px;
-//   height: 25px;
-//   margin-right: 17px;
-//   background-color: #EFEFEF !important;
-//   border: 1px solid #707070 !important;
-//   border-radius: 5px !important;  
-// `;
-const LicenseBox = styled.div`
-  display: flex;
-  margin-top: 22px;
-  .licenseList {
-  width: 645px;
-  height: 143px;
-  .licenseItem {
-  margin-bottom: 30px;
-  color: #707070;
-  font-size: 20px;
-  font-weight: 500;
-  font-family: Noto Sans KR;
+const IsProblemBox = styled.div`
+  margin-top:50px;
+  display:flex;
+  justify-content:flex-start;
+  align-items:flex-start;
+  font-size: 22px;
+  font-family: SpoqaHanSans;
+  height:45px;
+
   .textLabel {
-  margin-left: 35px;
-  vertical-align: top;
+    vertical-align: top;
+    padding-top:5px;
+    padding-left:10px;
+   }
+`
+const Wrapper = styled.div`
+  width:100%;
+  height:100%;
+  padding:90px 0px 90px 100px;
+  display:flex;
+  .flex{
+    max-width:800px;
+    display:flex;
+    flex-wrap:wrap;
   }
-  .disabled{
-    color:#9e9e9e;
+  .navi_menu{
+    width:264px;
+    height:100%;
+    padding:25px 38px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    .navi_header{
+      width:187px;
+      height:40px;
+      margin-bottom:32px;
+      font-family:Spoqa Han Sans Neo;
+      font-weight:500;
+      font-size:28px;
+      text-align:center;
+    }
+    .navi_label{
+      width:168px;
+      height:77px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-family:Spoqa Han Sans Neo;
+      font-size:28px;
+      cursor:pointer;
+    }
+    .black{color:black;}
+    .red{color:red;}
+    .borderBottom{border-bottom:2px solid #707070;}
   }
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-  flex-direction:column;
+  .vLine{
+    border:1px solid #CCCCCC;
+    margin:42px 0px;
   }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-  flex-direction:column;
+  .summary{
+    padding:45px 77px;
   }
+  .completeButton{
+    width:100%;
+    height:94px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:black;
+    font-family:Spoqa Han Sans Neo;
+    font-size:28px;
+    border:1px solid #eaeaea;
+    box-shadow: 8px 8px 8px #0000002B;
+    margin-top:61px;
+    cursor:pointer;
+  }
+  .marginRight1{margin-right:60px;}
+  .marginRight2{margin-right:0px;}
+  .board{
+    width:100%;
+    height:100%;
+    padding:45px 27px;
+    .board_label{
+      min-width:max-content;
+      height:40px;
+      display:flex;
+      align-items:center;
+      font-family:Spoqa Han Sans Neo;
+      font-size:28px;
+      font-weight:400;
+    }
+    .board_box{
+      width:100%;
+      height:90px;
+    }
+    .paddingLeft1{padding-left:191px;}
+  }
+  .sub{
+    height:40px;
+    color:red;
+  }
+  .licenseItem {
+    margin-bottom: 30px;
+    color: #707070;
+    font-size: 22px;
+    font-weight: 300;
+    font-family: SpoqaHanSans;
+   .textLabel {
+    margin-left: 35px;
+    vertical-align: top;
+   }
+  }
+  .findThumbnailText{
+    margin-left:30px;
+    border:2px solid red;
+    padding:5px 20px 4px 20px;
+    border-radius:20px;
+    color:red;
+    cursor:pointer;
+    font-size:22px;
+  }
+  .dropdown{
+    width:228px;
+    min-height:41px !important;
+    max-height:41px !important;
+    padding:0px 20px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    border-radius:0px !important;
+  }
+`
+
+
+const QuestionGuide = styled.div`
+  width:35px;
+  height:35px;
+  background-color:red;
+  border-radius:50%;
+  color:white;
+  font-size: 30px;
+  font-weight: 800;
+  font-family: SpoqaHanSans;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding-top:4px;
+  margin-left:10px;
+  position:relative;
+  cursor:default;
+  .messageBubble{
+    width:${props=>props.bubbleSize}px;
+    box-shadow: 8px 8px 8px #0000002B;
+    font: normal normal normal 20px/27px Segoe UI;
+    letter-spacing: 0px;
+    line-height:25px;
+    color:#707070;
+    background-color:white;
+    border:1px solid #707070;
+    font-weight:400;
+    padding:10px;
+    position:absolute;
+    left:0px;
+    top:50px;
+    z-index:888;
+
+    display:none;
+  }
+  &:hover{
+    .messageBubble{
+      display:block;
+    }
+  }
+`
+const DesignCard = styled.div`
+  *{
+    font-family:Spoqa Han Sans Neo;
+    color:black;
+  }
+  width:360px;
+  height:525px;
+  box-shadow: 8px 8px 8px #4141411A;
+  border: 0.5px solid #eaeaea;
+
+  .thumbnail{
+    width:100%;
+    height:333px;
+    border: 0.5px solid #eaeaea;
+  }
+  .info{
+    width:100%;
+    padding:21px 23px 31px 23px;
+  }
+  .spaceBetween{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:7px;
+  }
+  .title{
+    font-size:37px;
+    font-weight:600;
+    height:49px;
+    display:flex;
+    align-items:center;
+  }
+  .date{
+    color:#707070;
+    font-size:17px;
+  }
+  .designer{
+    font-size:16px;
+  }
+
+  .asset_wrapper{
+    width:100%;
+    height:30px;
+    display:flex;
+    align-items:center;
+    margin-top:31px;
+    .asset_icon{
+      width:27px;
+      height27px;
+      object-fit:cover;
+    }
+    .asset_text{
+      min-width:70px;
+      font-size:18px;
+      padding-left:10px;
+    }
+  }
+`
+const InputText = styled.input`
+  width:873px;
+  height:51px;
+  background-color:#E9E9E9;
+  padding:5px 20px;
+  outline:none;
+  border:none;
+  resize:none;
+  margin-left:30px;
+  margin-top:14px;
+  font-size:22px;
+`
+const InputTextArea = styled.textarea`
+  width:873px;
+  height:498px;
+  background-color:#E9E9E9;
+  padding:20px;
+  outline:none;
+  border:none;
+  resize:none;
+  margin-left:30px;
+  margin-top:24px;
+  font-size:22px;
+`
+const CategoryDropDown = styled(Dropdown)`
+  max-width:309px;
+  height:41px !important;     
+  font-family:SpoqaHanSans,Regular;
+  font-size:22px;
+  background-color:#8E8E8E !important;
+  margin-right:68px;
+  margin-top:10px;
+  margin-bottom:10px;
+  .text{
+    color:white !important;
+  }
+  .item{
+    background-color:#8e8e8e !important;
+  }
+
+`;
+const ResetButtonWrapper = styled.div`
+  width: max-content;
+  margin-left: auto;
+  margin-right: 25px;
+  color: #707070;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 20px;
 `;
 const DelBtn = styled.button`
   display: none;
@@ -561,31 +402,33 @@ const DelBtn = styled.button`
     display: block;
   }
 `;
-const SectionContainer = styled.section`
-  display: ${props => props.display};
-  // width: ${props => props.width || "100%"};
-  // *{border:1px solid black;}
-`;
-const CropperDialog = styled(Modal)`
-  max-width: ${props => props.ratio < 1.0 ? 450 : 650}px;
-  // height: ${props => props.ratio < 1.0 ? 650 : 450}px;
-  height: max-content;
-  padding:20px;
-  border-radius: 5px;
-  background-color: #FFFFFF;
-  box-shadow: 0px 3px 6px #FF0000;
-  .imagebox{
-
+const DesignTemplateSelector = styled.div`
+  max-width:853px;
+  width:100%;
+  .title {
+    width: max-content;
+    margin: auto;
+    color: #707070;
+    padding: 10px 5px;
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 2rem;
   }
-  .edit-step-name-button-container {
+  .template-wrapper {
     display: flex;
-    width: 576px;
-    margin-left: auto;
-    margin-right: 75px;
-    margin-top: 38px;
+    justify-content:center;
+    overflow: auto;
+  }
+  .element {
+    min-width: 200px;
+    margin: 5px;
+    border: 2px solid #EFEFEF;
+    padding: 5px;
+    :hover{
+      border: 2px solid #777777;
+    }
   }
 `;
-// content form, templete selector
 const DesignElement = styled.div`
   *{
     cursor:pointer;
@@ -596,8 +439,6 @@ const DesignElement = styled.div`
   font-size: 20px;
   font-family: "Noto Sans KR";
   z-index: 700;
-  width: 300px;
-  height: 150px;
   border-radius: 15px;
   // background-size: cover;
   img{
@@ -712,40 +553,16 @@ const DesignElement = styled.div`
     // cursor: default;
   }
 `;
-const DesignTemplateSelector = styled.div`
-  .title {
-    width: max-content;
-    margin: auto;
-    color: #707070;
-    padding: 10px 5px;
-    font-size: 2rem;
-    font-weight: 300;
-    line-height: 2rem;
-  }
-  .template-wrapper {
-    // width: 450px;
-    display: flex;
-    justify-content:center;
-    // flex-direction: row;
-    overflow: auto;
-  }
-  .element {
-    min-width: 150px;
-    margin: 5px;
-    border: 2px solid #EFEFEF;
-    padding: 5px;
-    :hover{
-      border: 2px solid #777777;
-    }
-  }
-`;
 const EditorWrapper = styled.div`
+  max-width:853px;
+  width:100%;
   .title {
-    width: max-content;
+    width: 100%;
+    text-align:center;
     margin: auto;
     color: #707070;
     padding: 10px 5px;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 300;
     line-height: 2rem;
   }
@@ -780,16 +597,7 @@ const template = [
   { type: "engineering", text: "공학디자인 템플릿", img: templateImgEngineering },
   { type: "software", text: "소프트웨어디자인 템플릿", img: templateImgSofware },
 ];
-const ResetButtonWrapper = styled.div`
-  width: max-content;
-  margin-left: auto;
-  margin-right: 25px;
-  color: #707070;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 10px;
-  margin-bottom: 20px;
-`;
+
 class CreateDesign extends Component {
   constructor(props) {
     super(props);
@@ -864,10 +672,6 @@ class CreateDesign extends Component {
         await alert(warning + "카테고리를 선택해주세요.", "확인");
         return;
       }
-      // else if ((this.state.alone === false && this.state.members.length === 0)) {
-      //   await alert(warning + "멤버를 초대하지 않으면 '멤버를 초대하지 않습니다'를 체크해주세요.","확인");
-      //   return;
-      // }
       else if (this.state.license1 === false || this.state.license2 === false || this.state.license3 === false) {
         await alert(warning + "라이센스 사용에 동의해주세요.", "확인");
         return;
@@ -879,7 +683,6 @@ class CreateDesign extends Component {
     if (data.target) {
       obj[data.target.name] = data;
       await this.setState(obj);
-      //console.log("thumbnail:", this.state);
     }
     this.checkFinishBasic();
   };
@@ -893,7 +696,6 @@ class CreateDesign extends Component {
     if (event.target) {
       await this.setState({ explanation: event.target.value });
     }
-    //this.checkFinishBasic();
   };
   onKeyDownEnter(event) {
     if (event.key === "Enter") {
@@ -1004,7 +806,6 @@ class CreateDesign extends Component {
       members: this.state.members.concat(member),
       addmem: this.state.addmem.concat(member)
     });
-    // console.log("members[]====", this.state.members);
     this.checkFinishAdditional();
     this.setState({ alone: false });
   };
@@ -1055,8 +856,6 @@ class CreateDesign extends Component {
     this.makeClientCrop(crop);
   };
   onCropChange = (crop, percentCrop) => {
-    // You could also use percentCrop:
-    // this.setState({ crop: percentCrop });
     this.setState({ crop });
   };
   makeClientCrop = async (crop) => {
@@ -1089,7 +888,6 @@ class CreateDesign extends Component {
   };
   openInfoToProject = () => {
     this.setState({ loading: true });
-    // this.setState({ info_dialog: true });
     this.toProject();
   };
   onChangeFile = async (data) => {
@@ -1165,371 +963,276 @@ class CreateDesign extends Component {
         nCount++;
       })
     }
-    // console.log(this.props.category3);
     if (category3Index == -1) category3Index = 0;
+
+
     return (
-      <div>
-
-        <MainBanner>
-          <div className="title">디자인 등록하기</div>
-        </MainBanner>
-
-        <MainSection>
-
-          {this.state.loading ?
-            <Loading /> : null}
-
-          {/* scroll - menu */}
-          <NavMenu>
-            <div className="menuBox">
-              <MenuItem
-                selected={this.state.step === 0}
-                onClick={() =>
-                  this.setState({ step: 0 })}
-                borderBottom={false}>
-                <div className="MenuText">
-                  {scrollmenu[0].txt}
-                </div>
-              </MenuItem>
-
-              <MenuItem
-                selected={this.state.step === 1}
-                borderBottom={false}
-                onClick={() =>
-                  this.state.basic ?
-                    this.setState({ step: 1 }) :
-                    alert("기본 정보의 필수항목(*)을 입력하셔야 합니다.")}
-              >
-                <div className="MenuText">
-                  {scrollmenu[1].txt}</div>
-              </MenuItem>
-
-              <MenuItem
-                selected={this.state.step === 2}
-                borderBottom={false}
-                onClick={() =>
-                  this.state.additional ?
-                    this.setState({ step: 2 }) :
-                    alert("부가 정보의 필수항목(*)을 입력하셔야 합니다.")}
-              >
-                <div className="MenuText">
-                  {scrollmenu[2].txt}</div>
-              </MenuItem>
-
+      <React.Fragment>
+       {this.state.cropper ?
+        <CropperDialog ratio={this.state.ratio} onKeyDown={null} open={this.state.cropper} onClose={null}>
+          <div onClick={this.closeCropper} style={{ position: "absolute", width: "max-content", top: "10px", right: "15px" }}>
+            <Cross angle={45} color={"#000000"} weight={2} width={32} height={32} />
+          </div>
+          <div style={{ width: "max-content", height: "20px", lineHeight: "20px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "left", marginTop: "45px", marginLeft: "75px" }}>{designImageText} 등록</div>
+          <div style={{ width: "max-content", height: "15px", lineHeight: "15px", color: "#FF0000", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>[!]등록하신 {designImageText}가 정사각형이 아닙니다.</div>
+          <div style={{ width: "max-content", height: "30px", lineHeight: "15px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>아래의 이미지에서 {designImageText}로 등록하고자하는 영역을 <br /> 조절하여 등록하기를 클릭하시면 {designImageText}가 등록됩니다.</div>
+          <div className="imagebox">
+            <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "20px", marginBottom: "20px", width: this.state.ratio > 1.0 ? "370px" : "240px", height: "max-content" }}>
+              <ReactCrop
+                src={this.state.thumbnail} crop={this.state.crop}
+                onImageLoaded={this.onImageLoaded} onComplete={this.onCropComplete} onChange={this.onCropChange} />
             </div>
-          </NavMenu>
-
-          {this.state.cropper ?
-            <CropperDialog ratio={this.state.ratio} onKeyDown={null} open={this.state.cropper} onClose={null}>
-              <div onClick={this.closeCropper} style={{ position: "absolute", width: "max-content", top: "10px", right: "15px" }}>
-                <Cross angle={45} color={"#000000"} weight={2} width={32} height={32} />
-              </div>
-              <div style={{ width: "max-content", height: "20px", lineHeight: "20px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "left", marginTop: "45px", marginLeft: "75px" }}>{designImageText} 등록</div>
-              <div style={{ width: "max-content", height: "15px", lineHeight: "15px", color: "#FF0000", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>[!]등록하신 {designImageText}가 정사각형이 아닙니다.</div>
-              <div style={{ width: "max-content", height: "30px", lineHeight: "15px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>아래의 이미지에서 {designImageText}로 등록하고자하는 영역을 <br /> 조절하여 등록하기를 클릭하시면 {designImageText}가 등록됩니다.</div>
-              <div className="imagebox">
-                <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "20px", marginBottom: "20px", width: this.state.ratio > 1.0 ? "370px" : "240px", height: "max-content" }}>
-                  <ReactCrop
-                    src={this.state.thumbnail} crop={this.state.crop}
-                    onImageLoaded={this.onImageLoaded} onComplete={this.onCropComplete} onChange={this.onCropChange} />
-                </div>
-                <div style={{ marginTop: "20px", display: "flex" }} >
-                  <div style={{
-                    marginLeft: "25px", marginRight: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500",
-                    fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer"
-                  }} onClick={() => this.closeCropper()} >취소</div>
-                  <div style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "40px", borderBottom: "1.5px solid #FF0000", border: "1px splid black", cursor: "pointer" }} onClick={() => this.crop()} >등록하기</div>
-                </div>
-              </div>
-            </CropperDialog> : null}
-
-          {/* FORM */}
-          <InputBoard>
-            <SectionContainer display={step === 0 ? "block" : "none"}>
-              {/* THUMBNAIL */}
-              <ContentsBox>
-                <ThumbnailBox>
-                  <div className="title">{designImageText}<sup style={{ color: "red" }}>*</sup></div>
-                  <ImageBox imageURL={thumbnailURL == null ? noimg : thumbnailURL} />
-                  <div className="findThumbnailBox">
-                    <div className="findThumbnailBtn">
-                      <label className="findThumbnailText" htmlFor="file">찾아보기</label>
-                      <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/png, image/bmp, image/jpeg, image/jpg" />
-                    </div>
-                    <div className="thumbnailExplainText"> {designImageText}는 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
-                  </div>
-                </ThumbnailBox>
-                {/* TITLE */}
-                <TitleBox>
-                  <div className="title">제목<sup style={{ color: "red" }}>*</sup></div>
-                  <input onChange={this.onChangeValueTitle} onKeyDown={this.onKeyDownEnter}
-                    className="inputText" name="title" maxLength="100" placeholder="디자인의 제목을 입력해주세요. (100자 이내)" />
-                </TitleBox>
-                {/* EXPLANATION */}
-                <ExplainBox>
-                  <div className="title">디자인 설명</div>
-                  <textarea id="explainBox" onChange={this.onChangeValueExplanation} className="inputTextareaBox"
-                    maxLength="350" placeholder="디자인 설명을 입력해주세요. (350자 이내)" />
-                </ExplainBox>
-              </ContentsBox>
-            </SectionContainer>
-            {/* CATEGORY */}
-            <SectionContainer display={step === 1 ? "block" : "none"}>
-              <ContentsBox>
-                {this.props.category1.length > 0 ?
-                  <CategoryBox>
-                    <div className="additionalTitle">카테고리<sup style={{ color: "red" }}>*</sup></div>
-                    <CategoryDropDown
-                      selection
-                      ref="dropdown1"
-                      onChange={this.onChangeCategory1}
-                      options={this.props.category1}
-                      value={this.state.categoryLevel1}
-                      placeholder="카테고리를 선택해주세요(필수)"
-                    />
-                    <CategoryDropDown
-                      selection
-                      id="category2"
-                      ref="dropdown2"
-                      onChange={this.onChangeCategory2}
-                      options={this.props.category2[this.state.categoryLevel1 - 1] || emptyCategory}
-                      value={this.state.categoryLevel2}
-                      placeholder="카테고리를 선택해주세요(선택)"
-                    />
-                    {this.state.categoryLevel2==28?
-                    <CategoryDropDown
-                    selection
-                    id="category3"
-                    ref="dropdown3"
-                    onChange={this.onChangeCategory3}
-                    options={this.props.category3&&this.props.category3[category3Index] || emptyCategory}
-                    value={this.state.categoryLevel3}
-                    placeholder="카테고리를 선택해주세요(선택)"
-                  />
-                  :null
-                    }
-                  </CategoryBox>
-                  : <p>카테고리를 가져오고 있습니다.</p>}
-                    <section style={{ display: step === 1 ? "block" : "none" }} >
-                    {
-                      this.state.categoryLevel3!=null?
-                        <IsProblemBox>
-                          <div className="additionalTitle"/>
-                          <CheckBox2 className="check" onChange={this.onCheckIsProblem} checked={this.state.is_problem ? true : false} type="checkbox" />
-                          <div className="check_label">문제 등록 기능을 사용합니다.</div>
-                        </IsProblemBox>
-                      :null
-                    }
-                    </section>
-                {/* INVITE MEMBER */}
-                <InviteMemberBox>
-                  <div className="additionalTitle">멤버 초대하기
-                  {/* <sup style={{ color: "red" }}>*</sup> */}
-                  </div>
-                  <div className="searchBox">
-                    {/* {this.state.alone ? undefined : <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />} */}
-                    <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />
-                  </div>
-                  <div className="tipTitle">TIP</div>
-                  <div className="tipDescription">
-                    함께 디자인을 만들어 갈 멤버를 초대해 주세요.<br />
-                    초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br />
-                    디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.</div>
-                </InviteMemberBox>
-                <div>
-                  {/* INVITED MEMBER */}
-                  <InviteMemberListBox>
-                    <div className="memberList">
-                      {this.state.members && this.state.members.length > 0 ?
-                        this.state.members.map((item, index) => {
-                          return (
-                            <div onClick={() => this.removeMember(item.user_id)} key={index}>
-                              <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
-                            </div>
-                          )
-                        }) : null}</div>
-                  </InviteMemberListBox>
-                  {/* LEAVE ME ALONE */}
-                  {/* <NoInviteMemberBox>
-                    <CheckBox2 onChange={this.LeaveMeAlone} checked={this.state.alone} />
-
-                    <span className="textLabel">멤버를 초대하지 않습니다.</span>
-                  </NoInviteMemberBox> */}
-                </div>
-                <HRline />
-                {/* LICENSE */}
-                <LicenseBox>
-                  <div className="additionalTitle">라이센스</div>
-                  <div className="licenseList">
-                    <div className="licenseItem"><CheckBox2 checked={this.state.license1} onChange={this.onCheckedLicense01} /><span className="textLabel">상업적으로 이용이 가능합니다.</span></div>
-                    <div className="licenseItem"><CheckBox2 checked={this.state.license2} onChange={this.onCheckedLicense02} /><span className="textLabel disabled">원작자를 표시합니다.</span></div>
-                    <div className="licenseItem"><CheckBox2 checked={this.state.license3} onChange={this.onCheckedLicense03} /><span className="textLabel">수정이 가능합니다.</span></div>
-                  </div>
-                </LicenseBox>
-              </ContentsBox>
-            </SectionContainer>
-
-            <SectionContainer display={step === 2 ? "block" : "none"}>
-
-              <ResetButtonWrapper
-                onClick={() => this.setState({ step: 2, type: "normal", is_project: 0, contents: [], steps: [], template: null })}>
-                작업취소하기<i className="undo icon" />
-              </ResetButtonWrapper>
-
-              {is_project === 0 ?
-                <React.Fragment>
-                  {/* edit mode */}
-                  {contents && contents.length > 0 ?
-                    (<React.Fragment>
-                      {contents.map(item => {
-                        return (<ControllerWrap key={item.order}>
-                          <div className="contentWrap">
-                            {item.type === "FILE" ?
-                              (<FileController
-                                item={item}
-                                name="source"
-                                initClick={this.state.click}
-                                getValue={this.onChangeFile}
-                                setController={this.setController} />)
-                              : null}
-                            {item.type === "TEXT" ?
-                              (<TextController
-                                item={item}
-                                name={item.name}
-                                initClick={this.state.click}
-                                getValue={(data) => this.onChangeValue(data, item.order)} />)
-                              : null}
-                            {item.type === "LINK" ?
-                              <LinkController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                              : null}
-
-                            {/* {item.type === "EMBED" ?
-                              (<EmbController />)
-                              : null} */}
-                          </div>
-                          <DelBtn
-                            type="button"
-                            className="editBtn"
-                            onClick={() => this.onDelete(item.order)}>
-                            <i className="trash alternate icon large" />
-                          </DelBtn>
-                          {/* {content.length - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={() => this.moveUpItem(item.order)}><i className="angle up alternate icon large" /></UpBtn> : null} */}
-                          {/* {content.length - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={() => this.moveDownItem(item.order)}><i className="angle down alternate icon large" /></DownBtn> : null} */}
-                        </ControllerWrap>)
-                      })}
-                      <AddContent getValue={this.onAddValue} order={contents.length} />
-                    </React.Fragment>)
-                    : <AddContent getValue={this.onAddValue} order={0} change={() => this.setState({ type: "grid", is_project: 1 })} />}
-                </React.Fragment>
-                : null}
-
-              {/* selected grid */}
-              {this.state.type === "grid" ?
-                /* first suggest design templete */
-                <DesignTemplateSelector>
-                  <div className="title">
-                    템플릿을 선택하시면 보다 편하게 작업을 시작하실 수 있습니다!
-                  </div>
-
-                  <div className="template-wrapper">
-                    {template &&
-                      template.length > 0 &&
-                      template.map(item =>
-                        <label
-                          className="element"
-                          key={item.type}
-                          onClick={async () => await this.setState({ template: item.type })}>
-                          {item.text}
-                          <DesignElement ><img alt="" src={item.img} /></DesignElement>
-                        </label>
-                      )}
-                    {/* <label
-                      className="element"
-                      onClick={async () => await this.setState({ template: "my-design" })}>
-                      <div>
-                        <input
-                          name="template"
-                          type="radio"
-                          value={"my-design"} />내 디자인에서 가져오기</div>
-                      <div>contents</div>
-                    </label>
-                      )} */}
-                  </div>
-                </DesignTemplateSelector>
-                : null}
-
-              {(this.state.type === "grid" && this.state.template != null && this.state.template !== "my-design")
-                ? <EditorWrapper>
-                  <div className="editor">
-                    <TemplateGridEditor
-                      selected={content => this.setState({ steps: content, is_project: 1 })}
-                      type={this.state.template} />
-                  </div>
-                  <div className="title">
-                    선택하신 템플릿으로 시작하시고 싶으시다면 아래에 완료 버튼을 클릭해주세요.
-                  </div>
-                </EditorWrapper>
-                : null}
-
-
-            </SectionContainer>
-
-            {/* buttons*/}
-            <div className="buttonBox">
-              <CustomButton
-                onClick={async () => {
-                  if (await confirm("등록 중인 내용이 저장되지 않습니다. 취소하시겠습니까?", "예", "아니오")) {
-                    window.history.go(-1)
-                  }
-                }}
-                isComplete={false}>
-                <BtnText>취소</BtnText>
-              </CustomButton>
-              {step === 0 && <React.Fragment>
-                <CustomButton
-                  onClick={this.state.basic ? this.gotoNextStep : this.checkInputForm}
-                  isComplete={this.state.basic}>
-                  <BtnText>다음</BtnText>
-                </CustomButton>
-              </React.Fragment>}
-              {step === 1 && <React.Fragment>
-                <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
-                  <BtnText>뒤로</BtnText>
-                </CustomButton>
-                <CustomButton
-                  onClick={this.state.additional ? this.gotoNextStep : this.checkInputForm}
-                  isComplete={this.state.additional}>
-                  <BtnText>다음</BtnText>
-                </CustomButton>
-              </React.Fragment>}
-              {step === 2 && <React.Fragment>
-                <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
-                  <BtnText>뒤로</BtnText>
-                </CustomButton>
-                <CustomButton
-                  // isComplete={((this.state.type === "normal" && this.state.content) || (this.state.type === "grid" && this.state.template))}
-                  // onClick={((this.state.type === "normal" && this.state.content) || (this.state.type === "grid" && this.state.template)) ? this.submit : this.checkInputForm}
-                  isComplete={this.state.type === "grid" && this.state.template == null ? false : true}
+            <div style={{ marginTop: "20px", display: "flex" }} >
+              <div style={{
+                marginLeft: "25px", marginRight: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500",
+                fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer"
+              }} onClick={() => this.closeCropper()} >취소</div>
+              <div style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "40px", borderBottom: "1.5px solid #FF0000", border: "1px splid black", cursor: "pointer" }} onClick={() => this.crop()} >등록하기</div>
+            </div>
+          </div>
+        </CropperDialog> : null}
+        <Wrapper>
+          <div className="navi_menu">
+            <div className="navi_header">디자인 등록하기</div>
+            <div className={`navi_label borderBottom ${this.state.step==0?"red":"black"}`} onClick={()=> this.setState({ step: 0 })}>{scrollmenu[0].txt}</div>
+            <div className={`navi_label borderBottom ${this.state.step==1?"red":"black"}`} onClick={()=> this.setState({ step: 1 })}>{scrollmenu[1].txt}</div>
+            <div className={`navi_label ${this.state.step==2?"red":"black"}`} onClick={()=> this.setState({ step: 2 })}>{scrollmenu[2].txt}</div>
+          </div>
+          <div className="vLine"/>
+          <div className="summary">
+             <DesignCard>
+               <img src={thumbnailURL == null ? noimg : thumbnailURL} className="thumbnail"/>
+               <div className="info">
+                 <div className="spaceBetween">
+                   <div className="title">디자인1</div>
+                   <div className="date">8일전</div>
+                 </div>
+                 <div className="designer">디자이너1</div>
+                 <div className="asset_wrapper">
+                   <img src={new_logo_view} className="asset_icon"/><div className="asset_text">0</div>
+                   <img src={new_logo_favorite} className="asset_icon"/><div className="asset_text">0</div>
+                   <img src={new_logo_share} className="asset_icon"/><div className="asset_text">0</div>
+                 </div>
+               </div>
+             </DesignCard>
+             <div className="completeButton"
                   onClick={this.submit}
-                >
-                  <BtnText>완료</BtnText>
-                </CustomButton>
-              </React.Fragment>}
+             >완성된 디자인 등록하기</div>
+          </div>
+          {
+            this.state.step==0&&
+            <React.Fragment>
+              <div className="board">
+                <div className="board_label">1. 대표 이미지 등록하기<sub className="sub marginRight2">*</sub>
+                     <QuestionGuide bubbleSize={584}>?
+                        <div className="messageBubble">
+                          디자이너님의 멋진 디자인을 보여주세요! <br/> 대표 이미지는 JPG/JPEG/PNG/BMP 파일로 등록하실 수 있어요!
+                        </div>
+                     </QuestionGuide>
+                     <label className="findThumbnailText" htmlFor="file">찾아보기</label>
+                     <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/png, image/bmp, image/jpeg, image/jpg" />
+                </div>
+                <div className="board_box"></div>
+                <div className="board_label">2. 디자인 이름<sub className="sub marginRight1">*</sub></div>
+                <div className="board_box">
+                      <InputText onChange={this.onChangeValueTitle} onKeyDown={this.onKeyDownEnter}
+                                 name="title" maxLength="100" placeholder="디자인의 제목을 입력해주세요. (100자 이내)" />
+                </div>
+                <div className="board_label">3. 디자인 설명<sub className="sub marginRight2">*</sub>
+                      {/* <QuestionGuide>?
+                        <div className="messageBubble">
+                          디자이너님의 멋진 디자인을 보여주세요! <br/> 대표 이미지는 JPG/JPEG/PNG/BMP 파일로 등록하실 수 있어요!
+                        </div>
+                      </QuestionGuide> */}
+                </div>
+                      <InputTextArea id="textBox" onChange={this.onChangeValueExplanation} 
+                                maxLength="350" placeholder="디자인 설명을 입력해주세요. (350자 이내)" />
+              </div>
+            </React.Fragment>
+          }
+          {
+            this.state.step==1&&
+            <React.Fragment>
+               <div className="board">
+                <div className="board_label">1. 카테고리<sub className="sub marginRight1" >*</sub>
+                <div className="flex">
+                  <CategoryDropDown
+                    selection
+                    ref="dropdown1"
+                    onChange={this.onChangeCategory1}
+                    options={this.props.category1}
+                    value={this.state.categoryLevel1}
+                    placeholder="카테고리를 선택해주세요"
+                  />
+                  <CategoryDropDown
+                    selection
+                    id="category2"
+                    ref="dropdown2"
+                    onChange={this.onChangeCategory2}
+                    options={this.props.category2[this.state.categoryLevel1 - 1] || emptyCategory}
+                    value={this.state.categoryLevel2}
+                    placeholder="카테고리를 선택해주세요"
+                  />
+                  {this.state.categoryLevel2==28?
+                  <CategoryDropDown
+                  selection
+                  id="category3"
+                  ref="dropdown3"
+                  onChange={this.onChangeCategory3}
+                  options={this.props.category3&&this.props.category3[category3Index] || emptyCategory}
+                  value={this.state.categoryLevel3}
+                  placeholder="카테고리를 선택해주세요"
+                  />:null}
+                </div>
+
+                </div>
+                <div className="board_box paddingLeft1">
+                {
+                  this.state.categoryLevel3!=null?
+                    <IsProblemBox>
+                      <CheckBox2 onChange={this.onCheckIsProblem} checked={this.state.is_problem ? true : false} type="checkbox" />
+                      <span className="textLabel">문제 등록 기능을 사용합니다.</span>
+                    </IsProblemBox>
+                  :null
+                }
+                </div> 
+                <div className="board_label">2. 멤버 초대하기
+                      <QuestionGuide bubbleSize={600}>
+                        ?
+                        <div className="messageBubble">
+                          함께 디자인을 만들어 갈 멤버를 초대해 주세요. <br/>
+                          초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br/> 
+                          디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.                        </div>
+                      </QuestionGuide>
+                </div>
+                <div className="board_box paddingLeft1">
+                     <div style={{width:"400px"}}>
+                     <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />
+                     </div>
+                </div>
+                <InviteMemberListBox>
+                  <div className="memberList">
+                    {this.state.members && this.state.members.length > 0 ?
+                      this.state.members.map((item, index) => {
+                        return (
+                          <div onClick={() => this.removeMember(item.user_id)} key={index}>
+                            <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
+                          </div>
+                        )
+                      }) : null}</div>
+                </InviteMemberListBox>
+                <div className="board_label">3. 라이센스</div>
+                <div className="board_box paddingLeft1">
+                     <div className="licenseItem"><CheckBox2 checked={this.state.license1} onChange={this.onCheckedLicense01} /><span className="textLabel">상업적으로 이용이 가능합니다.</span></div>
+                     <div className="licenseItem"><CheckBox2 checked={this.state.license2} onChange={this.onCheckedLicense02} /><span className="textLabel disabled">원작자를 표시합니다.</span></div>
+                     <div className="licenseItem"><CheckBox2 checked={this.state.license3} onChange={this.onCheckedLicense03} /><span className="textLabel">수정이 가능합니다.</span></div>
+                </div>
+              </div>
+            </React.Fragment>
+          }
+          {
+            this.state.step==2&&
+            <React.Fragment>
+              <div className="board">
+          <ResetButtonWrapper
+            onClick={() => this.setState({ step: 2, type: "normal", is_project: 0, contents: [], steps: [], template: null })}>
+            작업취소하기<i className="undo icon" />
+          </ResetButtonWrapper>
+
+          {is_project === 0 ?
+            <React.Fragment>
+              {contents && contents.length > 0 ?
+                (<React.Fragment>
+                  {contents.map(item => {
+                    return (<ControllerWrap key={item.order}>
+                      <div className="contentWrap">
+                        {item.type === "FILE" ?
+                          (<FileController
+                            item={item}
+                            name="source"
+                            initClick={this.state.click}
+                            getValue={this.onChangeFile}
+                            setController={this.setController} />)
+                          : null}
+                        {item.type === "TEXT" ?
+                          (<TextController
+                            item={item}
+                            name={item.name}
+                            initClick={this.state.click}
+                            getValue={(data) => this.onChangeValue(data, item.order)} />)
+                          : null}
+                        {item.type === "LINK" ?
+                          <LinkController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                          : null}
+                      </div>
+                      <DelBtn
+                        type="button"
+                        className="editBtn"
+                        onClick={() => this.onDelete(item.order)}>
+                        <i className="trash alternate icon large" />
+                      </DelBtn>
+                    </ControllerWrap>)
+                  })}
+                  <AddContent getValue={this.onAddValue} order={contents.length} />
+                </React.Fragment>)
+                : <AddContent getValue={this.onAddValue} order={0} change={() => this.setState({ type: "grid", is_project: 1 })} />}
+            </React.Fragment>
+            : null}
+            {this.state.type === "grid" ?
+              <DesignTemplateSelector>
+                <div className="title">
+                  템플릿을 선택하시면 보다 편하게 작업을 시작하실 수 있습니다!
+                </div>
+
+                <div className="template-wrapper">
+                  {template &&
+                    template.length > 0 &&
+                    template.map(item =>
+                      <label
+                        className="element"
+                        key={item.type}
+                        onClick={async () => await this.setState({ template: item.type })}>
+                        {item.text}
+                        <DesignElement ><img alt="" src={item.img} /></DesignElement>
+                      </label>
+                    )}
+                </div>
+              </DesignTemplateSelector>
+              : null}
+
+            {(this.state.type === "grid" && this.state.template != null && this.state.template !== "my-design")
+              ? <EditorWrapper>
+                <div className="editor">
+                  <TemplateGridEditor
+                    selected={content => this.setState({ steps: content, is_project: 1 })}
+                    type={this.state.template} />
+                </div>
+                <div className="title">
+                  선택하신 템플릿으로 시작하시고 싶으시다면 완성된 디자인 등록하기 버튼을 클릭해주세요.
+                </div>
+              </EditorWrapper>
+            : null}
             </div>
-          </InputBoard>
-        </MainSection>
-      </div >)
+            </React.Fragment>
+          }
+        </Wrapper>
+      </React.Fragment>
+    )
   };
 }
 export default CreateDesign;
 
 
 const ControllerWrap = styled.div`
-  // margin: 20px 0;
   position: relative;
   text-align: center;
-
-  border: 1px dashed ${osdcss.color.grayScale.scale6};
+  border: 1px solid #707070;
+  padding:25px;
+  margin-bottom:30px;
+  .innerBox {
+    display:flex;
+    justify-content:space-between;
+  }
   & .initWrap {
     & > ul {
       display: flex;
@@ -1546,67 +1249,18 @@ const ControllerWrap = styled.div`
       & > span { color: ${osdcss.color.grayScale.scale6}; }
     }
   }
-  .innerBox {
-    display: flex;
-    height: 45px;
-    align-items: center;
-    justify-content: center;
-    list-style: none;
-  }
+
 `;
-const NewController = styled.li`
-  width: max-content;
-  height: 29px;
-  color: #FF0000;
-  margin-left: 75px;
-  &.first {
-    margin-left: 0px;
-  }
-  &.complecated {
-    display: flex;
-    flex-direction: row;
-    .txt{
-      // border-bottom: 1.5px solid #FF0000;
-    }
-  }
-  &.txt{
-    border-bottom: 1.5px solid #FF0000;
-  }
-  line-height: 29px;
-  padding-bottom: 1.5px;
-  font-size: 20px;
-  font-weight: 500;
-  font-family: Noto Sans KR;
-  text-align: center;
-  cursor: pointer;
+const NewController = styled.div`
+  font-family:Spoqa Han Sans Neo;
+  font-weight:500;
+  font-size:28px;
+  color:black;
+  height:40px;
+  display:flex;
+  align-items:center;
+  cursor:pointer;
 `;
-//const Tip = styled.div`
-//  .wrapper {
-//    z-index: 900;
-//    position: absolute;
-//    display: flex;
-//    visibility: hidden;
-//  }
-//  .tip-txt {
-//    display: none;
-//    width: max-content;
-//    background-color: #707070;
-//    color: #EFEFEF;
-//    text-align: center;
-//    border-radius: 6px;
-//    padding: 10px 5px;
-//    margin-top: -5px;
-//    font-size: 14px;
-//  }
-//  :hover {
-//    .wrapper {
-//        visibility: visible;
-//    }
-//    .tip-txt {
-//        display: block;
-//    }
-//  }
-//`;
 
 class AddContent extends Component {
   constructor(props) {
@@ -1663,3 +1317,1049 @@ class AddContent extends Component {
     );
   }
 };
+
+
+
+// const MainBanner = styled.div`
+//   width: 100%;
+//   height:140px;
+//   display: flex;
+//   justify-content: center;
+//   .title{
+//     width: 196px;
+//     height: 37px;
+//     margin-top: 45px;
+//     font-size: 25px;
+//     font-family: Noto Sans KR;
+//     color: #707070;
+//     line-height: 37px;
+//     font-weight: 700;
+//   }
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//     align-items: flex-end;
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//     align-items: flex-end;
+//   }
+// `;
+// const MainSection = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//     flex-direction: column;
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//     flex-direction: column;
+//   }
+// `;
+// const NavMenu = styled.div`
+//   min-width: 433px;
+//   height: 300px;
+//   position: relative;
+//   .menuBox {
+//     width: 325px;
+//     position: fixed;
+//     top: 197px;
+//     margin-left: 64px;    
+//     background-color: #F5F4F4;
+//     border-radius: 5px;
+//   }
+//   .menuItem{
+//     height: 62px;
+//     padding-left: 36px;
+//     padding-top: 18px;
+//     lineHeight: 29px;
+//     border-bottom: ${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
+//     cursor: pointer;
+//   }
+//   .deleteText{
+//     font-family: Noto Sans KR;
+//     font-size: 20px;
+//     font-family: Noto Sans KR;
+//     font-weight: 500;
+//     text-align: left;
+//     color: #FF0000;
+//     border-bottom: ${props => props.borderBottom};
+//   }
+
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//     display:flex;
+//     justify-content:center;
+//     align-items:center;
+//     .menuBox{
+//       margin-left:0px;   
+//       position: static; 
+//     }
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//     display:flex;
+//     justify-content:center;
+//     align-items:center;
+//     .menuBox{
+//       margin-left:0px;  
+//       position:static;  
+
+//     }
+//   }
+// `;
+// const MenuItem = styled.div`
+//     height:62px;
+//     padding-left:36px;
+//     padding-top:18px;
+//     lineHeight:29px;
+//     border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
+//     cursor:pointer;
+//     .MenuText {
+//       font-size:20px;
+//       font-family:Noto Sans KR;
+//       font-weight:300;
+//       text-align:left;
+//       color: ${props => props.selected ? "#FF0000" : "#707070"};
+//       border-bottom:${props => props.borderBottom};
+//     }
+// `;
+// const InputBoard = styled.div`
+//   // width: ${window.innerWidth > 1920 ? 1422 : window.innerWidth - 500}px;
+//   width:77%;
+//   padding-bottom:100px;
+//   margin-bottom:100px;
+//   position:relative;
+//   padding-top:45px;
+//   border-radius:5px;
+//   border:8px solid #F5F4F4;
+//   .buttonBox{
+//     width: max-content;
+//     display: flex;
+//     justify-content:flex-end;
+//     margin-top: 21px;
+//     margin-left: auto;
+//     padding:10px 0px 10px 10px;
+//     position:absolute;
+//     right:0px;
+//     bottom:0px;
+//   }
+
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//     width:100%;
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//     width:100%;
+//   }
+// `;
+// const CustomButton = styled.div`
+//   cursor: pointer;
+//   width: 104.5px;
+//   height: 44px;
+//   border-radius: 5px;
+//   background-color: ${props => props.isComplete ? "#FF0000" : "#707070"};
+//   padding-top: 6px;
+//   padding-left: 15px;
+//   margin-right: 25px;
+// `;
+// const HRline = styled.div`
+//   width: 95%;
+//   margin-top: 60px;
+//   margin-bottom: 67px;
+//   border-bottom: 5px solid #F5F4F4;
+// `;
+// const BtnText = styled.p`
+//   width: 74px;
+//   padding: 0px;
+//   font-familty: Noto Sans KR;
+//   font-weight: 500;
+//   line-height: 29px;
+//   text-align: center;
+//   font-size: 20px;
+//   color: #FFFFFF;
+//   cursor: pointer;
+// `;
+// const PeerBox = styled.div`
+//   display: flex;
+//   margin-right: 25px;
+//   margin-bottom: 10px;
+//   .nameLabel{
+//     width: max-content;
+//     height: 29px;
+//     margin-top: 1px;
+//     margin-left: 10px;
+//     font-size: 20px;
+//     font-weight: 500;
+//     font-family: Noto Sans KR;
+//     color: #707070;
+//     text-align: left;
+//     line-height: 29px;
+//     white-space: nowrap;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//   }
+//   .closeButton{
+//     margin-top: 7px;
+//     margin-left: 14px;
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//     margin-right: 15px;
+//   }
+// `;
+// const PeerIcon = styled.div`
+//   width: 30px;
+//   height: 30px;
+//   border-radius: 50%;
+//   background: ${props => `url(${props.imageURL})`};
+//   background-size: cover;
+//   background-position: center center;
+// `;
+// //---sectionbasic---//
+// const ContentsBox = styled.div`
+//   padding-left: 47px;
+//   display: flex;
+//   flex-direction: column;
+//   .title {
+//     min-width: 100px;
+//     height: 29px;
+//     text-align: left;
+//     font-size: 20px;
+//     font-weight: 500;
+//     line-height: 29px;
+//     color: #707070;
+//   }
+//   .additionalTitle{
+//     min-width: 167px;
+//     height: 29px;
+//     text-align: left;
+//     font-size: 20px;
+//     font-weight: 500;
+//     line-height: 29px;
+//     color: #707070;
+//   }
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//     justify-content: center;
+//     .title{
+//       margin-bottom: 10px;
+//     }
+//     .additionalTitle{
+//       margin-bottom: 10px;
+//     }
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//     .title{
+//       margin-bottom: 10px;
+//     }
+//     .additionalTitle {
+//       margin-bottom: 10px;
+//     }
+//   }
+// `;
+// const IsProblemBox = styled.div`
+//   margin-top:10px;
+//   display:flex;
+//   justify-content:flex-start;
+//   align-items:flex-start;
+//   .check{
+//   }
+//   .check_label{
+//     padding-top:5px;
+//   }
+// `
+// const ImageBox = styled.div`
+//   margin-left: 67px;
+//   min-width: 210px;
+//   min-height: 210px;
+//   max-width: 210px;
+//   max-height: 210px;
+//   border-radius:5px;
+//   background: ${props => `url(${props.imageURL})`};
+//   background-size:cover;
+//   background-position:center center;
+// `;
+// const ThumbnailBox = styled.div`
+//   display:flex;
+//   justify-content:flex-start;
+//   flex-direction:row;
+//   .explainBox{
+//     margin-left:54px;
+//     margin-top:100px;
+//   }
+//   .findThumbnailBtn{
+//     width:63px;
+//     height:25px;
+//     cursor:pointer;
+//   }
+//   .findThumbnailText{
+//     font-family:Noto Sans KR;
+//     font-size:17px;
+//     font-weight:500;
+//     text-align:left;
+//     line-height:25px;
+//     color:#FF0000;
+//     border-bottom:1.5px solid #FF000;
+//     cursor:pointer;
+//   }
+//   .findThumbnailBox{
+//     margin-left:54px;
+//     margin-top:100px;
+//     .thumbnailExplainText{
+//       width:341px;
+//       height:45px;
+//       margin-top:11px;
+//       font-weight:300;
+//       font-size:14px;
+//       color:#707070;
+//       line-height:20px;
+//       text-align:left;
+//     }
+//   }
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//     flex-direction:column;
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//     flex-direction:column;
+//   }
+// `;
+// const TitleBox = styled.div`
+//   display:flex;
+//     margin-top:96px;
+//     justify-content:flex-start;
+//     flex-direction:row;
+//     .inputText{
+//       width:505px;
+//       height:56px;
+//       margin-left:67px;
+//       padding-left:22px;
+//       padding-right:22px;
+//       font-size:20px;
+//       font-weight:300;
+//       font-family:Noto Sans KR;
+//       line-height:29px;
+//       color:#707070;
+//       border:none;
+//       border-radius:5px;
+//       outline:none;
+//       background-color:#EFEFEF;
+//     }
+//     @media only screen and (min-width : 780px) and (max-width:1440px) {
+//       flex-direction:column;
+//       .inputText{
+//         margin-left:0px;
+//       }
+
+//     }
+//     @media only screen and (min-width : 360px) and (max-width:780px) {
+//       flex-direction:column;
+//       .inputText{
+//         margin-left:0px;
+//         width:80%;
+//       }
+//     }
+// `;
+// const ExplainBox = styled.div`
+//   margin-top: 103px;
+//   display: flex;
+//   justify-content:flex-start;
+//   flex-direction:row;
+//   .inputTextareaBox {
+//     width: 717px;
+//     height: 244px;
+//     margin-left: 70px;
+//     padding: 22px 26px 34px 32px;
+//     font-family: Noto Sans KR;
+//     font-size: 20px;
+//     font-weight: 300;
+//     color: #707070;
+//     line-height: 35px;
+//     text-align: left;
+//     outline: none;
+//     border: none;
+//     border-radius: 5px;
+//     resize: none;
+//     background-color: #EFEFEF;
+//   }
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//     flex-direction:column;
+//     .inputTextareaBox {
+//       margin-left: 0px;
+//     }
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//     flex-direction:column;
+
+//     .inputTextareaBox {
+//       width:90%;
+//       margin-left: 0px;
+//     }
+//   }
+// `;
+// //---additional--//
+// const CategoryBox = styled.div`
+//   width:100%;
+//   display:flex;
+//   justify-contant:flex-start;
+//   flex-direction:row;
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//     // flex-direction:column;
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//     flex-direction:column;
+//   }
+// `;
+// const CategoryDropDown = styled(Dropdown)`
+//   width:380px;
+//   height:56px;     
+//   border-radius:5px;
+//   font-size:20px;
+//   background-color:#EFEFEF !important;
+//   margin-right:30px;
+//   display:flex;
+//   align-items:center;
+//   .default{
+//     font-size:16px;
+//     margin-top:0px;
+//   }
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//     margin-top:10px;
+//     width:90%;
+//   }
+// `;
+// const InviteMemberBox = styled.div`
+//   display:flex;
+//   justify-content:flex-start;
+//   flex-direction:row;
+//   margin-top:120px;
+//   .searchBox{
+//   width:645px;
+//   height:56px;
+//   font-size:20px;
+//   font-weight:500;
+//   line-height:29px;
+//   color:#707070;
+//   border-radius:5px;
+//   background-color:#EFEFEF;
+//   }
+//   .tipTitle{
+//   width:27px;
+//   height:25px;
+//   margin-left:20px;
+//   font-size:17px;
+//   font-weight:500;
+//   line-height:25px;
+//   text-align:left;
+//   color:#FF0000;
+//   }
+//   .tipDescription{  
+//   margin-left:17px;
+//   font-size:16px;
+//   font-weight:100;
+//   font-family:Noto Sans KR;
+//   text-align:left;
+//   line-height:25px;
+//   color:#707070;
+//   }      
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//   flex-direction:column;
+//   .searchBox{
+//   }
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//   flex-direction:column;
+//   .searchBox{
+//   width:92%;
+//   }
+//   }
+// `;
+// const InviteMemberListBox = styled.div`
+//   margin-top:20px;
+//   margin-left:167px;
+//   width:645px;
+//   .memberList{
+//   display:flex;
+//   flex-wrap:wrap;
+//   flex-direction:row;
+//   }
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//   margin-left:0px;
+//   width:645px;
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//   margin-left:0px;
+//   width:92%;
+//   }
+// `;
+// // const NoInviteMemberBox = styled.div`
+// //   margin-left: 167px;
+// //   margin-top: 30px;
+// //   font-size: 20px;
+// //   font-weight: 500;
+// //   font-family: Noto Sans KR;
+// //   color: #707070;
+// //   .textLabel {
+// //     margin-left: 35px;
+// //     vertical-align: top;
+// //   }
+// // `;
+// // const CheckBox = styled.input.attrs({ type: 'checkbox' })`
+// //   width: 25px;
+// //   height: 25px;
+// //   margin-right: 17px;
+// //   background-color: #EFEFEF !important;
+// //   border: 1px solid #707070 !important;
+// //   border-radius: 5px !important;  
+// // `;
+// const LicenseBox = styled.div`
+//   display: flex;
+//   margin-top: 22px;
+//   .licenseList {
+//   width: 645px;
+//   height: 143px;
+//   .licenseItem {
+//   margin-bottom: 30px;
+//   color: #707070;
+//   font-size: 20px;
+//   font-weight: 500;
+//   font-family: Noto Sans KR;
+//   .textLabel {
+//   margin-left: 35px;
+//   vertical-align: top;
+//   }
+//   .disabled{
+//     color:#9e9e9e;
+//   }
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//   flex-direction:column;
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//   flex-direction:column;
+//   }
+// `;
+// const DelBtn = styled.button`
+//   display: none;
+//   position: absolute;
+//   top: 0;
+//   left: 95%;
+//   transform: translate(-50%, -50%);
+//   border: 0;
+//   padding: 0;
+//   width: 45px;
+//   height: 45px;
+//   border-radius: 25px;
+//   line-height: 25px;
+//   box-sizing: border-box;
+//   font-size: 12px;
+//   background-color: ${osdcss.color.main.basic};
+//   color: white;
+//   text-align: center;
+//   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+//   outline: 0;
+//   i.icon {
+//     margin: 0;
+//   }
+//   &:focus .subMenu {
+//     display: block;
+//   }
+// `;
+// const SectionContainer = styled.section`
+//   display: ${props => props.display};
+//   // width: ${props => props.width || "100%"};
+//   // *{border:1px solid black;}
+// `;
+// const CropperDialog = styled(Modal)`
+//   max-width: ${props => props.ratio < 1.0 ? 450 : 650}px;
+//   // height: ${props => props.ratio < 1.0 ? 650 : 450}px;
+//   height: max-content;
+//   padding:20px;
+//   border-radius: 5px;
+//   background-color: #FFFFFF;
+//   box-shadow: 0px 3px 6px #FF0000;
+//   .imagebox{
+
+//   }
+//   .edit-step-name-button-container {
+//     display: flex;
+//     width: 576px;
+//     margin-left: auto;
+//     margin-right: 75px;
+//     margin-top: 38px;
+//   }
+// `;
+// // content form, templete selector
+// const DesignElement = styled.div`
+//   *{
+//     cursor:pointer;
+//   }
+//   position: relative;
+//   cursor: pointer;
+//   color: white;
+//   font-size: 20px;
+//   font-family: "Noto Sans KR";
+//   z-index: 700;
+//   width: 300px;
+//   height: 150px;
+//   border-radius: 15px;
+//   // background-size: cover;
+//   img{
+//     max-width: 100%;
+//     max-height: 100%;
+//     // background-repeat: no-repeat;
+//     background-position: center center;
+//     background-image: url(${props => props.img});
+//   }
+  
+//   .cover {
+//     // cursor: default;
+//     z-index: 701;
+//     position: absolute;
+//     border-radius: 15px;
+//     background-image: linear-gradient(180deg, rgba(255,255,255,0) 60%, rgba(32,32,32, 0.7)100%); 
+//     width: 330px;
+//     height: 330px;
+//   }
+
+//   .innerbox {
+//     z-index: 703;
+//     position: absolute;
+//     width: 274.08px;
+//     color: #FFFFFF;
+//     line-height: 40px;
+//     height: 35px;
+//     font-family: Noto Sans KR;
+//     margin-left: 25px;
+//     margin-top: 201px;
+//     .design-title {
+//       font-size: 20px;
+//       font-weight: 700;
+//       text-shadow:2px 2px 6px gray;
+//       display: flex;
+//       justify-content: space-between;
+//     }
+//     .update-time { 
+//       margin-top: 5px;
+//       font-weight: 300;
+//       border: 1px solid red;
+//       width: max-content;
+//       height: 25px;
+//       font-size: 17px;
+//       font-family: Noto Sans KR;
+//       text-shadow:2px 2px 6px gray;
+//       line-height: 25px;
+//       text-align: right;
+//       // cursor: default;
+//     }
+//     .user-name {
+//       font-size: 20px;
+//       font-weight: 300;
+//       text-shadow:2px 2px 6px gray;
+//       // cursor: default;
+//     }  
+//     .user-update-wrapper {
+//       width: 285px;
+//       display: flex;
+//       justify-content: space-between;
+//     }
+//   }
+
+//   .counter {
+//     z-index: 703;
+//     position: absolute;
+//     left: 24.92px;
+//     top: 286px;
+//     display: flex;
+//     justify-content: space-start;
+//     width: 291px;
+//     height: 22px;
+//     text-align: left;
+//     line-height: 40px;
+//     font-size: 15px;
+//     font-weight: 500;
+//     align-items: center;
+//   }
+//   .view {
+//     z-index: 703;
+//     margin-right: 4.25px;
+//   }
+//   .view-count {
+//     z-index: 703;
+//     margin-right: 6px;
+//     // cursor: default;
+//   }
+//   .like {
+//     z-index: 703;
+//     margin-right: 4px;
+//     img{
+//       width: 13px;
+//       height: 13px;
+//     }
+//   } 
+//   .like-count {
+//     z-index: 703;
+//     margin-right: 6px;
+//     // cursor: default;
+//   }
+//   .fork {
+//     z-index: 703;
+//     margin-right: 4px;
+//     img {
+//       width: 22px;
+//       height: 11px;
+//     }
+//   }
+//   .fork-count {
+//     z-index: 703;
+//     margin-right: 0px;
+//     // cursor: default;
+//   }
+// `;
+// const DesignTemplateSelector = styled.div`
+//   .title {
+//     width: max-content;
+//     margin: auto;
+//     color: #707070;
+//     padding: 10px 5px;
+//     font-size: 2rem;
+//     font-weight: 300;
+//     line-height: 2rem;
+//   }
+//   .template-wrapper {
+//     // width: 450px;
+//     display: flex;
+//     justify-content:center;
+//     // flex-direction: row;
+//     overflow: auto;
+//   }
+//   .element {
+//     min-width: 150px;
+//     margin: 5px;
+//     border: 2px solid #EFEFEF;
+//     padding: 5px;
+//     :hover{
+//       border: 2px solid #777777;
+//     }
+//   }
+// `;
+// const EditorWrapper = styled.div`
+//   .title {
+//     width: max-content;
+//     margin: auto;
+//     color: #707070;
+//     padding: 10px 5px;
+//     font-size: 2rem;
+//     font-weight: 300;
+//     line-height: 2rem;
+//   }
+//   .editor{
+//     opacity: .75;
+//     overflow: auto;
+//   }
+// `;
+
+
+
+// <div>
+
+// <MainBanner>
+//   <div className="title">디자인 등록하기</div>
+// </MainBanner>
+
+// <MainSection>
+
+//   {this.state.loading ?
+//     <Loading /> : null}
+
+//   <NavMenu>
+//     <div className="menuBox">
+//       <MenuItem
+//         selected={this.state.step === 0}
+//         onClick={() =>
+//           this.setState({ step: 0 })}
+//         borderBottom={false}>
+//         <div className="MenuText">
+//           {scrollmenu[0].txt}
+//         </div>
+//       </MenuItem>
+
+//       <MenuItem
+//         selected={this.state.step === 1}
+//         borderBottom={false}
+//         onClick={() =>
+//           this.state.basic ?
+//             this.setState({ step: 1 }) :
+//             alert("기본 정보의 필수항목(*)을 입력하셔야 합니다.")}
+//       >
+//         <div className="MenuText">
+//           {scrollmenu[1].txt}</div>
+//       </MenuItem>
+
+//       <MenuItem
+//         selected={this.state.step === 2}
+//         borderBottom={false}
+//         onClick={() =>
+//           this.state.additional ?
+//             this.setState({ step: 2 }) :
+//             alert("부가 정보의 필수항목(*)을 입력하셔야 합니다.")}
+//       >
+//         <div className="MenuText">
+//           {scrollmenu[2].txt}</div>
+//       </MenuItem>
+
+//     </div>
+//   </NavMenu>
+
+//   {this.state.cropper ?
+//     <CropperDialog ratio={this.state.ratio} onKeyDown={null} open={this.state.cropper} onClose={null}>
+//       <div onClick={this.closeCropper} style={{ position: "absolute", width: "max-content", top: "10px", right: "15px" }}>
+//         <Cross angle={45} color={"#000000"} weight={2} width={32} height={32} />
+//       </div>
+//       <div style={{ width: "max-content", height: "20px", lineHeight: "20px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "left", marginTop: "45px", marginLeft: "75px" }}>{designImageText} 등록</div>
+//       <div style={{ width: "max-content", height: "15px", lineHeight: "15px", color: "#FF0000", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>[!]등록하신 {designImageText}가 정사각형이 아닙니다.</div>
+//       <div style={{ width: "max-content", height: "30px", lineHeight: "15px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>아래의 이미지에서 {designImageText}로 등록하고자하는 영역을 <br /> 조절하여 등록하기를 클릭하시면 {designImageText}가 등록됩니다.</div>
+//       <div className="imagebox">
+//         <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "20px", marginBottom: "20px", width: this.state.ratio > 1.0 ? "370px" : "240px", height: "max-content" }}>
+//           <ReactCrop
+//             src={this.state.thumbnail} crop={this.state.crop}
+//             onImageLoaded={this.onImageLoaded} onComplete={this.onCropComplete} onChange={this.onCropChange} />
+//         </div>
+//         <div style={{ marginTop: "20px", display: "flex" }} >
+//           <div style={{
+//             marginLeft: "25px", marginRight: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500",
+//             fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer"
+//           }} onClick={() => this.closeCropper()} >취소</div>
+//           <div style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "40px", borderBottom: "1.5px solid #FF0000", border: "1px splid black", cursor: "pointer" }} onClick={() => this.crop()} >등록하기</div>
+//         </div>
+//       </div>
+//     </CropperDialog> : null}
+
+//   <InputBoard>
+//     <SectionContainer display={step === 0 ? "block" : "none"}>
+//       <ContentsBox>
+//         <ThumbnailBox>
+//           <div className="title">{designImageText}<sup style={{ color: "red" }}>*</sup></div>
+//           <ImageBox imageURL={thumbnailURL == null ? noimg : thumbnailURL} />
+//           <div className="findThumbnailBox">
+//             <div className="findThumbnailBtn">
+//               <label className="findThumbnailText" htmlFor="file">찾아보기</label>
+//               <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/png, image/bmp, image/jpeg, image/jpg" />
+//             </div>
+//             <div className="thumbnailExplainText"> {designImageText}는 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+//           </div>
+//         </ThumbnailBox>
+//         <TitleBox>
+//           <div className="title">제목<sup style={{ color: "red" }}>*</sup></div>
+//           <input onChange={this.onChangeValueTitle} onKeyDown={this.onKeyDownEnter}
+//             className="inputText" name="title" maxLength="100" placeholder="디자인의 제목을 입력해주세요. (100자 이내)" />
+//         </TitleBox>
+//         <ExplainBox>
+//           <div className="title">디자인 설명</div>
+//           <textarea id="explainBox" onChange={this.onChangeValueExplanation} className="inputTextareaBox"
+//             maxLength="350" placeholder="디자인 설명을 입력해주세요. (350자 이내)" />
+//         </ExplainBox>
+//       </ContentsBox>
+//     </SectionContainer>
+//     <SectionContainer display={step === 1 ? "block" : "none"}>
+//       <ContentsBox>
+//         {this.props.category1.length > 0 ?
+//           <CategoryBox>
+//             <div className="additionalTitle">카테고리<sup style={{ color: "red" }}>*</sup></div>
+//             <CategoryDropDown
+//               selection
+//               ref="dropdown1"
+//               onChange={this.onChangeCategory1}
+//               options={this.props.category1}
+//               value={this.state.categoryLevel1}
+//               placeholder="카테고리를 선택해주세요(필수)"
+//             />
+//             <CategoryDropDown
+//               selection
+//               id="category2"
+//               ref="dropdown2"
+//               onChange={this.onChangeCategory2}
+//               options={this.props.category2[this.state.categoryLevel1 - 1] || emptyCategory}
+//               value={this.state.categoryLevel2}
+//               placeholder="카테고리를 선택해주세요(선택)"
+//             />
+//             {this.state.categoryLevel2==28?
+//             <CategoryDropDown
+//             selection
+//             id="category3"
+//             ref="dropdown3"
+//             onChange={this.onChangeCategory3}
+//             options={this.props.category3&&this.props.category3[category3Index] || emptyCategory}
+//             value={this.state.categoryLevel3}
+//             placeholder="카테고리를 선택해주세요(선택)"
+//           />
+//           :null
+//             }
+//           </CategoryBox>
+//           : <p>카테고리를 가져오고 있습니다.</p>}
+//             <section style={{ display: step === 1 ? "block" : "none" }} >
+//             {
+//               this.state.categoryLevel3!=null?
+//                 <IsProblemBox>
+//                   <div className="additionalTitle"/>
+//                   <CheckBox2 className="check" onChange={this.onCheckIsProblem} checked={this.state.is_problem ? true : false} type="checkbox" />
+//                   <div className="check_label">문제 등록 기능을 사용합니다.</div>
+//                 </IsProblemBox>
+//               :null
+//             }
+//             </section>
+//         <InviteMemberBox>
+//           <div className="additionalTitle">멤버 초대하기
+//           </div>
+//           <div className="searchBox">
+//             <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />
+//           </div>
+//           <div className="tipTitle">TIP</div>
+//           <div className="tipDescription">
+//             함께 디자인을 만들어 갈 멤버를 초대해 주세요.<br />
+//             초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br />
+//             디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.</div>
+//         </InviteMemberBox>
+//         <div>
+//           <InviteMemberListBox>
+//             <div className="memberList">
+//               {this.state.members && this.state.members.length > 0 ?
+//                 this.state.members.map((item, index) => {
+//                   return (
+//                     <div onClick={() => this.removeMember(item.user_id)} key={index}>
+//                       <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
+//                     </div>
+//                   )
+//                 }) : null}</div>
+//           </InviteMemberListBox>
+//         </div>
+//         <HRline />
+//         <LicenseBox>
+//           <div className="additionalTitle">라이센스</div>
+//           <div className="licenseList">
+//             <div className="licenseItem"><CheckBox2 checked={this.state.license1} onChange={this.onCheckedLicense01} /><span className="textLabel">상업적으로 이용이 가능합니다.</span></div>
+//             <div className="licenseItem"><CheckBox2 checked={this.state.license2} onChange={this.onCheckedLicense02} /><span className="textLabel disabled">원작자를 표시합니다.</span></div>
+//             <div className="licenseItem"><CheckBox2 checked={this.state.license3} onChange={this.onCheckedLicense03} /><span className="textLabel">수정이 가능합니다.</span></div>
+//           </div>
+//         </LicenseBox>
+//       </ContentsBox>
+//     </SectionContainer>
+
+//     <SectionContainer display={step === 2 ? "block" : "none"}>
+
+//       <ResetButtonWrapper
+//         onClick={() => this.setState({ step: 2, type: "normal", is_project: 0, contents: [], steps: [], template: null })}>
+//         작업취소하기<i className="undo icon" />
+//       </ResetButtonWrapper>
+
+//       {is_project === 0 ?
+//         <React.Fragment>
+//           {contents && contents.length > 0 ?
+//             (<React.Fragment>
+//               {contents.map(item => {
+//                 return (<ControllerWrap key={item.order}>
+//                   <div className="contentWrap">
+//                     {item.type === "FILE" ?
+//                       (<FileController
+//                         item={item}
+//                         name="source"
+//                         initClick={this.state.click}
+//                         getValue={this.onChangeFile}
+//                         setController={this.setController} />)
+//                       : null}
+//                     {item.type === "TEXT" ?
+//                       (<TextController
+//                         item={item}
+//                         name={item.name}
+//                         initClick={this.state.click}
+//                         getValue={(data) => this.onChangeValue(data, item.order)} />)
+//                       : null}
+//                     {item.type === "LINK" ?
+//                       <LinkController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+//                       : null}
+//                   </div>
+//                   <DelBtn
+//                     type="button"
+//                     className="editBtn"
+//                     onClick={() => this.onDelete(item.order)}>
+//                     <i className="trash alternate icon large" />
+//                   </DelBtn>
+//                 </ControllerWrap>)
+//               })}
+//               <AddContent getValue={this.onAddValue} order={contents.length} />
+//             </React.Fragment>)
+//             : <AddContent getValue={this.onAddValue} order={0} change={() => this.setState({ type: "grid", is_project: 1 })} />}
+//         </React.Fragment>
+//         : null}
+//       {this.state.type === "grid" ?
+//         <DesignTemplateSelector>
+//           <div className="title">
+//             템플릿을 선택하시면 보다 편하게 작업을 시작하실 수 있습니다!
+//           </div>
+
+//           <div className="template-wrapper">
+//             {template &&
+//               template.length > 0 &&
+//               template.map(item =>
+//                 <label
+//                   className="element"
+//                   key={item.type}
+//                   onClick={async () => await this.setState({ template: item.type })}>
+//                   {item.text}
+//                   <DesignElement ><img alt="" src={item.img} /></DesignElement>
+//                 </label>
+//               )}
+//           </div>
+//         </DesignTemplateSelector>
+//         : null}
+
+//       {(this.state.type === "grid" && this.state.template != null && this.state.template !== "my-design")
+//         ? <EditorWrapper>
+//           <div className="editor">
+//             <TemplateGridEditor
+//               selected={content => this.setState({ steps: content, is_project: 1 })}
+//               type={this.state.template} />
+//           </div>
+//           <div className="title">
+//             선택하신 템플릿으로 시작하시고 싶으시다면 아래에 완료 버튼을 클릭해주세요.
+//           </div>
+//         </EditorWrapper>
+//         : null}
+
+
+//     </SectionContainer>
+
+//     <div className="buttonBox">
+//       <CustomButton
+//         onClick={async () => {
+//           if (await confirm("등록 중인 내용이 저장되지 않습니다. 취소하시겠습니까?", "예", "아니오")) {
+//             window.history.go(-1)
+//           }
+//         }}
+//         isComplete={false}>
+//         <BtnText>취소</BtnText>
+//       </CustomButton>
+//       {step === 0 && <React.Fragment>
+//         <CustomButton
+//           onClick={this.state.basic ? this.gotoNextStep : this.checkInputForm}
+//           isComplete={this.state.basic}>
+//           <BtnText>다음</BtnText>
+//         </CustomButton>
+//       </React.Fragment>}
+//       {step === 1 && <React.Fragment>
+//         <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
+//           <BtnText>뒤로</BtnText>
+//         </CustomButton>
+//         <CustomButton
+//           onClick={this.state.additional ? this.gotoNextStep : this.checkInputForm}
+//           isComplete={this.state.additional}>
+//           <BtnText>다음</BtnText>
+//         </CustomButton>
+//       </React.Fragment>}
+//       {step === 2 && <React.Fragment>
+//         <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
+//           <BtnText>뒤로</BtnText>
+//         </CustomButton>
+//         <CustomButton
+//           isComplete={this.state.type === "grid" && this.state.template == null ? false : true}
+//           onClick={this.submit}
+//         >
+//           <BtnText>완료</BtnText>
+//         </CustomButton>
+//       </React.Fragment>}
+//     </div>
+//   </InputBoard>
+// </MainSection>
+// </div >
