@@ -257,6 +257,7 @@ const QuestionGuide = styled.div`
     position:absolute;
     left:40px;
     top:0px;
+
     z-index:888;
 
     display:none;
