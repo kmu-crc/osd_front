@@ -451,7 +451,7 @@ export function GetDesignerCountRequest(id) {
                 //console.log("no data")
                 data = { total_like: 0, total_group: 0, total_design: 0, total_favorite: 0, total_view: 0 };
             } else {
-                console.log("data-----", data);
+                console.log("data——", data);
             }
             dispatch(GetDesignerCount(data))
         }).catch((err) => {
@@ -461,12 +461,12 @@ export function GetDesignerCountRequest(id) {
 }
 export function GetTheBestDesignDesignerRequest(id) {
     return (dispatch) => {
-        return fetch(`${host}/designer/getTheBestDesign/${id}`, {
+        return fetch(`${host}/designer/designerdetail/${id}/bestdesign`, {
             headers: { "Content-Type": "application/json" },
             method: "GET"
         })
             .then(res => res.json())
-            .then(data => dispatch(GetTheBestDesignInDesigner(data)))
+            .then(data => dispatch(GetTheBestDesignInDesigner((data && data[0]) || null)))
             .catch((err => console.error("err", err)));
     };
 };

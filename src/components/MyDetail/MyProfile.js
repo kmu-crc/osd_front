@@ -115,37 +115,27 @@ const Wrapper = styled.div`
         }
     }
     .like-menu {
-        height: 40px;
+        display:flex;
+        flex-direction:column;
+        width:100%;
         text-align: center;
-        font-weight: medium;
-        font-size: 28px;
-        line-height: 40px;
-        font-family: Spoqa Han Sans Neo;
-        letter-spacing: 0px;
         color: #000000;
         opacity: 1;
-        align-items: cetner;
+        align-items:center;
+        margin-top:23px;
         cursor: default;
-        
-        .like-design {
-            margin-top: 45px;
-            margin-bottom: 22px;
-            :hover { background: #FAFAFA;}
-        }
-        .like-group {
-            margin-top: 22px;
-            margin-bottom: 15px;
-            :hover { background: #FAFAFA;}
-        }
-        .like-designer {
-            margin-top: 22px;
-            margin-bottom: 15px;
-            :hover { background: #FAFAFA;}
+        .menu{
+            width:168px;
+            font-size: 28px;
+            font-family: Spoqa Han Sans Neo;
+            font-weight: medium;
+            padding:22px 0px;
         }
         a{
             cursor: pointer;
         } 
         .border {
+            width:168px;
             border-bottom: 2px solid #707070;
         }
         .active {
@@ -156,7 +146,7 @@ const Wrapper = styled.div`
 
 const CounterWrapper = styled.div`
     display: flex;
-    ;
+    align-items:center;
     width: 207px;
     height: 30px;
     ;
@@ -256,15 +246,15 @@ export class MyProfile extends React.Component {
 
             <div className="like-menu">
                 {/* interest design */}
-                <div className={`border like-design ${tab === "design" ? "active" : ""}`}>
+                <div className={`border menu ${tab === "design" ? "active" : ""}`}>
                     <a onClick={this.gotoLikeDesign}>관심 디자인</a>
                 </div>
                 {/* interest group */}
-                <div className={`border like-group ${tab === "group" ? "active" : ""}`}>
+                <div className={`border menu ${tab === "group" ? "active" : ""}`}>
                     <a onClick={this.gotoLikeGroup}>관심 그룹</a>
                 </div>
                 {/* interest designer */}
-                <div className={`like-designer ${tab === "designer" ? "active" : ""}`}>
+                <div className={`menu ${tab === "designer" ? "active" : ""}`}>
                     <a onClick={this.gotoLikeDesigner} >관심 디자이너</a>
                 </div>
             </div>

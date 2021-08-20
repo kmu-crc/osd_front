@@ -255,8 +255,9 @@ const QuestionGuide = styled.div`
     font-weight:400;
     padding:10px;
     position:absolute;
-    left:0px;
-    top:50px;
+    left:40px;
+    top:0px;
+
     z-index:888;
 
     display:none;
