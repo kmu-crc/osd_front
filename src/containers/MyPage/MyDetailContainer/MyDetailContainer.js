@@ -17,7 +17,7 @@ import {
   GetLikeInDesignerRequest,
   GetMyDesignInDesignerRequest,
   GetLikeGroupInDesignerRequest,
-  GetLikeDesignerInDesignerRequest
+  GetLikeDesignerInDesignerRequest,
 } from "redux/modules/designer";
 
 class MyDetailContainer extends Component {
@@ -42,6 +42,7 @@ const mapStateToProps = (state) => {
     userInfo: state.Authentication.status.userInfo,
     token: state.Authentication.status.token,
     Count: state.Designer.status.Count,
+    TheBestDesign: state.Designer.status.TheBestDesign,
     MyDesign: state.Designer.status.MyDesignInDesigner,
     MyDesignAdded: state.Designer.status.MyDesignInDesignerAdded,
     MyLikeDesign: state.Designer.status.LikeInDesigner,
@@ -66,7 +67,9 @@ const mapDispatchToProps = (dispatch) => ({
   GetLikeInDesignerRequest: (id, page, sort) => dispatch(GetLikeInDesignerRequest(id, page, sort)),
   GetMyDesignInDesignerRequest: (id, page, sort) => dispatch(GetMyDesignInDesignerRequest(id, page, sort)),
   GetLikeGroupInDesignerRequest: (id, page, sort) => dispatch(GetLikeGroupInDesignerRequest(id, page, sort)),
-  GetLikeDesignerInDesignerRequest: (id, page, sort) => dispatch(GetLikeDesignerInDesignerRequest(id, page, sort))
+  GetLikeDesignerInDesignerRequest: (id, page, sort) => dispatch(GetLikeDesignerInDesignerRequest(id, page, sort)),
+
+  // GetTheBestDesignRequest: (id) => dispatch(GetTheBestDesignRequest(id)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyDetailContainer)

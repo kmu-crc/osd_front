@@ -250,8 +250,8 @@ class ScrollList extends Component {
           {/* 스크롤 */}
           {/* <i className="material-icons">arrow_drop_down</i> */}
         </ScrollIcon>}
-        {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>}
-        <div className="addList" onClick={this.getLoadData}><img className="icon" src={new_logo_arrow_down}/></div>
+        {/* {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>} */}
+        {<div className="addList" onClick={this.getLoadData}><img className="icon" src={new_logo_arrow_down} /></div>}
       </FlexContainer> : null
       // <NoData>{type === "design" ? "디자인이" : type === "group" ? "그룹이" : "디자이너가"} 없습니다.</NoData>)
     )

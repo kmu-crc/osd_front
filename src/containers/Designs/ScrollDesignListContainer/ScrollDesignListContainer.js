@@ -62,12 +62,12 @@ class ScrollDesignListContainer extends Component {
           <ScrollList
             manual={this.props.manual || false}
             {...opendesign_style.design_margin}
-            getListRequest={this.getList}
+            getlistrequest={this.getlist}
             reload={this.state.reload}
             type="design"
-            handleReload={this.handleReload}
-            dataList={this.props.dataList}
-            dataListAdded={this.props.dataListAdded} />
+            handlereload={this.handlereload}
+            datalist={this.props.datalist}
+            datalistadded={this.props.datalistadded} />
         }
       </React.Fragment>
     )
