@@ -3,122 +3,158 @@ import styled from 'styled-components';
 import noface from "source/thumbnail.png";
 import Icon from '@material-ui/core/Icon';
 import NumberFormat from 'modules/NumberFormat';
+import DateFormat from 'modules/DateFormat';
+
 
 const Wrapper = styled.div`
-    width: 374px;
-    
-    .title {
-        margin-bottom: 44px;
+`;
+const Title = styled.div`
+    margin-top: 24px;
 
-        width: max-content;
-        height: 40px;
-        text-align: center;
-        font-weight: medium;
-        font-size: 28px;
-        line-height: 40px;
-        font-family: Spoqa Han Sans Neo;
-        letter-spacing: 0px;
-        color: #000000;
-        opacity: 1;
-    }
+    width: 110px;
+    height: 40px;
+    text-align: center;
+    font-weight: medium;
+    font-size: 28px;
+    line-height: 40px;
+    font-family: Spoqa Han Sans Neo;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+`;
+const Profile = styled.div`
+    margin-top: 20px;
+
+    width: 350px;
+    height: 539px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 8px 8px 8px #0000002B;
+    opacity: 1;
+
     .thumbnail {
-        margin-left: 42px;
-        margin-bottom: 11px;
-
+        margin-top: 28px;
+        margin-left: 30px;
         width: 290px;
         height: 290px;
-        border-radius: 100%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: 50% 50%;
+        background-color: transparent;
         background-image: url(${prop => prop.face});
-    }
-    .nick-and-mygroup {
-        margin-bottom: 18px;
+        background-position: 0% 0%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        border-radius: 100%;
+        opacity: 1;
+    };
 
+    .nick-cate { 
+        margin-top: 28px;
+        margin-left: 19px;
         display: flex;
+        flex-direction: row;
         justify-content: space-between;
+        align-items: middle;
 
-      .nick {
-        width: 300px;
-        max-width: 300px;
-        height: 41px;
-        text-align: center;
-        font-weight: bold;
-        font-size: 28px;
-        line-height: 41px;
-        font-family: Spoqa Han Sans;
-        letter-spacing: 0px;
-        color: #000000;
-        opacity: 1; 
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-
-        cursor: default;
-      } 
-      .mygroup {
-        width: 70px;
-        height: 27px;
-        text-align: center;
-        font-weight: normal;
-        font-size: 18px;
-        line-height: 27px;
-        font-family: Spoqa Han Sans;
-        letter-spacing: 0px;
-        color: #777777;
-        opacity: 1;
-      }
-    }
-    .introduce {
-        margin-bottom: 34.39px;
-
-        // width: 54px;
-        // height: 27px;
-        text-align: center;
-        font-weight: normal;
-        font-size: 18px;
-        line-height: 27px;
-        font-family: Spoqa Han Sans;
-        letter-spacing: 0px;
-        color: #777777;
-        opacity: 1;
-    }
-
-    .counter { 
-        margin-bottom: 16px;
-    }
-
-    .create-design {
-        width: 346px;
-        height: 94px;
-        background: #FFFFFF 0% 0% no-repeat padding-box;
-        box-shadow: 8px 8px 8px #0000002B;
-        opacity: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: default;
-
-        :hover {
-            background: #FAFAFA;
-        }
-
-        .button {
-            width: 224px;
-            height: 40px;
-            text-align: center;
-            font-weight: medium;
+        .nick {
+            width: 200px;
+            height: 41px;
+            text-align: left;
+            font-weight: bold;
             font-size: 28px;
-            line-height: 40px;
-            font-family: Spoqa Han Sans Neo;
+            line-height: 41px;
+            font-family: Spoqa Han Sans;
             letter-spacing: 0px;
             color: #000000;
             opacity: 1;
-            cursor: pointer;
+
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .cate {
+
+            margin: auto;
+            margin-right: 27px;
+            width: 66px;
+            height: 27px;
+            text-align: left;
+            font-weight: normal;
+            font-size: 18px;
+            line-height: 27px;
+            font-family: Spoqa Han Sans;
+            letter-spacing: 0px;
+            color: #454545;
+            opacity: 1;
+
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+ 
         }
     }
-    .like-menu {
+    .update-intro { 
+        margin-top: 3px;
+        .update {
+            height: 27px;
+            text-align: left;
+            font-weight: normal;
+            font-size: 18px;
+            line-height: 27px;
+            font-family: spoqa han sans;
+            letter-spacing: 0px;
+            color: #777777;
+            opacity: 1;
+        }
+        .intro {
+            padding: 2px;
+            height: 54px;
+            font-weight: normal;
+            font-size: 18px;
+            line-height: 27px;
+            font-family: spoqa han sans;
+            text-align: left;
+            letter-spacing: 0px;
+            color: #777777;
+            opacity: 1;
+            overflow: hidden auto;
+            ::-webkit-scrollbar {
+                width: 8px;
+              }
+            ::-webkit-scrollbar-track {
+                background: white;
+            }
+              ::-webkit-scrollbar-thumb {
+                background: red;
+                border-right: 4px white solid;
+                background-clip: padding-box;
+              }
+        }
+    };
+    .counter { margin-top: 30px; };
+`;
+const TabMenu = styled.div`
+    margin-top: 38px;
+    display: flex;
+    flex-direction: column;
+
+    .border {
+        width: 118px;
+        height: 0px;
+        border-bottom: 2px solid #707070;
+        opacity: 1;
+    }
+    .menu {
+        margin: auto;
+        height: 100%; 
+        width: 118px; 
+        padding-top: 22px; 
+        padding-bottom: 22px;
+        cursor: pointer;
+        :hover {
+            background-color: rgba(112, 112, 112, .01);
+        }
+    }
+    .group {
+        margin: auto;
+        width: 58px;
         height: 40px;
         text-align: center;
         font-weight: medium;
@@ -128,152 +164,176 @@ const Wrapper = styled.div`
         letter-spacing: 0px;
         color: #000000;
         opacity: 1;
-        align-items: cetner;
-        cursor: default;
-        
-        .like-design {
-            margin-top: 45px;
-            margin-bottom: 22px;
-            :hover { background: #FAFAFA;}
-        }
-        .like-group {
-            margin-top: 22px;
-            margin-bottom: 15px;
-            :hover { background: #FAFAFA;}
-        }
-        .like-designer {
-            margin-top: 22px;
-            margin-bottom: 15px;
-            :hover { background: #FAFAFA;}
-        }
-        a{
-            cursor: pointer;
-        } 
-        .border {
-            border-bottom: 2px solid #707070;
-        }
-        .active {
-            color: red;
-        }
+        &.active { color: red;}
+        :hover { color: #FF0000; }
+    }
+    .join-group {
+        margin: auto;
+        width: 104px;
+        height: 40px;
+        text-align: center;
+        font-weight: medium;
+        font-size: 28px;
+        line-height: 40px;
+        font-family: Spoqa Han Sans Neo;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+        &.active { color: red;}
+        :hover { color: #FF0000; }
+    }
+    .design {
+        margin: auto;
+        width: 78px;
+        height: 40px;
+        text-align: center;
+        font-weight: medium;
+        font-size: 28px;
+        line-height: 40px;
+        font-family: Spoqa Han Sans Neo;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+        &.active { color: red;}
+        :hover { color: #FF0000; }
+    }
+    .like {
+        margin: auto;
+        width: 104px;
+        height: 40px;
+        text-align: center;
+        font-weight: medium;
+        font-size: 28px;
+        line-height: 40px;
+        font-family: Spoqa Han Sans Neo;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+        &.active { color: red;}
+        :hover { color: #FF0000; }
     }
 `;
 
-const CounterWrapper = styled.div`
+const CountDiv = styled.div`
     display: flex;
-    ;
-    width: 207px;
-    height: 30px;
-    ;
-    .row {
-        margin-right: 15px;
-        :last-child {
-            margin-right: 0px;
-        }
-        display: flex;
-        justify-content: space-between;
-    }
-    .number {
-        margin-left: 7px;
+    flex-direction: row;
+    height: 38px;
+    margin-left: 19px;
 
-        width: max-content;
-        height: 25px;
+    .icon {
+        width: 38px;
+        margin-right: 9px;
+    }
+    .num {
+        margin-right: 9px;
+        :last-child{margin-right:0px;}
+        width: max-content; //46px;
+        height: 38px;
         text-align: left;
         font-weight: normal;
-        font-size: 17px;
-        // line-height: 25px;
+        font-size: 26px;
+        line-height: 38px;
         font-family: Spoqa Han Sans;
         letter-spacing: 0px;
         color: #000000;
         opacity: 1;
     }
-
 `;
-const Counter = ({ view, like, my }) =>
-    <CounterWrapper>
-        <div className="row">
-            <Icon>visibility</Icon>
-            <div className="number">{view}</div>
+
+const Counter = ({ view, like, my }) => {
+    return (<CountDiv>
+        <div className="icon">
+            <Icon style={{ fontSize: "38px" }}>visibility</Icon>
         </div>
-        <div className="row">
-            <Icon>favorite_border</Icon>
-            <div className="number">{like}</div>
+        <div className="num">{view}</div>
+
+        <div className="icon">
+            <Icon style={{ fontSize: "38px", color: "red" }}>favorite_outline</Icon>
         </div>
-        <div className="row">
-            <Icon>article</Icon>
-            <div className="number">{my}</div>
+        <div className="num">{like}</div>
+
+        <div className="icon">
+            <Icon style={{ fontSize: "38px" }}>article</Icon>
         </div>
-    </CounterWrapper>;
+        <div className="num">{my}</div>
+
+    </CountDiv>)
+}
 
 export class MyProfile extends React.Component {
 
-    gotoCreateDesign = () => {
-        window.location.href = "/createDesign";
-    };
-    gotoLikeDesign = () => {
-        this.props.changeTab("design");
-    };
-    gotoLikeGroup = () => {
+    gotoGroup = () => {
         this.props.changeTab("group");
     };
-    gotoLikeDesigner = () => {
-        this.props.changeTab("designer");
-    };
     gotoJoinGroup = () => {
-        ;
+        this.props.changeTab("join-group");
+    };
+    gotoDesign = () => {
+        this.props.changeTab("design");
+    };
+    gotoLikePage = () => {
+        this.props.changeTab("like");
     };
 
     render() {
         const { userInfo, MyDetail, Count, tab } = this.props;
 
-        return (<Wrapper face={(userInfo && userInfo.thumbnail && userInfo.thumbnail.l_img) || noface}>
+        return (<Wrapper>
+            <Title>내 프로필</Title>
 
-            {/* title */}
-            <div className="title">내 프로필</div>
+            <Profile face={(userInfo && userInfo.thumbnail && userInfo.thumbnail.l_img) || noface} >
+                {/* thumbnail */}
+                <div className="thumbnail" />
 
-            {/* thumbnail */}
-            <div className="thumbnail" />
-
-            {/* nick & mygroup */}
-            <div className="nick-and-mygroup">
-                <div className="nick" title={userInfo && userInfo.nickName}>
-                    {userInfo && userInfo.nickName}</div>
-                <div className="mygroup">
-                    <a onClick={this.gotoJoinGroup}>참여그룹</a></div>
-            </div>
-
-            {/* 내 소개 */}
-            <div className="introduce">
-                {MyDetail && MyDetail.about_me}
-            </div>
-
-            {/* counter */}
-            <div className="counter">
-                <Counter
-                    view={(Count && NumberFormat(Count.total_view)) || 0}
-                    like={(Count && NumberFormat(Count.total_like)) || 0}
-                    my={(Count && NumberFormat((Count.total_design + Count.total_group))) || 0}
-                />
-            </div>
-
-            {/* CREATE DESIGN */}
-            <div className="create-design">
-                <a onClick={this.gotoCreateDesign} className="button">내 디자인 등록하기</a>
-            </div>
-
-            <div className="like-menu">
-                {/* interest design */}
-                <div className={`border like-design ${tab === "design" ? "active" : ""}`}>
-                    <a onClick={this.gotoLikeDesign}>관심 디자인</a>
+                {/* nick and cate */}
+                <div className="nick-cate">
+                    <div className="nick" title={userInfo && userInfo.nickName}>
+                        {userInfo && userInfo.nickName}
+                    </div>
+                    <div className="cate" title={MyDetail && MyDetail.categoryName}>
+                        {MyDetail && MyDetail.categoryName}
+                    </div>
                 </div>
-                {/* interest group */}
-                <div className={`border like-group ${tab === "group" ? "active" : ""}`}>
-                    <a onClick={this.gotoLikeGroup}>관심 그룹</a>
+
+                {/* update and intro */}
+                <div className="update-intro">
+                    <div className="update">{MyDetail && DateFormat(MyDetail.update_time)}</div>
+                    <div className="intro">{MyDetail && MyDetail.about_me}</div>
                 </div>
-                {/* interest designer */}
-                <div className={`like-designer ${tab === "designer" ? "active" : ""}`}>
-                    <a onClick={this.gotoLikeDesigner} >관심 디자이너</a>
+
+                {/* counter */}
+                <div className="counter">
+                    <Counter
+                        view={(Count && NumberFormat(Count.total_view)) || 0}
+                        like={(Count && NumberFormat(Count.total_like)) || 0}
+                        my={(Count && NumberFormat((Count.total_design + Count.total_group))) || 0}
+                    />
                 </div>
-            </div>
+
+            </Profile>
+
+            <TabMenu>
+                <a onClick={this.gotoGroup}>
+                    <div className="menu border">
+                        <div className={"group"}>그룹</div>
+                    </div>
+                </a>
+                <a onClick={this.gotoJoinGroup}>
+                    <div className="menu border">
+                        <div className={"join-group "}>참여그룹</div>
+                    </div>
+                </a>
+                <a onClick={this.gotoDesign}>
+                    <div className="menu border">
+                        <div className={"design active"}>디자인</div>
+                    </div>
+                </a>
+                <a onClick={this.gotoLikePage}>
+                    <div className="menu ">
+                        <div className={"like "}>관심항목</div>
+                    </div>
+                </a>
+            </TabMenu>
 
         </Wrapper>);
     };

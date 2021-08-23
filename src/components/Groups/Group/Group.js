@@ -12,54 +12,97 @@ import styled from 'styled-components';
 import { geturl } from "config";
 import opendesign_css from "opendesign_style";
 
-const GroupCard = styled.div`
-  width:207px;
-  height:308px;
-  box-shadow: 8px 8px 8px #0000002B;
+import new_logo_view from "source/new_logo_view.svg";
+import new_logo_favorite from "source/new_logo_favorite.svg";
+import new_logo_share from "source/new_logo_share.svg";
+import new_logo_note from "source/new_logo_note.svg";
 
-  .thumbnail{
+const GroupCard = styled.div`
+  width:701px;
+  height:191px;
+  display:flex;
+  box-shadow: 8px 8px 8px #4141411A;
+  border:1px solid #eaeaea;
+  .title_{
     width:100%;
-    height:179px;
+    max-width:200px;
+    height:26px;
+    // display:flex;
+    align-items:center;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+  }
+  .row{
+    max-width:508px;
+    width:100%;
+  }
+  .thumbnail{
+    width:193px;
+    height:100%;
     object-fit:cover;
+    border:1px solid #eaeaea;
   }
   .infoBox{
     width:100%;
-    padding:9px 13px;
+    max-width:508px;
+    height:120px;
+    padding:11px;
   }
-  .group_name{
-    width:100%;
-    height:27px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    font-size:18px;
-    font-family:SpoqaHanSans;
-    font-weight:500;
-    color:#000000;
+  .summary{
+    display:flex;
+    flex-direction:column;
   }
-  .category_name{
-    font-size:12px;
-    font-family:SpoqaHanSans;
-    color:#777777;
+  .flexEnd{
+    height:120px;
+    display:flex;
+    justify-content:flex-end;
   }
-  .spaceBetween{
-    width:100%;
+  .spacebetween{
     display:flex;
     justify-content:space-between;
+    align-items:center;
   }
-  .marginTop{margin-top:12px;}
-  .item_count{
-    font-size:12px;
-    font-family:SpoqaHanSans;
-    font-weight:400;
-    color:#454545;
+  .ellipsis{
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
   }
-  .like_count{
-    font-size:12px;
-    font-family:SpoqaHanSans;
-    font-weight:400;
-    color:#454545;
+  .imageBox{
+    width:120px;
+    height:120px;
+    display:flex;
+    flex-wrap:wrap;
+    .mini_thumbnail{
+      width:56px;
+      height:56px;
+      object-fit:cover;
+    }
+    .marginRight{margin-right:8px;}
   }
+  .asset_wrapper{
+    width:100%;
+    height:22px;
+    display:flex;
+    align-items:center;
+    .asset_icon{
+      width:13px;
+      height:13px;
+      object-fit:cover;
+      margin-right:5px;
+    }
+    .asset_num{
+      font-size:12px;
+      font-family:SpoqaHanSans;
+      font-weight:Regular;
+      margin-right:13px;
+    }
+  }
+  .fontSize1{font-size:19px;}
+  .fontSize2{font-size:10px;}
+
+  .marginTop1{margin-top:8px;}
+  .marginTop2{margin-top:78px;}
 `
 
 class Group extends Component {
@@ -91,14 +134,36 @@ class Group extends Component {
 
     return (
       <React.Fragment>
-        <GroupCard  onClick={event => this.handleGotoDetail(group.group_id || group.uid, event)}>
+        <GroupCard>
           <img src={img} className="thumbnail"/>
           <div className="infoBox">
-            <div className="group_name">{group.title}</div>
-            <div className="category_name">{group.nick_name}</div>
-            <div className="spaceBetween marginTop">
-              <div className="item_count">{group.view}개의 디자인</div>
-              <div className="like_count">♡{group.like}</div>
+            <div className="spacebetween">
+              <div className="title_ fontSize1 ellipsis">{group.title}</div>
+              <div className="fontSize2">{DateFormat(group.child_update_time)}</div>
+            </div>
+            <div className="spacebetween">
+              <div className="row fontSize2 ellipsis" style={{height:"20px"}}>{group.explanation}</div>
+            </div>
+            <div className="spacebetween flexEnd">
+              <div className="summary flexEnd">
+                  <div className="fontSize2">{group.nick_name}</div>
+                  <div className="asset_wrapper">
+                    <img src={new_logo_view} className="asset_icon"/>
+                    <div className="asset_num">{group.view}</div>
+                    <img src={new_logo_favorite} className="asset_icon"/>
+                    <div className="asset_num">{group.like}</div>
+                    <img src={new_logo_note} className="asset_icon"/>
+                    <div className="asset_num">{NumberFormat(group.design || 0 + group.group || 0)}</div>
+                  </div>
+              </div>
+              <div className="imageBox">
+               {four_child.map((child, index) =>
+                  <img src={child && child.m_img}
+                    className={`mini_thumbnail ${index%2==0?"marginRight":null}`}
+                    id={`child-${index}`}
+                    key={index} />
+                )}
+                </div>
             </div>
           </div>
         </GroupCard>
@@ -107,7 +172,17 @@ class Group extends Component {
   }
 }
 export default Group
-
+{/* <GroupCard  onClick={event => this.handleGotoDetail(group.group_id || group.uid, event)}>
+<img src={img} className="thumbnail"/>
+<div className="infoBox">
+  <div className="group_name">{group.title}</div>
+  <div className="category_name">{group.nick_name}</div>
+  <div className="spaceBetween marginTop">
+    <div className="item_count">{group.view}개의 디자인</div>
+    <div className="like_count">♡{group.like}</div>
+  </div>
+</div>
+</GroupCard> */}
 
 // {tiny ?
 //   <GroupTiny img={img} onClick={event => this.handleGotoDetail(group.group_id || group.uid, event)}>

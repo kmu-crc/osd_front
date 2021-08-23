@@ -15,38 +15,88 @@ import DateFormat from "modules/DateFormat"
 
 import { geturl } from "config"
 import opendesign_css from "opendesign_style";
-
+import new_logo_view from "source/new_logo_view.svg";
+import new_logo_favorite from "source/new_logo_favorite.svg";
+import new_logo_share from "source/new_logo_share.svg";
+import new_logo_note from "source/new_logo_note.svg";
 
 //styled
 const Designer_card = styled.div`
-  width:207px;
-  height:308px;
+  width:252px;
+  height:390px;
   box-shadow: 8px 8px 8px #0000002B;
   cursor:pointer;
+  display:flex;
+  flex-direction:column;
   .thumbnailBox{
     display:flex;
     justify-content:center;
   }
   .thumbnail{
-    width:184px;
-    height:184px;
+    min-width:232px;
+    min-height:232px;
+    max-width:232px;
+    max-height:232px;
     border-radius:50%;
     object-fit:cover;
+    border:1px solid #eaeaea;
 
   }
-  .infoBox{
-    padding:7px 12px;
-  }
-  .designer_name{
+  .wrap_{width:100%;}
+  .title{
     width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .content_{
+    width:100%;
+    .updateTime{
+      width:100%;
+      height:15px;
+      font-size:10px;
+
+    }
+    .about_me{
+      margin-top:5px;
+      line-height:10px;
+      font-size:10px;
+      height:20px;
+      width:100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-wrap: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; 
+      -webkit-box-orient: vertical;
+    }
+  }
+  .ellipsis{
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+  }
+  .infoBox{
+    width:100%;
+    // height:148px;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:8px 12px 12px 12px;
+  }
+  .
+  .designer_name{
+    width:180px;
     height:27px;
     font-size:18px;
     font-family:SpoqaHanSans;
+    font-weight:bold;
     font-weight:500;
     color:#000000;
   }
   .category_name{
-    font-size:12px;
+    font-size:10px;
     font-family:SpoqaHanSans;
     color:#777777;
   }
@@ -55,7 +105,8 @@ const Designer_card = styled.div`
     display:flex;
     justify-content:space-between;
   }
-  .marginTop{margin-top:12px;}  .item_count{
+  .marginTop{margin-top:12px;}  
+  .item_count{
     font-size:12px;
     font-family:SpoqaHanSans;
     color:#454545;
@@ -65,6 +116,24 @@ const Designer_card = styled.div`
     font-family:SpoqaHanSans;
     font-weight:400;
     color:#454545;
+  }
+
+  .counter{
+      width:100%;
+      display:flex;
+      align-items:center;
+      .icon{
+        width:20px;
+        height:20px;
+        object-fit:cover;
+        margin-right:6px;
+      }
+      .text{
+        width:36px;
+        text-align:left;
+        font-size:10px;
+        margin-right:20px;
+      }
   }
 `
 
@@ -85,16 +154,30 @@ class Designer extends Component {
 
     return (
     <React.Fragment>
-      <Designer_card onClick={event => this.gotoDesignerDetailPage(designer.uid, event)}>
-        <div className="thumbnailBox">
-          <img src={img} className="thumbnail"/>
-        </div>
-        <div className="infoBox">
-          <div className="designer_name">{designer.nick_name}</div>
-          <div className="category_name">{designer.level3_name || designer.level2_name || designer.level1_name || "전체"}</div>
-          <div className="spaceBetween marginTop">
+      <Designer_card>
+        <img src={img} className="thumbnail"/>
+          <div className="infoBox">
+          <div className="wrap_">
+            <div className="title">
+              <div className="designer_name ellipsis">{designer.nick_name}</div>
+              <div className="category_name">{designer.level3_name || designer.level2_name || designer.level1_name || "전체"}</div>
+            </div>
+            <div className="content_">
+              <div className="updateTime">{DateFormat(designer.update_time)}</div>
+              <div className="about_me">{designer.about_me}</div>
+            </div>
+          </div>
+          {/* <div className="spaceBetween marginTop">
             <div className="item_count">{NumberFormat(designer.total_design || 0 + designer.total_group || 0)}개의 디자인</div>
             <div className="like_count">♡ {NumberFormat(designer.total_like)}</div>
+          </div> */}
+          <div className="counter">
+                <img className="icon" src={new_logo_view}/>
+                <div className="text">{NumberFormat(designer.total_view == null ? 0 : designer.total_view)}</div>
+                <img className="icon" src={new_logo_favorite}/>
+                <div className="text">{NumberFormat(designer.total_like == null ? 0 : designer.total_like)}</div>
+                <img className="icon" src={new_logo_share}/>
+                <div className="text">{NumberFormat(designer.total_group == null || designer.total_design == null ? 0 : designer.total_group + designer.total_design)}</div>
           </div>
         </div>
       </Designer_card>
@@ -102,7 +185,19 @@ class Designer extends Component {
   }
 }
 export default Designer
-
+{/* <Designer_card onClick={event => this.gotoDesignerDetailPage(designer.uid, event)}>
+<div className="thumbnailBox">
+  <img src={img} className="thumbnail"/>
+</div>
+<div className="infoBox">
+  <div className="designer_name">{designer.nick_name}</div>
+  <div className="category_name">{designer.level3_name || designer.level2_name || designer.level1_name || "전체"}</div>
+  <div className="spaceBetween marginTop">
+    <div className="item_count">{NumberFormat(designer.total_design || 0 + designer.total_group || 0)}개의 디자인</div>
+    <div className="like_count">♡ {NumberFormat(designer.total_like)}</div>
+  </div>
+</div>
+</Designer_card> */}
 // {tiny ?
 //   <DesignerTiny img={img} onClick={event => this.gotoDesignerDetailPage(designer.uid, event)}>
 //     <div className="innerbox">
