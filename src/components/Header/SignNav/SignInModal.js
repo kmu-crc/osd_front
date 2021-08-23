@@ -345,7 +345,7 @@ class SignInModal extends Component {
                     </div>
                     <div className="row grayButton marginTop1" onClick={this.signin}>로그인</div>
                     <div className="row flexCenter marginTop1">
-                        <div className="halfRow grayEdgeButton" onClick={this.onClose}><Link style={{ color: "#FF0000" }} to="/signup" onClick={this.onClose}>회원가입</Link></div>
+                        <div className="halfRow grayEdgeButton" onClick={this.onClose}><Link style={{ color: "white" }} to="/signup" onClick={this.onClose}>회원가입</Link></div>
                         <div className="halfRow grayEdgeButton" onClick={this.findIDPW}>비밀번호 찾기</div>
                     </div>
                     </div>

@@ -44,8 +44,7 @@ const MyPageWrapper = styled.div`
 `;
 const FavoriteItemListWrapper = styled.div`
     // *{border:1px dashed red;}
-
-    margin-left: 46px;
+    margin-left: 30px;
     
     // width: 100%;
     width: 1168px;
@@ -57,8 +56,7 @@ const FavoriteItemListWrapper = styled.div`
         justify-content: space-between;
 
         .title {
-            margin-left: 30px;
-
+            // margin-left: 30px;
             width: max-content;
             height: 40px;
             text-align: center;
@@ -75,7 +73,7 @@ const FavoriteItemListWrapper = styled.div`
                 width: 128px;
                 height: 34px;
                 opacity: 1;
-                padding: 4.5px 17px; 
+                padding: 5px 17px 4px 17px; 
                 border: 1px solid white;
                 cursor: pointer;
                 
@@ -101,26 +99,21 @@ const FavoriteItemListWrapper = styled.div`
         }
     }
     .grid {
+
         margin-top: 26px;
         width: ${1118 + 16 + 16}px;
         height: 978px;
-        // padding-right: 16px;
         overflow: hidden scroll;
 
-        // scroll
-        // width
         ::-webkit-scrollbar {
           width: 16px;
         }
-        // track
         ::-webkit-scrollbar-track {
           background: rgba(233, 233, 233, 0.2);
         }
-        // handle
         ::-webkit-scrollbar-thumb {
           background: #F00;
         }
-        // handle on hover
         ::-webkit-scrollbar-thumb:hover {
           background: #F00000;
         }
@@ -193,10 +186,10 @@ const ItemList = ({ getList, itemList, itemListAdded, tab, order = "like", onCli
     <FavoriteItemListWrapper>
         <div className="top">
             <div className="title">
-                {tab === "design" ? "관심디자인" : null}
-                {tab === "group" ? "관심그룹" : null}
-                {tab === "designer" ? "관심디자이너" : null}
                 {tab === "manage" ? "내 디자인" : null}
+                {tab === "design" ? "관심 디자인" : null}
+                {tab === "group" ? "관심 그룹" : null}
+                {tab === "designer" ? "관심 디자이너" : null}
             </div>
             {tab !== "manage" ?
                 <div className="order">

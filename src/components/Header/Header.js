@@ -357,7 +357,7 @@ class Header extends Component {
             <React.Fragment>
                 {
                     window.location.pathname.indexOf("/sign") != -1?
-                <HeaderMenu bgColor={"#912525"}>
+                    <HeaderMenu bgColor={"#cccccc"}>
                         <div className="wrap">
                         <div className="menu_nav" onClick={()=>{this.props.onClickMenu();}}>
                             {
@@ -366,6 +366,16 @@ class Header extends Component {
                                 :<img className="menu_icon" src={new_logo_menu_open}/>
                             }
                         </div>
+                        <a href="/"><img src={new_logo_opendesign} className="home_logo"/></a>
+                        </div>
+                        <div className="wrap">
+                        {this.props.userInfo != null ? 
+                            <React.Fragment>
+                            <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
+                            <div className="icon_wrap marginRight1"><AlarmContainer {...this.props} alarm={this.state.alarm} /></div>
+                            </React.Fragment>
+                            :null
+                        }
                         </div>
                     </HeaderMenu>
                     :

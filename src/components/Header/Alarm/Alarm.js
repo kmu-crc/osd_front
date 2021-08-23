@@ -28,7 +28,7 @@ const AlarmList = styled.div`
     pointer-events: auto;
     top: 50px;
     right:0px;
-
+    overflow-y:auto;
     z-index: 904;
     background-color: #FFFFFF;
     box-shadow: 8px 8px 8px #0000002B;

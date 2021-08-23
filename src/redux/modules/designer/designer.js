@@ -451,7 +451,7 @@ export function GetDesignerCountRequest(id) {
                 //console.log("no data")
                 data = { total_like: 0, total_group: 0, total_design: 0, total_favorite: 0, total_view: 0 };
             } else {
-                console.log("data-----", data);
+                console.log("data——", data);
             }
             dispatch(GetDesignerCount(data))
         }).catch((err) => {
