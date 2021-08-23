@@ -4,24 +4,32 @@ import noface from "source/thumbnail.png";
 import Icon from '@material-ui/core/Icon';
 import NumberFormat from 'modules/NumberFormat';
 
-const Wrapper = styled.div`
-    width: 374px;
-    
-    .title {
-        margin-bottom: 44px;
+const Title = styled.div`
 
-        width: max-content;
-        height: 40px;
-        text-align: center;
-        font-weight: medium;
-        font-size: 28px;
-        line-height: 40px;
-        font-family: Spoqa Han Sans Neo;
-        letter-spacing: 0px;
-        color: #000000;
-        opacity: 1;
-    }
-    .thumbnail {
+    margin-top: 24px;
+
+    width: max-content;
+    height: 40px;
+    text-align: center;
+    font-weight: medium;
+    font-size: 28px;
+    line-height: 40px;
+    font-family: Spoqa Han Sans Neo;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+`;
+const Wrapper = styled.div`
+
+    margin-top: 20px;
+
+    width: 350px;
+    height: 539px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 8px 8px 8px #0000002B;
+    opacity: 1;
+
+   .thumbnail {
         margin-left: 42px;
         margin-bottom: 11px;
 
@@ -206,9 +214,6 @@ const Counter = ({ view, like, my }) =>
 
 export class MyProfile extends React.Component {
 
-    gotoCreateDesign = () => {
-        window.location.href = "/createDesign";
-    };
     gotoLikeDesign = () => {
         this.props.changeTab("design");
     };
@@ -225,56 +230,55 @@ export class MyProfile extends React.Component {
     render() {
         const { userInfo, MyDetail, Count, tab } = this.props;
 
-        return (<Wrapper face={(userInfo && userInfo.thumbnail && userInfo.thumbnail.l_img) || noface}>
+        return (
+            <React.Fragment>
 
-            {/* title */}
-            <div className="title">내 프로필</div>
+                {/* title */}
+                <Title>내 프로필</Title>
 
-            {/* thumbnail */}
-            <div className="thumbnail" />
+                <Wrapper face={(userInfo && userInfo.thumbnail && userInfo.thumbnail.l_img) || noface}>
+                    {/* thumbnail */}
+                    <div className="thumbnail" />
 
-            {/* nick & mygroup */}
-            <div className="nick-and-mygroup">
-                <div className="nick" title={userInfo && userInfo.nickName}>
-                    {userInfo && userInfo.nickName}</div>
-                <div className="mygroup">
-                    <a onClick={this.gotoJoinGroup}>참여그룹</a></div>
-            </div>
+                    {/* nick & mygroup */}
+                    <div className="nick-and-mygroup">
+                        <div className="nick" title={userInfo && userInfo.nickName}>
+                            {userInfo && userInfo.nickName}</div>
+                        <div className="mygroup">
+                            <a onClick={this.gotoJoinGroup}>참여그룹</a></div>
+                    </div>
 
-            {/* 내 소개 */}
-            <div className="introduce">
-                {MyDetail && MyDetail.about_me}
-            </div>
+                    {/* 내 소개 */}
+                    <div className="introduce">
+                        {MyDetail && MyDetail.about_me}
+                    </div>
 
-            {/* counter */}
-            <div className="counter">
-                <Counter
-                    view={(Count && NumberFormat(Count.total_view)) || 0}
-                    like={(Count && NumberFormat(Count.total_like)) || 0}
-                    my={(Count && NumberFormat((Count.total_design + Count.total_group))) || 0}
-                />
-            </div>
+                    {/* counter */}
+                    <div className="counter">
+                        <Counter
+                            view={(Count && NumberFormat(Count.total_view)) || 0}
+                            like={(Count && NumberFormat(Count.total_like)) || 0}
+                            my={(Count && NumberFormat((Count.total_design + Count.total_group))) || 0}
+                        />
+                    </div>
 
-            {/* CREATE DESIGN */}
-            <div className="create-design">
-                <a onClick={this.gotoCreateDesign} className="button">내 디자인 등록하기</a>
-            </div>
+                    <div className="like-menu">
+                        {/* interest design */}
+                        <div className={`border like-design ${tab === "design" ? "active" : ""}`}>
+                            <a onClick={this.gotoLikeDesign}>관심 디자인</a>
+                        </div>
+                        {/* interest group */}
+                        <div className={`border like-group ${tab === "group" ? "active" : ""}`}>
+                            <a onClick={this.gotoLikeGroup}>관심 그룹</a>
+                        </div>
+                        {/* interest designer */}
+                        <div className={`like-designer ${tab === "designer" ? "active" : ""}`}>
+                            <a onClick={this.gotoLikeDesigner} >관심 디자이너</a>
+                        </div>
+                    </div>
 
-            <div className="like-menu">
-                {/* interest design */}
-                <div className={`border like-design ${tab === "design" ? "active" : ""}`}>
-                    <a onClick={this.gotoLikeDesign}>관심 디자인</a>
-                </div>
-                {/* interest group */}
-                <div className={`border like-group ${tab === "group" ? "active" : ""}`}>
-                    <a onClick={this.gotoLikeGroup}>관심 그룹</a>
-                </div>
-                {/* interest designer */}
-                <div className={`like-designer ${tab === "designer" ? "active" : ""}`}>
-                    <a onClick={this.gotoLikeDesigner} >관심 디자이너</a>
-                </div>
-            </div>
-
-        </Wrapper>);
+                </Wrapper>
+            </React.Fragment>
+        );
     };
 };
