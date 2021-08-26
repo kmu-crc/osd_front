@@ -10,6 +10,7 @@ import Socket from "modules/Socket"
 // import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import opendesign_style from "opendesign_style";
+import { MyMenu, MyProfile } from 'components/MyDetail';
 
 const Title = styled.div`
   margin-left: 59px;
@@ -26,7 +27,6 @@ const Title = styled.div`
 `;
 const Peers = styled.div`
   padding: 16px 11px 16px 18px;
-  margin-left: 59px;
   width: 270px;
   height: 851px;
   background-color: #E9E9E9;
@@ -66,40 +66,78 @@ const Peers = styled.div`
   }
 `;
 const Wrapper = styled.div`
+  margin-left: 100px;
+  margin-top: ${90 + 24}px;
+    *{border: 1px solid blue;}
+
   display: flex;
   flex-direction: row;
+
+  .space-0 {
+    margin-left: 41px;
+  }
+  .space-1 {
+      margin-left: 48px;
+  }
+  .space-2 { 
+      margin-left: 39px;
+      margin-top: 62px;
+      width: 0px;
+      height: 871px;
+      border-left: 2px solid #CCCCCC;
+      opacity: 1;
+  }
+  
+  .wrapper{
+    .title {
+      // margin-top: 24px;
+      width: 78px;
+      height: 40px;
+      text-align: center;
+      font-weight: medium;
+      font-size: 28px;
+      line-height: 40px;
+      font-family: Spoqa Han Sans Neo;
+      letter-spacing: 0px;
+      color: #000000;
+      opacity: 1;
+    }
+    .peer-and-message {
+      display: flex;
+      flex-direction: row;
+
+      .peers { }
+      .message { }
+    }
+  }
 `;
 const MessageDetail = styled.div`
-  margin-left: 23px;
-  width: 788px;
+  // margin-left: 23px;
+  // width: 788px;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid green;
   height: 851px;
   background: #E9E9E9 0% 0% no-repeat padding-box;
   opacity: 1;
 `;
-const dummy = [
-  { nUnread: 10, face: null, nickname: "디자이너 1", lastMsg: "안녕하세요!" },
-  { nUnread: 10, face: null, nickname: "디자이너 1", lastMsg: "안녕하세요!" },
-  { nUnread: 10, face: null, nickname: "디자이너 1", lastMsg: "안녕하세요!" },
-  { nUnread: 10, face: null, nickname: "디자이너 1", lastMsg: "안녕하세요!" },
-  { nUnread: 10, face: null, nickname: "디자이너 1", lastMsg: "안녕하세요!" },
-  { nUnread: 10, face: null, nickname: "디자이너 1", lastMsg: "안녕하세요!" },
-  { nUnread: 10, face: null, nickname: "디자이너 1", lastMsg: "안녕하세요!" },
-  { nUnread: 10, face: null, nickname: "디자이너 1", lastMsg: "안녕하세요!" },
-  { nUnread: 10, face: null, nickname: "디자이너 1", lastMsg: "안녕하세요!" },
-  { nUnread: 10, face: null, nickname: "디자이너 1", lastMsg: "안녕하세요!" },
-  { nUnread: 10, face: null, nickname: "디자이너 1", lastMsg: "안녕하세요!" },
-  { nUnread: 10, face: null, nickname: "디자이너 1", lastMsg: "안녕하세요!" },
-  { nUnread: 10, face: null, nickname: "디자이너 1", lastMsg: "안녕하세요!" },
-  { nUnread: 10, face: null, nickname: "디자이너 1", lastMsg: "안녕하세요!" },
-  { nUnread: 10, face: null, nickname: "디자이너 1", lastMsg: "안녕하세요!" },
-  { nUnread: 10, face: null, nickname: "디자이너 1", lastMsg: "안녕하세요!" },
-];
+const Peer = styled.div`
+  height: 90px;
+  display: flex;
+  flex-direction: row;
+  .left{
+    .thumbnail{}
+    .counter{}
+  }
+  .text{}
+`;
 const chats = [
   { read: true, owner: true, date: "오전 10:11", content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
   { read: true, owner: false, date: "오후 12:35", content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
   { read: true, owner: false, date: "오후 12:35", content: "s3" },
   { read: false, owner: true, date: "오후 4:13", content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
 ];
+
 class Messages extends React.Component {
   constructor(props) {
     super(props);
@@ -107,54 +145,83 @@ class Messages extends React.Component {
   };
 
   render() {
-    const DUMMY = ({ face, nickname, lastMsg }) =>
-      <div style={{ border: "1px solid white", padding: "10px" }}>
-        <div style={{ display: "flex;", flexDirection: "row" }}>
-          <div ><img src={{ face }} /></div> <div>{nickname}<br />{lastMsg}</div>
-        </div>
-      </div>
+    const { userInfo, Count, MyDetail } = this.props;
+    console.log("PROPS:", this.props);
 
-    return (<React.Fragment>
+    return (<Wrapper>
+      <div className="space-0" >&nbsp;</div>
+
+      {/* mymenu */}
+      <MyMenu
+        tab={"message"}
+        // changeTab={this.changeTab}
+        Count={Count}
+        nickName={(userInfo && userInfo.nickName) || "회원"} />
+
+      {/* myprofile */}
+      <div className="space-1" >&nbsp;</div>
+      <MyProfile
+        userInfo={userInfo}
+        MyDetail={MyDetail}
+      // tab={tab}
+      // Count={Count}
+      // changeTab={this.changeTab}
+      />
+
       {/* temp */}
-      <div style={{ marginLeft: "100px", marginTop: "90px" }}>
+      <div className="space-2">&nbsp;</div>
+      <div className="wrapper">
 
-        {/* menu */}
-        {/* profile */}
-        <Title>메시지</Title>
+        {/* title */}
+        <div className="title">
+          메세지
+        </div>
 
-        <Wrapper>
+        {/* peers and message-detail */}
+        <div className="peer-and-message">
+          <div className="peers">
+            <Peers>
+              <div className="title">받은 메세지함</div>
+              {this.props.ChatRooms.map((room, index) =>
+                <Peer key={index} >
+                  {room.thumbnail}
+                  {room.firend_name}
+                  {room.recent}
+                  {/* <div style={{ display: "flex;", flexDirection: "row" }}> */}
+                  {/* <div ><img style={{ width: "25px" }} src={room.thumbnail} /></div> */}
+                  {/* <div>{room.friend_name}<br />{room.recent}</div> */}
+                  {/* </div> */}
+                </Peer>
+              )}
+            </Peers>
+          </div>
 
-          {/* 받은 메세지함 */}
-          <Peers>
-            <div className="title">받은 메세지함</div>
-            {dummy.map((dmy, index) =>
-              <DUMMY key={index} {...dmy} />
-            )}
-          </Peers>
+          <div className="message">
+            {/* 메시지 */}
+            <MessageDetail>
+              <div className="title">국민대 CRC</div>
 
-          {/* 메시지 */}
-          <MessageDetail>
-            <div className="title">국민대 CRC</div>
-
-            {
-              <MessageDetailContainer
+              {<MessageDetailContainer
                 // height={H - (64 + 196)}
                 repaint={this.state.render}
                 id={19}
               />}
-            <div className="detail">
-              {chats.map((chat, index) =>
-                <div key={index}>
+              <div className="detail">
+                {chats.map((chat, index) =>
+                  <div key={index}>
 
-                </div>)}
-            </div>
-            <div className="input"></div>
+                  </div>)}
+              </div>
+              <div className="input"></div>
 
-          </MessageDetail>
-        </Wrapper>
+            </MessageDetail>
 
+          </div>
+
+        </div>
       </div>
-    </React.Fragment>);
+
+    </Wrapper >);
   }
 }
 

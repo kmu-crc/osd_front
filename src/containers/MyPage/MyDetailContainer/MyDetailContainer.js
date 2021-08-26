@@ -18,6 +18,9 @@ import {
   GetMyDesignInDesignerRequest,
   GetLikeGroupInDesignerRequest,
   GetLikeDesignerInDesignerRequest,
+
+  GetTheBestDesignDesignerRequest,
+
 } from "redux/modules/designer";
 
 class MyDetailContainer extends Component {
@@ -69,7 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
   GetLikeGroupInDesignerRequest: (id, page, sort) => dispatch(GetLikeGroupInDesignerRequest(id, page, sort)),
   GetLikeDesignerInDesignerRequest: (id, page, sort) => dispatch(GetLikeDesignerInDesignerRequest(id, page, sort)),
 
-  // GetTheBestDesignRequest: (id) => dispatch(GetTheBestDesignRequest(id)),
+  GetTheBestDesignDesignerRequest: (id) => dispatch(GetTheBestDesignDesignerRequest(id)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyDetailContainer)

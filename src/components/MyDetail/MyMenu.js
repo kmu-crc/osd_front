@@ -22,7 +22,7 @@ const Alarm = ({ count }) => {
 };
 
 const Wrapper = styled.div`
-    width: 168px;
+    width: 174px;
     
     .menu {
         padding: 19px 0px 20px 0px;
@@ -40,9 +40,13 @@ const Wrapper = styled.div`
             color: #4F4F4F;
             opacity: 1;
             cursor: pointer;
-        }
-        :hover {
-            background: #FAFAFA;
+            &.active {
+                color: #FF0000;
+            }
+            :hover {
+                background: #FAFAFA;
+                color: #FF0000;
+            }
         }
     }
     .border {
@@ -67,6 +71,29 @@ const Wrapper = styled.div`
         width: 44px;
         height: 44px;
         position: relative;
+    }
+    .create-design {
+        width: 174px;
+        height: 41px;
+        background: #FF0000 0% 0% no-repeat padding-box;
+        box-shadow: 8px 8px 8px #0000002B;
+        opacity: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .text {
+            margin: auto;
+            width: 134px;
+            height: 28px;
+            text-align: center;
+            font-weight: medium;
+            font-size: 20px;
+            line-height: 28px;
+            font-family: Spoqa Han Sans Neo;
+            letter-spacing: 0px;
+            color: #FFFFFF;
+            opacity: 1;
+        }
     }
 `;
 
@@ -101,14 +128,18 @@ export class MyMenu extends React.Component {
         window.location.href = "/mymodify";
     };
     modifyMyDesign = () => {
-        alert('modify my design');
+        this.props.changeTab("manage");
     };
     openAlarmPopup = () => {
         alert('open alarm popup');
     };
+    gotoCreateDesign = () => {
+        window.location.href = "/createDesign";
+    };
+
 
     render() {
-        const { nickName, Count, } = this.props;
+        const { nickName, Count, tab, } = this.props;
 
         return (<Wrapper>
             {/* welcome */}
@@ -117,6 +148,16 @@ export class MyMenu extends React.Component {
                 <br />
                 반갑습니다!
             </div>
+
+            {/* CREATE DESIGN */}
+            <div className="create-design">
+                <a onClick={this.gotoCreateDesign}>
+                    <div className="text">
+                        디자인 등록하기
+                    </div>
+                </a>
+            </div>
+
             {/* alarm icon */}
             <div className="menu border">
                 {/* <div className="icon_wrap marginRight1"> */}
@@ -131,19 +172,18 @@ export class MyMenu extends React.Component {
                     <Message count={Count && Count.countMsg} />
                 </a>
             </div>
-            {/* logout */}
-            <div className="menu border">
-                <a onClick={this.logout}>로그아웃</a>
-            </div>
             {/* manage my design */}
-            <div className="menu border">
-                <a onClick={this.modifyMyDesign}>내 디자인 관리</a>
+            <div className={`menu border`}>
+                <a className={`${tab === "manage" ? "active" : ""}`} onClick={this.modifyMyDesign}>내 디자인 관리</a>
             </div>
             {/* modify myinfo */}
-            <div className="menu default">
-                <a onClick={this.modifyMyInfo}>회원정보 수정</a>
+            <div className="menu border default">
+                <a className={`${window.location.href.search('mymodify') > -1 ? "active" : ""}`} onClick={this.modifyMyInfo}>회원정보 수정</a>
             </div>
-
+            {/* logout */}
+            <div className="menu ">
+                <a onClick={this.logout}>로그아웃</a>
+            </div>
         </Wrapper>);
     };
 };
