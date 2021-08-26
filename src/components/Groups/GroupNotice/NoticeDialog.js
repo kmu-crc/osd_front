@@ -68,50 +68,47 @@ const Navi = styled.div`
   }
 `;
 const NoticeModalWrapper = styled(Modal)`
-  min-width: 500px;
-  min-height: 350px;
-  width: 85%;
-  padding: 35px;
+  width:100% !important;
+  max-width:1152px !important;
+  height:525px;
+  padding:26px 49px !important;
   background-color: white;
   display: flex;
-  
+
   .close-box{
     position: absolute;
-    right: 25px;
-    top: 25px;
+    width:60px;
+    height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    right: 0px;
+    top: 0px;
   }
   .title {
+    width:100%;
     text-alignment: center;
     display: flex;
     flex-direction: row;
-    justify-content: flex-between;
+    justify-content: space-between;
+    align-items:center;
     cursor: default;
-    h2 {
-        margin-left: 10px;
-        margin-top: 10px;
-        padding: 5px;
+    .text_{
+        font-family:Spoqa Han Sans Neo;
+        font-weight:500;
+        font-size:37px;
     }
     .newbutton {
         margin-right: 10px;
         margin-top: 5px;
         height: 100%;
-        width: max-content;
-        margin-left: auto;
+        width: 165px;
+        margin-left: 10px;
         text-alignment: center;
     }
   }
-  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
-  and (max-width : ${1024}px) { 
-      min-width:100%;
-   }
-  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-  and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
-      min-width:100%;
-   }
-
-
-
-    .empty {
+  .empty {
+        padding: 5px 11px 4px 11px;
         height: 150px;
     }
     .bottom-buttons {
@@ -129,40 +126,60 @@ const NoticeModalWrapper = styled(Modal)`
 const NoticeListWrapper = styled.div`
     width: 100%;
     padding: 5px;
-    font-size: 1.25rem;
+    font-size: 20px;
     cursor: default;
-
+    .ellipsis{
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+      }
     .header { 
-        background-color: #EFEFEF;
+        background-color: #CECECE;
         font-weight: 700;
-        padding: 5px;
+        font-family:Spoqa Han Sans Neo;
+        font-weight:Medium;
+        padding: 5px 11px 4px 11px;
         width: 100%;
         display: flex;
-        flex-direction: row;
-
+        align-items:center;
+        margin-top:13px;
         .num { 
+            height:28px;
             text-align: center; 
-            width: 10%;
+            width: 4%;
+            min-width:max-content;
+            display:flex;
+            align-items:center;
         }
         .header-title { 
-            text-align: center; 
-            width: 80%;
+            height:28px;
+            text-align: left; 
+            width: 890%;
+            padding-left:110px;
+            display:flex;
+            align-items:center;
         }
         .create_time { 
+            height:28px;
             text-align: center; 
-            width: 20%;
+            width: 6%;
+            min-width:max-content;
+            display:flex;
+            align-items:center;
         }
     }
 
     .row {
         background-color: white;
-        font-weight: 500;
-        padding: 5px;
+        font-size: 15px;
+        font-family:Noto Sans KR;
+        font-weight: 300;
+        padding: 19px 11px 19px 11px;
         width: 100%;
         display: flex;
         flex-direction: row;
         cursor: pointer;
-        border-bottom: 1px solid #EFEFEF;
+        // border-bottom: 1px solid #EFEFEF;
 
         :hover { 
             background-color: #EFEFEF;
@@ -170,25 +187,34 @@ const NoticeListWrapper = styled.div`
         }
         .num { 
             text-align: center; 
-            width: 10%;
+            width: 3%;
+            min-width:max-content;
         }
         .row-title { 
             text-align: left; 
-            padding-left: 15px;
-            width: 80%;
+            padding-left:120px;
+            width: 92%;
             white-space: nowrap; 
             text-overflow: ellipsis; 
         }
         .create_time { 
-            text-align: center;
-            width: 20%;
+            text-align: center; 
+            width: 5%;
+            min-width:max-content;
         }
     }
 `;
 const NoticeReadWrapper = styled.div`
     width: 100%;
-    padding: 10px;
-
+    background-color: #CECECE;
+    font-weight: 700;
+    font-family:Spoqa Han Sans Neo;
+    font-weight:Medium;
+    padding: 5px 11px 4px 11px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-top:13px;
     .header-element {
         font-weight: 700;
         display: flex;
@@ -210,7 +236,6 @@ const NoticeReadWrapper = styled.div`
     .content {
         border-top: 1px solid #EAEAEA;
         border-bottom: 1px solid #EAEAEA;
-        padding: 25px;
         font-weight: 500;
         min-height: 100px;
         overflow-y: auto;
@@ -253,7 +278,6 @@ const CloseButton = styled.div`
   font-size: 1.25rem;
   font-weight: 500;
   padding: 10px 15px;
-  border-radius: 5px;
   cursor: pointer;
   :hover {
     background-color: ${p => p.bgcolor_hover ? p.bgcolor_hover : "#CECECE"};
@@ -349,15 +373,17 @@ d      pagination
                 onClose={() => close()}>
 
                 <div className="close-box" onClick={() => close()}>
-                    <Cross angle={45} color={"#707070"} weight={5} width={35} height={35} />
+                    <Cross angle={45} color={"black"} weight={5} width={35} height={35} />
                 </div>
 
-                <Modal.Content>
+                {/* <Modal.Content> */}
                     {/* title & write-button */}
                     <div className="title">
-                        <h2>공지사항</h2>
+                        <div className="newbutton"/>
+                        <div className="text_">공지사항</div>
+                        <div className="newbutton">
                         {mode === LIST && user_id === group_owner_id
-                            ? <div className="newbutton">
+                            ? 
                                 <Button
                                     onClick={() => { this.setState({ mode: WRITE }) }}
                                     color={"white"}
@@ -365,8 +391,9 @@ d      pagination
                                     bgcolor_hover={"#DD0000"}
                                     marginTop={"0px"}
                                     marginRight={"0px"}
-                                >공지사항 등록하기</Button></div>
+                                >공지사항 등록하기</Button>
                             : null}
+                        </div>
                     </div>
 
                     {mode === LIST
@@ -465,11 +492,11 @@ d      pagination
                             {mode === WRITE || mode === READ
                                 ? <Button onClick={() => this.setState({ mode: LIST, title: "", content: "", notice: null })}>목록으로</Button>
                                 : null}
-                            <CloseButton  onClick={() => close()}>닫기</CloseButton>
+                            {/* <CloseButton  onClick={() => close()}>닫기</CloseButton> */}
                         </div>
                     </div>
 
-                </Modal.Content >
+                {/* </Modal.Content > */}
             </NoticeModalWrapper >);
     }
 };

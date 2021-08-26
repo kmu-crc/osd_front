@@ -14,7 +14,29 @@ import {
   // GetLastestGroupNoticeRequest,
 } from "redux/modules/group";
 import GroupDetail from "components/Groups/GroupDetail";
+import Category from "components/Commons/Category"
+import styled from "styled-components";
 
+const Wrapper = styled.div`
+  display:flex;
+  .category_wrapper{
+    margin-top:117px;
+    margin-left:140px;
+    margin-right:54px;
+  }
+  .content{
+    width:100%;
+    margin-top:90px;
+    margin-bottom:100px;
+  }
+  .scroll_wrapper{
+    overflow-y:scroll;
+  }
+  .orderBox{
+    width:100%;
+    padding-right:85px;
+  }
+`
 
 class GroupDetailContainer extends Component {
   componentWillMount() {
@@ -24,9 +46,18 @@ class GroupDetailContainer extends Component {
   }
   render() {
     return (
-      <GroupDetail
-        {...this.props}
-        getCountGroup={GetTotalCountGroupInGroupRequest} />
+      <React.Fragment>
+        <Wrapper>
+          <div className="category_wrapper">
+                  <Category/>
+          </div>
+          <div className="content">
+          <GroupDetail
+            {...this.props}
+            getCountGroup={GetTotalCountGroupInGroupRequest} />
+          </div>
+        </Wrapper>
+      </React.Fragment>
     )
   }
 }

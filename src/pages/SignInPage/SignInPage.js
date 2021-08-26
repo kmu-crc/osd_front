@@ -6,7 +6,7 @@ class SignInPage extends Component {
   render() {
     return (
     <ClientTemplate>
-      <SignInContainer history={this.props.history} />
+      <SignInContainer loginOpen={true} history={this.props.history} />
     </ClientTemplate>
     )
   }

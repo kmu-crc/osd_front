@@ -46,16 +46,43 @@ const Warning_Ani2 = keyframes`
     opacity:0;
   }
 `;
+
+const Warning_Ani3 = keyframes`
+  0% {
+    border:1px solid rgba(255,255,255,0);
+  }
+  25% {
+    border:1px solid rgba(255,255,255,1);
+  }
+  50% {
+    border:1px solid rgba(255,255,255,0);
+  }
+  75% {
+    border:1px solid rgba(255,255,255,1);
+  }
+  100% {
+    border:1px solid rgba(255,255,255,0);
+  }
+`;
 const Wrapper = styled.div`
     width:100%;
     height:100%;
     background-color:#000000A1;
     position:absolute;
     z-index:888;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    position:relative;
+    // display:flex;
+    // justify-content:center;
+    // align-items:center;
+    // position:relative;
+    margin-top:90px;
+    .content_{
+        width:100%;
+        height:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        position:relative;
+    }
     .none_display{
         display:none;
     }
@@ -78,6 +105,14 @@ const Wrapper = styled.div`
     .warning_logo_ani{
         display:inline;
         animation-name: ${Warning_Ani1};
+        animation-duration:1s;
+        animation-direction:alternate;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease-out;  
+    }
+    .warning_button_ani{
+        display:inline;
+        animation-name: ${Warning_Ani3};
         animation-duration:1s;
         animation-direction:alternate;
         animation-fill-mode: forwards;
@@ -139,6 +174,9 @@ const Wrapper = styled.div`
         font-size:15px;
         cursor:pointer;
     }
+    .borderAdd{
+        border:1px solid white;
+    }
     .marginTop1{margin-top:36px;}
     .marginTop2{margin-top:68px;}
 `
@@ -172,7 +210,8 @@ class SignInModal extends Component {
         let warningMsg1 = document.getElementById("warning_logo");
         let warningMsg2 = document.getElementById("warning_text1");
         let warningMsg3 = document.getElementById("warning_text2");
-        
+        let warningMsg4 = document.getElementById("warning_text3");
+
         // ---------------- 예외처리
         let checkedMail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         if (email === "") {
@@ -180,11 +219,13 @@ class SignInModal extends Component {
             warningMsg1.className = "logoBox_warning warning_logo_ani";
             warningMsg2.className = "warningText warning_text_ani";
             warningMsg3.className = "warningText warning_text_ani";
+            warningMsg4.className = "halfRow grayEdgeButton borderAdd warning_button_ani";
 
             setTimeout(()=>{
                 warningMsg1.className = "logoBox_warning warning_logo_ani";
                 warningMsg2.className = "none_display";
                 warningMsg3.className = "none_display";
+                warningMsg4.className = "halfRow grayEdgeButton";
             },1000)
             return;
         }
@@ -193,11 +234,14 @@ class SignInModal extends Component {
             warningMsg1.className = "logoBox_warning warning_logo_ani";
             warningMsg2.className = "warningText warning_text_ani";
             warningMsg3.className = "warningText warning_text_ani";
+            warningMsg4.className = "halfRow grayEdgeButton borderAdd warning_button_ani";
 
             setTimeout(()=>{
                 warningMsg1.className = "logoBox_warning warning_logo_ani";
                 warningMsg2.className = "none_display";
                 warningMsg3.className = "none_display";
+                warningMsg4.className = "halfRow grayEdgeButton";
+
             },1000)
             return;
         }
@@ -206,11 +250,14 @@ class SignInModal extends Component {
             warningMsg1.className = "logoBox_warning warning_logo_ani";
             warningMsg2.className = "warningText warning_text_ani";
             warningMsg3.className = "warningText warning_text_ani";
+            warningMsg4.className = "halfRow grayEdgeButton borderAdd warning_button_ani";
+            let warningMsg4 = document.getElementById("warning_text3");
 
             setTimeout(()=>{
                 warningMsg1.className = "logoBox_warning warning_logo_ani";
                 warningMsg2.className = "none_display";
                 warningMsg3.className = "none_display";
+                warningMsg4.className = "halfRow grayEdgeButton";
             },1000)
             return;
         }
@@ -237,7 +284,11 @@ class SignInModal extends Component {
                 if (res.type === "opendesign/authentication/AUTH_SIGNIN_SUCCESS") {
                     // alert('로그인에 성공하였습니다.') // SetSession("opendesign_token",res.token)
                     this.props.signin();
-                    window.history.back();
+                    if(window.location.pathname == "signin"||window.location.pathname=="signup"){
+                        window.location.href="/";
+                    }else{
+                        window.history.back();
+                    }
                 }
                 else {
                     // await alert('로그인에 실패하였습니다', "확인");
@@ -246,11 +297,13 @@ class SignInModal extends Component {
                     warningMsg1.className = "logoBox_warning warning_logo_ani";
                     warningMsg2.className = "warningText warning_text_ani";
                     warningMsg3.className = "warningText warning_text_ani";
-        
+                    warningMsg4.className = "halfRow grayEdgeButton borderAdd warning_button_ani";
+
                     setTimeout(()=>{
                         warningMsg1.className = "logoBox_warning warning_logo_ani";
                         warningMsg2.className = "none_display";
                         warningMsg3.className = "none_display";
+                        warningMsg4.className = "halfRow grayEdgeButton";
                     },1000)
                 }
             })
@@ -314,40 +367,42 @@ class SignInModal extends Component {
         return (
             <React.Fragment>
                 <Wrapper isWarning={this.state.isWarning}>
-                    <div className="loginBox">
-                    <img src={new_logo_opendesign_shadow} className="logoBox"/>
-                    <img src={new_logo_opendesign_shadow_red} id="warning_logo" className="logoBox_warning"/>
-                    <div className="marginTop2">
-                        <div className="row flexCenter ">
-                            <div className="label">ID</div>
-                                <div className="textBox ">
-                                    <div id="warning_text1" className="none_display">
-                                            <img src={new_logo_warning} className="warningImg"/>
-                                            <span>ID또는 비밀번호 오류입니다.</span>
+                    <div className="content_">
+                        <div className="loginBox">
+                        <img src={new_logo_opendesign_shadow} className="logoBox"/>
+                        <img src={new_logo_opendesign_shadow_red} id="warning_logo" className="logoBox_warning"/>
+                        <div className="marginTop2">
+                            <div className="row flexCenter ">
+                                <div className="label">ID</div>
+                                    <div className="textBox ">
+                                        <div id="warning_text1" className="none_display">
+                                                <img src={new_logo_warning} className="warningImg"/>
+                                                <span>ID또는 비밀번호 오류입니다.</span>
+                                        </div>
+                                        <InputText onKeyDown={this.handlesubmitEnter} name='email' type='text' value={email || ""}
+                                            onChange={this.handeEmailChange} placeholder="아이디(이메일주소)를 입력하세요" />
                                     </div>
-                                    <InputText onKeyDown={this.handlesubmitEnter} name='email' type='text' value={email || ""}
-                                        onChange={this.handeEmailChange} placeholder="아이디(이메일주소)를 입력하세요" />
-                                </div>
-                            <div onClick={this.onCheckSaveID}  className={`save ${this.state.saveID == true?"save_now":"save_none"}`}>아이디 저장</div>
+                                <div onClick={this.onCheckSaveID}  className={`save ${this.state.saveID == true?"save_now":"save_none"}`}>아이디 저장</div>
+                            </div>
+                            <div className="row flexCenter marginTop1">
+                                <div className="label">PW</div>
+                                    <div className="textBox ">
+                                    <div id="warning_text2" className="none_display">
+                                            <img src={new_logo_warning} className="warningImg"/>
+                                            ID또는 비밀번호 오류입니다.
+                                    </div>
+                                    <InputText onKeyDown={this.handlesubmitEnter} name='password' type='password' value={password || ""}
+                                        onChange={this.handlePasswordChange} placeholder="비밀번호를 입력하세요." />
+                                    </div>
+                                <div onClick={this.onCheckSaveLogin} className={`save ${this.state.saveLogin == true?"save_now":"save_none"}`}>로그인 상태 유지</div>
+                            </div>
                         </div>
+                        <div className="row grayButton marginTop1" onClick={this.signin}>로그인</div>
                         <div className="row flexCenter marginTop1">
-                            <div className="label">PW</div>
-                                <div className="textBox ">
-                                <div id="warning_text2" className="none_display">
-                                        <img src={new_logo_warning} className="warningImg"/>
-                                        ID또는 비밀번호 오류입니다.
-                                </div>
-                                <InputText onKeyDown={this.handlesubmitEnter} name='password' type='password' value={password || ""}
-                                    onChange={this.handlePasswordChange} placeholder="비밀번호를 입력하세요." />
-                                </div>
-                            <div onClick={this.onCheckSaveLogin} className={`save ${this.state.saveLogin == true?"save_now":"save_none"}`}>로그인 상태 유지</div>
+                            <div className="halfRow grayEdgeButton" onClick={this.onClose}><Link style={{ color: "white" }} to="/signup" onClick={this.onClose}>회원가입</Link></div>
+                            <div id="warning_text3" className={`halfRow grayEdgeButton`} onClick={this.findIDPW}>비밀번호 찾기</div>
                         </div>
-                    </div>
-                    <div className="row grayButton marginTop1" onClick={this.signin}>로그인</div>
-                    <div className="row flexCenter marginTop1">
-                        <div className="halfRow grayEdgeButton" onClick={this.onClose}><Link style={{ color: "white" }} to="/signup" onClick={this.onClose}>회원가입</Link></div>
-                        <div className="halfRow grayEdgeButton" onClick={this.findIDPW}>비밀번호 찾기</div>
-                    </div>
+                        </div>
                     </div>
                 </Wrapper>
             </React.Fragment>
