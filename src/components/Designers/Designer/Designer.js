@@ -19,6 +19,7 @@ import new_logo_view from "source/new_logo_view.svg";
 import new_logo_favorite from "source/new_logo_favorite.svg";
 import new_logo_share from "source/new_logo_share.svg";
 import new_logo_note from "source/new_logo_note.svg";
+import new_logo_heart_red from "source/new_logo_heart_red.svg";
 
 //styled
 const Designer_card = styled.div`
@@ -48,6 +49,7 @@ const Designer_card = styled.div`
     display:flex;
     align-items:center;
     justify-content:space-between;
+    font-size:19px;
   }
   .content_{
     width:100%;
@@ -131,8 +133,11 @@ const Designer_card = styled.div`
       .text{
         width:36px;
         text-align:left;
-        font-size:10px;
+        font-size:16px;
         margin-right:20px;
+        font-family:SpoqaHanSans;
+        font-weight:Regular;
+        text-align:right;
       }
   }
 `
@@ -154,7 +159,7 @@ class Designer extends Component {
 
     return (
     <React.Fragment>
-      <Designer_card>
+      <Designer_card onClick={event => this.gotoDesignerDetailPage(designer.uid, event)}>
         <img src={img} className="thumbnail"/>
           <div className="infoBox">
           <div className="wrap_">
@@ -174,7 +179,7 @@ class Designer extends Component {
           <div className="counter">
                 <img className="icon" src={new_logo_view}/>
                 <div className="text">{NumberFormat(designer.total_view == null ? 0 : designer.total_view)}</div>
-                <img className="icon" src={new_logo_favorite}/>
+                <img className="icon" src={new_logo_heart_red}/>
                 <div className="text">{NumberFormat(designer.total_like == null ? 0 : designer.total_like)}</div>
                 <img className="icon" src={new_logo_share}/>
                 <div className="text">{NumberFormat(designer.total_group == null || designer.total_design == null ? 0 : designer.total_group + designer.total_design)}</div>

@@ -29,6 +29,22 @@ const Wrapper = styled.div`
     padding: 2px 5px;
     line-height: 1rem;
   }
+  .button_{
+    width:142px;
+    height: 41px;
+    display:flex;
+    font-size:20px;
+    font-family:Spoqa Han Sans Neo;
+    font-weight:400;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    box-shadow: 8px 8px 8px #0000002B;
+    cursor:pointer;
+  }
+  .bg_green{background-color:#1E9B79;}
+  .marginRight{margin-right:17px;}
+
 `;
 
 export default class GroupNotice extends Component {
@@ -89,8 +105,8 @@ export default class GroupNotice extends Component {
         : null}
 
       <Wrapper>
-        <ButtonOSD onClick={() => this.setState({ notice: true })}>공지사항</ButtonOSD>
-        <ButtonOSD onClick={() => this.setState({ board: true })}>게시판</ButtonOSD>
+        <div className="button_ bg_green marginRight" onClick={() => this.setState({ notice: true })}>공지사항</div>
+        <div className="button_ bg_green marginRight" onClick={() => this.setState({ board: true })}>게시판</div>
 
         {user_id === GroupDetail.user_id && hasProgrammingDesign
           ? <ButtonOSD onClick={this.getExportFile}>제출현황보기</ButtonOSD>

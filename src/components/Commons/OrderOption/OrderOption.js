@@ -4,28 +4,30 @@ import opendesigncss from "opendesign_style";
 
 const OrderWrapper = styled.div`
     width: 100%;
+    height:80px;
     z-index: 820;
     display: flex;
-    justify-content: flex-end;
-    font-size: 20px;
+    align-items:center;
+    justify-content:flex-end;
     font-family: Noto Sans KR;
-    padding: 10px;
 `
 const OrderElement = styled.div`
-    width:max-content;
+    width:128px;
+    height:34px;
     font-family: Noto Sans KR;
     font-weight: 500;
-    line-height: 29px;
-    font-size: 20px;
+    font-size: 18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
     cursor: pointer;
-    
+    color: black;
+
     &.selected {
-        color: #FF0000;
         margin-left: ${props => props.marginRight};
-        border-bottom: 1.5px solid red;
+        border:1px solid #707070;
     }
     &.unselected {
-        color: #707070;
         margin-left: ${props => props.marginRight};
     }
     @media only screen and (min-width : ${opendesigncss.resolutions.SmallMinWidth}px) and (max-width : ${opendesigncss.resolutions.SmallMaxWidth}px) {

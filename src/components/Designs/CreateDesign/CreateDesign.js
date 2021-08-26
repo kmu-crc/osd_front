@@ -28,6 +28,7 @@ import templateImgEmpty from "source/template-image-empty.png";
 import new_logo_view from "source/new_logo_view.svg";
 import new_logo_favorite from "source/new_logo_favorite.svg";
 import new_logo_share from "source/new_logo_share.svg";
+import new_logo_plus from "source/new_logo_plus.png"
 
 const CropperDialog = styled(Modal)`
   max-width: ${props => props.ratio < 1.0 ? 450 : 650}px;
@@ -47,6 +48,23 @@ const CropperDialog = styled(Modal)`
     margin-right: 75px;
     margin-top: 38px;
   }
+`;
+const CustomButton = styled.div`
+  cursor: pointer;
+  width: 86px;
+  height: 49px;
+  background-color: ${props => props.isComplete ? "#FF0000" : "#8D8D8D"}; 
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-left:34px;
+  cursor:pointer;
+  `;
+const BtnText = styled.p`
+  font-family:Spoqa Han Sans Neo;
+  font-weight:Medium;
+  font-size:28px;
+  color:white;
 `;
 const PeerBox = styled.div`
   display: flex;
@@ -173,7 +191,8 @@ const Wrapper = styled.div`
   .marginRight2{margin-right:0px;}
   .board{
     width:100%;
-    height:100%;
+    height:max-content;
+    // height:100%;
     padding:45px 27px;
     .board_label{
       min-width:max-content;
@@ -186,9 +205,33 @@ const Wrapper = styled.div`
     }
     .board_box{
       width:100%;
-      height:90px;
+      min-height:90px;
+      height:max-content;
+      padding-left:30px;
     }
     .paddingLeft1{padding-left:191px;}
+    .buttonBox{
+      display:flex;
+      justify-content:flex-end;
+      align-items:center;
+      margin-top:26px;
+    }
+  }
+  .addImg{
+    width:200px;
+    height:200px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color:#E9E9E9;
+    margin-bottom:20px;
+    margin-top:10px;
+    object-fit:cover;
+    .plus{
+      width:100px;
+      height:100px;
+      object-fit:fit;
+    }
   }
   .sub{
     height:40px;
@@ -206,13 +249,13 @@ const Wrapper = styled.div`
    }
   }
   .findThumbnailText{
-    margin-left:30px;
-    border:2px solid red;
-    padding:5px 20px 4px 20px;
-    border-radius:20px;
-    color:red;
+    // margin-left:30px;
+    // border:2px solid red;
+    // padding:5px 20px 4px 20px;
+    // border-radius:20px;
+    // color:red;
     cursor:pointer;
-    font-size:22px;
+    // font-size:22px;
   }
   .dropdown{
     width:228px;
@@ -255,8 +298,11 @@ const QuestionGuide = styled.div`
     font-weight:400;
     padding:10px;
     position:absolute;
-    left:40px;
-    top:0px;
+
+    // left:15px;
+    // top:-50px;
+    left:${props=>props.left}px;
+    top:${props=>props.top}px;
 
     z-index:888;
 
@@ -335,7 +381,7 @@ const InputText = styled.input`
   outline:none;
   border:none;
   resize:none;
-  margin-left:30px;
+  // margin-left:30px;
   margin-top:14px;
   font-size:22px;
 `
@@ -347,7 +393,7 @@ const InputTextArea = styled.textarea`
   outline:none;
   border:none;
   resize:none;
-  margin-left:30px;
+  // margin-left:30px;
   margin-top:24px;
   font-size:22px;
 `
@@ -997,8 +1043,10 @@ class CreateDesign extends Component {
           <div className="navi_menu">
             <div className="navi_header">디자인 등록하기</div>
             <div className={`navi_label borderBottom ${this.state.step==0?"red":"black"}`} onClick={()=> this.setState({ step: 0 })}>{scrollmenu[0].txt}</div>
-            <div className={`navi_label borderBottom ${this.state.step==1?"red":"black"}`} onClick={()=> this.setState({ step: 1 })}>{scrollmenu[1].txt}</div>
-            <div className={`navi_label ${this.state.step==2?"red":"black"}`} onClick={()=> this.setState({ step: 2 })}>{scrollmenu[2].txt}</div>
+            <div className={`navi_label borderBottom ${this.state.step==1?"red":"black"}`}  
+                  onClick={() => this.state.basic ?this.setState({ step: 1 }) :alert("기본 정보의 필수항목(*)을 입력하셔야 합니다.")}>{scrollmenu[1].txt}</div>
+            <div className={`navi_label ${this.state.step==2?"red":"black"}`} 
+                   onClick={() => this.state.additional ? this.setState({ step: 2 }) : alert("부가 정보의 필수항목(*)을 입력하셔야 합니다.")}>{scrollmenu[2].txt}</div>
           </div>
           <div className="vLine"/>
           <div className="summary">
@@ -1026,15 +1074,26 @@ class CreateDesign extends Component {
             <React.Fragment>
               <div className="board">
                 <div className="board_label">1. 대표 이미지 등록하기<sub className="sub marginRight2">*</sub>
-                     <QuestionGuide bubbleSize={584}>?
+                     <QuestionGuide left={15} top={-50} bubbleSize={584}>?
                         <div className="messageBubble">
                           디자이너님의 멋진 디자인을 보여주세요! <br/> 대표 이미지는 JPG/JPEG/PNG/BMP 파일로 등록하실 수 있어요!
                         </div>
                      </QuestionGuide>
-                     <label className="findThumbnailText" htmlFor="file">찾아보기</label>
-                     <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/png, image/bmp, image/jpeg, image/jpg" />
+
+                     {/* <label className="findThumbnailText" htmlFor="file">찾아보기</label>
+                     <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/png, image/bmp, image/jpeg, image/jpg" /> */}
                 </div>
-                <div className="board_box"></div>
+                <div className="board_box">
+                  <label className="findThumbnailText" htmlFor="file">
+                    {
+                      this.state.thumbnail == null||this.state.thumbnail==noimg?
+                      <div className="addImg"><img src={new_logo_plus} className="plus"/></div>
+                      :
+                      <img src={this.state.thumbnail} className="addImg"/>
+                    }
+                  </label>
+                  <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/png, image/bmp, image/jpeg, image/jpg" />
+                </div>
                 <div className="board_label">2. 디자인 이름<sub className="sub marginRight1">*</sub></div>
                 <div className="board_box">
                       <InputText onChange={this.onChangeValueTitle} onKeyDown={this.onKeyDownEnter}
@@ -1047,8 +1106,18 @@ class CreateDesign extends Component {
                         </div>
                       </QuestionGuide> */}
                 </div>
+                <div className="board_box">
                       <InputTextArea id="textBox" onChange={this.onChangeValueExplanation} 
                                 maxLength="350" placeholder="디자인 설명을 입력해주세요. (350자 이내)" />
+                </div>
+                {step === 0 && 
+                <div className="buttonBox">
+                <CustomButton
+                  onClick={this.state.basic ? this.gotoNextStep : this.checkInputForm}
+                  isComplete={this.state.basic}>
+                  <BtnText>다음</BtnText>
+                </CustomButton>
+                </div>}
               </div>
             </React.Fragment>
           }
@@ -1099,7 +1168,7 @@ class CreateDesign extends Component {
                 }
                 </div> 
                 <div className="board_label">2. 멤버 초대하기
-                      <QuestionGuide bubbleSize={600}>
+                      <QuestionGuide left={-580} top={-75} bubbleSize={600}>
                         ?
                         <div className="messageBubble">
                           함께 디자인을 만들어 갈 멤버를 초대해 주세요. <br/>
@@ -1129,7 +1198,20 @@ class CreateDesign extends Component {
                      <div className="licenseItem"><CheckBox2 checked={this.state.license2} onChange={this.onCheckedLicense02} /><span className="textLabel disabled">원작자를 표시합니다.</span></div>
                      <div className="licenseItem"><CheckBox2 checked={this.state.license3} onChange={this.onCheckedLicense03} /><span className="textLabel">수정이 가능합니다.</span></div>
                 </div>
+
+                {step === 1 && 
+                <div className="buttonBox">
+                <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
+                  <BtnText>뒤로</BtnText>
+                </CustomButton>
+                <CustomButton
+                  onClick={this.state.additional ? this.gotoNextStep : this.checkInputForm}
+                  isComplete={this.state.additional}>
+                  <BtnText>다음</BtnText>
+                </CustomButton>
+                </div>}
               </div>
+
             </React.Fragment>
           }
           {
@@ -1214,6 +1296,18 @@ class CreateDesign extends Component {
                 </div>
               </EditorWrapper>
             : null}
+            {step === 2 && 
+            <div className="buttonBox">
+              <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
+                <BtnText>뒤로</BtnText>
+              </CustomButton>
+              <CustomButton
+                isComplete={this.state.type === "grid" && this.state.template == null ? false : true}
+                onClick={this.submit}
+              >
+                <BtnText>완료</BtnText>
+              </CustomButton>
+            </div>}
             </div>
             </React.Fragment>
           }

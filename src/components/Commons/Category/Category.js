@@ -17,6 +17,23 @@ const Container = styled.div`
     .selected{
         color:red;
     }
+
+    .button{
+        width:100%;
+        height:41px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        color:white;
+        font-size:20px;
+        font-family:Spoqa Han Sans Neo;
+        font-weight:medium;
+        box-shadow: 8px 8px 8px #0000002B;
+        cursor:pointer;
+    }
+    .blue{background-color:#1262AB;}
+    .purple{background-color:#7E1E9B;}
+    .green{background-color:#1E9B79;}
 `
 const Main_element = styled.div`
     width:170px;
@@ -62,13 +79,36 @@ class Category extends Component {
         const selected2 = third_selected && third_selected.value;
         const hidemenu = this.context.hidemenu ? "hidemenu " : "";
         const larger = this.context.larger ? "larger " : "";
+
+        const isDesign =window.location.pathname === "/design"
+        || window.location.pathname.search("/design/") > -1 ? true : false
+        || window.location.pathname.search("/designDetail/") > -1 ? true : false
+        || window.location.pathname.search("/createDesign/") > -1 ? true : false
+        || window.location.pathname.search("/modifyDesign/") > -1 ? true : false;
+        const isGroup = window.location.pathname === '/group'
+        || window.location.pathname.search("/group/") > -1 ? true : false
+        || (window.location.pathname.search('/groupDetail/') > -1 ? true : false)
+        || window.location.pathname.search("/createGroup/") > -1 ? true : false
+        || window.location.pathname.search("/modifyGroup/") > -1 ? true : false;
+        const isDesigner = window.location.pathname === '/designer'
+        || window.location.pathname.search("/designer/") > -1 ? true : false
+        || (window.location.pathname.search('/designerDetail/') > -1 ? true : false)
+        || window.location.pathname.search("/createDesigner/") > -1 ? true : false
+        || window.location.pathname.search("/modifyDesigner/") > -1 ? true : false;
+        
         return (<Container className={`${hidemenu}${larger}`} >
             <div className="main_category">
-            
-            {category1.map((element,index) => {
+            {isDesign == true?
+            <div className="button blue" onClick={()=>window.location.href="/createDesign"}>디자인 등록하기</div>:null}
+            {isGroup == true?
+            <div className="button green" onClick={()=>window.location.href="/createGroup"}>그룹 등록하기</div>:null}
+            {isDesigner == true?
+            <div className="button purple" onClick={()=>window.location.href="/createDesigner"}>디자이너 등록하기</div>:null}
+            {!isGroup&&category1.map((element,index) => {
                 console.log(index);
                 return(
                     <React.Fragment>
+
                         <Main_element
                         className={`${main_selected && main_selected.value === element.value ? "selected" : ""} ${index!=0?"borderTop":""}`}
                         onClick={() => this.clickedMainCategory(element)}

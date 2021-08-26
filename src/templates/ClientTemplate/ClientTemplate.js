@@ -70,9 +70,9 @@ const NavigationAni = styled.div`
 `
 const Client = styled.div`
   // width:1920px;
-  // height:1080px;
   width:100%;
   height:1080px;
+  // min-height:1080px;
   overflow-x:hidden;
   overflow-y:${
     window.location.pathname == "/"?

@@ -73,46 +73,45 @@ const Navi = styled.div`
   }
 `;
 const BoardModalWrapper = styled(Modal)`
-  min-width: 500px;
-  min-height: 350px;
-  width: 85%;
-  padding: 35px;
-  background-color: white;
-  display: flex;
+    width:100% !important;
+    height:525px;
+    max-width:1152px !important;
+    padding:26px 49px !important;
+    background-color: white;
+    display: flex;
   
   .close-box{
     position: absolute;
-    right: 25px;
-    top: 25px;
+    width:60px;
+    height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    right: 0px;
+    top: 0px;
   }
   .title {
+    width:100%;
     text-alignment: center;
     display: flex;
     flex-direction: row;
-    justify-content: flex-between;
+    justify-content: space-between;
+    align-items:center;
     cursor: default;
-    h2 {
-        margin-left: 10px;
-        margin-top: 10px;
-        padding: 5px;
+    .text_{
+        font-family:Spoqa Han Sans Neo;
+        font-weight:500;
+        font-size:37px;
     }
     .newbutton {
-        margin-right: 10px;
         margin-top: 5px;
         height: 100%;
-        width: max-content;
-        margin-left: auto;
+        min-width: 85px;
+        width:max-content;
         text-alignment: center;
+        
     }
   }
-  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
-  and (max-width : ${1024}px) { 
-      min-width:100%;
-   }
-  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-  and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
-      min-width:100%;
-   }
 
 
 
@@ -132,74 +131,96 @@ const BoardModalWrapper = styled(Modal)`
     }
 `;
 const NoticeListWrapper = styled.div`
+width: 100%;
+padding: 5px;
+font-size: 20px;
+cursor: default;
+.header { 
+    background-color: #CECECE;
+    font-weight: 700;
+    font-family:Spoqa Han Sans Neo;
+    font-weight:Medium;
+    padding: 5px 11px 4px 11px;
     width: 100%;
-    padding: 5px;
-    font-size: 1.25rem;
-    cursor: default;
+    display: flex;
+    align-items:center;
+    margin-top:13px;
+    .num { 
+        height:28px;
+        text-align: center; 
+        width: 4%;
+        min-width:max-content;
+        display:flex;
+        align-items:center;
+    }
+    .header-title { 
+        height:28px;
+        text-align: left; 
+        width: 80%;
+        padding-left:110px;
+        display:flex;
+        align-items:center;
+    }
+    .create_time { 
+        height:28px;
+        width: 6%;
+        min-width:max-content;
+        display:flex;
+        text-align: center; 
+        align-items:center;
+    }
+    .nick-name {
+        white-space: nowrap; 
+        text-overflow: ellipsis; 
+        width: 10%;
+        min-width:max-content;
+        height:28px;
+        display:flex;
+        text-align: center; 
+        align-items:center;
+    }
+}
 
-    .header { 
+.row {
+    background-color: white;
+    font-size: 15px;
+    font-family:Noto Sans KR;
+    font-weight: 300;
+    padding: 19px 11px 19px 11px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    // border-bottom: 1px solid #EFEFEF;
+
+    :hover { 
         background-color: #EFEFEF;
-        font-weight: 700;
-        padding: 5px;
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-
-        .num { 
-            text-align: center; 
-            width: 10%;
-        }
-        .header-title { 
-            text-align: center; 
-            width: 60%;
-        }
-        .nick-name { 
-            text-align: center; 
-            width: 20%;
-        }
-        .create_time { 
-            text-align: center; 
-            width: 10%;
-        }
+        opacity:0.5; 
     }
-
-    .row {
-        background-color: white;
-        font-weight: 500;
-        padding: 5px;
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        cursor: pointer;
-        border-bottom: 1px solid #EFEFEF;
-
-        :hover { 
-            background-color: #EFEFEF; 
-            opacity:0.5; 
-        }
-        .num { 
-            text-align: center; 
-            width: 10%;
-        }
-        .row-title { 
-            text-align: left; 
-            padding-left: 15px;
-            width: 60%;
-            white-space: nowrap; 
-            text-overflow: ellipsis; 
-        }
-        .nick-name {
-            white-space: nowrap; 
-            text-overflow: ellipsis; 
-            width: 20%;
-        }
-        .create_time { 
-            white-space: nowrap; 
-            text-overflow: ellipsis; 
-            text-align: center;
-            width: 10%;
-        }
+    .num { 
+        text-align: center; 
+        width: 3%;
+        min-width:max-content;
     }
+    .row-title { 
+        text-align: left; 
+        padding-left:120px;
+        width: 82%;
+        white-space: nowrap; 
+        text-overflow: ellipsis; 
+    }
+    .create_time { 
+        text-align: center; 
+        width: 6%;
+        min-width:max-content;
+    }
+    .nick-name {
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+        width: 9%;
+    }
+}
 `;
 const NoticeReadWrapper = styled.div`
     width: 100%;
@@ -275,7 +296,7 @@ const CloseButton = styled.div`
   font-size: 1.25rem;
   font-weight: 500;
   padding: 10px 15px;
-  border-radius: 5px;
+//   border-radius: 5px;
   cursor: pointer;
   :hover {
     background-color: ${p => p.bgcolor_hover ? p.bgcolor_hover : "#CECECE"};
@@ -372,15 +393,17 @@ export default class BoardDialog extends Component {
                 onClose={() => close()}>
 
                 <div className="close-box" onClick={() => close()}>
-                    <Cross angle={45} color={"#707070"} weight={5} width={35} height={35} />
+                    <Cross angle={45} color={"black"} weight={5} width={35} height={35} />
                 </div>
 
-                <Modal.Content>
+                {/* <Modal.Content> */}
                     {/* title & write-button */}
                     <div className="title">
-                        <h2>그룹 게시판</h2>
+                        <div className="newbutton"/>
+                        <div className="text_">그룹 게시판</div>
+                        <div className="newbutton">
                         {mode === LIST && userInfo != null
-                            ? <div className="newbutton">
+                            ? 
                                 <Button
                                     onClick={() => { this.setState({ mode: WRITE }) }}
                                     color={"white"}
@@ -388,8 +411,9 @@ export default class BoardDialog extends Component {
                                     bgcolor_hover={"#DD0000"}
                                     marginTop={"0px"}
                                     marginRight={"0px"}
-                                > 글쓰기</Button></div>
+                                > 글쓰기</Button>
                             : null}
+                        </div>
                     </div>
 
                     {mode === LIST
@@ -406,7 +430,7 @@ export default class BoardDialog extends Component {
                                         <div className="row" key={index} onClick={() => this.readBoard(item)}>
                                             <div className="num">{count - ((page * per) + index)}</div>
                                             <div className="row-title">{item.title}{item.comments > 0 ? `(${item.comments})` : null}</div>
-                                            <div className="nick-name">{item.nick_name}</div>
+                                            <div className="nick-name ellipsis">{item.nick_name}</div>
                                             <div className="create_time">{DateFormat(item.create_time)}</div>
                                         </div >)
                                     : <div className="empty"> 글이 없습니다. </div>}
@@ -499,11 +523,11 @@ export default class BoardDialog extends Component {
                             {mode === WRITE || mode === READ
                                 ? <Button onClick={() => this.setState({ mode: LIST, title: "", content: "", notice: null })}>목록으로</Button>
                                 : null}
-                            <CloseButton onClick={() => close()}>닫기</CloseButton>
+                            {/* <CloseButton onClick={() => close()}>닫기</CloseButton> */}
                         </div>
                     </div>
 
-                </Modal.Content >
+                {/* </Modal.Content > */}
             </BoardModalWrapper >);
     }
 };

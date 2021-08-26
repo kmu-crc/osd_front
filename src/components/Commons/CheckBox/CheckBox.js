@@ -27,7 +27,7 @@ height:max-content;
         left: 0;
         height: 25px;
         width: 25px;
-        background: #e6e6e6;
+        background: #8E8E8E;
         border: 0px solid #000000;
         border-radius: 0px;
     }
@@ -44,7 +44,7 @@ height:max-content;
         background: #FF000;
     }
     .control input:disabled ~ .control_indicator {
-        background: #e6e6e6;
+        background: #8E8E8E;
         opacity: 35;
         pointer-events: none;
     }

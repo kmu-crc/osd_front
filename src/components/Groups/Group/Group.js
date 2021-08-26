@@ -23,6 +23,7 @@ const GroupCard = styled.div`
   display:flex;
   box-shadow: 8px 8px 8px #4141411A;
   border:1px solid #eaeaea;
+  cursor:pointer;
   .title_{
     width:100%;
     max-width:200px;
@@ -134,7 +135,7 @@ class Group extends Component {
 
     return (
       <React.Fragment>
-        <GroupCard>
+        <GroupCard onClick={event => this.handleGotoDetail(group.group_id || group.uid, event)}>
           <img src={img} className="thumbnail"/>
           <div className="infoBox">
             <div className="spacebetween">
@@ -149,9 +150,9 @@ class Group extends Component {
                   <div className="fontSize2">{group.nick_name}</div>
                   <div className="asset_wrapper">
                     <img src={new_logo_view} className="asset_icon"/>
-                    <div className="asset_num">{group.view}</div>
+                    <div className="asset_num">{NumberFormat(group.view || 0)}</div>
                     <img src={new_logo_favorite} className="asset_icon"/>
-                    <div className="asset_num">{group.like}</div>
+                    <div className="asset_num">{NumberFormat(group.like || 0)}</div>
                     <img src={new_logo_note} className="asset_icon"/>
                     <div className="asset_num">{NumberFormat(group.design || 0 + group.group || 0)}</div>
                   </div>

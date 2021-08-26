@@ -87,8 +87,8 @@ const opendesign_style = {
   big: { marginRightLast: 85, cols: 4, },
   },
   group_margin: {
-    marginRight: 44,
-    marginBottom: 44,
+    marginRight: 58,
+    marginBottom: 58,
     marginBottomLast: 0,
     small: { marginRightLast: 0, cols: 1,},
     medium: { marginRightLast: 0, cols: 1, },
@@ -120,4 +120,4 @@ const opendesign_style = {
   }
 }
 
-export default opendesign_style
+export default opendesign_style 
