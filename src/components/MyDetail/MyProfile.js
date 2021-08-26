@@ -9,7 +9,7 @@ import DateFormat from 'modules/DateFormat';
 const Wrapper = styled.div`
 `;
 const Title = styled.div`
-    margin-top: 24px;
+    // margin-top: 24px;
 
     width: 110px;
     height: 40px;

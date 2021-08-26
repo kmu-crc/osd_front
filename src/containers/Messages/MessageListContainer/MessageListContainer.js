@@ -16,6 +16,8 @@ class MessageListContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  MyDetail: state.Personal.status.MyDetail,
+  Count: state.DesignerList.status.Count,
   ChatRooms: state.Message.status.Rooms,
   token: state.Authentication.status.token,
   MessageList: state.Message.status.MsgList,
