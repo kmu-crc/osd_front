@@ -298,10 +298,12 @@ const QuestionGuide = styled.div`
     font-weight:400;
     padding:10px;
     position:absolute;
+
     // left:15px;
     // top:-50px;
     left:${props=>props.left}px;
     top:${props=>props.top}px;
+
     z-index:888;
 
     display:none;

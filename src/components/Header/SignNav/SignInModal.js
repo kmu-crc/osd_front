@@ -403,6 +403,7 @@ class SignInModal extends Component {
                             <div id="warning_text3" className={`halfRow grayEdgeButton`} onClick={this.findIDPW}>비밀번호 찾기</div>
                         </div>
                         </div>
+
                     </div>
                 </Wrapper>
             </React.Fragment>
