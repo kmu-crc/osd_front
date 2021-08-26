@@ -10,17 +10,23 @@ import styled from 'styled-components';
 import opendesign_style from "opendesign_style";
 
 const Wrapper = styled.div`
-  width:110%;
   display:flex;
   .category_wrapper{
-    margin-top:124px
+    margin-top:109px
     margin-left:140px;
     margin-right:54px;
   }
-  .scroll_wrapper{
-    margin-top:146px;
+  .content{
+    width:100%;
+    margin-top:90px;
     margin-bottom:100px;
+  }
+  .scroll_wrapper{
     overflow-y:scroll;
+  }
+  .orderBox{
+    width:100%;
+    padding-right:85px;
   }
 `
 class DesignListContainer extends Component {
@@ -179,11 +185,17 @@ class DesignListContainer extends Component {
             <Category thirdcategory_clicked={this.handleChangeThirdCategory} subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
             category1={category1} category2={this.state.category2} category3={this.state.category3} main_selected={main_category} sub_selected={sub_category} third_selected={third_category} />
           </div>
+          <div className="content">
+          <div className="orderBox">
+            <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
+          </div>
           <div className="scroll_wrapper">
+
           {status === "INIT"
             ? <Loading />
             : <ScrollList {...opendesign_style.design_margin} reload={reload} handleReload={this.handleReload}
               type="design" dataList={this.props.DesignList} dataListAdded={this.props.DesignListAdded} getListRequest={this.getList} />}
+          </div>
           </div>
         </Wrapper>
       </React.Fragment>

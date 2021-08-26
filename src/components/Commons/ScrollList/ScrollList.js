@@ -67,31 +67,31 @@ const FlexBox = styled.div`
 
   display: inline-block;
   position: relative;
-
+  &.right-last {
+    @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
+      margin-right: ${props =>
+    props.type === "design" ? osdcss.design_margin.medium.marginRightLast :
+      props.type === "group" ? osdcss.group_margin.medium.marginRightLast :
+        props.type === "designer" ? osdcss.designer_margin.medium.marginRightLast : 0}px;
+    }
+    @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {
+      margin-right: ${props =>
+    props.type === "design" ? osdcss.design_margin.large.marginRightLast :
+      props.type === "group" ? osdcss.group_margin.large.marginRightLast :
+        props.type === "designer" ? osdcss.designer_margin.large.marginRightLast : 0}px;
+    }
+    @media only screen and (min-width : ${osdcss.resolutions.LargeMaxWidth}px){
+      margin-right: ${props =>
+    props.type === "design" ? osdcss.design_margin.big.marginRightLast :
+      props.type === "group" ? osdcss.group_margin.big.marginRightLast :
+        props.type === "designer" ? osdcss.designer_margin.big.marginRightLast : 0}px;
+    }
+  }
+  @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
+    margin-right: 0px;
+  }
 `;
-// &.right-last {
-//   @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
-//     margin-right: ${props =>
-//   props.type === "design" ? osdcss.design_margin.medium.marginRightLast :
-//     props.type === "group" ? osdcss.group_margin.medium.marginRightLast :
-//       props.type === "designer" ? osdcss.designer_margin.medium.marginRightLast : 0}px;
-//   }
-//   @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {
-//     margin-right: ${props =>
-//   props.type === "design" ? osdcss.design_margin.large.marginRightLast :
-//     props.type === "group" ? osdcss.group_margin.large.marginRightLast :
-//       props.type === "designer" ? osdcss.designer_margin.large.marginRightLast : 0}px;
-//   }
-//   @media only screen and (min-width : ${osdcss.resolutions.LargeMaxWidth}px){
-//     margin-right: ${props =>
-//   props.type === "design" ? osdcss.design_margin.big.marginRightLast :
-//     props.type === "group" ? osdcss.group_margin.big.marginRightLast :
-//       props.type === "designer" ? osdcss.designer_margin.big.marginRightLast : 0}px;
-//   }
-// }
-// @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
-//   margin-right: 0px;
-// }
+
 const OutBtn = styled.button`
   position: absolute;
   top: 0;
@@ -233,9 +233,10 @@ class ScrollList extends Component {
           // }
         }} >
         {dataListAdded.map((item, i) => {
-          // console.log(item);
+          console.log(cols);
           const last = (((i + 1) % cols === 0 && i !== 0) || (cols === 1 && i === 0)) ? "right-last" : "";
           const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";
+
           return (<FlexBox width={width} height={height} marginRight={marginRight} marginBottom={marginBottom}
             marginRightLast={marginRightLast} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
             {handleAccept && <AcceptBtn className="ui button black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>}

@@ -6,20 +6,26 @@ import styled from 'styled-components';
 import ScrollList from "components/Commons/ScrollList";
 import Loading from "components/Commons/Loading";
 import osdstyle from "opendesign_style";
+import Category from "components/Commons/Category"
 
 const Wrapper = styled.div`
-  width:110%;
   display:flex;
   .category_wrapper{
-    min-width:170px;
-    margin-top:124px
+    margin-top:117px
     margin-left:140px;
     margin-right:54px;
   }
-  .scroll_wrapper{
-    margin-top:146px;
+  .content{
+    width:100%;
+    margin-top:90px;
     margin-bottom:100px;
+  }
+  .scroll_wrapper{
     overflow-y:scroll;
+  }
+  .orderBox{
+    width:100%;
+    padding-right:85px;
   }
 `
 class GroupListContainer extends Component {
@@ -77,7 +83,13 @@ class GroupListContainer extends Component {
     return (
       <React.Fragment>
         <Wrapper>
-        <div className="category_wrapper"/>
+        <div className="category_wrapper">
+            <Category/>
+        </div>
+        <div className="content">
+        <div className="orderBox">
+            <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
+        </div>
         <div className="scroll_wrapper">
             {this.props.status === "INIT"
             ? <Loading />
@@ -89,6 +101,7 @@ class GroupListContainer extends Component {
               dataList={dataList}
               dataListAdded={dataListAdded}
               getListRequest={this.getList} />}
+          </div>
           </div>
         </Wrapper>
       </React.Fragment>

@@ -16,25 +16,32 @@ import osdstyle from "opendesign_style";
 import NumberFormat from "modules/NumberFormat";
 
 const Tabs = styled.div`
+  max-width:1466px;
+  width:100%;
   display: flex;
-  margin-top: 45px;
-  margin-bottom: 25px;
-  padding-left: 70px;
+  justify-content:space-between;
+  align-items:center;
+  margin-top: 17px;
+  margin-bottom: 30px;
+  .menu{
+    display:flex;
+  }
 `
 const Tab = styled.div`
-  font-family: Noto Sans KR;
+  font-family: Spoqa Han Sans Neo;
   font-weight: 500;
-  font-size: 20px;
-  margin-right: ${props => props.marginRight}px;
+  font-size: 28px;
   width: ${props => props.width}px;
   height: 29px;
   line-height: 29px;
   text-align: left;
-  color: #707070;
+  color: black;
   cursor: pointer;
-  opacity: 0.5;
+  padding-left:20px;
+  padding-right:10px;
+  margin-right:10px;
   &.selected { 
-    opacity: 1.0;
+    color:#1E9B79;
   }
   @media only screen and (min-width: ${osdstyle.resolutions.SmallMinWidth}px) 
   and (max-width: ${osdstyle.resolutions.SmallMaxWidth}px) {
@@ -47,7 +54,11 @@ const Tab = styled.div`
 const BlankDiv = styled.div`
   padding-top: 50px;
 `;
-
+const OrderBox = styled.div`
+  max-width:1466px;
+  width:100%;
+  border:1px solid black;
+`
 class GroupDetail extends Component {
   constructor(props) {
     super(props);
@@ -131,15 +142,20 @@ class GroupDetail extends Component {
         :
         <React.Fragment>
           <Tabs>
-            <Tab onClick={() => this.switchTab("group")} marginRight={54} className={currentTab === "group" ? "selected" : ""}>그룹({NumberFormat(Count.group)})</Tab>
+            <div className="menu">
+            <Tab onClick={() => this.switchTab("group")}  className={currentTab === "group" ? "selected" : ""}>그룹({NumberFormat(Count.group)})</Tab>
             <Tab onClick={() => this.switchTab("design")} className={currentTab === "design" ? "selected" : ""}>디자인({NumberFormat(Count.design)})</Tab>
+            </div>
+            <OrderOption style={{ width:"240px",height:"41px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getGroupList)} selected={this_order} />
           </Tabs>
 
           {(GroupDetail && currentTab === "group") ?
             <React.Fragment>
               {status === "INIT" ? <Loading /> :
                 <React.Fragment>
-                  <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getGroupList)} selected={this_order} />
+                  {/* <OrderBox>
+                    <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getGroupList)} selected={this_order} />
+                  </OrderBox> */}
                   <ScrollList {...osdstyle.group_margin} handleReload={this.handleReload} reloader={reload} type="group" dataList={GroupList} dataListAdded={GroupListAdded} getListRequest={this.getGroupList} />
                 </React.Fragment>}
             </React.Fragment> : null
@@ -149,7 +165,9 @@ class GroupDetail extends Component {
             <React.Fragment>
               {status === "INIT" ? <Loading /> :
                 <React.Fragment>
+                  {/* <OrderBox>
                   <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getDesignList)} selected={this_order} />
+                  </OrderBox> */}
                   <ScrollList {...osdstyle.design_margin} handleReload={this.handleReload} reloader={reload} type="design" dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />
                 </React.Fragment>}
             </React.Fragment> : null

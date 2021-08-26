@@ -5,10 +5,19 @@ import styled from "styled-components";
 import { Dropdown, Form } from "semantic-ui-react";
 import opendesign_style from "opendesign_style";
 
-const Btn = styled(Button)`
+const Btn = styled.div`
+  width:104px;
+  height:41px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   font-size:17px;
+  font-weight:500;
+  color:white;
   border:none;
-  position:absolute;
+  border-radius:0px;
+  box-shadow: 8px 8px 8px #0000002B;
+  cursor:pointer;
   &:hover{
     outline:none;
   }
@@ -67,13 +76,13 @@ class MyDesignList extends Component {
     return (
       <ValidateForm ignore={true} onSubmit={this.handleSubmit}>
         <Field>
-          <label style={{fontSize:"17px",paddingLeft:"20px"}}>내 디자인 리스트</label>
-          <Dropdown style={{margin:"20px",width:"95%"}} name="join_design" ref="dropdown" selection multiple onChange={this.handleChange} options={this.props.designList} />
-          <label style={{fontSize:"17px",paddingLeft:"20px"}}><input style={{ verticalAlign: "middle", width:"15px",height:"15px",marginRight:"10px" }} type="checkbox" onChange={this.selectAll} value={this.state.joinList} />모두선택 </label>
+          <label style={{fontSize:"20px",fontFamily:"Spoqa Han Sans Neo"}}>내 디자인 리스트</label>
+          <Dropdown style={{marginTop:"11px",width:"100%"}} name="join_design" ref="dropdown" selection multiple onChange={this.handleChange} options={this.props.designList} />
+          <label style={{height:"30px",marginTop:"20px",display:"flex",alignItems:"center",fontWeight:"300",fontSize:"15px"}}><input style={{ verticalAlign: "middle",borderRadius:"0px !important", width:"30px",height:"30px",marginRight:"10px" }} type="checkbox" onChange={this.selectAll} value={this.state.joinList} />모두선택 </label>
         </Field>
-        <div style={{height:"50px",marginBottom:"10px"}}>
-        <Btn style={{bottom:"0px",left:"170px"}} type="button" onClick={this.props.handleCloseModal}>취소</Btn>
-        <Btn style={{bottom:"0px",left:"20px",background:"#FF0000"}} type="submit">가입 신청</Btn>
+        <div style={{width:"100%",display:"flex",justifyContent:"center"}}>
+        <Btn style={{backgroundColor:"#1E9B79",marginRight:"64px"}} type="submit">가입 신청</Btn>
+        <Btn style={{backgroundColor:"black"}} type="button" onClick={this.props.handleCloseModal}>취소</Btn>
         </div>
       </ValidateForm>
     );

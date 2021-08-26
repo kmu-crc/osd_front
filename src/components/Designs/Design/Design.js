@@ -12,84 +12,90 @@ import TextFormat from "modules/TextFormat"
 import NumberFormat from "modules/NumberFormat"
 import { geturl } from "config"
 
+import new_logo_view from "source/new_logo_view.svg";
+import new_logo_favorite from "source/new_logo_favorite.svg";
+import new_logo_share from "source/new_logo_share.svg";
+
 const DesignCard = styled.div`
-  width:246px;
-  height:275px;
-  box-shadow: 8px 8px 8px #4141411A;
-  cursor:pointer;
-  .thumbnail{
-     width:100%;
-     min-height:207px;
-     max-height:207px;
-     background-repeat: no-repeat;
-     background-size: cover;
-     background-position: center center;
-     background-image: url(${props => props.img});
+  *{
+    font-family:Spoqa Han Sans Neo;
+    color:black;
   }
-  .forked{
-     position: absolute;
-     width: 32.63px;
-     height: 67px;
-     background-image: url(${forked});
-     background-size:cover;
+  width:300px;
+  height:439px;
+  box-shadow: 8px 8px 8px #4141411A;
+  border: 0.5px solid #eaeaea;
+  cursor:pointer; 
+  position:relative;
+  overflow:hidden;
+  .share_cover{
+    position:absolute;
+    top:-22px;
+    right:0px;
+    width: 28px;
+    height: 76px;
+    transform: matrix(-0.71, 0.71, -0.71, -0.71, 0, 0);
+    background: #1262AB 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    .share_icon{
+      width:15px;
+      height:17px;
+      filter: invert(100%);
+      transform: rotate(225deg); 
+    }
+  }
+  .thumbnail{
+    width:100%;
+    height:276px;
+    border: 0.5px solid #eaeaea;
+    object-fit:cover;
   }
   .info{
-     width:100%; 
-     height:68px;
-     padding:16px 12px;
-     .design_name{
-        width:130px;
-        white-space:nowrap;
-        overflow:hidden;
-        text-overflow:ellipsis;
-        font-size:13px;
-        font-weight:500;
-        font-family:Noto Sans KR;
-        color:black;
-     }
-     .design_user{
-        max-width:80px;
-        width:max-content;
-        white-space:nowrap;
-        overflow:hidden;
-        text-overflow:ellipsis;
-        font-size:11px;
-        font-weight:300;
-        font-family:Noto Sans KR;
-        color:black;
-     }
-     .design_updatetime{
-        font-size:10px;
-        font-weight:300;
-        font-family:Noto Sans KR;
-        color:black;
-     }
-     .design_counter{
-        width:130px;
-        display:flex;
-        align-items:center;
-        .icon{
-          min-width:15px
-          height:8px;
-          color:#707070;
-          filter: invert(60%);    
-          object-fit:contain;    
-        }
-        .count_text{
-          font-size:10px;
-          color:black;
-          margin-right:5px;
-          margin-left:3px;
-        }
-     }
+    width:100%;
+    padding:11px 21px 21px 21px;
   }
   .spaceBetween{
-     width:100%;
-     display:flex;
-     justify-content:space-between;
-     align-items:center;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:3px;
+  }
+  .title{
+    font-size:33px;
+    font-weight:600;
+    height:49px;
+    display:flex;
+    align-items:center;
+  }
+  .date{
+    color:#707070;
+    font-size:17px;
+  }
+  .designer{
+    font-size:16px;
   }
 
+  .asset_wrapper{
+    width:100%;
+    height:30px;
+    display:flex;
+    align-items:center;
+    margin-top:21px;
+    .asset_icon{
+      width:25px;
+      height25px;
+      object-fit:cover;
+    }
+    .asset_text{
+      min-width:40px;
+      font-size:16px;
+      padding-left:10px;
+    }
+  }
 `
 
 const DesignEmpty = {
@@ -115,38 +121,58 @@ class Design extends Component {
     const isForked = this.props.forked || data.parent_design;
     return (
       <React.Fragment>
-        <DesignCard onClick={this.gotoDetailPage} img={(thumbnail === null ? noimg : thumbnail.l_img === null ? noimg : thumbnail.l_img)}>
-          <div className="thumbnail"/>
-          <div className="info">
-            <div className="spaceBetween">
-              <div className="design_name">{data.title}</div>
-              <div className="design_user">{data.userName}</div>
-            </div>
-            <div className="spaceBetween">
-              <div className="design_counter">
-                <IconView className="icon" width="15px" height="8px" fill="#707070" />
-                <div className="count_text">{NumberFormat(data.view_count)}</div>
-                <img className="icon" alt="icon" src={iThumbUp} />
-                <div className="count_text">{NumberFormat(data.like_count)}</div>
-                <img  className="icon" alt="icon" src={iForked} />
-                <div className="count_text">{NumberFormat(data.children_count) || 0}</div>
-                {/* <div className="view"><IconView width="22px" height="11px" fill="white" /></div>
-                
-                <div className="like"><img alt="icon" src={iThumbUp} /></div>
-                <div className="like-count">{NumberFormat(data.like_count)}</div>
-                <div className="fork"><img alt="icon" src={iForked} /></div>
-                <div className="fork-count">{NumberFormat(data.children_count) || 0}</div> */}
-              </div>
-              <div className="design_updatetime">{DateFormat(data.update_time)}</div>
-            </div>
-          </div>
-        </DesignCard>
+             <DesignCard  onClick={this.gotoDetailPage}>
+               {
+                 isForked&&
+               <div className="share_cover">
+               <img className="share_icon" alt="icon" src={new_logo_share} />
+               </div>
+               }
+               <img src={(thumbnail === null ? noimg : thumbnail.l_img === null ? noimg : thumbnail.l_img)} className="thumbnail"/>
+               <div className="info">
+                 <div className="spaceBetween">
+                   <div className="title">디자인1</div>
+                   <div className="date">8일전</div>
+                 </div>
+                 <div className="designer">디자이너1</div>
+                 <div className="asset_wrapper">
+                   <img src={new_logo_view} className="asset_icon"/><div className="asset_text">0</div>
+                   <img src={new_logo_favorite} className="asset_icon"/><div className="asset_text">0</div>
+                   <img src={new_logo_share} className="asset_icon"/><div className="asset_text">0</div>
+                 </div>
+               </div>
+             </DesignCard>
       </React.Fragment>
     )
   }
 }
 export default Design
-
+{/* <DesignCard onClick={this.gotoDetailPage} img={(thumbnail === null ? noimg : thumbnail.l_img === null ? noimg : thumbnail.l_img)}>
+<div className="thumbnail"/>
+<div className="info">
+  <div className="spaceBetween">
+    <div className="design_name">{data.title}</div>
+    <div className="design_user">{data.userName}</div>
+  </div>
+  <div className="spaceBetween">
+    <div className="design_counter">
+      <IconView className="icon" width="15px" height="8px" fill="#707070" />
+      <div className="count_text">{NumberFormat(data.view_count)}</div>
+      <img className="icon" alt="icon" src={iThumbUp} />
+      <div className="count_text">{NumberFormat(data.like_count)}</div>
+      <img  className="icon" alt="icon" src={iForked} />
+      <div className="count_text">{NumberFormat(data.children_count) || 0}</div>
+      <div className="view"><IconView width="22px" height="11px" fill="white" /></div>
+      
+      <div className="like"><img alt="icon" src={iThumbUp} /></div>
+      <div className="like-count">{NumberFormat(data.like_count)}</div>
+      <div className="fork"><img alt="icon" src={iForked} /></div>
+      <div className="fork-count">{NumberFormat(data.children_count) || 0}</div>
+    </div>
+    <div className="design_updatetime">{DateFormat(data.update_time)}</div>
+  </div>
+</div>
+</DesignCard> */}
 {/* <DesignElement onClick={this.gotoDetailPage} img={(thumbnail === null ? noimg : thumbnail.l_img === null ? noimg : thumbnail.l_img)}>
 {isForked && <div className="forked" />}
 <div className="categoryName">{data.categoryName}</div>
