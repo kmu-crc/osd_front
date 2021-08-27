@@ -53,7 +53,7 @@ const Wrapper = styled.div`
         border-bottom: 2px solid #4F4F4F;
     }
     .welcome {
-        width: 160px;
+        width: 100%;
         height: 64px;
         text-align: center;
         font-weight: medium;
@@ -159,23 +159,21 @@ export class MyMenu extends React.Component {
             </div>
 
             {/* alarm icon */}
-            <div className="menu border">
-                {/* <div className="icon_wrap marginRight1"> */}
+            {/* <div className="menu border">
                 <a onClick={this.openAlarmPopup}>
                     <Alarm count={Count && Count.count} />
                 </a>
-                {/* </div> */}
-            </div>
+            </div> */}
             {/* msg icon */}
-            <div className="menu border">
+            {/* <div className="menu border">
                 <a onClick={this.gotoMessagePage}>
                     <Message count={Count && Count.countMsg} />
                 </a>
-            </div>
+            </div> */}
             {/* manage my design */}
-            <div className={`menu border`}>
+            {/* <div className={`menu border`}>
                 <a className={`${tab === "manage" ? "active" : ""}`} onClick={this.modifyMyDesign}>내 디자인 관리</a>
-            </div>
+            </div> */}
             {/* modify myinfo */}
             <div className="menu border default">
                 <a className={`${window.location.href.search('mymodify') > -1 ? "active" : ""}`} onClick={this.modifyMyInfo}>회원정보 수정</a>

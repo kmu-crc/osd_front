@@ -4,7 +4,7 @@ import opendesigncss from "opendesign_style";
 
 const OrderWrapper = styled.div`
     width: 100%;
-    height:80px;
+    height:${props=>props.wrap==null?"80px":""};
     z-index: 820;
     display: flex;
     align-items:center;
@@ -57,7 +57,7 @@ class OrderOption extends Component {
         const { selected, style } = this.props
         return (
 
-            <OrderWrapper style={style}>
+            <OrderWrapper wrap={this.props.wrap} style={style}>
 
                 {options.map(opt => {
                     return (<OrderElement

@@ -21,13 +21,15 @@ const DesignCard = styled.div`
     font-family:Spoqa Han Sans Neo;
     color:black;
   }
-  width:300px;
-  height:439px;
+  width:238px;
+  height:348px;
   box-shadow: 8px 8px 8px #4141411A;
   border: 0.5px solid #eaeaea;
   cursor:pointer; 
   position:relative;
   overflow:hidden;
+  display:flex;
+  flex-direction:column;
   .share_cover{
     position:absolute;
     top:-22px;
@@ -49,55 +51,54 @@ const DesignCard = styled.div`
   }
   .thumbnail{
     width:100%;
-    height:276px;
+    min-height:230px;
     border: 0.5px solid #eaeaea;
     object-fit:cover;
   }
   .info{
     width:100%;
-    padding:11px 21px 21px 21px;
+    height:100%;
+    padding:11px 11px 21px 11px;
   }
   .spaceBetween{
     width:100%;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    margin-bottom:3px;
+    margin-bottom:0px;
+    height:30px;
   }
   .title{
-    width:200px;
+    width:150px;
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis; 
-    font-size:27px;
-    font-weight:600;
-    height:49px;
-    line-height:49px;
-    // display:flex;
-    // align-items:center;
+    font-size:20px;
+    font-weight:500;
+    line-height:20px;
   }
   .date{
     color:#707070;
-    font-size:17px;
+    font-size:11px;
   }
   .designer{
-    font-size:16px;
+    font-size:11px;
   }
 
   .asset_wrapper{
     width:100%;
-    height:30px;
+    height:25px;
     display:flex;
     align-items:center;
-    margin-top:21px;
+    margin-top:15px;
     .asset_icon{
-      width:25px;
-      height25px;
+      width:15px;
+      height15px;
       object-fit:cover;
     }
     .asset_text{
       min-width:40px;
-      font-size:16px;
+      font-size:11px;
       padding-left:10px;
     }
   }
@@ -109,7 +110,7 @@ const DesignEmpty = {
   thumbnailUrl: { m_img: null },
 }
 
-class Design extends Component {
+class MyDesign extends Component {
   gotoDetailPage = () => {
     window.location.href = geturl() + "/designDetail/" + this.props.data.uid
   }
@@ -151,7 +152,7 @@ class Design extends Component {
     )
   }
 }
-export default Design
+export default MyDesign
 {/* <DesignCard onClick={this.gotoDetailPage} img={(thumbnail === null ? noimg : thumbnail.l_img === null ? noimg : thumbnail.l_img)}>
 <div className="thumbnail"/>
 <div className="info">

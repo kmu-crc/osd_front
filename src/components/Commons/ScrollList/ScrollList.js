@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import Design from "components/Designs/Design";
 import Group from "components/Groups/Group";
 import Designer from "components/Designers/Designer";
+import MyDesign from "components/Designs/MyDesign";
+import MyGroup from "components/Groups/MyGroup";
+import MyDesigner from "components/Designers/MyDesigner";
 import styled from "styled-components";
 import osdcss from "opendesign_style";
 import new_logo_arrow_down from "source/new_logo_arrow_down.svg";
@@ -189,21 +192,29 @@ class ScrollList extends Component {
     let cols = 0;
     let w = window.innerWidth > osdcss.resolutions.LargeMaxWidth ? osdcss.resolutions.LargeMaxWidth : window.innerWidth;
     if (osdcss.resolutions.SmallMinWidth <= w && w < osdcss.resolutions.SmallMaxWidth) {
-      cols = type === "design" ? osdcss.design_margin.small.cols :
+      cols = 
+        type === "design" ? osdcss.design_margin.small.cols :
         type === "group" ? osdcss.group_margin.small.cols :
-          osdcss.designer_margin.small.cols;
+        type === "designer" ?osdcss.designer_margin.small.cols
+        :osdcss.my_design_margin.small.cols;
     } else if (osdcss.resolutions.MediumMinWidth <= w && w < osdcss.resolutions.MediumMaxWidth) {
-      cols = type === "design" ? osdcss.design_margin.medium.cols :
+      cols = 
+        type === "design" ? osdcss.design_margin.medium.cols :
         type === "group" ? osdcss.group_margin.medium.cols :
-          osdcss.designer_margin.medium.cols;
+        type === "designer" ?  osdcss.designer_margin.medium.cols
+        :osdcss.my_design_margin.medium.cols;
     } else if (osdcss.resolutions.LargeMinWidth <= w && w < osdcss.resolutions.LargeMaxWidth) {
-      cols = type === "design" ? osdcss.design_margin.large.cols :
+      cols = 
+        type === "design" ? osdcss.design_margin.large.cols :
         type === "group" ? osdcss.group_margin.large.cols :
-          osdcss.designer_margin.large.cols;
+        type === "designer" ?  osdcss.designer_margin.large.cols
+        :osdcss.my_design_margin.large.cols;
     } else {
-      cols = type === "design" ? osdcss.design_margin.big.cols :
+      cols = 
+        type === "design" ? osdcss.design_margin.big.cols :
         type === "group" ? osdcss.group_margin.big.cols :
-          osdcss.designer_margin.big.cols;
+        type === "designer" ?  osdcss.designer_margin.big.cols
+        :osdcss.my_design_margin.big.cols;
     }
     this.setState({ cols: cols });
   };
@@ -217,7 +228,7 @@ class ScrollList extends Component {
   render() {
     const { type, manual, handleAccept, handleReject, height, width, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded, rejectText } = this.props;
     const { hasMore, loading, cols } = this.state;
-    console.log("onload:", cols);
+    console.log("type",this.props);
     return (dataListAdded && dataListAdded.length > 0 ?
       <FlexContainer
         cols={cols}
@@ -244,6 +255,9 @@ class ScrollList extends Component {
             {type === "design" ? <Design data={item} /> : null}
             {type === "group" ? <Group data={item} /> : null}
             {type === "designer" ? <Designer data={item} /> : null}
+            {type === "myDesign" ? <MyDesign data={item} /> : null}
+            {type === "myGroup" ? <MyGroup data={item} /> : null}
+            {type === "myDesigner" ? <MyDesigner data={item} /> : null}
           </FlexBox>)
         })}
         {loading && <LoadingText>목록을 가져오고 있습니다.</LoadingText>}

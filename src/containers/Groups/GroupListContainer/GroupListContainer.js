@@ -88,7 +88,7 @@ class GroupListContainer extends Component {
         </div>
         <div className="content">
         <div className="orderBox">
-            <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
+            <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
         </div>
         <div className="scroll_wrapper">
             {this.props.status === "INIT"
