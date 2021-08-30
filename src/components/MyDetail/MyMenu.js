@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import new_logo_mail from "source/new_logo_mail.svg";
+import new_logo_mail_red from "source/new_logo_mail_red.svg";
 import new_logo_notifications from "source/new_logo_notifications.svg";
 import { SignOutRequest, } from "redux/modules/auth";
 import { SetSession } from "modules/Sessions";
@@ -101,15 +102,16 @@ const Wrapper = styled.div`
 const MsgIcon = styled.div`
     width:44px;
     height:44px;
-    background: url(${new_logo_mail}); 
+    background: url(${prop => prop.red ? new_logo_mail_red : new_logo_mail}); 
     background-size:contain;
     background-repeat: no-repeat;
     background-position: center center;
+
 `;
 const Message = ({ count }) => {
     return (<React.Fragment>
         {count ? <React.Fragment></React.Fragment> : null}
-        <MsgIcon />
+        <MsgIcon red={window.location.href.search('/message') > -1 ? true : false} />
     </React.Fragment>);
 };
 
