@@ -21,22 +21,14 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
 
-  .top-margin { 
-    margin-top: 25px; 
-  }
-  .space-0{
-    margin-left: 41px;
-  }
-  .space-1{
-    margin-left: 48px;
-  }
-  .space-2{
-    margin-left: 22px;
-    border-right: 1px solid #707070;
-  }
-  .space-3{
-    margin-left: 58px;
-  }
+  padding-left: 29px;
+  padding-top: 25px;
+
+  // .top-margin { margin-top: 25px; }
+  // .space-0{ margin-left: 41px; }
+  // .space-1{ margin-left: 48px; }
+  // .space-2{ margin-left: 22px; border-right: 1px solid #707070; }
+  // .space-3{ margin-left: 58px; }
 `;
 const MainBox = styled.div`
   width: 100%;
@@ -85,7 +77,7 @@ const MainBox = styled.div`
   .mainContent{
     width:100%;
     height:100%;
-    margin-top:25px;
+    // margin-top:25px;
     display:flex;
     // justify-content:center;
     position:relative;
@@ -713,7 +705,7 @@ class Messages extends React.Component {
 
     return (<Wrapper >
 
-      <div className="space-0 top-margin">&nbsp;</div>
+      {/* <div className="space-0 top-margin">&nbsp;</div>
       <div className="top-margin">
         <MyMenu
           Count={Count}
@@ -737,66 +729,66 @@ class Messages extends React.Component {
       <div className="space-2 top-margin">&nbsp;</div>
 
       <div className="space-3 top-margin">&nbsp;</div>
-      <div className="top-margin">
+      <div className="top-margin"> */}
 
-        <MainBox>
-          <div className="mainBanner">
-            <div className="label font_big font_bold">메세지</div>
-          </div>
-          <div className="mainContent flexBox">
-            <div className="wrapper">
-              <RoomListBox isSelectMsg={this.state.msgId === -1 ? false : true}>
-                <div className="header">
-                  <div className="header-item fixed">
-                    <div className="title">받은 메세지함</div>
-                    <PlusIcon isSelectMsg={this.state.msgId == -1 ? false : true} onClick={this.openMemberSearch} /></div>
-                  <div onClick={() => { this.setMsgId(-1, this.props.id, this.props.name) }} className="mobilelistIcon"><Icon className="unordered list" size="big" color="grey" /></div>
-                  {this.state.memberSearch &&
-                    (<SearchMemberBox ref={this.searchRef}>
-                      <SearchMemberContainer inputWidth={100} marginLeft={0} id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />
-                    </SearchMemberBox>)}
+      <MainBox>
+        {/* <div className="mainBanner">
+          <div className="label font_big font_bold">메세지</div>
+        </div> */}
+        <div className="mainContent flexBox">
+          <div className="wrapper">
+            <RoomListBox isSelectMsg={this.state.msgId === -1 ? false : true}>
+              <div className="header">
+                <div className="header-item fixed">
+                  <div className="title">받은 메세지함</div>
+                  <PlusIcon isSelectMsg={this.state.msgId == -1 ? false : true} onClick={this.openMemberSearch} /></div>
+                <div onClick={() => { this.setMsgId(-1, this.props.id, this.props.name) }} className="mobilelistIcon"><Icon className="unordered list" size="big" color="grey" /></div>
+                {this.state.memberSearch &&
+                  (<SearchMemberBox ref={this.searchRef}>
+                    <SearchMemberContainer inputWidth={100} marginLeft={0} id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />
+                  </SearchMemberBox>)}
+              </div>
+              <div className="roomList">
+                <SummaryList id="searchRect">
+                  {ChatRooms && ChatRooms.length > 0 &&
+                    ChatRooms.map(chat => chat.recent != null ?
+                      <div key={chat.uid}
+                        onClick={async () => {
+                          await userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token);
+                          await this.setMsgId(chat.uid, chat.friend_id, chat.friend_name);
+                        }}>
+                        <SummaryItem
+                          noti={chat.count}
+                          opacityON={this.state.selectId === chat.friend_id}
+                          s_img={chat.thumbnail || noImage}
+                          friend_name={chat.friend_name}
+                          message={chat.recent}
+                        />
+                      </div> : null)}
+                </SummaryList>
+              </div>
+            </RoomListBox>
+            <WhiteBox />
+            <ChatBox isSelectMsg={this.state.msgId == -1 ? false : true}>
+              <div className="header"><div className="fitBox font_big font_bold">{this.state.selectName}</div></div>
+              <div className="wrapper">
+                <div className="content">
+                  {this.state.render && <MessageDetailContainer height={H - (64 + 196)} repaint={this.state.render} id={this.state.msgId} />}
                 </div>
-                <div className="roomList">
-                  <SummaryList id="searchRect">
-                    {ChatRooms && ChatRooms.length > 0 &&
-                      ChatRooms.map(chat => chat.recent != null ?
-                        <div key={chat.uid}
-                          onClick={async () => {
-                            await userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token);
-                            await this.setMsgId(chat.uid, chat.friend_id, chat.friend_name);
-                          }}>
-                          <SummaryItem
-                            noti={chat.count}
-                            opacityON={this.state.selectId === chat.friend_id}
-                            s_img={chat.thumbnail || noImage}
-                            friend_name={chat.friend_name}
-                            message={chat.recent}
-                          />
-                        </div> : null)}
-                  </SummaryList>
-                </div>
-              </RoomListBox>
-              <WhiteBox />
-              <ChatBox isSelectMsg={this.state.msgId == -1 ? false : true}>
-                <div className="header"><div className="fitBox font_big font_bold">{this.state.selectName}</div></div>
-                <div className="wrapper">
-                  <div className="content">
-                    {this.state.render && <MessageDetailContainer height={H - (64 + 196)} repaint={this.state.render} id={this.state.msgId} />}
+                <div className="send">
+                  <div className="sendBox">
+                    <SendMessageTextarea contentEditable="true" id="sendMsgBox">
+                    </SendMessageTextarea>
                   </div>
-                  <div className="send">
-                    <div className="sendBox">
-                      <SendMessageTextarea contentEditable="true" id="sendMsgBox">
-                      </SendMessageTextarea>
-                    </div>
-                    <SendButton className="cursor_pointer" onClick={this.onSubmitForm}>
-                      <div className="sendButton_label">전송하기</div></SendButton>
-                  </div>
+                  <SendButton className="cursor_pointer" onClick={this.onSubmitForm}>
+                    <div className="sendButton_label">전송하기</div></SendButton>
                 </div>
-              </ChatBox>
-            </div>
+              </div>
+            </ChatBox>
           </div>
-        </MainBox>
-      </div>
+        </div>
+      </MainBox>
+      {/* </div> */}
 
     </Wrapper>);
   }
