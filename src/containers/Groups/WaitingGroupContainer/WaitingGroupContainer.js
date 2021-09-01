@@ -8,12 +8,14 @@ import osdstyle from "opendesign_style";
 import Loading from 'components/Commons/Loading';
 
 const GroupBox = styled.div`
-  margin-bottom: 1rem;
-  & .boxTitle {
-    margin-left: 1rem;
-    padding-bottom: 1rem;
-    font-size: ${opendesign_style.font.size.heading4};
-  }
+margin-bottom: 5px;
+& .boxTitle {
+  margin-bottom:5px;
+  font-size: 20px;
+}
+.boxContent{
+  margin-top:22px;
+}
 `;
 
 class WaitingGroupContainer extends Component {
@@ -55,7 +57,9 @@ class WaitingGroupContainer extends Component {
         <div className="boxTitle">가입 신청중인 그룹 ({this.props.waitingGroup.length})</div>
         {this.props.status === "INIT" ?
           <Loading /> :
+          <div className="boxContent">
           <ScrollList
+            height={"max-content"}
             {...osdstyle.group_margin}
             reload={reload}
             handleReload={this.handleReload}
@@ -65,6 +69,7 @@ class WaitingGroupContainer extends Component {
             rejectText={"거절"}
             handleReject={this.setOut} 
             handleAccept={this.setAccept} />
+            </div>
         }
       </GroupBox>
     );

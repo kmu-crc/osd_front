@@ -5,6 +5,9 @@ import { GetMyGroupListRequest, GroupJoinGroupRequest } from "redux/modules/grou
 import { withRouter } from "react-router-dom";
 
 class MyGroupListContainer extends Component {
+  componentDidMount(){
+    this.props.GetMyGroupListRequest(this.props.token, this.props.match.params.id);
+  }
   render() {
     return (
       <MyGroupList {...this.props} />

@@ -9,11 +9,14 @@ import Loading from 'components/Commons/Loading';
 import { confirm } from 'components/Commons/Confirm/Confirm';
 
 const DesignBox = styled.div`
-  & .boxTitle {
-    margin-left: 1rem;
-    padding-bottom: 1rem;
-    font-size: ${opendesign_style.font.size.heading4};
-  }
+margin-bottom: 5px;
+& .boxTitle {
+  margin-bottom:5px;
+  font-size: 20px;
+}
+.boxContent{
+  margin-top:22px;
+}
 `;
 
 class EditDesignListContainer extends Component {
@@ -47,6 +50,7 @@ class EditDesignListContainer extends Component {
         <div className="boxTitle">등록된 디자인 ({this.props.EditDesignList.length})</div>
         {this.props.status === "INIT" ?
           <Loading /> :
+          <div className="boxContent">
           <ScrollList
             {...osdstyle.design_margin}
             reload={reload}
@@ -54,7 +58,9 @@ class EditDesignListContainer extends Component {
             type="design"
             dataListAdded={this.props.EditDesignList}
             getListRequest={null}
-            handleReject={this.setOut} />}
+            handleReject={this.setOut} />
+            </div>
+            }
       </DesignBox>
     );
   }

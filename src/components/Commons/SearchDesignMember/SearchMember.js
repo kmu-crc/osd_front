@@ -61,6 +61,7 @@ const MemberList = styled.ul`
   background: #EFEFEF;
   border-radius: 3px;
   z-index: 999;
+  position:absolute;
 `;
 const MemberListItem = styled.li`
   width: 100%;
@@ -114,7 +115,7 @@ class SearchMember extends Component {
     return (
       <SearchWrap className="searchRect">
         <FormInput className="form-input" type="text" name="search" placeholder="추가할 멤버의 닉네임을 입력해 주세요" validates={this.props.validates} getValue={this.getValue} />
-        <div style={{ width: "100%", height: "100%", paddingLeft: "50px" }}>
+        <div style={{ width: "100%", height: "100%", }}>
           <MemberList display={this.state.open ? "block" : "none"}>
           {this.props.members && this.props.members.map((item, index) => {
             return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item)}>{item.email}</MemberListItem>);

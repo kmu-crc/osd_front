@@ -7,12 +7,14 @@ import ScrollList from 'components/Commons/ScrollList';
 import osdstyle from 'opendesign_style';
 
 const DesignBox = styled.div`
-  margin-bottom: 1rem;
-  & .boxTitle {
-    margin-left: 1rem;
-    padding-bottom: 1rem;
-    font-size: ${opendesign_style.font.size.heading4};
-  }
+margin-bottom: 5px;
+& .boxTitle {
+  margin-bottom:5px;
+  font-size: 20px;
+}
+.boxContent{
+  margin-top:22px;
+}
 `
 
 class WaitingDesignContainer extends Component {
@@ -50,6 +52,7 @@ class WaitingDesignContainer extends Component {
     return (
       <DesignBox>
         <div className="boxTitle">가입 신청중인 디자인 ({this.props.waitingDesign.length})</div>
+        <div className="boxContent">
         <ScrollList
           reload={this.state.reload}
           handleReload={this.handleReload}
@@ -60,6 +63,7 @@ class WaitingDesignContainer extends Component {
           handleReject={this.setOut}
           rejectText={"거절"}
           handleAccept={this.setAccept} />
+          </div>
       </DesignBox>
     );
   }

@@ -30,9 +30,12 @@ const MenuBox = styled.div`
     min-width:100px;
     min-height:1080px;
     background-color:${
-        window.location.pathname.indexOf("/designer")!=-1?"#7E1E9B"
-        :window.location.pathname.indexOf("/design")!=-1?"#1262AB"
-        :window.location.pathname.indexOf("/group")!=-1?"#1E9B79"
+        window.location.pathname.indexOf("designer")!=-1?"#7E1E9B"
+        :window.location.pathname.indexOf("Designer")!=-1?"#7E1E9B"
+        :window.location.pathname.indexOf("design")!=-1?"#1262AB"
+        :window.location.pathname.indexOf("Design")!=-1?"#1262AB"
+        :window.location.pathname.indexOf("group")!=-1?"#1E9B79"
+        :window.location.pathname.indexOf("Group")!=-1?"#1E9B79"
         :"red"
     };
     position:relative;
@@ -148,7 +151,7 @@ class Navigation extends Component {
     };
 
     render() {
-        console.log(this.props);
+        console.log(window.location.pathname,window.location.pathname.indexOf("/group"),window.location.pathname.indexOf("/Group"));
         return (
             <React.Fragment>
                 <MenuBox>
@@ -178,20 +181,20 @@ class Navigation extends Component {
                     isSelect={window.location.pathname === "/design"
                              || window.location.pathname.search("/design/") > -1 ? true : false
                              || window.location.pathname.search("/designDetail/") > -1 ? true : false
-                             || window.location.pathname.search("/createDesign/") > -1 ? true : false
+                             || window.location.pathname.search("/createDesign") > -1 ? true : false
                              || window.location.pathname.search("/modifyDesign/") > -1 ? true : false}
                     className="menu_tag marginTop1"><a className="link_tag" href="/design">디자인</a></MenuItem>
                     <MenuItem isSelect={window.location.pathname === '/group'
                              || window.location.pathname.search("/group/") > -1 ? true : false
                              || (window.location.pathname.search('/groupDetail/') > -1 ? true : false)
-                             || window.location.pathname.search("/createGroup/") > -1 ? true : false
+                             || window.location.pathname.search("/createGroup") > -1 ? true : false
                              || window.location.pathname.search("/modifyGroup/") > -1 ? true : false}
                               className="menu_tag marginTop1"> <a className="link_tag" href="/group">그룹</a></MenuItem>
                     <MenuItem 
                     isSelect={window.location.pathname === '/designer'
                              || window.location.pathname.search("/designer/") > -1 ? true : false
                              || (window.location.pathname.search('/designerDetail/') > -1 ? true : false)
-                             || window.location.pathname.search("/createDesigner/") > -1 ? true : false
+                             || window.location.pathname.search("/createDesigner") > -1 ? true : false
                              || window.location.pathname.search("/modifyDesigner/") > -1 ? true : false}
                               className="menu_tag marginTop1"><a className="link_tag" href="/designer">디자이너</a></MenuItem>
                     <MenuItem className="menu_tag marginTop1">NEWS</MenuItem>

@@ -66,7 +66,7 @@ class MyGroupList extends Component {
         <label style={{height:"30px",marginTop:"20px",display:"flex",alignItems:"center",fontWeight:"300",fontSize:"15px"}}/>
       </Field>
       <div style={{width:"100%",display:"flex",justifyContent:"center"}}>
-      <Btn style={{backgroundColor:"#1E9B79",marginRight:"64px"}} type="submit">가입 신청</Btn>
+      <Btn style={{backgroundColor:"#1E9B79",marginRight:"64px"}} type="submit" onClick={this.handleSubmit}>가입 신청</Btn>
       <Btn style={{backgroundColor:"black"}} type="button" onClick={this.props.handleCloseModal}>취소</Btn>
       </div>
     </ValidateForm>

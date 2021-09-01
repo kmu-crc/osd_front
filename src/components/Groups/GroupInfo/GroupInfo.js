@@ -22,14 +22,34 @@ import new_logo_view from "source/new_logo_view.svg";
 import new_logo_favorite from "source/new_logo_favorite.svg";
 import new_logo_share from "source/new_logo_share.svg";
 import new_logo_note from "source/new_logo_note.svg";
-
+const NormalIcon = styled.div`
+    width: 22px;
+    height: 22px;
+    margin-left: 5px;
+    background-image: ${props => `url(${props.imageURL})`};
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: ${props => props.opacity};
+`;
+const NewAlarmLogo = styled.div`
+    width:10px;
+    height:100%;
+    display:flex;
+    margin-right:2px;
+    .circle{
+        background-color:red;
+        width:7px;
+        height:7px;
+        border-radius:50%;
+    }
+`;
 const GroupSummary = styled.div`
-    max-width:1466px;
+    max-width:1740px;
     width:100%;
     height:315px;
     box-shadow: 8px 8px 8px #4141411A;
     border:1px solid #eaeaea;
-    margin-top:27px;
     display:flex;
     .thumbnail{
         min-width:319px;
@@ -37,6 +57,15 @@ const GroupSummary = styled.div`
         height:100%;
         object-fit:cover;
         border:1px solid #eaeaea;
+    }
+    .ButtonItem{
+        display:flex;
+        justify-content:flex-end;
+        font-size:15px;
+        font-family:Spoqa Han Sans Neo;
+        font-weight:Regular;
+        color:#707070;
+        cursor:pointer;
     }
     .content_wrapper{
         width:100%;
@@ -75,20 +104,23 @@ const GroupSummary = styled.div`
             text-overflow:ellipsis;
             white-space:nowrap;
         }
-        .update_time{
-            height:41px;
-            display:flex;
-            align-items:flex-start;
-            font-family:Noto Sans KR;
-            font-size:16px;
-            font-weight:300;
+
+    }
+    .date_time{
+        width:100%;
+        height:48px;
+        font-family:Noto Sans KR;
+        font-size:15px;
+        font-weight:300;
+        .time_detail{
+            text-align:right;
         }
     }
-    
     .content_box{
         width:100%;
         height:240px;
         display:flex;
+        justify-content:space-between;
         .mini_thumbnail{
             width:111px;
             height:111px;
@@ -100,7 +132,8 @@ const GroupSummary = styled.div`
             margin-left:20px;
         }
         .infoBox{
-            width:850px;
+            max-width:1200px;
+            width:100%;
             height:100%;
             display:flex;
             flex-direction:column;
@@ -146,6 +179,14 @@ const GroupSummary = styled.div`
             }
         }
 
+    }
+    .sideBox{
+        min-width:200px;
+        padding-top:28px;
+        padding-bottom:18px;
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
     }
     .flex{display:flex;align-items:center;}
     .button_{
@@ -278,10 +319,11 @@ class GroupInfoComponent extends Component {
                              <div className="row">
                                  <div className="title_wrapper">
                                      <div className="_title ellipsis">{GroupDetail.title}</div>
-                                     <div className="marginLeft"><JoinGroupContainer isIcon={false}/></div>
                                  </div>
                              </div>
-                             <div className="update_time">최근 업데이트 {GroupDetail && DateFormat(GroupDetail.update_time)}</div>
+                             <div className="marginLeft"><JoinGroupContainer isIcon={false}/></div>
+
+                             {/* <div className="update_time">최근 업데이트 {GroupDetail && DateFormat(GroupDetail.update_time)}</div> */}
                          </div>
 
                          <div className="content_box">
@@ -331,18 +373,35 @@ class GroupInfoComponent extends Component {
                                         <div className="asset_text">{NumberFormat(GroupDetail.design || 0 + GroupDetail.group || 0)}</div>
                                         {/* <div className="button_ marginRight bg_green"></div> */}
                                         {GroupDetail.uid ? <GroupNoticeContainer loading={this.props.loading} id={GroupDetail.uid} /> : ""}
-                                        <div className={`button_ ${like?"bg_green":"bg_black"}`} onClick={this.like}>{like?"관심그룹 취소":"관심그룹 등록"}</div>
                                   </div>
                              </div>
-                             <div className="thumbnailBox">
-                                    {this.props.GroupDetail&&this.props.GroupDetail.children&&
-                                     this.props.GroupDetail.children.map((child, index) =>
-                                    <img src={child && child.m_img}
-                                        className={`mini_thumbnail ${index%2==0?"marginRight":null}`}
-                                        id={`child-${index}`}
-                                        key={index} />
-                                    )}
-                             </div>
+                             <div className="sideBox">
+                                        <div>
+                                            {isEditor
+                                                ? <React.Fragment>                                
+                                                    <div className="ButtonItem" onClick={this.gotoGroupModify}>
+                                                        <div className="button_text_label">그룹 정보 수정하기</div>
+                                                        <NormalIcon imageURL={iEdit} opacity={0.5} /></div>                                 
+                                                    <div className="ButtonItem" onClick={this.changeEditMode}>                                  
+                                                        <div className="button_text_label displayFlex">                                 
+                                                            {manager ? "관리모드 종료" : "그룹 관리하기"}</div>
+                                                        <NormalIcon imageURL={iINOUT} opacity={0.5} />
+                                                        {this.props.waitingDesign.length > 0 || this.props.waitingGroup.length > 0 ?
+                                                            manager ? null : <NewAlarmLogo><div className="circle" /></NewAlarmLogo>
+                                                            : null}
+                                                    </div>                                  
+                                                </React.Fragment>
+                                                : <React.Fragment>
+                                                    <div className="ButtonItem" onClick={this.like}>
+                                                        <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
+                                                        <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} /></div>                                   
+                                                </React.Fragment>}
+                                        </div>
+                                        <div className="date_time">
+                                            <div className="time_detail">최근 업데이트 {GroupDetail && DateFormat(GroupDetail.update_time)}</div>
+                                            <div className="time_detail" style={{marginTop:"8px"}}>등록 일자 {GroupDetail && new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
+                                        </div>
+                                </div>
                          </div>
                     </div>
                 </GroupSummary>

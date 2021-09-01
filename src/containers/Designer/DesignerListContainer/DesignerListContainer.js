@@ -9,24 +9,39 @@ import ScrollList from "components/Commons/ScrollList"
 import Loading from "components/Commons/Loading"
 import { connect } from "react-redux";
 import opendesign_style from 'opendesign_style';
+
 const Wrapper = styled.div`
-  display:flex;
+  margin-left:100px;
+  margin-top:90px;
   .category_wrapper{
-    margin-top:109px
-    margin-left:140px;
-    margin-right:54px;
+    padding-left:41px;
+    padding-top:19px;
   }
   .content{
+    padding-left:41px;
     width:100%;
-    margin-top:90px;
-    margin-bottom:100px;
   }
   .scroll_wrapper{
-    overflow-y:scroll;
+    margin-top:42px;
+    margin-bottom:100px;
   }
-  .orderBox{
+  .header_box{
     width:100%;
-    padding-right:85px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:13px;
+    padding-right:39px;
+    .category_title{
+      width:200px;
+      height:32px;
+      font-family:Spoqa Han Sans Neo;
+      font-weight:Medium;
+      font-size:24px;
+      color:#7E1E9B;
+      display:flex;
+      align-items:center;
+    }
   }
 `
 class DesignerListContainer extends Component {
@@ -183,14 +198,15 @@ class DesignerListContainer extends Component {
         const { category1, category2, category3, Count, status } = this.props;
         return (<React.Fragment>
             <Wrapper>
-            <div className="category_wrapper">
-                <Category thirdcategory_clicked={this.handleChangeThirdCategory} subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
-                category1={category1} category2={this.state.category2} category3={this.state.category3} main_selected={main_category} sub_selected={sub_category} third_selected={third_category} />
-            </div>
+              <div className="category_wrapper">                
+              <Category thirdcategory_clicked={this.handleChangeThirdCategory} subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
+              category1={category1} category2={this.state.category2} category3={this.state.category3} main_selected={main_category} sub_selected={sub_category} third_selected={third_category} />
+              </div>
             <div className="content">
-            <div className="orderBox">
-            <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
-            </div>
+              <div className="header_box">
+                <div className="category_title">{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</div>
+                <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
+              </div>
             <div className="scroll_wrapper">
                 {status === "INIT"
                 ? <Loading />
