@@ -23,40 +23,42 @@ import new_logo_heart_red from "source/new_logo_heart_red.svg";
 
 //styled
 const Designer_card = styled.div`
-  width:252px;
-  height:390px;
+  width:330px;
+  height:510px;
   box-shadow: 8px 8px 8px #0000002B;
   cursor:pointer;
   display:flex;
+  align-items:center;
+  border: 1px solid #C9C9C9;
   flex-direction:column;
   .thumbnailBox{
     display:flex;
     justify-content:center;
   }
   .thumbnail{
-    min-width:232px;
-    min-height:232px;
+    min-width:306px;
+    min-height:306px;
     max-width:232px;
     max-height:232px;
     border-radius:50%;
     object-fit:cover;
     border:1px solid #eaeaea;
-
+    margin-top:12px;
   }
   .wrap_{width:100%;}
-  .title{
+  .title_wrap{
     width:100%;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    font-size:19px;
+
   }
   .content_{
     width:100%;
     .updateTime{
       width:100%;
       height:15px;
-      font-size:10px;
+      font-size:13px;
 
     }
     .about_me{
@@ -80,27 +82,29 @@ const Designer_card = styled.div`
   }
   .infoBox{
     width:100%;
-    // height:148px;
     height:100%;
     display:flex;
     flex-direction:column;
     justify-content:space-between;
-    padding:8px 12px 12px 12px;
+    padding:14px 19px 14px 19px;
   }
-  .
-  .designer_name{
+  .designerName{
     width:180px;
-    height:27px;
-    font-size:18px;
+    height:36px;
+    font-size:24px;
     font-family:SpoqaHanSans;
-    font-weight:bold;
-    font-weight:500;
+    font-weight:Bold;
     color:#000000;
+    display:flex;
+    align-items:center;
   }
   .category_name{
-    font-size:10px;
+    display:flex;
+    align-items:center;
+    height:28px;
+    font-size:19ox;
     font-family:SpoqaHanSans;
-    color:#777777;
+    color:red;
   }
   .spaceBetween{
     width:100%;
@@ -125,15 +129,15 @@ const Designer_card = styled.div`
       display:flex;
       align-items:center;
       .icon{
-        width:20px;
-        height:20px;
+        width:36px;
+        height:36px;
         object-fit:cover;
         margin-right:6px;
       }
       .text{
         width:36px;
         text-align:left;
-        font-size:16px;
+        font-size:21px;
         margin-right:20px;
         font-family:SpoqaHanSans;
         font-weight:Regular;
@@ -163,12 +167,13 @@ class Designer extends Component {
         <img src={img} className="thumbnail"/>
           <div className="infoBox">
           <div className="wrap_">
-            <div className="title">
-              <div className="designer_name ellipsis">{designer.nick_name}</div>
-              <div className="category_name">{designer.level3_name || designer.level2_name || designer.level1_name || "전체"}</div>
+            <div className="title_wrap">
+              <div className="designerName ellipsis">{designer.nick_name}</div>
+              <div className="updateTime">{DateFormat(designer.update_time)}</div>
+
             </div>
             <div className="content_">
-              <div className="updateTime">{DateFormat(designer.update_time)}</div>
+              <div className="category_name">{designer.level3_name || designer.level2_name || designer.level1_name || "전체"}</div>
               <div className="about_me">{designer.about_me}</div>
             </div>
           </div>

@@ -5,13 +5,13 @@ import { confirmable, createConfirmation } from "react-confirm";
 
 const ModalBox = styled(Modal)`
     *{
-        // border:1px solid black;
         font-family: Noto Sans KR;
     }
-    max-width: 500px;
-    // height: 200px;
+    max-width: 654px;
+    width:100%;
+    height: 375px;
     box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
+    border-radius: 0px;
     
     padding: 20px;
 
@@ -21,13 +21,16 @@ const ModalBox = styled(Modal)`
     }
     .messageBox{
         width: 100%;
+        height:80%;
         display:flex;
         align-items:center;
+        justify-content:center;
         padding:20px;
         .message{
-            font-size:20px;
+            font-size:37px;
             font-weight:500;
-            line-height:30px;
+            line-height:44px;
+            font-family:Spoqa Han Sans Neo;
         }
     }
     .buttonBox{
@@ -35,7 +38,7 @@ const ModalBox = styled(Modal)`
         height:20%;
         margin-top:5px;
         display:flex;
-        justify-content:flex-end;
+        justify-content:center;
     }
     animation:modalSlide 0.5s ease-out forwards;
     @keyframes modalSlide {
@@ -49,21 +52,22 @@ const ModalBox = styled(Modal)`
           opacity: 1;
         }
       }
-
 `
 const Button = styled.div`
     z-index:1200;
-    width:max-content;
-    height:100%;
-    background-color:${props => props.color === "red" ? "red" : "gray"};
+    max-width:158px;
+    width:100%;
+    height:41px;
+    background-color:${props => props.color === "red" ? "red" : "black"};
     color:white;
     display:flex;
     justify-content:center;
     align-items:center;
     padding:10px 30px 10px 30px;
-    border-radius:5px;
     margin-left:10px;
     cursor:pointer;
+    box-shadow: 8px 8px 8px #4141411A;
+
     .text{
         font-family:Noto Sans KR;
         font-size:20px;

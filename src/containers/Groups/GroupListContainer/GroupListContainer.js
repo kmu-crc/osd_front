@@ -9,23 +9,37 @@ import osdstyle from "opendesign_style";
 import Category from "components/Commons/Category"
 
 const Wrapper = styled.div`
-  display:flex;
+  margin-left:100px;
+  margin-top:90px;
   .category_wrapper{
-    margin-top:117px
-    margin-left:140px;
-    margin-right:54px;
+    padding-left:24px;
+    padding-top:19px;
   }
   .content{
+    padding-left:24px;
     width:100%;
-    margin-top:90px;
-    margin-bottom:100px;
   }
   .scroll_wrapper{
-    overflow-y:scroll;
+    margin-top:12px;
+    margin-bottom:100px;
   }
-  .orderBox{
+  .header_box{
     width:100%;
-    padding-right:85px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:32px;
+    padding-right:39px;
+    .category_title{
+      width:200px;
+      height:32px;
+      font-family:Spoqa Han Sans Neo;
+      font-weight:Medium;
+      font-size:24px;
+      color:#1E9B79;
+      display:flex;
+      align-items:center;
+    }
   }
 `
 class GroupListContainer extends Component {
@@ -87,21 +101,22 @@ class GroupListContainer extends Component {
             <Category/>
         </div>
         <div className="content">
-        <div className="orderBox">
-            <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
-        </div>
-        <div className="scroll_wrapper">
-            {this.props.status === "INIT"
-            ? <Loading />
-            : <ScrollList
-              {...osdstyle.group_margin}
-              type="group"
-              reload={reload}
-              handleReload={this.handleReload}
-              dataList={dataList}
-              dataListAdded={dataListAdded}
-              getListRequest={this.getList} />}
-          </div>
+            <div className="header_box">
+                <div className="category_title">그룹({count})</div>
+                <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
+            </div>
+            <div className="scroll_wrapper">
+                {this.props.status === "INIT"
+                ? <Loading />
+                : <ScrollList
+                  {...osdstyle.group_margin}
+                  type="group"
+                  reload={reload}
+                  handleReload={this.handleReload}
+                  dataList={dataList}
+                  dataListAdded={dataListAdded}
+                  getListRequest={this.getList} />}
+              </div>
           </div>
         </Wrapper>
       </React.Fragment>

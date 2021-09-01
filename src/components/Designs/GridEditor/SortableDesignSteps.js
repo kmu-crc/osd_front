@@ -23,7 +23,7 @@ const DragBox = styled.div`
     // border:1px solid black;
 `
 
-const Container = SortableContainer(({ children }) => { return <ul style={{ margin: "0px", padding: "0px" }}>{children}</ul> });
+const Container = SortableContainer(({ children }) => { return <ul style={{ margin: "0px", padding: "0px"}}>{children}</ul> });
 const HorizonDragHandle = SortableHandle(() => <DragBox>
     {/* <AsBelowArrow color="#FF0000" angle={90} percent={.21} marginRight={7} />
     <AsBelowArrow color="#FF0000" angle={-90} percent={.21} /> */}
@@ -124,7 +124,7 @@ const SortableStep = SortableElement(({ editStep, step, boardId, editor, design_
 
             {step.cards && step.cards.length > 0 &&
                 <Fragment>
-                    <div style={{ marginTop: "25px" }}>
+                    <div style={{ marginTop: "12px" }}>
                         <AsBelowArrow angle={0} percent={.25} marginTop={0} marginRight={0} marginBottom={0} marginLeft={0} />
                     </div>
                     <div>

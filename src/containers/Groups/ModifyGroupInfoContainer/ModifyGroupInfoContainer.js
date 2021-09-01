@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DeleteGroupRequest, GetGroupDetailRequest, UpdateGroupRequest } from "redux/modules/group";
-import ModifyGroupInfo from "components/Groups/ModifyGroupInfo";
-// import { confirm } from "components/Commons/Confirm/Confirm";
+import ModifyGroup from "components/Groups/ModifyGroupInfo";
 import { alert } from "components/Commons/Alert/Alert";
+import styled from "styled-components";
+
+const Content = styled.div`
+  margin-left:100px;
+  margin-top:90px;
+`
+
 class ModifyGroupInfoContainer extends Component {
   state = {
     isAuthor: false
@@ -22,10 +28,9 @@ class ModifyGroupInfoContainer extends Component {
   render() {
     //console.log("ModifyGroupInfo", this.props)
     return (
-      <div>
-
-        <ModifyGroupInfo {...this.props} />
-      </div>
+      <Content>
+        <ModifyGroup {...this.props} />
+      </Content>
     )
   }
 }

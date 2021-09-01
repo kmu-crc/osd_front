@@ -497,8 +497,9 @@ class Alarm extends Component {
                             {this.props.alarm.count ?
                                 <div onClick={this.allAlarmConfirm}
                                     style={{
+                                        fontSize:"15px",fontFamily:"Spoqa Han Sans Neo",
                                         zIndex: "999", cursor: "pointer", width: "max-content", borderRadius: "0 25px 0 0",
-                                        backgroundColor: "#FFFFFF", marginTop: "13px", marginLeft: "auto", marginRight: "10px"
+                                        backgroundColor: "#FFFFFF", marginLeft: "auto", marginRight: "10px"
                                     }}>모두 읽음으로 처리</div>
                                 : null}
                         </div>

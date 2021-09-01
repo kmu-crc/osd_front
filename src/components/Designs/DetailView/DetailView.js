@@ -10,13 +10,21 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 // css styling
 
+import new_logo_chat from "source/new_logo_chat.svg";
+import new_logo_msg from "source/new_logo_msg.svg";
+
 const ViewWrapper = styled(Grid)`
   &.ui.grid {
-    margin: 0;
-    padding-bottom: 60px;
-    width: 100%;
-    padding-top: 30px;
-    font-size: ${opendesign_style.font.size.paragraph};
+    margin-left:25px;
+    width:100%;
+    max-width:1760px;
+    // margin: 0;
+    // padding-bottom: 60px;
+    // max-width:1736px;
+    // margin-left:38px;
+    // width: 100%;
+    // // padding-top: 30px;
+    // font-size: ${opendesign_style.font.size.paragraph};
   }
   & .date {
     color: #a4a4a4;
@@ -39,23 +47,50 @@ const ViewWrapper = styled(Grid)`
 `;
 const GoStepBtn = styled(Button)`
   margin-left: 0.5rem;
-  /* position: absolute;
-  top: 0px;
-  right: 1rem; */
-  /* background-color: #57BBBA;
-  border: 1px solid #57BBBA; */
+  display:flex;
+  justify-content:center;
+  align-items:center;
   font-size:17px;
-  width:200px;
+  width:276px;
+  height:49px;
   padding:7px;
+  color:white;
+  font-size:30px;
+  border-radius:0px;
+
 `;
 const BtnWrap = styled.div`
-  position: absolute;
-  top: 0;
-  right: 1rem;
+  width:100%;
+  max-width:1740px;
+  height:100px;
+  margin-left:38px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  .row{
+    display:flex;
+  }
+  .icon_wrap{
+    margin-left:44px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .icon{
+    width:66px;
+    height:66px;
+    object-fit:contain;
+  }
+  .icon_label{
+    font-size:17px;
+    font-family:Spoqa Han Sans Neo;
+    font-weight:Medium;
+  }
 `;
 const TransFormBtnContainer = styled.div`
   position: relative;
-  margin-top: 35px;
+  // margin-top: 35px;
+  margin-bottom:20px;
 `;
 
 class DetailView extends Component {
@@ -148,8 +183,21 @@ class DetailView extends Component {
             ) : null} */}
             {this.props.token &&
               this.props.userInfo.uid === view.user_id && (
+                <React.Fragment>
                 <GoStepBtn onClick={this.onActiveStep} size="small">
-                  디자인 형식 변경</GoStepBtn>
+                  디자인 형식 변경
+                </GoStepBtn>
+                {/* <div className="row">
+                <div className="icon_wrap">
+                    <img src={new_logo_chat} className="icon"/>
+                    <div className="icon_label">화상회의</div>
+                </div>
+                <div className="icon_wrap">
+                  <img src={new_logo_msg} className="icon"/>
+                  <div className="icon_label">채팅</div>
+                </div>
+                </div> */}
+                </React.Fragment>
               )}
           </BtnWrap>
         </TransFormBtnContainer>

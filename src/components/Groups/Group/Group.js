@@ -18,25 +18,31 @@
   import new_logo_note from "source/new_logo_note.svg";
 
   const GroupCard = styled.div`
-    width:701px;
-    height:191px;
+    width:850px;
+    height:200px;
     display:flex;
-    box-shadow: 8px 8px 8px #4141411A;
     border:1px solid #eaeaea;
     cursor:pointer;
+    background-color:#E0E0E0;
+    box-shadow: 8px 8px 8px #4141411A;
     .title_{
       width:100%;
       max-width:200px;
       height:26px;
-      // display:flex;
       align-items:center;
       white-space: nowrap; 
       overflow: hidden; 
       text-overflow: ellipsis; 
+      margin-bottom:8px;
     }
     .row{
-      max-width:508px;
+      max-width:647px;
       width:100%;
+    }
+    .spacebetween{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
     }
     .thumbnail{
       width:193px;
@@ -46,9 +52,9 @@
     }
     .infoBox{
       width:100%;
-      max-width:508px;
+      max-width:647px;
       height:120px;
-      padding:11px;
+      padding:13px;
     }
     .summary{
       display:flex;
@@ -59,30 +65,40 @@
       display:flex;
       justify-content:flex-end;
     }
-    .spacebetween{
+    .info{
+      height:147px;
+    }
+    .vertical{
       display:flex;
+      flex-direction:column;
       justify-content:space-between;
-      align-items:center;
     }
     .ellipsis{
       white-space: nowrap; 
       overflow: hidden; 
       text-overflow: ellipsis; 
     }
-    .imageBox{
-      width:120px;
-      height:120px;
+    .bottomWrapper{
+      width:100%;
+      height:50px;
       display:flex;
-      flex-wrap:wrap;
+      justfiy-content:space-between;
+      align-items:flex-end;
+      padding-bottom:10px;
+    }
+    .imageBox{
+      width:250px;
+      height:50px;
+      display:flex;
+      justify-content:flex-end;
       .mini_thumbnail{
-        width:56px;
-        height:56px;
+        width:50px;
+        height:50px;
         object-fit:cover;
       }
-      .marginRight{margin-right:8px;}
+      .marginLeft{margin-left:11px;}
     }
     .asset_wrapper{
-      width:100%;
       height:22px;
       display:flex;
       align-items:center;
@@ -142,11 +158,37 @@
                 <div className="title_ fontSize1 ellipsis">{group.title}</div>
                 <div className="fontSize2">{DateFormat(group.child_update_time)}</div>
               </div>
-              <div className="spacebetween">
-                <div className="row fontSize2 ellipsis" style={{height:"20px"}}>{group.explanation}</div>
-              </div>
-              <div className="spacebetween flexEnd">
-                <div className="summary flexEnd">
+              <div className="vertical info">
+                <div>
+                  <div className="row fontSize2 ellipsis">{group.explanation}</div>
+                </div>
+                <div className="bottomWrapper" style={{display:"flex",justifyContent:"space-between"}}>
+                  <div>
+                      <div className="fontSize2">{group.nick_name}</div>
+                      <div className="asset_wrapper">
+                        <img src={new_logo_view} className="asset_icon"/>
+                        <div className="asset_num">{NumberFormat(group.view || 0)}</div>
+                        <img src={new_logo_favorite} className="asset_icon"/>
+                        <div className="asset_num">{NumberFormat(group.like || 0)}</div>
+                        <img src={new_logo_note} className="asset_icon"/>
+                        <div className="asset_num">{NumberFormat(group.design || 0 + group.group || 0)}</div>
+                      </div>
+                  </div>
+                  <div className="imageBox">
+                          {four_child.map((child, index) =>
+                              {
+                                return(
+                                  child&&
+                                  <img src={child && child.m_img}
+                                  className="mini_thumbnail marginLeft"
+                                  id={`child-${index}`}
+                                  key={index} />  
+                                )                                
+                              }
+                            )}
+                    </div>
+                </div>
+                {/* <div className="summary flexEnd">
                     <div className="fontSize2">{group.nick_name}</div>
                     <div className="asset_wrapper">
                       <img src={new_logo_view} className="asset_icon"/>
@@ -160,11 +202,11 @@
                 <div className="imageBox">
                 {four_child.map((child, index) =>
                     <img src={child && child.m_img}
-                      className={`mini_thumbnail ${index%2==0?"marginRight":null}`}
+                      className={`mini_thumbnail marginRight}`}
                       id={`child-${index}`}
                       key={index} />
                   )}
-                  </div>
+                  </div> */}
               </div>
             </div>
           </GroupCard>

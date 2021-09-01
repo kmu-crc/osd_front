@@ -21,8 +21,8 @@ const DesignCard = styled.div`
     font-family:Spoqa Han Sans Neo;
     color:black;
   }
-  width:300px;
-  height:439px;
+  width:307px;
+  height:450px;
   box-shadow: 8px 8px 8px #4141411A;
   border: 0.5px solid #eaeaea;
   cursor:pointer; 
@@ -49,7 +49,7 @@ const DesignCard = styled.div`
   }
   .thumbnail{
     width:100%;
-    height:276px;
+    height:287px;
     border: 0.5px solid #eaeaea;
     object-fit:cover;
   }
@@ -62,14 +62,14 @@ const DesignCard = styled.div`
     display:flex;
     align-items:center;
     justify-content:space-between;
-    margin-bottom:3px;
+    margin-bottom:5px;
   }
   .title{
     width:200px;
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis; 
-    font-size:27px;
+    font-size:31px;
     font-weight:600;
     height:49px;
     line-height:49px;
@@ -78,10 +78,10 @@ const DesignCard = styled.div`
   }
   .date{
     color:#707070;
-    font-size:17px;
+    font-size:15px;
   }
   .designer{
-    font-size:16px;
+    font-size:14px;
   }
 
   .asset_wrapper{
@@ -89,7 +89,7 @@ const DesignCard = styled.div`
     height:30px;
     display:flex;
     align-items:center;
-    margin-top:21px;
+    margin-top:24px;
     .asset_icon{
       width:25px;
       height25px;

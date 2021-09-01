@@ -16,13 +16,13 @@ import osdstyle from "opendesign_style";
 import NumberFormat from "modules/NumberFormat";
 
 const Tabs = styled.div`
-  max-width:1466px;
+  max-width:1740px;
   width:100%;
   display: flex;
   justify-content:space-between;
   align-items:center;
-  margin-top: 17px;
-  margin-bottom: 30px;
+  margin-top: 39px;
+  margin-bottom: 49px;
   .menu{
     display:flex;
   }
@@ -59,6 +59,9 @@ const OrderBox = styled.div`
   width:100%;
   border:1px solid black;
 `
+const ScrollWrapper = styled.div`
+  width:1784px;
+  `
 class GroupDetail extends Component {
   constructor(props) {
     super(props);
@@ -148,14 +151,11 @@ class GroupDetail extends Component {
             </div>
             <OrderOption style={{ width:"240px",height:"41px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getGroupList)} selected={this_order} />
           </Tabs>
-
+          <ScrollWrapper>
           {(GroupDetail && currentTab === "group") ?
             <React.Fragment>
               {status === "INIT" ? <Loading /> :
                 <React.Fragment>
-                  {/* <OrderBox>
-                    <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getGroupList)} selected={this_order} />
-                  </OrderBox> */}
                   <ScrollList {...osdstyle.group_margin} handleReload={this.handleReload} reloader={reload} type="group" dataList={GroupList} dataListAdded={GroupListAdded} getListRequest={this.getGroupList} />
                 </React.Fragment>}
             </React.Fragment> : null
@@ -165,13 +165,11 @@ class GroupDetail extends Component {
             <React.Fragment>
               {status === "INIT" ? <Loading /> :
                 <React.Fragment>
-                  {/* <OrderBox>
-                  <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getDesignList)} selected={this_order} />
-                  </OrderBox> */}
                   <ScrollList {...osdstyle.design_margin} handleReload={this.handleReload} reloader={reload} type="design" dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />
                 </React.Fragment>}
             </React.Fragment> : null
           }
+          </ScrollWrapper>
         </React.Fragment>}
       <BlankDiv />
     </React.Fragment>)

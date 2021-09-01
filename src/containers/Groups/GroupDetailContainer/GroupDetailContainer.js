@@ -19,15 +19,11 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   display:flex;
-  .category_wrapper{
-    margin-top:117px;
-    margin-left:140px;
-    margin-right:54px;
-  }
+  margin-top:90px;
+  margin-left:100px;
   .content{
     width:100%;
-    margin-top:90px;
-    margin-bottom:100px;
+    padding:27px 41px 38px 27px;
   }
   .scroll_wrapper{
     overflow-y:scroll;
@@ -48,9 +44,6 @@ class GroupDetailContainer extends Component {
     return (
       <React.Fragment>
         <Wrapper>
-          <div className="category_wrapper">
-                  <Category/>
-          </div>
           <div className="content">
           <GroupDetail
             {...this.props}

@@ -204,6 +204,7 @@ const ItemList = ({ getList, itemList, itemListAdded, tab, order = "like", onCli
     let styleSheet =  {...opendesign_style.my_design_margin}
     if(tab == "design") styleSheet = {...opendesign_style.my_design_margin}
     else if(tab == "group") styleSheet = {...opendesign_style.my_group_margin}
+    else if(tab == "join-group") styleSheet = {...opendesign_style.my_group_margin}
     else if(tab == "designer") styleSheet = {...opendesign_style.my_designer_margin}
 
     return(
@@ -348,7 +349,7 @@ class MypageBody extends Component {
                 <OrderOption wrap={true} order_clicked={(order) => this.handleChangeOrderOps(order, this.getRelatedGroupInDesignerRequest)} selected={this_order} />
                 </div>
                 <ItemList
-                    tab="join-group"
+                    tab="group"
                     itemList={MyGroup}
                     itemListAdded={MyGroupAdded}
                     getList={this.getMyGroupListRequest}
