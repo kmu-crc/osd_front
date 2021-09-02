@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 const MsgSectionBoard = styled.div`
   width:100%;
-  height:90%;
-  padding-top:10px;
+  height: 98%;
+  padding-top: 50px;
   padding-right:10px;
   position: relative;
   flex-direction: column-reverse;
@@ -13,6 +13,15 @@ const MsgSectionBoard = styled.div`
   :hover {
     overflow-y: overlay;
     overflow-x: hidden;
+  }
+  // scroll
+  ::-webkit-scrollbar-track { background-color: transparent; }
+  ::-webkit-scrollbar-track { background-color: transparent; }
+  ::-webkit-scrollbar-thumb { background-color: transparent; }
+  :hover{
+    ::-webkit-scrollbar-track { background-color: transparent; }
+    ::-webkit-scrollbar { width: 7px;  background-color: transparent; }
+    ::-webkit-scrollbar-thumb { background-color: #FF0000; }
   }
 `;
 const ReceiveMessageBox = styled.div`
@@ -28,18 +37,20 @@ const ReceiveMessageBox = styled.div`
     max-width:100%;    
     padding: 13px 25px 13px 20px;
     border-radius: 20px;
-    background-color: #FFFFFF;
+    background-color: #FFE8E8;
     word-wrap:break-word;
   }
   .messageText {
     width: 100%;
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 500;
-    font-family: Noto Sans KR;
+    font-family: Segoe UI;
     color: #707070;
     text-align: left;
-    line-height: 25px;
-    overflow-y:auto;
+    line-height: 27px;
+    // overflow-y:auto;
+    letter-spacing: 0px;
+    opacity: 1;
   }
   .messageReceiveTime {
     width: 100px;
@@ -55,14 +66,22 @@ const ReceiveMessageBox = styled.div`
       width:70%;
     }
   }
+  :hover {
+    z-index: 1001;
+  }
 `;
 const SendMessageBox = styled.div`
     width: 100%;
     margin-bottom: 32px;
+    // margin-right: 38px;
     position: relative;
     display:flex;
     justify-content:flex-end;
     align-items:flex-end;
+
+    .spacer-0 {
+      width: 38px;
+    }
     .messageSendBubble{
       display: inline-block;
       width: max-content;  
@@ -158,6 +177,7 @@ function MsgSendBox(props) {
           {/* {props.msgText} */}
         </div>
       </div>
+      <div className="spacer-0">&nbsp;</div>
     </SendMessageBox>
   );
 }
@@ -199,9 +219,9 @@ class MessageDetail extends Component {
             , hasMore: this.checkHasMore(this.props.MessageDetail)
             , addList: this.props.MessageDetail, nowList: this.props.MessageDetail.reverse().concat(this.state.nowList)
           });
-          
+
           return;
-        }).then(()=>{
+        }).then(() => {
           this.state.page === 1 && this.ScrollDown();
         })
         .catch((err) => {
