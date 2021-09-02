@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 const MsgSectionBoard = styled.div`
   width:100%;
-  height:90%;
-  padding-top:10px;
+  height: 98%;
+  padding-top: 50px;
   padding-right:10px;
   position: relative;
   flex-direction: column-reverse;
@@ -73,10 +73,15 @@ const ReceiveMessageBox = styled.div`
 const SendMessageBox = styled.div`
     width: 100%;
     margin-bottom: 32px;
+    // margin-right: 38px;
     position: relative;
     display:flex;
     justify-content:flex-end;
     align-items:flex-end;
+
+    .spacer-0 {
+      width: 38px;
+    }
     .messageSendBubble{
       display: inline-block;
       width: max-content;  
@@ -172,6 +177,7 @@ function MsgSendBox(props) {
           {/* {props.msgText} */}
         </div>
       </div>
+      <div className="spacer-0">&nbsp;</div>
     </SendMessageBox>
   );
 }
@@ -213,9 +219,9 @@ class MessageDetail extends Component {
             , hasMore: this.checkHasMore(this.props.MessageDetail)
             , addList: this.props.MessageDetail, nowList: this.props.MessageDetail.reverse().concat(this.state.nowList)
           });
-          
+
           return;
-        }).then(()=>{
+        }).then(() => {
           this.state.page === 1 && this.ScrollDown();
         })
         .catch((err) => {

@@ -221,7 +221,7 @@ const MessageDetail = styled.div`
   }
   .messages {
     height: 100%;
-    // padding: 13px 17px 20px 37px;
+    padding: 13px 17px 20px 37px;
 
     .list {
       height: 691px;
@@ -233,12 +233,40 @@ const MessageDetail = styled.div`
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      
-      textarea {
-        background: #E9E9E9;
-      }
     }
   }
+  .not-selected {
+    padding-top: 25%;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 50px;
+    font-size: 25px;
+    color #4A4A4A;
+  }
+`;
+const SendMessageTextarea = styled.div`
+  width: 80%;
+  height: 119px;
+  background-color: #E9E9E9;
+  resize: none;
+  border: none;
+  outline: none;
+  padding: 20px;
+  overflow: auto;
+
+  height: 119px;
+  text-align: left;
+  font-weight: 300;
+  font-size: 25px;
+  line-height: 36px;
+  font-family: Spoqa Han Sans Neo;
+  letter-spacing: 0px;
+  color: #4F4F4F;
+  opacity: 1;
+
+  @media only screen and (min-width : 780px) and (max-width:1440px) { }
+  @media only screen and (min-width : 360px) and (max-width:780px) { height:100%; }
 `;
 const SendArrowButton = styled.div`
 
@@ -252,6 +280,7 @@ const SendArrowButton = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
 
+  cursor: pointer;
 `;
 class Messages extends React.Component {
   constructor(props) {
@@ -526,8 +555,8 @@ class Messages extends React.Component {
                   {this.state.render && <MessageDetailContainer height={691} repaint={this.state.render} id={this.state.msgId} />}
                 </div>
                 <div className="send-wrap">
-                  <textarea />
-                  <SendArrowButton></SendArrowButton>
+                  <SendMessageTextarea contentEditable={true} id="sendMsgBox" />
+                  <SendArrowButton onClick={this.onSubmitForm} />
                 </div>
               </div>
 
@@ -586,7 +615,7 @@ export default Messages;
                       <SendMessageTextarea contentEditable="true" id="sendMsgBox">
                       </SendMessageTextarea>
                     </div>
-                    <SendButton className="cursor_pointer" onClick={this.onSubmitForm}>
+                    <SendButton className="cursor_pointer">
                       <div className="sendButton_label">전송하기</div></SendButton>
                   </div>
                 </div>
@@ -657,7 +686,7 @@ const MainBox = styled.div`
   @media only screen and (min-width : 500px) and (max-width:1024px) {
     margin-top:50px;
     .wrapper{
-      height:90%;
+      height:98%;
       flex-direction:column;
     }
   }
@@ -849,28 +878,7 @@ const SendButton = styled.div`
     color:#707070;
   }
 `;
-const SendMessageTextarea = styled.div`
-  max-width:100%;
-  min-width:100%;
-  height:100%;
-  font-size:18px;
-  // font-weight:500;
-  // color:#707070;
-  text-align:left;
-  line-height:27px;
-  background-color:#dddddd;
-  resize:none;
-  border:none;
-  outline:none;
-  padding:20px;
-  overflow:auto;
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
 
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-    height:100%;
-  }
-`;
 const SummaryList = styled.div`
   width:100%;
   height:100%;
