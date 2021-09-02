@@ -2,40 +2,316 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 //img
-import noimg from "source/noimg.png"
+import iconView from "source/mypage_icon_view.svg";
+import iconLike from "source/mypage_icon_like.svg";
+import iconArticle from "source/mypage_icon_article.svg";
+import iconEdit from "source/mypage_icon_edit.svg";
+import noimg from "source/noimg.png";
 import iForked from "source/baseline_library_books_black_48dp.png"
 import iThumbUp from "source/thumbup_icon_black.png"
 import IconView from "source/IconView"
 import DateFormat from 'modules/DateFormat';
 import NumberFormat from "modules/NumberFormat";
 import iEdit from 'source/edit_1.png';
-import { geturl } from "config"
+import { geturl } from "config";
 
 import opendesign_style from "opendesign_style";
 // import { Icon } from 'semantic-ui-react'
 
 // css
-const Thumbnail = styled.div`
-    position:relative;
-    min-width: 200px;
-    max-width: 200px;
-    min-height: 200px;
-    max-height:200px;
-    border-radius: 200px;
-    background: #D6D6D6;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    background-size: cover;
-    background-image: ${props => `url(${props.imageURL})`};
-    @media only screen and (min-width : ${0}px) 
-    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
-        min-width: 100px;
-        min-height:100px;
-        max-width: 100px;
-        max-height:100px;
-        margin-right:20px;
+const Wrapper = styled.div`
+    margin-top: ${100 + 24}px;
+    margin-left: ${100 + 38}px;
+    // *{border: 1px solid red;}
+`;
+const MyInfoBox = styled.div`
+    padding: 12px 12px 12px 34px;
+
+    max-width: 1737px;
+
+    display: flex;
+    flex-direction: row;
+
+    .wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
-`
+    background-color: #E0E0E0;
+`;
+const Thumbnail = styled.div`
+    width: 226px;
+    height: 226px;
+    min-width: 226px;
+    min-height: 226px;
+    background-image: url(${props => props.face});
+    background-position: center center;
+    background-size: cover;
+    border-radius: 100%;
+`;
+const Details = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .nick {
+        width: max-content;
+        height: 41px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 28px;
+        line-height: 41px;
+        font-family: Spoqa Han Sans;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+     }
+
+    .about {
+        padding-left: 5px;
+        padding-right: 10px;
+        margin-top: 14px;
+        text-align: left;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 27px;
+        font-family: Spoqa Han Sans;
+        letter-spacing: 0px;
+        color: #777777;
+        opacity: 1;
+     }
+
+    .count { 
+        display: flex;
+        flex-direction: row;
+
+        .element {
+            display: flex;
+            flex-direction: row;
+            .icon {
+                width: 42px;
+                height: 42px;
+                display: flex;
+                align-items: middle;
+
+                margin-right: 7px;
+            }
+            .num {
+                width: max-content;
+                height: 38px;
+                text-align: left;
+                font-weight: normal;
+                font-size: 26px;
+                line-height: 38px;
+                font-family: Spoqa Han Sans;
+                letter-spacing: 0px;
+                color: #000000;
+                opacity: 1;
+
+            }
+            margin-right: 20px;
+            :last-child { margin-right: 0px;}
+        }
+    }
+`;
+const IconDiv = styled.div`
+    width: ${props => props.width}px;
+    height: ${props => props.height}px;
+    background-image: url(${props => props.icon});
+    background-position: center center;
+    background-size: cover;
+`;
+const Additional = styled.div`
+    width: 203px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .modify {
+        display: flex;
+        flex-direction: row;
+    }
+    .modify-text {
+        width: 138px;
+        height: 33px;
+        text-align: center;
+        font-weight: medium;
+        font-size: 24px;
+        line-height: 33px;
+        font-family: Spoqa Han Sans Neo;
+        letter-spacing: 0px;
+        color: #4F4F4F;
+        opacity: 1;
+
+        margin-top: 6px;
+        margin-right: 12px;
+    }
+    .modify-icon {
+        width: 53px;
+        height: 53px;
+    }
+    .date {
+        text-align: right;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 26px
+        font-family: Spoqa Han Sans Neo;
+        letter-spacing: 0px;
+        color: #777777;
+        opacity: 1;
+    }
+`;
+
+class MypageHeader extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            w: window.innerWidth > 1920 ? 1920 : window.innerWidth,
+            tmpLike: false,
+            likeDialog: false,
+            forkDialog: 0,
+            isSeeMore: false,
+        };
+    }
+    gotoMyModify = () => {
+        window.location.href = geturl() + '/mymodify';
+    }
+    render() {
+        console.log("MyDetail:", this.props);
+
+        const { likeDialog, w } = this.state;
+        const { MyDetail } = this.props;
+
+        const MypageInfo = this.props.MyDetail;
+        const countInfo = MypageInfo.count || { total_like: 0, total_group: 0, total_design: 0, total_view: 0, };
+        const thumbnailInfo = MypageInfo.profileImg ? MypageInfo.profileImg.m_img : noimg;
+
+        return (<Wrapper>
+            <MyInfoBox>
+                {/* thumbnail */}
+                <Thumbnail face={thumbnailInfo} />
+
+                <div className="wrapper">
+                    {/* nick, intro, counter */}
+                    <Details>
+                        <div className="wrapper">
+                            <div className="nick">{MyDetail.nick_name}</div>
+                            <div className="about">{MyDetail.about_me}</div>
+                        </div>
+
+                        <div className="count">
+                            <div className="element">
+                                <div className="icon"><IconDiv width={38} height={38} icon={iconView} /></div>
+                                <div className="num">{NumberFormat(countInfo.total_view)}</div>
+                            </div>
+                            <div className="element">
+                                <div className="icon"><IconDiv width={38} height={38} icon={iconLike} /></div>
+                                <div className="num">{NumberFormat(countInfo.total_like)}</div>
+                            </div>
+                            <div className="element">
+                                <div className="icon"><IconDiv width={38} height={38} icon={iconArticle} /></div>
+                                <div className="num">{NumberFormat(countInfo.total_design + countInfo.total_group)}</div>
+                            </div>
+                        </div>
+                    </Details>
+
+                    {/* button, update, create */}
+                    <Additional>
+                        <div className="modify">
+                            <div className="modify-text">정보 수정하기</div>
+                            <div className="modify-icon"><IconDiv width={53} height={53} icon={iconEdit} /></div>
+                        </div>
+                        <div className="date">
+                            <div className="update-date">최근&nbsp;업데이트&nbsp;{MyDetail && DateFormat(MyDetail.update_time)}</div>
+                            <div className="create-date">등록일자&nbsp;{MyDetail ? new Date(MyDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(MyDetail.create_time).toLocaleDateString('ko-KR').length - 1) : "none"}</div>
+                        </div>
+                    </Additional>
+                </div>
+            </MyInfoBox>
+
+        </Wrapper>);
+    };
+}
+export default MypageHeader;
+
+
+// // new
+//const Header = styled.div`
+//    // div{border:1px solid red;}
+//    width: ${props => props.width}px;
+//    display: flex;
+//    @media only screen and (min-width : ${0}px) and (max-width : ${900}px) {
+//        margin-top: 50px;
+//    }
+//`;
+//const ButtonRegion = styled.div`
+//    display: flex;
+//    height: 250px;
+//    padding: 15px 0px;
+//    flex-direction: column !important;
+//    .sideItemBox {
+//        display: flex;
+//        justify-content: flex-end;
+//        align-items: flex-end;
+//        width: 100%;
+//        height: 36px;
+//    }
+//    .sideMenu_label {
+//        cursor: pointer;
+//        width: 164px;
+//        height: 25px;
+//        color: #707070;
+//        font-family: Noto Sans KR;
+//        font-size: 17px;
+//        font-weight: 200;
+//        text-align: right;
+//    }
+//    .UpdateTimeLabel {
+//        width: max-content;
+//        height: 25px;
+//        margin-left: auto;
+//        font-size: 17px;
+//        font-weight: 200;
+//        font-family: Noto Sans KR;
+//        color: #707070;
+//        text-align: right;
+//    }
+//`;
+//const LeftSide = styled.div`
+//    margin-left: 35px;
+//    display: flex;
+//    flex-direction: column;
+//
+//    @media only screen and (min-width : ${0}px) and (max-width : ${750}px) {
+//        display: none;
+//    }
+//`;
+// const Thumbnail = styled.div`
+//     position:relative;
+//     min-width: 200px;
+//     max-width: 200px;
+//     min-height: 200px;
+//     max-height:200px;
+//     border-radius: 200px;
+//     background: #D6D6D6;
+//     background-repeat: no-repeat;
+//     background-position: 50%;
+//     background-size: cover;
+//     background-image: ${props => `url(${props.imageURL})`};
+//     @media only screen and (min-width : ${0}px) 
+//     and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
+//         min-width: 100px;
+//         min-height:100px;
+//         max-width: 100px;
+//         max-height:100px;
+//         margin-right:20px;
+//     }
+// `
 const MainBox = styled.div`
     width:100%;
     position:relative;
@@ -505,184 +781,106 @@ const LikeDialog = styled.div`
         text-align:center;
     }
 `;
-// // new
-//const Header = styled.div`
-//    // div{border:1px solid red;}
-//    width: ${props => props.width}px;
-//    display: flex;
-//    @media only screen and (min-width : ${0}px) and (max-width : ${900}px) {
-//        margin-top: 50px;
-//    }
-//`;
-//const ButtonRegion = styled.div`
-//    display: flex;
-//    height: 250px;
-//    padding: 15px 0px;
-//    flex-direction: column !important;
-//    .sideItemBox {
-//        display: flex;
-//        justify-content: flex-end;
-//        align-items: flex-end;
-//        width: 100%;
-//        height: 36px;
-//    }
-//    .sideMenu_label {
-//        cursor: pointer;
-//        width: 164px;
-//        height: 25px;
-//        color: #707070;
-//        font-family: Noto Sans KR;
-//        font-size: 17px;
-//        font-weight: 200;
-//        text-align: right;
-//    }
-//    .UpdateTimeLabel {
-//        width: max-content;
-//        height: 25px;
-//        margin-left: auto;
-//        font-size: 17px;
-//        font-weight: 200;
-//        font-family: Noto Sans KR;
-//        color: #707070;
-//        text-align: right;
-//    }
-//`;
-//const LeftSide = styled.div`
-//    margin-left: 35px;
-//    display: flex;
-//    flex-direction: column;
-//
-//    @media only screen and (min-width : ${0}px) and (max-width : ${750}px) {
-//        display: none;
-//    }
-//`;
-class MypageHeader extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            w: window.innerWidth > 1920 ? 1920 : window.innerWidth,
-            tmpLike: false,
-            likeDialog: false,
-            forkDialog: 0,
-            isSeeMore: false,
-        };
-    }
-    gotoMyModify = () => {
-        window.location.href = geturl() + '/mymodify';
-    }
-    render() {
-        console.log("MyDetail:", this.props);
-
-        const { likeDialog, w } = this.state;
-        const { MyDetail } = this.props;
-
-        const MypageInfo = this.props.MyDetail;
-        const countInfo = MypageInfo.count || { total_like: 0, total_group: 0, total_design: 0, total_view: 0, };
-        const thumbnailInfo = MypageInfo.profileImg ? MypageInfo.profileImg.m_img : noimg;
-
-        return (
-            <React.Fragment>
-
-                {likeDialog ?
-                    <LikeDialog>
-                        <div className="message">
-                            관심 디자이너로 등록되었습니다.<br />
-                            내 정보에서 확인 가능합니다.
-                        </div>
-                    </LikeDialog>
-                    : null}
-
-                <MainBox>
-                    <div className="wrapper">
-                        {/* left */}
-                        <OneSideBox>
-                            <div className="title">{MyDetail.nick_name}</div>
-                            <Thumbnail imageURL={thumbnailInfo} />
-                            <div className="mobileMode">
-                                <div className="time_label">
-                                    <div>최근 업데이트 {MyDetail && DateFormat(MyDetail.update_time)}</div>
-                                    <div>등록 일자 {MyDetail && new Date(MyDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(MyDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
-                                </div>
-                                <div className="count-box">
-                                    <div className="icon-wrapper">
-                                        <IconView width="22px" height="11px" fill="#000000" opacity="0.55" />
-                                        <div className="label">{NumberFormat(countInfo.total_view || 0)}</div>
-                                    </div>
-
-                                    <div className="icon-wrapper">
-                                        <img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} />
-                                        <div className="label">{NumberFormat(countInfo.total_like || 0)}</div>
-                                    </div>
-
-                                    <div className="icon-wrapper">
-                                        <img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55" }} />
-                                        <div className="label">{NumberFormat(countInfo.total_design || 0 + countInfo.total_group || 0)}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </OneSideBox>
-                        <TwoSideBox w={w - 450}>
-                            <div className="explainBox">
-                                {MyDetail.categoryName ?
-                                    <CategoryLabel className="font_red">{MyDetail.categoryName}</CategoryLabel> : null}
-                                <div className="explanationRegion">
-                                    <div className="explain-text">
-                                        {MyDetail.about_me}</div>
-                                </div>
-                                <div className="count-box">
-                                    <div className="icon-wrapper">
-                                        <IconView width="22px" height="11px" fill="#000000" opacity="0.55" />
-                                        <div className="label">{NumberFormat(countInfo.total_view || 0)}</div>
-                                    </div>
-
-                                    <div className="icon-wrapper">
-                                        <img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} />
-                                        <div className="label">{NumberFormat(countInfo.total_like || 0)}</div>
-                                    </div>
-
-                                    <div className="icon-wrapper">
-                                        <img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55" }} />
-                                        <div className="label">{NumberFormat(countInfo.total_design || 0 + countInfo.total_group || 0)}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </TwoSideBox>
-                        {/* right */}
-                        <ThreeSideBox>
-                            <div>
-                                <div onClick={this.gotoMyModify} className="sideItemBox">
-                                    <div className="sideMenu_label">정보 수정하기</div>
-                                    <SideItemIcon imageURL={iEdit} />
-                                </div>
-                            </div>
-                            <div className="time_label">
-                                <div>최근 업데이트 {MyDetail && DateFormat(MyDetail.update_time)}</div>
-                                <div>등록 일자 {MyDetail && new Date(MyDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(MyDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
-                            </div>
-                        </ThreeSideBox>
-
-                        <MobileSeeMore isShow={this.state.isSeeMore}>
-                            <div className="explain-box font_middle">{MyDetail.about_me}</div>
-                            <div className="icon-box">
-                                <div className="icon-wrapper">
-                                    <div onClick={this.gotoMyModify} className="icon-piece"><MiniIcon iconName={iEdit} /><div className="font_small">정보수정</div></div>
-                                </div>
-                            </div>
-                        </MobileSeeMore>
-                        <div className="seemore cursor_pointer" onClick={() => { this.setState({ isSeeMore: !this.state.isSeeMore }) }}>
-                            <div className="txt">{this.state.isSeeMore === false ? "▼ 더보기" : "▲ 접기"}</div>
-                            {/* <div className="txt">더보기</div> */}
-                        </div>
-                    </div>
-                </MainBox>
 
 
-            </React.Fragment>
-        );
 
-    };
-}
-export default MypageHeader;
+// {likeDialog ?
+//     <LikeDialog>
+//         <div className="message">
+//             관심 디자이너로 등록되었습니다.<br />
+//             내 정보에서 확인 가능합니다.
+//         </div>
+//     </LikeDialog>
+//     : null}
+
+// <MainBox>
+//     <div className="wrapper">
+//         {/* left */}
+//         <OneSideBox>
+//             <div className="title">{MyDetail.nick_name}</div>
+//             <Thumbnail imageURL={thumbnailInfo} />
+//             <div className="mobileMode">
+//                 <div className="time_label">
+//                     <div>최근 업데이트 {MyDetail && DateFormat(MyDetail.update_time)}</div>
+//                     <div>등록 일자 {MyDetail && new Date(MyDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(MyDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
+//                 </div>
+//                 <div className="count-box">
+//                     <div className="icon-wrapper">
+//                         <IconView width="22px" height="11px" fill="#000000" opacity="0.55" />
+//                         <div className="label">{NumberFormat(countInfo.total_view || 0)}</div>
+//                     </div>
+
+//                     <div className="icon-wrapper">
+//                         <img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} />
+//                         <div className="label">{NumberFormat(countInfo.total_like || 0)}</div>
+//                     </div>
+
+//                     <div className="icon-wrapper">
+//                         <img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55" }} />
+//                         <div className="label">{NumberFormat(countInfo.total_design || 0 + countInfo.total_group || 0)}</div>
+//                     </div>
+//                 </div>
+//             </div>
+//         </OneSideBox>
+//         <TwoSideBox w={w - 450}>
+//             <div className="explainBox">
+//                 {MyDetail.categoryName ?
+//                     <CategoryLabel className="font_red">{MyDetail.categoryName}</CategoryLabel> : null}
+//                 <div className="explanationRegion">
+//                     <div className="explain-text">
+//                         {MyDetail.about_me}</div>
+//                 </div>
+//                 <div className="count-box">
+//                     <div className="icon-wrapper">
+//                         <IconView width="22px" height="11px" fill="#000000" opacity="0.55" />
+//                         <div className="label">{NumberFormat(countInfo.total_view || 0)}</div>
+//                     </div>
+
+//                     <div className="icon-wrapper">
+//                         <img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} />
+//                         <div className="label">{NumberFormat(countInfo.total_like || 0)}</div>
+//                     </div>
+
+//                     <div className="icon-wrapper">
+//                         <img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55" }} />
+//                         <div className="label">{NumberFormat(countInfo.total_design || 0 + countInfo.total_group || 0)}</div>
+//                     </div>
+//                 </div>
+//             </div>
+//         </TwoSideBox>
+//         {/* right */}
+//         <ThreeSideBox>
+//             <div>
+//                 <div onClick={this.gotoMyModify} className="sideItemBox">
+//                     <div className="sideMenu_label">정보 수정하기</div>
+//                     <SideItemIcon imageURL={iEdit} />
+//                 </div>
+//             </div>
+//             <div className="time_label">
+//                 <div>최근 업데이트 {MyDetail && DateFormat(MyDetail.update_time)}</div>
+//                 <div>등록 일자 {MyDetail && new Date(MyDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(MyDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
+//             </div>
+//         </ThreeSideBox>
+
+//         <MobileSeeMore isShow={this.state.isSeeMore}>
+//             <div className="explain-box font_middle">{MyDetail.about_me}</div>
+//             <div className="icon-box">
+//                 <div className="icon-wrapper">
+//                     <div onClick={this.gotoMyModify} className="icon-piece"><MiniIcon iconName={iEdit} /><div className="font_small">정보수정</div></div>
+//                 </div>
+//             </div>
+//         </MobileSeeMore>
+//         <div className="seemore cursor_pointer" onClick={() => { this.setState({ isSeeMore: !this.state.isSeeMore }) }}>
+//             <div className="txt">{this.state.isSeeMore === false ? "▼ 더보기" : "▲ 접기"}</div>
+//             {/* <div className="txt">더보기</div> */}
+//         </div>
+//     </div>
+// </MainBox>
+
+
+
+
+
 
 // {/* <Header width={w}>
 //     {MyDetail ?

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-// import MypageHeader from 'components/MypageHeader';
+import MypageHeader from 'components/MypageHeader';
 import MypageBody from 'components/MypageBody';
 import {
   GetMyDetailRequest,
@@ -32,7 +32,7 @@ class MyDetailContainer extends Component {
   render() {
     return (
       <React.Fragment>
-        {/* <MypageHeader {...this.props} /> */}
+        <MypageHeader {...this.props} />
         <MypageBody {...this.props} id={this.props.userInfo.uid} />
       </React.Fragment>
     )
