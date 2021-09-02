@@ -14,6 +14,15 @@ const MsgSectionBoard = styled.div`
     overflow-y: overlay;
     overflow-x: hidden;
   }
+  // scroll
+  ::-webkit-scrollbar-track { background-color: transparent; }
+  ::-webkit-scrollbar-track { background-color: transparent; }
+  ::-webkit-scrollbar-thumb { background-color: transparent; }
+  :hover{
+    ::-webkit-scrollbar-track { background-color: transparent; }
+    ::-webkit-scrollbar { width: 7px;  background-color: transparent; }
+    ::-webkit-scrollbar-thumb { background-color: #FF0000; }
+  }
 `;
 const ReceiveMessageBox = styled.div`
   width: 100%;
@@ -28,18 +37,20 @@ const ReceiveMessageBox = styled.div`
     max-width:100%;    
     padding: 13px 25px 13px 20px;
     border-radius: 20px;
-    background-color: #FFFFFF;
+    background-color: #FFE8E8;
     word-wrap:break-word;
   }
   .messageText {
     width: 100%;
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 500;
-    font-family: Noto Sans KR;
+    font-family: Segoe UI;
     color: #707070;
     text-align: left;
-    line-height: 25px;
-    overflow-y:auto;
+    line-height: 27px;
+    // overflow-y:auto;
+    letter-spacing: 0px;
+    opacity: 1;
   }
   .messageReceiveTime {
     width: 100px;
@@ -54,6 +65,9 @@ const ReceiveMessageBox = styled.div`
     .messageReceiveBubble{
       width:70%;
     }
+  }
+  :hover {
+    z-index: 1001;
   }
 `;
 const SendMessageBox = styled.div`
