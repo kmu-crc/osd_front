@@ -8,12 +8,11 @@ const FormWrapper = styled.div`
 `;
 
 const FromFieldCard = styled.div`
+  max-content:1736px;
   width: 100%;
   background-color: white;
   box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
-  padding: 70px;
   margin-bottom: 30px;
-  border-radius: 3px;
   /* @media only screen and (min-width: 1200px) {
     padding: 70px 100px 0 100px;
   } */

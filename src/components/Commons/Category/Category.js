@@ -4,22 +4,31 @@ import MenuContext from "Global/Context/GlobalContext"
 import opendesign_style from "opendesign_style"
 
 const Container = styled.div`
-    width:170px;
+    display:flex;
+    width:100%;
+    .category{
+
+    }
     .main_category{
-        width:170px;
+        width:100%;
+        display:flex;
     }
     .sub_category{
-        background-color:#efefef;
-    }
-    .borderTop{
-        border-top:2px solid #707070;
+        width:max-content;
+        margin-top:9px;
+        display:flex;
+        height:41px;
+        padding:6px 26px 7px 26px;
+        border:1px solid #eaeaea;
+        background-color:white;
+        box-shadow: 8px 8px 8px #4141411A;
     }
     .selected{
         color:red;
     }
 
     .button{
-        width:100%;
+        min-width:174px;
         height:41px;
         display:flex;
         justify-content:center;
@@ -30,28 +39,35 @@ const Container = styled.div`
         font-weight:medium;
         box-shadow: 8px 8px 8px #0000002B;
         cursor:pointer;
+        margin-right:51px;
     }
     .blue{background-color:#1262AB;}
     .purple{background-color:#7E1E9B;}
     .green{background-color:#1E9B79;}
 `
 const Main_element = styled.div`
-    width:170px;
-    height:72px;
+    height:41px;
     display:flex;
     justify-content:center;
     align-items:center;
     font-size:24px;
+    font-family:Spoqa Han Sans Neo;
+    font-weight:Medium;
     cursor:pointer;
+    margin-right:26px;
 
 `
 const SubCateElement =styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:18px;
+    font-size:20px;
+    font-family:Spoqa Han Sans Neo;
+    font-weight:Light;
     padding:10px;
     cursor:pointer;
+    margin-left:10px;
+    margin-right:10px;
 `
 
 class Category extends Component {
@@ -97,37 +113,31 @@ class Category extends Component {
         || window.location.pathname.search("/modifyDesigner/") > -1 ? true : false;
         
         return (<Container className={`${hidemenu}${larger}`} >
-            <div className="main_category">
             {isDesign == true?
             <div className="button blue" onClick={()=>window.location.href="/createDesign"}>디자인 등록하기</div>:null}
             {isGroup == true?
             <div className="button green" onClick={()=>window.location.href="/createGroup"}>그룹 등록하기</div>:null}
             {isDesigner == true?
             <div className="button purple" onClick={()=>window.location.href="/createDesigner"}>디자이너 등록하기</div>:null}
+            
+            <div className="category">
+            <div className="main_category">
+
             {!isGroup&&category1.map((element,index) => {
                 console.log(index);
                 return(
                     <React.Fragment>
-
-                        <Main_element
-                        className={`${main_selected && main_selected.value === element.value ? "selected" : ""} ${index!=0?"borderTop":""}`}
-                        onClick={() => this.clickedMainCategory(element)}
-                        key={element.value}>{element.text}</Main_element>
-                        <div className="sub_category">
-                            {main_selected && main_selected.value==element.value && category2 && category2.length > 0 && category2.map(element => {
-                                const style = element.value === selected ? "selected " : ""
-                                return <SubCateElement
-                                    className={`${style}`}
-                                    onClick={() => this.clickedSubCategory(element)}
-                                    key={element.value}>{element.text}</SubCateElement>
-                            })}
-                        </div>
+                        <Main_element className={`${main_selected && main_selected.value === element.value ? "selected" : ""}`}
+                                      onClick={() => this.clickedMainCategory(element)} key={element.value}>
+                        {element.text}
+                        </Main_element>
                     </React.Fragment>
                 ) 
             })}
             
             </div>
-            {/* <SubCategory screenWidth={window.innerWidth}>
+            {!isGroup&&main_selected.value&&
+            <div className="sub_category">
             {category2 && category2.length > 0 && category2.map(element => {
                 const style = element.value === selected ? "selected " : ""
                 return <SubCateElement
@@ -135,7 +145,10 @@ class Category extends Component {
                     onClick={() => this.clickedSubCategory(element)}
                     key={element.value}>{element.text}</SubCateElement>
             })}
-            </SubCategory>
+            </div>
+            }
+            </div>
+            {/* 
             <ThirdCategory screenWidth={window.innerWidth}>
             {category3 && category3.length > 0 && category3.map(element => {
                 const style = element.value === selected2 ? "selected " : ""

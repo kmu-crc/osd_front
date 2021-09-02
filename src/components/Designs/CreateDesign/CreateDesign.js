@@ -103,7 +103,10 @@ const PeerIcon = styled.div`
 `;
 const InviteMemberListBox = styled.div`
   width:645px;
+  height:200px;
   margin-left:191px;
+  padding-top:50px;
+  overflow-y:auto;
   .memberList{
   display:flex;
   flex-wrap:wrap;
@@ -130,6 +133,13 @@ const Wrapper = styled.div`
   height:100%;
   padding:90px 0px 90px 100px;
   display:flex;
+  margin-bottom:150px;
+
+  .maxFlex{
+    display:flex;
+    width:100%;
+    align-items:center;
+  }
   .flex{
     max-width:800px;
     display:flex;
@@ -138,7 +148,7 @@ const Wrapper = styled.div`
   .navi_menu{
     width:264px;
     height:100%;
-    padding:25px 38px;
+    padding:36px 38px;
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -163,12 +173,13 @@ const Wrapper = styled.div`
       cursor:pointer;
     }
     .black{color:black;}
-    .red{color:red;}
+    .select{color:#1262AB;}
     .borderBottom{border-bottom:2px solid #707070;}
   }
   .vLine{
     border:1px solid #CCCCCC;
-    margin:42px 0px;
+    margin:53px 0px;
+    height:871px;
   }
   .summary{
     padding:45px 77px;
@@ -187,28 +198,33 @@ const Wrapper = styled.div`
     margin-top:61px;
     cursor:pointer;
   }
-  .marginRight1{margin-right:60px;}
+  .marginRight1{margin-right:51px;}
   .marginRight2{margin-right:0px;}
   .board{
+    max-width:1248px;
     width:100%;
     height:max-content;
-    // height:100%;
-    padding:45px 27px;
+    padding:56px 72px;
     .board_label{
-      min-width:max-content;
-      height:40px;
       display:flex;
       align-items:center;
+      height:40px;
       font-family:Spoqa Han Sans Neo;
+      font-weight:Medium;
       font-size:28px;
-      font-weight:400;
+    }
+    .guide{
+      font-size:20px;
+      font-family:Spoqa Han Sans Neo;
+      line-height:28px;
+      color:#707070;
     }
     .board_box{
       width:100%;
-      min-height:90px;
-      height:max-content;
-      padding-left:30px;
+      padding-left:40px;
+      display:flex;
     }
+    .column{flex-direction:column;}
     .paddingLeft1{padding-left:191px;}
     .buttonBox{
       display:flex;
@@ -218,8 +234,8 @@ const Wrapper = styled.div`
     }
   }
   .addImg{
-    width:200px;
-    height:200px;
+    width:290px;
+    height:290px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -238,7 +254,7 @@ const Wrapper = styled.div`
     color:red;
   }
   .licenseItem {
-    margin-bottom: 30px;
+    margin-bottom: 46px;
     color: #707070;
     font-size: 22px;
     font-weight: 300;
@@ -248,14 +264,36 @@ const Wrapper = styled.div`
     vertical-align: top;
    }
   }
-  .findThumbnailText{
-    // margin-left:30px;
-    // border:2px solid red;
-    // padding:5px 20px 4px 20px;
-    // border-radius:20px;
-    // color:red;
-    cursor:pointer;
-    // font-size:22px;
+  .row{
+    width:100%;
+    display:flex;
+  }
+  .imageBox{
+    width:290px;
+    height:290px;
+    background-color:#E9E9E9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+  .imageLabel{
+    margin-left:38px;
+    padding-top:10px;
+    .findThumbnailText{
+      cursor:pointer;
+      font-size:30px;
+      font-family:Spoqa Han Sans Neo;
+      font-weight:Regular;
+      color:red;
+    }
+    .thumbnailExplainText{
+      font-size:22px;
+      font-family:SpoqaHanSans;
+      font-weight:Regular;
+      color:#707070;
+      margin-top:15px;
+      line-height:33px;
+    }
   }
   .dropdown{
     width:228px;
@@ -267,9 +305,27 @@ const Wrapper = styled.div`
     justify-content:space-between !important;
     border-radius:0px !important;
   }
+
+
 `
 
-
+const ContentWrapper = styled.div`
+  max-width:1566px;
+  width:100%;
+  display:flex;
+  .formWrap{
+    max-width:1248px;
+    width:100%;
+  }
+  .buttonWrap{
+    display:flex;
+    width:250px;
+    padding-top:875px;
+    .button{cursor:pointer;width:86px;height:49px;display:flex;justify-content:center;align-items:center;color:white;font-size:28px;font-family:Spoqa Han Sans Neo;}
+    .grey{background-color:#8D8D8D;}
+    .red{background-color:red;}
+  }
+`
 const QuestionGuide = styled.div`
   width:35px;
   height:35px;
@@ -288,13 +344,10 @@ const QuestionGuide = styled.div`
   cursor:default;
   .messageBubble{
     width:${props=>props.bubbleSize}px;
-    box-shadow: 8px 8px 8px #0000002B;
     font: normal normal normal 20px/27px Segoe UI;
     letter-spacing: 0px;
     line-height:25px;
     color:#707070;
-    background-color:white;
-    border:1px solid #707070;
     font-weight:400;
     padding:10px;
     position:absolute;
@@ -306,13 +359,13 @@ const QuestionGuide = styled.div`
 
     z-index:888;
 
-    display:none;
+    display:block;
   }
-  &:hover{
-    .messageBubble{
-      display:block;
-    }
-  }
+  // &:hover{
+  //   .messageBubble{
+  //     display:block;
+  //   }
+  // }
 `
 const DesignCard = styled.div`
   *{
@@ -374,7 +427,7 @@ const DesignCard = styled.div`
   }
 `
 const InputText = styled.input`
-  width:873px;
+  width:880px;
   height:51px;
   background-color:#E9E9E9;
   padding:5px 20px;
@@ -382,12 +435,12 @@ const InputText = styled.input`
   border:none;
   resize:none;
   // margin-left:30px;
-  margin-top:14px;
+  margin-top:12px;
   font-size:22px;
 `
 const InputTextArea = styled.textarea`
-  width:873px;
-  height:498px;
+  width:880px;
+  height:323px;
   background-color:#E9E9E9;
   padding:20px;
   outline:none;
@@ -451,7 +504,7 @@ const DelBtn = styled.button`
   }
 `;
 const DesignTemplateSelector = styled.div`
-  max-width:853px;
+  max-width:100%;
   width:100%;
   .title {
     width: max-content;
@@ -1042,14 +1095,18 @@ class CreateDesign extends Component {
         <Wrapper>
           <div className="navi_menu">
             <div className="navi_header">디자인 등록하기</div>
-            <div className={`navi_label borderBottom ${this.state.step==0?"red":"black"}`} onClick={()=> this.setState({ step: 0 })}>{scrollmenu[0].txt}</div>
-            <div className={`navi_label borderBottom ${this.state.step==1?"red":"black"}`}  
-                  onClick={() => this.state.basic ?this.setState({ step: 1 }) :alert("기본 정보의 필수항목(*)을 입력하셔야 합니다.")}>{scrollmenu[1].txt}</div>
-            <div className={`navi_label ${this.state.step==2?"red":"black"}`} 
-                   onClick={() => this.state.additional ? this.setState({ step: 2 }) : alert("부가 정보의 필수항목(*)을 입력하셔야 합니다.")}>{scrollmenu[2].txt}</div>
+            <div className={`navi_label borderBottom ${this.state.step==0?"select":"black"}`} onClick={()=> this.setState({ step: 0 })}>{scrollmenu[0].txt}</div>
+            <div className={`navi_label borderBottom ${this.state.step==1?"select":"black"}`}  
+                  // onClick={()=> this.setState({ step: 1 })}
+                  onClick={() => this.state.basic ?this.setState({ step: 1 }) :alert("기본 정보의 필수항목(*)을 입력하셔야 합니다.")}
+                  >{scrollmenu[1].txt}</div>
+            <div className={`navi_label ${this.state.step==2?"select":"black"}`} 
+                  // onClick={()=> this.setState({ step: 2 })}
+                   onClick={() => this.state.additional ? this.setState({ step: 2 }) : alert("부가 정보의 필수항목(*)을 입력하셔야 합니다.")}
+                   >{scrollmenu[2].txt}</div>
           </div>
           <div className="vLine"/>
-          <div className="summary">
+          {/* <div className="summary">
              <DesignCard>
                <img src={thumbnailURL == null ? noimg : thumbnailURL} className="thumbnail"/>
                <div className="info">
@@ -1068,23 +1125,34 @@ class CreateDesign extends Component {
              <div className="completeButton"
                   onClick={this.submit}
              >완성된 디자인 등록하기</div>
-          </div>
+          </div> */}
+          <ContentWrapper>
           {
             this.state.step==0&&
             <React.Fragment>
               <div className="board">
                 <div className="board_label">1. 대표 이미지 등록하기<sub className="sub marginRight2">*</sub>
                      <QuestionGuide left={15} top={-50} bubbleSize={584}>?
-                        <div className="messageBubble">
+                        {/* <div className="messageBubble">
                           디자이너님의 멋진 디자인을 보여주세요! <br/> 대표 이미지는 JPG/JPEG/PNG/BMP 파일로 등록하실 수 있어요!
-                        </div>
+                        </div> */}
                      </QuestionGuide>
-
-                     {/* <label className="findThumbnailText" htmlFor="file">찾아보기</label>
-                     <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/png, image/bmp, image/jpeg, image/jpg" /> */}
                 </div>
                 <div className="board_box">
-                  <label className="findThumbnailText" htmlFor="file">
+                <div className="row" style={{marginTop:"10px"}}>
+                  {
+                      this.state.thumbnail == null||this.state.thumbnail==noimg?
+                      <div className="imageBox"><img src={new_logo_plus} className="plus"/></div>
+                      :
+                      <img className="imageBox" src={this.state.thumbnail} />
+                    }
+                    <div className="imageLabel">
+                          <label className="findThumbnailText" htmlFor="file">찾아보기</label>
+                          <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
+                          <div className="thumbnailExplainText"> 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+                    </div>
+                </div>
+                  {/* <label className="findThumbnailText" htmlFor="file">
                     {
                       this.state.thumbnail == null||this.state.thumbnail==noimg?
                       <div className="addImg"><img src={new_logo_plus} className="plus"/></div>
@@ -1092,39 +1160,36 @@ class CreateDesign extends Component {
                       <img src={this.state.thumbnail} className="addImg"/>
                     }
                   </label>
-                  <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/png, image/bmp, image/jpeg, image/jpg" />
+                  <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/png, image/bmp, image/jpeg, image/jpg" /> */}
                 </div>
-                <div className="board_label">2. 디자인 이름<sub className="sub marginRight1">*</sub></div>
+                <div className="board_label" style={{marginTop:"12px"}}>2. 디자인 이름<sub className="sub marginRight1">*</sub></div>
                 <div className="board_box">
                       <InputText onChange={this.onChangeValueTitle} onKeyDown={this.onKeyDownEnter}
                                  name="title" maxLength="100" placeholder="디자인의 제목을 입력해주세요. (100자 이내)" />
                 </div>
-                <div className="board_label">3. 디자인 설명<sub className="sub marginRight2">*</sub>
-                      {/* <QuestionGuide>?
-                        <div className="messageBubble">
-                          디자이너님의 멋진 디자인을 보여주세요! <br/> 대표 이미지는 JPG/JPEG/PNG/BMP 파일로 등록하실 수 있어요!
-                        </div>
-                      </QuestionGuide> */}
+                <div className="board_label" style={{marginTop:"22px"}}>3. 디자인 설명<sub className="sub marginRight2">*</sub>
                 </div>
                 <div className="board_box">
                       <InputTextArea id="textBox" onChange={this.onChangeValueExplanation} 
                                 maxLength="350" placeholder="디자인 설명을 입력해주세요. (350자 이내)" />
                 </div>
-                {step === 0 && 
-                <div className="buttonBox">
+
+              </div>
+              {step === 0 && 
+                <div className="buttonWrap" >
                 <CustomButton
                   onClick={this.state.basic ? this.gotoNextStep : this.checkInputForm}
                   isComplete={this.state.basic}>
                   <BtnText>다음</BtnText>
                 </CustomButton>
                 </div>}
-              </div>
             </React.Fragment>
           }
+          
           {
             this.state.step==1&&
             <React.Fragment>
-               <div className="board">
+               <div className="board" >
                 <div className="board_label">1. 카테고리<sub className="sub marginRight1" >*</sub>
                 <div className="flex">
                   <CategoryDropDown
@@ -1157,7 +1222,7 @@ class CreateDesign extends Component {
                 </div>
 
                 </div>
-                <div className="board_box paddingLeft1">
+                <div className="board_box paddingLeft1" style={{marginTop:"90px"}}>
                 {
                   this.state.categoryLevel3!=null?
                     <IsProblemBox>
@@ -1167,19 +1232,16 @@ class CreateDesign extends Component {
                   :null
                 }
                 </div> 
-                <div className="board_label">2. 멤버 초대하기
-                      <QuestionGuide left={-580} top={-75} bubbleSize={600}>
-                        ?
-                        <div className="messageBubble">
-                          함께 디자인을 만들어 갈 멤버를 초대해 주세요. <br/>
-                          초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br/> 
-                          디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.                        </div>
-                      </QuestionGuide>
-                </div>
-                <div className="board_box paddingLeft1">
-                     <div style={{width:"400px"}}>
-                     <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />
-                     </div>
+                <div className="maxFlex">
+                  <div className="board_label " style={{marginRight:"5px"}}>2. 멤버 초대하기</div> 
+                  <div style={{width:"400px",marginRight:"10px"}}><SearchDesignMemverContainer className="searchRect" addMember={this.addMember} /></div>
+                  <QuestionGuide left={64} top={-10} bubbleSize={600}>?
+                    <div className="messageBubble">
+                            함께 디자인을 만들어 갈 멤버를 초대해 주세요. <br/>
+                            초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br/> 
+                            디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.                        
+                    </div>
+                  </QuestionGuide>
                 </div>
                 <InviteMemberListBox>
                   <div className="memberList">
@@ -1192,15 +1254,41 @@ class CreateDesign extends Component {
                         )
                       }) : null}</div>
                 </InviteMemberListBox>
+                {/* <div className="board_label">2. 멤버 초대하기
+                      <QuestionGuide left={-580} top={-75} bubbleSize={600}>
+                        ?
+                        <div className="messageBubble">
+                          함께 디자인을 만들어 갈 멤버를 초대해 주세요. <br/>
+                          초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br/> 
+                          디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.                        </div>
+                      </QuestionGuide>
+                </div> */}
+                {/* <div className="board_box paddingLeft1">
+                     <div style={{width:"400px"}}>
+                     <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />
+                     </div>
+                </div> */}
+                {/* <InviteMemberListBox>
+                  <div className="memberList">
+                    {this.state.members && this.state.members.length > 0 ?
+                      this.state.members.map((item, index) => {
+                        return (
+                          <div onClick={() => this.removeMember(item.user_id)} key={index}>
+                            <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
+                          </div>
+                        )
+                      }) : null}</div>
+                </InviteMemberListBox> */}
                 <div className="board_label">3. 라이센스</div>
-                <div className="board_box paddingLeft1">
+                <div className="board_box paddingLeft1 column">
                      <div className="licenseItem"><CheckBox2 checked={this.state.license1} onChange={this.onCheckedLicense01} /><span className="textLabel">상업적으로 이용이 가능합니다.</span></div>
                      <div className="licenseItem"><CheckBox2 checked={this.state.license2} onChange={this.onCheckedLicense02} /><span className="textLabel disabled">원작자를 표시합니다.</span></div>
                      <div className="licenseItem"><CheckBox2 checked={this.state.license3} onChange={this.onCheckedLicense03} /><span className="textLabel">수정이 가능합니다.</span></div>
                 </div>
+                </div>
 
                 {step === 1 && 
-                <div className="buttonBox">
+                <div className="buttonWrap">
                 <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
                   <BtnText>뒤로</BtnText>
                 </CustomButton>
@@ -1210,14 +1298,13 @@ class CreateDesign extends Component {
                   <BtnText>다음</BtnText>
                 </CustomButton>
                 </div>}
-              </div>
 
             </React.Fragment>
           }
           {
             this.state.step==2&&
             <React.Fragment>
-              <div className="board">
+          <div className="board">
           <ResetButtonWrapper
             onClick={() => this.setState({ step: 2, type: "normal", is_project: 0, contents: [], steps: [], template: null })}>
             작업취소하기<i className="undo icon" />
@@ -1262,6 +1349,7 @@ class CreateDesign extends Component {
                 : <AddContent getValue={this.onAddValue} order={0} change={() => this.setState({ type: "grid", is_project: 1 })} />}
             </React.Fragment>
             : null}
+            
             {this.state.type === "grid" ?
               <DesignTemplateSelector>
                 <div className="title">
@@ -1296,8 +1384,10 @@ class CreateDesign extends Component {
                 </div>
               </EditorWrapper>
             : null}
+            </div>
+
             {step === 2 && 
-            <div className="buttonBox">
+            <div className="buttonWrap">
               <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
                 <BtnText>뒤로</BtnText>
               </CustomButton>
@@ -1308,9 +1398,10 @@ class CreateDesign extends Component {
                 <BtnText>완료</BtnText>
               </CustomButton>
             </div>}
-            </div>
             </React.Fragment>
           }
+          </ContentWrapper>
+
         </Wrapper>
       </React.Fragment>
     )

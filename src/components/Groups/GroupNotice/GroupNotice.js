@@ -109,7 +109,7 @@ export default class GroupNotice extends Component {
         <div className="button_ bg_green marginRight" onClick={() => this.setState({ board: true })}>게시판</div>
 
         {user_id === GroupDetail.user_id && hasProgrammingDesign
-          ? <ButtonOSD onClick={this.getExportFile}>제출현황보기</ButtonOSD>
+          ? <div className="button_ bg_black" onClick={this.getExportFile}>제출현황보기</div>
           : null}
 
         {/* {user_id === GroupDetail.user_id && hasProgrammingDesign

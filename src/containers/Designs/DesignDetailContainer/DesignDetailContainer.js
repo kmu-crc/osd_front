@@ -8,10 +8,20 @@ import {
   GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest,
   GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest
 } from "redux/modules/design";
+import styled from "styled-components";
+
+const Content = styled.div`
+  margin-top:90px;
+  margin-left:100px;
+`
 
 class DesignDetailContainer extends Component {
   render() {
-    return (<DesignDetail {...this.props} />)
+    return (
+    <Content>
+    <DesignDetail {...this.props} />
+    </Content>
+    )
   }
 }
 const mapStateToProps = (state) => {

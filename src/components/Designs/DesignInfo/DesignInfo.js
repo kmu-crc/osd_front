@@ -24,734 +24,324 @@ import vChatIcon from "source/video-chat-icon.png";
 import Socket from "modules/Socket"
 import Loading from 'components/Commons/Loading';
 
+import new_logo_view from "source/new_logo_view.svg";
+import new_logo_favorite from "source/new_logo_favorite.svg";
+import new_logo_share from "source/new_logo_share.svg";
+import new_logo_note from "source/new_logo_note.svg";
+
 import CCL1 from "source/ccl-1.png";
 import CCL2 from "source/ccl-2.png";
 import CCL3 from "source/ccl-3.png";
 import CCL4 from "source/ccl-4.png";
 import CCL5 from "source/ccl-5.png";
 
+import new_logo_chat from "source/new_logo_chat.svg";
+import new_logo_msg from "source/new_logo_msg.svg";
 
-// new style
-const Thumbnail = styled.div`
-    .fork-mark {
-        position: absolute;
-        margin-left: 175px;
-        width: 32px;
-        height: 70px;
-        background-image: url(${forked});
-        background-size: cover; 
-    }
-    position:relative;
-    width: 220px;
-    height: 220px;
-    margin-right:30px;
-    border-radius: 15px;
-    background-color: #D6D6D6;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    background-image: ${props => `url(${props.imageURL})`};
-    @media only screen and (min-width : ${0}px) 
-    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
-        width:100px;
-        height:100px;
-        .fork-mark {
-            position: absolute;
-            right:10px;
-            top:0px;
-            width: 16px;
-            height: 35px;
-            background-image: url(${forked});
-            background-size: cover; 
-        }
-    }
+
+const Wrapper = styled.div`
+    padding-top:42px;
+    padding-left:38px;
+`
+const ChatWrapper = styled.div`
+width:100%;
+max-width:1740px;
+height:100px;
+display:flex;
+justify-content:flex-end;
+align-items:flex-end;
+.row{
+  display:flex;
+}
+.icon_wrap{
+  margin-left:44px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.icon{
+  width:66px;
+  height:66px;
+  object-fit:contain;
+}
+.icon_label{
+  font-size:17px;
+  font-family:Spoqa Han Sans Neo;
+  font-weight:Medium;
+}
 `;
-const MainBox = styled.div`
+const DesignHeader = styled.div`
+    max-width:1740px;
     width:100%;
-    position:relative;
-    .wrapper{
-        width:100%;
+    height:307px;
+    border:1px solid #B7B7B7;
+    box-shadow: 8px 8px 8px #4141411A;
+    display:flex;
+    .thumbnail{
+        max-width:307px;
+        min-width:307px;
         height:100%;
-        background-color:#EFEFEF;
-        display:flex;
-        padding:15px;
-        padding-left:25px;
-        .seemore{
-            margin-top:15px;
-            width:100%;
-            height:max-content;
-            background-color:#E6E6E6;
-            padding:3px;
-            border-radius:3px;
-            display:none;
-            .txt{
-                width:max-content;
-                height:max-content;
-                color:#707070;
-            }
-        }
-    }      
-    .font_big{font-size:20px;}
-    .font_midBig{font-size:17px;}
-    .font_middle{font-size:16px;}
-    .font_smallthan{font-size:14px;}
-    .font_small{font-size:12px;}
-    .font_bold{font-weight:500;}
-    .font_fit{font-weight:300;}
-    .font_red{color:#FF0000;}
-    .flexBox{display:flex;}
-    .algin_right{text-align:right;}
-    .margin_top{margin-top:15px;}
-    .margin_top1{margin-top:10px;}
-    .margin_bottom{margin-bottom:10px;}
-    .margin_bottom_small{margin-bottom:5px;}
-    .alignItem_end{align-items:flex-end;}
-    .justify_end{justify-content:flex-end;}
-    .line_height{line-height:20px;}
-    .position_relative{position:relative;}
-    .mini_icon{
-        width:20px;
-        height:20px;
-        margin-right:3px;
+        object-fit:cover;
+        overflow:hidden;
+        position:relative;
     }
-    .transparent_btn{
-        width: max-content;
-        margin-top:15px;
-        margin-left:-5px;
-        background:none;
-        border:none;
-        outline:none;
-        display:flex;
-    }
-    .transparent_btn_nomargin{
-        width: max-content;
-        margin-left:-5px;
-        background:none;
-        border:none;
-        outline:none;
-        display:flex;
-    }
-    .cursor_pointer{
-        cursor:pointer;
-    }
-    @media only screen and (min-width : ${opendesign_style.resolutions.LargeMaxWidth}px){
-        width:1920px;
-    }
-    @media only screen and (min-width : ${0}px) and (max-width : ${1024}px) {
-        height:max-content;
-        margin-top: 90px;
-    }
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
-    and (max-width : ${1024}px) {
-        .wrapper{
-            flex-wrap:wrap
-        }
-    }
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
-
-        .wrapper{
-            flex-wrap:wrap
-            .seemore{
-                display:flex;
-                justify-content:center;
-                align-items:center;
-            }
-        }
-    }
-`;
-const CustomIcon = styled.div`
-    width: 35px; 
-    height: 35px; 
-    margin-left: 15px; 
-    background: url(${props => props.iconName}); 
-    background-size: cover; 
-    background-position: center center; 
-    background-repeat: no-repeat;
-    opacity: ${props => props.like_opacity == null ? 1 : props.like_opacity};
-
-`;
-const MiniIcon = styled.div`
-    width: 30px; 
-    height: 30px; 
-    background: url(${props => props.iconName}); 
-    background-size: contain; 
-    background-position: center center; 
-    background-repeat: no-repeat;
-    opacity: ${props => props.like_opacity == null ? 1 : props.like_opacity};
-
-`;
-const MobileSeeMore = styled.div`
-    margin-top:15px;
-    display:${props => props.isShow === false ? "none" : "flex"};
-    flex-direction:column;
-    width:100%;
-    .explain-box{
-        margin-bottom:15px;
-        color:#707070;
-    }
-    .icon-box{
-        margin-top:30px;
+    .infoBox{
+        padding:12px 22px 12px 22px;
         width:100%;
-        height:60px;
-        display:flex;
-        .icon-wrapper{
-            width:20%;
-            min-width:50px;
-            height:100%;  
-        }
-        .icon-piece{
-            cursor:pointer;
+        .design_name{
+            height:42px;
             display:flex;
-            flex-direction:column;
             align-items:center;
-            justify-content:center;
-            width:95%;
-            height:95%;
-            border-radius:5px;
-            background-color:#DEDEDE;
+            color:black;
+            font-size:31px;
+            font-family:Noto Sans KR;
+            font-weight:Bold;
+        }
+        .row{
+            width:100%;
+            display:flex;
+        }
+        .detail_height{height:190px;}
+        .column{flex-direction:column;}
+        .red_label{font-size:14px;color:red;margin-top:12px;}
+        .black_label{font-size:14px;color:black;margin-top:12px;}
+        .pointer{cursor:pointer;}
+        .left_box{
+            width:145px;
+            height:100%;
+            margin-right:10px;  
+        }
+        .right_box{
+            width:100%;
+            height:100%;
+        }
+
+    }
+    .bottom_box{
+        width:100%;
+        height:41px;
+        display:flex;
+        align-items:center;
+        .asset_icon{
+            max-width:29px;
+            max-height:29px;
+            object-fit:contain;
+        }
+        .asset_text{
+            width:max-content;
+            max-width:40px;
+            margin-left:8px;
+            margin-right:16px;
+            font-family:SpoqaHanSans;
+            font-size:19px;
+            font-weight:400;
         }
     }
-`;
-const ThreeSideBox = styled.div`
-    *{
-        text-align:right;
-        font-family:Noto Sans KR;
-        color:#707070;
-    }
-    margin-left:auto;
-    display: flex;
-    height: 220px;
-    justify-content: space-between;
-    flex-direction: column;
-    .content_box{
-        ._txt{
-            height: max-content;
-            font-family: Noto Sans KR;
-            text-align: right;
-            margin-left: auto;
+    .menuBox{
+        max-width:170px;
+        min-width:170px;
+        height:100%;
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
+        padding:12px 12px 27px 0px;
+        .pointer{cursor:pointer;}
+        .button_wrap{
+            display:flex;
+            align-items:center;
+            justify-content:flex-end;
             margin-top:5px;
-            
         }
-    }
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
-    and (max-width : ${1024}px) { 
-        width:100%;
-        height:max-content;
-    }
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
-        display:none;
-        width:100%;
-        height:max-content;
-    }
-`;
-const TwoSideBox = styled.div`    
-    min-width:165px;
-    margin-left:30px;
-    .descriptionContainer{
-        width: ${props => props.w}px;
-        height: 200px;
-        display: flex;
-        flex-direction: column;
-        .category-name {
-            margin-top: 42px;
-            width: max-content;
-            height: 25px;
-            color: #FF0000;
-            font-size: 17px;
-            font-weight: 300;
-            line-height: 25px;
-            text-align: left;
-            font-family: Noto Sans KR;
+        .fork_label{
+            height:28px;
+            font-family:Spoqa Han Sans Neo;
+            font-weight:Bold;
+            font-size:20px;
+            color:red;
+            text-align:right;
         }
-        .txt {
-            display: inline-block; 
-            width: 100%;
-            height: 200px;
-            font-size: 20px;
-            font-weight: 200;
-            font-family: Noto Sans KR;
-            line-height: 35px;
-            margin-top: 20px;
-            color: #707070;
-    
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
-            white-space: normal; 
-            text-align: left; 
-            word-wrap: break-word; 
-            display: -webkit-box; 
-            -webkit-line-clamp: 3; 
-            -webkit-box-orient: vertical;
+        .black_label{
+            font-family:Spoqa Han Sans Neo;
+            font-weight:Bold;
+            font-size:14px;
+            color:black;
         }
-        .explanationRegion{
-            width: 100%;
-            display: flex;
-            height: 90px;
-            font-size: 17px;
-            color: #707070;
-            line-height: 30px;
-            cursor: default;
-            
-            p {
-                overflow-y: auto;
-                overflow-x: hidden;
-                width: 100%;
-                word-wrap: break-word;
-
-                font-size: 20px;
-                font-weight: 300;
-                font-family: Noto Sans KR;
-                line-height: 30px;
-                color: #707070;
-
-                :hover {
-                    background-color: #EDEDED;
-                }
-
-                ::-webkit-scrollbar {
-                    position: absolute;
-                    width: 3px;
-                }
-                ::-webkit-scrollbar-thumb {
-                    background: #707070 !important;
-                }
-            }
-    }
-
-
-    @media only screen and (min-width : ${opendesign_style.resolutions.MediumMinWidth}px) 
-    and (max-width : ${1024}px) {
-        height:max-content;
-        width:300px;
-        margin-left:0px;
-        margin-top:10px;
-        margin-bottom:10px;
-        .descriptionContainer{
-            width:100%;
-            height:max-content;
-            .category-name {
-                margin-top: 10px;
-                line-height:0px;
-                height:max-content;
-            }
-            .txt{
-                height:max-content;
-                min-width:100%;
-            }
+        .icon{
+            width:24px;
+            height:24px;
+            object-fit:contain;
+            margin-left:10px;
         }
-
-    }
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
-        display:none;
-        height:max-content;
-        width:100%;
-        margin-left:0px;
-        margin-top:10px;
-        margin-bottom:10px;
-        .descriptionContainer{
-            height:max-content;
-            width:100%;
-            .category-name {
-                display:none;
-                margin-top: 10px;
-                line-height:0px;
-                height:max-content;
-            }
-            .txt{
-                height:max-content;
-            }
+        .ssl{
+            width:20px;
+            height:20px;
+            object-fit:contain;
         }
-        
-
-    }
-
-    
-`;
-const OneSideBox = styled.div`
-    *{
-        color: #707070;
-    }
-    position: relative;
-    width: 165px;
-    min-width: 165px;
-    height: 220px;
-    .title {
-        display: block !important;
-        width: max-content !important;
-        height: 29px;
-        color: #707070;
-        font-size: 20px;
-        font-weight: 500;
-        text-align: left;
-        line-height: 29px;
-        cursor: pointer;
-    }
-
-    .info {
-        height: 120px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-start;
-
-        .author {
-            display: flex;
-        }
-        .original-design-button {
-            margin-top: 10px;
-        }
-        .fork-design-count {
-            margin-top: 10px;
-        }
-        .comment-box {
-            margin-top: 10px;
+        .date{
+            text-align:right;
+            margin-top:5px;
         }
     }
 
-    .comment-box{
-        display: flex;
-        flex-direction: row;
-        font-size: 1.1rem;
-        cursor: pointer;
-    }
-    .count-box {
-        position: absolute;
-        bottom: 0px;
-        width: 100%;
-        font-size: 15px;
-        color: #707070;
-        font-weight: 500;
-        text-align: left;
-        display: flex;
-        align-items: flex-end;
+`
 
-        .count-element {
-            display: flex;
-            flex-direction: rows;
-
-            .icon {
-                margin-left: 5px;
-            }
-            .number {
-                margin-left: 2px;
-            }
-        }
-    }
-
-    @media only screen and (min-width : ${1024}px) 
-    and (max-width : ${opendesign_style.resolutions.LargeMinWidth}px) {
-        height:220px;
-        margin-right:15px;
-        position:relative;
-        .title{
-            width:300px !important;
-            white-space:nowrap;
-            overflow:hidden;
-            text-overflow:ellipsis;
-        }
-    }
-    @media only screen and (min-width : ${opendesign_style.resolutions.MediumMinWidth}px) 
-    and (max-width : ${1024}px) {
-        height:220px;
-        width:${window.document.width - 320}px;
-        margin-right:15px;
-        position:relative;
-        .title{
-            width:165px !important;
-            white-space:nowrap;
-            overflow:hidden;
-            text-overflow:ellipsis;
-        }
-    }
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
-        width:55%;
-        height:120px;
-        .title{
-            width:100% !important;
-            white-space:nowrap;
-            overflow:hidden;
-            text-overflow:ellipsis;
-        }
-        .info{
-            .goto-parent{
-                display:none;
-            }
-            .flexBox{
-                .comment-box{
-                    display:none;
-                }
-                .fork-design{
-                    display:none;
-                }
-                .smallMode-category-name{
-                    color:red;
-                    display:block;
-                }
-            }
-        }
-    }
-`;
-const DesignMemberList = styled.div`
-    display: ${props => props.display};
-    z-index: 900;
-    position: absolute;
-    pointer-events: auto;
-    // top: ${props => props.top};
-    // left: ${props => props.left};
-    top:35px;
-    z-index: 904;
-    height: 250px;
-    max-height: 550px;
-    width: 365px;
-    border-radius: 15px;
-    background-color: #FFFFFF;
-    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
-    font-family: Noto Sans KR;
-    overflow-y: auto;
-    overflow-x: hidden;
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
-    and (max-width : ${1024}px) { 
-        left:-150px;
-     }
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
-        left:-150px;
-        width:350px;
-        box-shadow: 1px 3px 6px 1px rgba(0,0,0,0.5);
-
-     }
-    .close-box {
-        position: absolute;
-        cursor: pointer;
-        z-index: 901;
-        right: 10px;
-        top: 10px;
-    } 
-    &.list::-webkit-scrollbar {
-        position: absolute;
-        width: 4px;
-    }
-
-    &.list::-webkit-scrollbar-thumb {
-        background: rgba(112, 112, 112, 0.45) !important;
-    }
-    &.list {
-      padding: 15px;
-      padding-right: 36px;
-      padding-bottom: 5px;
-      height: 490px;
-        &:hover{
-            overflow-y: auto;
-            overflow-x: hidden;
-    }
-
-`;
-const DesignMemberListElement = styled.div`
-    width: max-content;
-    padding: 5px;
-    margin-left: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-right: 5px;
-    border-radius: 15px;
-    background: #EFEFEF;
-    align-items: center;
-    display: flex;
+const ListItem = styled.div`
+display:flex;
+padding-left:15px;
+padding-top: 15px;
+flex-direction: column;
+// width: 365px;
+// height: 85px;
+display: flex;
+border-bottom: 1px solid #B7B7B7;
+color: #707070;
+&:hover {
+    background-color: #EFEFEF;
+    opacity: 0.90;
+}
+.wrapper {
     cursor: pointer;
-    .face {
-        background-image: url(${props => props.face});
+    display: flex;
+    .design-thumbnail {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+        background-image: url(${props => props.img});
         background-size: cover;
         background-position: center;
-        background-color: #D6D6D6;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
     }
-    .nick-name {
-        width: max-content;
-        height: 29px;
-        margin-top: 1px;
-        margin-left: 10px;
+    .design-title {
+        margin-left: 16px;
+        font-size: 17px;
+    }
+} 
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
+    padding:0px;
+}
+`;
+const DesignMemberListElement = styled.div`
+width: max-content;
+padding: 5px;
+margin-left: 5px;
+margin-top: 5px;
+margin-bottom: 5px;
+margin-right: 5px;
+border-radius: 15px;
+background: #EFEFEF;
+align-items: center;
+display: flex;
+cursor: pointer;
+.face {
+    background-image: url(${props => props.face});
+    background-size: cover;
+    background-position: center;
+    background-color: #D6D6D6;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.nick-name {
+    width: max-content;
+    height: 29px;
+    margin-top: 1px;
+    margin-left: 10px;
+    color: #707070;
+    font-size: 20px;
+    text-align: left;
+    font-weight: 500;
+    font-family: Noto Sans KR;
+    line-height: 29px;
+}
+.star {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: none;
+    &i{
+        margin-left: auto;
+        margin-right: auto;
         color: #707070;
-        font-size: 20px;
-        text-align: left;
-        font-weight: 500;
-        font-family: Noto Sans KR;
-        line-height: 29px;
     }
-    .star {
-        width: 20px;
-        height: 20px;
-        display: flex;
-        justify-content: center;
-        border-radius: 50%;
-        background-color: none;
-        &i{
-            margin-left: auto;
-            margin-right: auto;
-            color: #707070;
-        }
-    }
+}
 
 `;
-const ListItem = styled.div`
-    display:flex;
-    padding-left:15px;
-    padding-top: 15px;
-    flex-direction: column;
-    // width: 365px;
-    // height: 85px;
-    display: flex;
-    border-bottom: 1px solid #B7B7B7;
-    color: #707070;
-    &:hover {
-        background-color: #EFEFEF;
-        opacity: 0.90;
-    }
-    .wrapper {
-        cursor: pointer;
-        display: flex;
-        .design-thumbnail {
-            width: 50px;
-            height: 50px;
-            border-radius: 5px;
-            background-image: url(${props => props.img});
-            background-size: cover;
-            background-position: center;
-        }
-        .design-title {
-            margin-left: 16px;
-            font-size: 17px;
-        }
-    } 
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
-        padding:0px;
-    }
-`;
 const LikeDialogContainer = styled.div`
-    width:100%;
-    height:100%;
-    position:absolute;
+width:100%;
+height:100%;
+position:absolute;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:800;
+.likeDialog{
+    width: 396px;
+    height: 138px;
+    box-shadow: 0px 3px 6px #000000;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border-radius: 5px;
+    opacity: 1;
     display:flex;
     justify-content:center;
     align-items:center;
-    z-index:800;
-    .likeDialog{
-        width: 396px;
-        height: 138px;
-        box-shadow: 0px 3px 6px #000000;
-        background: #FFFFFF 0% 0% no-repeat padding-box;
-        border-radius: 5px;
-        opacity: 1;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        .txt {
-            width: 273px;
-            height: max-content;
-            text-align: center;
-            color: #707070;
-            font-size: 20px;
-            font-weight: 500;
-            font-family: Noto Sans KR;
-            line-height: 40px;
-        }
+    .txt {
+        width: 273px;
+        height: max-content;
+        text-align: center;
+        color: #707070;
+        font-size: 20px;
+        font-weight: 500;
+        font-family: Noto Sans KR;
+        line-height: 40px;
     }
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
-       .likeDialog{
-            width:90%;
-       }
-    }
+}
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
+   .likeDialog{
+        width:90%;
+   }
+}
 
 `;
 const DesignMemberModalContainer = styled(Modal)`
-    .close-box {
-        cursor:pointer;
-        position: absolute;
-        right:10px;
-        top:10px;
-    }
+.close-box {
+    cursor:pointer;
+    position: absolute;
+    right:10px;
+    top:10px;
+}
 `;
 const DesignCommentModalContainer = styled(Modal)`
-    padding: 60px;
-    max-width: 800px;
-    width:400px;
-    // width: max-content;
-    // max-width: 1440px;
-    .close-box {
-        cursor:pointer;
-        position: absolute;
-        right: 10px;
-        top: 10px;
-    }
-    .header-txt {
-        margin-bottom:20px;
-    }
-    .body-container {
-        width: 100%;
-    }
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
-    and (max-width : ${1024}px) { 
-        min-width:100%;
-     }
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-    and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
-        min-width:100%;
+padding: 60px;
+max-width: 800px;
+width:400px;
+// width: max-content;
+// max-width: 1440px;
+.close-box {
+    cursor:pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.header-txt {
+    margin-bottom:20px;
+}
+.body-container {
+    width: 100%;
+}
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+and (max-width : ${1024}px) { 
+    min-width:100%;
+ }
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
+    min-width:100%;
 
-     }
+ }
 `;
 
-const ChatWrapper = styled.div`
-    display: flex;
-    position: relative;
-    width: max-content;
-    margin-left: auto;
-    margin-right: 10px;
-    margin-top: 10px;
-
-    .notice {
-        position: relative;
-        cursor: pointer;
-        span {
-            position: absolute;
-            background-color: red;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            z-index: 1;
-            color: white;
-            font-weight: 500;
-            text-align: center;
-            font-size: 10px;
-        };
-
-        .video-chat-icon {
-            opacity: 0.6;
-            background-size: cover;
-            width: 45px;
-            height: 45px;
-        };
-
-        i {
-            text-align: center;
-            line-height: 36px;
-            font-size: 36px;
-            color: gray;
-            z-index: 0;
-        };
-        .text {
-            text-align: center;
-            font-size: 12px;
-            color: #707070;
-        };
-    }
-`;
 
 function isOpen(ws) { return ws.readyState === ws.OPEN }
 class DesignInfo extends Component {
@@ -1093,256 +683,159 @@ class DesignInfo extends Component {
             </LikeDialogContainer>
             )
         }
-        return (<React.Fragment>
-
-            {/* modals */}
-            {this.state.memberList
-                ? <MemberModal />
-                : null}
-            {this.state.comment
-                ? <DesignCommentModal />
-                : null}
-            {this.state.likeDialog
-                ? <LikeDialogModal />
-                : null}
-            {this.state.forkDesignList
-                ? <ForkDesignListModal />
-                : null}
-            {!isMyDesign && this.state.memberList && <MemberListModal />}
-
-
-            <MainBox>
-                <div className="wrapper">
-                    <Thumbnail imageURL={thumbnail}>
-                        {DesignDetail.parent_design && <div className="fork-mark" />}
-                    </Thumbnail>
-
-                    <OneSideBox>
-                        {/* title */}
-                        <div className="title" title={DesignDetail.title}>
-                            <TextFormat txt={DesignDetail.title} />
-                        </div>
-
-                        <div className="info">
-
-                            {/* author and member, member modal enable button */}
-                            <div className="author" >
-                                <button
-                                    className="transparent_btn cursor_pointer font_bold"
-                                    onClick={this.openMemberList} >
-                                    <div className="flexBox font_fit font_middle cursor_pointer">
-                                        <TextFormat
-                                            txt={DesignDetail.userName} chars={11} />
-                                        <div style={{ fontSize: "0.95rem" }}>
-                                            {(DesignDetail.member && DesignDetail.member.length > 1)
-                                                ? `외 ${(DesignDetail.member.length - 1).toString()}명 `
-                                                : null}
-                                        </div>
+        return (
+        <React.Fragment>
+             {this.state.memberList
+                 ? <MemberModal />
+                 : null}
+             {this.state.comment
+                 ? <DesignCommentModal />
+                 : null}
+             {this.state.likeDialog
+                 ? <LikeDialogModal />
+                 : null}
+             {this.state.forkDesignList
+                 ? <ForkDesignListModal />
+                 : null}
+             {!isMyDesign && this.state.memberList && <MemberListModal />}
+            <Wrapper>
+                <DesignHeader>
+                    <div className="thumbnail">
+                        <img className="thumbnail" src={thumbnail}/>
+                    </div>
+                    <div className="infoBox">
+                        <div className="design_name">{DesignDetail.title}</div>
+                        <div className="row detail_height">
+                            <div className="left_box">
+                                <div className="row column">
+                                    <div className="row black_label pointer" onClick={this.openMemberList} >
+                                        <TextFormat txt={DesignDetail.userName} chars={11} />
+                                        {(DesignDetail.member && DesignDetail.member.length > 1)
+                                        ? `외 ${(DesignDetail.member.length - 1).toString()}명 `
+                                        : null} 
+                                        {WaitingList && WaitingList.length > 0  
+                                         ? <div style={{fontSize:"10px",color:"red"
+                                        }}>new!</div>: null} 
                                     </div>
-                                </button>
-
-                                {WaitingList && WaitingList.length > 0
-                                    ? <div style={{
-                                        marginTop: "5px", fontSize: "0.95rem", padding: "0",
-                                        height: "0.95rem", color: "red", fontWeight: "500",
-                                    }}>new!</div>
-                                    : null}
-                            </div>
-
-                            {/* origin-design */}
-                            {DesignDetail.parent_design &&
-                                <div className="original-design-button">
-                                    <button
-                                        className="transparent_btn_nomargin cursor_pointer font_red font_bold font_middle"
-                                        onClick={() => this.goParentDesign(DesignDetail.parent_design)}>
+                                    {DesignDetail.parent_design &&
+                                    <div className="red_label pointer" onClick={() => this.goParentDesign(DesignDetail.parent_design)}>
                                         {DesignDetail.parent_title.slice(0, 6)}
                                         {DesignDetail.parent_title.length > 6 && "..."}에서 파생됨
-                                    </button>
-                                </div>}
-
-                            {/* fork-design modal enable button */}
-                            <div className="fork-design-count">
-                                {DesignDetail.children_count["count(*)"] > 0 &&
-                                    <button className="transparent_btn_nomargin cursor_pointer font_red font_bold font_middle" onClick={this.openForkList}>
-                                        파생된 디자인&nbsp;<span className="font_red">{DesignDetail.children_count["count(*)"]}</span>
-                                    </button>}
-                            </div>
-
-                            {/* comment-button */}
-                            <div className="comment-box" onClick={this.getDesignComment} >
-                                <div className="txt font_red">댓글작성</div>
-                                {CountDesignComment && CountDesignComment > 0 ?
-                                    <div style={{
-                                        marginLeft: "5px", fontWeight: "500",
-                                        fontSize: "0.95rem", padding: "0",
-                                        height: "0.95rem", color: "red"
-                                    }}>new!</div> : null}
-                            </div>
-
-                        </div>
-
-                        {/* count-box */}
-                        <div className="count-box">
-                            <div className="count-element">
-                                <div className="icon"><i className="icon eye"></i></div>
-                                <div className="number">{NumberFormat(Count.view_count)}</div>
-                            </div>
-                            <div className="count-element">
-                                <div className="icon"><i className="icon thumbs up"></i></div>
-                                <div className="number">{NumberFormat(Count.like_count)}</div>
-                            </div>
-                            <div className="count-element">
-                                <div className="icon"><i className="icon comment"></i></div>
-                                <div className="number" style={{ width: "max-content", display: "flex" }}>
-                                    {Count && Count.comment_count ?
-                                        NumberFormat(Count.comment_count) : 0}
-                                </div>
-                            </div>
-                        </div>
-
-                    </OneSideBox>
-
-                    <TwoSideBox w={w - 750}>
-                        <div className="descriptionContainer">
-                            <div className="category-name">{DesignDetail.categoryName}</div>
-                            <div className={`explanationRegion`}>
-                                <p>
-                                    {DesignDetail.explanation}
-                                </p>
-                            </div>
-                        </div>
-                    </TwoSideBox>
-
-                    <ThreeSideBox>
-                        <div className="content_box">
-                            {DesignDetail&&DesignDetail.is_modify == true?
-                            <div className="cursor_pointer font_red font_bold font_big"
-                            onClick={() => this.forkDesign()}>파생 디자인 생성</div>
-                            :
-                            <div className="cursor_pointer font_red font_bold font_big"/>
-
-                            }                           
-                            {isMyDesign === false &&
-                                <div className="flexBox margin_top1">
-                                    {editor === false ?
-                                        DesignDetail && DesignDetail.waitingStatus === 1 ?
-                                            <div className="_txt transparent_btn font_red font_fit font_big">가입승인 대기중</div>
-                                            : <div className="_txt transparent_btn cursor_pointer font_red font_fit font_big" onClick={this.joinMember} >멤버 가입 신청</div> : undefined}
-                                </div>}
-                            {isMyDesign === true ?
-                                <div className="cursor_pointer flexBox margin_top alignItem_end" onClick={this.gotoDesignModify}  >
-                                    <div className="_txt font_midBig font_fit" style={{ lineHeight: "20px" }}>디자인 수정하기</div>
-                                    <CustomIcon iconName={iEdit} />
-                                </div>
-                                :
-                                <div className="cursor_pointer flexBox margin_top1 alignItem_end" onClick={this.like} >
-                                    <div className="_txt font_midBig font_fit margin_bottom_small" >관심 디자인 {like ? "취소하기" : "등록하기"}</div>
-                                    <CustomIcon like_opacity={like ? 1 : 0.45} iconName={thumbup} />
-                                </div>}
-                            {isMyDesign === true ?
-                                null :
-                                <div className="cursor_pointer flexBox margin_top1 alignItem_end" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>
-                                    <div className="_txt font_midBig font_fit margin_bottom_small">메시지 보내기</div>
-                                    <CustomIcon iconName={email} />
-                                </div>}
-                        </div>
-                        <div className="content_box">
-                            <div className="justify_end flexBox">
-                            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-                                <img className="mini_icon" src={CCL2}/>
-                                <img className="mini_icon" src={CCL3}/>
-                                {DesignDetail&&DesignDetail.is_modify==false?<img className="mini_icon" src={CCL4}/>:null}
-                                {DesignDetail&&DesignDetail.is_commercial==false?<img className="mini_icon" src={CCL5}/>:null}
-                                {/* <img className="mini_icon" src={CCL1}/> */}
-                                </a>
-                            </div>
-                            <div className="_txt font_midBig font_fit margin_bottom">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
-                            <div className="_txt font_midBig font_fit">등록 일자 {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
-                        </div>
-                    </ThreeSideBox>
-
-                    <MobileSeeMore isShow={this.state.isSeeMore}>
-                        <div className="explain-box font_middle">{DesignDetail.explanation}</div>
-                        <div className="_txt font_smallthan font_fit">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
-                        <div className="_txt font_smallthan font_fit">등록 일자
-                        {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR')
-                                .substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}
-                        </div>
-                        <div className="icon-box">
-                            {editor === false ?
-                                DesignDetail && DesignDetail.waitingStatus === 1 ?
-                                    <div className="icon-wrapper">
-                                        <div className="icon-piece"><Icon color="grey" className="sign in" size="big" />
-                                            <div className="font_small">승인대기</div></div>
+                                    </div>}
+                                    <div className="red_label pointer">
+                                        {DesignDetail.children_count["count(*)"] > 0 &&
+                                            <div onClick={this.openForkList}>
+                                                파생된 디자인&nbsp;<span className="font_red">{DesignDetail.children_count["count(*)"]}</span>
+                                            </div>}
                                     </div>
-                                    :
-                                    <div className="icon-wrapper">
-                                        <div onClick={this.joinMember} className="icon-piece"><Icon color="grey" className="sign in" size="big" />
-                                            <div className="font_small">가입신청</div></div>
+                                    <div className="red_label pointer" onClick={this.getDesignComment}>덧글 작성</div>
+                                </div>
+                            </div>
+                            <div className="right_box">
+                                <div className="row column">
+                                    <div className="red_label">{DesignDetail.categoryName}</div>
+                                    <div className="black_label">{DesignDetail.explanation}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="bottom_box">
+                                    <img src={new_logo_view} className="asset_icon"/>
+                                    <div className="asset_text">{NumberFormat(Count.view_count || 0)}</div>
+                                    <img src={new_logo_favorite} className="asset_icon"/>
+                                    <div className="asset_text">{NumberFormat(Count.like_count || 0)}</div>
+                                    <img src={new_logo_note} className="asset_icon"/>
+                                    <div className="asset_text">{NumberFormat(Count.comment_count  || 0)}</div>
+                            </div>
+                    </div>
+                    <div className="menuBox">
+                        <div>
+                                <div className="fork_label pointer" onClick={() => this.forkDesign()}>파생디자인 생성</div>
+                                <div className="fork_label pointer">
+                                    {editor === false ?DesignDetail && DesignDetail.waitingStatus === 1 ?
+                                        <div>가입승인 대기중</div>
+                                        :
+                                        <div onClick={this.joinMember}>멤버 가입 신청</div>
+                                        :
+                                        null
+                                    }
+                                </div>
+                                <div className="button_wrap">
+                                {isMyDesign === true ?
+                                    <div className="button_wrap pointer" onClick={this.gotoDesignModify} >
+                                        디자인 수정하기
+                                        <img src={iEdit} className="icon"/>
                                     </div>
                                 :
-                                null
-                            }
-                            <div className="icon-wrapper"><div onClick={() => this.forkDesign()} className="icon-piece"><Icon color="grey" className="fork" size="big" /><div className="font_small">디자인파생</div></div></div>
-                            <div className="icon-wrapper"><div onClick={this.getDesignComment} className="icon-piece"><Icon color="grey" className="talk" size="big" /><div className="font_small">덧글</div></div></div>
-                            {isMyDesign === true ?
-                                null
-                                :
-                                <div className="icon-wrapper">
-                                    <div onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)} className="icon-piece"><Icon color="grey" className="mail" size="big" /><div className="font_small">메시지</div></div>
+                                    <div className="button_wrap pointer" onClick={this.like}>
+                                        관심 디자인 {like ? "취소하기" : "등록하기"}
+                                        <img src={thumbup} className="icon"/>
+                                    </div>
+                                }
+                                    
                                 </div>
-                            }
-                            {isMyDesign === true ?
-                                <div className="icon-wrapper">
-                                    <div onClick={this.gotoDesignModify} className="icon-piece"><MiniIcon iconName={iEdit} /><div className="font_small">디자인수정</div></div>
-                                </div>
-                                :
-                                <div className="icon-wrapper" >
-                                    <div className="icon-piece" onClick={this.like}><MiniIcon like_opacity={like ? 1 : 0.45} iconName={thumbup} /><div className="font_small">관심디자인</div></div>
-                                </div>
-                            }
                         </div>
-                    </MobileSeeMore>
-
-                    <div className="seemore cursor_pointer"
-                        onClick={() => { this.setState({ isSeeMore: !this.state.isSeeMore }) }}>
-                        <div className="txt">
-                            {this.state.isSeeMore === false ? "▼ 더보기" : "▲ 접기"}</div>
-                        {/* <div className="txt">더보기</div> */}
+                        <div>
+                                <div className="button_wrap">
+                                    {isMyDesign==true?
+                                    null:
+                                    <div className="button_wrap pointer" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>메시지 보내기<img src={email} className="icon"/></div>
+                                    }
+                                </div>
+                                <div className="button_wrap">
+                                    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                                        <img className="ssl" src={CCL2}/>
+                                        <img className="ssl" src={CCL3}/>
+                                        {DesignDetail&&DesignDetail.is_modify==false?<img className="ssl" src={CCL4}/>:null}
+                                        {DesignDetail&&DesignDetail.is_commercial==false?<img className="ssl" src={CCL5}/>:null}
+                                    </a>
+                                </div>
+                                <div className="date">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
+                                <div className="date">등록일자 {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
+                        </div>
                     </div>
-                </div>
-            </MainBox>
+                </DesignHeader>
 
-            <ChatWrapper>
-                <div
-                    className="notice"
-                    title="디자인 멤버들과 화상회의를 시작합니다."
-                    onClick={this.openVideoChat}>
-                    {this.state.liveVC ? <span>ON</span> : null}
-                    <div className="video-chat-icon">
-                        <i className="video icon"></i>
+                <ChatWrapper>
+                    <div className="row">
+                    <div className="icon_wrap" onClick={this.openVideoChat}>
+                        <img src={new_logo_chat} className="icon"/>
+                        <div className="icon_label">화상회의</div>
                     </div>
-                    <div className="text">
-                        {"화상회의"}
+                    <div className="icon_wrap" onClick={this.openChat}>
+                    <img src={new_logo_msg} className="icon"/>
+                    <div className="icon_label">채팅</div>
                     </div>
-                </div>
+                    </div>
+                    {/* <div
+                        className="notice"
+                        title="디자인 멤버들과 화상회의를 시작합니다."
+                        onClick={this.openVideoChat}>
+                        {this.state.liveVC ? <span>ON</span> : null}
+                        <div className="video-chat-icon">
+                            <i className="video icon"></i>
+                        </div>
+                        <div className="text">
+                            {"화상회의"}
+                        </div>
+                    </div>
 
-                <div
-                    className="notice"
-                    title="디자인 멤버들과 채팅을 시작합니다."
-                    onClick={this.openChat}>
+                    <div
+                        className="notice"
+                        title="디자인 멤버들과 채팅을 시작합니다."
+                        onClick={this.openChat}>
 
-                    {this.state.msg_cnt > 0 ? <span>{this.state.msg_cnt}</span> : null}
-                    <div className="video-chat-icon">
-                        <i className="talk big icon"></i>
-                    </div>
-                    <div className="text">
-                        채팅
-                    </div>
-                </div>
-            </ChatWrapper>
-
-        </React.Fragment >)
+                        {this.state.msg_cnt > 0 ? <span>{this.state.msg_cnt}</span> : null}
+                        <div className="video-chat-icon">
+                            <i className="talk big icon"></i>
+                        </div>
+                        <div className="text">
+                            채팅
+                        </div>
+                    </div> */}
+                </ChatWrapper>
+            </Wrapper>
+        </React.Fragment >
+        )
     }
 };
 
@@ -1353,3 +846,963 @@ export default DesignInfo;
 
 
 /*  */
+
+            // {this.state.memberList
+            //     ? <MemberModal />
+            //     : null}
+            // {this.state.comment
+            //     ? <DesignCommentModal />
+            //     : null}
+            // {this.state.likeDialog
+            //     ? <LikeDialogModal />
+            //     : null}
+            // {this.state.forkDesignList
+            //     ? <ForkDesignListModal />
+            //     : null}
+            // {!isMyDesign && this.state.memberList && <MemberListModal />}
+
+
+            // <MainBox>
+            //     <div className="wrapper">
+            //         <Thumbnail imageURL={thumbnail}>
+            //             {DesignDetail.parent_design && <div className="fork-mark" />}
+            //         </Thumbnail>
+
+            //         <OneSideBox>
+            //             <div className="title" title={DesignDetail.title}>
+            //                 <TextFormat txt={DesignDetail.title} />
+            //             </div>
+
+            //             <div className="info">
+
+            //                 <div className="author" >
+            //                     <button
+            //                         className="transparent_btn cursor_pointer font_bold"
+            //                         onClick={this.openMemberList} >
+            //                         <div className="flexBox font_fit font_middle cursor_pointer">
+            //                             <TextFormat
+            //                                 txt={DesignDetail.userName} chars={11} />
+            //                             <div style={{ fontSize: "0.95rem" }}>
+            //                                 {(DesignDetail.member && DesignDetail.member.length > 1)
+            //                                     ? `외 ${(DesignDetail.member.length - 1).toString()}명 `
+            //                                     : null}
+            //                             </div>
+            //                         </div>
+            //                     </button>
+
+            //                     {WaitingList && WaitingList.length > 0
+            //                         ? <div style={{
+            //                             marginTop: "5px", fontSize: "0.95rem", padding: "0",
+            //                             height: "0.95rem", color: "red", fontWeight: "500",
+            //                         }}>new!</div>
+            //                         : null}
+            //                 </div>
+
+            //                 {DesignDetail.parent_design &&
+            //                     <div className="original-design-button">
+            //                         <button
+            //                             className="transparent_btn_nomargin cursor_pointer font_red font_bold font_middle"
+            //                             onClick={() => this.goParentDesign(DesignDetail.parent_design)}>
+            //                             {DesignDetail.parent_title.slice(0, 6)}
+            //                             {DesignDetail.parent_title.length > 6 && "..."}에서 파생됨
+            //                         </button>
+            //                     </div>}
+
+            //                 <div className="fork-design-count">
+            //                     {DesignDetail.children_count["count(*)"] > 0 &&
+            //                         <button className="transparent_btn_nomargin cursor_pointer font_red font_bold font_middle" onClick={this.openForkList}>
+            //                             파생된 디자인&nbsp;<span className="font_red">{DesignDetail.children_count["count(*)"]}</span>
+            //                         </button>}
+            //                 </div>
+
+            //                 <div className="comment-box" onClick={this.getDesignComment} >
+            //                     <div className="txt font_red">댓글작성</div>
+            //                     {CountDesignComment && CountDesignComment > 0 ?
+            //                         <div style={{
+            //                             marginLeft: "5px", fontWeight: "500",
+            //                             fontSize: "0.95rem", padding: "0",
+            //                             height: "0.95rem", color: "red"
+            //                         }}>new!</div> : null}
+            //                 </div>
+
+            //             </div>
+
+            //             <div className="count-box">
+            //                 <div className="count-element">
+            //                     <div className="icon"><i className="icon eye"></i></div>
+            //                     <div className="number">{NumberFormat(Count.view_count)}</div>
+            //                 </div>
+            //                 <div className="count-element">
+            //                     <div className="icon"><i className="icon thumbs up"></i></div>
+            //                     <div className="number">{NumberFormat(Count.like_count)}</div>
+            //                 </div>
+            //                 <div className="count-element">
+            //                     <div className="icon"><i className="icon comment"></i></div>
+            //                     <div className="number" style={{ width: "max-content", display: "flex" }}>
+            //                         {Count && Count.comment_count ?
+            //                             NumberFormat(Count.comment_count) : 0}
+            //                     </div>
+            //                 </div>
+            //             </div>
+
+            //         </OneSideBox>
+
+            //         <TwoSideBox w={w - 750}>
+            //             <div className="descriptionContainer">
+            //                 <div className="category-name">{DesignDetail.categoryName}</div>
+            //                 <div className={`explanationRegion`}>
+            //                     <p>
+            //                         {DesignDetail.explanation}
+            //                     </p>
+            //                 </div>
+            //             </div>
+            //         </TwoSideBox>
+
+            //         <ThreeSideBox>
+            //             <div className="content_box">
+            //                 {DesignDetail&&DesignDetail.is_modify == true?
+            //                 <div className="cursor_pointer font_red font_bold font_big"
+            //                 onClick={() => this.forkDesign()}>파생 디자인 생성</div>
+            //                 :
+            //                 <div className="cursor_pointer font_red font_bold font_big"/>
+
+            //                 }                           
+            //                 {isMyDesign === false &&
+            //                     <div className="flexBox margin_top1">
+            //                         {editor === false ?
+            //                             DesignDetail && DesignDetail.waitingStatus === 1 ?
+            //                                 <div className="_txt transparent_btn font_red font_fit font_big">가입승인 대기중</div>
+            //                                 : <div className="_txt transparent_btn cursor_pointer font_red font_fit font_big" onClick={this.joinMember} >멤버 가입 신청</div> : undefined}
+            //                     </div>}
+            //                 {isMyDesign === true ?
+            //                     <div className="cursor_pointer flexBox margin_top alignItem_end" onClick={this.gotoDesignModify}  >
+            //                         <div className="_txt font_midBig font_fit" style={{ lineHeight: "20px" }}>디자인 수정하기</div>
+            //                         <CustomIcon iconName={iEdit} />
+            //                     </div>
+            //                     :
+            //                     <div className="cursor_pointer flexBox margin_top1 alignItem_end" onClick={this.like} >
+            //                         <div className="_txt font_midBig font_fit margin_bottom_small" >관심 디자인 {like ? "취소하기" : "등록하기"}</div>
+            //                         <CustomIcon like_opacity={like ? 1 : 0.45} iconName={thumbup} />
+            //                     </div>}
+            //                 {isMyDesign === true ?
+            //                     null :
+            //                     <div className="cursor_pointer flexBox margin_top1 alignItem_end" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>
+            //                         <div className="_txt font_midBig font_fit margin_bottom_small">메시지 보내기</div>
+            //                         <CustomIcon iconName={email} />
+            //                     </div>}
+            //             </div>
+            //             <div className="content_box">
+            //                 <div className="justify_end flexBox">
+            //                 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+            //                     <img className="mini_icon" src={CCL2}/>
+            //                     <img className="mini_icon" src={CCL3}/>
+            //                     {DesignDetail&&DesignDetail.is_modify==false?<img className="mini_icon" src={CCL4}/>:null}
+            //                     {DesignDetail&&DesignDetail.is_commercial==false?<img className="mini_icon" src={CCL5}/>:null}
+            //                     </a>
+            //                 </div>
+            //                 <div className="_txt font_midBig font_fit margin_bottom">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
+            //                 <div className="_txt font_midBig font_fit">등록 일자 {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
+            //             </div>
+            //         </ThreeSideBox>
+
+            //         <MobileSeeMore isShow={this.state.isSeeMore}>
+            //             <div className="explain-box font_middle">{DesignDetail.explanation}</div>
+            //             <div className="_txt font_smallthan font_fit">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
+            //             <div className="_txt font_smallthan font_fit">등록 일자
+            //             {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR')
+            //                     .substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}
+            //             </div>
+            //             <div className="icon-box">
+            //                 {editor === false ?
+            //                     DesignDetail && DesignDetail.waitingStatus === 1 ?
+            //                         <div className="icon-wrapper">
+            //                             <div className="icon-piece"><Icon color="grey" className="sign in" size="big" />
+            //                                 <div className="font_small">승인대기</div></div>
+            //                         </div>
+            //                         :
+            //                         <div className="icon-wrapper">
+            //                             <div onClick={this.joinMember} className="icon-piece"><Icon color="grey" className="sign in" size="big" />
+            //                                 <div className="font_small">가입신청</div></div>
+            //                         </div>
+            //                     :
+            //                     null
+            //                 }
+            //                 <div className="icon-wrapper"><div onClick={() => this.forkDesign()} className="icon-piece"><Icon color="grey" className="fork" size="big" /><div className="font_small">디자인파생</div></div></div>
+            //                 <div className="icon-wrapper"><div onClick={this.getDesignComment} className="icon-piece"><Icon color="grey" className="talk" size="big" /><div className="font_small">덧글</div></div></div>
+            //                 {isMyDesign === true ?
+            //                     null
+            //                     :
+            //                     <div className="icon-wrapper">
+            //                         <div onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)} className="icon-piece"><Icon color="grey" className="mail" size="big" /><div className="font_small">메시지</div></div>
+            //                     </div>
+            //                 }
+            //                 {isMyDesign === true ?
+            //                     <div className="icon-wrapper">
+            //                         <div onClick={this.gotoDesignModify} className="icon-piece"><MiniIcon iconName={iEdit} /><div className="font_small">디자인수정</div></div>
+            //                     </div>
+            //                     :
+            //                     <div className="icon-wrapper" >
+            //                         <div className="icon-piece" onClick={this.like}><MiniIcon like_opacity={like ? 1 : 0.45} iconName={thumbup} /><div className="font_small">관심디자인</div></div>
+            //                     </div>
+            //                 }
+            //             </div>
+            //         </MobileSeeMore>
+
+            //         <div className="seemore cursor_pointer"
+            //             onClick={() => { this.setState({ isSeeMore: !this.state.isSeeMore }) }}>
+            //             <div className="txt">
+            //                 {this.state.isSeeMore === false ? "▼ 더보기" : "▲ 접기"}</div>
+            //         </div>
+            //     </div>
+            // </MainBox>
+
+            // <ChatWrapper>
+            //     <div
+            //         className="notice"
+            //         title="디자인 멤버들과 화상회의를 시작합니다."
+            //         onClick={this.openVideoChat}>
+            //         {this.state.liveVC ? <span>ON</span> : null}
+            //         <div className="video-chat-icon">
+            //             <i className="video icon"></i>
+            //         </div>
+            //         <div className="text">
+            //             {"화상회의"}
+            //         </div>
+            //     </div>
+
+            //     <div
+            //         className="notice"
+            //         title="디자인 멤버들과 채팅을 시작합니다."
+            //         onClick={this.openChat}>
+
+            //         {this.state.msg_cnt > 0 ? <span>{this.state.msg_cnt}</span> : null}
+            //         <div className="video-chat-icon">
+            //             <i className="talk big icon"></i>
+            //         </div>
+            //         <div className="text">
+            //             채팅
+            //         </div>
+            //     </div>
+            // </ChatWrapper>
+
+            // new style
+// const Thumbnail = styled.div`
+// .fork-mark {
+//     position: absolute;
+//     margin-left: 175px;
+//     width: 32px;
+//     height: 70px;
+//     background-image: url(${forked});
+//     background-size: cover; 
+// }
+// position:relative;
+// width: 220px;
+// height: 220px;
+// margin-right:30px;
+// border-radius: 15px;
+// background-color: #D6D6D6;
+// background-repeat: no-repeat;
+// background-size: cover;
+// background-position: center center;
+// background-image: ${props => `url(${props.imageURL})`};
+// @media only screen and (min-width : ${0}px) 
+// and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
+//     width:100px;
+//     height:100px;
+//     .fork-mark {
+//         position: absolute;
+//         right:10px;
+//         top:0px;
+//         width: 16px;
+//         height: 35px;
+//         background-image: url(${forked});
+//         background-size: cover; 
+//     }
+// }
+// `;
+// const MainBox = styled.div`
+// width:100%;
+// position:relative;
+// .wrapper{
+//     width:100%;
+//     height:100%;
+//     background-color:#EFEFEF;
+//     display:flex;
+//     padding:15px;
+//     padding-left:25px;
+//     .seemore{
+//         margin-top:15px;
+//         width:100%;
+//         height:max-content;
+//         background-color:#E6E6E6;
+//         padding:3px;
+//         border-radius:3px;
+//         display:none;
+//         .txt{
+//             width:max-content;
+//             height:max-content;
+//             color:#707070;
+//         }
+//     }
+// }      
+// .font_big{font-size:20px;}
+// .font_midBig{font-size:17px;}
+// .font_middle{font-size:16px;}
+// .font_smallthan{font-size:14px;}
+// .font_small{font-size:12px;}
+// .font_bold{font-weight:500;}
+// .font_fit{font-weight:300;}
+// .font_red{color:#FF0000;}
+// .flexBox{display:flex;}
+// .algin_right{text-align:right;}
+// .margin_top{margin-top:15px;}
+// .margin_top1{margin-top:10px;}
+// .margin_bottom{margin-bottom:10px;}
+// .margin_bottom_small{margin-bottom:5px;}
+// .alignItem_end{align-items:flex-end;}
+// .justify_end{justify-content:flex-end;}
+// .line_height{line-height:20px;}
+// .position_relative{position:relative;}
+// .mini_icon{
+//     width:20px;
+//     height:20px;
+//     margin-right:3px;
+// }
+// .transparent_btn{
+//     width: max-content;
+//     margin-top:15px;
+//     margin-left:-5px;
+//     background:none;
+//     border:none;
+//     outline:none;
+//     display:flex;
+// }
+// .transparent_btn_nomargin{
+//     width: max-content;
+//     margin-left:-5px;
+//     background:none;
+//     border:none;
+//     outline:none;
+//     display:flex;
+// }
+// .cursor_pointer{
+//     cursor:pointer;
+// }
+// @media only screen and (min-width : ${opendesign_style.resolutions.LargeMaxWidth}px){
+//     width:1920px;
+// }
+// @media only screen and (min-width : ${0}px) and (max-width : ${1024}px) {
+//     height:max-content;
+//     margin-top: 90px;
+// }
+// @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+// and (max-width : ${1024}px) {
+//     .wrapper{
+//         flex-wrap:wrap
+//     }
+// }
+// @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+// and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
+
+//     .wrapper{
+//         flex-wrap:wrap
+//         .seemore{
+//             display:flex;
+//             justify-content:center;
+//             align-items:center;
+//         }
+//     }
+// }
+// `;
+// const CustomIcon = styled.div`
+// width: 35px; 
+// height: 35px; 
+// margin-left: 15px; 
+// background: url(${props => props.iconName}); 
+// background-size: cover; 
+// background-position: center center; 
+// background-repeat: no-repeat;
+// opacity: ${props => props.like_opacity == null ? 1 : props.like_opacity};
+
+// `;
+// const MiniIcon = styled.div`
+// width: 30px; 
+// height: 30px; 
+// background: url(${props => props.iconName}); 
+// background-size: contain; 
+// background-position: center center; 
+// background-repeat: no-repeat;
+// opacity: ${props => props.like_opacity == null ? 1 : props.like_opacity};
+
+// `;
+// const MobileSeeMore = styled.div`
+// margin-top:15px;
+// display:${props => props.isShow === false ? "none" : "flex"};
+// flex-direction:column;
+// width:100%;
+// .explain-box{
+//     margin-bottom:15px;
+//     color:#707070;
+// }
+// .icon-box{
+//     margin-top:30px;
+//     width:100%;
+//     height:60px;
+//     display:flex;
+//     .icon-wrapper{
+//         width:20%;
+//         min-width:50px;
+//         height:100%;  
+//     }
+//     .icon-piece{
+//         cursor:pointer;
+//         display:flex;
+//         flex-direction:column;
+//         align-items:center;
+//         justify-content:center;
+//         width:95%;
+//         height:95%;
+//         border-radius:5px;
+//         background-color:#DEDEDE;
+//     }
+// }
+// `;
+// const ThreeSideBox = styled.div`
+// *{
+//     text-align:right;
+//     font-family:Noto Sans KR;
+//     color:#707070;
+// }
+// margin-left:auto;
+// display: flex;
+// height: 220px;
+// justify-content: space-between;
+// flex-direction: column;
+// .content_box{
+//     ._txt{
+//         height: max-content;
+//         font-family: Noto Sans KR;
+//         text-align: right;
+//         margin-left: auto;
+//         margin-top:5px;
+        
+//     }
+// }
+// @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+// and (max-width : ${1024}px) { 
+//     width:100%;
+//     height:max-content;
+// }
+// @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+// and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
+//     display:none;
+//     width:100%;
+//     height:max-content;
+// }
+// `;
+// const TwoSideBox = styled.div`    
+// min-width:165px;
+// margin-left:30px;
+// .descriptionContainer{
+//     width: ${props => props.w}px;
+//     height: 200px;
+//     display: flex;
+//     flex-direction: column;
+//     .category-name {
+//         margin-top: 42px;
+//         width: max-content;
+//         height: 25px;
+//         color: #FF0000;
+//         font-size: 17px;
+//         font-weight: 300;
+//         line-height: 25px;
+//         text-align: left;
+//         font-family: Noto Sans KR;
+//     }
+//     .txt {
+//         display: inline-block; 
+//         width: 100%;
+//         height: 200px;
+//         font-size: 20px;
+//         font-weight: 200;
+//         font-family: Noto Sans KR;
+//         line-height: 35px;
+//         margin-top: 20px;
+//         color: #707070;
+
+//         white-space: nowrap; 
+//         overflow: hidden; 
+//         text-overflow: ellipsis; 
+//         white-space: normal; 
+//         text-align: left; 
+//         word-wrap: break-word; 
+//         display: -webkit-box; 
+//         -webkit-line-clamp: 3; 
+//         -webkit-box-orient: vertical;
+//     }
+//     .explanationRegion{
+//         width: 100%;
+//         display: flex;
+//         height: 90px;
+//         font-size: 17px;
+//         color: #707070;
+//         line-height: 30px;
+//         cursor: default;
+        
+//         p {
+//             overflow-y: auto;
+//             overflow-x: hidden;
+//             width: 100%;
+//             word-wrap: break-word;
+
+//             font-size: 20px;
+//             font-weight: 300;
+//             font-family: Noto Sans KR;
+//             line-height: 30px;
+//             color: #707070;
+
+//             :hover {
+//                 background-color: #EDEDED;
+//             }
+
+//             ::-webkit-scrollbar {
+//                 position: absolute;
+//                 width: 3px;
+//             }
+//             ::-webkit-scrollbar-thumb {
+//                 background: #707070 !important;
+//             }
+//         }
+// }
+
+
+// @media only screen and (min-width : ${opendesign_style.resolutions.MediumMinWidth}px) 
+// and (max-width : ${1024}px) {
+//     height:max-content;
+//     width:300px;
+//     margin-left:0px;
+//     margin-top:10px;
+//     margin-bottom:10px;
+//     .descriptionContainer{
+//         width:100%;
+//         height:max-content;
+//         .category-name {
+//             margin-top: 10px;
+//             line-height:0px;
+//             height:max-content;
+//         }
+//         .txt{
+//             height:max-content;
+//             min-width:100%;
+//         }
+//     }
+
+// }
+// @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+// and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
+//     display:none;
+//     height:max-content;
+//     width:100%;
+//     margin-left:0px;
+//     margin-top:10px;
+//     margin-bottom:10px;
+//     .descriptionContainer{
+//         height:max-content;
+//         width:100%;
+//         .category-name {
+//             display:none;
+//             margin-top: 10px;
+//             line-height:0px;
+//             height:max-content;
+//         }
+//         .txt{
+//             height:max-content;
+//         }
+//     }
+    
+
+// }
+
+
+// `;
+// const OneSideBox = styled.div`
+// *{
+//     color: #707070;
+// }
+// position: relative;
+// width: 165px;
+// min-width: 165px;
+// height: 220px;
+// .title {
+//     display: block !important;
+//     width: max-content !important;
+//     height: 29px;
+//     color: #707070;
+//     font-size: 20px;
+//     font-weight: 500;
+//     text-align: left;
+//     line-height: 29px;
+//     cursor: pointer;
+// }
+
+// .info {
+//     height: 120px;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: space-start;
+
+//     .author {
+//         display: flex;
+//     }
+//     .original-design-button {
+//         margin-top: 10px;
+//     }
+//     .fork-design-count {
+//         margin-top: 10px;
+//     }
+//     .comment-box {
+//         margin-top: 10px;
+//     }
+// }
+
+// .comment-box{
+//     display: flex;
+//     flex-direction: row;
+//     font-size: 1.1rem;
+//     cursor: pointer;
+// }
+// .count-box {
+//     position: absolute;
+//     bottom: 0px;
+//     width: 100%;
+//     font-size: 15px;
+//     color: #707070;
+//     font-weight: 500;
+//     text-align: left;
+//     display: flex;
+//     align-items: flex-end;
+
+//     .count-element {
+//         display: flex;
+//         flex-direction: rows;
+
+//         .icon {
+//             margin-left: 5px;
+//         }
+//         .number {
+//             margin-left: 2px;
+//         }
+//     }
+// }
+
+// @media only screen and (min-width : ${1024}px) 
+// and (max-width : ${opendesign_style.resolutions.LargeMinWidth}px) {
+//     height:220px;
+//     margin-right:15px;
+//     position:relative;
+//     .title{
+//         width:300px !important;
+//         white-space:nowrap;
+//         overflow:hidden;
+//         text-overflow:ellipsis;
+//     }
+// }
+// @media only screen and (min-width : ${opendesign_style.resolutions.MediumMinWidth}px) 
+// and (max-width : ${1024}px) {
+//     height:220px;
+//     width:${window.document.width - 320}px;
+//     margin-right:15px;
+//     position:relative;
+//     .title{
+//         width:165px !important;
+//         white-space:nowrap;
+//         overflow:hidden;
+//         text-overflow:ellipsis;
+//     }
+// }
+// @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+// and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
+//     width:55%;
+//     height:120px;
+//     .title{
+//         width:100% !important;
+//         white-space:nowrap;
+//         overflow:hidden;
+//         text-overflow:ellipsis;
+//     }
+//     .info{
+//         .goto-parent{
+//             display:none;
+//         }
+//         .flexBox{
+//             .comment-box{
+//                 display:none;
+//             }
+//             .fork-design{
+//                 display:none;
+//             }
+//             .smallMode-category-name{
+//                 color:red;
+//                 display:block;
+//             }
+//         }
+//     }
+// }
+// `;
+// const DesignMemberList = styled.div`
+// display: ${props => props.display};
+// z-index: 900;
+// position: absolute;
+// pointer-events: auto;
+// // top: ${props => props.top};
+// // left: ${props => props.left};
+// top:35px;
+// z-index: 904;
+// height: 250px;
+// max-height: 550px;
+// width: 365px;
+// border-radius: 15px;
+// background-color: #FFFFFF;
+// box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+// font-family: Noto Sans KR;
+// overflow-y: auto;
+// overflow-x: hidden;
+// @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+// and (max-width : ${1024}px) { 
+//     left:-150px;
+//  }
+// @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+// and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
+//     left:-150px;
+//     width:350px;
+//     box-shadow: 1px 3px 6px 1px rgba(0,0,0,0.5);
+
+//  }
+// .close-box {
+//     position: absolute;
+//     cursor: pointer;
+//     z-index: 901;
+//     right: 10px;
+//     top: 10px;
+// } 
+// &.list::-webkit-scrollbar {
+//     position: absolute;
+//     width: 4px;
+// }
+
+// &.list::-webkit-scrollbar-thumb {
+//     background: rgba(112, 112, 112, 0.45) !important;
+// }
+// &.list {
+//   padding: 15px;
+//   padding-right: 36px;
+//   padding-bottom: 5px;
+//   height: 490px;
+//     &:hover{
+//         overflow-y: auto;
+//         overflow-x: hidden;
+// }
+
+// `;
+// const DesignMemberListElement = styled.div`
+// width: max-content;
+// padding: 5px;
+// margin-left: 5px;
+// margin-top: 5px;
+// margin-bottom: 5px;
+// margin-right: 5px;
+// border-radius: 15px;
+// background: #EFEFEF;
+// align-items: center;
+// display: flex;
+// cursor: pointer;
+// .face {
+//     background-image: url(${props => props.face});
+//     background-size: cover;
+//     background-position: center;
+//     background-color: #D6D6D6;
+//     width: 30px;
+//     height: 30px;
+//     border-radius: 50%;
+// }
+// .nick-name {
+//     width: max-content;
+//     height: 29px;
+//     margin-top: 1px;
+//     margin-left: 10px;
+//     color: #707070;
+//     font-size: 20px;
+//     text-align: left;
+//     font-weight: 500;
+//     font-family: Noto Sans KR;
+//     line-height: 29px;
+// }
+// .star {
+//     width: 20px;
+//     height: 20px;
+//     display: flex;
+//     justify-content: center;
+//     border-radius: 50%;
+//     background-color: none;
+//     &i{
+//         margin-left: auto;
+//         margin-right: auto;
+//         color: #707070;
+//     }
+// }
+
+// `;
+// const ListItem = styled.div`
+// display:flex;
+// padding-left:15px;
+// padding-top: 15px;
+// flex-direction: column;
+// // width: 365px;
+// // height: 85px;
+// display: flex;
+// border-bottom: 1px solid #B7B7B7;
+// color: #707070;
+// &:hover {
+//     background-color: #EFEFEF;
+//     opacity: 0.90;
+// }
+// .wrapper {
+//     cursor: pointer;
+//     display: flex;
+//     .design-thumbnail {
+//         width: 50px;
+//         height: 50px;
+//         border-radius: 5px;
+//         background-image: url(${props => props.img});
+//         background-size: cover;
+//         background-position: center;
+//     }
+//     .design-title {
+//         margin-left: 16px;
+//         font-size: 17px;
+//     }
+// } 
+// @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+// and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
+//     padding:0px;
+// }
+// `;
+// const LikeDialogContainer = styled.div`
+// width:100%;
+// height:100%;
+// position:absolute;
+// display:flex;
+// justify-content:center;
+// align-items:center;
+// z-index:800;
+// .likeDialog{
+//     width: 396px;
+//     height: 138px;
+//     box-shadow: 0px 3px 6px #000000;
+//     background: #FFFFFF 0% 0% no-repeat padding-box;
+//     border-radius: 5px;
+//     opacity: 1;
+//     display:flex;
+//     justify-content:center;
+//     align-items:center;
+//     .txt {
+//         width: 273px;
+//         height: max-content;
+//         text-align: center;
+//         color: #707070;
+//         font-size: 20px;
+//         font-weight: 500;
+//         font-family: Noto Sans KR;
+//         line-height: 40px;
+//     }
+// }
+// @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+// and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
+//    .likeDialog{
+//         width:90%;
+//    }
+// }
+
+// `;
+// const DesignMemberModalContainer = styled(Modal)`
+// .close-box {
+//     cursor:pointer;
+//     position: absolute;
+//     right:10px;
+//     top:10px;
+// }
+// `;
+// const DesignCommentModalContainer = styled(Modal)`
+// padding: 60px;
+// max-width: 800px;
+// width:400px;
+// // width: max-content;
+// // max-width: 1440px;
+// .close-box {
+//     cursor:pointer;
+//     position: absolute;
+//     right: 10px;
+//     top: 10px;
+// }
+// .header-txt {
+//     margin-bottom:20px;
+// }
+// .body-container {
+//     width: 100%;
+// }
+// @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+// and (max-width : ${1024}px) { 
+//     min-width:100%;
+//  }
+// @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+// and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
+//     min-width:100%;
+
+//  }
+// `;
+
+// const ChatWrapper = styled.div`
+// display: flex;
+// position: relative;
+// width: max-content;
+// margin-left: auto;
+// margin-right: 10px;
+// margin-top: 10px;
+
+// .notice {
+//     position: relative;
+//     cursor: pointer;
+//     span {
+//         position: absolute;
+//         background-color: red;
+//         width: 20px;
+//         height: 20px;
+//         border-radius: 50%;
+//         z-index: 1;
+//         color: white;
+//         font-weight: 500;
+//         text-align: center;
+//         font-size: 10px;
+//     };
+
+//     .video-chat-icon {
+//         opacity: 0.6;
+//         background-size: cover;
+//         width: 45px;
+//         height: 45px;
+//     };
+
+//     i {
+//         text-align: center;
+//         line-height: 36px;
+//         font-size: 36px;
+//         color: gray;
+//         z-index: 0;
+//     };
+//     .text {
+//         text-align: center;
+//         font-size: 12px;
+//         color: #707070;
+//     };
+// }
+// `;

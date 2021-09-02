@@ -10,6 +10,8 @@ import arrow from "source/arrow.svg";
 import SortableDesignSteps from "./SortableDesignSteps";
 import osdcss from "opendesign_style";
 
+import new_logo_chat from "source/new_logo_chat.svg";
+import new_logo_msg from "source/new_logo_msg.svg";
 // const SmallMinWidth = 0;
 // const MediumMinWidth = 480;
 // const LargeMinWidth = 1440;
@@ -22,7 +24,7 @@ const LeftWhitePane = styled.div`
     height: ${props => props.height}px;
     left: ${props => props.left}px;
     right: ${props => props.right}px;
-    background: #FFFFFF; // transparent linear-gradient(90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%);
+    background: transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 0.5) 50%, rgba(255,255,255, 0.5) 100%);
     backgroundRepeat: no-repeat;
     @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
     and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
@@ -37,7 +39,7 @@ const RightWhitePane = styled.div`
     height: ${props => props.height}px;
     left: ${props => props.left}px;
     right: ${props => props.right}px;
-    background: #FFFFFF; // transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 1) 50%, rgba(255,255,255, 1) 100%);
+    background: transparent linear-gradient(90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 0.5) 50%, rgba(255,255,255, 0.5) 100%);
     backgroundRepeat: no-repeat;
     @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
     and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
@@ -75,10 +77,12 @@ const Arrow = styled.div`
     }
 `;
 const GridEditorWrapper = styled.div`
+    max-width:1740px;
+    width:100%;
     display: flex;
-    margin-left:32px;
+    margin-left:38px;
     margin-bottom: 75px;
-    width: ${window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth}; 
+    // width: ${window.innerWidth < osdcss.resolutions.LargeMaxWidth ? window.innerWidth : osdcss.resolutions.LargeMaxWidth}; 
     .Editor{
         padding-right: 250px;
         overflow: hidden;

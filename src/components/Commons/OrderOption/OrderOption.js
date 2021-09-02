@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import opendesigncss from "opendesign_style";
 
 const OrderWrapper = styled.div`
-    width: 100%;
-    height:80px;
     z-index: 820;
     display: flex;
     align-items:center;
@@ -24,8 +22,9 @@ const OrderElement = styled.div`
     color: black;
 
     &.selected {
+        color:red;
         margin-left: ${props => props.marginRight};
-        border:1px solid #707070;
+        border:1px solid red;
     }
     &.unselected {
         margin-left: ${props => props.marginRight};
@@ -57,7 +56,7 @@ class OrderOption extends Component {
         const { selected, style } = this.props
         return (
 
-            <OrderWrapper style={style}>
+            <OrderWrapper wrap={this.props.wrap} style={style}>
 
                 {options.map(opt => {
                     return (<OrderElement

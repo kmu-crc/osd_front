@@ -92,6 +92,7 @@ const Profile = styled.div`
     }
     .update-intro { 
         margin-top: 3px;
+        padding:0px 17px 0px 17px;
         .update {
             height: 27px;
             text-align: left;
@@ -124,6 +125,7 @@ const Profile = styled.div`
               ::-webkit-scrollbar-thumb {
                 background: red;
                 border-right: 4px white solid;
+                border-radius:0px;
                 background-clip: padding-box;
               }
         }
@@ -131,7 +133,7 @@ const Profile = styled.div`
     .counter { margin-top: 30px; };
 `;
 const TabMenu = styled.div`
-    margin-top: 38px;
+    margin-top: 16px;
     display: flex;
     flex-direction: column;
 
@@ -277,7 +279,7 @@ export class MyProfile extends React.Component {
 
     render() {
         const { userInfo, MyDetail, Count, tab } = this.props;
-
+        console.log("tab:::::",tab);
         return (<Wrapper>
             <Title>내 프로필</Title>
 
@@ -315,22 +317,22 @@ export class MyProfile extends React.Component {
             <TabMenu>
                 <a onClick={this.gotoGroup}>
                     <div className="menu border">
-                        <div className={"group"}>그룹</div>
+                        <div className={`group ${tab=="group"&&"active"}`}>그룹</div>
                     </div>
                 </a>
                 <a onClick={this.gotoJoinGroup}>
                     <div className="menu border">
-                        <div className={"join-group "}>참여그룹</div>
+                        <div className={`join-group ${tab=="join-group"&&"active"}`}>참여그룹</div>
                     </div>
                 </a>
                 <a onClick={this.gotoDesign}>
                     <div className="menu border">
-                        <div className={"design active"}>디자인</div>
+                        <div className={`design ${tab=="design"&&"active"}`}>디자인</div>
                     </div>
                 </a>
                 <a onClick={this.gotoLikePage}>
                     <div className="menu ">
-                        <div className={"like "}>관심항목</div>
+                        <div className={`like ${tab=="like"&&"active"}`}>관심항목</div>
                     </div>
                 </a>
             </TabMenu>

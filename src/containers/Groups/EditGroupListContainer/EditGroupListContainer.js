@@ -10,11 +10,13 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 // import { alert } from "components/Commons/Alert/Alert";
 
 const GroupBox = styled.div`
-  margin-bottom: 1rem;
+  margin-bottom: 5px;
   & .boxTitle {
-    margin-left: 1rem;
-    padding-bottom: 1rem;
-    font-size: ${opendesign_style.font.size.heading4};
+    margin-bottom:5px;
+    font-size: 20px;
+  }
+  .boxContent{
+    margin-top:22px;
   }
 `;
 
@@ -47,6 +49,7 @@ class EditGroupListContainer extends Component {
         <div className="boxTitle">등록된 그룹 ({this.props.EditGroupList.length})</div>
         {this.props.status === "INIT" ?
           <Loading /> :
+          <div className="boxContent">
           <ScrollList
             {...osdstyle.group_margin}
             reload={reload}
@@ -55,7 +58,9 @@ class EditGroupListContainer extends Component {
             dataListAdded={this.props.EditGroupList}
             getListRequest={null}
             rejectText={"삭제"}
-            handleReject={this.setOut} />}
+            handleReject={this.setOut} />
+            </div>
+            }
       </GroupBox>
     );
   }

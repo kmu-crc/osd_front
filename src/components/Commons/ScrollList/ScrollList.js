@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import Design from "components/Designs/Design";
 import Group from "components/Groups/Group";
 import Designer from "components/Designers/Designer";
+import MyDesign from "components/Designs/MyDesign";
+import MyGroup from "components/Groups/MyGroup";
+import MyDesigner from "components/Designers/MyDesigner";
 import styled from "styled-components";
 import osdcss from "opendesign_style";
 import new_logo_arrow_down from "source/new_logo_arrow_down.svg";
@@ -14,7 +17,7 @@ import new_logo_arrow_down from "source/new_logo_arrow_down.svg";
 // css 
 const FlexContainer = styled.div`
   width: 100%;
-  min-height:900px;
+  min-height:${props=>props.height==null?"900px":props.height};
   padding: 0;
   position:relative;
   // position:relative;
@@ -93,16 +96,40 @@ const FlexBox = styled.div`
 `;
 
 const OutBtn = styled.button`
+  width:142px;
+  height:41px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   position: absolute;
-  top: 0;
-  right: 5px;
+  top: 8px;
+  right: 8px;
   z-index: 899;
+  font-size:20px;
+  font-family:Spoqa Han Sans Neo;
+  border-radius:0px;
+  border:none;
+  outline:none;
+  background-color:black;
+  color:white;
 `;
 const AcceptBtn = styled.button`
+  width:142px;
+  height:41px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   position: absolute;
-  top: 0;
-  right: 80px;
+  top: 8px;
+  right: 158px;
   z-index: 899;
+  font-size:20px;
+  font-family:Spoqa Han Sans Neo;
+  border-radius:0px;
+  border:none;
+  outline:none;
+  background-color:black;
+  color:white;
 `;
 const MoreBtn = styled.button`
   position: relative;
@@ -189,21 +216,29 @@ class ScrollList extends Component {
     let cols = 0;
     let w = window.innerWidth > osdcss.resolutions.LargeMaxWidth ? osdcss.resolutions.LargeMaxWidth : window.innerWidth;
     if (osdcss.resolutions.SmallMinWidth <= w && w < osdcss.resolutions.SmallMaxWidth) {
-      cols = type === "design" ? osdcss.design_margin.small.cols :
+      cols = 
+        type === "design" ? osdcss.design_margin.small.cols :
         type === "group" ? osdcss.group_margin.small.cols :
-          osdcss.designer_margin.small.cols;
+        type === "designer" ?osdcss.designer_margin.small.cols
+        :osdcss.my_design_margin.small.cols;
     } else if (osdcss.resolutions.MediumMinWidth <= w && w < osdcss.resolutions.MediumMaxWidth) {
-      cols = type === "design" ? osdcss.design_margin.medium.cols :
+      cols = 
+        type === "design" ? osdcss.design_margin.medium.cols :
         type === "group" ? osdcss.group_margin.medium.cols :
-          osdcss.designer_margin.medium.cols;
+        type === "designer" ?  osdcss.designer_margin.medium.cols
+        :osdcss.my_design_margin.medium.cols;
     } else if (osdcss.resolutions.LargeMinWidth <= w && w < osdcss.resolutions.LargeMaxWidth) {
-      cols = type === "design" ? osdcss.design_margin.large.cols :
+      cols = 
+        type === "design" ? osdcss.design_margin.large.cols :
         type === "group" ? osdcss.group_margin.large.cols :
-          osdcss.designer_margin.large.cols;
+        type === "designer" ?  osdcss.designer_margin.large.cols
+        :osdcss.my_design_margin.large.cols;
     } else {
-      cols = type === "design" ? osdcss.design_margin.big.cols :
+      cols = 
+        type === "design" ? osdcss.design_margin.big.cols :
         type === "group" ? osdcss.group_margin.big.cols :
-          osdcss.designer_margin.big.cols;
+        type === "designer" ?  osdcss.designer_margin.big.cols
+        :osdcss.my_design_margin.big.cols;
     }
     this.setState({ cols: cols });
   };
@@ -217,9 +252,10 @@ class ScrollList extends Component {
   render() {
     const { type, manual, handleAccept, handleReject, height, width, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded, rejectText } = this.props;
     const { hasMore, loading, cols } = this.state;
-    console.log("onload:", cols);
+    console.log("type",this.props);
     return (dataListAdded && dataListAdded.length > 0 ?
       <FlexContainer
+        height={this.props.height}
         cols={cols}
         type={type}
         ref={this.myRef}
@@ -239,11 +275,14 @@ class ScrollList extends Component {
 
           return (<FlexBox width={width} height={height} marginRight={marginRight} marginBottom={marginBottom}
             marginRightLast={marginRightLast} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
-            {handleAccept && <AcceptBtn className="ui button black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>}
-            {handleReject && <OutBtn className="ui button black" onClick={() => handleReject(item.uid)}>{rejectText || "삭제"}</OutBtn>}
-            {type === "design" ? <Design data={item} /> : null}
-            {type === "group" ? <Group data={item} /> : null}
-            {type === "designer" ? <Designer data={item} /> : null}
+            {handleAccept && <AcceptBtn className="ui black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>}
+            {handleReject && <OutBtn className="ui black" onClick={() => handleReject(item.uid)}>{rejectText || "삭제"}</OutBtn>}
+            {type == "design" ? <Design data={item} /> : null}
+            {type == "group" ? <Group data={item} /> : null}
+            {type == "designer" ? <Designer data={item} /> : null}
+            {type == "myDesign" ? <MyDesign data={item} /> : null}
+            {type == "myGroup" ? <MyGroup data={item} /> : null}
+            {type == "myDesigner" ? <MyDesigner data={item} /> : null}
           </FlexBox>)
         })}
         {loading && <LoadingText>목록을 가져오고 있습니다.</LoadingText>}
@@ -252,7 +291,8 @@ class ScrollList extends Component {
           {/* <i className="material-icons">arrow_drop_down</i> */}
         </ScrollIcon>}
         {/* {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>} */}
-        {<div className="addList" onClick={this.getLoadData}><img className="icon" src={new_logo_arrow_down} /></div>}
+        {hasMore&&
+          <div className="addList" onClick={this.getLoadData}><img className="icon" src={new_logo_arrow_down} /></div>}
       </FlexContainer> : null
       // <NoData>{type === "design" ? "디자인이" : type === "group" ? "그룹이" : "디자이너가"} 없습니다.</NoData>)
     )

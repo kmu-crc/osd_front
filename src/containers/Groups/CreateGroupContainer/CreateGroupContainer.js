@@ -4,10 +4,19 @@ import { withRouter } from "react-router";
 import CreateGroup from "components/Groups/CreateGroup";
 import { CreateNewGroupRequest } from "redux/modules/group";
 
+import styled from "styled-components";
+
+const Content = styled.div`
+  margin-left:100px;
+  margin-top:90px;
+`
+
 class CreateGroupContainer extends Component {
   render() {
     return (
-      <CreateGroup {...this.props} />
+      <Content>
+        <CreateGroup {...this.props} />
+      </Content>
     );
   }
 }

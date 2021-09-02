@@ -66,6 +66,20 @@ const HeaderMenu = styled.div`
     .marginRight1{
         margin-right:45px;
     }
+    .design_button{
+        width:170px;
+        height:40px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:white;
+        font-family:Spoqa Han Sans Neo,Noto Sans KR;
+        font-size:20px;
+        background-color:red;
+        box-shadow: 8px 8px 8px #0000002B;
+        margin-right:46px;
+        cursor:pointer;
+    }
     
 `
 
@@ -371,8 +385,9 @@ class Header extends Component {
                         <div className="wrap">
                         {this.props.userInfo != null ? 
                             <React.Fragment>
-                            <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
+                            <div className="design_button">디자인 등록</div>
                             <div className="icon_wrap marginRight1"><AlarmContainer {...this.props} alarm={this.state.alarm} /></div>
+                            <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
                             </React.Fragment>
                             :null
                         }
@@ -389,10 +404,14 @@ class Header extends Component {
                             }
                         </div>
                         <a href="/"><img src={
-                                window.location.pathname.indexOf("/group")!=-1? new_logo_opendesign_green
-                                :window.location.pathname.indexOf("/designer")!=-1? new_logo_opendesign_purple
-                                :window.location.pathname.indexOf("/my")!=-1? new_logo_opendesign_red 
-                                :window.location.pathname.indexOf("/design")!=-1? new_logo_opendesign_blue
+                                window.location.pathname.indexOf("group")!=-1? new_logo_opendesign_green
+                                :window.location.pathname.indexOf("Group")!=-1? new_logo_opendesign_green
+                                :window.location.pathname.indexOf("designer")!=-1? new_logo_opendesign_purple
+                                :window.location.pathname.indexOf("Designer")!=-1? new_logo_opendesign_purple
+                                :window.location.pathname.indexOf("my")!=-1? new_logo_opendesign_red 
+                                :window.location.pathname.indexOf("My")!=-1? new_logo_opendesign_red 
+                                :window.location.pathname.indexOf("design")!=-1? new_logo_opendesign_blue
+                                :window.location.pathname.indexOf("Design")!=-1? new_logo_opendesign_blue
                                 :new_logo_opendesign
                             } className="home_logo"/></a>
                         <div className="searchBox">
@@ -404,8 +423,9 @@ class Header extends Component {
                         <div className="wrap">
                         {this.props.userInfo != null ? 
                             <React.Fragment>
-                            <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
+                            <div className="design_button" onClick={()=>{window.location.href = "/createDesign"}}>디자인 등록</div>
                             <div className="icon_wrap marginRight1"><AlarmContainer {...this.props} alarm={this.state.alarm} /></div>
+                            <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
                             </React.Fragment>
                             :null
                         }
