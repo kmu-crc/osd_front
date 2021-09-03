@@ -20,8 +20,8 @@ const DivPeers = styled.div`
 `;
 const DivPeer = styled.div`
 	margin: 0;
-	width: 250px;
-	height: 250px;
+	width: 217px;
+	height: 217px;
 	border: 1px solid transparent;
 	&.active {
 		border: 1px solid white;

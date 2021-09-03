@@ -2,12 +2,10 @@ import React, { Component } from "react";
 import Design from "components/Designs/Design";
 import Group from "components/Groups/Group";
 import Designer from "components/Designers/Designer";
-import MyDesign from "components/Designs/MyDesign";
-import MyGroup from "components/Groups/MyGroup";
-import MyDesigner from "components/Designers/MyDesigner";
 import styled from "styled-components";
 import osdcss from "opendesign_style";
-import new_logo_arrow_down from "source/new_logo_arrow_down.svg";
+import Fade from 'react-reveal/Fade';
+
 // @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
 //   margin-right: ${props =>
 //     props.type === "design" ? osdcss.design_margin.small.marginRightLast :
@@ -16,11 +14,12 @@ import new_logo_arrow_down from "source/new_logo_arrow_down.svg";
 // }
 // css 
 const FlexContainer = styled.div`
-  width: 100%;
-  min-height:${props=>props.height==null?"900px":props.height};
+// *{border: 1px solid blue;}
+  width: 103%;
   padding: 0;
-  position:relative;
-  // position:relative;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
   // @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
   //   width: 330px;
   // }
@@ -42,24 +41,10 @@ const FlexContainer = styled.div`
   //   @media only screen and (min-width : 360px) and (max-width:780px) {
   //     overflow-x: overlay;
   //   }
-  .addList {
-    width:100%;
-    height:354px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:absolute;
-    bottom:0px;
-    background: transparent linear-gradient(0deg, rgba(255,255,255, 1) 0%, rgba(255,255,255, 0) 100%);
-    z-index:890;
-    cursor:pointer;
-  }
-  .icon{
-    width:77px;
-    height:53px;
-  }
+
 `;
 const FlexBox = styled.div`
+    // border:1px solid black;
   flex: 0 0 ${props => props.width}px;
   width: ${props => props.width}px;
   margin-bottom: ${props => props.marginBottom}px;
@@ -70,71 +55,47 @@ const FlexBox = styled.div`
 
   display: inline-block;
   position: relative;
-  &.right-last {
-    @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
-      margin-right: ${props =>
-    props.type === "design" ? osdcss.design_margin.medium.marginRightLast :
-      props.type === "group" ? osdcss.group_margin.medium.marginRightLast :
-        props.type === "designer" ? osdcss.designer_margin.medium.marginRightLast : 0}px;
-    }
-    @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {
-      margin-right: ${props =>
-    props.type === "design" ? osdcss.design_margin.large.marginRightLast :
-      props.type === "group" ? osdcss.group_margin.large.marginRightLast :
-        props.type === "designer" ? osdcss.designer_margin.large.marginRightLast : 0}px;
-    }
-    @media only screen and (min-width : ${osdcss.resolutions.LargeMaxWidth}px){
-      margin-right: ${props =>
-    props.type === "design" ? osdcss.design_margin.big.marginRightLast :
-      props.type === "group" ? osdcss.group_margin.big.marginRightLast :
-        props.type === "designer" ? osdcss.designer_margin.big.marginRightLast : 0}px;
-    }
-  }
   @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
     margin-right: 0px;
   }
 `;
 
+// &.right-last {
+//   @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
+//     margin-right: ${props =>
+//   props.type === "design" ? osdcss.design_margin.medium.marginRightLast :
+//     props.type === "group" ? osdcss.group_margin.medium.marginRightLast :
+//       props.type === "designer" ? osdcss.designer_margin.medium.marginRightLast : 0}px;
+//   }
+//   @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {
+//     margin-right: ${props =>
+//   props.type === "design" ? osdcss.design_margin.large.marginRightLast :
+//     props.type === "group" ? osdcss.group_margin.large.marginRightLast :
+//       props.type === "designer" ? osdcss.designer_margin.large.marginRightLast : 0}px;
+//   }
+//   @media only screen and (min-width : ${osdcss.resolutions.LargeMaxWidth}px){
+//     margin-right: ${props =>
+//   props.type === "design" ? osdcss.design_margin.big.marginRightLast :
+//     props.type === "group" ? osdcss.group_margin.big.marginRightLast :
+//       props.type === "designer" ? osdcss.designer_margin.big.marginRightLast : 0}px;
+//   }
+// }
 const OutBtn = styled.button`
-  width:142px;
-  height:41px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
   position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 899;
-  font-size:20px;
-  font-family:Spoqa Han Sans Neo;
-  border-radius:0px;
-  border:none;
-  outline:none;
-  background-color:black;
-  color:white;
+  top: 0;
+  right: 5px;
+  z-index: 900;
 `;
 const AcceptBtn = styled.button`
-  width:142px;
-  height:41px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
   position: absolute;
-  top: 8px;
-  right: 158px;
-  z-index: 899;
-  font-size:20px;
-  font-family:Spoqa Han Sans Neo;
-  border-radius:0px;
-  border:none;
-  outline:none;
-  background-color:black;
-  color:white;
+  top: 0;
+  right: 80px;
+  z-index: 900;
 `;
 const MoreBtn = styled.button`
   position: relative;
   left: 50%;
-  z-index: 899;
+  z-index: 900;
 `;
 const LoadingText = styled.p`
   color: #707070;
@@ -165,17 +126,17 @@ class ScrollList extends Component {
   componentDidMount() {
     !this.props.manual && window.addEventListener("scroll", this.handleScroll, true);
     this.props.manual && this.getLoadData();
-    // window.addEventListener("resize", this.handleResize, false);
+    window.addEventListener("resize", this.handleResize, false);
     this.getColumnNumber(this.props.type);
   };
   componentWillUnmount() {
     !this.props.manual && window.removeEventListener("scroll", this.handleScroll, true);
     window.removeEventListener("resize", this.handleResize, false);
   };
-  // handleScroll = (e) => {
-  //   const reach = e.target.scrollTop + e.target.clientHeight > e.target.scrollHeight - this.state.gap;
-  //   reach && this.state.hasMore && this.state.loading === false && this.getLoadData();
-  // };
+  handleScroll = (e) => {
+    const reach = e.target.scrollTop + e.target.clientHeight > e.target.scrollHeight - this.state.gap;
+    reach && this.state.hasMore && this.state.loading === false && this.getLoadData();
+  };
   getLoadData = async () => {
     const { dataList } = this.props;
     if (!this.props.getListRequest) return;
@@ -216,29 +177,21 @@ class ScrollList extends Component {
     let cols = 0;
     let w = window.innerWidth > osdcss.resolutions.LargeMaxWidth ? osdcss.resolutions.LargeMaxWidth : window.innerWidth;
     if (osdcss.resolutions.SmallMinWidth <= w && w < osdcss.resolutions.SmallMaxWidth) {
-      cols = 
-        type === "design" ? osdcss.design_margin.small.cols :
+      cols = type === "design" ? osdcss.design_margin.small.cols :
         type === "group" ? osdcss.group_margin.small.cols :
-        type === "designer" ?osdcss.designer_margin.small.cols
-        :osdcss.my_design_margin.small.cols;
+          osdcss.designer_margin.small.cols;
     } else if (osdcss.resolutions.MediumMinWidth <= w && w < osdcss.resolutions.MediumMaxWidth) {
-      cols = 
-        type === "design" ? osdcss.design_margin.medium.cols :
+      cols = type === "design" ? osdcss.design_margin.medium.cols :
         type === "group" ? osdcss.group_margin.medium.cols :
-        type === "designer" ?  osdcss.designer_margin.medium.cols
-        :osdcss.my_design_margin.medium.cols;
+          osdcss.designer_margin.medium.cols;
     } else if (osdcss.resolutions.LargeMinWidth <= w && w < osdcss.resolutions.LargeMaxWidth) {
-      cols = 
-        type === "design" ? osdcss.design_margin.large.cols :
+      cols = type === "design" ? osdcss.design_margin.large.cols :
         type === "group" ? osdcss.group_margin.large.cols :
-        type === "designer" ?  osdcss.designer_margin.large.cols
-        :osdcss.my_design_margin.large.cols;
+          osdcss.designer_margin.large.cols;
     } else {
-      cols = 
-        type === "design" ? osdcss.design_margin.big.cols :
+      cols = type === "design" ? osdcss.design_margin.big.cols :
         type === "group" ? osdcss.group_margin.big.cols :
-        type === "designer" ?  osdcss.designer_margin.big.cols
-        :osdcss.my_design_margin.big.cols;
+          osdcss.designer_margin.big.cols;
     }
     this.setState({ cols: cols });
   };
@@ -252,37 +205,32 @@ class ScrollList extends Component {
   render() {
     const { type, manual, handleAccept, handleReject, height, width, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded, rejectText } = this.props;
     const { hasMore, loading, cols } = this.state;
-    console.log("type",this.props);
+    // console.log("onload:", this.state.page);
     return (dataListAdded && dataListAdded.length > 0 ?
       <FlexContainer
-        height={this.props.height}
         cols={cols}
         type={type}
         ref={this.myRef}
         onLoad={() => {
           const { loading, page } = this.state;
           let footer = document.getElementById("footer-div");
-          // footer = footer.getBoundingClientRect();
-          // const box = this.myRef.current.getBoundingClientRect();
-          // if (loading == false && page === 0 && this.myRef &&footer.y> box.y + box.height ) {
-          //   this.getLoadData();
-          // }
+          footer = footer.getBoundingClientRect();
+          const box = this.myRef.current.getBoundingClientRect();
+          if (loading == false && page === 0 && this.myRef &&footer.y> box.y + box.height ) {
+            this.getLoadData();
+          }
         }} >
         {dataListAdded.map((item, i) => {
-          console.log(cols);
+          // console.log(item);
           const last = (((i + 1) % cols === 0 && i !== 0) || (cols === 1 && i === 0)) ? "right-last" : "";
           const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";
-
           return (<FlexBox width={width} height={height} marginRight={marginRight} marginBottom={marginBottom}
             marginRightLast={marginRightLast} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
-            {handleAccept && <AcceptBtn className="ui black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>}
-            {handleReject && <OutBtn className="ui black" onClick={() => handleReject(item.uid)}>{rejectText || "삭제"}</OutBtn>}
-            {type == "design" ? <Design data={item} /> : null}
-            {type == "group" ? <Group data={item} /> : null}
-            {type == "designer" ? <Designer data={item} /> : null}
-            {type == "myDesign" ? <MyDesign data={item} /> : null}
-            {type == "myGroup" ? <MyGroup data={item} /> : null}
-            {type == "myDesigner" ? <MyDesigner data={item} /> : null}
+            {handleAccept && <AcceptBtn className="ui button black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>}
+            {handleReject && <OutBtn className="ui button black" onClick={() => handleReject(item.uid)}>{rejectText || "삭제"}</OutBtn>}
+            {type === "design" ? <Fade><Design data={item} /></Fade> : null}
+            {type === "group" ? <Fade><Group data={item} /></Fade> : null}
+            {type === "designer" ? <Fade><Designer data={item} /></Fade> : null}
           </FlexBox>)
         })}
         {loading && <LoadingText>목록을 가져오고 있습니다.</LoadingText>}
@@ -290,9 +238,7 @@ class ScrollList extends Component {
           {/* 스크롤 */}
           {/* <i className="material-icons">arrow_drop_down</i> */}
         </ScrollIcon>}
-        {/* {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>} */}
-        {hasMore&&
-          <div className="addList" onClick={this.getLoadData}><img className="icon" src={new_logo_arrow_down} /></div>}
+        {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>}
       </FlexContainer> : null
       // <NoData>{type === "design" ? "디자인이" : type === "group" ? "그룹이" : "디자이너가"} 없습니다.</NoData>)
     )
@@ -300,3 +246,53 @@ class ScrollList extends Component {
 }
 
 export default ScrollList;
+
+
+// render() {
+//   const { type, manual, handleAccept, handleReject, height, width, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded, rejectText } = this.props;
+//   const { hasMore, loading, cols } = this.state;
+//   console.log("type",this.props);
+//   return (dataListAdded && dataListAdded.length > 0 ?
+//     <FlexContainer
+//       height={this.props.height}
+//       cols={cols}
+//       type={type}
+//       ref={this.myRef}
+//       onLoad={() => {
+//         const { loading, page } = this.state;
+//         let footer = document.getElementById("footer-div");
+//         // footer = footer.getBoundingClientRect();
+//         // const box = this.myRef.current.getBoundingClientRect();
+//         // if (loading == false && page === 0 && this.myRef &&footer.y> box.y + box.height ) {
+//         //   this.getLoadData();
+//         // }
+//       }} >
+//       {dataListAdded.map((item, i) => {
+//         console.log(cols);
+//         const last = (((i + 1) % cols === 0 && i !== 0) || (cols === 1 && i === 0)) ? "right-last" : "";
+//         const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";
+
+//         return (<FlexBox width={width} height={height} marginRight={marginRight} marginBottom={marginBottom}
+//           marginRightLast={marginRightLast} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
+//           {handleAccept && <AcceptBtn className="ui black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>}
+//           {handleReject && <OutBtn className="ui black" onClick={() => handleReject(item.uid)}>{rejectText || "삭제"}</OutBtn>}
+//           {type == "design" ? <Design data={item} /> : null}
+//           {type == "group" ? <Group data={item} /> : null}
+//           {type == "designer" ? <Designer data={item} /> : null}
+//           {type == "myDesign" ? <MyDesign data={item} /> : null}
+//           {type == "myGroup" ? <MyGroup data={item} /> : null}
+//           {type == "myDesigner" ? <MyDesigner data={item} /> : null}
+//         </FlexBox>)
+//       })}
+//       {loading && <LoadingText>목록을 가져오고 있습니다.</LoadingText>}
+//       {!manual && hasMore && <ScrollIcon onMouseOver={this.getLoadData}>
+//         {/* 스크롤 */}
+//         {/* <i className="material-icons">arrow_drop_down</i> */}
+//       </ScrollIcon>}
+//       {/* {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>} */}
+//       {hasMore&&
+//         <div className="addList" onClick={this.getLoadData}><img className="icon" src={new_logo_arrow_down} /></div>}
+//     </FlexContainer> : null
+//     // <NoData>{type === "design" ? "디자인이" : type === "group" ? "그룹이" : "디자이너가"} 없습니다.</NoData>)
+//   )
+// }

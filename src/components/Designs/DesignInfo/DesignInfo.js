@@ -58,6 +58,7 @@ align-items:flex-end;
   display:flex;
   flex-direction:column;
   align-items:center;
+  cursor:pointer;
 }
 .icon{
   width:66px;

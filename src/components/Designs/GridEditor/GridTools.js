@@ -4,6 +4,7 @@ import styled from "styled-components";
 import PxtoRem from "modules/PxtoRem";
 import TextFormat from 'modules/TextFormat';
 import new_logo_cross from "source/new_logo_cross.svg";
+import new_logo_lock from "source/new_logo_lock.svg";
 
 const CreateStepContainer = styled.div`
     position: relative;
@@ -209,7 +210,7 @@ const CardContainer = styled.div`
         .gradient {
             z-index: 701;
             cursor: pointer;
-            border-radius: 15px;
+            // border-radius: 15px;
             position: absolute;
             width: 100%;
             height: 100%;
@@ -253,15 +254,19 @@ const LockContainer = styled.div`
     display: flex;
 
     .icon-wrapper {
-        background-color: red;
-        width: max-content;
-        border-radius: 50%;
-        padding: 3px;
-        text-align: center;
-
-        i {
-            margin: auto;
-            color: white;
+        height:26px;
+        display:flex;
+        align-items:center;
+        .icon{
+            width:26px;
+            height:26px;
+            min-width:26px;
+            min-height:26px;
+            object-fit:contain;
+        }
+        .text{
+            color:#707070;
+            font: normal normal 300 15px/22px Spoqa Han Sans Neo;
         }
     }
 `;
@@ -275,9 +280,9 @@ export const ContentCard = (props) => {
             {props.card.private === 1 ?
                 <LockContainer>
                     <div className="icon-wrapper">
-                        <i className="lock icon" />
+                        <img src={new_logo_lock} className="icon"/>
+                        <div className="text">비공개</div>
                     </div>
-                    <div>(비공개)</div>
                 </LockContainer>
                 : null}
 

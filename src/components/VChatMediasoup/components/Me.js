@@ -23,24 +23,24 @@ import icon_share_white_on from 'resources/images/icon_share_white_on.svg';
 import icon_share_white_unsupported from 'resources/images/icon_share_white_unsupported.svg';
 
 const DivME = styled.div`
-	width: 250px;
-	height: 250px;
+	width: 217px;
+	height: 217px;
 	position: relative;
 	border: 1px solid transparent;
 	cursor: default;
 `;
 const Thumbnail = styled.div`
 	position: absolute;
-	right: 1rem;
-	bottom: 1rem;
+	right: 10px;
+	bottom: 8px;
 	border-radius: 100%;
-	width: 50px;
-	height: 50px;
+	width: 47px;
+	height: 47px;
 	background-color: white;
 	background-size: cover;
 	background-position: center center;
 	background-Image: url(${props => props.img});
-	z-index: 501;
+	z-index: 500;
 `
 const Control = styled.div`
 	position: absolute;

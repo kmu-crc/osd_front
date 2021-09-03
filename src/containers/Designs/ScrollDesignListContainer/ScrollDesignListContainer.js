@@ -50,10 +50,9 @@ class ScrollDesignListContainer extends Component {
   handleReload() {
     this.setState({ reload: !this.state.reload });
   }
-
   render() {
     const { dataListAdded } = this.props;
-
+    console.log("-----",this.props)
     return (
       <React.Fragment>
         {dataListAdded.length <= 0 ?
@@ -62,12 +61,12 @@ class ScrollDesignListContainer extends Component {
           <ScrollList
             manual={this.props.manual || false}
             {...opendesign_style.design_margin}
-            getlistrequest={this.getlist}
+            getListRequest={this.getList}
             reload={this.state.reload}
             type="design"
-            handlereload={this.handlereload}
-            datalist={this.props.datalist}
-            datalistadded={this.props.datalistadded} />
+            handleReload={this.handleReload}
+            dataList={this.props.dataList}
+            dataListAdded={this.props.dataListAdded} />
         }
       </React.Fragment>
     )

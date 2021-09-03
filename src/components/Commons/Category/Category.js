@@ -46,6 +46,7 @@ const Container = styled.div`
     .green{background-color:#1E9B79;}
 `
 const Main_element = styled.div`
+    min-width:max-content;
     height:41px;
     display:flex;
     justify-content:center;
@@ -58,6 +59,7 @@ const Main_element = styled.div`
 
 `
 const SubCateElement =styled.div`
+    min-width:max-content;
     display:flex;
     justify-content:center;
     align-items:center;

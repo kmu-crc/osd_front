@@ -16,8 +16,8 @@ const DivPeerView = styled.div`
   video {
 		z-index: 400;
 	  // border: 1px solid white;
-	  width: 248px;
-	  height: 248px;
+	  width: 215px;
+	  height: 215px;
 		object-fit: cover;
 		z-index: 500;
 
@@ -41,8 +41,8 @@ const DivPeerView = styled.div`
 	}
 
 	.peerName {
-		width: 248px;
-		height: 248px;
+		width: 215px;
+		height: 215px;
 		margin: auto;
 		background-color: #36454f;
 		display: flex;
@@ -59,7 +59,7 @@ const DivPeerView = styled.div`
 			overflow: hidden
 			
 			color: white;
-			font-size: 1.75rem;
+			font-size: 20px;
 		}
 	}
 	.volume-container {

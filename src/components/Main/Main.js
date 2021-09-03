@@ -21,9 +21,18 @@ import { Settings } from "material-ui-icons";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-
+import Fade from 'react-reveal/Fade';
+const MainList = styled.div`
+  padding-left:100px;
+  width:100%;
+  overflow:hidden;
+  .list_wrap{
+    
+  }
+`
 const Wrapper= styled.div`
   position:relative;
+  overflow:hidden;
   .slick-track{
     overflow:hidden;
   }
@@ -38,6 +47,7 @@ const Wrapper= styled.div`
     left:1761px;
     background-image:url(${new_logo_arrow_left});
     background-size:cover;
+    opacity:1 !important;
   }
   .pause{
     max-width:34px;
@@ -59,32 +69,46 @@ const Wrapper= styled.div`
     background-image:url(${new_logo_arrow_right});
     background-size:cover;
   }
+  .slick-next:hover, .slick-next:before{
+    position:absolute;
+    z-index:999 !important;
+    top:991px;
+    left:1841px;
+    background-image:url(${new_logo_arrow_right});
+    background-size:cover;
+    opacity:1;
+  }
+  .slick-prev:hover, .slick-prev:before{
+    position:absolute;
+    z-index:999 !important;
+    top:991px;
+    left:1761px;
+    background-image:url(${new_logo_arrow_left});
+    background-size:cover;
+    opacity:1 !important;
+  }
+
   .slick-arrow{
     width:45px;
-    height:45px
-
-    color:rgba(0,0,0,0);
+    height:45px;
   }
   .slick-arrow:before{
-    color:rgba(0,0,0,0);
+    opacity:0;
   }
-  .slick-arrow:hover{
-    color:rgba(0,0,0,0);
-  }
+  // .slick-arrow:hover{
+  //   color:rgba(0,0,0,0);
+  // }
 `
 const Banner= styled.div`
-  min-width:1920px;
-  max-width:100%;
-  height:100%;
+  width:100%;
+  height:1080px;
   position:relative;
   overflow-y:hidden;
   .slider_{
-    min-width:1920px;
-    max-width:100%;
-    height:100%;
-    // height:300px;
+    overflow:hidden;
+    width:100%;
+    height:1080px;
     object-fit:cover;
-    z-index:5;
   }
   .banner_button1{
     width:285px;
@@ -126,7 +150,18 @@ const Banner= styled.div`
 
   
 `
-
+const Head = styled.div`
+  font: normal normal bold 23px/34px Noto Sans KR;
+  color: ${opendesign_style.color.grayScale.scale7};
+  // font-size: ${opendesign_style.font.size.heading2};
+  line-height: ${opendesign_style.font.size.heading2};
+  text-align: center;
+  margin-top: 27px;
+  margin-bottom: 27px;
+`;
+const ScrollListContainer = styled.div`
+    padding-left:20px;
+`;
 // const BannerWrapper = styled.div`
 //   // width: ${props => props.width}px;
 //   width:100%;
@@ -195,7 +230,7 @@ let settings = {
   infinite: true, 
   speed: 2000, 
   slidesToShow: 1, 
-  dots:true,
+  dots:false,
   autoplay:true,
   autoplaySpeed:4000,
   slidesToScroll: 1 ,
@@ -214,6 +249,9 @@ export default class Main extends Component {
     window.removeEventListener("resize", this.handleResize, false);
   }
   handleResize = (event) => {
+    if (window.innerWidth > 1920 ) {
+      this.setState({ heroSize: 'l' });
+    }
     if (window.innerWidth > 1440 && window.innerWidth <= 1920) {
       this.setState({ heroSize: 'l' });
     }
@@ -228,7 +266,9 @@ export default class Main extends Component {
     const { heroSize } = this.state;
 
     return (
+      <React.Fragment>
       <Wrapper>
+        <Fade>
         <Slider ref={slider => (this.slider = slider)} {...settings}>
         <Banner>
         <img src={new_banner_step1} className="slider_" />
@@ -243,6 +283,7 @@ export default class Main extends Component {
           </div>
         </Banner> 
         </Slider>
+        </Fade>
         <div className="pause"
              onClick={()=>{
                !this.state.play == true?
@@ -254,8 +295,27 @@ export default class Main extends Component {
                });
              }}
         />
-
       </Wrapper>
+      {/* <MainList>
+      <div className="list_wrap">
+      <Fade cascade>
+      {this.props.userInfo
+          ? <ScrollListContainer><MainMyDesignListContainer /></ScrollListContainer> : null}
+
+        {this.props.userInfo
+          ? <ScrollListContainer><MainMyGroupListContainer /></ScrollListContainer> : null}
+        <Head>인기 그룹</Head>
+        <ScrollListContainer>
+        <TopGroupListContainer />
+        </ScrollListContainer>
+        <Head>인기 디자인</Head>
+        <ScrollListContainer>
+        <TopDesignListContainer />
+        </ScrollListContainer>
+        </Fade>
+      </div>
+      </MainList> */}
+      </React.Fragment>
     )
   }
 }
