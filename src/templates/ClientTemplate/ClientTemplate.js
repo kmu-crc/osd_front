@@ -5,6 +5,7 @@ import styled, { keyframes } from "styled-components";
 import MenuContext from "Global/Context/GlobalContext"
 import Navigation from "components/Nav/Navigation";
 import SignInContainer from "containers/Registration/SignInContainer";
+
 // const ContentContainer = styled.div`
 //   position: absolute;
 //   // top: 55px;
@@ -69,15 +70,29 @@ const NavigationAni = styled.div`
   animation-timing-function: ease-out;  
 `
 const Client = styled.div`
-  // width:1920px;
+// border:5px solid red;
+  position:absolute;
   width:100%;
-  height:1080px;
-  // min-height:1080px;
-  overflow-x:hidden;
-  overflow-y:${
-    window.location.pathname == "/"?
-    "hidden":"auto"
-  };
+  top: 0px;
+  bottom: 0px;
+  display:flex;
+  justify-content:center;
+  overflow-y: overlay;
+  overflow-x: overlay;
+  &.hidemenu {
+    top: 0px;
+  }
+  .wrap_children{
+    max-width:${window.location.pathname=="/"?"100%":"1920px"};
+    width:100%;;
+  }
+
+   @media only screen and (min-width : 500px) and (max-width:1920px) {
+    width:100%;
+    .wrap_children{
+      max-width:${window.location.pathname=="/"?"100%":"max-content"};
+    }
+   }
 `
 class ClientTemplate extends Component {
   constructor(props){
@@ -134,6 +149,7 @@ class ClientTemplate extends Component {
     this.setState({ prevScroll: currentScrollPos })
   }
   handleScroll = (e) => {
+    console.log("sroll")
     const obj = e.target
     this.checkScrollUp(obj)
     this.checkIsOutScroll(obj)
@@ -149,6 +165,7 @@ class ClientTemplate extends Component {
     console.log(this.props);
     return (
       <React.Fragment>
+        
         {
           this.state.login == true?
           <SignInContainer onCloseLogin={()=>this.setState({login:null})} loginOpen={this.state.login}/>
@@ -164,23 +181,15 @@ class ClientTemplate extends Component {
         <NavigationAni sidemenu={this.state.login==null?window.location.pathname.indexOf("/signup")==-1?this.state.sidemenu:false:false} >
         <Navigation onClickLogin={()=>this.setState({login:this.state.login==null?true:!this.state.login})} userInfo={this.props.userInfo}/>
         </NavigationAni>
-        <Client>
-        {this.props.children}
+        <Client active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
+          <div className="wrap_children">
+          {this.props.children}
+          </div>
         </Client>
+        <Footer/>
       </React.Fragment>
     )
   }
 }
 
 export default ClientTemplate;
-
-
-// <MenuContext.Provider value={{ hidemenu, larger }}>
-//   <HeaderContainer />
-//   <ContentContainer active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
-//     <ChildrenContainer screenWidth={this.state.screenWidth}>
-//       {this.props.children}
-//     </ChildrenContainer>
-//     <Footer />
-//   </ContentContainer>
-// </MenuContext.Provider>
