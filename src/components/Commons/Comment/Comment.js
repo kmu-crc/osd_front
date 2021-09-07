@@ -9,10 +9,11 @@ import opendesign_style from "opendesign_style"
 
 const CommentBox = styled.div`
     *{
-        font-family: Noto Sans KR;
-        font-weight: 500;
-        font-size: 16px;
-        color: #707070;
+        font-family:Spoqa Han Sans Neo;
+        font-size:18px;
+        color:black;
+        font-weight:400;
+        
     }
 `;
 const blinker = keyframes`
@@ -33,115 +34,109 @@ const Comments = styled.div`
 const CommentInner = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 
   &.blinking {
     animation: ${blinker} 1.15s 5;
   }
   &.reply {
-    margin-left: 55px;
+    margin-left: 82px;
   };
   .face {
-    min-width: 45px;
-    min-height: 45px;
-    max-width: 45px;
-    max-height: 45px;
+    min-width: 57px;
+    min-height: 57px;
+    max-width: 57px;
+    max-height: 57px;
     border-radius: 50%;
     background-image: url(${props => props.face});
     background-size: cover;
     background-position:center;
     border: 1px solid #EFEFEF;
-  };
+    box-shadow: 8px 8px 6px #00000029;  
+    };
     .text-wrapper {
-        margin-left: 10px;
+        *{
+            font-family:Spoqa Han Sans Neo;
+            font-size:18px;
+            font-weight:400;
+            color:black;
+        }
+        margin-left: 27px;
         width: max-content;
-        // min-width: 150px;
-        // max-width: 473px;
-        // height:40px;
         .nick {
             display: flex;
-            flex-direction: row;
-            font-size: 18px;
-            font-weight: 500;
             .name {
-                width: max-content;
+                width: 122px;
+                white-space:nowrap;
+                overflow:hidden;
+                text-overflow:ellipsis;
+                margin-right:20px;
             };
             .create-time {
-                margin-left: auto;
-                margin-right: 10px;
-                width: max-content;
-                font-size: 13px;
-                font-weight: 500;
+                width: 80px;
+                margin-right:20px;
             };
-        };
-        .comment {
-            // min-width: 120px;
-            // width: max-content;
-            // font-weight: 300;
-            // font-size: 16px;
-            // max-width: 560px;
-            // margin-top: 5px;
         };
     };
 
     .button-wrapper {
         display: flex;
-        flex-direction: row;
-        margin-left: 7px;
-        
+        *{
+            font-family:Spoqa Han Sans Neo;
+            font-size:18px;
+            color:black;
+        }
         .reply {
             width: max-content;
-            height: 16px;
-            font-size: 14px;
-            font-weight: 500;
-            margin-left: 5px;
             cursor: pointer;
        }
         .del {
-            font-size: 14px;
             color: red;
             cursor: pointer;
+            margin-left:20px;
         }
     };
-
-    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px){
-        display:flex;
-        flex-wrap:wrap;
-        .text-wrapper{
-            min-width:100%;
-            .nick{
-                min-width:100%;
-                display:flex;
-                flex-wrap:wrap;
-                .name{
-                    width:100%;
-                    white-space: nowrap; 
-                    overflow: hidden; 
-                    text-overflow: ellipsis; 
-                }
-                .create-time{
-                    margin-left:0px;
-                }
-            }
-        }
-        .button-wrapper{
-            .del{
-                margin-top:5px;
-                margin:3px;
-            }
-        }
+    .comment{
+        margin-top:8px;
+        line-height:26px;
     }
+
+    // @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px){
+    //     display:flex;
+    //     flex-wrap:wrap;
+    //     .text-wrapper{
+    //         min-width:100%;
+    //         .nick{
+    //             min-width:100%;
+    //             display:flex;
+    //             flex-wrap:wrap;
+    //             .name{
+    //                 width:100%;
+    //                 white-space: nowrap; 
+    //                 overflow: hidden; 
+    //                 text-overflow: ellipsis; 
+    //             }
+    //             .create-time{
+    //                 margin-left:0px;
+    //             }
+    //         }
+    //     }
+    //     .button-wrapper{
+    //         .del{
+    //             margin-top:5px;
+    //             margin:3px;
+    //         }
+    //     }
+    // }
 `;
 const CommentInputTextContainer = styled.div`
    height:max-content;
-   margin-bottom: 30px;
    margin-top: 15px;
    display: flex;
     &.reply {
-        margin-left: 50px;
+        margin-left: 86px;
     }
     .writeBox {
-
         font-size: 15px;
         line-height: 22px;
         color: #707070;
@@ -149,32 +144,30 @@ const CommentInputTextContainer = styled.div`
         font-family: Noto Sans KR;
         margin-bottom:5px;
     }
-   .face {
-       max-width: 58px;
-       max-height: 58px;
-       min-width: 58px;
-       min-height: 58px;
-       background-image: url(${props => props.face});
-       background-repeat: no-repeat;
-       background-size: cover;
-       background-position: center;
-       background-color: #D6D6D6;
-       border-radius: 50%;
-   }
+    .face {
+        min-width: 57px;
+        min-height: 57px;
+        max-width: 57px;
+        max-height: 57px;
+        border-radius: 50%;
+        background-image: url(${props => props.face});
+        background-size: cover;
+        background-position:center;
+        border: 1px solid #EFEFEF;
+        box-shadow: 8px 8px 6px #00000029;  
+        margin-right:27px;
+    };
    .wrapper {
-       width:75%;
-       height:max-content;
-       margin-left: 24px;
-
        textarea {
-           width: 100%;
+           max-width:800px;
            min-width: 100px;
+           width: 800px;
            height: 100%;
            padding: 7px;
            outline: none;
            border: none;
            resize: none;
-           color: #707070;
+           color: #cccccc;
            font-size: 20px;
            font-weight: 300;
            font-family: Noto Sans KR;
@@ -192,33 +185,11 @@ const CommentInputTextContainer = styled.div`
        display:flex;
    }
    .another-wrapper { 
-    //    margin-left: auto;
-    //    margin-right: 20px;
-    //    margin-top: 41px;
        display: flex;
-       align-items:flex-end;
-       padding:5px;
-       textarea {
-           width: 560px;
-           min-width: 100px;
-           height: 100%;
-           padding: 7px;
-           outline: none;
-           border: none;
-           resize: none;
-           color: #707070;
-           font-size: 20px;
-           font-weight: 300;
-           font-family: Noto Sans KR;
-           line-height: 22px;
-           background: #EFEFEF;
-           background-repeat: no-repeat;
-           border-radius: 5px;
-       }
+       align-items:center;
        .submit {
            width: max-content;
            height:max-content;
-        //    height: 22px;
            margin-left: 18px;
            font-size: 20px;
            font-weight: 500;
@@ -226,17 +197,18 @@ const CommentInputTextContainer = styled.div`
            color: #707070;
            cursor: pointer;
            letter-spacing: 0;
+           margin-left:44px;
        }
        .cancel {
-           width: max-content;
+           width: max-content; 
            height:max-content;
-        //    height: 22px;
            margin-left: 18px;
            font-size: 20px;
-           font-weight: 300;
+           font-weight: 500;
            text-align: left;
-           color: #707070;
+           color: red;
            cursor: pointer;
+           margin-left:44px;
        }
    }
    @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px){
@@ -390,8 +362,8 @@ class Comment extends Component {
                                         <textarea value={this_reply || ""} onChange={this.onChangeValue} name="this_reply" />
                                     </div>
                                     <div className="another-wrapper">
-                                        <div className="cancel" onClick={this.undoReply}>취소</div>
                                         <div className="submit" onClick={() => this.requestReply(item.uid)}>게시</div>
+                                        <div className="cancel" onClick={this.undoReply}>취소</div>
                                     </div>
                                 </div>
                             </CommentInputTextContainer>

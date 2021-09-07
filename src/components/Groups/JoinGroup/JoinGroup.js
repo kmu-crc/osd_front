@@ -12,7 +12,7 @@ import { alert } from "components/Commons/Alert/Alert";
 import { Icon } from 'semantic-ui-react'
 
 const ModalContent = styled.div`
-border:1px solid black;
+  border:1px solid black;
   max-width:632px;
   width:100%;
   padding:22px 64px 42px 64px;

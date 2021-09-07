@@ -14,8 +14,8 @@ import new_logo_arrow_left from "source/new_logo_arrow_left.svg"
 import new_logo_arrow_right from "source/new_logo_arrow_right.svg";
 import new_logo_pause from "source/new_logo_pause.svg";
 
-import new_banner_step1 from "source/new_banner_step1.png";
-import new_banner_step2 from "source/new_banner_step2.png";
+import new_banner_step1 from "source/new_banner_step1-1.png";
+import new_banner_step2 from "source/new_banner_step2-1.png";
 import new_banner_upper01 from "source/new_banner_upper01.png";
 import { Settings } from "material-ui-icons";
 import Slider from "react-slick";
@@ -26,12 +26,15 @@ const MainList = styled.div`
   padding-left:100px;
   width:100%;
   overflow:hidden;
+  display:flex;
+  justify-content:center;
   .list_wrap{
-    
+    max-width:1920px;
+    width:100%;
   }
 `
 const Wrapper= styled.div`
-  position:relative;
+  position:relative !important;
   overflow:hidden;
   .slick-track{
     overflow:hidden;
@@ -43,8 +46,8 @@ const Wrapper= styled.div`
   .slick-prev{
     position:absolute;
     z-index:999 !important;
-    top:991px;
-    left:1761px;
+    top:1001px;
+    left:91.8%;
     background-image:url(${new_logo_arrow_left});
     background-size:cover;
     opacity:1 !important;
@@ -55,8 +58,8 @@ const Wrapper= styled.div`
     height:64px;
     position:absolute;
     z-index:999 !important;
-    top:961px;
-    left:1807px;
+    top:968px;
+    left:94%;
     background-image:url(${new_logo_pause});
     background-size:cover;
     cursor:pointer;
@@ -64,16 +67,16 @@ const Wrapper= styled.div`
   .slick-next{
     position:absolute;
     z-index:999 !important;
-    top:991px;
-    left:1841px;
+    top:1001px;
+    left:95.5%;
     background-image:url(${new_logo_arrow_right});
     background-size:cover;
   }
   .slick-next:hover, .slick-next:before{
     position:absolute;
     z-index:999 !important;
-    top:991px;
-    left:1841px;
+    top:1001px;
+    left:95.5%;
     background-image:url(${new_logo_arrow_right});
     background-size:cover;
     opacity:1;
@@ -81,8 +84,8 @@ const Wrapper= styled.div`
   .slick-prev:hover, .slick-prev:before{
     position:absolute;
     z-index:999 !important;
-    top:991px;
-    left:1761px;
+    top:1001px;
+    left:91.8%;
     background-image:url(${new_logo_arrow_left});
     background-size:cover;
     opacity:1 !important;
@@ -127,11 +130,16 @@ const Banner= styled.div`
     background-color:rgba(0,0,0,0.5);
   }
   .wrapper_{
+    width:50%;
+    height:25%;
     position:absolute;
     z-index:888;
+    bottom:100px;
+    right:0px;
+    cursor:pointer;
   }
   .detail{
-    width:286px%;
+    width:286px;
     height:51px;
     object-fit:contain;
   }
@@ -264,7 +272,7 @@ export default class Main extends Component {
   }
   render() {
     const { heroSize } = this.state;
-
+    console.log(this.props);
     return (
       <React.Fragment>
       <Wrapper>
@@ -272,14 +280,14 @@ export default class Main extends Component {
         <Slider ref={slider => (this.slider = slider)} {...settings}>
         <Banner>
         <img src={new_banner_step1} className="slider_" />
-          <div className="wrapper_" style={{top:"865px",left:"1342px"}}>
-            <img src={new_banner_upper01} className="banner_button1"/>
+          <div className="wrapper_" onClick={()=>window.location.href="/designerDetail/1488"}>
+            {/* <img src={new_banner_upper01} className="banner_button1"/> */}
           </div>
         </Banner>
         <Banner slider={new_banner_step2}>
           <img src={new_banner_step2} className="slider_" />
-          <div className="wrapper_" style={{top:"785px",left:"1144px"}}>
-          <div className="banner_button2">프로젝트 자세히 보기</div>
+          <div className="wrapper_" >
+          {/* <div className="banner_button2">프로젝트 자세히 보기</div> */}
           </div>
         </Banner> 
         </Slider>
@@ -296,14 +304,16 @@ export default class Main extends Component {
              }}
         />
       </Wrapper>
-      {/* <MainList>
+      <MainList>
       <div className="list_wrap">
       <Fade cascade>
-      {this.props.userInfo
+      <ScrollListContainer><MainMyDesignListContainer /></ScrollListContainer> 
+      <ScrollListContainer><MainMyGroupListContainer /></ScrollListContainer>
+      {/* {this.props.userInfo != null
           ? <ScrollListContainer><MainMyDesignListContainer /></ScrollListContainer> : null}
 
-        {this.props.userInfo
-          ? <ScrollListContainer><MainMyGroupListContainer /></ScrollListContainer> : null}
+        {this.props.userInfo != null
+          ? <ScrollListContainer><MainMyGroupListContainer /></ScrollListContainer> : null} */}
         <Head>인기 그룹</Head>
         <ScrollListContainer>
         <TopGroupListContainer />
@@ -314,7 +324,7 @@ export default class Main extends Component {
         </ScrollListContainer>
         </Fade>
       </div>
-      </MainList> */}
+      </MainList>
       </React.Fragment>
     )
   }

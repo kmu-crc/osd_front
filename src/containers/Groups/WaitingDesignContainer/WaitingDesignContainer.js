@@ -50,7 +50,7 @@ class WaitingDesignContainer extends Component {
 
   render() {
     return (
-      <DesignBox>
+      <DesignBox style={{marginBottom:`${this.props.waitingDesign&&this.props.waitingDesign.length==0?"0px":"75px"}`}}>
         <div className="boxTitle">가입 신청중인 디자인 ({this.props.waitingDesign.length})</div>
         <div className="boxContent">
         <ScrollList

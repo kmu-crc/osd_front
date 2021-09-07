@@ -29,6 +29,8 @@ const Wrapper = styled.div`
     padding: 2px 5px;
     line-height: 1rem;
   }
+  .bg_green{background-color:#1E9B79;}
+  .marginRight2{margin-right:38px;}
   .button_{
     width:142px;
     height: 41px;
@@ -42,8 +44,7 @@ const Wrapper = styled.div`
     box-shadow: 8px 8px 8px #0000002B;
     cursor:pointer;
   }
-  .bg_green{background-color:#1E9B79;}
-  .marginRight{margin-right:17px;}
+
 
 `;
 
@@ -105,8 +106,8 @@ export default class GroupNotice extends Component {
         : null}
 
       <Wrapper>
-        <div className="button_ bg_green marginRight" onClick={() => this.setState({ notice: true })}>공지사항</div>
-        <div className="button_ bg_green marginRight" onClick={() => this.setState({ board: true })}>게시판</div>
+        <div className="button_ bg_green marginRight2" onClick={() => this.setState({ notice: true })}>공지사항</div>
+        <div className="button_ bg_green marginRight2" onClick={() => this.setState({ board: true })}>게시판</div>
 
         {user_id === GroupDetail.user_id && hasProgrammingDesign
           ? <div className="button_ bg_black" onClick={this.getExportFile}>제출현황보기</div>

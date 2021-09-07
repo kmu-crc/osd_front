@@ -60,7 +60,10 @@ const CustomButton = styled.div`
   justify-content:center;
   align-items:center;
   margin-left:34px;
-  cursor:pointer;
+  font-family:Spoqa Han Sans Neo;
+  font-weight:Medium;
+  font-size:28px;
+  color:white;
   `;
 const BtnText = styled.p`
   font-family:Spoqa Han Sans Neo;
@@ -333,22 +336,22 @@ const Wrapper = styled.div`
 `
 
 const ContentWrapper = styled.div`
-  max-width:1566px;
+max-width:1566px;
+width:100%;
+display:flex;
+.formWrap{
+  max-width:1248px;
   width:100%;
+}
+.buttonWrap{
   display:flex;
-  .formWrap{
-    max-width:1248px;
-    width:100%;
-  }
-  .buttonWrap{
-    display:flex;
-    justify-content:flex-end;
-    width:250px;
-    padding-top:875px;
-    .button{cursor:pointer;width:86px;height:49px;display:flex;justify-content:center;align-items:center;color:white;font-size:28px;font-family:Spoqa Han Sans Neo;}
-    .grey{background-color:#8D8D8D;}
-    .red{background-color:red;}
-  }
+  justify-content:flex-end;
+  width:250px;
+  padding-top:875px;
+  .button{cursor:pointer;width:86px;height:49px;display:flex;justify-content:center;align-items:center;color:white;font-size:28px;font-family:Spoqa Han Sans Neo;}
+  .grey{background-color:#8D8D8D;}
+  .red{background-color:red;}
+}
 `
 const QuestionGuide = styled.div`
   width:35px;
@@ -832,9 +835,11 @@ class CreateDesign extends Component {
     this.checkFinishBasic();
   };
   gotoPrevStep = () => {
+    console.log(this.state.step - 1);
     this.setState({ step: this.state.step - 1 });
   };
   gotoNextStep = async () => {
+    console.log(this.state.step + 1);
     await this.setState({ step: this.state.step + 1 });
     this.checkFinishBasic();
     this.checkFinishAdditional();
@@ -1128,6 +1133,8 @@ class CreateDesign extends Component {
                   // onClick={()=> this.setState({ step: 2 })}
                    onClick={() => this.state.additional ? this.setState({ step: 2 }) : alert("부가 정보의 필수항목(*)을 입력하셔야 합니다.")}
                    >{scrollmenu[2].txt}</div>
+            <div className="navi_label red" style={{marginTop:"531px"}}></div>
+
           </div>
           <div className="vLine"/>
           {/* <div className="summary">
@@ -1278,12 +1285,14 @@ class CreateDesign extends Component {
                 {step === 1 && 
                 <div className="buttonWrap">
                 <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
-                  <BtnText>뒤로</BtnText>
+                  {/* <BtnText>뒤로</BtnText> */}
+                  뒤로
                 </CustomButton>
                 <CustomButton
                   onClick={this.state.additional ? this.gotoNextStep : this.checkInputForm}
                   isComplete={this.state.additional}>
-                  <BtnText>다음</BtnText>
+                  {/* <BtnText>다음</BtnText> */}
+                  다음
                 </CustomButton>
                 </div>}
 

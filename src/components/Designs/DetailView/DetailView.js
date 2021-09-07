@@ -175,7 +175,7 @@ class DetailView extends Component {
     return (
       <div>
         <TransFormBtnContainer >
-          <BtnWrap>
+         
             {/* {this.props.isTeam ? (
               <Button type="button" size="small" onClick={this.onPreviewMode}>
                 {this.state.edit ? "미리보기" : "편집하기"}
@@ -183,10 +183,11 @@ class DetailView extends Component {
             ) : null} */}
             {this.props.token &&
               this.props.userInfo.uid === view.user_id && (
-                <React.Fragment>
+                <BtnWrap>
                 <GoStepBtn onClick={this.onActiveStep} size="small">
                   디자인 형식 변경
                 </GoStepBtn>
+                
                 {/* <div className="row">
                 <div className="icon_wrap">
                     <img src={new_logo_chat} className="icon"/>
@@ -197,9 +198,9 @@ class DetailView extends Component {
                   <div className="icon_label">채팅</div>
                 </div>
                 </div> */}
-                </React.Fragment>
+                </BtnWrap>
               )}
-          </BtnWrap>
+          
         </TransFormBtnContainer>
 
         {len > 0 ? (

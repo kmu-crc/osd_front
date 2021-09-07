@@ -82,13 +82,13 @@ const FlexBox = styled.div`
 // }
 const OutBtn = styled.button`
   position: absolute;
-  top: 0;
+  top: 5px;
   right: 5px;
   z-index: 900;
 `;
 const AcceptBtn = styled.button`
   position: absolute;
-  top: 0;
+  top: 5px;
   right: 80px;
   z-index: 900;
 `;

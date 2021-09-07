@@ -262,7 +262,6 @@ const Wrapper = styled.div`
       font-family:Spoqa Han Sans Neo;
       font-size:28px;
       cursor:pointer;
-      padding:
     }
     .red{color:red;}
     .black{color:black;}
@@ -332,6 +331,9 @@ const Wrapper = styled.div`
     }
   }
   .grid_wrapper{
+    width:100%;
+    max-width:1566px;
+    padding-left:50px;
     display:flex;
     flex-direction:column;
     .grid_buttonWrap{
@@ -1246,7 +1248,7 @@ class ModifyDesign extends Component {
                   <BtnText>뒤로</BtnText>
                 </CustomButton>
                 <CustomButton
-                  onClick={this.state.additional ? this.gotoNextStep : this.checkInputForm}
+                  onClick={this.gotoNextStep}
                   isComplete={true}>
                   <BtnText>다음</BtnText>
                 </CustomButton>

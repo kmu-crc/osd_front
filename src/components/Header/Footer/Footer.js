@@ -5,7 +5,7 @@ import GitInfo from 'react-git-info/macro';
 import { alert } from "components/Commons/Alert/Alert";
 const FooterContainer = styled.div`
     width:100%;
-    height:32px;
+    height:1px;
     display:flex;
     position:fixed;
     bottom:0;

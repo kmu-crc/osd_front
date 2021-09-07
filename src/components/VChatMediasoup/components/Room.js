@@ -448,12 +448,12 @@ const ContentContainer = styled.div`
 
 `;
 const RightVerticalScroll = styled.div`
-	padding: 0px 10px 0px 10px;
-	width: 242px;
+	padding: 5px 10px 5px 15px;
+	min-width: 242px;
 	display: ${props => props.hidden ? "none" : "flex"};
 
 	z-index: 110;
-	background-color: rgba(255,255,255, 0.5);
+	background-color: rgba(0,0,0, 0.3);
 	flex-direction: column;
 	align-items: center;
 
@@ -518,7 +518,7 @@ const MiddleDynamicGrid = styled.div`
 `;
 const BigScreenContainer = styled.div`
 	min-width: 750px; // ${props => props.scroll ? "max-content" : "100%"};
-	width: 85%;
+	width: 100%;
 	height: 100%;
 	min-height: ${VIDEO_SIZE}px;
 	color: white;

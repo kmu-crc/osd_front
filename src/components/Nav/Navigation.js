@@ -84,9 +84,15 @@ const MenuBox = styled.div`
             color:white;
         }
     }
+    @media only screen and (min-width : 500px) {
+        height:${window.innerHeight}px;
+    }
 
 `
 const MenuItem = styled.div`
+    *{
+        cursor:pointer;
+    }
     width:100%;
     text-align:center;
     font-size:18px;

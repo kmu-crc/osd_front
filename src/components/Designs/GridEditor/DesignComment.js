@@ -38,9 +38,9 @@ class DesignComment extends Component {
             return { ...parent, replies };
         })
         console.log(comments);
-        return (<div>
+        return (
             <Comment comments={comments} my={this.props.userInfo} comment={this.comment} removeComment={this.removeComment} />
-        </div>)
+        )
     }
 };
 const mapStateToProps = state => {

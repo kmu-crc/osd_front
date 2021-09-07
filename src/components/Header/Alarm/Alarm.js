@@ -108,10 +108,12 @@ class Alarm extends Component {
         }
     }
     openAlarmList = (e) => {
-        document.addEventListener("mousedown", this.checkClickOutside)
+        // document.addEventListener("mousedown", this.checkClickOutside)
         const top = e.clientY + 10
         const left = e.clientX - (e.clientX + 150 > window.screenLeft ? 250 : 175)
-        this.setState({ active: true, top: top, left: left })
+
+        document.addEventListener("mousedown", this.checkClickOutside);
+        this.setState({ active: !this.state.active, top: top, left: left })
     }
     checkClickOutside = (e) => {
         if (this.myRef.current === null) return
@@ -545,7 +547,7 @@ class Alarm extends Component {
                 {/* red circle icon */}
                 <div
                     style={{ width: "100%", height: "100%", cursor: "pointer", display: "flex" }}
-                    onClick={this.openAlarmList} >
+                    >
                     <div
                         style={{ width: "48px", position: "absolute" }}>
                         {this.props.alarm && this.props.alarm.count > 0 ?
@@ -557,7 +559,7 @@ class Alarm extends Component {
                         <i
                             style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }}
                             className="material-icons"
-                            onClick={this.openList}>
+                            onClick={this.openAlarmList}>
                             <AlarmIcon />
                         </i>
                     </div>

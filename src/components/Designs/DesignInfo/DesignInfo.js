@@ -90,13 +90,21 @@ const DesignHeader = styled.div`
         padding:12px 22px 12px 22px;
         width:100%;
         .design_name{
+            max-width:1200px;
+            width:100%;
             height:42px;
-            display:flex;
-            align-items:center;
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap; 
+            line-height:41px;
             color:black;
             font-size:31px;
             font-family:Noto Sans KR;
             font-weight:Bold;
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap; 
+            line-height:41px;
         }
         .row{
             width:100%;
@@ -139,13 +147,13 @@ const DesignHeader = styled.div`
         }
     }
     .menuBox{
-        max-width:170px;
-        min-width:170px;
+        max-width:180px;
+        min-width:180px;
         height:100%;
         display:flex;
         flex-direction:column;
         justify-content:space-between;
-        padding:12px 12px 27px 0px;
+        padding:11px;
         .pointer{cursor:pointer;}
         .button_wrap{
             display:flex;
@@ -160,6 +168,7 @@ const DesignHeader = styled.div`
             font-size:20px;
             color:red;
             text-align:right;
+            line-height:28px;
         }
         .black_label{
             font-family:Spoqa Han Sans Neo;
@@ -177,6 +186,7 @@ const DesignHeader = styled.div`
             width:20px;
             height:20px;
             object-fit:contain;
+            margin-left:5px;
         }
         .date{
             text-align:right;
@@ -188,8 +198,7 @@ const DesignHeader = styled.div`
 
 const ListItem = styled.div`
 display:flex;
-padding-left:15px;
-padding-top: 15px;
+padding:15px;
 flex-direction: column;
 // width: 365px;
 // height: 85px;
@@ -307,27 +316,40 @@ and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
 
 `;
 const DesignMemberModalContainer = styled(Modal)`
+max-width:1200px;
+width:100% !important;
+margin-bottom:100px;
 .close-box {
     cursor:pointer;
     position: absolute;
     right:10px;
-    top:10px;
+    top:5px;
 }
 `;
 const DesignCommentModalContainer = styled(Modal)`
-padding: 60px;
-max-width: 800px;
-width:400px;
-// width: max-content;
-// max-width: 1440px;
+max-width:1200px;
+width:100% !important;
+min-height:875px;
+border-radius:0px !important;
+padding:23px 65px 51px 65px;
+margin-bottom:100px;
+
 .close-box {
     cursor:pointer;
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right:10px;
+    top:5px;
 }
 .header-txt {
-    margin-bottom:20px;
+    height:52px;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:37px;
+    font-family:Spoqa Han Sans Neo;
+    font-weight:Medium;
+    margin-bottom:32px;
 }
 .body-container {
     width: 100%;
@@ -343,6 +365,42 @@ and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
  }
 `;
 
+const MemberContainer = styled(Modal)`
+max-width:1200px;
+width:100% !important;
+border-radius:0px !important;
+padding:23px 65px 51px 65px;
+
+.close-box {
+    cursor:pointer;
+    position: absolute;
+    right:10px;
+    top:5px;
+}
+.header-txt {
+    height:52px;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:37px;
+    font-family:Spoqa Han Sans Neo;
+    font-weight:Medium;
+    margin-bottom:32px;
+}
+.body-container {
+    width: 100%;
+}
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+and (max-width : ${1024}px) { 
+    min-width:100%;
+ }
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
+    min-width:100%;
+
+ }
+`;
 
 function isOpen(ws) { return ws.readyState === ws.OPEN }
 class DesignInfo extends Component {
@@ -603,7 +661,7 @@ class DesignInfo extends Component {
             return (
                 <DesignMemberModalContainer open={isMyDesign && this.state.memberList} closeOnDimmerClick={false} onClose={() => this.setState({ memberList: false })}>
                     <div className="close-box" onClick={() => this.setState({ memberList: false })} >
-                        <Cross angle={45} color={"#707070"} weight={3} width={20} height={20} />
+                        <Cross angle={45} color={"#707070"} weight={3} width={35} height={35} />
                     </div>
                     <Modal.Content>
                         <DesignMemberContainer mine={isMyDesign} DesignDetail={DesignDetail} />
@@ -615,10 +673,10 @@ class DesignInfo extends Component {
             return (
                 <DesignCommentModalContainer open={this.state.comment} onClose={() => this.onClosedCommentModal()}>
                     <div className="close-box" onClick={() => this.onClosedCommentModal()} >
-                        <Cross angle={45} color={"#000000"} weight={3} width={20} height={20} />
+                        <Cross angle={45} color={"#000000"} weight={3} width={35} height={35} />
                     </div>
                     {/* <Modal.Content> */}
-                    <div className="header-txt"><h2>댓글</h2></div>
+                    <div className="header-txt">댓글</div>
                     <div className="body-container">
                         <DesignComment
                             designId={parseInt(this.props.id, 10)}
@@ -628,13 +686,13 @@ class DesignInfo extends Component {
                 </DesignCommentModalContainer>)
         }
         const MemberListModal = () => {
-            return (<DesignCommentModalContainer
+            return (<MemberContainer
                 open={this.state.memberList} onClose={() => this.setState({ memberList: false })}>
                 {/* <DesignMemberList ref={this.memberRef} top={this.state.posY} left={this.state.posX} > */}
                 <div className="close-box" onClick={() => this.setState({ memberList: false })} >
                     <Cross angle={45} width={30} height={30} />
                 </div>
-                <div><h2>디자인 멤버 목록</h2></div>
+                <div className="header-txt">디자인 멤버 목록</div>
                 <div className="list" style={{display:"flex",width:"100%",flexWrap:"wrap"}}>
                     {DesignDetail.member && DesignDetail.member.length > 0 &&
                         DesignDetail.member.map((mem, i) =>
@@ -645,7 +703,7 @@ class DesignInfo extends Component {
                                     <div title={"팀장"} ><i className="star icon" /></div>}
                             </DesignMemberListElement>)}</div>
                 {/* </DesignMemberList> */}
-            </DesignCommentModalContainer>);
+            </MemberContainer>);
         }
         const ForkDesignListModal = () => {
             return (
@@ -654,9 +712,7 @@ class DesignInfo extends Component {
                         <Cross angle={45} color={"#000000"} weight={3} width={30} height={30} />
                     </div>
 
-                    <div style={{ marginTop: "10px", marginBottom: "10px" }}>
-                        <h3>이 디자인을 파생한 디자인들의 목록입니다.</h3>
-                    </div>
+                    <div className="header-txt">파생된 디자인</div>
 
                     <div style={{ overflowY: "auto" }}>
                         {this.props.forkDesignList && this.props.forkDesignList.map((item, idx) => {
@@ -669,7 +725,8 @@ class DesignInfo extends Component {
                                     </div>
                                 </div>
                             </ListItem>)
-                        })}</div>
+                        })}
+                        </div>
                 </DesignCommentModalContainer>
             );
         }
@@ -709,7 +766,7 @@ class DesignInfo extends Component {
                         <div className="row detail_height">
                             <div className="left_box">
                                 <div className="row column">
-                                    <div className="row black_label pointer" onClick={this.openMemberList} >
+                                    <div className="row black_label pointer" style={{cursor:"pointer"}} onClick={this.openMemberList} >
                                         <TextFormat txt={DesignDetail.userName} chars={11} />
                                         {(DesignDetail.member && DesignDetail.member.length > 1)
                                         ? `외 ${(DesignDetail.member.length - 1).toString()}명 `
@@ -751,15 +808,18 @@ class DesignInfo extends Component {
                     <div className="menuBox">
                         <div>
                                 <div className="fork_label pointer" onClick={() => this.forkDesign()}>파생디자인 생성</div>
-                                <div className="fork_label pointer">
                                     {editor === false ?DesignDetail && DesignDetail.waitingStatus === 1 ?
-                                        <div>가입승인 대기중</div>
+                                        <div className="fork_label pointer">
+                                            <div>가입승인 대기중</div>
+                                        </div>
                                         :
-                                        <div onClick={this.joinMember}>멤버 가입 신청</div>
+                                        <div className="fork_label pointer">
+                                            <div onClick={this.joinMember}>멤버 가입 신청</div>
+                                        </div>
                                         :
                                         null
                                     }
-                                </div>
+                                
                                 <div className="button_wrap">
                                 {isMyDesign === true ?
                                     <div className="button_wrap pointer" onClick={this.gotoDesignModify} >
