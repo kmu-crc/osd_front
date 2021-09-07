@@ -186,12 +186,12 @@ class MypageBody extends Component {
 
             {this.state.cateIndex === 3 &&
                 <div>
-                    <div className="interested">관심있는 디자인({NumberFormat(Count.like_group)})</div>
+                    <div className="interested">관심있는 디자인({NumberFormat(Count.like_design)})</div>
                     {this.props.status === "INIT"
                         ? <Loading />
                         : <ScrollList manual {...opendesign_style.design_margin} type="design" dataList={MyLikeDesign} dataListAdded={MyLikeDesignAdded} getListRequest={this.getLikeDesignList} />}
 
-                    <div className="interested">관심있는 그룹({NumberFormat(Count.like_design)})</div>
+                    <div className="interested">관심있는 그룹({NumberFormat(Count.like_group)})</div>
                     {this.props.status === "INIT"
                         ? <Loading />
                         : <ScrollList manual {...opendesign_style.group_margin} type="group" dataList={MyLikeGroup} dataListAdded={MyLikeGroupAdded} getListRequest={this.getLikeGroupList} />}
