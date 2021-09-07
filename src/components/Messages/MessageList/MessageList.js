@@ -246,7 +246,7 @@ const MessageDetail = styled.div`
   }
 `;
 const SendMessageTextarea = styled.div`
-  width: 80%;
+  width: 90%;
   height: 119px;
   background-color: #E9E9E9;
   resize: none;
@@ -255,7 +255,6 @@ const SendMessageTextarea = styled.div`
   padding: 20px;
   overflow: auto;
 
-  height: 119px;
   text-align: left;
   font-weight: 300;
   font-size: 25px;
@@ -264,9 +263,15 @@ const SendMessageTextarea = styled.div`
   letter-spacing: 0px;
   color: #4F4F4F;
   opacity: 1;
-
-  @media only screen and (min-width : 780px) and (max-width:1440px) { }
-  @media only screen and (min-width : 360px) and (max-width:780px) { height:100%; }
+  // scroll
+  ::-webkit-scrollbar-track { background-color: transparent; }
+  ::-webkit-scrollbar-track { background-color: transparent; }
+  ::-webkit-scrollbar-thumb { background-color: transparent; }
+  :hover{
+    ::-webkit-scrollbar-track { background-color: transparent; }
+    ::-webkit-scrollbar { width: 5px;  background-color: transparent; }
+    ::-webkit-scrollbar-thumb { background-color: #4F4F4F; }
+  }
 `;
 const SendArrowButton = styled.div`
 
