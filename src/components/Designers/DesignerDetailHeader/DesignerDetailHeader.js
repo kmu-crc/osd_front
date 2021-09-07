@@ -194,10 +194,12 @@ const Additional = styled.div`
     .modify-icon {
         width: 22px;
         height: 22px;
-    
+        filter: invert(100%);
+        filter: brightness(0);
         margin-top: 3px;
     }
     .date {
+        width: max-content;
         text-align: right;
         font-weight: normal;
         font-size: 18px;

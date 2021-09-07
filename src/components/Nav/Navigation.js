@@ -26,7 +26,7 @@ const Profile = styled.div`
 `
 const MenuBox = styled.div`
     width:100px;
-    height:1080px;
+    height: 100%;
     min-width:100px;
     min-height:1080px;
     background-color:${
