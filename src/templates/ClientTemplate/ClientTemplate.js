@@ -198,14 +198,3 @@ class ClientTemplate extends Component {
 }
 
 export default ClientTemplate;
-
-
-// <MenuContext.Provider value={{ hidemenu, larger }}>
-//   <HeaderContainer />
-//   <ContentContainer active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
-//     <ChildrenContainer screenWidth={this.state.screenWidth}>
-//       {this.props.children}
-//     </ChildrenContainer>
-//     <Footer />
-//   </ContentContainer>
-// </MenuContext.Provider>

@@ -12,7 +12,7 @@ class ModifyMyDetailContainer extends Component {
     this.props.GetMyDetailRequest(this.props.token);
   }
   render() {
-    //console.log("MYDETAIL::::::", this.props);
+    console.log("MYDETAIL::::::", this.props);
     return (<ModifyMyDetail {...this.props} />)
   }
 }
