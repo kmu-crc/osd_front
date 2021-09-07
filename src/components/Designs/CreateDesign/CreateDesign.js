@@ -30,6 +30,7 @@ import new_logo_favorite from "source/new_logo_favorite.svg";
 import new_logo_share from "source/new_logo_share.svg";
 import new_logo_plus from "source/new_logo_plus.png"
 
+
 const CropperDialog = styled(Modal)`
   max-width: ${props => props.ratio < 1.0 ? 450 : 650}px;
   // height: ${props => props.ratio < 1.0 ? 650 : 450}px;
@@ -52,13 +53,17 @@ const CropperDialog = styled(Modal)`
 const CustomButton = styled.div`
   cursor: pointer;
   width: 86px;
+  min-width: 86px;
   height: 49px;
   background-color: ${props => props.isComplete ? "#FF0000" : "#8D8D8D"}; 
   display:flex;
   justify-content:center;
   align-items:center;
   margin-left:34px;
-  cursor:pointer;
+  font-family:Spoqa Han Sans Neo;
+  font-weight:Medium;
+  font-size:28px;
+  color:white;
   `;
 const BtnText = styled.p`
   font-family:Spoqa Han Sans Neo;
@@ -140,10 +145,19 @@ const Wrapper = styled.div`
     width:100%;
     align-items:center;
   }
+  .category_wrapper{
+    display:flex;
+    max-width:1200px;
+    width:100%;
+  }
   .flex{
     max-width:800px;
     display:flex;
     flex-wrap:wrap;
+  }
+  .flex2{
+    max-width:1200px;
+    width:100%;
   }
   .navi_menu{
     width:264px;
@@ -163,8 +177,8 @@ const Wrapper = styled.div`
       text-align:center;
     }
     .navi_label{
-      width:168px;
-      height:77px;
+      width:187px;
+      min-height:84px;
       display:flex;
       justify-content:center;
       align-items:center;
@@ -172,6 +186,7 @@ const Wrapper = styled.div`
       font-size:28px;
       cursor:pointer;
     }
+    .red{color:red;}
     .black{color:black;}
     .select{color:#1262AB;}
     .borderBottom{border-bottom:2px solid #707070;}
@@ -200,12 +215,17 @@ const Wrapper = styled.div`
   }
   .marginRight1{margin-right:51px;}
   .marginRight2{margin-right:0px;}
+  .flex_board{
+    display:flex;
+  }
   .board{
     max-width:1248px;
     width:100%;
     height:max-content;
     padding:56px 72px;
     .board_label{
+      width:max-content;
+      min-width:195px;
       display:flex;
       align-items:center;
       height:40px;
@@ -224,8 +244,14 @@ const Wrapper = styled.div`
       padding-left:40px;
       display:flex;
     }
+    .board_Grid{
+      max-width:1566px;
+      width:100%;
+      height:max-content;
+      margin-top:-10px;
+    }
     .column{flex-direction:column;}
-    .paddingLeft1{padding-left:191px;}
+    .paddingLeft1{padding-left:200px;}
     .buttonBox{
       display:flex;
       justify-content:flex-end;
@@ -310,21 +336,22 @@ const Wrapper = styled.div`
 `
 
 const ContentWrapper = styled.div`
-  max-width:1566px;
+max-width:1566px;
+width:100%;
+display:flex;
+.formWrap{
+  max-width:1248px;
   width:100%;
+}
+.buttonWrap{
   display:flex;
-  .formWrap{
-    max-width:1248px;
-    width:100%;
-  }
-  .buttonWrap{
-    display:flex;
-    width:250px;
-    padding-top:875px;
-    .button{cursor:pointer;width:86px;height:49px;display:flex;justify-content:center;align-items:center;color:white;font-size:28px;font-family:Spoqa Han Sans Neo;}
-    .grey{background-color:#8D8D8D;}
-    .red{background-color:red;}
-  }
+  justify-content:flex-end;
+  width:250px;
+  padding-top:875px;
+  .button{cursor:pointer;width:86px;height:49px;display:flex;justify-content:center;align-items:center;color:white;font-size:28px;font-family:Spoqa Han Sans Neo;}
+  .grey{background-color:#8D8D8D;}
+  .red{background-color:red;}
+}
 `
 const QuestionGuide = styled.div`
   width:35px;
@@ -655,7 +682,6 @@ const DesignElement = styled.div`
   }
 `;
 const EditorWrapper = styled.div`
-  max-width:853px;
   width:100%;
   .title {
     width: 100%;
@@ -680,6 +706,7 @@ const scrollmenu = [
   { step: 0, txt: "기본 정보" },
   { step: 1, txt: "부가 정보" },
   { step: 2, txt: "컨텐츠 정보" }];
+
 
 function Peer(props) {
   return (
@@ -808,9 +835,11 @@ class CreateDesign extends Component {
     this.checkFinishBasic();
   };
   gotoPrevStep = () => {
+    console.log(this.state.step - 1);
     this.setState({ step: this.state.step - 1 });
   };
   gotoNextStep = async () => {
+    console.log(this.state.step + 1);
     await this.setState({ step: this.state.step + 1 });
     this.checkFinishBasic();
     this.checkFinishAdditional();
@@ -1104,6 +1133,8 @@ class CreateDesign extends Component {
                   // onClick={()=> this.setState({ step: 2 })}
                    onClick={() => this.state.additional ? this.setState({ step: 2 }) : alert("부가 정보의 필수항목(*)을 입력하셔야 합니다.")}
                    >{scrollmenu[2].txt}</div>
+            <div className="navi_label red" style={{marginTop:"531px"}}></div>
+
           </div>
           <div className="vLine"/>
           {/* <div className="summary">
@@ -1132,11 +1163,7 @@ class CreateDesign extends Component {
             <React.Fragment>
               <div className="board">
                 <div className="board_label">1. 대표 이미지 등록하기<sub className="sub marginRight2">*</sub>
-                     <QuestionGuide left={15} top={-50} bubbleSize={584}>?
-                        {/* <div className="messageBubble">
-                          디자이너님의 멋진 디자인을 보여주세요! <br/> 대표 이미지는 JPG/JPEG/PNG/BMP 파일로 등록하실 수 있어요!
-                        </div> */}
-                     </QuestionGuide>
+                     <QuestionGuide left={15} top={-50} bubbleSize={584}>?</QuestionGuide>
                 </div>
                 <div className="board_box">
                 <div className="row" style={{marginTop:"10px"}}>
@@ -1152,15 +1179,6 @@ class CreateDesign extends Component {
                           <div className="thumbnailExplainText"> 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
                     </div>
                 </div>
-                  {/* <label className="findThumbnailText" htmlFor="file">
-                    {
-                      this.state.thumbnail == null||this.state.thumbnail==noimg?
-                      <div className="addImg"><img src={new_logo_plus} className="plus"/></div>
-                      :
-                      <img src={this.state.thumbnail} className="addImg"/>
-                    }
-                  </label>
-                  <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/png, image/bmp, image/jpeg, image/jpg" /> */}
                 </div>
                 <div className="board_label" style={{marginTop:"12px"}}>2. 디자인 이름<sub className="sub marginRight1">*</sub></div>
                 <div className="board_box">
@@ -1190,8 +1208,10 @@ class CreateDesign extends Component {
             this.state.step==1&&
             <React.Fragment>
                <div className="board" >
-                <div className="board_label">1. 카테고리<sub className="sub marginRight1" >*</sub>
-                <div className="flex">
+              <div className="maxFlex">
+               <div className="board_label">1. 카테고리<sub className="sub marginRight1" >*</sub></div>
+
+                <div className="category_wrapper">
                   <CategoryDropDown
                     selection
                     ref="dropdown1"
@@ -1219,10 +1239,10 @@ class CreateDesign extends Component {
                   value={this.state.categoryLevel3}
                   placeholder="카테고리를 선택해주세요"
                   />:null}
-                </div>
 
                 </div>
-                <div className="board_box paddingLeft1" style={{marginTop:"90px"}}>
+                </div>
+                <div className="board_box paddingLeft1" style={{marginTop:"70px"}}>
                 {
                   this.state.categoryLevel3!=null?
                     <IsProblemBox>
@@ -1254,31 +1274,6 @@ class CreateDesign extends Component {
                         )
                       }) : null}</div>
                 </InviteMemberListBox>
-                {/* <div className="board_label">2. 멤버 초대하기
-                      <QuestionGuide left={-580} top={-75} bubbleSize={600}>
-                        ?
-                        <div className="messageBubble">
-                          함께 디자인을 만들어 갈 멤버를 초대해 주세요. <br/>
-                          초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br/> 
-                          디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.                        </div>
-                      </QuestionGuide>
-                </div> */}
-                {/* <div className="board_box paddingLeft1">
-                     <div style={{width:"400px"}}>
-                     <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />
-                     </div>
-                </div> */}
-                {/* <InviteMemberListBox>
-                  <div className="memberList">
-                    {this.state.members && this.state.members.length > 0 ?
-                      this.state.members.map((item, index) => {
-                        return (
-                          <div onClick={() => this.removeMember(item.user_id)} key={index}>
-                            <Peer s_img={item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
-                          </div>
-                        )
-                      }) : null}</div>
-                </InviteMemberListBox> */}
                 <div className="board_label">3. 라이센스</div>
                 <div className="board_box paddingLeft1 column">
                      <div className="licenseItem"><CheckBox2 checked={this.state.license1} onChange={this.onCheckedLicense01} /><span className="textLabel">상업적으로 이용이 가능합니다.</span></div>
@@ -1290,12 +1285,14 @@ class CreateDesign extends Component {
                 {step === 1 && 
                 <div className="buttonWrap">
                 <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
-                  <BtnText>뒤로</BtnText>
+                  {/* <BtnText>뒤로</BtnText> */}
+                  뒤로
                 </CustomButton>
                 <CustomButton
                   onClick={this.state.additional ? this.gotoNextStep : this.checkInputForm}
                   isComplete={this.state.additional}>
-                  <BtnText>다음</BtnText>
+                  {/* <BtnText>다음</BtnText> */}
+                  다음
                 </CustomButton>
                 </div>}
 

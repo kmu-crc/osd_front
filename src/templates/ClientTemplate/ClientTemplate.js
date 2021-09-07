@@ -70,7 +70,6 @@ const NavigationAni = styled.div`
   animation-timing-function: ease-out;  
 `
 const Client = styled.div`
-// border:5px solid red;
   position:absolute;
   width:100%;
   top: 0px;
@@ -83,16 +82,22 @@ const Client = styled.div`
     top: 0px;
   }
   .wrap_children{
-    max-width:${window.location.pathname=="/"?"100%":"1920px"};
-    width:100%;;
-  }
-
-   @media only screen and (min-width : 500px) and (max-width:1920px) {
+    max-width:1920px;
     width:100%;
-    .wrap_children{
-      max-width:${window.location.pathname=="/"?"100%":"max-content"};
-    }
-   }
+  }
+  // .wrap_children{
+  //   max-width:${window.location.pathname=="/"?"100%":"1920px"};
+  //   width:100%;
+  // }
+  // @media only screen and (min-width : 1920px) {
+  // }
+  //  @media only screen and (min-width : 500px) and (max-width:1920px) {
+     
+  //   width:100%;
+  //   .wrap_children{
+  //     max-width:100%;
+  //   }
+  //  }
 `
 class ClientTemplate extends Component {
   constructor(props){

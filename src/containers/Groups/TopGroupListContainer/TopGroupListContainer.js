@@ -18,6 +18,7 @@ class TopGroupListContainer extends Component {
             <Loading /> :
             <ScrollList
                 type="group"
+                height={"max-content"}
                 {...opendesign_style.group_margin}
                 dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />
         }</React.Fragment>)

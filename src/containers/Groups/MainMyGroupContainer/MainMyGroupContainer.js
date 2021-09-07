@@ -37,6 +37,7 @@ class MainMyGroupContainer extends Component {
         {this.props.MyMainGroupAdded && this.props.MyMainGroupAdded.length > 0 ? <Head>내그룹 | 관심그룹</Head> : null}
         {/* <ScrollListContainer> */}
         <ScrollList
+          height={"max-content"}
           {...opendesign_style.group_margin}
           getListRequest={this.getList}
           type="group"

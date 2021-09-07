@@ -37,6 +37,7 @@ class MainMyDesignContainer extends Component {
           : null}
         {/* <ScrollListContainer> */}
         <ScrollList
+          height={"max-content"}
             {...opendesign_style.design_margin}
             getListRequest={this.getList}
           type="design"

@@ -53,7 +53,7 @@ class WaitingGroupContainer extends Component {
   render() {
     const { reload } = this.state;
     return (
-      <GroupBox>
+      <GroupBox style={{marginBottom:`${this.props.waitingGroup&&this.props.waitingGroup.length==0?"0px":"75px"}`}}>
         <div className="boxTitle">가입 신청중인 그룹 ({this.props.waitingGroup.length})</div>
         {this.props.status === "INIT" ?
           <Loading /> :

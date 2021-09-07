@@ -427,8 +427,7 @@ class Group extends Component {
   }
 }
 export default Group
-
-
+  
   // import React, { Component } from 'react';
   // import noimg from "source/noimg.png";
   // import iForked from "source/baseline_library_books_black_48dp.png"

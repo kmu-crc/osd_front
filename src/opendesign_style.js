@@ -92,7 +92,7 @@ const opendesign_style = {
     marginBottomLast: 0,
     small: { marginRightLast: 26, cols: 1,},
     medium: { marginRightLast: 26, cols: 1, },
-    large: { marginRightLast: 26, cols: 2, },
+    large: { marginRightLast: 26, cols: 1, },
     big: { marginRightLast: 26, cols: 2, },
   },
   designer_margin: {
@@ -254,5 +254,4 @@ export default opendesign_style
 //     big: { marginRightLast: 44, cols: 4, },
 //   },
 // }
-
-// export default opendesign_style
+// export default opendesign_style 

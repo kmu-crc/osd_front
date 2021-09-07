@@ -19,32 +19,32 @@ import new_logo_msg from "source/new_logo_msg.svg";
 
 const LeftWhitePane = styled.div`
     position: absolute;
-    z-index: 830;
+    z-index: 899;
     width: ${props => props.width}px;
     height: ${props => props.height}px;
     left: ${props => props.left}px;
     right: ${props => props.right}px;
     background: transparent linear-gradient(-90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 0.5) 50%, rgba(255,255,255, 0.5) 100%);
     backgroundRepeat: no-repeat;
-    @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
-    and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
-        background: transparent linear-gradient(-90deg, rgba(255,255,255, 0) 20%,rgba(255,255,255, 1) 70%);
-    }
+    // @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
+    // and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
+    //     background: transparent linear-gradient(-90deg, rgba(255,255,255, 0) 20%,rgba(255,255,255, 1) 70%);
+    // }
 
 `;
 const RightWhitePane = styled.div`
     position: absolute;
-    z-index: 830;
+    z-index: 899;
     width: ${props => props.width}px;
     height: ${props => props.height}px;
     left: ${props => props.left}px;
     right: ${props => props.right}px;
     background: transparent linear-gradient(90deg, rgba(255,255,255, 0) 0%, rgba(255,255,255, 0.5) 50%, rgba(255,255,255, 0.5) 100%);
     backgroundRepeat: no-repeat;
-    @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
-    and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
-        background: transparent linear-gradient(90deg, rgba(255,255,255, 0) 20%, rgba(255,255,255, 1) 70%);
-    }
+    // @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) 
+    // and (max-width : ${osdcss.resolutions.MediumMinWidth}px) { 
+    //     background: transparent linear-gradient(90deg, rgba(255,255,255, 0) 20%, rgba(255,255,255, 1) 70%);
+    // }
 
 `;
 const Arrow = styled.div`
@@ -162,6 +162,23 @@ class GridEditor extends Component {
         console.log('grid-editor:', this.grid);
         window.addEventListener("resize", this.handleResize, true);
         window.addEventListener("scroll", this.handleScroll, true);
+
+
+        if (this.temp.current.scrollWidth - this.temp.current.scrollLeft >= this.state.w) {
+            this.setState({ right: true });
+        }
+
+        if (this.temp.current.scrollLeft > 0) {
+            this.setState({ left: true });
+        }
+
+        if (this.temp.current.scrollLeft === 0) {
+            this.setState({ left: false });
+        }
+
+        if (this.temp.current.scrollWidth - this.temp.current.scrollLeft <= this.state.w) {
+            this.setState({ right: false });
+        }
         // if (this.grid) {
         // console.log('grid-editor:', 'init');
         // this.grid.current.addEventListener("scroll", this.handleScroll, true);
@@ -317,7 +334,7 @@ class GridEditor extends Component {
 
 
         return (
-            <div style={{ position: "relative" }}>
+            <div style={{ position: "relative",width:"100%",overflow:"hidden" }}>
 
                 {/* {wire ? <Wiring gap={gap} wires={design && design.wires} /> : null} */}
 

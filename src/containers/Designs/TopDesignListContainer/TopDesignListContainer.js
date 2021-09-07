@@ -18,6 +18,7 @@ class TopDesignListContainer extends Component {
             <Loading /> :
             <ScrollList
                 type="design"
+                height={"max-content"}
                 {...opendesign_style.design_margin}
                 dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />
         }</React.Fragment>)

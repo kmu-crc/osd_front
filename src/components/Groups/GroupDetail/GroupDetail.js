@@ -60,7 +60,7 @@ const OrderBox = styled.div`
   border:1px solid black;
 `
 const ScrollWrapper = styled.div`
-  width:1784px;
+  width:100%;
   `
 class GroupDetail extends Component {
   constructor(props) {

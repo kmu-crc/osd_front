@@ -5,7 +5,7 @@ import GitInfo from 'react-git-info/macro';
 import { alert } from "components/Commons/Alert/Alert";
 const FooterContainer = styled.div`
     width:100%;
-    height:32px;
+    height:1px;
     display:flex;
     position:fixed;
     bottom:0;
@@ -16,7 +16,7 @@ const FooterContainer = styled.div`
     font-family:Noto Sans KR;
     color:#707070;
     text-align:center;
-    background-color:white;
+    background-color:transparent;
     z-index: 999;
     .origin{
         min-width:max-content;
@@ -59,9 +59,9 @@ class Footer extends Component {
     render() {
         return (
             <FooterContainer id="footer-div">
-                <div className="origin" title={`${gitInfo.commit.date}`} onClick={async () => await alert(`현재 버전: ${gitInfo.commit.date}`, "확인")}>Copyright @ 2021 Open Design Inc.(ver.{global.appVersion})</div>
+                {/* <div className="origin" title={`${gitInfo.commit.date}`} onClick={async () => await alert(`현재 버전: ${gitInfo.commit.date}`, "확인")}>Copyright @ 2021 Open Design Inc.(ver.{global.appVersion})</div>
                 <div className="term" onClick={this.gotoTerm}>이용약관</div>
-                <div className="security" onClick={this.gotoPrivacy}>개인 정보 보호 방책</div>
+                <div className="security" onClick={this.gotoPrivacy}>개인 정보 보호 방책</div> */}
             </FooterContainer>
         )
     }
