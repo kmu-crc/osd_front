@@ -11,6 +11,7 @@ import iThumbUp from "source/thumbup_icon_black.png";
 import NumberFormat from "modules/NumberFormat";
 import DateFormat from 'modules/DateFormat';
 import { alert } from "components/Commons/Alert/Alert";
+import iconEdit from "source/mypage_icon_edit.svg";
 
 // CSS
 const LikeDialog = styled.div`
@@ -194,12 +195,11 @@ const Additional = styled.div`
     .modify-icon {
         width: 22px;
         height: 22px;
-        filter: invert(100%);
-        filter: brightness(0);
+    
         margin-top: 3px;
     }
     .date {
-        width: max-content;
+        width: 100%;
         text-align: right;
         font-weight: normal;
         font-size: 18px;
@@ -210,6 +210,72 @@ const Additional = styled.div`
         opacity: 1;
     }
 `;
+const MyAdditional = styled.div`
+    width: 203px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+    .modify {
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+        :hover {
+            opacity: 0.8;
+            background-color: #E4E4E4;
+        }
+    }
+    .logout {
+        margin-left: auto;
+        width: max-content;
+        margin-top: 15px;
+    }
+    .logout-text {
+        cursor: pointer;
+        width: max-content;
+        color: #FF0000;
+        font-size: 1rem;
+        height: 1.2rem;
+        line-height: 1.2rem;
+        font-family: Spoqa Han Sans Neo;
+    }
+    .modify-text {
+        width: max-content;
+        height: 33px;
+        text-align: center;
+        font-weight: medium;
+        font-size: 24px;
+        line-height: 33px;
+        font-family: Spoqa Han Sans Neo;
+        letter-spacing: 0px;
+        color: #4F4F4F;
+        opacity: 1;
+
+        margin-top: 6px;
+        margin-right: 12px;
+    }
+    .modify-icon {
+        width: 53px;
+        height: 53px;
+    }
+    .date {
+        margin-left: auto;
+        width: 100%;
+        text-align: right;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 26px;
+        font-family: Spoqa Han Sans Neo;
+        letter-spacing: 0px;
+        color: #777777;
+        opacity: 1;
+    }
+`;
+
 class DesignerPageHeader extends Component {
     constructor(props) {
         super(props);
@@ -268,7 +334,7 @@ class DesignerPageHeader extends Component {
         const isMyProfile = this.props.userInfo && DesignerDetail && this.props.userInfo.uid === DesignerDetail.uid ? true : false;
         const MypageInfo = this.props.DesignerDetail;
 
-        console.log("DesignerDetail::", this.props);
+        // console.log("DesignerDetail::", this.props);
 
         return (<Wrapper>
 
@@ -307,30 +373,57 @@ class DesignerPageHeader extends Component {
                         </div>
                     </Details>
 
-                    <Additional>
-                        <div classname="wrapper">
-                            <div className="modify"
-                                onClick={this.props.userInfo == null
-                                    ? async () => await alert("로그인 해주세요", "확인")
-                                    : () => this.like()}>
-                                <div className="modify-text">관심디자이너 {like ? "취소하기" : "등록하기"}</div>
-                                <div className="modify-icon">
-                                    <IconDiv width={22} height={20} className={`${like ? "active" : "inactive"}`} icon={iThumbUp} />
+                    {isMyProfile
+                        ? <MyAdditional>
+                            <div className="wrapper">
+                                <a className="modify" onClick={this.gotoMyModify}>
+                                    {/* <div  > */}
+                                    <div className="modify-text">정보 수정하기</div>
+                                    <div className="modify-icon"><IconDiv width={53} height={53} icon={iconEdit} /></div>
+                                    {/* </div> */}
+                                </a>
+                                <a className="logout" onClick={this.SignOut}>
+                                    <div className="logout-text">로그아웃</div>
+                                    {/* <div className="logout-icon"><IconDiv width={53} height={53} icon={?} /></div> */}
+                                </a>
+                            </div>
+                            <div className="date">
+                                <div className="update-date">최근&nbsp;업데이트&nbsp;{MypageInfo && DateFormat(MypageInfo.update_time)}</div>
+                                <div className="create-date">등록일자&nbsp;
+                                    {MypageInfo
+                                        ? new Date(MypageInfo.create_time).toLocaleDateString('ko-KR').substring(0, new Date(MypageInfo.create_time).toLocaleDateString('ko-KR').length - 1)
+                                        : "none"}
                                 </div>
                             </div>
-                            <div className="modify" onClick={this.sendMessage}>
-                                <div className="modify-text">메시지 보내기</div>
-                                <div className="modify-icon">
-                                    <IconDiv width={20} height={16} icon={iMessage} />
+                        </MyAdditional>
+                        : <Additional>
+                            <div classname="wrapper">
+                                <div className="modify"
+                                    onClick={this.props.userInfo == null
+                                        ? async () => await alert("로그인 해주세요", "확인")
+                                        : () => this.like()}>
+                                    <div className="modify-text">관심디자이너 {like ? "취소하기" : "등록하기"}</div>
+                                    <div className="modify-icon">
+                                        <IconDiv width={22} height={20} className={`${like ? "active" : "inactive"}`} icon={iThumbUp} />
+                                    </div>
+                                </div>
+                                <div className="modify" onClick={this.sendMessage}>
+                                    <div className="modify-text">메시지 보내기</div>
+                                    <div className="modify-icon">
+                                        <IconDiv width={20} height={16} icon={iMessage} />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="date">
-                            <div className="update-date">최근&nbsp;업데이트&nbsp;{DesignerDetail && DateFormat(DesignerDetail.update_time)}</div>
-                            <div className="create-date">등록일자&nbsp;{DesignerDetail ? new Date(DesignerDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(DesignerDetail.create_time).toLocaleDateString('ko-KR').length - 1) : "none"}</div>
-                        </div>
-                    </Additional>
-
+                            <div className="date">
+                                <div className="update-date">최근&nbsp;업데이트&nbsp;{DesignerDetail && DateFormat(DesignerDetail.update_time)}</div>
+                                <div className="create-date">등록일자&nbsp;
+                                    {DesignerDetail
+                                        ? new Date(DesignerDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(DesignerDetail.create_time).toLocaleDateString('ko-KR').length - 1)
+                                        : "none"}
+                                </div>
+                            </div>
+                        </Additional>
+                    }
                 </div>
 
             </DesignerInfoBox>

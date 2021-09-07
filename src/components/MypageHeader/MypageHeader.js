@@ -177,6 +177,7 @@ const Additional = styled.div`
         height: 53px;
     }
     .date {
+        width: 100%;
         text-align: right;
         font-weight: normal;
         font-size: 18px;
