@@ -72,18 +72,10 @@ const mapStateTopProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    SignInRequest: (data) => {
-      return dispatch(SignInRequest(data))
-    },
-    SignOutRequest: () => {
-      return dispatch(SignOutRequest())
-    },
-    FindPwRequest: (data) => {
-      return dispatch(FindPwRequest(data))
-    },
-    CheckEmailRequest: (email) => {
-      return dispatch(CheckEmailRequest(email))
-    }
+    SignInRequest: (data) => { return dispatch(SignInRequest(data)) },
+    SignOutRequest: () => { return dispatch(SignOutRequest()) },
+    FindPwRequest: (data) => { return dispatch(FindPwRequest(data)) },
+    CheckEmailRequest: (email) => { return dispatch(CheckEmailRequest(email)) }
   }
 }
 

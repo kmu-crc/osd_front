@@ -191,12 +191,14 @@ const InputText = styled.input`
 class SignInModal extends Component {
     constructor(props) {
         super(props);
-        this.state = { email: "", password: "", findPW: false 
-                    ,email: cookie.load('saveid') || ""
-                    , password: cookie.load('savepassword') || ""
-                    , saveID: cookie.load('saveid') != null ? cookie.load('savepassword') == null ? true: false : false
-                    , saveLogin: cookie.load('savepassword') != null ? cookie.load('saveid') != null ? true : false : false
-                    , isWarning:false}
+        this.state = {
+            email: "", password: "", findPW: false
+            , email: cookie.load('saveid') || ""
+            , password: cookie.load('savepassword') || ""
+            , saveID: cookie.load('saveid') != null ? cookie.load('savepassword') == null ? true : false : false
+            , saveLogin: cookie.load('savepassword') != null ? cookie.load('saveid') != null ? true : false : false
+            , isWarning: false
+        }
         this.findIDPW = this.findIDPW.bind(this);
         this.handlesubmitEnter = this.handlesubmitEnter.bind(this);
         this.onCheckSaveID = this.onCheckSaveID.bind(this);
@@ -206,7 +208,7 @@ class SignInModal extends Component {
     signin = async (event) => {
 
         const { email, password } = this.state
-        
+
         let warningMsg1 = document.getElementById("warning_logo");
         let warningMsg2 = document.getElementById("warning_text1");
         let warningMsg3 = document.getElementById("warning_text2");
@@ -221,12 +223,12 @@ class SignInModal extends Component {
             warningMsg3.className = "warningText warning_text_ani";
             warningMsg4.className = "halfRow grayEdgeButton borderAdd warning_button_ani";
 
-            setTimeout(()=>{
+            setTimeout(() => {
                 warningMsg1.className = "logoBox_warning warning_logo_ani";
                 warningMsg2.className = "none_display";
                 warningMsg3.className = "none_display";
                 warningMsg4.className = "halfRow grayEdgeButton";
-            },1000)
+            }, 1000)
             return;
         }
         else if (checkedMail.test(this.state.email) === false) {
@@ -236,13 +238,13 @@ class SignInModal extends Component {
             warningMsg3.className = "warningText warning_text_ani";
             warningMsg4.className = "halfRow grayEdgeButton borderAdd warning_button_ani";
 
-            setTimeout(()=>{
+            setTimeout(() => {
                 warningMsg1.className = "logoBox_warning warning_logo_ani";
                 warningMsg2.className = "none_display";
                 warningMsg3.className = "none_display";
                 warningMsg4.className = "halfRow grayEdgeButton";
 
-            },1000)
+            }, 1000)
             return;
         }
         else if (password === "") {
@@ -253,40 +255,40 @@ class SignInModal extends Component {
             warningMsg4.className = "halfRow grayEdgeButton borderAdd warning_button_ani";
             let warningMsg4 = document.getElementById("warning_text3");
 
-            setTimeout(()=>{
+            setTimeout(() => {
                 warningMsg1.className = "logoBox_warning warning_logo_ani";
                 warningMsg2.className = "none_display";
                 warningMsg3.className = "none_display";
                 warningMsg4.className = "halfRow grayEdgeButton";
-            },1000)
+            }, 1000)
             return;
         }
         // -----------------------
         if (this.state.saveID === true) {
             cookie.save("saveid", this.state.email, {
-              path: '/',
+                path: '/',
             });
-          }
-          //로그인저장
-          if (this.state.saveLogin === true) {
+        }
+        //로그인저장
+        if (this.state.saveLogin === true) {
             cookie.save("saveid", this.state.email, {
-              path: '/',
+                path: '/',
             });
             cookie.save("savepassword", this.state.password, {
-              path: '/',
+                path: '/',
             });
-          }
+        }
 
-          
+
         this.props.signinrequest({ email: email, password: password })
             .then(async (res) => {
                 //console.log("cap", res)
                 if (res.type === "opendesign/authentication/AUTH_SIGNIN_SUCCESS") {
                     // alert('로그인에 성공하였습니다.') // SetSession("opendesign_token",res.token)
                     this.props.signin();
-                    if(window.location.pathname == "signin"||window.location.pathname=="signup"){
-                        window.location.href="/";
-                    }else{
+                    if (window.location.pathname === "/" || window.location.pathname === "signin" || window.location.pathname === "signup") {
+                        window.location.href = "/";
+                    } else {
                         window.history.back();
                     }
                 }
@@ -299,12 +301,12 @@ class SignInModal extends Component {
                     warningMsg3.className = "warningText warning_text_ani";
                     warningMsg4.className = "halfRow grayEdgeButton borderAdd warning_button_ani";
 
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         warningMsg1.className = "logoBox_warning warning_logo_ani";
                         warningMsg2.className = "none_display";
                         warningMsg3.className = "none_display";
                         warningMsg4.className = "halfRow grayEdgeButton";
-                    },1000)
+                    }, 1000)
                 }
             })
     }
@@ -347,19 +349,19 @@ class SignInModal extends Component {
     onCheckSaveID(event) {
         const result = !this.state.saveID;
         if (result === false) {
-          cookie.remove(('saveid'), { path: '/' });
+            cookie.remove(('saveid'), { path: '/' });
         }
-    
-        this.setState({ saveID: result,saveLogin:!result });
-      }
-      onCheckSaveLogin(event) {
+
+        this.setState({ saveID: result, saveLogin: !result });
+    }
+    onCheckSaveLogin(event) {
         const result = !this.state.saveLogin;
         if (result) {
-          cookie.remove(('saveid'), { path: '/' });
-          cookie.remove(('savepassword'), { path: '/' });
+            cookie.remove(('saveid'), { path: '/' });
+            cookie.remove(('savepassword'), { path: '/' });
         }
-        this.setState({ saveLogin: result,saveID:!result });
-      }
+        this.setState({ saveLogin: result, saveID: !result });
+    }
 
     render() {
         const { open } = this.props
@@ -369,39 +371,39 @@ class SignInModal extends Component {
                 <Wrapper isWarning={this.state.isWarning}>
                     <div className="content_">
                         <div className="loginBox">
-                        <img src={new_logo_opendesign_shadow} className="logoBox"/>
-                        <img src={new_logo_opendesign_shadow_red} id="warning_logo" className="logoBox_warning"/>
-                        <div className="marginTop2">
-                            <div className="row flexCenter ">
-                                <div className="label">ID</div>
+                            <img src={new_logo_opendesign_shadow} className="logoBox" />
+                            <img src={new_logo_opendesign_shadow_red} id="warning_logo" className="logoBox_warning" />
+                            <div className="marginTop2">
+                                <div className="row flexCenter ">
+                                    <div className="label">ID</div>
                                     <div className="textBox ">
                                         <div id="warning_text1" className="none_display">
-                                                <img src={new_logo_warning} className="warningImg"/>
-                                                <span>ID또는 비밀번호 오류입니다.</span>
+                                            <img src={new_logo_warning} className="warningImg" />
+                                            <span>ID또는 비밀번호 오류입니다.</span>
                                         </div>
                                         <InputText onKeyDown={this.handlesubmitEnter} name='email' type='text' value={email || ""}
                                             onChange={this.handeEmailChange} placeholder="아이디(이메일주소)를 입력하세요" />
                                     </div>
-                                <div onClick={this.onCheckSaveID}  className={`save ${this.state.saveID == true?"save_now":"save_none"}`}>아이디 저장</div>
-                            </div>
-                            <div className="row flexCenter marginTop1">
-                                <div className="label">PW</div>
+                                    <div onClick={this.onCheckSaveID} className={`save ${this.state.saveID == true ? "save_now" : "save_none"}`}>아이디 저장</div>
+                                </div>
+                                <div className="row flexCenter marginTop1">
+                                    <div className="label">PW</div>
                                     <div className="textBox ">
-                                    <div id="warning_text2" className="none_display">
-                                            <img src={new_logo_warning} className="warningImg"/>
+                                        <div id="warning_text2" className="none_display">
+                                            <img src={new_logo_warning} className="warningImg" />
                                             ID또는 비밀번호 오류입니다.
+                                        </div>
+                                        <InputText onKeyDown={this.handlesubmitEnter} name='password' type='password' value={password || ""}
+                                            onChange={this.handlePasswordChange} placeholder="비밀번호를 입력하세요." />
                                     </div>
-                                    <InputText onKeyDown={this.handlesubmitEnter} name='password' type='password' value={password || ""}
-                                        onChange={this.handlePasswordChange} placeholder="비밀번호를 입력하세요." />
-                                    </div>
-                                <div onClick={this.onCheckSaveLogin} className={`save ${this.state.saveLogin == true?"save_now":"save_none"}`}>로그인 상태 유지</div>
+                                    <div onClick={this.onCheckSaveLogin} className={`save ${this.state.saveLogin == true ? "save_now" : "save_none"}`}>로그인 상태 유지</div>
+                                </div>
                             </div>
-                        </div>
-                        <div className="row grayButton marginTop1" onClick={this.signin}>로그인</div>
-                        <div className="row flexCenter marginTop1">
-                            <div className="halfRow grayEdgeButton" onClick={this.onClose}><Link style={{ color: "white" }} to="/signup" onClick={this.onClose}>회원가입</Link></div>
-                            <div id="warning_text3" className={`halfRow grayEdgeButton`} onClick={this.findIDPW}>비밀번호 찾기</div>
-                        </div>
+                            <div className="row grayButton marginTop1" onClick={this.signin}>로그인</div>
+                            <div className="row flexCenter marginTop1">
+                                <div className="halfRow grayEdgeButton" onClick={this.onClose}><Link style={{ color: "white" }} to="/signup" onClick={this.onClose}>회원가입</Link></div>
+                                <div id="warning_text3" className={`halfRow grayEdgeButton`} onClick={this.findIDPW}>비밀번호 찾기</div>
+                            </div>
                         </div>
 
                     </div>
