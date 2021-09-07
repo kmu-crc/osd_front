@@ -11,14 +11,14 @@ import icon_remote_mic_white_off from 'resources/images/icon_remote_mic_white_of
 import icon_remote_webcam_white_off from 'resources/images/icon_remote_webcam_white_off.svg'
 
 const DivPeer = styled.div`
-	width: 250px;
-	height: 250px;
+	width: 215px;
+	height: 215px;
 	position: relative;
 	display: flex;
 
 	.peerName {
-		width: 248px;
-		height: 248px;
+		width: 215px;
+		height: 215px;
 		margin: auto;
 		background-color: #36454f;
 		display: flex;
@@ -35,7 +35,7 @@ const DivPeer = styled.div`
 			overflow: hidden
 			
 			color: white;
-			font-size: 1.75rem;
+			font-size: 20px;
 		}
 	}
 
@@ -73,11 +73,11 @@ const DivPeer = styled.div`
 `
 const Thumbnail = styled.div`
 	position: absolute;
-	right: 1rem;
-	bottom: 1rem;
+	right: 10px;
+	bottom: 8px;
 	border-radius: 100%;
-	width: 50px;
-	height: 50px;
+	width: 47px;
+	height: 47px;
 	background-color: white;
 	background-size: cover;
 	background-position: center center;

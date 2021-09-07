@@ -158,10 +158,12 @@ export default class NewVChat extends React.Component {
   }
 
   render() {
-    return (<React.Fragment>
+    return (
+    <React.Fragment>
       <div hidden id='mediasoup-demo-app-media-query-detector'></div>
       <div id='mediasoup-demo-app-container'></div>
-    </React.Fragment>)
+    </React.Fragment>
+    )
   }
 }
 

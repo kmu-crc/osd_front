@@ -46,7 +46,7 @@ class EditDesignListContainer extends Component {
   render() {
     const { reload } = this.state;
     return (
-      <DesignBox>
+      <DesignBox style={{marginBottom:`${this.props.EditDesignList&&this.props.EditDesignList.length==0?"0px":"75px"}`}}>
         <div className="boxTitle">등록된 디자인 ({this.props.EditDesignList.length})</div>
         {this.props.status === "INIT" ?
           <Loading /> :

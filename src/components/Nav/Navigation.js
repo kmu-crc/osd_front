@@ -84,9 +84,15 @@ const MenuBox = styled.div`
             color:white;
         }
     }
+    @media only screen and (min-width : 500px) {
+        height:${window.innerHeight}px;
+    }
 
 `
 const MenuItem = styled.div`
+    *{
+        cursor:pointer;
+    }
     width:100%;
     text-align:center;
     font-size:18px;
@@ -198,7 +204,7 @@ class Navigation extends Component {
                              || window.location.pathname.search("/modifyDesigner/") > -1 ? true : false}
                               className="menu_tag marginTop1"><a className="link_tag" href="/designer">디자이너</a></MenuItem>
                     <MenuItem className="menu_tag marginTop1">NEWS</MenuItem>
-                    <MenuItem className="menu_tag marginTop1">ABOUT</MenuItem>
+                    <MenuItem className="menu_tag marginTop1" onClick={()=>window.location.href="/footerPara"}>ABOUT</MenuItem>
                     {/* <img className="icon_message" src={new_logo_message_bubble}/> */}
                 </MenuBox>
             </React.Fragment>

@@ -45,7 +45,7 @@ class EditGroupListContainer extends Component {
   render() {
     const { reload } = this.state;
     return (
-      <GroupBox>
+      <GroupBox style={{marginBottom:`${this.props.EditDesignList&&this.props.EditDesignList.length==0?"0px":"75px"}`}}>
         <div className="boxTitle">등록된 그룹 ({this.props.EditGroupList.length})</div>
         {this.props.status === "INIT" ?
           <Loading /> :

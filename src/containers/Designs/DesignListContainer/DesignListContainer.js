@@ -32,7 +32,7 @@ const Wrapper = styled.div`
     margin-top:13px;
     padding-right:39px;
     .category_title{
-      width:200px;
+      min-width:200px;
       height:32px;
       font-family:Spoqa Han Sans Neo;
       font-weight:Medium;

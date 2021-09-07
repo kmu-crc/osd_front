@@ -14,16 +14,28 @@ import new_logo_arrow_left from "source/new_logo_arrow_left.svg"
 import new_logo_arrow_right from "source/new_logo_arrow_right.svg";
 import new_logo_pause from "source/new_logo_pause.svg";
 
-import new_banner_step1 from "source/new_banner_step1.png";
-import new_banner_step2 from "source/new_banner_step2.png";
+import new_banner_step1 from "source/new_banner_step1-1.png";
+import new_banner_step2 from "source/new_banner_step2-1.png";
 import new_banner_upper01 from "source/new_banner_upper01.png";
 import { Settings } from "material-ui-icons";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-
+import Fade from 'react-reveal/Fade';
+const MainList = styled.div`
+  padding-left:100px;
+  width:100%;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  .list_wrap{
+    max-width:1920px;
+    width:100%;
+  }
+`
 const Wrapper= styled.div`
-  position:relative;
+  position:relative !important;
+  overflow:hidden;
   .slick-track{
     overflow:hidden;
   }
@@ -34,10 +46,11 @@ const Wrapper= styled.div`
   .slick-prev{
     position:absolute;
     z-index:999 !important;
-    top:991px;
-    left:1761px;
+    top:1001px;
+    left:91.8%;
     background-image:url(${new_logo_arrow_left});
     background-size:cover;
+    opacity:1 !important;
   }
   .pause{
     max-width:34px;
@@ -45,8 +58,8 @@ const Wrapper= styled.div`
     height:64px;
     position:absolute;
     z-index:999 !important;
-    top:961px;
-    left:1807px;
+    top:968px;
+    left:94%;
     background-image:url(${new_logo_pause});
     background-size:cover;
     cursor:pointer;
@@ -54,37 +67,51 @@ const Wrapper= styled.div`
   .slick-next{
     position:absolute;
     z-index:999 !important;
-    top:991px;
-    left:1841px;
+    top:1001px;
+    left:95.5%;
     background-image:url(${new_logo_arrow_right});
     background-size:cover;
   }
+  .slick-next:hover, .slick-next:before{
+    position:absolute;
+    z-index:999 !important;
+    top:1001px;
+    left:95.5%;
+    background-image:url(${new_logo_arrow_right});
+    background-size:cover;
+    opacity:1;
+  }
+  .slick-prev:hover, .slick-prev:before{
+    position:absolute;
+    z-index:999 !important;
+    top:1001px;
+    left:91.8%;
+    background-image:url(${new_logo_arrow_left});
+    background-size:cover;
+    opacity:1 !important;
+  }
+
   .slick-arrow{
     width:45px;
-    height:45px
-
-    color:rgba(0,0,0,0);
+    height:45px;
   }
   .slick-arrow:before{
-    color:rgba(0,0,0,0);
+    opacity:0;
   }
-  .slick-arrow:hover{
-    color:rgba(0,0,0,0);
-  }
+  // .slick-arrow:hover{
+  //   color:rgba(0,0,0,0);
+  // }
 `
 const Banner= styled.div`
-  min-width:1920px;
-  max-width:100%;
-  height:100%;
+  width:100%;
+  height:1080px;
   position:relative;
   overflow-y:hidden;
   .slider_{
-    min-width:1920px;
-    max-width:100%;
-    height:100%;
-    // height:300px;
+    overflow:hidden;
+    width:100%;
+    height:1080px;
     object-fit:cover;
-    z-index:5;
   }
   .banner_button1{
     width:285px;
@@ -103,11 +130,16 @@ const Banner= styled.div`
     background-color:rgba(0,0,0,0.5);
   }
   .wrapper_{
+    width:50%;
+    height:25%;
     position:absolute;
     z-index:888;
+    bottom:100px;
+    right:0px;
+    cursor:pointer;
   }
   .detail{
-    width:286px%;
+    width:286px;
     height:51px;
     object-fit:contain;
   }
@@ -126,7 +158,18 @@ const Banner= styled.div`
 
   
 `
-
+const Head = styled.div`
+  font: normal normal bold 23px/34px Noto Sans KR;
+  color: ${opendesign_style.color.grayScale.scale7};
+  // font-size: ${opendesign_style.font.size.heading2};
+  line-height: ${opendesign_style.font.size.heading2};
+  text-align: center;
+  margin-top: 27px;
+  margin-bottom: 27px;
+`;
+const ScrollListContainer = styled.div`
+    padding-left:20px;
+`;
 // const BannerWrapper = styled.div`
 //   // width: ${props => props.width}px;
 //   width:100%;
@@ -195,7 +238,7 @@ let settings = {
   infinite: true, 
   speed: 2000, 
   slidesToShow: 1, 
-  dots:true,
+  dots:false,
   autoplay:true,
   autoplaySpeed:4000,
   slidesToScroll: 1 ,
@@ -214,6 +257,9 @@ export default class Main extends Component {
     window.removeEventListener("resize", this.handleResize, false);
   }
   handleResize = (event) => {
+    if (window.innerWidth > 1920 ) {
+      this.setState({ heroSize: 'l' });
+    }
     if (window.innerWidth > 1440 && window.innerWidth <= 1920) {
       this.setState({ heroSize: 'l' });
     }
@@ -226,23 +272,26 @@ export default class Main extends Component {
   }
   render() {
     const { heroSize } = this.state;
-
+    console.log(this.props);
     return (
+      <React.Fragment>
       <Wrapper>
+        <Fade>
         <Slider ref={slider => (this.slider = slider)} {...settings}>
         <Banner>
         <img src={new_banner_step1} className="slider_" />
-          <div className="wrapper_" style={{top:"865px",left:"1342px"}}>
-            <img src={new_banner_upper01} className="banner_button1"/>
+          <div className="wrapper_" onClick={()=>window.location.href="/designerDetail/1488"}>
+            {/* <img src={new_banner_upper01} className="banner_button1"/> */}
           </div>
         </Banner>
         <Banner slider={new_banner_step2}>
           <img src={new_banner_step2} className="slider_" />
-          <div className="wrapper_" style={{top:"785px",left:"1144px"}}>
-          <div className="banner_button2">프로젝트 자세히 보기</div>
+          <div className="wrapper_" >
+          {/* <div className="banner_button2">프로젝트 자세히 보기</div> */}
           </div>
         </Banner> 
         </Slider>
+        </Fade>
         <div className="pause"
              onClick={()=>{
                !this.state.play == true?
@@ -254,8 +303,29 @@ export default class Main extends Component {
                });
              }}
         />
-
       </Wrapper>
+      <MainList>
+      <div className="list_wrap">
+      <Fade cascade>
+      <ScrollListContainer><MainMyDesignListContainer /></ScrollListContainer> 
+      <ScrollListContainer><MainMyGroupListContainer /></ScrollListContainer>
+      {/* {this.props.userInfo != null
+          ? <ScrollListContainer><MainMyDesignListContainer /></ScrollListContainer> : null}
+
+        {this.props.userInfo != null
+          ? <ScrollListContainer><MainMyGroupListContainer /></ScrollListContainer> : null} */}
+        <Head>인기 그룹</Head>
+        <ScrollListContainer>
+        <TopGroupListContainer />
+        </ScrollListContainer>
+        <Head>인기 디자인</Head>
+        <ScrollListContainer>
+        <TopDesignListContainer />
+        </ScrollListContainer>
+        </Fade>
+      </div>
+      </MainList>
+      </React.Fragment>
     )
   }
 }

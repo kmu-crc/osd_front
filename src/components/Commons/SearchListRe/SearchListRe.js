@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import zoom from "source/zoom.svg";
+import new_logo_zoom_red from "source/new_logo_zoom_red.svg";
 import OrderOption from "components/Commons/OrderOption"
 import { Dropdown } from "semantic-ui-react";
 import 'react-dropdown/style.css'
@@ -13,94 +13,78 @@ import { alert } from "components/Commons/Alert/Alert";
 import opendesigncss from "opendesign_style";
 
 const SearchContainer = styled.div`
-    margin-top: 50px;
-
-    .search-form {
-        width: max-content;
-        margin: auto;
+    margin-top: 90px;
+    margin-left:100px;
+    padding:43px 85px;
+    .search_header{
+        width:100%;
+        height:47px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:83px;
     }
-    .cate-and-order {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-
-        .cate {
-            margin-left: 5px;
-            margin-top: 5px;
+    .search_dropdown{
+        min-width:270px;
+        height:100%;   
+        .dropdown{
+            max-width:239px;
+            max-height:40px !important;     
+            font-family:SpoqaHanSans,Regular;
+            font-size:18px !important;
+            background-color:#b6b6b6 !important;
+            margin-right:68px;
+            position:absolute;
+            border-radius:0px;
+            z-index:999 !important;
+            .text{
+              color:black !important;
+            }
+            .item{
+              background-color:#8e8e8e !important;
+            }
         }
-        .order {
-            ;
+    }
+    .search_form{
+        max-width:930px;
+        min-width:200px;
+        width:100%;
+        position:relative;
+        .inputForm{
+            max-width:930px;
+            width:100%;
+            height:47px;
+            outline:none;
+            border:none;
+            border-bottom:1px solid #707070;
+            padding:5px 43px;
+            font: normal normal normal 30px/42px Spoqa Han Sans Neo;
+        }
+        .button{
+            width:47px;
+            height:47px;
+            object-fit:contain;
+            position:absolute;
+            right:0px;
+            bottom:0px;
         }
     }
-    .result {
-        z-index: 800;
-        margin-top: 25px;
-        min-height: 250px;
+    .search_order{
+        width:300px;
+        display:flex;
+        justify-content:flex-end;
     }
-`;
-const SearchForm = styled.div`
-    position: relative;
-
-    input {
-        z-index:500;
-        position: relative;
-        min-height:30px;
-        text-align: left;
-        padding-left: 25px;
-        font-size:23px;
-        color: #707070;
-        opacity: 1;
-        width: 600px;
-        border: none;
-        border-bottom: 1px solid #707070;
-    }
-    .shadow_button {
-        position: absolute;
-        width:21px;
-        height:21px;
-        left: 0px;
-        z-index: 501;
-
-        background: url(${zoom});
-        background-size: contain;
-        background-repeat: no-repeat;
-        cursor: pointer;
-    }
-
-    @media only screen and (min-width : ${opendesigncss.resolutions.SmallMinWidth}px) and (max-width : ${opendesigncss.resolutions.SmallMaxWidth}px) {
-        background-color: #FFFFFF;
-        border-radius: 20px;
-        border: 1.5px solid #707070;
-        position: relative;
-        overflow: hidden;
-        width: 320px;
-        min-width: 150px;
-        height: 36px;
-
-        &:focus{
-            outline: 1.5px solid red;
-        }
-        input {
-            outline: none;
-            width: 80%;
-            border: none;
-            margin: 0px 10px;
-        }
-        .shadow_button{
-            width:21px;
-            height:21px;
-            position: absolute;
-            top:3px;
-            right:12px;
-
-            background: url(${zoom});
-            background-size: contain;
-            background-repeat: no-repeat;
-            cursor: pointer;
+    .result_list{
+        width:100%;
+        display:flex;
+        justify-content:center;
+        padding-left:40px;
+        .result{
+            max-width:1820px;
+            width:100%;
         }
     }
 `;
-
 
 
 class SearchListRe extends Component {
@@ -209,11 +193,40 @@ class SearchListRe extends Component {
     render() {
         const { category1, category2 } = this.props;
         const { main_category, sub_category } = this.state;
-        console.log(this.props);
+        console.log(this.state.selectCate,this.state.urlCate);
 
         return (
             <SearchContainer>
-                <div className="search-form">
+                <div className="search_header">
+                    <div className="search_dropdown">
+                    <Dropdown
+                            className="dropdown"
+                            id="dropbox"
+                            options={this.state.mainCate}
+                            selection
+                            name="searchcate"
+                            onChange={this.onChangeDropBox}
+                            value={this.state.selectCate} />
+                    </div>
+                    <div className="search_form">
+                        <input
+                            className="inputForm"
+                            id="searchInput"
+                            placeholder="검색어를 입력하세요"
+                            value={this.state.searchKeyword}
+                            onChange={this.onChangeSearchkey}
+                            onKeyDown={this.submitEnter}
+                            maxLength="100"
+                        />
+                        <img src={new_logo_zoom_red} className="button" onClick={this.onClickedIcon} />
+                    </div>
+                    <div className="search_order">
+                        <OrderOption
+                            order_clicked={this.handleChangeOrderOps}
+                            selected={this.state.this_order} />
+                    </div>
+                </div>
+                {/* <div className="search-form">
                     <SearchForm >
                         <div className="shadow_button" onClick={this.onClickedIcon} />
                         <input
@@ -244,10 +257,10 @@ class SearchListRe extends Component {
                             order_clicked={this.handleChangeOrderOps}
                             selected={this.state.this_order} />
                     </div>
-                </div>
+                </div> */}
 
-                <div className="result">
-
+                <div className="result_list">
+                    <div className="result">
                     <div style={{ display: this.state.urlCate === "design" ? "block" : "none" }}>
                         <ScrollDesignListContainer
                             sort={this.props.sort}
@@ -257,6 +270,7 @@ class SearchListRe extends Component {
                             cate3={this.state.third_category.value}
                             orderOption={this.state.this_order}
                         />
+
                     </div>
 
                     <div style={{ display: this.state.urlCate === "group" ? "block" : "none" }}>
@@ -279,6 +293,7 @@ class SearchListRe extends Component {
                             cate3={this.state.third_category.value}
                             orderOption={this.state.this_order}
                         />
+                    </div>
                     </div>
                 </div>
             </SearchContainer >

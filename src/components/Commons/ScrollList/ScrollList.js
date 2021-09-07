@@ -82,13 +82,13 @@ const FlexBox = styled.div`
 // }
 const OutBtn = styled.button`
   position: absolute;
-  top: 0;
+  top: 5px;
   right: 5px;
   z-index: 900;
 `;
 const AcceptBtn = styled.button`
   position: absolute;
-  top: 0;
+  top: 5px;
   right: 80px;
   z-index: 900;
 `;
@@ -216,7 +216,7 @@ class ScrollList extends Component {
           let footer = document.getElementById("footer-div");
           footer = footer.getBoundingClientRect();
           const box = this.myRef.current.getBoundingClientRect();
-          if (loading == false && page === 0 && this.myRef && footer.y > box.y + box.height) {
+          if (loading == false && page === 0 && this.myRef &&footer.y> box.y + box.height ) {
             this.getLoadData();
           }
         }} >

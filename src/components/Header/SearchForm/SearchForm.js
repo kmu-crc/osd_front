@@ -130,6 +130,7 @@ class SearchForm extends Component {
     }
     render() {
         return (
+            
             <SearchContainer formSize={this.props.formWidth} visible={this.props.visible === 1 ? "block" : "none"} >
                 <input className="searchbox" id="searchbox" type="text" placeholder="새로운 디자인을 찾아보세요!" maxLength="100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword} />
                 <img src={
@@ -138,7 +139,7 @@ class SearchForm extends Component {
                     :window.location.pathname.indexOf("/my")!=-1? new_logo_zoom_red 
                     :window.location.pathname.indexOf("/design")!=-1? new_logo_zoom_blue
                     :new_logo_zoom_red
-                } className="icon_zoom"/>
+                } className="icon_zoom"  onClick={this.onClickedIcon}/>
                 {/* <div className="shadow_button" onClick={this.onClickedIcon} />
                 <input id="searchbox" type="text" placeholder={this.props.formWidth > 1200 ? "Search..." : ""} maxLength="100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword} /> */}
             </SearchContainer>)
