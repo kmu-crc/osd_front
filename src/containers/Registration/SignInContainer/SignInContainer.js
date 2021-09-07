@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   position:fixed;
   z-index:880;
   opacity:0;
-  animation-name: ${props=>props.loginOpen==null?null:props.loginOpen==true?Open_ani:Close_ani};
+  animation-name: ${props => props.loginOpen == null ? null : props.loginOpen == true ? Open_ani : Close_ani};
   animation-duration:1s;
   animation-direction:alternate;
   animation-fill-mode: forwards;
@@ -50,12 +50,12 @@ class SignInContainer extends Component {
   render() {
     return (
       <React.Fragment>
-      <Wrapper loginOpen={this.props.loginOpen}>
-        <div className="close_" onClick={()=>{
-          this.props.onCloseLogin();
-        }}/>
-      <SignInForm {...this.props} />
-      </Wrapper>
+        <Wrapper loginOpen={this.props.loginOpen}>
+          <div className="close_" onClick={() => {
+            this.props.onCloseLogin && this.props.onCloseLogin();
+          }} />
+          <SignInForm {...this.props} />
+        </Wrapper>
       </React.Fragment>
     );
   }

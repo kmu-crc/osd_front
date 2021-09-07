@@ -62,6 +62,7 @@ const Close_ani = keyframes`
 `;
 const NavigationAni = styled.div`
   position:fixed;
+  height: 100%;
   z-index:902;
   animation-name: ${props=>props.sidemenu==true?Open_ani:Close_ani};
   animation-duration:1s;
