@@ -3,6 +3,7 @@ import styled from "styled-components";
 import CheckBox2 from "components/Commons/CheckBox";
 import iPlus from "source/modifymypage_new_career_button.svg";
 import iHelp from "source/modifymypage_help.svg";
+import iChecked from "source/modifymypage_checked.png";
 
 const Wrapper = styled.div`
   max-width: 1300px;
@@ -27,6 +28,8 @@ const Wrapper = styled.div`
       color: #777777;
       opacity: 1;
       min-width: 221px;
+
+      &.remove { margin-top: 0px;}
     }
     .head {
       display: flex;
@@ -89,6 +92,19 @@ const Wrapper = styled.div`
       color: #707070;
       opacity: 1;
     }
+  }
+  .checked {
+    width: 32px;
+    height: 32px;
+    background-color: #CCCCCC;
+    background-image: url(${props => props.imgChecked});
+    background-position: center center;
+    background-size: cover;
+  }
+  .unchecked {
+    width: 32px;
+    height: 32px;
+    background-color: #CCCCCC;
   }
 `;
 const IconDiv = styled.div`
@@ -300,19 +316,16 @@ class SectionBuziness extends Component {
   }
   render() {
 
-    return (<Wrapper>
+    return (<Wrapper imgChecked={iChecked}>
       <div className="section">
-        <div className="label">디자이너 활동 여부</div>
+        <div className="label remove">디자이너 활동 여부</div>
         <div className="content row v-center">
           <div style={{ marginTop: "4px" }}>
-            <input type="checkbox"
-              style={{ width: "33px", height: "33px", background: "#CCC" }}
-              checked={this.state.isDesigner}
-              className="cuteCheckBox"
-              id="designercheckbox"
-              onChange={this.isDesignerCheck}
-              onClick={this.isDesignerCheck}
-            /></div>
+            <a onClick={this.isDesignerCheck} style={{ width: "33px", height: "33px", background: "#CCC", }}>
+              {this.state.isDesigner ? <div className="checked" >&nbsp;</div> : <div className="unchecked">&nbsp;</div>}
+            </a>
+            {/* <input type="checkbox" checked={this.state.isDesigner} className="cuteCheckBox" id="designercheckbox" onChange={this.isDesignerCheck} /> */}
+          </div>
           {/* <CheckBox2 type="checkbox" />  */}
           <IconDiv width={42} height={42} icon={iHelp} style={{ marginLeft: "17px" }} />
           <div className="tip" style={{ marginTop: "20px", marginLeft: "6px" }}>
