@@ -131,6 +131,7 @@ const Additional = styled.div`
     .modify {
         display: flex;
         flex-direction: row;
+        cursor: pointer;
     }
     .modify-text {
         width: 138px;
@@ -218,7 +219,7 @@ class MypageHeader extends Component {
 
                     {/* button, update, create */}
                     <Additional>
-                        <div className="modify">
+                        <div className="modify" onClick={this.gotoMyModify}>
                             <div className="modify-text">정보 수정하기</div>
                             <div className="modify-icon"><IconDiv width={53} height={53} icon={iconEdit} /></div>
                         </div>
