@@ -61,7 +61,7 @@ const CategoryDropDown = styled(Dropdown)`
   line-height: 22px;
   font-family: Spoqa Han Sans Neo;
   letter-spacing: 0px;
-  color: #000000;
+  *{color: #000000 !important;}
   opacity: 1;
 `
 
@@ -115,7 +115,7 @@ class SectionAdditional extends Component {
       })
     }
 
-    return (<Wrapper>
+    return (<Wrapper id="additional">
       <div className="section">
         <div className="label">카테고리</div>
         <div className="content">

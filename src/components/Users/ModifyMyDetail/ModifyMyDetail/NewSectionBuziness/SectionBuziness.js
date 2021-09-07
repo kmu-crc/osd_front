@@ -32,11 +32,10 @@ const Wrapper = styled.div`
       display: flex;
       flex-direction: row;
       margin-left: 42px;
-      min-width: 1109px;
-      border-bottom: 1px solid #707070;
       opacity: 1;
 
       .head_label {
+        border-bottom: 1px solid #707070;
         width: max-content;
         height: 33px;
         text-align: left;
@@ -61,6 +60,11 @@ const Wrapper = styled.div`
       margin-bottom: 20px;
     }
   }
+  .row {
+    display: flex;
+    flex-direction: row;
+    // align-items: center;
+  }
   .column {
     display: flex;
     flex-direction: column;
@@ -72,6 +76,7 @@ const Wrapper = styled.div`
     box-shadow: 8px 8px 8px #0000002B;
     border: 0.5px solid #707070;
     opacity: 1;
+    padding: 5px 10px;
 
     .text {
       height: 127px;
@@ -95,6 +100,108 @@ const IconDiv = styled.div`
 
     cursor: pointer;
 `;
+
+
+const NewCareerWrapper = styled.div`
+  margin-top: 17px;
+  height: 52px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  .number {
+    margin-left: 42px;
+    width: 100px;
+    height: 52px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 35px;
+    line-height: 52px;
+    font-family: Spoqa Han Sans;
+    letter-spacing: 0px;
+    color: #777777;
+    opacity: 1;
+    margin-right: 29px;
+  }
+  input {
+    padding-left: 20px;
+    padding-top: 5px;
+    font-weight: 300;
+    font-size: 15px;
+    font-family: Spoqa Han Sans Neo;
+    letter-spacing: 0px;
+    color: #000000;
+    border: none;
+    outline: none;
+    background-color: #C9C9C9;
+    width: 280px;
+    height: 40px;
+
+    margin-right: 29px;
+    :last-child { margin-right: 0px; }
+  }
+`;
+class CreateCareer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      task: "", explain: "", during: "",
+    }
+    this.onChangeTask = this.onChangeTask.bind(this);
+    this.onChangeExplain = this.onChangeExplain.bind(this);
+    this.onChangeDuring = this.onChangeDuring.bind(this);
+  }
+  componentDidMount() {
+
+    this.setState({
+      task: this.props.item.task,
+      explain: this.props.item.explain,
+      during: this.props.item.during,
+    })
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.item !== this.props.item) {
+      this.setState({
+        task: this.props.item.task,
+        explain: this.props.item.explain,
+        during: this.props.item.during,
+      })
+    }
+    return true;
+  }
+  onChangeTask(event) {
+    this.setState({ task: event.target.value, })
+    this.props.onChangeCareer(this.props.number - 1, event.target.value, this.state.explain, this.state.during);
+  }
+  onChangeExplain(event) {
+    this.setState({ explain: event.target.value, })
+    this.props.onChangeCareer(this.props.number - 1, this.state.task, event.target.value, this.state.during);
+  }
+  onChangeDuring(event) {
+    this.setState({ during: event.target.value, })
+    this.props.onChangeCareer(this.props.number - 1, this.state.task, this.state.explain, event.target.value);
+  }
+
+
+  render() {
+    const leadingZeros = (n, digits) => { //0채우는 함수
+      var zero = '';
+      n = n.toString();
+      if (n.length < digits) {
+        for (var i = 0; i < digits - n.length; i++)
+          zero += '0';
+      }
+      return zero + n;
+    }
+    return (
+      <NewCareerWrapper>
+        <div className="number">{leadingZeros(this.props.number, 2)}</div>
+        <input value={this.state.task} onChange={this.onChangeTask} />
+        <input value={this.state.during} onChange={this.onChangeDuring} />
+        <input value={this.state.explain} onChange={this.onChangeExplain} />
+      </NewCareerWrapper>
+    );
+  }
+}
 class SectionBuziness extends Component {
   constructor(props) {
     super(props);
@@ -196,17 +303,19 @@ class SectionBuziness extends Component {
     return (<Wrapper>
       <div className="section">
         <div className="label">디자이너 활동 여부</div>
-        <div className="content">
-          <CheckBox2
-            type="checkbox"
-            id="designercheckbox"
-            className="cuteCheckBox"
-            onChange={this.isDesignerCheck}
-            onClick={this.isDesignerCheck}
-            checked={this.state.isDesigner}
-          /> 
-          <IconDiv width={42} height={42} icon={iHelp} />
-          <div className="tip">
+        <div className="content row v-center">
+          <div style={{ marginTop: "4px" }}>
+            <input type="checkbox"
+              style={{ width: "33px", height: "33px", background: "#CCC" }}
+              checked={this.state.isDesigner}
+              className="cuteCheckBox"
+              id="designercheckbox"
+              onChange={this.isDesignerCheck}
+              onClick={this.isDesignerCheck}
+            /></div>
+          {/* <CheckBox2 type="checkbox" />  */}
+          <IconDiv width={42} height={42} icon={iHelp} style={{ marginLeft: "17px" }} />
+          <div className="tip" style={{ marginTop: "20px", marginLeft: "6px" }}>
             <div className="text">
               디자이너로서 디자인과 그룹을 만들고 수정할 수 있으며<br />
               디자이너 리스트에 올라가게 됩니다.<br />
@@ -228,7 +337,7 @@ class SectionBuziness extends Component {
           <div className="head_label long">내용</div>
         </div>
 
-        <div className="content">
+        <div className="content" style={{ marginTop: "13px" }}>
           {this.state.career.map((item, index) =>
             <CreateCareer
               key={index}
@@ -252,104 +361,3 @@ class SectionBuziness extends Component {
   }
 }
 export default SectionBuziness;
-
-
-const NewCareerWrapper = styled.div`
-  height: 52px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  .number {
-    margin-left: 42px;
-    width: 100px;
-    height: 52px;
-    text-align: left;
-    font-weight: bold;
-    font-size: 35px;
-    line-height: 52px;
-    font-family: Spoqa Han Sans;
-    letter-spacing: 0px;
-    color: #777777;
-    opacity: 1;
-    margin-right: 29px;
-  }
-  input {
-    padding-left: 20px;
-    padding-top: 5px;
-    font-weight: 300;
-    font-size: 15px;
-    font-family: Spoqa Han Sans Neo;
-    letter-spacing: 0px;
-    color: #000000;
-    border: none;
-    outline: none;
-    background-color: #C9C9C9;
-    width: 280px;
-    height: 40px;
-
-    margin-right: 29px;
-    :last-child { margin-right: 0px; }
-  }
-`;
-class CreateCareer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      task: "", explain: "", during: "",
-    }
-    this.onChangeTask = this.onChangeTask.bind(this);
-    this.onChangeExplain = this.onChangeExplain.bind(this);
-    this.onChangeDuring = this.onChangeDuring.bind(this);
-  }
-  componentDidMount() {
-
-    this.setState({
-      task: this.props.item.task,
-      explain: this.props.item.explain,
-      during: this.props.item.during,
-    })
-  }
-  componentDidUpdate(prevProps) {
-    if (prevProps.item !== this.props.item) {
-      this.setState({
-        task: this.props.item.task,
-        explain: this.props.item.explain,
-        during: this.props.item.during,
-      })
-    }
-    return true;
-  }
-  onChangeTask(event) {
-    this.setState({ task: event.target.value, })
-    this.props.onChangeCareer(this.props.number - 1, event.target.value, this.state.explain, this.state.during);
-  }
-  onChangeExplain(event) {
-    this.setState({ explain: event.target.value, })
-    this.props.onChangeCareer(this.props.number - 1, this.state.task, event.target.value, this.state.during);
-  }
-  onChangeDuring(event) {
-    this.setState({ during: event.target.value, })
-    this.props.onChangeCareer(this.props.number - 1, this.state.task, this.state.explain, event.target.value);
-  }
-
-
-  render() {
-    const leadingZeros = (n, digits) => { //0채우는 함수
-      var zero = '';
-      n = n.toString();
-      if (n.length < digits) {
-        for (var i = 0; i < digits - n.length; i++)
-          zero += '0';
-      }
-      return zero + n;
-    }
-    return (
-      <NewCareerWrapper>
-        <div className="number">{leadingZeros(this.props.number, 2)}</div>
-        <input value={this.state.task} onChange={this.onChangeTask} />
-        <input value={this.state.during} onChange={this.onChangeDuring} />
-        <input value={this.state.explain} onChange={this.onChangeExplain} />
-      </NewCareerWrapper>
-    );
-  }
-}

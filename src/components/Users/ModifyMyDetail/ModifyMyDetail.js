@@ -130,7 +130,42 @@ const ModifyForm = styled.div`
   margin-left: 39px;
   border: 3px solid #707070;
   margin-bottom: 50px;
+  
+  .buttonBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-right: 30px;
+    :last-child { margin-right: 0px; }
+  }
 `;
+
+const Button = styled.div`
+  cursor: pointer;
+  width: 100px;
+  height: 40px;
+  background-color: ${props => props.backgroundColor};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  margin-bottom: 30px;
+  margin-right: 30px;
+  box-shadow: 8px 8px 8px #0000002B;
+`;
+const ButtonText = styled.div`
+  width: max-content;
+  height: 20px;
+  padding: 0px;
+  font-family: Spoqa Han Sans Neo-Medium, Spoqa Han Sans Neo, Noto Sans KR;
+  font-weight:500;
+  line-height: 20px;
+  text-align: center;
+  font-size: 28px;
+  &.black { color: #000000; }
+  &.white { color: #FFFFFF; }
+`;
+
 const scrollmenu_data = [{ txt: "기본 정보", tag: "#basic" }, { txt: "보안", tag: "#security" }, { txt: "부가 정보", tag: "#additional" }];
 
 class ModifyMyDetail extends Component {
@@ -277,8 +312,6 @@ class ModifyMyDetail extends Component {
         careerlist += item.number + "," + item.task + "," + item.explain + "," + item.during + "/"
       );
     })
-    // console.log(careerlist);
-    // return;
     let formData = {
       uid: this.props.uid, nick_name: this.state.nick_name,
       about_me: this.state.about_me,
@@ -305,9 +338,9 @@ class ModifyMyDetail extends Component {
         formData.files.push(file);
       }
     }
-    if (formData.files.length === 0 ||
-      formData.files[0].value === (this.props.MyDetail.profileImg && this.props.MyDetail.profileImg.m_img))
+    if (formData.files.length === 0 || formData.files[0].value === (this.props.MyDetail.profileImg && this.props.MyDetail.profileImg.l_img)) {
       delete formData.files;
+    }
     if (this.state.nick_name !== this.props.MyDetail.nick_name) {
       if (await this.checkNickname() === false) {
         await alert("중복된 닉네임입니다", "확인");
@@ -337,8 +370,6 @@ class ModifyMyDetail extends Component {
       return;
     }
 
-    // console.log("성공", formData, { ...this.state });
-    // return
     await this.setState({ loading: true });
     this.props.UpdateUserDetailRequest(formData, this.props.token)
       .then(async res => {
@@ -383,11 +414,19 @@ class ModifyMyDetail extends Component {
     }
   }
 
+  onBack = async () => {
+
+    if (await confirm("수정 중인 내용이 저장되지 않습니다. 취소하시겠습니까?", "예", "아니오")) {
+      window.history.go(-1);
+    }
+  }
+
+
   render() {
     const scrollmenu = scrollmenu_data;
     const { MyDetail } = this.props;
 
-    return (<Wrapper>
+    return (<Wrapper id="basic">
 
       {/* loading */}
       {this.state.loading ? <Loading /> : null}
@@ -398,7 +437,6 @@ class ModifyMyDetail extends Component {
           MyDetail={MyDetail}
           updateThumbnail={this.updateThumbnail}
         />
-
 
         <div className="menu-wrapper">
           {scrollmenu.map((menu, index) => {
@@ -418,7 +456,7 @@ class ModifyMyDetail extends Component {
       <div className="split">&nbsp;</div>
 
       {/* form */}
-      <ModifyForm>
+      <ModifyForm >
         <SectionBasic
           updateNickName={this.updateNickName}
           updateIntroduce={this.updateIntroduce}
@@ -452,22 +490,26 @@ class ModifyMyDetail extends Component {
         />
 
         <div className="buttonBox">
-          <BackButton
-            onClick={async () => {
-              if (await confirm("수정 중인 내용이 저장되지 않습니다. 취소하시겠습니까?", "예", "아니오")) {
-                window.history.go(-1)
-              }
-            }}
-            isComplete={false}>
-            <BtnText>취소</BtnText>
-          </BackButton>
-          <CompleteButton id="additional" isComplete={true} onClick={this.onSubmit}><BtnText>수정</BtnText></CompleteButton>
+          {/* back */}
+          <a onClick={this.onBack}>
+            <Button backgroundColor={"#CCCCCC"}>
+              <ButtonText className="black">취소</ButtonText>
+            </Button>
+          </a>
+
+          {/* complete */}
+          <a onClick={this.onSubmit}>
+            <Button backgroundColor={"#FF0000"}>
+              <ButtonText className="white">수정</ButtonText>
+            </Button>
+          </a>
+
         </div>
-        
+
       </ModifyForm>
     </Wrapper >);
-  };
-};
+  }
+}
 
 export default ModifyMyDetail;
 
@@ -499,118 +541,83 @@ export default ModifyMyDetail;
 // </InputBoard>
 // </MainSection>
 
-const MainBanner = styled.div`
-  width: 100%;
-  height:140px;
-  display: flex;
-  justify-content: center;
-  .title{
-    width: 196px;
-    height: 37px;
-    margin-top: 45px;
-    font-size: 25px;
-    font-family: Noto Sans KR;
-    color: #707070;
-    line-height: 37px;
-    font-weight: 700;
-  }
+// const MainBanner = styled.div`
+//   width: 100%;
+//   height:140px;
+//   display: flex;
+//   justify-content: center;
+//   .title{
+//     width: 196px;
+//     height: 37px;
+//     margin-top: 45px;
+//     font-size: 25px;
+//     font-family: Noto Sans KR;
+//     color: #707070;
+//     line-height: 37px;
+//     font-weight: 700;
+//   }
 
-  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-  and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
-    align-items:flex-end;
-  }
-  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
-    margin-bottom:20px;
-  }
-`
-const MainSection = styled.div`
-  display: flex;
-  flex-direction:row;
-  @media only screen and (min-width : 780px) and (max-width:1440px) {
-      flex-direction:column;
-  }
-  @media only screen and (min-width : 360px) and (max-width:780px) {
-      flex-direction:column;
-  }
-`
-const MenuItem = styled.div`
-  height:62px;
-  padding-left:36px;
-  padding-top:18px;
-  lineHeight:29px;
-  border-bottom: ${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
-  cursor:pointer;
-  &.white{
-    background-color: white;
-  }
-}`
+//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+//   and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
+//     align-items:flex-end;
+//   }
+//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+//   and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+//     margin-bottom:20px;
+//   }
+// `
+// const MainSection = styled.div`
+//   display: flex;
+//   flex-direction:row;
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//       flex-direction:column;
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//       flex-direction:column;
+//   }
+// `
+// const MenuItem = styled.div`
+//   height:62px;
+//   padding-left:36px;
+//   padding-top:18px;
+//   lineHeight:29px;
+//   border-bottom: ${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
+//   cursor:pointer;
+//   &.white{
+//     background-color: white;
+//   }
+// }`
 
-const MenuText = styled.div`
-font-size:20px;
-font-family:Noto Sans KR;
-font-weight:300;
-text-align:left;
-color: ${props => props.selected ? "#FF0000" : "#707070"};
-border-bottom:${props => props.borderBottom};
-`
-//const Arrow = styled.span`
-//  margin-left:70px;
-//  font-size:15px;
-//`
-const InputBoard = styled.div`
-  width:${window.innerWidth > 1920 ? 1422 + 'px' : 100 + '%'};
-  padding-bottom:100px;
-  margin-bottom:100px;
-  position:relative;
-  padding-top:45px;
-  border-radius:5px;
-  border:8px solid #F5F4F4;
-  .buttonBox{
-    width: max-content;
-    display: flex;
-    justify-content:flex-end;
-    margin-top: 21px;
-    margin-left: auto;
-    padding:10px 0px 10px 10px;
-    position:absolute;
-    right:0px;
-    bottom:0px;
-  }  
-`
+// const MenuText = styled.div`
+// font-size:20px;
+// font-family:Noto Sans KR;
+// font-weight:300;
+// text-align:left;
+// color: ${props => props.selected ? "#FF0000" : "#707070"};
+// border-bottom:${props => props.borderBottom};
+// `
+// //const Arrow = styled.span`
+// //  margin-left:70px;
+// //  font-size:15px;
+// //`
+// const InputBoard = styled.div`
+//   width:${window.innerWidth > 1920 ? 1422 + 'px' : 100 + '%'};
+//   padding-bottom:100px;
+//   margin-bottom:100px;
+//   position:relative;
+//   padding-top:45px;
+//   border-radius:5px;
+//   border:8px solid #F5F4F4;
+//   .buttonBox{
+//     width: max-content;
+//     display: flex;
+//     justify-content:flex-end;
+//     margin-top: 21px;
+//     margin-left: auto;
+//     padding:10px 0px 10px 10px;
+//     position:absolute;
+//     right:0px;
+//     bottom:0px;
+//   }  
+// `
 
-const BackButton = styled.div`
-      cursor: pointer;
-      width: 104.5px;
-      height: 44px;
-      border-radius: 5px;
-      background-color: ${props => props.isComplete ? "#FF0000" : "#707070"};
-      padding-top: 6px;
-      padding-left: 15px;
-      margin-right: 25px;
-`
-const CompleteButton = styled.div`
-        cursor: pointer;
-        width: 104.5px;
-        height: 44px;
-        border-radius: 5px;
-        background-color: ${props => props.isComplete ? "#FF0000" : "#707070"};
-        padding-top: 6px;
-        padding-left: 15px;
-        margin-right: 25px;
-  `
-const HRline = styled.div`
-  margin-top:100px;
-  margin-bottom:67px;
-  border-bottom:5px solid #F5F4F4;
-`
-const BtnText = styled.p`
-  width: 74px;
-  padding: 0px;
-  font-familty: Noto Sans KR;
-  font-weight: 500;
-  line-height: 29px;
-  text-align: center;
-  font-size: 20px;
-  color: #FFFFFF;
-`;

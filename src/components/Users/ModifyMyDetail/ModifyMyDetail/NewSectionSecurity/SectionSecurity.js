@@ -88,7 +88,7 @@ class SectionSecurity extends Component {
     this.setState({ showPass: !this.state.showPass });
   }
   render() {
-    return (<Wrapper>
+    return (<Wrapper id="security" >
       <div className="section">
         <div className="label">비밀번호</div>
         <div className="content">

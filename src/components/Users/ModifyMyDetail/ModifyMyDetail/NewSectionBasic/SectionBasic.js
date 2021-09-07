@@ -42,8 +42,8 @@ const Wrapper = styled.div`
     height: 40px;
   }
   .inputTextareaBox {
-    width: 850px;
-    max-width: 850px;
+    min-width: 260px;
+    width: 750px;
     height: 244px;
     padding-left: 20px;
     padding-top: 10px;
@@ -199,7 +199,7 @@ export default SectionBasic;
 //     .inputText{
 //       margin-left:0px;
 //     }
-  
+
 //   }
 //   @media only screen and (min-width : 360px) and (max-width:780px) {
 //     flex-direction:column;
@@ -239,7 +239,7 @@ export default SectionBasic;
 //   }
 //   @media only screen and (min-width : 360px) and (max-width:780px) {
 //     flex-direction:column;
-  
+
 //     .inputTextareaBox {
 //       width:100%;
 //       margin-left: 0px;

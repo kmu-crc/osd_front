@@ -132,7 +132,7 @@ const Details = styled.div`
                 width: 42px;
                 height: 42px;
                 display: flex;
-                align-items: middle;
+                align-items: center;
 
                 margin-right: 7px;
             }
@@ -299,7 +299,7 @@ class DesignerPageHeader extends Component {
                                 <div className="num">{NumberFormat(Count.total_like)}</div>
                             </div>
                             <div className="element">
-                                <div className="icon"><IconDiv width={38} height={38} icon={iconArticle} /></div>
+                                <div className="icon"><IconDiv width={28} height={28} icon={iconArticle} /></div>
                                 <div className="num">{NumberFormat(Count.total_design + Count.total_group)}</div>
                             </div>
                         </div>

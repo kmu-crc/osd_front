@@ -10,6 +10,7 @@ import noimg from "source/noimg.png";
 import DateFormat from 'modules/DateFormat';
 import NumberFormat from "modules/NumberFormat";
 import { geturl } from "config";
+import { SetSession } from 'modules/Sessions';
 
 // css
 const Wrapper = styled.div`
@@ -26,6 +27,7 @@ const MyInfoBox = styled.div`
     flex-direction: row;
 
     .wrapper {
+        width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -93,7 +95,7 @@ const Details = styled.div`
                 width: 42px;
                 height: 42px;
                 display: flex;
-                align-items: middle;
+                align-items: center;
 
                 margin-right: 7px;
             }
@@ -128,13 +130,35 @@ const Additional = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+    }
     .modify {
         display: flex;
         flex-direction: row;
         cursor: pointer;
+        :hover {
+            opacity: 0.8;
+            background-color: #E4E4E4;
+        }
+    }
+    .logout {
+        margin-left: auto;
+        width: max-content;
+        margin-top: 15px;
+    }
+    .logout-text {
+        cursor: pointer;
+        width: max-content;
+        color: #FF0000;
+        font-size: 1rem;
+        height: 1.2rem;
+        line-height: 1.2rem;
+        font-family: Spoqa Han Sans Neo;
     }
     .modify-text {
-        width: 138px;
+        width: max-content;
         height: 33px;
         text-align: center;
         font-weight: medium;
@@ -178,6 +202,13 @@ class MypageHeader extends Component {
     gotoMyModify = () => {
         window.location.href = geturl() + '/mymodify';
     }
+    SignOut = () => {
+        SetSession("opendesign_token", null)
+            .then(data => {
+                this.props.SignOutRequest();
+                window.location.href = "/";
+            });
+    }
     render() {
         console.log("MyDetail:", this.props);
 
@@ -211,7 +242,7 @@ class MypageHeader extends Component {
                                 <div className="num">{NumberFormat(countInfo.total_like)}</div>
                             </div>
                             <div className="element">
-                                <div className="icon"><IconDiv width={38} height={38} icon={iconArticle} /></div>
+                                <div className="icon"><IconDiv width={28} height={28} icon={iconArticle} /></div>
                                 <div className="num">{NumberFormat(countInfo.total_design + countInfo.total_group)}</div>
                             </div>
                         </div>
@@ -219,9 +250,17 @@ class MypageHeader extends Component {
 
                     {/* button, update, create */}
                     <Additional>
-                        <div className="modify" onClick={this.gotoMyModify}>
-                            <div className="modify-text">정보 수정하기</div>
-                            <div className="modify-icon"><IconDiv width={53} height={53} icon={iconEdit} /></div>
+                        <div className="wrapper">
+                            <a className="modify" onClick={this.gotoMyModify}>
+                                {/* <div  > */}
+                                <div className="modify-text">정보 수정하기</div>
+                                <div className="modify-icon"><IconDiv width={53} height={53} icon={iconEdit} /></div>
+                                {/* </div> */}
+                            </a>
+                            <a className="logout" onClick={this.SignOut}>
+                                <div className="logout-text">로그아웃</div>
+                                {/* <div className="logout-icon"><IconDiv width={53} height={53} icon={?} /></div> */}
+                            </a>
                         </div>
                         <div className="date">
                             <div className="update-date">최근&nbsp;업데이트&nbsp;{MyDetail && DateFormat(MyDetail.update_time)}</div>

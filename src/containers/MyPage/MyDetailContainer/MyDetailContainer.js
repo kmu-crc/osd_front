@@ -22,6 +22,7 @@ import {
   GetTheBestDesignDesignerRequest,
 
 } from "redux/modules/designer";
+import { SignOutRequest, } from "redux/modules/auth";
 
 class MyDetailContainer extends Component {
   componentWillMount() {
@@ -73,6 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
   GetLikeDesignerInDesignerRequest: (id, page, sort) => dispatch(GetLikeDesignerInDesignerRequest(id, page, sort)),
 
   GetTheBestDesignDesignerRequest: (id) => dispatch(GetTheBestDesignDesignerRequest(id)),
+  SignOutRequest: () => dispatch(SignOutRequest()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyDetailContainer)
