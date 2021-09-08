@@ -507,8 +507,17 @@ class Messages extends React.Component {
         <Peers>
           <div className="header">
             <div className="title">받은 메세지함</div>
-            <div className="plus"><PlusIcon /></div>
+            <div className="plus">
+              <PlusIcon
+                isSelectMsg={this.state.msgId == -1 ? false : true}
+                onClick={this.openMemberSearch} />
+            </div>
           </div>
+          {/* <div onClick={() => { this.setMsgId(-1, this.props.id, this.props.name) }} className="mobilelistIcon"><Icon className="unordered list" size="big" color="grey" /></div> */}
+          {this.state.memberSearch &&
+            (<SearchMemberBox ref={this.searchRef}>
+              <SearchMemberContainer inputWidth={100} marginLeft={0} id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />
+            </SearchMemberBox>)}
 
           <div className="list">
             {this.props.ChatRooms
@@ -574,7 +583,7 @@ class Messages extends React.Component {
 
       </Wrapper>
 
-    </React.Fragment>);
+    </React.Fragment >);
   }
 }
 
@@ -591,13 +600,8 @@ export default Messages;
                 <div className="header">
                   <div className="header-item fixed">
                     <div className="fitBox font_big font_bold">받은 메시지함</div>
-                    <PlusIcon isSelectMsg={this.state.msgId == -1 ? false : true} onClick={this.openMemberSearch} /></div>
-                  <div onClick={() => { this.setMsgId(-1, this.props.id, this.props.name) }} className="mobilelistIcon"><Icon className="unordered list" size="big" color="grey" /></div>
-                  {this.state.memberSearch &&
-                    (<SearchMemberBox ref={this.searchRef}>
-                      <SearchMemberContainer inputWidth={100} marginLeft={0} id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />
-                    </SearchMemberBox>)}
-                </div>
+                    <PlusIcon   /></div>
+                  
                 <div className="roomList">
                   <SummaryList id="searchRect">
                     {this.props.ChatRooms && this.props.ChatRooms.length > 0 &&
@@ -858,8 +862,8 @@ const ChatBox = styled.div`
 const SearchMemberBox = styled.div`
   width:100%;
   height:max-content;
-  position:absolute;
-  top:50px;
+  // position:absolute;
+  // top:50px;
   z-index:900;
 `;
 
