@@ -1175,7 +1175,7 @@ class CreateDesign extends Component {
                     }
                     <div className="imageLabel">
                           <label className="findThumbnailText" htmlFor="file">찾아보기</label>
-                          <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
+                          <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/jpg, image/jpeg, image/png, image/bmp"/>
                           <div className="thumbnailExplainText"> 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
                     </div>
                 </div>

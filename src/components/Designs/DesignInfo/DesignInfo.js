@@ -862,11 +862,11 @@ class DesignInfo extends Component {
                 <ChatWrapper>
                     <div className="row">
                     <div className="icon_wrap" onClick={this.openVideoChat}>
-                        <img src={new_logo_chat} className="icon"/>
+                        <img src={new_logo_msg} className="icon"/>
                         <div className="icon_label">화상회의</div>
                     </div>
                     <div className="icon_wrap" onClick={this.openChat}>
-                    <img src={new_logo_msg} className="icon"/>
+                    <img src={new_logo_chat} className="icon"/>
                     <div className="icon_label">채팅</div>
                     </div>
                     </div>

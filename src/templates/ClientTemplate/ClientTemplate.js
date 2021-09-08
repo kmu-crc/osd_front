@@ -62,6 +62,7 @@ const Close_ani = keyframes`
 `;
 const NavigationAni = styled.div`
   position:fixed;
+  height: 100%;
   z-index:902;
   animation-name: ${props=>props.sidemenu==true?Open_ani:Close_ani};
   animation-duration:1s;
@@ -198,14 +199,3 @@ class ClientTemplate extends Component {
 }
 
 export default ClientTemplate;
-
-
-// <MenuContext.Provider value={{ hidemenu, larger }}>
-//   <HeaderContainer />
-//   <ContentContainer active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
-//     <ChildrenContainer screenWidth={this.state.screenWidth}>
-//       {this.props.children}
-//     </ChildrenContainer>
-//     <Footer />
-//   </ContentContainer>
-// </MenuContext.Provider>

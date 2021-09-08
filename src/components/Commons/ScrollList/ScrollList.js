@@ -15,7 +15,7 @@ import Fade from 'react-reveal/Fade';
 // css 
 const FlexContainer = styled.div`
 // *{border: 1px solid blue;}
-  width: 103%;
+  width: 110%;
   padding: 0;
   position: relative;
   margin-left: auto;
@@ -207,6 +207,7 @@ class ScrollList extends Component {
     const { hasMore, loading, cols } = this.state;
     // console.log("onload:", this.state.page);
     return (dataListAdded && dataListAdded.length > 0 ?
+      <div style={{maxWidth:"1920px",width:"100%",minWidth:"100%"}}>
       <FlexContainer
         cols={cols}
         type={type}
@@ -239,7 +240,7 @@ class ScrollList extends Component {
           {/* <i className="material-icons">arrow_drop_down</i> */}
         </ScrollIcon>}
         {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>}
-      </FlexContainer> : null
+      </FlexContainer></div> : null
       // <NoData>{type === "design" ? "디자인이" : type === "group" ? "그룹이" : "디자이너가"} 없습니다.</NoData>)
     )
   }

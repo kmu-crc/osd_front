@@ -9,21 +9,17 @@ import NumberFormat from 'modules/NumberFormat';
 import OrderOption from "components/Commons/OrderOption";
 
 //css
-const DesignerDetailBody = styled.div`
-    font-family: Noto Sans KR;
-    padding-bottom:50px;
-    .MypageCategory{
+const Wrapper = styled.div`
+    margin-top: ${33}px;
+    margin-left: ${100 + 38}px;
+
+    // *{border: 1px solid red;}
+
+    .menu-container {
+        max-width: 1737px;
         display: flex;
-        justifyContent: space-start;
-        font-size: 20px;
-        color: #707070;
-    }
-    .selectedCate {
-        opacity: 1.0;
-    }
-    .compWrapper {
-        padding-top: 35px;
-        padding-bottom: 15px;
+        flex-direction: row;
+        justify-content: space-between;
     }
     .interested {
         font-size: ${opendesign_style.font.size.heading2};
@@ -37,24 +33,31 @@ const DesignerDetailBody = styled.div`
         padding-top: 42px;
         padding-bottom: 42px;
     }
-    .interested-first-scroll {
-        padding-top: 15px;
+    .scroll-list {
+        margin-top: 66px;
     }
 `;
-const CategoryItems = styled.div`
-    padding-left: ${props => props.paddingLeft}px;
-    padding-top: ${props => props.paddingTop}px;
-    opacity: ${props => props.opacity};
-    cursor: pointer;
-    @media only screen and (min-width: ${opendesign_style.resolutions.SmallMinWidth}px) 
-    and (max-width: ${opendesign_style.resolutions.SmallMaxWidth}px) {
-      font-size: 15px;
-      width: max-content;
-      margin: 0px;
-      padding: 13px;
-    }
-`;
+const TabMenu = styled.div`
+    display: flex;
+    justify-content: space-start;
 
+    .tab {
+        text-align: center;
+        font-weight: medium;
+        font-size: 28px;
+        line-height: 40px;
+        font-family: Spoqa Han Sans Neo;
+        letter-spacing: 0px;
+        cursor: pointer;
+        color: #000000;
+        
+        margin-left: 47px;
+    }
+    .selected { 
+        color: #7E1E9B; 
+        font-weight: 00;
+    }
+`;
 class DesignerPageBody extends Component {
     constructor(props) {
         super(props);
@@ -140,52 +143,58 @@ class DesignerPageBody extends Component {
     handleChangeOrderOps = async (order, getfunc) => {
         await this.setState({ this_order: order });
         getfunc(0);
-    }
+    };
+
     render() {
         const { Count, MyDesignInDesigner, MyDesignInDesignerAdded, GroupInDesigner, GroupInDesignerAdded, RelatedGroupInDesigner, RelatedGroupInDesignerAdded,
             LikeInDesigner, LikeInDesignerAdded, LikeGroupInDesigner, LikeGroupInDesignerAdded, LikeDesignerInDesigner, LikeDesignerInDesignerAdded } = this.props;
         const { reload, this_order } = this.state;
-        return (
-            <DesignerDetailBody>
-                <div className="MypageCategory">
-                    <CategoryItems paddingTop={42} paddingLeft={42} opacity={this.state.cateIndex === 0 ? "1.0" : "0.5"} onClick={() => this.changeCategory(0)}>그룹({NumberFormat(Count.total_group || 0)})</CategoryItems>
-                    <CategoryItems paddingTop={42} paddingLeft={42} opacity={this.state.cateIndex === 1 ? "1.0" : "0.5"} onClick={() => this.changeCategory(1)}>참여그룹({NumberFormat(Count.joined_group || 0)})</CategoryItems>
-                    <CategoryItems paddingTop={42} paddingLeft={42} opacity={this.state.cateIndex === 2 ? "1.0" : "0.5"} onClick={() => this.changeCategory(2)}>디자인({NumberFormat((Count.total_design || 0) + (Count.joined_design || 0))})</CategoryItems>
-                    <CategoryItems paddingTop={42} paddingLeft={42} opacity={this.state.cateIndex === 3 ? "1.0" : "0.5"} onClick={() => this.changeCategory(3)}>관심항목({NumberFormat(Count.total_favorite || 0)})</CategoryItems>
-                </div>
+
+        return (<Wrapper>
+
+            <div className="menu-container">
+                <TabMenu>
+                    {/* Count.total_group Count.joined_group Count.total_design + Count.joined_design Count.total_favorite */}
+                    <a onClick={() => this.changeCategory(0)}><div className={`tab ${this.state.cateIndex === 0 ? "selected" : ""}`}>그룹</div></a>
+                    <a onClick={() => this.changeCategory(1)}><div className={`tab ${this.state.cateIndex === 1 ? "selected" : ""}`}>참여그룹</div></a>
+                    <a onClick={() => this.changeCategory(2)}><div className={`tab ${this.state.cateIndex === 2 ? "selected" : ""}`}>디자인</div></a>
+                    <a onClick={() => this.changeCategory(3)}><div className={`tab ${this.state.cateIndex === 3 ? "selected" : ""}`}>관심항목</div></a>
+                </TabMenu>
+
+                {this.state.cateIndex === 0 && <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getMyGroupListRequest)} selected={this_order} />}
+                {this.state.cateIndex === 1 && <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getRelatedGroupInDesignerRequest)} selected={this_order} />}
+                {this.state.cateIndex === 2 && <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getMyDesignListRequest)} selected={this_order} />}
+
+            </div>
+
+            <div className="scroll-list">
 
                 {this.state.cateIndex === 0 &&
-                    <div className="compWrapper" >
-                        {this.props.status === "INIT" ? <Loading /> :
-                            <div>
-                                <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getGroupInDesignerRequest)} selected={this_order} />
-                                <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload} type="group"
-                                    dataList={GroupInDesigner} dataListAdded={GroupInDesignerAdded} getListRequest={this.getGroupInDesignerRequest} />
-                            </div>}
+                    <div>
+                        {this.props.status === "INIT"
+                            ? <Loading />
+                            : <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload} type="group" dataList={GroupInDesigner} dataListAdded={GroupInDesignerAdded} getListRequest={this.getGroupInDesignerRequest} />
+                        }
                     </div>}
 
                 {this.state.cateIndex === 1 &&
-                    <div className="compWrapper" >
-                        {this.props.status === "INIT" ? <Loading /> :
-                            <div>
-                                <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getRelatedGroupInDesignerRequest)} selected={this_order} />
-                                <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload} type="group"
-                                    dataList={RelatedGroupInDesigner} dataListAdded={RelatedGroupInDesignerAdded} getListRequest={this.getRelatedGroupInDesignerRequest} />
-                            </div>}
+                    <div>
+                        {this.props.status === "INIT"
+                            ? <Loading />
+                            : <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload} type="group" dataList={RelatedGroupInDesigner} dataListAdded={RelatedGroupInDesignerAdded} getListRequest={this.getRelatedGroupInDesignerRequest} />
+                        }
                     </div>}
 
                 {this.state.cateIndex === 2 &&
-                    <div className="compWrapper" >
-                        {this.props.status === "INIT" ? <Loading /> :
-                            <div>
-                                <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getMyDesignInDesignerRequest)} selected={this_order} />
-                                <ScrollList {...opendesign_style.design_margin} handleReload={this.handleReload} reloader={reload} type="design"
-                                    dataList={MyDesignInDesigner} dataListAdded={MyDesignInDesignerAdded} getListRequest={this.getMyDesignInDesignerRequest} />
-                            </div>}
+                    <div>
+                        {this.props.status === "INIT"
+                            ? <Loading />
+                            : <ScrollList {...opendesign_style.design_margin} handleReload={this.handleReload} reloader={reload} type="design" dataList={MyDesignInDesigner} dataListAdded={MyDesignInDesignerAdded} getListRequest={this.getMyDesignInDesignerRequest} />
+                        }
                     </div>}
 
                 {this.state.cateIndex === 3 &&
-                    <div className="compWrapper">
+                    <div>
                         <div className="interested first">관심있는 그룹({NumberFormat(Count.like_group)})</div>
                         {this.props.status === "INIT" ?
                             <Loading /> :
@@ -206,12 +215,11 @@ class DesignerPageBody extends Component {
                             <ScrollList {...opendesign_style.designer_margin} handleReload={this.handleReload} reloader={reload}
                                 manual type="designer" dataList={LikeDesignerInDesigner} dataListAdded={LikeDesignerInDesignerAdded} getListRequest={this.getLikeDesignerInDesignerRequest} />
                         }
+                    </div>}
 
-                    </div>
-                }
-            </DesignerDetailBody >
-        )
-    }
-}
+            </div>
+        </Wrapper >);
+    };
+};
 
 export default DesignerPageBody;

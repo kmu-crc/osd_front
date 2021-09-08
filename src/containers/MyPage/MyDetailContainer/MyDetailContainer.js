@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-// import MypageHeader from 'components/MypageHeader';
+import MypageHeader from 'components/MypageHeader';
 import MypageBody from 'components/MypageBody';
 import {
   GetMyDetailRequest,
@@ -22,6 +22,7 @@ import {
   GetTheBestDesignDesignerRequest,
 
 } from "redux/modules/designer";
+import { SignOutRequest, } from "redux/modules/auth";
 
 class MyDetailContainer extends Component {
   componentWillMount() {
@@ -32,7 +33,7 @@ class MyDetailContainer extends Component {
   render() {
     return (
       <React.Fragment>
-        {/* <MypageHeader {...this.props} /> */}
+        <MypageHeader {...this.props} />
         <MypageBody {...this.props} id={this.props.userInfo.uid} />
       </React.Fragment>
     )
@@ -73,6 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
   GetLikeDesignerInDesignerRequest: (id, page, sort) => dispatch(GetLikeDesignerInDesignerRequest(id, page, sort)),
 
   GetTheBestDesignDesignerRequest: (id) => dispatch(GetTheBestDesignDesignerRequest(id)),
+  SignOutRequest: () => dispatch(SignOutRequest()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyDetailContainer)

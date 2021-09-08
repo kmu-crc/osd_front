@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import UserDetailForm from "components/Registration/UserDetailFrom";
+// import UserDetailForm from "components/Registration/UserDetailFrom";
 import { InsertUserDetailRequest, GetMyDetailRequest, UpdateUserDetailRequest } from "redux/modules/personal"
 import { GetCategoryAllRequest } from "redux/modules/category"
-
+import ModifyMyDetail from "components/Users/ModifyMyDetail"
 class UpdateUserInfoContainer extends Component {
 
   componentDidMount() {
@@ -14,7 +14,8 @@ class UpdateUserInfoContainer extends Component {
   render() {
     //console.log("this.props:upaderUserIfno", this.props)
     return (
-      <UserDetailForm {...this.props} />
+      <ModifyMyDetail {...this.props} />
+      // <UserDetailForm {...this.props} />
     );
   }
 }

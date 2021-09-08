@@ -427,7 +427,6 @@ class Group extends Component {
   }
 }
 export default Group
-
   
   // import React, { Component } from 'react';
   // import noimg from "source/noimg.png";
