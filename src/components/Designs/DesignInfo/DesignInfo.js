@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import thumbup from "source/thumbup.png";
-import email from "source/email.png";
+import thumbup from "source/thumbup_icon_black.png";
+import email from "source/email_black.png";
 import iEdit from "source/edit.png";
 import forked from "source/forked.svg";
 import noimg from "source/noimg.png";
@@ -64,6 +64,9 @@ align-items:flex-end;
   width:66px;
   height:66px;
   object-fit:contain;
+}
+.icon_black{
+    filter: invert(100%);
 }
 .icon_label{
   font-size:17px;
@@ -839,7 +842,7 @@ class DesignInfo extends Component {
                                 <div className="button_wrap">
                                     {isMyDesign==true?
                                     null:
-                                    <div className="button_wrap pointer" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>메시지 보내기<img src={email} className="icon"/></div>
+                                    <div className="button_wrap pointer" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>메시지 보내기<img src={email}  className="icon icon_black"/></div>
                                     }
                                 </div>
                                 <div className="button_wrap">

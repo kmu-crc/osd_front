@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import noface from "source/thumbnail.png";
 import iForked from "source/baseline_library_books_black_48dp.png";
 import iThumbUp from "source/thumbup_icon_black.png"
-import iMessage from 'source/email.png';
+import iMessage from 'source/email_black.png';
 import IconView from "source/IconView";
 import iEdit from 'source/edit_1.png';
 import DateFormat from 'modules/DateFormat';
