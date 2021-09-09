@@ -72,33 +72,24 @@ const NavigationAni = styled.div`
 `
 const Client = styled.div`
   position:absolute;
-  width:100%;
   top: 0px;
   bottom: 0px;
+  width:100%;
   display:flex;
   justify-content:center;
+
   overflow-y: overlay;
   overflow-x: overlay;
-  &.hidemenu {
-    top: 0px;
-  }
   .wrap_children{
     max-width:1920px;
+    // min-width:1000px;
     width:100%;
+
   }
-  // .wrap_children{
-  //   max-width:${window.location.pathname=="/"?"100%":"1920px"};
-  //   width:100%;
-  // }
-  // @media only screen and (min-width : 1920px) {
-  // }
-  //  @media only screen and (min-width : 500px) and (max-width:1920px) {
-     
-  //   width:100%;
-  //   .wrap_children{
-  //     max-width:100%;
-  //   }
-  //  }
+`
+const Wrapper = styled.div`
+  width:100%;
+  overflow-x:scroll;
 `
 class ClientTemplate extends Component {
   constructor(props){
@@ -171,7 +162,8 @@ class ClientTemplate extends Component {
     console.log(this.props);
     return (
       <React.Fragment>
-        
+        <Wrapper>
+        <div style={{width:"100%",minWidth:"1000px"}}>
         {
           this.state.login == true?
           <SignInContainer onCloseLogin={()=>this.setState({login:null})} loginOpen={this.state.login}/>
@@ -193,6 +185,8 @@ class ClientTemplate extends Component {
           </div>
         </Client>
         <Footer/>
+        </div>
+        </Wrapper>
       </React.Fragment>
     )
   }

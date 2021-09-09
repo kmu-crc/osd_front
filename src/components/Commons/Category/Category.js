@@ -5,23 +5,30 @@ import opendesign_style from "opendesign_style"
 
 const Container = styled.div`
     display:flex;
+    flex-wrap:wrap;
     width:100%;
+    padding-right:30px;
     .category{
 
     }
     .main_category{
         width:100%;
         display:flex;
+        flex-wrap:wrap;
     }
     .sub_category{
-        width:max-content;
+        width:100%;
+        max-width:max-content;
         margin-top:9px;
         display:flex;
-        height:41px;
+        flex-wrap:wrap;
+        min-height:41px;
+        height:max-content;
         padding:6px 26px 7px 26px;
         border:1px solid #eaeaea;
         background-color:white;
         box-shadow: 8px 8px 8px #4141411A;
+        margin-right:30px;
     }
     .selected{
         color:red;

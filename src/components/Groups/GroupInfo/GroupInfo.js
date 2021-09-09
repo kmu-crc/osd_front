@@ -5,7 +5,7 @@ import iEdit from "source/edit.png"
 import iForked from "source/baseline_library_books_black_48dp.png"
 import iThumbUp from "source/thumbup_icon_black.png"
 import iINOUT from "source/inout.svg"
-import thumbup from "source/baseline_thumb_up_black_48dp_2x.png"
+import thumbup from "source/thumbup_icon_black.png"
 import noimg from "source/noimg.png";
 import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";
@@ -60,6 +60,7 @@ const GroupSummary = styled.div`
     }
     .ButtonItem{
         display:flex;
+        align-items:flex-end;
         justify-content:flex-end;
         font-size:15px;
         font-family:Spoqa Han Sans Neo;

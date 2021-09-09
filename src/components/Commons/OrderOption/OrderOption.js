@@ -8,6 +8,7 @@ const OrderWrapper = styled.div`
     align-items:center;
     justify-content:flex-end;
     font-family: Noto Sans KR;
+    flex-wrap:wrap;
 `
 const OrderElement = styled.div`
     width:128px;

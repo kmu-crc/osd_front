@@ -272,7 +272,6 @@ export default class Main extends Component {
   }
   render() {
     const { heroSize } = this.state;
-    console.log(this.props);
     return (
       <React.Fragment>
       <Wrapper>
@@ -306,9 +305,18 @@ export default class Main extends Component {
       </Wrapper>
       <MainList>
       <div className="list_wrap">
+      {
+        this.props&&this.props.userInfo == null? null:
+        <React.Fragment>
+           <Fade cascade>
+          <ScrollListContainer><MainMyDesignListContainer /></ScrollListContainer> 
+          <ScrollListContainer><MainMyGroupListContainer /></ScrollListContainer>
+          </Fade>
+        </React.Fragment>
+      }
       <Fade cascade>
-      <ScrollListContainer><MainMyDesignListContainer /></ScrollListContainer> 
-      <ScrollListContainer><MainMyGroupListContainer /></ScrollListContainer>
+
+
       {/* {this.props.userInfo != null
           ? <ScrollListContainer><MainMyDesignListContainer /></ScrollListContainer> : null}
 
