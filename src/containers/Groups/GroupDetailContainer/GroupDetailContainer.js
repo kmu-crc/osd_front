@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import GroupDetail from "components/Groups/GroupDetail";
 import {
   DesignInGroupClear, GroupInGroupClear,
   GetGroupDetailRequest, GetGroupCountRequest,
@@ -9,30 +10,9 @@ import {
   GetTotalCountGroupInGroupRequest,
   GetWaitingDesignRequest,
   GetWaitingGroupRequest,
-
   //  // group-notice w/o redux 
   // GetLastestGroupNoticeRequest,
 } from "redux/modules/group";
-import GroupDetail from "components/Groups/GroupDetail";
-import Category from "components/Commons/Category"
-import styled from "styled-components";
-
-const Wrapper = styled.div`
-  display:flex;
-  margin-top:90px;
-  margin-left:100px;
-  .content{
-    width:100%;
-    padding:27px 41px 38px 27px;
-  }
-  .scroll_wrapper{
-    overflow-y:scroll;
-  }
-  .orderBox{
-    width:100%;
-    padding-right:85px;
-  }
-`
 
 class GroupDetailContainer extends Component {
   componentWillMount() {
@@ -41,17 +21,9 @@ class GroupDetailContainer extends Component {
 
   }
   render() {
-    return (
-      <React.Fragment>
-        <Wrapper>
-          <div className="content">
-          <GroupDetail
-            {...this.props}
-            getCountGroup={GetTotalCountGroupInGroupRequest} />
-          </div>
-        </Wrapper>
-      </React.Fragment>
-    )
+    return (<GroupDetail
+      {...this.props}
+      getCountGroup={GetTotalCountGroupInGroupRequest} />)
   }
 }
 

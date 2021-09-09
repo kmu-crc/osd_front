@@ -456,7 +456,7 @@ export default Designer
 //     width:180px;
 //     height:36px;
 //     font-size:24px;
-//     font-family:SpoqaHanSans;
+//     font-family:Spoqa Han Sans;
 //     font-weight:Bold;
 //     color:#000000;
 //     display:flex;
@@ -467,7 +467,7 @@ export default Designer
 //     align-items:center;
 //     height:28px;
 //     font-size:19ox;
-//     font-family:SpoqaHanSans;
+//     font-family:Spoqa Han Sans;
 //     color:red;
 //   }
 //   .spaceBetween{
@@ -478,12 +478,12 @@ export default Designer
 //   .marginTop{margin-top:12px;}  
 //   .item_count{
 //     font-size:12px;
-//     font-family:SpoqaHanSans;
+//     font-family:Spoqa Han Sans;
 //     color:#454545;
 //   }
 //   .like_count{
 //     font-size:12px;
-//     font-family:SpoqaHanSans;
+//     font-family:Spoqa Han Sans;
 //     font-weight:400;
 //     color:#454545;
 //   }
@@ -503,7 +503,7 @@ export default Designer
 //         text-align:left;
 //         font-size:21px;
 //         margin-right:20px;
-//         font-family:SpoqaHanSans;
+//         font-family:Spoqa Han Sans;
 //         font-weight:Regular;
 //         text-align:right;
 //       }

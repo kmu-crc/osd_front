@@ -120,7 +120,7 @@ const Banner= styled.div`
   .banner_button2{
     border: 1px solid #FFFFFF;
     font-size:25px;
-    font-family:SpoqaHanSans,Lignt;
+    font-family:Spoqa Han Sans,Lignt;
     color:white;
     width:232px;
     height:55px;

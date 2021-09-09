@@ -94,14 +94,14 @@ const Designer_card = styled.div`
     width:180px;
     height:27px;
     font-size:18px;
-    font-family:SpoqaHanSans;
+    font-family:Spoqa Han Sans;
     font-weight:bold;
     font-weight:500;
     color:#000000;
   }
   .category_name{
     font-size:10px;
-    font-family:SpoqaHanSans;
+    font-family:Spoqa Han Sans;
     color:#777777;
   }
   .spaceBetween{
@@ -112,12 +112,12 @@ const Designer_card = styled.div`
   .marginTop{margin-top:12px;}  
   .item_count{
     font-size:12px;
-    font-family:SpoqaHanSans;
+    font-family:Spoqa Han Sans;
     color:#454545;
   }
   .like_count{
     font-size:12px;
-    font-family:SpoqaHanSans;
+    font-family:Spoqa Han Sans;
     font-weight:400;
     color:#454545;
   }
@@ -137,7 +137,7 @@ const Designer_card = styled.div`
         text-align:left;
         font-size:16px;
         margin-right:20px;
-        font-family:SpoqaHanSans;
+        font-family:Spoqa Han Sans;
         font-weight:Regular;
         text-align:right;
       }

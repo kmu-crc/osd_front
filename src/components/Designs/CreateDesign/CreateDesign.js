@@ -124,7 +124,7 @@ const IsProblemBox = styled.div`
   justify-content:flex-start;
   align-items:flex-start;
   font-size: 22px;
-  font-family: SpoqaHanSans;
+  font-family: Spoqa Han Sans;
   height:45px;
 
   .textLabel {
@@ -284,7 +284,7 @@ const Wrapper = styled.div`
     color: #707070;
     font-size: 22px;
     font-weight: 300;
-    font-family: SpoqaHanSans;
+    font-family: Spoqa Han Sans;
    .textLabel {
     margin-left: 35px;
     vertical-align: top;
@@ -314,7 +314,7 @@ const Wrapper = styled.div`
     }
     .thumbnailExplainText{
       font-size:22px;
-      font-family:SpoqaHanSans;
+      font-family:Spoqa Han Sans;
       font-weight:Regular;
       color:#707070;
       margin-top:15px;
@@ -361,7 +361,7 @@ const QuestionGuide = styled.div`
   color:white;
   font-size: 30px;
   font-weight: 800;
-  font-family: SpoqaHanSans;
+  font-family: Spoqa Han Sans;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -480,7 +480,7 @@ const InputTextArea = styled.textarea`
 const CategoryDropDown = styled(Dropdown)`
   max-width:309px;
   height:41px !important;     
-  font-family:SpoqaHanSans,Regular;
+  font-family:Spoqa Han Sans,Regular;
   font-size:22px;
   background-color:#8E8E8E !important;
   margin-right:68px;

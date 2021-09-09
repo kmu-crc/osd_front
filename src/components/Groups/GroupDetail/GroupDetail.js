@@ -15,6 +15,28 @@ import OrderOption from "components/Commons/OrderOption";
 import osdstyle from "opendesign_style";
 import NumberFormat from "modules/NumberFormat";
 
+import Category from "components/Commons/Category";
+
+const Wrapper = styled.div`
+  display:flex;
+  // margin-top: 90px;
+  // margin-left: 100px;
+  margin-top: 24px;
+  margin-left: 38px;
+  margin-right: 38px;
+
+  .content{
+    // width:100%;
+    // padding:27px 41px 38px 27px;
+  }
+  .scroll_wrapper{
+    overflow-y:scroll;
+  }
+  .orderBox{
+    width:100%;
+    padding-right:85px;
+  }
+`;
 const Tabs = styled.div`
   max-width:1740px;
   width:100%;
@@ -26,7 +48,7 @@ const Tabs = styled.div`
   .menu{
     display:flex;
   }
-`
+`;
 const Tab = styled.div`
   font-family: Spoqa Han Sans Neo;
   font-weight: 500;
@@ -58,10 +80,10 @@ const OrderBox = styled.div`
   max-width:1466px;
   width:100%;
   border:1px solid black;
-`
+`;
 const ScrollWrapper = styled.div`
   width:100%;
-  `
+`;
 class GroupDetail extends Component {
   constructor(props) {
     super(props);
@@ -133,47 +155,57 @@ class GroupDetail extends Component {
     const { status, GroupDetail, DesignList, DesignListAdded, GroupList, GroupListAdded, Count } = this.props;
     const { currentTab, manager, reload, this_order } = this.state
     return (<React.Fragment>
-      {this.state.loading ?<Loading />:null}
-      <GroupInfo handleSwitchMode={this.switchMode} {...this.props} loading={(status)=>this.setState({loading:status})}/>
-      {manager ?
-        <div style={{ marginTop: "32px" }}>
-          <WaitingGroupContainer id={this.props.id} sort={this.props.sort} />
-          <WaitingDesignContainer id={this.props.id} sort={this.props.sort} />
-          <EditDesignListContainer id={this.props.id} sort={this.props.sort} />
-          <EditGroupListContainer id={this.props.id} sort={this.props.sort} />
-        </div>
-        :
-        <React.Fragment>
-          <Tabs>
-            <div className="menu">
-            <Tab onClick={() => this.switchTab("group")}  className={currentTab === "group" ? "selected" : ""}>그룹({NumberFormat(Count.group)})</Tab>
-            <Tab onClick={() => this.switchTab("design")} className={currentTab === "design" ? "selected" : ""}>디자인({NumberFormat(Count.design)})</Tab>
-            </div>
-            <OrderOption style={{ width:"240px",height:"41px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getGroupList)} selected={this_order} />
-          </Tabs>
-          <ScrollWrapper>
-          {(GroupDetail && currentTab === "group") ?
-            <React.Fragment>
-              {status === "INIT" ? <Loading /> :
-                <React.Fragment>
-                  <ScrollList {...osdstyle.group_margin} handleReload={this.handleReload} reloader={reload} type="group" dataList={GroupList} dataListAdded={GroupListAdded} getListRequest={this.getGroupList} />
-                </React.Fragment>}
-            </React.Fragment> : null
-          }
 
-          {(GroupDetail && currentTab === "design") ?
+      {this.state.loading ? <Loading /> : null}
+
+      <Wrapper>
+        <div className="content">
+          {/* <GroupDetail */}
+          {/* {...this.props} */}
+          {/* getCountGroup={GetTotalCountGroupInGroupRequest} /> */}
+          <GroupInfo handleSwitchMode={this.switchMode} {...this.props} loading={(status) => this.setState({ loading: status })} />
+
+          {/* {manager ?
+            <div style={{ marginTop: "32px" }}>
+              <WaitingGroupContainer id={this.props.id} sort={this.props.sort} />
+              <WaitingDesignContainer id={this.props.id} sort={this.props.sort} />
+              <EditDesignListContainer id={this.props.id} sort={this.props.sort} />
+              <EditGroupListContainer id={this.props.id} sort={this.props.sort} />
+            </div>
+            :
             <React.Fragment>
-              {status === "INIT" ? <Loading /> :
-                <React.Fragment>
-                  <ScrollList {...osdstyle.design_margin} handleReload={this.handleReload} reloader={reload} type="design" dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />
-                </React.Fragment>}
-            </React.Fragment> : null
-          }
-          </ScrollWrapper>
-        </React.Fragment>}
-      <BlankDiv />
-    </React.Fragment>)
+              <Tabs>
+                <div className="menu">
+                  <Tab onClick={() => this.switchTab("group")} className={currentTab === "group" ? "selected" : ""}>그룹({NumberFormat(Count.group)})</Tab>
+                  <Tab onClick={() => this.switchTab("design")} className={currentTab === "design" ? "selected" : ""}>디자인({NumberFormat(Count.design)})</Tab>
+                </div>
+                <OrderOption style={{ width: "240px", height: "41px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getGroupList)} selected={this_order} />
+              </Tabs>
+              <ScrollWrapper>
+                {(GroupDetail && currentTab === "group") ?
+                  <React.Fragment>
+                    {status === "INIT" ? <Loading /> :
+                      <React.Fragment>
+                        <ScrollList {...osdstyle.group_margin} handleReload={this.handleReload} reloader={reload} type="group" dataList={GroupList} dataListAdded={GroupListAdded} getListRequest={this.getGroupList} />
+                      </React.Fragment>}
+                  </React.Fragment> : null
+                }
+
+                {(GroupDetail && currentTab === "design") ?
+                  <React.Fragment>
+                    {status === "INIT" ? <Loading /> :
+                      <React.Fragment>
+                        <ScrollList {...osdstyle.design_margin} handleReload={this.handleReload} reloader={reload} type="design" dataList={DesignList} dataListAdded={DesignListAdded} getListRequest={this.getDesignList} />
+                      </React.Fragment>}
+                  </React.Fragment> : null
+                }
+              </ScrollWrapper>
+            </React.Fragment>}
+          <BlankDiv /> */}
+        </div>
+      </Wrapper>
+    </React.Fragment>);
   }
 }
 
-export default GroupDetail
+export default GroupDetail;

@@ -141,7 +141,7 @@ const DesignHeader = styled.div`
             max-width:40px;
             margin-left:8px;
             margin-right:16px;
-            font-family:SpoqaHanSans;
+            font-family:Spoqa Han Sans;
             font-size:19px;
             font-weight:400;
         }
