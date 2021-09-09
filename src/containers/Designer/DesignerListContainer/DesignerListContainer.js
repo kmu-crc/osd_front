@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import opendesign_style from 'opendesign_style';
 
 const Wrapper = styled.div`
-  margin-left:100px;
+  // margin-left:100px;
   margin-top:90px;
   .category_wrapper{
     padding-left:41px;

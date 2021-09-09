@@ -25,6 +25,12 @@ import new_logo_share from "source/new_logo_share.svg";
 import new_logo_plus from "source/new_logo_plus.png"
 import osdcss from "opendesign_style";
 
+const Section = styled.div`
+  display:${props=>props.isNone==true?props.isLast==null?"flex":"block":"none"};
+  @media only screen and (min-width : 500px) and (max-width:1700px) {
+    display:${props=>props.isNone==true?props.isLast==null?"block":"block":"none"};;
+  }
+`
 const LoadingBox = styled.div`
   padding-top: 200px;
   .IconBox {
@@ -212,11 +218,10 @@ const IsProblemBox = styled.div`
 `
 const Wrapper = styled.div`
   width:100%;
-  height:100%;
-  padding:90px 0px 90px 100px;
+  padding:90px 50px 0px 100px;
   display:flex;
   margin-bottom:150px;
-
+  // flex-wrap:wrap;
   .maxFlex{
     display:flex;
     width:100%;
@@ -224,6 +229,7 @@ const Wrapper = styled.div`
   }
   .category_wrapper{
     display:flex;
+    flex-wrap:wrap;
     max-width:1200px;
     width:100%;
   }
@@ -245,6 +251,7 @@ const Wrapper = styled.div`
     align-items:center;
 
     .navi_header{
+      min-width:max-content;
       width:187px;
       height:40px;
       margin-bottom:32px;
@@ -254,6 +261,7 @@ const Wrapper = styled.div`
       text-align:center;
     }
     .navi_label{
+      min-width:max-content;
       width:187px;
       min-height:84px;
       display:flex;
@@ -266,6 +274,7 @@ const Wrapper = styled.div`
     .red{color:red;}
     .black{color:black;}
     .select{color:#1262AB;}
+    .delete{margin-top:531px;}
     .borderBottom{border-bottom:2px solid #707070;}
   }
   .vLine{
@@ -297,9 +306,10 @@ const Wrapper = styled.div`
   }
   .board{
     max-width:1248px;
+    min-width:1000px;
     width:100%;
     height:max-content;
-    padding:56px 72px;
+    padding:56px 72px 0px 72px;
     .board_label{
       width:max-content;
       min-width:195px;
@@ -331,6 +341,7 @@ const Wrapper = styled.div`
     }
   }
   .grid_wrapper{
+    min-width:1000px;
     width:100%;
     max-width:1566px;
     padding-left:50px;
@@ -340,7 +351,6 @@ const Wrapper = styled.div`
       display:flex;
       justify-content:flex-end;
       width:100%;
-      padding-bottom:100px;
       .button{cursor:pointer;width:86px;height:49px;display:flex;justify-content:center;align-items:center;color:white;font-size:28px;font-family:Spoqa Han Sans Neo;}
       .grey{background-color:#8D8D8D;}
       .red{background-color:red;}
@@ -424,26 +434,92 @@ const Wrapper = styled.div`
     justify-content:space-between !important;
     border-radius:0px !important;
   }
+  .messageBubble{
+    width:100%;
+    display:none;
+    .quest{
+      min-width:20px;
+      min-height:20px;
+      max-width:20px;
+      max-height:20px;
+      font-size:15px;
+      font-family:Noto Sans KR;
+      font-weight:400;
+      border-radius:50%;
+      background-color:red;
+      color:white;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+  }
+  @media only screen and (min-width : 500px) and (max-width:1700px) {
+    display:flex;
+    flex-direction:column;
+    .vLine{
+      width:100%;
+      min-width:1000px;
+      margin:0;
+      height:0px;
+      border-bottom:1px solid #CCCCCC;
+      margin-top:10px;
 
+    }
+    .navi_menu{
+      width:100%;
+      min-width:1000px;
+      height:max-content;
+      padding:0px;
+      display:flex;
+      flex-direction:row;
+      align-items:center;
+      justify-content:center;
+      flex-wrap:wrap;
+      .navi_header{
+        width:100%;
+        margin-bottom:0px;
+      }
+      .navi_label{
+        min-height:40px;
+      }
+      .borderBottom{border:none;}
+      .delete{margin:0;margin-left:50px;}
+    }
+    .messageBubble{
+      display:flex;
+    }
+  }
 
 `
 
 const ContentWrapper = styled.div`
   max-width:1566px;
   width:100%;
-  display:flex;
+  
+  // display:flex;
+  padding-bottom:100px;
   .formWrap{
     max-width:1248px;
     width:100%;
   }
   .buttonWrap{
+    min-height:920px;
     display:flex;
     justify-content:flex-end;
+    align-items:flex-end;
     width:250px;
-    padding-top:875px;
     .button{cursor:pointer;width:86px;height:49px;display:flex;justify-content:center;align-items:center;color:white;font-size:28px;font-family:Spoqa Han Sans Neo;}
     .grey{background-color:#8D8D8D;}
     .red{background-color:red;}
+  }
+  @media only screen and (min-width : 500px) and (max-width:1700px) {
+    .buttonWrap{
+      width:100%;
+      min-width:1000px;
+      height:max-content;
+      min-height:max-content;
+      margin-top:30px;
+    }
   }
 `
 const QuestionGuide = styled.div`
@@ -471,9 +547,6 @@ const QuestionGuide = styled.div`
     font-weight:400;
     padding:10px;
     position:absolute;
-
-    // left:15px;
-    // top:-50px;
     left:${props=>props.left}px;
     top:${props=>props.top}px;
 
@@ -481,11 +554,12 @@ const QuestionGuide = styled.div`
 
     display:block;
   }
-  // &:hover{
-  //   .messageBubble{
-  //     display:block;
-  //   }
-  // }
+  @media only screen and (min-width : 500px) and (max-width:1700px) {
+    display:none;
+    .messageBubble{
+      display:none;
+    }
+  }
 `
 const DesignCard = styled.div`
   *{
@@ -1092,12 +1166,11 @@ class ModifyDesign extends Component {
                 onClick={() => this.gotoStep(scrollmenu[1])}>{scrollmenu[1].txt}</div>
             <div className={`navi_label ${this.state.step==2?"select":"black"}`} 
                 onClick={() => this.gotoStep(scrollmenu[2])}>{scrollmenu[2].txt}</div>
-            <div onClick={this.deleteDesign} className="navi_label red" style={{marginTop:"531px"}}>디자인 삭제하기</div>
+            <div onClick={this.deleteDesign} className="navi_label red delete" >디자인 삭제하기</div>
           </div>
           <div className="vLine"/>
           <ContentWrapper>
-            {
-              this.state.step==0&&
+          <Section isNone={ step === 0 } >
               <React.Fragment>
                 <div className="board">
                   <div className="board_label">1. 대표 이미지 등록하기<sub className="sub marginRight2">*</sub>
@@ -1151,10 +1224,8 @@ class ModifyDesign extends Component {
                   </CustomButton>
                   </div>}
               </React.Fragment>
-            }
-            {
-            this.state.step==1&&
-            <React.Fragment>
+            </Section>
+            <Section isNone={ step === 1} >
                <div className="board" >
               <div className="maxFlex">
                <div className="board_label">1. 카테고리<sub className="sub marginRight1" >*</sub></div>
@@ -1211,6 +1282,15 @@ class ModifyDesign extends Component {
                     </div>
                   </QuestionGuide>
                 </div>
+                <div className="messageBubble">
+                  <div className="board_label"/>
+                  <div className="quest">?</div>
+                  <div className="board_box">
+                            함께 디자인을 만들어 갈 멤버를 초대해 주세요. <br/>
+                            초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br/> 
+                            디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.    
+                  </div>                    
+                </div>
                 <InviteMemberListBox>
                   <div className="memberList">
                     {this.state.members && this.state.members.length > 0 ?
@@ -1219,7 +1299,7 @@ class ModifyDesign extends Component {
                         
                         return (
                           <div onClick={() => this.removeMember(item.user_id)} key={index}>
-                            <Peer s_img={item.thumbnail&&item.thumbnail.s_img == null ? noface : item.thumbnail.s_img} nick_name={item.nick_name} />
+                            <Peer s_img={item&&item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
                           </div>
                         )
                       }) : null}</div>
@@ -1254,11 +1334,8 @@ class ModifyDesign extends Component {
                 </CustomButton>
                 </div>}
 
-            </React.Fragment>
-          }
-          {
-            this.state.step==2&&
-            <React.Fragment>
+          </Section>
+          <Section isNone={ step === 2 } isLast={true}>
               <div className="grid_wrapper">
                 <div className="board_Grid">
                   {this.state.grid ?
@@ -1286,8 +1363,7 @@ class ModifyDesign extends Component {
                   </CustomButton>
                 </div>}
                 </div>
-            </React.Fragment>
-          }
+            </Section>
           </ContentWrapper>
           </Wrapper>
       </React.Fragment>)

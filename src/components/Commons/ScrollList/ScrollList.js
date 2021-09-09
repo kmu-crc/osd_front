@@ -14,34 +14,31 @@ import Fade from 'react-reveal/Fade';
 // }
 // css 
 const FlexContainer = styled.div`
-// *{border: 1px solid blue;}
-  width: 110%;
-  padding: 0;
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  // @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
-  //   width: 330px;
-  // }
-  // @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
-  //   margin-left: ${props => props.type === "design" ? 100 : props.type === "group" ? 215 : 67}px;
-  //   width: ${osdcss.resolutions.MediumMaxWidth}px;
-  // }
-  // @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {
-  //   margin-left: ${props => props.type === "design" ? 9 : props.type === "group" ? 11 : 12}px;
-  //   width: ${osdcss.resolutions.LargeMaxWidth}px;
-  // }
-  // @media only screen and (min-width : ${osdcss.resolutions.LargeMaxWidth}px) {
-  //   margin-left: ${props => props.type === "design" ? 9 : props.type === "group" ? 11 : 12}px;
-  //   width: ${osdcss.resolutions.LargeMaxWidth}px;
-  // }
-  //   @media only screen and (min-width : 780px) and (max-width:1440px) {
-  //     overflow-x: overlay;
-  //   }
-  //   @media only screen and (min-width : 360px) and (max-width:780px) {
-  //     overflow-x: overlay;
-  //   }
-
+padding: 0;
+position: relative;
+margin-left: auto;
+margin-right: auto;
+// @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
+//   width: 330px;
+// }
+// @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
+//   margin-left: ${props => props.type === "design" ? 100 : props.type === "group" ? 215 : 67}px;
+//   width: ${osdcss.resolutions.MediumMaxWidth}px;
+// }
+// @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {
+//   margin-left: ${props => props.type === "design" ? 9 : props.type === "group" ? 11 : 12}px;
+//   width: ${osdcss.resolutions.LargeMaxWidth}px;
+// }
+// @media only screen and (min-width : ${osdcss.resolutions.LargeMaxWidth}px) {
+//   margin-left: ${props => props.type === "design" ? 9 : props.type === "group" ? 11 : 12}px;
+//   width: ${osdcss.resolutions.LargeMaxWidth}px;
+// }
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//     overflow-x: overlay;
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//     overflow-x: overlay;
+//   }
 `;
 const FlexBox = styled.div`
     // border:1px solid black;
@@ -207,7 +204,6 @@ class ScrollList extends Component {
     const { hasMore, loading, cols } = this.state;
     // console.log("onload:", this.state.page);
     return (dataListAdded && dataListAdded.length > 0 ?
-      <div style={{maxWidth:"1920px",width:"100%",minWidth:"100%"}}>
       <FlexContainer
         cols={cols}
         type={type}
@@ -240,7 +236,7 @@ class ScrollList extends Component {
           {/* <i className="material-icons">arrow_drop_down</i> */}
         </ScrollIcon>}
         {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>}
-      </FlexContainer></div> : null
+      </FlexContainer> : null
       // <NoData>{type === "design" ? "디자인이" : type === "group" ? "그룹이" : "디자이너가"} 없습니다.</NoData>)
     )
   }

@@ -4,6 +4,13 @@ const opendesign_style = {
     MediumMinWidth: 480, MediumMaxWidth: 1440,
     LargeMinWidth: 1440, LargeMaxWidth: 1920
   },
+  new_resolutions:{
+    mini:0,
+    small:500,
+    medium:1000,
+    large:1500,
+    max:1920
+  },
   font: {
     notoSans: "'Noto Sans KR', sans-serif",
     notoSerif: "'Noto Serif', serif",
