@@ -21,8 +21,7 @@ class GroupDetailContainer extends Component {
 
   }
   render() {
-    return (<GroupDetail
-      {...this.props} getCountGroup={GetTotalCountGroupInGroupRequest} />)
+    return (<GroupDetail {...this.props} getCountGroup={GetTotalCountGroupInGroupRequest} />)
   }
 }
 

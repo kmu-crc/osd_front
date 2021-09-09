@@ -39,9 +39,9 @@ const Wrapper = styled.div`
   }
 `;
 const BodyWrapper = styled.div`
-  margin-top: 28px;
-  margin-left: 38px;
-  margin-right: 38px;
+  padding-top: 28px;
+  padding-left: 38px;
+  padding-right: 38px;
   .menu-container {
     max-width: 1737px;
     min-width: 1000px;

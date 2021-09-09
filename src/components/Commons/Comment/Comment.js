@@ -160,8 +160,8 @@ const CommentInputTextContainer = styled.div`
    .wrapper {
        textarea {
            max-width:800px;
-           min-width: 100px;
-           width: 800px;
+           min-width: 350px;
+           width: 100%;
            height: 100%;
            padding: 7px;
            outline: none;

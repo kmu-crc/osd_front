@@ -3,6 +3,14 @@ import DesignInfo from "components/Designs/DesignInfo"
 import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer"
 import Loading from "components/Commons/Loading";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  // margin-top:90px;
+  // margin-left:100px;
+  max-width: 1740px;
+  min-width: 1000px;
+`
 
 class DesignDetail extends Component {
 
@@ -50,7 +58,7 @@ class DesignDetail extends Component {
 
     const DesignDetail = this.props.DesignDetail;
 
-    return (<React.Fragment>
+    return (<Wrapper>
       {DesignDetail && DesignDetail.uid
         ? <React.Fragment>
           {/* design info */}
@@ -61,7 +69,7 @@ class DesignDetail extends Component {
             : (<DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />)}
         </React.Fragment>
         : <Loading />}
-    </React.Fragment>)
+    </Wrapper>)
   }
 }
 

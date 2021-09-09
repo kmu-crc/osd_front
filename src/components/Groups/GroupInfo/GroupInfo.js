@@ -46,10 +46,9 @@ const NewAlarmLogo = styled.div`
     }
 `;
 const GroupSummary = styled.div`
-    // padding: ?
-  margin-top: 24px;
-  margin-left: 38px;
-  margin-right: 38px;
+  padding-top: 24px;
+  padding-left: 38px;
+  padding-right: 38px;
 
   max-width: 1760px;
   min-width: ${props => props.isEditor ? 1124 : 924}px;
