@@ -14,34 +14,31 @@ import Fade from 'react-reveal/Fade';
 // }
 // css 
 const FlexContainer = styled.div`
-// *{border: 1px solid blue;}
-  width: 103%;
-  padding: 0;
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  // @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
-  //   width: 330px;
-  // }
-  // @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
-  //   margin-left: ${props => props.type === "design" ? 100 : props.type === "group" ? 215 : 67}px;
-  //   width: ${osdcss.resolutions.MediumMaxWidth}px;
-  // }
-  // @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {
-  //   margin-left: ${props => props.type === "design" ? 9 : props.type === "group" ? 11 : 12}px;
-  //   width: ${osdcss.resolutions.LargeMaxWidth}px;
-  // }
-  // @media only screen and (min-width : ${osdcss.resolutions.LargeMaxWidth}px) {
-  //   margin-left: ${props => props.type === "design" ? 9 : props.type === "group" ? 11 : 12}px;
-  //   width: ${osdcss.resolutions.LargeMaxWidth}px;
-  // }
-  //   @media only screen and (min-width : 780px) and (max-width:1440px) {
-  //     overflow-x: overlay;
-  //   }
-  //   @media only screen and (min-width : 360px) and (max-width:780px) {
-  //     overflow-x: overlay;
-  //   }
-
+padding: 0;
+position: relative;
+margin-left: auto;
+margin-right: auto;
+// @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
+//   width: 330px;
+// }
+// @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
+//   margin-left: ${props => props.type === "design" ? 100 : props.type === "group" ? 215 : 67}px;
+//   width: ${osdcss.resolutions.MediumMaxWidth}px;
+// }
+// @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {
+//   margin-left: ${props => props.type === "design" ? 9 : props.type === "group" ? 11 : 12}px;
+//   width: ${osdcss.resolutions.LargeMaxWidth}px;
+// }
+// @media only screen and (min-width : ${osdcss.resolutions.LargeMaxWidth}px) {
+//   margin-left: ${props => props.type === "design" ? 9 : props.type === "group" ? 11 : 12}px;
+//   width: ${osdcss.resolutions.LargeMaxWidth}px;
+// }
+//   @media only screen and (min-width : 780px) and (max-width:1440px) {
+//     overflow-x: overlay;
+//   }
+//   @media only screen and (min-width : 360px) and (max-width:780px) {
+//     overflow-x: overlay;
+//   }
 `;
 const FlexBox = styled.div`
     // border:1px solid black;

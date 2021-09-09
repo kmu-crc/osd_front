@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import thumbup from "source/thumbup.png";
-import email from "source/email.png";
+import thumbup from "source/thumbup_icon_black.png";
+import email from "source/email_black.png";
 import iEdit from "source/edit.png";
 import forked from "source/forked.svg";
 import noimg from "source/noimg.png";
@@ -42,6 +42,7 @@ import new_logo_msg from "source/new_logo_msg.svg";
 const Wrapper = styled.div`
     padding-top:42px;
     padding-left:38px;
+    padding-right:38px;
 `
 const ChatWrapper = styled.div`
 width:100%;
@@ -65,6 +66,9 @@ align-items:flex-end;
   height:66px;
   object-fit:contain;
 }
+.icon_black{
+    filter: invert(100%);
+}
 .icon_label{
   font-size:17px;
   font-family:Spoqa Han Sans Neo;
@@ -73,6 +77,7 @@ align-items:flex-end;
 `;
 const DesignHeader = styled.div`
     max-width:1740px;
+    min-width:1000px;
     width:100%;
     height:307px;
     border:1px solid #B7B7B7;
@@ -839,7 +844,7 @@ class DesignInfo extends Component {
                                 <div className="button_wrap">
                                     {isMyDesign==true?
                                     null:
-                                    <div className="button_wrap pointer" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>메시지 보내기<img src={email} className="icon"/></div>
+                                    <div className="button_wrap pointer" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>메시지 보내기<img src={email}  className="icon icon_black"/></div>
                                     }
                                 </div>
                                 <div className="button_wrap">

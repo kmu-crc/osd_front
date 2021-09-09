@@ -3,11 +3,20 @@ import styled from 'styled-components';
 
 // img
 import noface from "source/thumbnail.png";
+// <<<<<<< HEAD
+// import iForked from "source/baseline_library_books_black_48dp.png";
+// import iThumbUp from "source/thumbup_icon_black.png"
+// import iMessage from 'source/email_black.png';
+// import IconView from "source/IconView";
+// import iEdit from 'source/edit_1.png';
+// import DateFormat from 'modules/DateFormat';
+// =======
 import iconView from "source/mypage_icon_view.svg";
 import iconLike from "source/mypage_icon_like.svg";
 import iconArticle from "source/mypage_icon_article.svg";
 import iMessage from "source/email.png";
 import iThumbUp from "source/thumbup_icon_black.png";
+// >>>>>>> 516a54272e9eb6db9de4c287bab67e6a62f4f325
 import NumberFormat from "modules/NumberFormat";
 import DateFormat from 'modules/DateFormat';
 import { alert } from "components/Commons/Alert/Alert";
