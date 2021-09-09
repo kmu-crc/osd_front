@@ -14,14 +14,18 @@ import { SetSession } from 'modules/Sessions';
 
 // css
 const Wrapper = styled.div`
-    margin-top: ${100 + 24}px;
-    margin-left: ${100 + 38}px;
+    // margin-top: ${100 + 24}px;
+    // margin-left: ${100 + 38}px;
+    margin-top: 24px;
+    margin-left: 38px;
+    margin-right: 38px;
     // *{border: 1px solid red;}
 `;
 const MyInfoBox = styled.div`
     padding: 12px 12px 12px 34px;
 
     max-width: 1737px;
+    min-width: ${1000}px;
 
     display: flex;
     flex-direction: row;
