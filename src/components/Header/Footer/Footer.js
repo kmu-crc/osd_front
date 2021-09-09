@@ -6,18 +6,18 @@ import { alert } from "components/Commons/Alert/Alert";
 const FooterContainer = styled.div`
     width:100%;
     height:1px;
-    display:flex;
+    display: flex;
     position:fixed;
-    bottom:0;
-    margin-height:100%;
+    bottom:-1px;
+    // margin-height:100%;
     font-size:15px;
     font-weight:500;
-    padding:5px;
+    padding:0px;
     font-family:Noto Sans KR;
     color:#707070;
     text-align:center;
     background-color:transparent;
-    z-index: 999;
+    z-index: 1;
     .origin{
         min-width:max-content;
         cursor: pointer;

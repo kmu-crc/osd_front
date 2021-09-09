@@ -35,7 +35,7 @@ import SignInContainer from "containers/Registration/SignInContainer";
 // const ChildrenContainer = styled.div`
 //   margin-left: auto;
 //   margin-right: auto;
-  
+
 //   width:${props => props.screenWidth > 1920 ? 1920 : props.screenWidth}px;
 //   // @media only screen and (max-width: 1920px) {
 //   //   width:${window.innerWidth}px;
@@ -64,7 +64,7 @@ const NavigationAni = styled.div`
   position:fixed;
   height: 100%;
   z-index:902;
-  animation-name: ${props=>props.sidemenu==true?Open_ani:Close_ani};
+  animation-name: ${props => props.sidemenu == true ? Open_ani : Close_ani};
   animation-duration:1s;
   animation-direction:alternate;
   animation-fill-mode: forwards;
@@ -92,7 +92,7 @@ const Wrapper = styled.div`
   overflow-x:scroll;
 `
 class ClientTemplate extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       scroll: false,
@@ -101,8 +101,8 @@ class ClientTemplate extends Component {
       hidemenu: false,
       prevScroll: 0,
       screenWidth: window.innerWidth,
-      sidemenu:true,
-      login:null,
+      sidemenu: true,
+      login: null,
     }
   }
   componentDidMount() {
@@ -163,29 +163,29 @@ class ClientTemplate extends Component {
     return (
       <React.Fragment>
         <Wrapper>
-        <div style={{width:"100%",minWidth:"1000px"}}>
-        {
-          this.state.login == true?
-          <SignInContainer onCloseLogin={()=>this.setState({login:null})} loginOpen={this.state.login}/>
-          :null
-        }
-        
-        <HeaderContainer isLogin={this.state.login} sidemenu={this.state.login==null||this.state.login==true?this.state.sidemenu:false} 
-                         onClickMenu={()=>{
-                           this.state.login==true&&this.state.sidemenu==true?
-                           this.setState({sidemenu:this.state.sidemenu}):
-                           this.setState({sidemenu:!this.state.sidemenu})
-                         }}/>
-        <NavigationAni sidemenu={this.state.login==null?window.location.pathname.indexOf("/signup")==-1?this.state.sidemenu:false:false} >
-        <Navigation onClickLogin={()=>this.setState({login:this.state.login==null?true:!this.state.login})} userInfo={this.props.userInfo}/>
-        </NavigationAni>
-        <Client active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
-          <div className="wrap_children">
-          {this.props.children}
+          <div style={{ width: "100%", minWidth: "1000px" }}>
+            {
+              this.state.login == true ?
+                <SignInContainer onCloseLogin={() => this.setState({ login: null })} loginOpen={this.state.login} />
+                : null
+            }
+
+            {/* <HeaderContainer isLogin={this.state.login} sidemenu={this.state.login == null || this.state.login == true ? this.state.sidemenu : false}
+              onClickMenu={() => {
+                this.state.login == true && this.state.sidemenu == true ?
+                  this.setState({ sidemenu: this.state.sidemenu }) :
+                  this.setState({ sidemenu: !this.state.sidemenu })
+              }} />
+            <NavigationAni sidemenu={this.state.login == null ? window.location.pathname.indexOf("/signup") == -1 ? this.state.sidemenu : false : false} >
+              <Navigation onClickLogin={() => this.setState({ login: this.state.login == null ? true : !this.state.login })} userInfo={this.props.userInfo} />
+            </NavigationAni> */}
+            <Client active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
+              <div className="wrap_children">
+                {this.props.children}
+              </div>
+            </Client>
+            <Footer />
           </div>
-        </Client>
-        <Footer/>
-        </div>
         </Wrapper>
       </React.Fragment>
     )

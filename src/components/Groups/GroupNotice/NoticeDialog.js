@@ -213,7 +213,7 @@ const NoticeReadWrapper = styled.div`
     padding: 5px 11px 4px 11px;
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin-top:13px;
     .header-element {
         font-weight: 700;
@@ -362,7 +362,7 @@ d      pagination
             })
     }
     render() {
-        const { open, close, group_id,group_owner_id, user_id } = this.props;
+        const { open, close, group_id, group_owner_id, user_id } = this.props;
         const { mode, list, count, per, page, notice } = this.state;
         console.log(this.props);
         return (
@@ -371,130 +371,129 @@ d      pagination
                 closeOnDimmerClick={mode === WRITE ? false : true}
                 open={open}
                 onClose={() => close()}>
-
                 <div className="close-box" onClick={() => close()}>
                     <Cross angle={45} color={"black"} weight={5} width={35} height={35} />
                 </div>
 
                 {/* <Modal.Content> */}
-                    {/* title & write-button */}
-                    <div className="title">
-                        <div className="newbutton"/>
-                        <div className="text_">공지사항</div>
-                        <div className="newbutton">
+                {/* title & write-button */}
+                <div className="title">
+                    <div className="newbutton" />
+                    <div className="text_">공지사항</div>
+                    <div className="newbutton">
                         {mode === LIST && user_id === group_owner_id
-                            ? 
-                                <Button
-                                    onClick={() => { this.setState({ mode: WRITE }) }}
-                                    color={"white"}
-                                    bgcolor={"#FF0000"}
-                                    bgcolor_hover={"#DD0000"}
-                                    marginTop={"0px"}
-                                    marginRight={"0px"}
-                                >공지사항 등록하기</Button>
+                            ?
+                            <Button
+                                onClick={() => { this.setState({ mode: WRITE }) }}
+                                color={"white"}
+                                bgcolor={"#FF0000"}
+                                bgcolor_hover={"#DD0000"}
+                                marginTop={"0px"}
+                                marginRight={"0px"}
+                            >공지사항 등록하기</Button>
                             : null}
-                        </div>
                     </div>
+                </div>
 
-                    {mode === LIST
-                        ? <NoticeListWrapper>
-                            <div className="header">
-                                <div className="num">번호</div>
-                                <div className="header-title">제목</div>
-                                <div className="create_time">등록일</div>
-                            </div>
-                            <div className="body">
-                                {list && list.length > 0
-                                    ? list.map((item, index) =>
-                                        <div className="row" key={index} onClick={() => this.readNotice(item)}>
-                                            <div className="num">{count - ((page * per) + index)}</div>
-                                            <div className="row-title">{item.title}</div>
-                                            <div className="create_time">{DateFormat(item.create_time)}</div>
-                                        </div >)
-                                    : <div className="empty"> 글이 없습니다. </div>}
-                            </div>
+                {mode === LIST
+                    ? <NoticeListWrapper>
+                        <div className="header">
+                            <div className="num">번호</div>
+                            <div className="header-title">제목</div>
+                            <div className="create_time">등록일</div>
+                        </div>
+                        <div className="body">
+                            {list && list.length > 0
+                                ? list.map((item, index) =>
+                                    <div className="row" key={index} onClick={() => this.readNotice(item)}>
+                                        <div className="num">{count - ((page * per) + index)}</div>
+                                        <div className="row-title">{item.title}</div>
+                                        <div className="create_time">{DateFormat(item.create_time)}</div>
+                                    </div >)
+                                : <div className="empty"> 글이 없습니다. </div>}
+                        </div>
 
 
-                        </NoticeListWrapper>
-                        : null}
+                    </NoticeListWrapper>
+                    : null}
 
-                    {mode === READ
-                        ? <NoticeReadWrapper>
-                            {notice
-                                ? <React.Fragment>
-                                    <div className="header-element">
-                                        <div className="label">제목</div>
-                                        <div className="element-content">{notice.title}</div>
-                                    </div>
-                                    <div className="header-element">
-                                        <div className="label">등록일</div>
-                                        <div className="element-content">{DateFormat(notice.create_time)}</div>
-                                    </div>
-                                    <div className="content">
-                                        <div dangerouslySetInnerHTML={{ __html: notice.content }} />
-                                    </div>
-                                </React.Fragment>
-                                : <div>내용을 표시할 수 없습니다.</div>}
-                        </NoticeReadWrapper>
-                        : null}
+                {mode === READ
+                    ? <NoticeReadWrapper>
+                        {notice
+                            ? <React.Fragment>
+                                <div className="header-element">
+                                    <div className="label">제목</div>
+                                    <div className="element-content">{notice.title}</div>
+                                </div>
+                                <div className="header-element">
+                                    <div className="label">등록일</div>
+                                    <div className="element-content">{DateFormat(notice.create_time)}</div>
+                                </div>
+                                <div className="content">
+                                    <div dangerouslySetInnerHTML={{ __html: notice.content }} />
+                                </div>
+                            </React.Fragment>
+                            : <div>내용을 표시할 수 없습니다.</div>}
+                    </NoticeReadWrapper>
+                    : null}
 
-                    {mode === WRITE
-                        ? <NoticeWriteWrapper>
-                            <div className="label">제목</div>
-                            <div>
-                                <input
-                                    autoFocus
-                                    type="text" className="inputText"
-                                    value={this.state.title}
-                                    onChange={event =>
-                                        this.setState({ title: event.target.value })} />
-                            </div>
-                            <div className="label">내용</div>
-                            <div>
-                                <TextController
-                                    donotfocus
-                                    item={{ content: "" }}
-                                    getValue={(data) =>
-                                        this.onChangeContent(data)} />
-                            </div>
-                        </NoticeWriteWrapper>
-                        : null}
-
-                    {/* button */}
-                    <div className="bottom-buttons">
+                {mode === WRITE
+                    ? <NoticeWriteWrapper>
+                        <div className="label">제목</div>
                         <div>
-                            {/* /* pagination */}
-                            {mode === LIST
-                                ? <Navi>
-                                    <div className="inner">
-                                        {count > per
-                                            ?
-                                            <div className="pagination">
-                                                <Pagination
-                                                    activePage={this.state.page + 1}
-                                                    itemsCountPerPage={5}
-                                                    totalItemsCount={count}
-                                                    pageRangeDisplayed={5}
-                                                    onChange={async (page) => { await this.setState({ page: page - 1 }); this.getList(); }}
-                                                />
-                                            </div>
-                                            // <PaginationOpenDesign current={page} count={count} per={per} />
-                                            : null}
-                                    </div>
-                                </Navi>
-                                : null}
+                            <input
+                                autoFocus
+                                type="text" className="inputText"
+                                value={this.state.title}
+                                onChange={event =>
+                                    this.setState({ title: event.target.value })} />
                         </div>
+                        <div className="label">내용</div>
+                        <div>
+                            <TextController
+                                donotfocus
+                                item={{ content: "" }}
+                                getValue={(data) =>
+                                    this.onChangeContent(data)} />
+                        </div>
+                    </NoticeWriteWrapper>
+                    : null}
 
-                        <div style={{ display: "flex", flexDirection: "row", width: "max-content", marginTop:"10px", marginLeft: "auto", marginRight: "10px"}}>
-                            {mode === WRITE
-                                ? <Button bgcolor="red" color="white" onClick={() => this.write()}>등록</Button>
-                                : null}
-                            {mode === WRITE || mode === READ
-                                ? <Button onClick={() => this.setState({ mode: LIST, title: "", content: "", notice: null })}>목록으로</Button>
-                                : null}
-                            {/* <CloseButton  onClick={() => close()}>닫기</CloseButton> */}
-                        </div>
+                {/* button */}
+                <div className="bottom-buttons">
+                    <div>
+                        {/* /* pagination */}
+                        {mode === LIST
+                            ? <Navi>
+                                <div className="inner">
+                                    {count > per
+                                        ?
+                                        <div className="pagination">
+                                            <Pagination
+                                                activePage={this.state.page + 1}
+                                                itemsCountPerPage={5}
+                                                totalItemsCount={count}
+                                                pageRangeDisplayed={5}
+                                                onChange={async (page) => { await this.setState({ page: page - 1 }); this.getList(); }}
+                                            />
+                                        </div>
+                                        // <PaginationOpenDesign current={page} count={count} per={per} />
+                                        : null}
+                                </div>
+                            </Navi>
+                            : null}
                     </div>
+
+                    <div style={{ display: "flex", flexDirection: "row", width: "max-content", marginTop: "10px", marginLeft: "auto", marginRight: "10px" }}>
+                        {mode === WRITE
+                            ? <Button bgcolor="red" color="white" onClick={() => this.write()}>등록</Button>
+                            : null}
+                        {mode === WRITE || mode === READ
+                            ? <Button onClick={() => this.setState({ mode: LIST, title: "", content: "", notice: null })}>목록으로</Button>
+                            : null}
+                        {/* <CloseButton  onClick={() => close()}>닫기</CloseButton> */}
+                    </div>
+                </div>
 
                 {/* </Modal.Content > */}
             </NoticeModalWrapper >);
