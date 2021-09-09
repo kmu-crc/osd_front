@@ -72,8 +72,20 @@ const Details = styled.div`
         letter-spacing: 0px;
         color: #000000;
         opacity: 1;
-     }
-
+    }
+     .cate {
+        margin-top: 5px;
+        width: max-content;
+        height: 28px;
+        text-align: left;
+        font-weight: normal;
+        font-size: 19px;
+        line-height: 28px;
+        font-family: Spoqa Han Sans;
+        letter-spacing: 0px;
+        color: #FF0000;
+        opacity: 1;
+    }
     .about {
         padding-left: 5px;
         padding-right: 10px;
@@ -86,7 +98,7 @@ const Details = styled.div`
         letter-spacing: 0px;
         color: #777777;
         opacity: 1;
-     }
+    }
 
     .count { 
         display: flex;
@@ -234,6 +246,7 @@ class MypageHeader extends Component {
                     <Details>
                         <div className="wrapper">
                             <div className="nick">{MyDetail.nick_name}</div>
+                            <div className="cate">{MyDetail.categoryName}</div>
                             <div className="about">{MyDetail.about_me}</div>
                         </div>
 

@@ -10,11 +10,11 @@ import OrderOption from "components/Commons/OrderOption";
 
 //css
 const Wrapper = styled.div`
-    margin-top: ${28}px;
-    // margin-left: ${100 + 38}px;
+    margin-top: 28px;
     margin-left: 38px;
     margin-right: 38px;
 
+    // margin-left: ${100 + 38}px;
     // *{border: 1px solid red;}
 
     .menu-container {
@@ -169,9 +169,7 @@ class MypageBody extends Component {
             </div>
 
             {this.state.cateIndex === 4 &&
-                <div>
-                    { }
-                </div>}
+                <div>{ }</div>}
 
             {this.state.cateIndex === 0 &&
                 <div style={{ paddingTop: "37px" }}>
