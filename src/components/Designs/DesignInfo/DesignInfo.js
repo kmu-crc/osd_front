@@ -599,7 +599,7 @@ class DesignInfo extends Component {
     }
     sendMessage(user_id, nick_name) {
         let href = window.location.href.substring(0, window.location.href.search("designDetail"))
-        window.location.href = href + 'message/' + user_id + '/' + nick_name;
+        window.location.href = '/message/' + user_id + '/' + nick_name;
     }
     goParentDesign = (parent) => {
         window.location.href = geturl() + `/designDetail/${parent}`
