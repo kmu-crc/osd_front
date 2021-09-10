@@ -170,7 +170,7 @@ class ClientTemplate extends Component {
                 : null
             }
 
-            {/* <HeaderContainer isLogin={this.state.login} sidemenu={this.state.login == null || this.state.login == true ? this.state.sidemenu : false}
+            <HeaderContainer isLogin={this.state.login} sidemenu={this.state.login == null || this.state.login == true ? this.state.sidemenu : false}
               onClickMenu={() => {
                 this.state.login == true && this.state.sidemenu == true ?
                   this.setState({ sidemenu: this.state.sidemenu }) :
@@ -178,7 +178,7 @@ class ClientTemplate extends Component {
               }} />
             <NavigationAni sidemenu={this.state.login == null ? window.location.pathname.indexOf("/signup") == -1 ? this.state.sidemenu : false : false} >
               <Navigation onClickLogin={() => this.setState({ login: this.state.login == null ? true : !this.state.login })} userInfo={this.props.userInfo} />
-            </NavigationAni> */}
+            </NavigationAni>
             <Client active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
               <div className="wrap_children">
                 {this.props.children}
