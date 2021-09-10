@@ -79,7 +79,6 @@ const Arrow = styled.div`
 const GridEditorWrapper = styled.div`
     max-width:1740px;
     width:100%;
-    border: 1px solid red;
     display: flex;
     margin-left:38px;
     margin-bottom: 75px;
