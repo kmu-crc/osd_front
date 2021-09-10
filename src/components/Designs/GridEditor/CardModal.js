@@ -39,6 +39,8 @@ const ContentBorder = styled.div`
 `;
 const CommentWrapper = styled.div`
 
+    padding-bottom: 75px;
+
     .commentBox{
         .comment-title {
             margin-left: 45px;

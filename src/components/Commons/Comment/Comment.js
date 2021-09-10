@@ -158,6 +158,8 @@ const CommentInputTextContainer = styled.div`
         margin-right:27px;
     };
    .wrapper {
+       width: 100%;
+
        textarea {
            max-width:800px;
            min-width: 350px;
@@ -181,8 +183,9 @@ const CommentInputTextContainer = styled.div`
        }
    }
    .flex_Input{
-       width:100%;
-       display:flex;
+       width: 100%;
+       display: flex;
+       justify-content: space-between;
    }
    .another-wrapper { 
        display: flex;
