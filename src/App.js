@@ -38,7 +38,7 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Notice />
+        {/* <Notice /> */}
         <Switch>
 
           {/* no client template */}

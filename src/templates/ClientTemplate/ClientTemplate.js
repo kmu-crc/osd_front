@@ -108,18 +108,16 @@ const Client = styled.div`
   overflow-y: overlay;
   overflow-x: overlay;
   .wrap_children{
-    max-width: 1920px;
-    min-width: 1000px;
+    // max-width: 1920px;
+    // min-width: 1000px;
     width: 100%;
     padding-top: 90px;
-
-    // margin-left: ${props => props.menu ? 100 : 0}px;
-    
   }
 `
 const Wrapper = styled.div`
-  width:100%;
-  overflow-x:scroll;
+  width: 100%;
+  // overflow-x: scroll;
+  // padding: 0;
 `
 class ClientTemplate extends Component {
   constructor(props) {
@@ -202,9 +200,11 @@ class ClientTemplate extends Component {
               this.setState({ sidemenu: this.state.sidemenu }) :
               this.setState({ sidemenu: !this.state.sidemenu })
           }} />
+
         <NavigationAni sidemenu={this.state.login == null ? window.location.pathname.indexOf("/signup") == -1 ? this.state.sidemenu : false : false} >
           <Navigation onClickLogin={() => this.setState({ login: this.state.login == null ? true : !this.state.login })} userInfo={this.props.userInfo} />
         </NavigationAni>
+
         <Client menu={this.state.sidemenu} active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
           <ClientAni sidemenu={this.state.sidemenu}>
             <div className="wrap_children">
