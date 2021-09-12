@@ -49,11 +49,12 @@ a{
   background: transparent; 
 }
 .partical-scroll-none::-webkit-scrollbar-thumb {
-  background: transparent;
+  background: rgba(255, 0, 0, 0.45) !important;
+  /* background: transparent; */
 }
 .partial-scroll-on::-webkit-scrollbar {
   position: block;
-  width: 3.9px;
+  width: 4px;
 }
 .partial-scroll-on::-webkit-scrollbar * {
   background: transparent;

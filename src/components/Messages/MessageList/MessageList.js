@@ -239,7 +239,7 @@ const MessageDetail = styled.div`
       max-height: 730px;
     }
     .send {
-      width: 100%;
+      width: 96%;
       bottom: 0px;
       position: absolute;
       height: 121px;
@@ -282,7 +282,7 @@ const MessageDetail = styled.div`
   }
 `;
 const SendMessageTextarea = styled.div`
-  width: 90%;
+  width: 88%;
   height: 119px;
   background-color: #E9E9E9;
   resize: none;
