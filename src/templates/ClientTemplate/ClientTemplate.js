@@ -190,6 +190,7 @@ class ClientTemplate extends Component {
             </Client>
 
             <Footer />
+
           </div>
         </Wrapper>
       </React.Fragment>
@@ -225,3 +226,27 @@ export default ClientTemplate;
 //         <NavigationAni sidemenu={this.state.login == null ? window.location.pathname.indexOf("/signup") == -1 ? this.state.sidemenu : false : false} >
 //           <NavigationContainer onClickFolding={this.onClickFoldingSideMenu} userInfo={this.props.userInfo} />
 {/* <Navigation onClickLogin={() => this.setState({ login: this.state.login == null ? true : !this.state.login })} userInfo={this.props.userInfo} /> */ }
+
+
+
+//         <div style={{width:"100%",minWidth:"500px"}}>
+//         {
+//           this.state.login == true?
+//           <SignInContainer onCloseLogin={()=>this.setState({login:null})} loginOpen={this.state.login}/>
+//           :null
+//         }
+        
+//         <HeaderContainer onClickLogin={()=>this.setState({login:this.state.login==null?true:!this.state.login})}
+//                          isLogin={this.state.login} sidemenu={this.state.login==null||this.state.login==true?this.state.sidemenu:false} 
+//                          onClickMenu={()=>{
+//                            this.state.login==true&&this.state.sidemenu==true?
+//                            this.setState({sidemenu:this.state.sidemenu}):
+//                            this.setState({sidemenu:!this.state.sidemenu})
+//                          }}/>
+//         <NavigationAni sidemenu={this.state.login==null?window.location.pathname.indexOf("/signup")==-1?this.state.sidemenu:false:false} >
+//         <NavigationContainer onClickFolding={this.onClickFoldingSideMenu}  userInfo={this.props.userInfo}/>
+
+//         </NavigationAni>
+//         <Client active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
+//           <div className="wrap_children">
+//           {this.props.children}

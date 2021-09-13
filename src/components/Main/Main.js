@@ -60,18 +60,7 @@ const Wrapper = styled.div`
     background-size:cover;
     opacity:1 !important;
   }
-  .pause{
-    max-width: 34px;
-    width: 34px;
-    height: 64px;
-    position: absolute;
-    z-index:999 !important;
-    top: 968px;
-    left: 94%;
-    background-image:url(${new_logo_pause});
-    background-size:cover;
-    cursor: pointer;
-  }
+
   .slick-next{
     position:absolute;
     z-index:999 !important;
@@ -109,6 +98,21 @@ const Wrapper = styled.div`
   // .slick-arrow:hover{
   //   color:rgba(0,0,0,0);
   // }
+`;
+const Pause = styled.div`
+  background-color: red;
+  border: 2px dashed black;
+
+  max-width: 34px;
+  width: 34px;
+  height: 64px;
+  position: absolute;
+  z-index: 999 !important;
+  top: 968px;
+  left: 94%;
+  background-image: url(${new_logo_pause});
+  background-size: cover;
+  cursor: pointer;
 `;
 const ButtonOnImage = styled.div`
   position: absolute;
@@ -157,7 +161,7 @@ let settings = {
   speed: 2000,
   slidesToShow: 1,
   dots: false,
-  autoplay: true,
+  autoplay: false, //true,
   autoplaySpeed: 4000,
   slidesToScroll: 1,
   arrows: true,
@@ -191,7 +195,7 @@ export default class Main extends Component {
     const height = width * (1 / 1.76);
     const ratioW = width / 1920;
     const ratioH = height / 1080;
-    console.log(this.state.w)
+
     return (<React.Fragment>
       {/* banner */}
       <Wrapper w={1920 * ratioW}>
@@ -219,6 +223,7 @@ export default class Main extends Component {
 
       {/* scroll-list */}
       <MainList w={w}>
+        {/* <Fade cascade> */}
         {(this.props && this.props.userInfo != null)
           ? <>
             <ScrollListContainer> <MainMyDesignListContainer /> </ScrollListContainer>
@@ -236,6 +241,7 @@ export default class Main extends Component {
           <TopDesignListContainer />
         </ScrollListContainer>
 
+        {/* </Fade> */}
       </MainList>
 
 
