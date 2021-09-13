@@ -12,6 +12,8 @@ import opendesign_style from "opendesign_style"
 
 import new_logo_exit from "source/new_logo_exit.svg";
 import new_logo_message_bubble from "source/new_logo_message_bubble.svg";
+import new_logo_handle_arrow from "source/new_logo_handle_arrow.svg";
+import { SetSession } from 'modules/Sessions';
 
 const Profile = styled.div`
     min-width:57px;
@@ -40,6 +42,31 @@ const MenuBox = styled.div`
         :"red"
     };
     position:relative;
+    .menu_handle{
+        cursor:pointer;
+        position:absolute;
+        top:115px;
+        left:${100}px;
+        width:33px;
+        height:49px;
+        border-radius: 0px 17px 17px 0px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background-color:${
+            window.location.pathname.indexOf("designer")!=-1?"#7E1E9B"
+            :window.location.pathname.indexOf("Designer")!=-1?"#7E1E9B"
+            :window.location.pathname.indexOf("design")!=-1?"#1262AB"
+            :window.location.pathname.indexOf("Design")!=-1?"#1262AB"
+            :window.location.pathname.indexOf("group")!=-1?"#1E9B79"
+            :window.location.pathname.indexOf("Group")!=-1?"#1E9B79"
+            :"red"
+        };
+        .arrow{
+            width:24px;
+            height:24px;
+        }
+    }
     .menu_top{
         width:100%;
         height:90px;
@@ -138,6 +165,13 @@ class Navigation extends Component {
         }
         window.addEventListener("resize", this.handleResize, false);
     };
+    SignOut = () => {
+        SetSession("opendesign_token", null)
+            .then(data => {
+                this.props.SignOutRequest();
+                window.location.href = "/";
+            });
+    }
     componentWillUpdate(nextProps) {
         if (this.props.userInfo != null && nextProps.userInfo != null && this.props.userInfo.uid != null && nextProps.userInfo.uid != null) {
             if (this.props.userInfo.uid !== nextProps.userInfo.uid) {
@@ -163,7 +197,8 @@ class Navigation extends Component {
             <React.Fragment>
                 <MenuBox>
                     <div className="menu_top"/>
-                    <MenuItem
+                    <div className="menu_handle" onClick={this.props.onClickFolding}><img className="arrow" src={new_logo_handle_arrow}/></div>
+                    {/* <MenuItem
                     isSelect={window.location.pathname === "/myPage"
                     || window.location.pathname.search("/myPage/") > -1 ? true : false
                     || window.location.pathname.search("/myModify") > -1 ? true : false
@@ -183,7 +218,7 @@ class Navigation extends Component {
                             </a>
                         }
                     </div>
-                    </MenuItem>
+                    </MenuItem> */}
                     <MenuItem 
                     isSelect={window.location.pathname === "/design"
                              || window.location.pathname.search("/design/") > -1 ? true : false
@@ -204,9 +239,14 @@ class Navigation extends Component {
                              || window.location.pathname.search("/createDesigner") > -1 ? true : false
                              || window.location.pathname.search("/modifyDesigner/") > -1 ? true : false}
                               className="menu_tag marginTop1"><a className="link_tag" href="/designer">디자이너</a></MenuItem>
-                    <MenuItem className="menu_tag marginTop1">NEWS</MenuItem>
+                    {/* <MenuItem className="menu_tag marginTop1">NEWS</MenuItem> */}
                     <MenuItem className="menu_tag marginTop1" onClick={()=>window.location.href="/footerPara"}>ABOUT</MenuItem>
-                    {/* <img className="icon_message" src={new_logo_message_bubble}/> */}
+                    {
+                        this.props.userInfo == null?
+                        null
+                        :
+                        <MenuItem className="menu_tag marginTop1" onClick={this.SignOut}>로그아웃</MenuItem>
+                    }
                 </MenuBox>
             </React.Fragment>
         )

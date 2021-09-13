@@ -3,7 +3,7 @@ import HeaderContainer from "containers/Header/HeaderContainer"
 import Footer from "components/Header/Footer"
 import styled, { keyframes } from "styled-components";
 import MenuContext from "Global/Context/GlobalContext"
-import Navigation from "components/Nav/Navigation";
+import NavigationContainer from "containers/Nav/NavigationContainer";
 import SignInContainer from "containers/Registration/SignInContainer";
 
 // const ContentContainer = styled.div`
@@ -104,6 +104,7 @@ class ClientTemplate extends Component {
       sidemenu:true,
       login:null,
     }
+    this.onClickFoldingSideMenu = this.onClickFoldingSideMenu.bind(this);
   }
   componentDidMount() {
     window.addEventListener("resize", this.handleResize, false)
@@ -154,6 +155,9 @@ class ClientTemplate extends Component {
   handleResize = () => {
     this.setState({ screenWidth: window.innerWidth })
   }
+  onClickFoldingSideMenu = async()=>{
+    await this.setState({sidemenu:!this.state.sidemenu});
+  }
   render() {
     const { scroll, hidemenu, larger } = this.state
     const scroll_style = (scroll ? "partial-scroll-on " : "partical-scroll-none ")
@@ -170,14 +174,15 @@ class ClientTemplate extends Component {
           :null
         }
         
-        <HeaderContainer isLogin={this.state.login} sidemenu={this.state.login==null||this.state.login==true?this.state.sidemenu:false} 
+        <HeaderContainer onClickLogin={()=>this.setState({login:this.state.login==null?true:!this.state.login})}
+                         isLogin={this.state.login} sidemenu={this.state.login==null||this.state.login==true?this.state.sidemenu:false} 
                          onClickMenu={()=>{
                            this.state.login==true&&this.state.sidemenu==true?
                            this.setState({sidemenu:this.state.sidemenu}):
                            this.setState({sidemenu:!this.state.sidemenu})
                          }}/>
         <NavigationAni sidemenu={this.state.login==null?window.location.pathname.indexOf("/signup")==-1?this.state.sidemenu:false:false} >
-        <Navigation onClickLogin={()=>this.setState({login:this.state.login==null?true:!this.state.login})} userInfo={this.props.userInfo}/>
+        <NavigationContainer onClickFolding={this.onClickFoldingSideMenu}  userInfo={this.props.userInfo}/>
         </NavigationAni>
         <Client active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
           <div className="wrap_children">
