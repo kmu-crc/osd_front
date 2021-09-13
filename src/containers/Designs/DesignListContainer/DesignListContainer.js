@@ -13,6 +13,7 @@ const Wrapper = styled.div`
   // margin-left:100px;
   // margin-top:90px;
   .category_wrapper{
+    width:100%;
     padding-left:41px;
     padding-top:19px;
   }
