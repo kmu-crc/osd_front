@@ -12,12 +12,10 @@ const FooterContainer = styled.div`
     margin-height:100%;
     font-size:15px;
     font-weight:500;
-    padding:5px;
     font-family:Noto Sans KR;
     color:#707070;
     text-align:center;
     background-color:transparent;
-    z-index: 999;
     .origin{
         min-width:max-content;
         cursor: pointer;

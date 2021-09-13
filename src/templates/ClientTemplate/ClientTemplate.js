@@ -163,7 +163,7 @@ class ClientTemplate extends Component {
     return (
       <React.Fragment>
         <Wrapper>
-        <div style={{width:"100%",minWidth:"1000px"}}>
+        <div style={{width:"100%",minWidth:"500px"}}>
         {
           this.state.login == true?
           <SignInContainer onCloseLogin={()=>this.setState({login:null})} loginOpen={this.state.login}/>
