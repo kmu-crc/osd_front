@@ -53,11 +53,9 @@ export default function CheckAuth(Components) {
     render() {
       return this.state.valid
         ? <Components {...this.props} />
-        : (
-          <Dimmer active>
-            <Loader />
-          </Dimmer>
-        );
+        : <Dimmer active>
+          <Loader />
+        </Dimmer>
     }
   }
   const mapStateToProps = (state) => {

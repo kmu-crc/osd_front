@@ -36,7 +36,7 @@ const ContentBox = styled.div`
     }
     .thumbnailExplainText{
       font-size:22px;
-      font-family:SpoqaHanSans;
+      font-family:Spoqa Han Sans;
       font-weight:Regular;
       color:#707070;
       margin-top:15px;
@@ -51,7 +51,7 @@ const InputText =styled.input`
       border:none;
       outline:none;
       font-size:22px;
-      font-family:SpoqaHanSans;
+      font-family:Spoqa Han Sans;
       font-weight:Regular;
       padding:11px 16px;
       .placeholder{
@@ -65,7 +65,7 @@ const InputTextArea =styled.textarea`
       border:none;
       outline:none;
       font-size:22px;
-      font-family:SpoqaHanSans;
+      font-family:Spoqa Han Sans;
       font-weight:Regular;
       padding:11px 16px;
       .placeholder{

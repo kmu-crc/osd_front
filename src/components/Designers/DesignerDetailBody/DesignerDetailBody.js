@@ -8,15 +8,19 @@ import opendesign_style from "opendesign_style";
 import NumberFormat from 'modules/NumberFormat';
 import OrderOption from "components/Commons/OrderOption";
 
+// CSS
 //css
 const Wrapper = styled.div`
-    margin-top: ${33}px;
-    margin-left: ${100 + 38}px;
+    margin-top: 28px;
+    margin-left: 38px;
+    margin-right: 38px;
 
+    // margin-left: ${100 + 38}px;
     // *{border: 1px solid red;}
 
     .menu-container {
         max-width: 1737px;
+        min-width: 1000px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -34,7 +38,7 @@ const Wrapper = styled.div`
         padding-bottom: 42px;
     }
     .scroll-list {
-        margin-top: 66px;
+        padding-top: 37px;
     }
 `;
 const TabMenu = styled.div`
@@ -51,13 +55,16 @@ const TabMenu = styled.div`
         cursor: pointer;
         color: #000000;
         
-        margin-left: 47px;
+        margin-left: 43px;
+        :first-child{
+            margin-left: 21px;
+        }
     }
     .selected { 
         color: #7E1E9B; 
-        font-weight: 00;
     }
 `;
+
 class DesignerPageBody extends Component {
     constructor(props) {
         super(props);
@@ -155,19 +162,22 @@ class DesignerPageBody extends Component {
             <div className="menu-container">
                 <TabMenu>
                     {/* Count.total_group Count.joined_group Count.total_design + Count.joined_design Count.total_favorite */}
+                    <a onClick={() => this.changeCategory(4)}><div className={`tab ${this.state.cateIndex === 4 ? "selected" : ""}`}>경험</div></a>
                     <a onClick={() => this.changeCategory(0)}><div className={`tab ${this.state.cateIndex === 0 ? "selected" : ""}`}>그룹</div></a>
                     <a onClick={() => this.changeCategory(1)}><div className={`tab ${this.state.cateIndex === 1 ? "selected" : ""}`}>참여그룹</div></a>
                     <a onClick={() => this.changeCategory(2)}><div className={`tab ${this.state.cateIndex === 2 ? "selected" : ""}`}>디자인</div></a>
                     <a onClick={() => this.changeCategory(3)}><div className={`tab ${this.state.cateIndex === 3 ? "selected" : ""}`}>관심항목</div></a>
                 </TabMenu>
 
-                {this.state.cateIndex === 0 && <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getMyGroupListRequest)} selected={this_order} />}
+                {this.state.cateIndex === 0 && <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getGroupInDesignerRequest)} selected={this_order} />}
                 {this.state.cateIndex === 1 && <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getRelatedGroupInDesignerRequest)} selected={this_order} />}
-                {this.state.cateIndex === 2 && <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getMyDesignListRequest)} selected={this_order} />}
+                {this.state.cateIndex === 2 && <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getMyDesignInDesignerRequest)} selected={this_order} />}
 
             </div>
 
             <div className="scroll-list">
+                {this.state.cateIndex === 4 &&
+                    <div>{ }</div>}
 
                 {this.state.cateIndex === 0 &&
                     <div>
@@ -195,29 +205,39 @@ class DesignerPageBody extends Component {
 
                 {this.state.cateIndex === 3 &&
                     <div>
-                        <div className="interested first">관심있는 그룹({NumberFormat(Count.like_group)})</div>
-                        {this.props.status === "INIT" ?
-                            <Loading /> :
-                            <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload}
-                                manual type="group" dataList={LikeGroupInDesigner} dataListAdded={LikeGroupInDesignerAdded} getListRequest={this.getLikeGroupInDesignerRequest} />
-                        }
+                        {Count.like_group > 0
+                            ? <React.Fragment>
+                                <div className="interested first">관심있는 그룹({NumberFormat(Count.like_group)})</div>
+                                {this.props.status === "INIT" ?
+                                    <Loading /> :
+                                    <ScrollList {...opendesign_style.group_margin} handleReload={this.handleReload} reloader={reload}
+                                        manual type="group" dataList={LikeGroupInDesigner} dataListAdded={LikeGroupInDesignerAdded} getListRequest={this.getLikeGroupInDesignerRequest} />}
+                            </React.Fragment>
+                            : null}
+                        {Count.like_design > 0
+                            ? <React.Fragment>
+                                <div className="interested second">관심있는 디자인({NumberFormat(Count.like_design)})</div>
+                                {this.props.status === "INIT" ?
+                                    <Loading /> :
+                                    <ScrollList {...opendesign_style.design_margin} handleReload={this.handleReload} reloader={reload}
+                                        manual type="design" dataList={LikeInDesigner} dataListAdded={LikeInDesignerAdded} getListRequest={this.getLikeInDesignerRequest} />
+                                }
+                            </React.Fragment>
+                            : null}
 
-                        <div className="interested second">관심있는 디자인({NumberFormat(Count.like_design)})</div>
-                        {this.props.status === "INIT" ?
-                            <Loading /> :
-                            <ScrollList {...opendesign_style.design_margin} handleReload={this.handleReload} reloader={reload}
-                                manual type="design" dataList={LikeInDesigner} dataListAdded={LikeInDesignerAdded} getListRequest={this.getLikeInDesignerRequest} />
-                        }
-
-                        <div className="interested third">관심있는 디자이너({NumberFormat(Count.like_designer)})</div>
-                        {this.props.status === "INIT" ?
-                            <Loading /> :
-                            <ScrollList {...opendesign_style.designer_margin} handleReload={this.handleReload} reloader={reload}
-                                manual type="designer" dataList={LikeDesignerInDesigner} dataListAdded={LikeDesignerInDesignerAdded} getListRequest={this.getLikeDesignerInDesignerRequest} />
-                        }
+                        {Count.like_designer > 0
+                            ? <React.Fragment>
+                                <div className="interested third">관심있는 디자이너({NumberFormat(Count.like_designer)})</div>
+                                {this.props.status === "INIT" ?
+                                    <Loading /> :
+                                    <ScrollList {...opendesign_style.designer_margin} handleReload={this.handleReload} reloader={reload}
+                                        manual type="designer" dataList={LikeDesignerInDesigner} dataListAdded={LikeDesignerInDesignerAdded} getListRequest={this.getLikeDesignerInDesignerRequest} />
+                                }
+                            </React.Fragment>
+                            : null}
                     </div>}
-
             </div>
+
         </Wrapper >);
     };
 };

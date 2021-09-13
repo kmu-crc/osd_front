@@ -26,6 +26,7 @@ import Loading from 'components/Commons/Loading';
 
 import new_logo_view from "source/new_logo_view.svg";
 import new_logo_favorite from "source/new_logo_favorite.svg";
+import iconLike from "source/mypage_icon_like.svg";
 import new_logo_share from "source/new_logo_share.svg";
 import new_logo_note from "source/new_logo_note.svg";
 
@@ -40,9 +41,9 @@ import new_logo_msg from "source/new_logo_msg.svg";
 
 
 const Wrapper = styled.div`
-    padding-top:42px;
-    padding-left:38px;
-    padding-right:38px;
+    padding-top: 42px;
+    padding-left: 38px;
+    padding-right: 38px;
 `
 const ChatWrapper = styled.div`
 width:100%;
@@ -76,26 +77,28 @@ align-items:flex-end;
 }
 `;
 const DesignHeader = styled.div`
-    max-width:1740px;
-    min-width:1000px;
-    width:100%;
-    height:307px;
+
+    max-width: 1740px;
+    min-width: ${1000 - (38 * 2)}px;
+    height: 307px;
     border:1px solid #B7B7B7;
     box-shadow: 8px 8px 8px #4141411A;
     display:flex;
-    .thumbnail{
-        max-width:307px;
-        min-width:307px;
-        height:100%;
-        object-fit:cover;
-        overflow:hidden;
-        position:relative;
+
+    .thumbnail {
+        max-width: 307px;
+        min-width: 307px;
+        height: 100%;
+        object-fit: cover;
+        overflow: hidden;
+        position: relative;
     }
+    
     .infoBox{
         padding:12px 22px 12px 22px;
         width:100%;
         .design_name{
-            max-width:1200px;
+            // max-width:1200px;
             width:100%;
             height:42px;
             overflow: hidden; 
@@ -146,7 +149,7 @@ const DesignHeader = styled.div`
             max-width:40px;
             margin-left:8px;
             margin-right:16px;
-            font-family:SpoqaHanSans;
+            font-family:Spoqa Han Sans;
             font-size:19px;
             font-weight:400;
         }
@@ -198,7 +201,14 @@ const DesignHeader = styled.div`
             margin-top:5px;
         }
     }
-
+    // responsive
+    @media only screen and (min-width: 500px) and (max-width: 1300px) {
+        .thumbnail {
+            width: 100%;
+            min-width: 150px;
+            object-fit: contain;
+        }
+    }
 `
 
 const ListItem = styled.div`
@@ -334,10 +344,11 @@ margin-bottom:100px;
 const DesignCommentModalContainer = styled(Modal)`
 max-width:1200px;
 width:100% !important;
-min-height:875px;
+
+min-height: 450px;
 border-radius:0px !important;
-padding:23px 65px 51px 65px;
-margin-bottom:100px;
+padding:23px 65px 51px 65px !important;
+margin-bottom: 100px;
 
 .close-box {
     cursor:pointer;
@@ -588,7 +599,7 @@ class DesignInfo extends Component {
     }
     sendMessage(user_id, nick_name) {
         let href = window.location.href.substring(0, window.location.href.search("designDetail"))
-        window.location.href = href + 'message/' + user_id + '/' + nick_name;
+        window.location.href = '/message/' + user_id + '/' + nick_name;
     }
     goParentDesign = (parent) => {
         window.location.href = geturl() + `/designDetail/${parent}`
@@ -662,6 +673,7 @@ class DesignInfo extends Component {
         const { w } = this.state;
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg
         console.log(DesignDetail);
+
         const MemberModal = () => {
             return (
                 <DesignMemberModalContainer open={isMyDesign && this.state.memberList} closeOnDimmerClick={false} onClose={() => this.setState({ memberList: false })}>
@@ -674,6 +686,7 @@ class DesignInfo extends Component {
                 </DesignMemberModalContainer>
             )
         }
+
         const DesignCommentModal = () => {
             return (
                 <DesignCommentModalContainer open={this.state.comment} onClose={() => this.onClosedCommentModal()}>
@@ -698,7 +711,7 @@ class DesignInfo extends Component {
                     <Cross angle={45} width={30} height={30} />
                 </div>
                 <div className="header-txt">디자인 멤버 목록</div>
-                <div className="list" style={{display:"flex",width:"100%",flexWrap:"wrap"}}>
+                <div className="list" style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
                     {DesignDetail.member && DesignDetail.member.length > 0 &&
                         DesignDetail.member.map((mem, i) =>
                             <DesignMemberListElement face={mem.thumbnail ? mem.thumbnail.s_img : noface} key={i} >
@@ -710,6 +723,7 @@ class DesignInfo extends Component {
                 {/* </DesignMemberList> */}
             </MemberContainer>);
         }
+
         const ForkDesignListModal = () => {
             return (
                 <DesignCommentModalContainer open={this.state.forkDesignList} onClose={() => this.setState({ forkDesignList: false })}>
@@ -731,60 +745,64 @@ class DesignInfo extends Component {
                                 </div>
                             </ListItem>)
                         })}
-                        </div>
+                    </div>
                 </DesignCommentModalContainer>
             );
         }
+
         const LikeDialogModal = () => {
             return (<LikeDialogContainer>
                 <div className="likeDialog">
                     <div className="txt">
                         관심 디자인으로 등록되었습니다.<br />
-                            내 정보에서 확인 가능합니다.
-                            </div>
+                        내 정보에서 확인 가능합니다.
+                    </div>
                 </div>
             </LikeDialogContainer>
             )
         }
-        return (
-        <React.Fragment>
-             {this.state.memberList
-                 ? <MemberModal />
-                 : null}
-             {this.state.comment
-                 ? <DesignCommentModal />
-                 : null}
-             {this.state.likeDialog
-                 ? <LikeDialogModal />
-                 : null}
-             {this.state.forkDesignList
-                 ? <ForkDesignListModal />
-                 : null}
-             {!isMyDesign && this.state.memberList && <MemberListModal />}
+        return (<React.Fragment>
+
+            {this.state.memberList
+                ? <MemberModal />
+                : null}
+            {this.state.comment
+                ? <DesignCommentModal />
+                : null}
+            {this.state.likeDialog
+                ? <LikeDialogModal />
+                : null}
+            {this.state.forkDesignList
+                ? <ForkDesignListModal />
+                : null}
+
+            {!isMyDesign && this.state.memberList && <MemberListModal />}
+
             <Wrapper>
                 <DesignHeader>
                     <div className="thumbnail">
-                        <img className="thumbnail" src={thumbnail}/>
+                        <img className="thumbnail" src={thumbnail} />
                     </div>
                     <div className="infoBox">
                         <div className="design_name">{DesignDetail.title}</div>
                         <div className="row detail_height">
                             <div className="left_box">
                                 <div className="row column">
-                                    <div className="row black_label pointer" style={{cursor:"pointer"}} onClick={this.openMemberList} >
-                                        <TextFormat txt={DesignDetail.userName} chars={11} />
+                                    <div className="row black_label pointer" style={{ cursor: "pointer" }} onClick={this.openMemberList} >
+                                        <TextFormat txt={DesignDetail.userName} chars={6} />
                                         {(DesignDetail.member && DesignDetail.member.length > 1)
-                                        ? `외 ${(DesignDetail.member.length - 1).toString()}명 `
-                                        : null} 
-                                        {WaitingList && WaitingList.length > 0  
-                                         ? <div style={{fontSize:"10px",color:"red"
-                                        }}>new!</div>: null} 
+                                            ? `외 ${(DesignDetail.member.length - 1).toString()}명 `
+                                            : null}
+                                        {WaitingList && WaitingList.length > 0
+                                            ? <div style={{
+                                                fontSize: "10px", color: "red"
+                                            }}>new!</div> : null}
                                     </div>
                                     {DesignDetail.parent_design &&
-                                    <div className="red_label pointer" onClick={() => this.goParentDesign(DesignDetail.parent_design)}>
-                                        {DesignDetail.parent_title.slice(0, 6)}
-                                        {DesignDetail.parent_title.length > 6 && "..."}에서 파생됨
-                                    </div>}
+                                        <div className="red_label pointer" onClick={() => this.goParentDesign(DesignDetail.parent_design)}>
+                                            {DesignDetail.parent_title.slice(0, 6)}
+                                            {DesignDetail.parent_title.length > 6 && "..."}에서 파생됨
+                                        </div>}
                                     <div className="red_label pointer">
                                         {DesignDetail.children_count["count(*)"] > 0 &&
                                             <div onClick={this.openForkList}>
@@ -802,102 +820,81 @@ class DesignInfo extends Component {
                             </div>
                         </div>
                         <div className="bottom_box">
-                                    <img src={new_logo_view} className="asset_icon"/>
-                                    <div className="asset_text">{NumberFormat(Count.view_count || 0)}</div>
-                                    <img src={new_logo_favorite} className="asset_icon"/>
-                                    <div className="asset_text">{NumberFormat(Count.like_count || 0)}</div>
-                                    <img src={new_logo_note} className="asset_icon"/>
-                                    <div className="asset_text">{NumberFormat(Count.comment_count  || 0)}</div>
-                            </div>
+                            <img src={new_logo_view} className="asset_icon" />
+                            <div className="asset_text">{NumberFormat(Count.view_count || 0)}</div>
+                            {/* <img src={new_logo_favorite} className="asset_icon" /> */}
+                            <img src={iconLike} className="asset_icon" />
+                            <div className="asset_text">{NumberFormat(Count.like_count || 0)}</div>
+                            <img src={new_logo_note} className="asset_icon" />
+                            <div className="asset_text">{NumberFormat(Count.comment_count || 0)}</div>
+                        </div>
                     </div>
                     <div className="menuBox">
                         <div>
-                                <div className="fork_label pointer" onClick={() => this.forkDesign()}>파생디자인 생성</div>
-                                    {editor === false ?DesignDetail && DesignDetail.waitingStatus === 1 ?
-                                        <div className="fork_label pointer">
-                                            <div>가입승인 대기중</div>
-                                        </div>
-                                        :
-                                        <div className="fork_label pointer">
-                                            <div onClick={this.joinMember}>멤버 가입 신청</div>
-                                        </div>
-                                        :
-                                        null
-                                    }
-                                
-                                <div className="button_wrap">
+                            <div className="fork_label pointer" onClick={() => this.forkDesign()}>파생디자인 생성</div>
+                            {editor === false ? DesignDetail && DesignDetail.waitingStatus === 1 ?
+                                <div className="fork_label pointer">
+                                    <div>가입승인 대기중</div>
+                                </div>
+                                :
+                                <div className="fork_label pointer">
+                                    <div onClick={this.joinMember}>멤버 가입 신청</div>
+                                </div>
+                                :
+                                null
+                            }
+
+                            <div className="button_wrap">
                                 {isMyDesign === true ?
                                     <div className="button_wrap pointer" onClick={this.gotoDesignModify} >
                                         디자인 수정하기
-                                        <img src={iEdit} className="icon"/>
+                                        <img src={iEdit} className="icon" />
                                     </div>
-                                :
+                                    :
                                     <div className="button_wrap pointer" onClick={this.like}>
                                         관심 디자인 {like ? "취소하기" : "등록하기"}
-                                        <img src={thumbup} className="icon"/>
+                                        <img src={thumbup} className="icon" />
                                     </div>
                                 }
-                                    
-                                </div>
+
+                            </div>
                         </div>
                         <div>
-                                <div className="button_wrap">
-                                    {isMyDesign==true?
-                                    null:
-                                    <div className="button_wrap pointer" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>메시지 보내기<img src={email}  className="icon icon_black"/></div>
-                                    }
-                                </div>
-                                <div className="button_wrap">
-                                    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-                                        <img className="ssl" src={CCL2}/>
-                                        <img className="ssl" src={CCL3}/>
-                                        {DesignDetail&&DesignDetail.is_modify==false?<img className="ssl" src={CCL4}/>:null}
-                                        {DesignDetail&&DesignDetail.is_commercial==false?<img className="ssl" src={CCL5}/>:null}
-                                    </a>
-                                </div>
-                                <div className="date">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
-                                <div className="date">등록일자 {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
+                            <div className="button_wrap">
+                                {isMyDesign == true ?
+                                    null :
+                                    <div className="button_wrap pointer" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>메시지 보내기<img src={email} className="icon icon_black" /></div>
+                                }
+                            </div>
+                            <div className="button_wrap">
+                                <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                                    <img className="ssl" src={CCL2} />
+                                    <img className="ssl" src={CCL3} />
+                                    {DesignDetail && DesignDetail.is_modify == false ? <img className="ssl" src={CCL4} /> : null}
+                                    {DesignDetail && DesignDetail.is_commercial == false ? <img className="ssl" src={CCL5} /> : null}
+                                </a>
+                            </div>
+                            <div className="date">최근 업데이트 {DateFormat(DesignDetail.update_time)}</div>
+                            <div className="date">등록일자 {DesignDetail && new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(DesignDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
                         </div>
                     </div>
                 </DesignHeader>
 
                 <ChatWrapper>
                     <div className="row">
-                    <div className="icon_wrap" onClick={this.openVideoChat}>
-                        <img src={new_logo_msg} className="icon"/>
-                        <div className="icon_label">화상회의</div>
-                    </div>
-                    <div className="icon_wrap" onClick={this.openChat}>
-                    <img src={new_logo_chat} className="icon"/>
-                    <div className="icon_label">채팅</div>
-                    </div>
-                    </div>
-                    {/* <div
-                        className="notice"
-                        title="디자인 멤버들과 화상회의를 시작합니다."
-                        onClick={this.openVideoChat}>
-                        {this.state.liveVC ? <span>ON</span> : null}
-                        <div className="video-chat-icon">
-                            <i className="video icon"></i>
+                        <div
+                            title="디자인 멤버들과 화상회의를 시작합니다."
+                            className="icon_wrap" onClick={this.openVideoChat}>
+                            <img src={new_logo_msg} className="icon" />
+                            <div className="icon_label">화상회의</div>
                         </div>
-                        <div className="text">
-                            {"화상회의"}
+                        <div
+                            title="디자인 멤버들과 채팅을 시작합니다."
+                            className="icon_wrap" onClick={this.openChat}>
+                            <img src={new_logo_chat} className="icon" />
+                            <div className="icon_label">채팅</div>
                         </div>
                     </div>
-
-                    <div
-                        className="notice"
-                        title="디자인 멤버들과 채팅을 시작합니다."
-                        onClick={this.openChat}>
-
-                        {this.state.msg_cnt > 0 ? <span>{this.state.msg_cnt}</span> : null}
-                        <div className="video-chat-icon">
-                            <i className="talk big icon"></i>
-                        </div>
-                        <div className="text">
-                            채팅
-                        </div>
-                    </div> */}
                 </ChatWrapper>
             </Wrapper>
         </React.Fragment >
@@ -1351,7 +1348,7 @@ export default DesignInfo;
 //         text-align: right;
 //         margin-left: auto;
 //         margin-top:5px;
-        
+
 //     }
 // }
 // @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
@@ -1414,7 +1411,7 @@ export default DesignInfo;
 //         color: #707070;
 //         line-height: 30px;
 //         cursor: default;
-        
+
 //         p {
 //             overflow-y: auto;
 //             overflow-x: hidden;
@@ -1485,7 +1482,7 @@ export default DesignInfo;
 //             height:max-content;
 //         }
 //     }
-    
+
 
 // }
 

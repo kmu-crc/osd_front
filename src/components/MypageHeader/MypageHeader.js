@@ -14,14 +14,18 @@ import { SetSession } from 'modules/Sessions';
 
 // css
 const Wrapper = styled.div`
-    margin-top: ${100 + 24}px;
-    margin-left: ${100 + 38}px;
+    // margin-top: ${100 + 24}px;
+    // margin-left: ${100 + 38}px;
+    margin-top: 24px;
+    margin-left: 38px;
+    margin-right: 38px;
     // *{border: 1px solid red;}
 `;
 const MyInfoBox = styled.div`
     padding: 12px 12px 12px 34px;
 
     max-width: 1737px;
+    min-width: ${1000}px;
 
     display: flex;
     flex-direction: row;
@@ -68,8 +72,20 @@ const Details = styled.div`
         letter-spacing: 0px;
         color: #000000;
         opacity: 1;
-     }
-
+    }
+     .cate {
+        margin-top: 5px;
+        width: max-content;
+        height: 28px;
+        text-align: left;
+        font-weight: normal;
+        font-size: 19px;
+        line-height: 28px;
+        font-family: Spoqa Han Sans;
+        letter-spacing: 0px;
+        color: #FF0000;
+        opacity: 1;
+    }
     .about {
         padding-left: 5px;
         padding-right: 10px;
@@ -82,7 +98,7 @@ const Details = styled.div`
         letter-spacing: 0px;
         color: #777777;
         opacity: 1;
-     }
+    }
 
     .count { 
         display: flex;
@@ -230,6 +246,7 @@ class MypageHeader extends Component {
                     <Details>
                         <div className="wrapper">
                             <div className="nick">{MyDetail.nick_name}</div>
+                            <div className="cate">{MyDetail.categoryName}</div>
                             <div className="about">{MyDetail.about_me}</div>
                         </div>
 

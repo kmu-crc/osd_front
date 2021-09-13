@@ -20,26 +20,27 @@ import new_logo_mail from "source/new_logo_mail.svg";
 import new_logo_notifications from "source/new_logo_notifications.svg";
 import new_logo_menu_open from "source/new_logo_menu_open.svg";
 import new_logo_menu_close from "source/new_logo_menu_close.svg";
+
 const HeaderMenu = styled.div`
-    width:100%;
-    height:90px;
-    background-color:${props=>props.bgColor};
-    position:fixed;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    z-index:903;
+    width: 100%;
+    height: 90px;
+    background-color: ${props => props.bgColor};
+    position: fixed;
+    display: flex;
+    // justify-content: space-between;
+    align-items: center;
+    z-index: 903;
     * {
         font-family: Noto Sans KR;
     }
-    .wrap{
-        display:flex;
-        align-items:center;
+    .wrap {
+        display: flex;
+        align-items: center;
     }
-    .menu_nav{
-        width:100px;
+    .menu_nav {
+        min-width: 100px;
         height:90px;
-        display:flexl
+        display:flex;
         justify-content:center;
         align-items:center;
     }
@@ -49,11 +50,11 @@ const HeaderMenu = styled.div`
         cursor:pointer;
     }
     .home_logo{
-        width:122px;
-        height:51px;
-        min-width:122px;
-        min-height:51px;
-        margin-left:38px;
+        width: 120px;
+        height: 51px;
+        min-width: 120px;
+        min-height: 51px;
+        margin-left: 35px;
     }
     .searchBox{
         margin-left:100px;
@@ -80,7 +81,27 @@ const HeaderMenu = styled.div`
         margin-right:46px;
         cursor:pointer;
     }
-    
+   @media only screen and (min-width: 500px) and (max-width: 1300px) {
+        justify-content: start;
+        .home_logo {
+            margin-left: 15px;
+        }
+        .searchBox {
+            margin-left: 15px;
+        }
+        .marginRight1 {
+            // margin-right: 17px;
+            margin-right: 15px;
+        }
+        .design_button {
+            // margin-right: 25px;
+            margin-right: 15px;
+        }
+        .wrap {
+            // margin-left: 35px;
+            // margin-left: 15px;
+        }
+   } 
 `
 
 // const WrapperBox = styled.div`
@@ -267,7 +288,7 @@ const HeaderMenu = styled.div`
 //         }
 //     }
 //     @media only screen and (max-width : 1024px) {
-        
+
 //         min-width:100%;
 //         background-color:#EFEFEF;
 //         display:flex;
@@ -367,73 +388,61 @@ class Header extends Component {
     };
 
     render() {
-        return (
-            <React.Fragment>
-                {
-                    window.location.pathname.indexOf("/sign") != -1?
-                    <HeaderMenu bgColor={"#cccccc"}>
-                        <div className="wrap">
-                        <div className="menu_nav" onClick={()=>{this.props.onClickMenu();}}>
-                            {
-                                this.props.sidemenu == true&&this.props.isLogin?
-                                <img className="menu_icon" src={new_logo_menu_close}/>
-                                :<img className="menu_icon" src={new_logo_menu_open}/>
-                            }
+        return (<React.Fragment>
+            {window.location.pathname.indexOf("/sign") != -1 ?
+                <HeaderMenu bgColor={"#cccccc"}>
+                    <div className="wrap">
+                        <div className="menu_nav" onClick={() => { this.props.onClickMenu(); }}>
+                            <img className="menu_icon" src={this.props.sidemenu == true && this.props.isLogin ? new_logo_menu_close : new_logo_menu_open} />
                         </div>
-                        <a href="/"><img src={new_logo_opendesign} className="home_logo"/></a>
+                    </div>
+
+                    <div style={{ width: "100%", display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+                        <div className="wrap">
+                            <a href="/"><img src={new_logo_opendesign} className="home_logo" /></a>
                         </div>
                         <div className="wrap">
-                        {this.props.userInfo != null ? 
-                            <React.Fragment>
-                            <div className="design_button">디자인 등록</div>
-                            <div className="icon_wrap marginRight1"><AlarmContainer {...this.props} alarm={this.state.alarm} /></div>
-                            <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
-                            </React.Fragment>
-                            :null
-                        }
+                            {this.props.userInfo != null
+                                ? <React.Fragment>
+                                    <div className="design_button">디자인 등록</div>
+                                    <div className="icon_wrap marginRight1"><AlarmContainer {...this.props} alarm={this.state.alarm} /></div>
+                                    <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
+                                </React.Fragment>
+                                : null}
                         </div>
-                    </HeaderMenu>
-                    :
-                    <HeaderMenu bgColor={"#00000033"}>
+                    </div>
+                </HeaderMenu>
+                :
+                <HeaderMenu bgColor={"#00000033"}>
+                    <div className="menu_nav" onClick={() => this.props.onClickMenu()}>
+                        <img className="menu_icon" src={this.props.sidemenu == true ? new_logo_menu_close : new_logo_menu_open} />
+                    </div>
+
+                    <div style={{ width: "100%", display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
                         <div className="wrap">
-                        <div className="menu_nav" onClick={()=>this.props.onClickMenu()}>
-                            {
-                                this.props.sidemenu == true?
-                                <img className="menu_icon" src={new_logo_menu_close}/>
-                                :<img className="menu_icon" src={new_logo_menu_open}/>
-                            }
+                            <a href="/"><img src={new_logo_opendesign} className="home_logo" /></a>
                         </div>
-                        <a href="/"><img src={
-                                window.location.pathname.indexOf("group")!=-1? new_logo_opendesign_green
-                                :window.location.pathname.indexOf("Group")!=-1? new_logo_opendesign_green
-                                :window.location.pathname.indexOf("designer")!=-1? new_logo_opendesign_purple
-                                :window.location.pathname.indexOf("Designer")!=-1? new_logo_opendesign_purple
-                                :window.location.pathname.indexOf("my")!=-1? new_logo_opendesign_red 
-                                :window.location.pathname.indexOf("My")!=-1? new_logo_opendesign_red 
-                                :window.location.pathname.indexOf("design")!=-1? new_logo_opendesign_blue
-                                :window.location.pathname.indexOf("Design")!=-1? new_logo_opendesign_blue
-                                :new_logo_opendesign
-                            } className="home_logo"/></a>
-                        <div className="searchBox">
-                            {window.location.href.search('/search') > -1 ? null :
-                            <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={1} />
-                            }
+
+                        <div className="wrap">
+                            <div className="searchBox">
+                                {window.location.href.search('/search') > -1 ? null : <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={1} />}
                             </div>
                         </div>
-                        <div className="wrap">
-                        {this.props.userInfo != null ? 
-                            <React.Fragment>
-                            <div className="design_button" onClick={()=>{window.location.href = "/createDesign"}}>디자인 등록</div>
-                            <div className="icon_wrap marginRight1"><AlarmContainer {...this.props} alarm={this.state.alarm} /></div>
-                            <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
-                            </React.Fragment>
-                            :null
-                        }
-                        </div>
-                    </HeaderMenu>
 
-                }
-            </React.Fragment>
+                        <div className="wrap">
+                            {this.props.userInfo != null ?
+                                <React.Fragment>
+                                    <div className="design_button" onClick={() => { window.location.href = "/createDesign" }}>디자인 등록</div>
+                                    <div className="icon_wrap marginRight1"><AlarmContainer {...this.props} alarm={this.state.alarm} /></div>
+                                    <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
+                                </React.Fragment>
+                                : null}
+                        </div>
+                    </div>
+                </HeaderMenu>
+
+            }
+        </React.Fragment>
         )
     }
 }

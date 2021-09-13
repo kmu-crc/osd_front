@@ -47,6 +47,14 @@ const Close_ani = keyframes`
   }
 `;
 class SignInContainer extends Component {
+
+  componentDidUpdate() {
+    const { userInfo } = this.props;
+    if (userInfo) {
+      window.location.href = "/";
+    }
+  }
+
   render() {
     return (
       <React.Fragment>

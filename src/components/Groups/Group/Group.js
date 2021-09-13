@@ -540,7 +540,7 @@ export default Group
   //     }
   //     .asset_num{
   //       font-size:12px;
-  //       font-family:SpoqaHanSans;
+  //       font-family:Spoqa Han Sans;
   //       font-weight:Regular;
   //       margin-right:13px;
   //     }

@@ -69,15 +69,15 @@ const MemberListItem = styled.li`
   }
 `
 const SearchInputText = styled(FormInput)`
-    box-shadow:0px 1px 2px #000000 ;
-    border-radius:10px;
+    box-shadow: 0px 1px 2px #000000;
+    // border-radius:10px;
     padding-left:10px;
     outline:none;
     border:none;
-    width:${props=>props.InputWidth==null?"353px":props.InputWidth+"%"};
+    width:${props => props.InputWidth == null ? "350px" : props.InputWidth + "%"};
     height:40px;
-    font-size:18px;
-     margin-left:${props=>props.marginLeft==null?"20px":props.marginLeft+"px"};
+    // font-size:18px;
+    margin-left: ${props => props.marginLeft == null ? "20px" : props.marginLeft + "px"};
 
 `
 
@@ -104,7 +104,7 @@ class SearchMember extends Component {
   addMember = async (data) => {
     //console.log("ADDMEMBER:", data)
     await this.props.addMemberItem && this.props.addMemberItem(data.uid, data.nick_name);
-    await this.props.setMsgID&&this.props.setMsgID(data.group_id==null?-1:data.group_id,data.uid,data.nick_name);
+    await this.props.setMsgID && this.props.setMsgID(data.group_id == null ? -1 : data.group_id, data.uid, data.nick_name);
   }
   closeList = () => {
     //console.log("close")

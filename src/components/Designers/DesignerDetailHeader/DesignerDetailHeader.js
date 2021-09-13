@@ -46,8 +46,12 @@ const LikeDialog = styled.div`
     opacity: 1;
 `;
 const Wrapper = styled.div`
-    margin-top: ${100 + 24}px;
-    margin-left: ${100 + 38}px;
+    margin-top: 24px;
+    margin-left: 38px;
+    margin-right: 38px;
+
+    // margin-top: ${100 + 24}px;
+    // margin-left: ${100 + 38}px;
     // *{border: 1px solid red;}
 `;
 const Thumbnail = styled.div`
@@ -67,6 +71,7 @@ const DesignerInfoBox = styled.div`
     padding: 12px 12px 12px 34px;
 
     max-width: 1737px;
+    min-width: 1000px;
 
     display: flex;
     flex-direction: row;
@@ -91,10 +96,9 @@ const Details = styled.div`
     }
 
     .nick {
-        margin-top: 5px;
         width: max-content;
         height: 41px;
-        text-align: left;
+        text-align: center;
         font-weight: bold;
         font-size: 28px;
         line-height: 41px;
@@ -102,7 +106,7 @@ const Details = styled.div`
         letter-spacing: 0px;
         color: #000000;
         opacity: 1;
-     }
+    }
      .cate {
         margin-top: 5px;
         width: max-content;
@@ -115,12 +119,11 @@ const Details = styled.div`
         letter-spacing: 0px;
         color: #FF0000;
         opacity: 1;
-     }
-
+    }
     .about {
         padding-left: 5px;
         padding-right: 10px;
-        margin-top: 5px;
+        margin-top: 14px;
         text-align: left;
         font-weight: normal;
         font-size: 18px;
@@ -129,7 +132,7 @@ const Details = styled.div`
         letter-spacing: 0px;
         color: #777777;
         opacity: 1;
-     }
+    }
 
     .count { 
         display: flex;
@@ -363,7 +366,7 @@ class DesignerPageHeader extends Component {
                     <Details>
                         <div className="wrapper">
                             <div className="nick">{DesignerDetail.nick_name}</div>
-                            <div className="cate">{DesignerDetail.categoryName}</div>
+                            {DesignerDetail.categoryName ? <div className="cate">{DesignerDetail.categoryName}</div> : null}
                             <div className="about">{DesignerDetail.about_me}</div>
                         </div>
                         <div className="count">

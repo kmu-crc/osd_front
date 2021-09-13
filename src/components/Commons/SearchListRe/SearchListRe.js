@@ -30,7 +30,7 @@ const SearchContainer = styled.div`
         .dropdown{
             max-width:239px;
             max-height:40px !important;     
-            font-family:SpoqaHanSans,Regular;
+            font-family:Spoqa Han Sans,Regular;
             font-size:18px !important;
             background-color:#b6b6b6 !important;
             margin-right:68px;

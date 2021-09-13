@@ -7,20 +7,6 @@ import { FindPwRequest } from "redux/modules/account";
 
 
 class HeaderContainer extends Component {
-    // componentDidMount() {
-    //     this.emptyCache();
-    // }
-    // emptyCache = async () => {
-    //     const cn = await caches.keys();
-    //     if (cn) {
-    //         caches.delete(cn[0]).then(
-    //             result => {
-    //                 if (result) {
-    //                     window.location.reload();
-    //                 }
-    //             });
-    //     }
-    // }
     render() {
         return (<Header {...this.props} style={{ margin: "0 auto" }} />)
     }

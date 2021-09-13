@@ -256,33 +256,33 @@ class MessageDetail extends Component {
   checkHasMore = (list) => {
     if (list == null) return false;
     return list && list.length < 10 ? false : true;
-  };
+  }
+  
   render() {
     const list = this.state.nowList;
     const myId = this.props.userInfo.uid;
-    const arrMsg = list && list.length > 0 ? list.map(item => {
-      let isMyMsg = true;
-      if (item.from_user_id !== myId) isMyMsg = false;
-      // console.log(item.message);
-      return (
-        <React.Fragment key={item.uid}>
-          <LoadMessage isMyMsg={isMyMsg} msgText={item.message === "" ? "\u00a0" : item.message} updateTime={CheckedTime(item.create_time)} />
-        </React.Fragment>
-      );
-    }) : null
-    //  <div style={{ fontFamily: "Noto Sans KR", fontSize: "28px", fontWeight: 500, lineHeight: "29px", color: "#707070" }}> 메시지는 1년간 보관됩니다.</div>
+    const arrMsg = list && list.length > 0
+      ? list.map(item => {
+        let isMyMsg = true;
+        if (item.from_user_id !== myId) {
+          isMyMsg = false;
+        }
+        return (<LoadMessage
+          key={item.uid}
+          isMyMsg={isMyMsg}
+          msgText={item.message === "" ? "\u00a0" : item.message}
+          updateTime={CheckedTime(item.create_time)}
+        />);
+      })
+      : null // <div style={{ fontFamily: "Noto Sans KR", fontSize: "28px", fontWeight: 500, lineHeight: "29px", color: "#707070" }}> 메시지는 1년간 보관됩니다.</div>
 
-    return (
-      <React.Fragment>
-        <MsgSectionBoard
-          onScroll={this.handleScroll}
-          height={this.props.height}
-          id="MsgBox"
-          onClick={this.ScrollDown}>
-          {arrMsg}
-        </MsgSectionBoard>
-      </React.Fragment >
-    );
+    return (<MsgSectionBoard
+              id="MsgBox" 
+              height={this.props.height}
+              onScroll={this.handleScroll} 
+              onClick={this.ScrollDown}>
+      {arrMsg}
+    </MsgSectionBoard>);
   }
 }
 

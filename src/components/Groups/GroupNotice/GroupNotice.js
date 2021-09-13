@@ -44,7 +44,15 @@ const Wrapper = styled.div`
     box-shadow: 8px 8px 8px #0000002B;
     cursor:pointer;
   }
-
+  @media only screen and (min-width:0px) and (max-width:1366px) {
+    .button_ {
+      width: max-content;
+      padding: 1px;
+      height: 41px;
+      font-size: 15px;
+    }
+    .marginRight2{margin-right: 10px;}
+  }
 
 `;
 
