@@ -20,6 +20,7 @@ import GroupNoticeContainer from "containers/Groups/GroupNoticeContainer";
 
 import new_logo_view from "source/new_logo_view.svg";
 import new_logo_favorite from "source/new_logo_favorite.svg";
+import iconLike from "source/mypage_icon_like.svg";
 import new_logo_share from "source/new_logo_share.svg";
 import new_logo_note from "source/new_logo_note.svg";
 const NormalIcon = styled.div`
@@ -45,18 +46,23 @@ const NewAlarmLogo = styled.div`
     }
 `;
 const GroupSummary = styled.div`
-    max-width:1740px;
-    width:100%;
-    height:315px;
+  margin-top: 24px;
+  margin-left: 38px;
+  margin-right: 38px;
+
+  max-width: 1760px;
+  min-width: ${props => props.isEditor ? 1124 : 1000}px;
+    height: 319px;
     box-shadow: 8px 8px 8px #4141411A;
-    border:1px solid #eaeaea;
-    display:flex;
-    .thumbnail{
-        min-width:319px;
-        width:319px;
-        height:100%;
-        object-fit:cover;
-        border:1px solid #eaeaea;
+    border: 1px solid #eaeaea;
+
+    display: flex;
+
+    .thumbnail {
+        width: 319px;
+        height: 319px;
+        object-fit: cover;
+        border: 1px solid #eaeaea;
     }
     .ButtonItem{
         display:flex;
@@ -70,6 +76,7 @@ const GroupSummary = styled.div`
     }
     .content_wrapper{
         width:100%;
+        // min-width: px;
         height:100%;
         padding:16px;
     }
@@ -85,6 +92,7 @@ const GroupSummary = styled.div`
         align-items:center;
         justify-content:space-between;
         margin-bottom:15px;
+        margin-right: 38px;
         .row{
             display:flex;
             align-items:center;
@@ -139,13 +147,19 @@ const GroupSummary = styled.div`
             display:flex;
             flex-direction:column;
             .explain{
-                width:100%;
-                height:150px;
+                width: 100%;
+                // width: 250px;
+                height: 150px;
             }
-            .group_summary{width:100%;max-width:200px;font-size:16px;font-weight:500;}
-            .explanationRegion{
+            .group_summary{
                 width:100%;
-                height:120px;
+                max-width:200px;
+                font-size:16px;
+                // font-weight:500;
+            }
+            .explanationRegion{
+                width: 100%;
+                height: 120px;
                 overflow-y:auto;
                 padding-top:10px;
                 padding-bottom:10px;
@@ -174,7 +188,7 @@ const GroupSummary = styled.div`
                 max-width:40px;
                 margin-left:8px;
                 margin-right:16px;
-                font-family:SpoqaHanSans;
+                font-family:Spoqa Han Sans;
                 font-size:19px;
                 font-weight:400;
             }
@@ -182,6 +196,7 @@ const GroupSummary = styled.div`
 
     }
     .sideBox{
+        // margin-right: 38px;
         min-width:200px;
         padding-top:28px;
         padding-bottom:18px;
@@ -208,6 +223,23 @@ const GroupSummary = styled.div`
     .marginRight{margin-right:17px;}
     .bg_black{background-color:black;}
     .bg_green{background-color:#1E9B79;}
+    
+    // responsive
+    @media only screen and (min-width: 500px) and (max-width: 1300px) {
+        .thumbnail {
+            width: 100%;
+            min-width: 150px;
+            object-fit: cover;
+        }
+        // .content_wrapper{
+        //     margin-right: 38px;
+        //     .header_box {
+        //         width: 100%;
+        //         min-width: 250px;
+        //     }
+        // }
+    }
+
 `
 
 class GroupInfoComponent extends Component {
@@ -308,106 +340,103 @@ class GroupInfoComponent extends Component {
         const group_user_id = GroupDetail && GroupDetail.user_id;
         const user_id = userInfo && userInfo.uid;
         const isEditor = group_user_id === user_id;
-        const { w, manager } = this.state;
-        const { couldJoinVChat } = this.state;
-        console.log(this.props);
-        return (
-            <React.Fragment>
-                <GroupSummary>
-                    <img src={(GroupDetail && GroupDetail.img && GroupDetail.img.l_img) ? GroupDetail.img.l_img : noimg} className="thumbnail"/>
-                    <div className="content_wrapper">
-                         <div className="header_box">
-                             <div className="row">
-                                 <div className="title_wrapper">
-                                     <div className="_title ellipsis">{GroupDetail.title}</div>
-                                 </div>
-                             </div>
-                             <div className="marginLeft"><JoinGroupContainer isIcon={false}/></div>
+        const { w, couldJoinVChat, manager } = this.state;
 
-                             {/* <div className="update_time">최근 업데이트 {GroupDetail && DateFormat(GroupDetail.update_time)}</div> */}
-                         </div>
-
-                         <div className="content_box">
-                             <div className="infoBox">
-                                 
-                                 {/* explain --- */}
-                                 <div className="explain">
-                                    <div className="flex">
-                                        {GroupDetail.grand_parentTitle ?
-                                                <React.Fragment>
-                                                <div onClick={() => this.gotoGroup(GroupDetail.grand_parentId)}className="group_summary ellipsis">
-                                                        {GroupDetail.grand_parentTitle}
-                                                    
-                                                </div>
-                                                <Icon className="triangle right" size="large" color="grey" />
-                                                </React.Fragment>
-                                            : null}
-                                        {GroupDetail.parentName ?
-                                                <React.Fragment>
-                                                <div onClick={() => this.gotoGroup(GroupDetail.parentId)} className="group_summary ellipsis">
-                                                        {GroupDetail.parentName} 
-                                                </div>
-                                                <Icon className="triangle right" size="large" color="grey" />
-                                                </React.Fragment>
-                                        : null}
-                                        <div className="group_summary ellipsis">{GroupDetail.title}</div>
-                                    </div>
-                                    <div className="explanationRegion">
-                                        <p
-                                            dangerouslySetInnerHTML={{
-                                                __html: GroupDetail.explanation
-                                                    ? GroupDetail.explanation.replace(/\n/g, "<br/>")
-                                                    : null
-                                        }} />
-                                    </div>
-                                  </div>
-                                  {/* explain ---  */}
-
-                                  
-                                  <div className="nick_name">{`개설자 : ${GroupDetail.userName}`}</div>
-                                  <div className="footerBox">
-                                        <img src={new_logo_view} className="asset_icon"/>
-                                        <div className="asset_text">{NumberFormat(GroupDetail.view || 0)}</div>
-                                        <img src={new_logo_favorite} className="asset_icon"/>
-                                        <div className="asset_text">{NumberFormat(GroupDetail.like || 0)}</div>
-                                        <img src={new_logo_note} className="asset_icon"/>
-                                        <div className="asset_text">{NumberFormat(GroupDetail.design || 0 + GroupDetail.group || 0)}</div>
-                                        {/* <div className="button_ marginRight bg_green"></div> */}
-                                        <div style={{marginLeft:"38px"}}>{GroupDetail.uid ? <GroupNoticeContainer loading={this.props.loading} id={GroupDetail.uid} /> : ""}</div>
-                                  </div>
-                             </div>
-                             <div className="sideBox">
-                                        <div>
-                                            {isEditor
-                                                ? <React.Fragment>                                
-                                                    <div className="ButtonItem" onClick={this.gotoGroupModify}>
-                                                        <div className="button_text_label">그룹 정보 수정하기</div>
-                                                        <NormalIcon imageURL={iEdit} opacity={0.5} /></div>                                 
-                                                    <div className="ButtonItem" onClick={this.changeEditMode}>                                  
-                                                        <div className="button_text_label displayFlex">                                 
-                                                            {manager ? "관리모드 종료" : "그룹 관리하기"}</div>
-                                                        <NormalIcon imageURL={iINOUT} opacity={0.5} />
-                                                        {this.props.waitingDesign.length > 0 || this.props.waitingGroup.length > 0 ?
-                                                            manager ? null : <NewAlarmLogo><div className="circle" /></NewAlarmLogo>
-                                                            : null}
-                                                    </div>                                  
-                                                </React.Fragment>
-                                                : <React.Fragment>
-                                                    <div className="ButtonItem" onClick={this.like}>
-                                                        <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
-                                                        <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} /></div>                                   
-                                                </React.Fragment>}
-                                        </div>
-                                        <div className="date_time">
-                                            <div className="time_detail">최근 업데이트 {GroupDetail && DateFormat(GroupDetail.update_time)}</div>
-                                            <div className="time_detail" style={{marginTop:"8px"}}>등록 일자 {GroupDetail && new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
-                                        </div>
-                                </div>
-                         </div>
+        return (<GroupSummary isEditor={isEditor}>
+            <img src={(GroupDetail && GroupDetail.img && GroupDetail.img.l_img) || noimg} className="thumbnail" />
+            <div className="content_wrapper">
+                <div className="header_box">
+                    <div className="row">
+                        <div className="title_wrapper">
+                            <div className="_title ellipsis">{GroupDetail.title}</div>
+                        </div>
                     </div>
-                </GroupSummary>
-            </React.Fragment>
-        )
+                    <div className="marginLeft"><JoinGroupContainer isIcon={false} /></div>
+
+                    {/* <div className="update_time">최근 업데이트 {GroupDetail && DateFormat(GroupDetail.update_time)}</div> */}
+                </div>
+
+                <div className="content_box">
+                    <div className="infoBox">
+
+                        {/* explain --- */}
+                        <div className="explain">
+                            <div className="flex">
+                                {GroupDetail.grand_parentTitle ?
+                                    <React.Fragment>
+                                        <div onClick={() => this.gotoGroup(GroupDetail.grand_parentId)} className="group_summary ellipsis">
+                                            {GroupDetail.grand_parentTitle}
+
+                                        </div>
+                                        <Icon className="triangle right" size="large" color="grey" />
+                                    </React.Fragment>
+                                    : null}
+                                {GroupDetail.parentName ?
+                                    <React.Fragment>
+                                        <div onClick={() => this.gotoGroup(GroupDetail.parentId)} className="group_summary ellipsis">
+                                            {GroupDetail.parentName}
+                                        </div>
+                                        <Icon className="triangle right" size="large" color="grey" />
+                                    </React.Fragment>
+                                    : null}
+                                <div className="group_summary ellipsis">{GroupDetail.title}</div>
+                            </div>
+                            <div className="explanationRegion">
+                                <p
+                                    dangerouslySetInnerHTML={{
+                                        __html: GroupDetail.explanation
+                                            ? GroupDetail.explanation.replace(/\n/g, "<br/>")
+                                            : null
+                                    }} />
+                            </div>
+                        </div>
+                        {/* explain ---  */}
+
+
+                        <div className="nick_name">{`개설자 : ${GroupDetail.userName}`}</div>
+                        <div className="footerBox">
+                            <img src={new_logo_view} className="asset_icon" />
+                            <div className="asset_text">{NumberFormat(GroupDetail.view || 0)}</div>
+                            {/* <img src={new_logo_favorite} className="asset_icon" /> */}
+                            <img src={iconLike} className="asset_icon" />
+                            <div className="asset_text">{NumberFormat(GroupDetail.like || 0)}</div>
+                            <img src={new_logo_note} className="asset_icon" />
+                            <div className="asset_text">{NumberFormat(GroupDetail.design || 0 + GroupDetail.group || 0)}</div>
+                            {/* <div className="button_ marginRight bg_green"></div> */}
+                            <div style={{ marginLeft: "38px" }}>
+                                {GroupDetail.uid ? <GroupNoticeContainer loading={this.props.loading} id={GroupDetail.uid} /> : ""}</div>
+                        </div>
+                    </div>
+                    <div className="sideBox">
+                        <div>
+                            {isEditor
+                                ? <React.Fragment>
+                                    <div className="ButtonItem" onClick={this.gotoGroupModify}>
+                                        <div className="button_text_label">그룹 정보 수정하기</div>
+                                        <NormalIcon imageURL={iEdit} opacity={0.5} /></div>
+                                    <div className="ButtonItem" onClick={this.changeEditMode}>
+                                        <div className="button_text_label displayFlex">
+                                            {manager ? "관리모드 종료" : "그룹 관리하기"}</div>
+                                        <NormalIcon imageURL={iINOUT} opacity={0.5} />
+                                        {this.props.waitingDesign.length > 0 || this.props.waitingGroup.length > 0 ?
+                                            manager ? null : <NewAlarmLogo><div className="circle" /></NewAlarmLogo>
+                                            : null}
+                                    </div>
+                                </React.Fragment>
+                                : <React.Fragment>
+                                    <div className="ButtonItem" onClick={this.like}>
+                                        <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
+                                        <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} /></div>
+                                </React.Fragment>}
+                        </div>
+                        <div className="date_time">
+                            <div className="time_detail">최근 업데이트 {GroupDetail && DateFormat(GroupDetail.update_time)}</div>
+                            <div className="time_detail" style={{ marginTop: "8px" }}>등록 일자 {GroupDetail && new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </GroupSummary>);
     }
 };
 
@@ -1107,7 +1136,7 @@ export default GroupInfoComponent;
 //     margin-left: auto;
 //     margin-right: 10px;
 //     margin-top: 10px;
-    
+
 //     .notice {
 //         position: relative;
 //         cursor: pointer;
@@ -1123,14 +1152,14 @@ export default GroupInfoComponent;
 //             text-align: center;
 //             font-size: 10px;
 //         };
-    
+
 //         .video-chat-icon {
 //             opacity: 0.6;
 //             background-size: cover;
 //             width: 45px;
 //             height: 45px;
 //         };
-    
+
 //         i {
 //             text-align: center;
 //             line-height: 36px;

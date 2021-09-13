@@ -8,22 +8,13 @@ import {
   GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest,
   GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest
 } from "redux/modules/design";
-import styled from "styled-components";
-
-const Content = styled.div`
-  margin-top:90px;
-  margin-left:100px;
-`
 
 class DesignDetailContainer extends Component {
   render() {
-    return (
-    <Content>
-    <DesignDetail {...this.props} />
-    </Content>
-    )
+    return (<DesignDetail {...this.props} />)
   }
-}
+};
+
 const mapStateToProps = (state) => {
   return {
     DesignForked: state.Design.status.DesignForked,
@@ -39,7 +30,7 @@ const mapStateToProps = (state) => {
     WaitingList: state.Design.status.WaitingList,
     CountDesignComment: state.DesignComment.status.CountDesignComment,
   }
-}
+};
 
 const mapDispatchToProps = (dispatch) => ({
   GetDesignDetailRequest: (id, token) => {

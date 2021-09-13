@@ -15,6 +15,9 @@ const NotFoundContainer = styled.div`
     .main-link {
         margin-top: 50px;
         font-size: 2.5rem;
+        b {
+            color: red;
+        }
     }
     .recommendation {
         margin-top: 50px;
@@ -29,11 +32,11 @@ class NotFound extends Component {
                     페이지를 찾을 수 없습니다.
                 </div>
                 <div className="main-link">
-                    <Link to="/">메인페이지</Link>로 이동합니다.
+                    <Link to="/"><b>메인페이지</b></Link>로 이동합니다.
                 </div>
-                <div className="recommendation">
-                    <h3>이 디자인은 어떠세요?</h3>
-                </div>
+                {/* <div className="recommendation"> */}
+                {/* <h3>이 디자인은 어떠세요?</h3> */}
+                {/* </div> */}
             </NotFoundContainer>
         </ClientTemplate>)
     }

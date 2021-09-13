@@ -124,7 +124,7 @@ const MenuItem = styled.div`
     width:100%;
     text-align:center;
     font-size:18px;
-    font-family:SpoqaHanSans;
+    font-family:Spoqa Han Sans;
     color:white;
     background-color:${props=>props.isSelect == true ? "rgba(255,255,255,0.53)" : null};
     cursor:pointer;

@@ -13,6 +13,11 @@ import NumberFormat from "modules/NumberFormat"
 import { geturl } from "config"
 
 // CSS 
+const DesignElement_empty = styled.div`
+  width: 330px;
+  height: 330px;
+  border-radius: 15px;
+`
 const DesignElement = styled.div`
   *{
     cursor:pointer;
@@ -185,33 +190,40 @@ class Design extends Component {
     const thumbnail = data.thumbnailUrl
     const isForked = this.props.forked || data.parent_design;
     return (
-      <DesignElement onClick={this.gotoDetailPage} img={(thumbnail === null ? noimg : thumbnail.l_img === null ? noimg : thumbnail.l_img)}>
-        {/* <div className="cover" /> */}
-        {isForked && <div className="forked" />}
-        <div className="categoryName">{data.categoryName}</div>
-        <div className="innerbox">
-          <div className="design-title">
-            {/* {data.title} */}
-            <TextFormat tip width="100%" txt={data.title} single />
-          </div>
-          <div className="user-update-wrapper">
-            <div style={{ textShadow: "1px 1px 2px #707070", fontWeight: "500", fontSize: "1.25rem", width: "200px" }}>
-              <TextFormat tip txt={data.userName} width="100%" />
+      <React.Fragment>
+        {
+          this.props.empty == null?
+          <DesignElement onClick={this.gotoDetailPage} img={(thumbnail === null ? noimg : thumbnail.l_img === null ? noimg : thumbnail.l_img)}>
+          {/* <div className="cover" /> */}
+          {isForked && <div className="forked" />}
+          <div className="categoryName">{data.categoryName}</div>
+          <div className="innerbox">
+            <div className="design-title">
+              {/* {data.title} */}
+              <TextFormat tip width="100%" txt={data.title} single />
             </div>
-            <div style={{ textShadow: "2px 2px 6px gray", fontSize: "1.15rem", width: "max-content" }}>
-              {DateFormat(data.update_time)}
+            <div className="user-update-wrapper">
+              <div style={{ textShadow: "1px 1px 2px #707070", fontWeight: "500", fontSize: "1.25rem", width: "200px" }}>
+                <TextFormat tip txt={data.userName} width="100%" />
+              </div>
+              <div style={{ textShadow: "2px 2px 6px gray", fontSize: "1.15rem", width: "max-content" }}>
+                {DateFormat(data.update_time)}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="counter">
-          <div className="view"><IconView width="22px" height="11px" fill="white" /></div>
-          <div className="view-count">{NumberFormat(data.view_count)}</div>
-          <div className="like"><img alt="icon" src={iThumbUp} /></div>
-          <div className="like-count">{NumberFormat(data.like_count)}</div>
-          <div className="fork"><img alt="icon" src={iForked} /></div>
-          <div className="fork-count">{NumberFormat(data.children_count) || 0}</div>
-        </div>
-      </DesignElement >
+          <div className="counter">
+            <div className="view"><IconView width="22px" height="11px" fill="white" /></div>
+            <div className="view-count">{NumberFormat(data.view_count)}</div>
+            <div className="like"><img alt="icon" src={iThumbUp} /></div>
+            <div className="like-count">{NumberFormat(data.like_count)}</div>
+            <div className="fork"><img alt="icon" src={iForked} /></div>
+            <div className="fork-count">{NumberFormat(data.children_count) || 0}</div>
+          </div>
+        </DesignElement >
+        :
+        <DesignElement_empty/>
+        }
+      </React.Fragment>
     )
   }
 }

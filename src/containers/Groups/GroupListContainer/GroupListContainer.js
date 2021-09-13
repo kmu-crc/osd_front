@@ -10,7 +10,7 @@ import Category from "components/Commons/Category"
 
 const Wrapper = styled.div`
   // margin-left:100px;
-  margin-top:90px;
+  // margin-top:90px;
   .category_wrapper{
     padding-left:24px;
     padding-top:19px;

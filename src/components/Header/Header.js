@@ -41,26 +41,27 @@ const Profile = styled.div`
         :"red"
     };
 `
+
 const HeaderMenu = styled.div`
-    width:100%;
-    height:90px;
-    background-color:${props=>props.bgColor};
-    position:fixed;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    z-index:903;
+    width: 100%;
+    height: 90px;
+    background-color: ${props => props.bgColor};
+    position: fixed;
+    display: flex;
+    // justify-content: space-between;
+    align-items: center;
+    z-index: 903;
     * {
         font-family: Noto Sans KR;
     }
-    .wrap{
-        display:flex;
-        align-items:center;
+    .wrap {
+        display: flex;
+        align-items: center;
     }
-    .menu_nav{
-        width:100px;
+    .menu_nav {
+        min-width: 100px;
         height:90px;
-        display:flexl
+        display:flex;
         justify-content:center;
         align-items:center;
         background-color:${
@@ -79,11 +80,11 @@ const HeaderMenu = styled.div`
         cursor:pointer;
     }
     .home_logo{
-        width:122px;
-        height:51px;
-        min-width:122px;
-        min-height:51px;
-        margin-left:38px;
+        width: 120px;
+        height: 51px;
+        min-width: 120px;
+        min-height: 51px;
+        margin-left: 35px;
     }
     .searchBox{
         margin-left:100px;
@@ -118,6 +119,7 @@ const HeaderMenu = styled.div`
     }
 `
 
+   
 function isOpen(ws) { return ws.readyState === ws.OPEN }
 class Header extends Component {
     constructor(props) {
@@ -182,22 +184,31 @@ class Header extends Component {
                                 <img className="menu_icon" src={new_logo_menu_close}/>
                                 :<img className="menu_icon" src={new_logo_menu_open}/>
                             } */}
+
                         </div>
-                        <a href="/"><img src={new_logo_opendesign} className="home_logo"/></a>
+                    </div>
+
+                    <div style={{ width: "100%", display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+                        <div className="wrap">
+                            <a href="/"><img src={
+                                            new_logo_opendesign
+                            } className="home_logo" /></a>
                         </div>
                         <div className="wrap">
-                        {this.props.userInfo != null ? 
-                            <React.Fragment>
-                            <div className="design_button">디자인 등록</div>
-                            <div className="icon_wrap marginRight1"><AlarmContainer {...this.props} alarm={this.state.alarm} /></div>
-                            <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
-                            </React.Fragment>
-                            :null
-                        }
+                            {this.props.userInfo != null
+                                ? <React.Fragment>
+                                    <div className="design_button">디자인 등록</div>
+                                    <div className="icon_wrap marginRight1"><AlarmContainer {...this.props} alarm={this.state.alarm} /></div>
+                                    <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
+                                </React.Fragment>
+                                : null}
                         </div>
-                    </HeaderMenu>
-                    :
-                    <HeaderMenu bgColor={"#00000033"}>
+                    </div>
+                </HeaderMenu>
+                :
+                <HeaderMenu bgColor={"#00000033"}>
+
+                    <div style={{ width: "100%", display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
                         <div className="wrap">
                         <div className="menu_nav">
                             {/* {
@@ -214,37 +225,38 @@ class Header extends Component {
                                 onClick={()=>this.props.onClickLogin()}>로그인</div>
                             }
                         </div>
+                        <div className="wrap">
                         <a href="/"><img src={
-                                window.location.pathname.indexOf("group")!=-1? new_logo_opendesign_green
-                                :window.location.pathname.indexOf("Group")!=-1? new_logo_opendesign_green
-                                :window.location.pathname.indexOf("designer")!=-1? new_logo_opendesign_purple
-                                :window.location.pathname.indexOf("Designer")!=-1? new_logo_opendesign_purple
-                                :window.location.pathname.indexOf("my")!=-1? new_logo_opendesign_red 
-                                :window.location.pathname.indexOf("My")!=-1? new_logo_opendesign_red 
-                                :window.location.pathname.indexOf("design")!=-1? new_logo_opendesign_blue
-                                :window.location.pathname.indexOf("Design")!=-1? new_logo_opendesign_blue
-                                :new_logo_opendesign
-                            } className="home_logo"/></a>
-                        <div className="searchBox">
-                            {window.location.href.search('/search') > -1 ? null :
-                            <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={1} />
-                            }
-                            </div>
+                            window.location.pathname.indexOf("designer")!=-1?`${new_logo_opendesign_purple}`
+                            :window.location.pathname.indexOf("Designer")!=-1?`${new_logo_opendesign_purple}`
+                            :window.location.pathname.indexOf("design")!=-1?`${new_logo_opendesign_blue}`
+                            :window.location.pathname.indexOf("Design")!=-1?`${new_logo_opendesign_blue}`
+                            :window.location.pathname.indexOf("group")!=-1?`${new_logo_opendesign_green}`
+                            :window.location.pathname.indexOf("Group")!=-1?`${new_logo_opendesign_green}`
+                            :`${new_logo_opendesign}`
+                        } className="home_logo" /></a>
+                        </div>
                         </div>
                         <div className="wrap">
-                        {this.props.userInfo != null ? 
-                            <React.Fragment>
-                            <div className="design_button" onClick={()=>{window.location.href = "/createDesign"}}>디자인 등록</div>
-                            <div className="icon_wrap marginRight1"><AlarmContainer {...this.props} alarm={this.state.alarm} /></div>
-                            <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
-                            </React.Fragment>
-                            :null
-                        }
+                            <div className="searchBox">
+                                {window.location.href.search('/search') > -1 ? null : <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={1} />}
+                            </div>
                         </div>
-                    </HeaderMenu>
 
-                }
-            </React.Fragment>
+                        <div className="wrap">
+                            {this.props.userInfo != null ?
+                                <React.Fragment>
+                                    <div className="design_button" onClick={() => { window.location.href = "/createDesign" }}>디자인 등록</div>
+                                    <div className="icon_wrap marginRight1"><AlarmContainer {...this.props} alarm={this.state.alarm} /></div>
+                                    <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
+                                </React.Fragment>
+                                : null}
+                        </div>
+                    </div>
+                </HeaderMenu>
+
+            }
+        </React.Fragment>
         )
     }
 }

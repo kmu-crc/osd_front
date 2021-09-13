@@ -77,14 +77,18 @@ const Client = styled.div`
   width:100%;
   display:flex;
   justify-content:center;
-
+  ${window.location.pathname == "/"?
+  null:
+  `
+  padding-top:90px;
+  padding-left:100px;
+  `
+  }
   overflow-y: overlay;
   overflow-x: overlay;
   .wrap_children{
     max-width:1920px;
-    // min-width:1000px;
     width:100%;
-
   }
 `
 const Wrapper = styled.div`

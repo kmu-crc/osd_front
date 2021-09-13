@@ -38,7 +38,9 @@ export default class BoardCommentContainer extends Component {
                     this.refresh(group_id, board_id);
                 else throw result.success
             })
-            .catch(_ => alert("댓글달기를 하지 못하였습니다."));
+            .catch(_ => {
+                // alert("댓글달기를 하지 못하였습니다.")
+            });
     }
     removecomment = (id) => {
         const { group_id, board_id, token } = this.props;

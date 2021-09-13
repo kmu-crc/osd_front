@@ -10,13 +10,16 @@ import OrderOption from "components/Commons/OrderOption";
 
 //css
 const Wrapper = styled.div`
-    margin-top: ${28}px;
-    margin-left: ${100 + 38}px;
+    margin-top: 28px;
+    margin-left: 38px;
+    margin-right: 38px;
 
+    // margin-left: ${100 + 38}px;
     // *{border: 1px solid red;}
 
     .menu-container {
         max-width: 1737px;
+        min-width: 1000px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -145,11 +148,14 @@ class MypageBody extends Component {
         const { Count, MyLikeDesign, MyLikeDesigner, MyLikeDesignAdded, MyLikeDesignerAdded, MyGroup, MyGroupAdded, MyDesign, MyDesignAdded, MyLikeGroup, MyLikeGroupAdded, RelatedGroup, RelatedGroupAdded } = this.props;
         const { this_order } = this.state;
 
+        console.log(this.props, this.state);
+
         return (<Wrapper>
 
             <div className="menu-container">
                 <TabMenu>
                     {/* ({NumberFormat(Count.total_group || 0)}) ({NumberFormat(Count.joined_group || 0)})({NumberFormat(Count.total_design || 0) + (Count.joined_design || 0)})({NumberFormat(Count.total_favorite || 0)})*/}
+                    <a onClick={() => this.changeCategory(4)}><div className={`tab ${this.state.cateIndex === 4 ? "selected" : ""}`}>경험</div></a>
                     <a onClick={() => this.changeCategory(0)}><div className={`tab ${this.state.cateIndex === 0 ? "selected" : ""}`}>그룹</div></a>
                     <a onClick={() => this.changeCategory(1)}><div className={`tab ${this.state.cateIndex === 1 ? "selected" : ""}`}>참여그룹</div></a>
                     <a onClick={() => this.changeCategory(2)}><div className={`tab ${this.state.cateIndex === 2 ? "selected" : ""}`}>디자인</div></a>
@@ -161,6 +167,9 @@ class MypageBody extends Component {
                 {this.state.cateIndex === 2 && <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getMyDesignListRequest)} selected={this_order} />}
 
             </div>
+
+            {this.state.cateIndex === 4 &&
+                <div>{ }</div>}
 
             {this.state.cateIndex === 0 &&
                 <div style={{ paddingTop: "37px" }}>
@@ -185,27 +194,40 @@ class MypageBody extends Component {
                 </div>}
 
             {this.state.cateIndex === 3 &&
-                <div>
-                    <div className="interested">관심있는 디자인({NumberFormat(Count.like_design)})</div>
-                    {this.props.status === "INIT"
-                        ? <Loading />
-                        : <ScrollList manual {...opendesign_style.design_margin} type="design" dataList={MyLikeDesign} dataListAdded={MyLikeDesignAdded} getListRequest={this.getLikeDesignList} />}
+                <div style={{ paddingTop: "37px" }}>
+                    {Count.like_design > 0
+                        ? <React.Fragment>
+                            <div className="interested">관심있는 디자인({NumberFormat(Count.like_design)})</div>
+                            {this.props.status === "INIT"
+                                ? <Loading />
+                                : <ScrollList manual {...opendesign_style.design_margin} type="design" dataList={MyLikeDesign} dataListAdded={MyLikeDesignAdded} getListRequest={this.getLikeDesignList} />}
+                        </React.Fragment>
+                        : null}
+                    {Count.like_group > 0
+                        ? <React.Fragment>
+                            <div className="interested">관심있는 그룹({NumberFormat(Count.like_group)})</div>
+                            {this.props.status === "INIT"
+                                ? <Loading />
+                                : <ScrollList manual {...opendesign_style.group_margin} type="group" dataList={MyLikeGroup} dataListAdded={MyLikeGroupAdded} getListRequest={this.getLikeGroupList} />}
+                        </React.Fragment>
+                        : null}
 
-                    <div className="interested">관심있는 그룹({NumberFormat(Count.like_group)})</div>
-                    {this.props.status === "INIT"
-                        ? <Loading />
-                        : <ScrollList manual {...opendesign_style.group_margin} type="group" dataList={MyLikeGroup} dataListAdded={MyLikeGroupAdded} getListRequest={this.getLikeGroupList} />}
-
-                    <div className="interested">관심있는 디자이너({NumberFormat(Count.like_designer)})</div>
-                    {this.props.status === "INIT"
-                        ? <Loading />
-                        : <ScrollList manual {...opendesign_style.designer_margin} type="designer" dataList={MyLikeDesigner} dataListAdded={MyLikeDesignerAdded} getListRequest={this.getLikeDesignerList} />}
+                    {Count.like_designer > 0
+                        ? <React.Fragment>
+                            <div className="interested">관심있는 디자이너({NumberFormat(Count.like_designer)})</div>
+                            {this.props.status === "INIT"
+                                ? <Loading />
+                                : <ScrollList manual {...opendesign_style.designer_margin} type="designer" dataList={MyLikeDesigner} dataListAdded={MyLikeDesignerAdded} getListRequest={this.getLikeDesignerList} />}
+                        </React.Fragment>
+                        : null}
                 </div>}
+
         </Wrapper>);
     };
 };
 
 export default MypageBody;
+
 {/* <MypageBodyComp>
                 <div className="MypageCategory"></div>
 
