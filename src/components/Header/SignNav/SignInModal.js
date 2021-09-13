@@ -179,6 +179,21 @@ const Wrapper = styled.div`
     }
     .marginTop1{margin-top:36px;}
     .marginTop2{margin-top:68px;}
+
+    @media only screen and (min-width : 500px) and (max-width:1000px) {
+        .label{
+            margin-bottom:20px;
+        }
+        .flexCenter{
+            flex-wrap:wrap;
+        }
+        .save{
+            width:100%;
+            margin-left:0px;
+            display:flex;
+            justify-content:flex-end;
+        }
+    }
 `
 const InputText = styled.input`
     min-width:300px;

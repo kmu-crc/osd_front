@@ -9,7 +9,7 @@ import { alert } from "components/Commons/Alert/Alert";
 import opendesign_style from "opendesign_style";
 import { confirm } from "components/Commons/Confirm/Confirm";
 
-const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }]
+const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }];
 const Wrapper =styled.div`
   display:flex;
   .nav{
@@ -28,12 +28,10 @@ const Wrapper =styled.div`
         font-family:Spoqa Han Sans Neo;
         font-weight:Medium;
         font-size:28px;
-        color:#1E9B79;
-        cursor:pointer;
+        color:black;
       }
-      .deleteButton{
-        margin-top:714px;
-        color:red;
+      .delete{
+        color:#1E9B79;
       }
       .menu_marginTop{margin-top:57px;}
   }
@@ -53,15 +51,81 @@ const Wrapper =styled.div`
         width:100%;
       }
       .buttonWrap{
+        min-height:920px;
         display:flex;
-        width:250px;
-        padding-top:822px;
+        justify-content:flex-end;
+        align-items:flex-end;
+        padding-bottom:50px;
+
         .button{cursor:pointer;width:86px;height:49px;display:flex;justify-content:center;align-items:center;color:white;font-size:28px;font-family:Spoqa Han Sans Neo;}
         .grey{background-color:#8D8D8D;}
         .red{background-color:red;}
       }
   }
+
+  @media only screen and (min-width : 500px) and (max-width:1700px) {
+    display:flex;
+    flex-direction:column;
+    .content{
+      display:flex;
+      flex-direction:column;
+      .buttonWrap{
+        padding-right:30px;
+        width:100%;
+        min-width:1000px;
+        height:max-content;
+        min-height:max-content;
+        margin-top:30px;
+      }
+    }
+    .vline{
+      width:96%;
+      min-width:1000px;
+      margin:0;
+      margin-left:auto;
+      margin-right:auto;
+      height:0px;
+      border-bottom:1px solid #CCCCCC;
+      margin-top:60px;
+
+    }
+    .nav{
+      min-width:1000px;
+      width:100%;
+      height:100px;
+      padding:36px 38px;
+      display:flex;
+      flex-direction:row;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:center;
+      .title{
+        height:40px;
+        margin-bottom:32px;
+        font-family:Spoqa Han Sans Neo;
+        font-weight:500;
+        font-size:28px;
+        width:100%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+      }
+      .menu{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-family:Spoqa Han Sans Neo;
+        font-size:28px;
+        cursor:pointer;
+        min-height:40px;
+      }
+      .menu_marginTop{margin-top:0px;}
+      .borderBottom{border:none;}
+      .delete{margin:0;margin-left:50px;}
+    }
+  }
 `
+
 class CreateGroup extends Component {
 
   constructor(props) {
@@ -214,7 +278,7 @@ class CreateGroup extends Component {
               return (
               <div className="menu menu_marginTop " onClick={() => this.gotoStep(index)}>기본 정보</div>
               )})}
-              <div className="menu deleteButton" onClick={this.handleOnClickDeleteDesign} >그룹 삭제하기</div>
+              <div className="menu deleteButton delete" onClick={this.handleOnClickDeleteDesign} >그룹 삭제하기</div>
             </div>
             <div className="vline"/>
             <div className="content">

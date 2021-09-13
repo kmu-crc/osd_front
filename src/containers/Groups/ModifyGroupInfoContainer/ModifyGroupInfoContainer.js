@@ -6,8 +6,8 @@ import { alert } from "components/Commons/Alert/Alert";
 import styled from "styled-components";
 
 const Content = styled.div`
-  margin-left:100px;
-  margin-top:90px;
+  // margin-left:100px;
+  // margin-top:90px;
 `
 
 class ModifyGroupInfoContainer extends Component {

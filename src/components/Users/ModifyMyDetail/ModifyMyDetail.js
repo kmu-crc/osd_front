@@ -14,12 +14,13 @@ import opendesign_style from "opendesign_style";
 import { SetSession } from 'modules/Sessions';
 
 const Wrapper = styled.div`
-  width: 1620px;
-  margin-left: ${100 + 38}px;
-  margin-top: ${90 + 32}px;
-
-  // *{ border:1px solid red; }
-  // background-color: #EFEFEF;
+  max-width: 1620px;
+  min-width: 1000px;
+  width:100%;
+  margin-left: ${38}px;
+  margin-top: ${32}px;
+  // margin-left: ${100 + 38}px;
+  // margin-top: ${90 + 32}px;
 
   display: flex;
   flex-direction: row;
@@ -28,6 +29,15 @@ const Wrapper = styled.div`
     margin-top: 8px;
     height: 1000px;
     border-left: 2px solid #CCCCCC;
+  }
+
+  @media only screen and (min-width : 500px) and (max-width:1600px) {
+    flex-direction:column;
+    // margin-left: 0px;
+    align-items:center;
+    .split{
+      height:0px;
+    }
   }
 `;
 const NavMenu = styled.div`
@@ -82,49 +92,18 @@ const NavMenu = styled.div`
       border-bottom: 2px solid #707070;
     }
   }
-  // min-width:433px;
-  // height:300px;
-  // position:relative;
-  // .menuBox{
-  //   width:325px;
-  //   position: fixed;
-  //   top:197px;
-  //   margin-left:64px;    
-  //   background-color:#F5F4F4;
-  //   border-radius:5px;
-  // }
-  // .menuItem{
-  //   height:62px;
-  //   padding-left:36px;
-  //   padding-top:18px;
-  //   lineHeight:29px;
-  //   border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
-  //   cursor:pointer;
-  // }
-  // .deleteText{
-  //   font-family:Noto Sans KR;
-  //   font-size:20px;
-  //   font-family:Noto Sans KR;
-  //   font-weight:500;
-  //   text-align:left;
-  //   color:#FF0000;
-  //   border-bottom:${props => props.borderBottom};
-  // }
 
-  // @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-  // and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
-  //   display:flex;
-  //   justify-content:center;
-  //   align-items:center;
-  //   .menuBox{
-  //     margin-left:0px;   
-  //     position: static; 
-  //   }
-  // }
-  // @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-  // and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
-  //   display:none;
-  // }
+  @media only screen and (min-width : 500px) and (max-width:1600px) {
+    .menu-wrapper{
+      display:flex;
+      margin-top:0px;
+      .menu{
+       padding-left:15px;
+       padding-right:15px;
+      }
+      .bottom-border{border:none;}
+    }
+  }
 `;
 const ModifyForm = styled.div`
   margin-left: 39px;
@@ -137,6 +116,9 @@ const ModifyForm = styled.div`
     justify-content: flex-end;
     margin-right: 30px;
     :last-child { margin-right: 0px; }
+  }
+  @media only screen and (min-width : 500px) and (max-width:1600px) {
+    margin-left:0px;
   }
 `;
 
