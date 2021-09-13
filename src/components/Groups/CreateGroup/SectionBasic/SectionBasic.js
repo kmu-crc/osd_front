@@ -7,7 +7,6 @@ const GroupImageText = "그룹 이미지";
 
 const ContentBox = styled.div`
   width:100%;
-  margin-bottom:150px;
   .label{
     display:flex;
     align-items:center;

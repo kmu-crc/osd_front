@@ -31,6 +31,98 @@ import new_logo_share from "source/new_logo_share.svg";
 import new_logo_plus from "source/new_logo_plus.png"
 
 
+const Section = styled.div`
+  display:${props=>props.isNone==true?props.isLast==null?"flex":"flex":"none"};
+  @media only screen and (min-width : 500px) and (max-width:1700px) {
+    display:${props=>props.isNone==true?props.isLast==null?"block":"block":"none"};;
+  }
+`
+const LoadingBox = styled.div`
+  padding-top: 200px;
+  .IconBox {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+  }
+  .loadingText{
+    margin-top: 20px;
+    width: 100%;
+    font-family: Noto Sans KR;
+    font-size: 20px;
+    text-align: center;
+  }
+`;
+const LoadingIconBox = styled.div`
+  width:100px;
+  height:100px;
+  margin:0 auto;
+  background: ${props => `url(${props.imageURL})`};
+  background-position:center center;
+  background-repeat:no-repeat;
+  -webkit-animation: jello-horizontal 0.9s infinite both;
+            animation: jello-horizontal 0.9s infinite both;
+  
+  @-webkit-keyframes jello-horizontal {
+    0% {
+      -webkit-transform: scale3d(1, 1, 1);
+              transform: scale3d(1, 1, 1);
+    }
+    30% {
+      -webkit-transform: scale3d(1.25, 0.75, 1);
+              transform: scale3d(1.25, 0.75, 1);
+    }
+    40% {
+      -webkit-transform: scale3d(0.75, 1.25, 1);
+              transform: scale3d(0.75, 1.25, 1);
+    }
+    50% {
+      -webkit-transform: scale3d(1.15, 0.85, 1);
+              transform: scale3d(1.15, 0.85, 1);
+    }
+    65% {
+      -webkit-transform: scale3d(0.95, 1.05, 1);
+              transform: scale3d(0.95, 1.05, 1);
+    }
+    75% {
+      -webkit-transform: scale3d(1.05, 0.95, 1);
+              transform: scale3d(1.05, 0.95, 1);
+    }
+    100% {
+      -webkit-transform: scale3d(1, 1, 1);
+              transform: scale3d(1, 1, 1);
+    }
+  }
+  @keyframes jello-horizontal {
+    0% {
+      -webkit-transform: scale3d(1, 1, 1);
+              transform: scale3d(1, 1, 1);
+    }
+    30% {
+      -webkit-transform: scale3d(1.25, 0.75, 1);
+              transform: scale3d(1.25, 0.75, 1);
+    }
+    40% {
+      -webkit-transform: scale3d(0.75, 1.25, 1);
+              transform: scale3d(0.75, 1.25, 1);
+    }
+    50% {
+      -webkit-transform: scale3d(1.15, 0.85, 1);
+              transform: scale3d(1.15, 0.85, 1);
+    }
+    65% {
+      -webkit-transform: scale3d(0.95, 1.05, 1);
+              transform: scale3d(0.95, 1.05, 1);
+    }
+    75% {
+      -webkit-transform: scale3d(1.05, 0.95, 1);
+              transform: scale3d(1.05, 0.95, 1);
+    }
+    100% {
+      -webkit-transform: scale3d(1, 1, 1);
+              transform: scale3d(1, 1, 1);
+    }
+  }
+`;
 const CropperDialog = styled(Modal)`
   max-width: ${props => props.ratio < 1.0 ? 450 : 650}px;
   // height: ${props => props.ratio < 1.0 ? 650 : 450}px;
@@ -60,10 +152,7 @@ const CustomButton = styled.div`
   justify-content:center;
   align-items:center;
   margin-left:34px;
-  font-family:Spoqa Han Sans Neo;
-  font-weight:Medium;
-  font-size:28px;
-  color:white;
+  cursor:pointer;
   `;
 const BtnText = styled.p`
   font-family:Spoqa Han Sans Neo;
@@ -135,11 +224,9 @@ const IsProblemBox = styled.div`
 `
 const Wrapper = styled.div`
   width:100%;
-  height:100%;
-  padding:90px 0px 90px 100px;
   display:flex;
   margin-bottom:150px;
-
+  // flex-wrap:wrap;
   .maxFlex{
     display:flex;
     width:100%;
@@ -147,6 +234,7 @@ const Wrapper = styled.div`
   }
   .category_wrapper{
     display:flex;
+    flex-wrap:wrap;
     max-width:1200px;
     width:100%;
   }
@@ -168,6 +256,7 @@ const Wrapper = styled.div`
     align-items:center;
 
     .navi_header{
+      min-width:max-content;
       width:187px;
       height:40px;
       margin-bottom:32px;
@@ -177,6 +266,7 @@ const Wrapper = styled.div`
       text-align:center;
     }
     .navi_label{
+      min-width:max-content;
       width:187px;
       min-height:84px;
       display:flex;
@@ -189,6 +279,7 @@ const Wrapper = styled.div`
     .red{color:red;}
     .black{color:black;}
     .select{color:#1262AB;}
+    .delete{margin-top:531px;}
     .borderBottom{border-bottom:2px solid #707070;}
   }
   .vLine{
@@ -220,9 +311,10 @@ const Wrapper = styled.div`
   }
   .board{
     max-width:1248px;
+    min-width:1000px;
     width:100%;
     height:max-content;
-    padding:56px 72px;
+    padding:56px 72px 0px 72px;
     .board_label{
       width:max-content;
       min-width:195px;
@@ -244,12 +336,6 @@ const Wrapper = styled.div`
       padding-left:40px;
       display:flex;
     }
-    .board_Grid{
-      max-width:1566px;
-      width:100%;
-      height:max-content;
-      margin-top:-10px;
-    }
     .column{flex-direction:column;}
     .paddingLeft1{padding-left:200px;}
     .buttonBox{
@@ -258,6 +344,29 @@ const Wrapper = styled.div`
       align-items:center;
       margin-top:26px;
     }
+  }
+  .grid_wrapper{
+    min-width:1000px;
+    width:100%;
+    max-width:1566px;
+    padding-left:50px;
+    display:flex;
+    flex-direction:column;
+    .grid_buttonWrap{
+      display:flex;
+      justify-content:flex-end;
+      width:100%;
+      .button{cursor:pointer;width:86px;height:49px;display:flex;justify-content:center;align-items:center;color:white;font-size:28px;font-family:Spoqa Han Sans Neo;}
+      .grey{background-color:#8D8D8D;}
+      .red{background-color:red;}
+    }
+  }
+  .board_grid{
+    max-width:1566px;
+    width:96%;
+    height:max-content;
+    margin-left:auto;
+    margin-right:auto;
   }
   .addImg{
     width:290px;
@@ -331,27 +440,106 @@ const Wrapper = styled.div`
     justify-content:space-between !important;
     border-radius:0px !important;
   }
+  .messageBubble{
+    width:100%;
+    display:none;
+    .quest{
+      min-width:20px;
+      min-height:20px;
+      max-width:20px;
+      max-height:20px;
+      font-size:15px;
+      font-family:Noto Sans KR;
+      font-weight:400;
+      border-radius:50%;
+      background-color:red;
+      color:white;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+  }
+  @media only screen and (min-width : 500px) and (max-width:1700px) {
+    display:flex;
+    flex-direction:column;
+    .board{
+      padding-left:auto;
+      padding-right:auto;
+    }
+    .grid_wrapper{
+      padding-left:0px;
+      padding-left:auto;
+      padding-right:auto;
+    }
+    .vLine{
+      width:96%;
+      min-width:1000px;
+      margin:0;
+      margin-left:auto;
+      margin-right:auto;
+      height:0px;
+      border-bottom:1px solid #CCCCCC;
+      margin-top:60px;
 
+    }
+    .navi_menu{
+      min-width:1000px;
+      width:100%;
+      height:100px;
+      display:flex;
+      flex-direction:row;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:center;
+      .navi_header{
+        width:100%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+      }
+      .navi_label{
+        min-height:40px;
+      }
+      .borderBottom{border:none;}
+      .delete{margin:0;margin-left:50px;}
+    }
+    .messageBubble{
+      display:flex;
+    }
+  }
 
 `
 
 const ContentWrapper = styled.div`
-max-width:1566px;
-width:100%;
-display:flex;
-.formWrap{
-  max-width:1248px;
+  max-width:1566px;
   width:100%;
-}
-.buttonWrap{
-  display:flex;
-  justify-content:flex-end;
-  width:250px;
-  padding-top:875px;
-  .button{cursor:pointer;width:86px;height:49px;display:flex;justify-content:center;align-items:center;color:white;font-size:28px;font-family:Spoqa Han Sans Neo;}
-  .grey{background-color:#8D8D8D;}
-  .red{background-color:red;}
-}
+  
+  // display:flex;
+  padding-bottom:100px;
+  .formWrap{
+    max-width:1248px;
+    width:100%;
+  }
+  .buttonWrap{
+    min-height:920px;
+    display:flex;
+    justify-content:flex-end;
+    align-items:flex-end;
+    width:250px;
+    .button{cursor:pointer;width:86px;height:49px;display:flex;justify-content:center;align-items:center;color:white;font-size:28px;font-family:Spoqa Han Sans Neo;}
+    .grey{background-color:#8D8D8D;}
+    .red{background-color:red;}
+  }
+  @media only screen and (min-width : 500px) and (max-width:1700px) {
+    .buttonWrap{
+      padding-right:30px;
+      width:100%;
+      min-width:1000px;
+      height:max-content;
+      min-height:max-content;
+      margin-top:30px;
+    }
+  }
 `
 const QuestionGuide = styled.div`
   width:35px;
@@ -378,9 +566,6 @@ const QuestionGuide = styled.div`
     font-weight:400;
     padding:10px;
     position:absolute;
-
-    // left:15px;
-    // top:-50px;
     left:${props=>props.left}px;
     top:${props=>props.top}px;
 
@@ -388,11 +573,12 @@ const QuestionGuide = styled.div`
 
     display:block;
   }
-  // &:hover{
-  //   .messageBubble{
-  //     display:block;
-  //   }
-  // }
+  @media only screen and (min-width : 500px) and (max-width:1700px) {
+    display:none;
+    .messageBubble{
+      display:none;
+    }
+  }
 `
 const DesignCard = styled.div`
   *{
@@ -501,8 +687,8 @@ const ResetButtonWrapper = styled.div`
   color: #707070;
   font-size: 16px;
   cursor: pointer;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 `;
 const DelBtn = styled.button`
   display: none;
@@ -682,6 +868,7 @@ const DesignElement = styled.div`
   }
 `;
 const EditorWrapper = styled.div`
+  max-width:853px;
   width:100%;
   .title {
     width: 100%;
@@ -706,7 +893,6 @@ const scrollmenu = [
   { step: 0, txt: "기본 정보" },
   { step: 1, txt: "부가 정보" },
   { step: 2, txt: "컨텐츠 정보" }];
-
 
 function Peer(props) {
   return (
@@ -1124,18 +1310,30 @@ class CreateDesign extends Component {
         <Wrapper>
           <div className="navi_menu">
             <div className="navi_header">디자인 등록하기</div>
+            <div className={`navi_label borderBottom ${this.state.step==0?"select":"black"}`} 
+                onClick={()=> this.setState({ step: 0 })}
+            >{scrollmenu[0].txt}</div>
+            <div className={`navi_label borderBottom ${this.state.step==1?"select":"black"}`}  
+                onClick={()=> this.setState({ step: 1 })}
+            >{scrollmenu[1].txt}</div>
+            <div className={`navi_label ${this.state.step==2?"select":"black"}`} 
+                onClick={()=> this.setState({ step: 2 })}
+            >{scrollmenu[2].txt}</div>
+          </div>
+          {/* <div className="navi_menu">
+            <div className="navi_header">디자인 등록하기</div>
             <div className={`navi_label borderBottom ${this.state.step==0?"select":"black"}`} onClick={()=> this.setState({ step: 0 })}>{scrollmenu[0].txt}</div>
             <div className={`navi_label borderBottom ${this.state.step==1?"select":"black"}`}  
-                  // onClick={()=> this.setState({ step: 1 })}
-                  onClick={() => this.state.basic ?this.setState({ step: 1 }) :alert("기본 정보의 필수항목(*)을 입력하셔야 합니다.")}
+                  onClick={()=> this.setState({ step: 1 })}
+                  // onClick={() => this.state.basic ?this.setState({ step: 1 }) :alert("기본 정보의 필수항목(*)을 입력하셔야 합니다.")}
                   >{scrollmenu[1].txt}</div>
             <div className={`navi_label ${this.state.step==2?"select":"black"}`} 
-                  // onClick={()=> this.setState({ step: 2 })}
-                   onClick={() => this.state.additional ? this.setState({ step: 2 }) : alert("부가 정보의 필수항목(*)을 입력하셔야 합니다.")}
+                  onClick={()=> this.setState({ step: 2 })}
+                  //  onClick={() => this.state.additional ? this.setState({ step: 2 }) : alert("부가 정보의 필수항목(*)을 입력하셔야 합니다.")}
                    >{scrollmenu[2].txt}</div>
             <div className="navi_label red" style={{marginTop:"531px"}}></div>
 
-          </div>
+          </div> */}
           <div className="vLine"/>
           {/* <div className="summary">
              <DesignCard>
@@ -1158,9 +1356,7 @@ class CreateDesign extends Component {
              >완성된 디자인 등록하기</div>
           </div> */}
           <ContentWrapper>
-          {
-            this.state.step==0&&
-            <React.Fragment>
+          <Section isNone={ step === 0 } >
               <div className="board">
                 <div className="board_label">1. 대표 이미지 등록하기<sub className="sub marginRight2">*</sub>
                      <QuestionGuide left={15} top={-50} bubbleSize={584}>?</QuestionGuide>
@@ -1201,12 +1397,9 @@ class CreateDesign extends Component {
                   <BtnText>다음</BtnText>
                 </CustomButton>
                 </div>}
-            </React.Fragment>
-          }
+            </Section>
           
-          {
-            this.state.step==1&&
-            <React.Fragment>
+            <Section isNone={ step === 1} >
                <div className="board" >
               <div className="maxFlex">
                <div className="board_label">1. 카테고리<sub className="sub marginRight1" >*</sub></div>
@@ -1263,6 +1456,15 @@ class CreateDesign extends Component {
                     </div>
                   </QuestionGuide>
                 </div>
+                <div className="messageBubble">
+                  <div className="board_label"/>
+                  <div className="quest">?</div>
+                  <div className="board_box">
+                            함께 디자인을 만들어 갈 멤버를 초대해 주세요. <br/>
+                            초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br/> 
+                            디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.    
+                  </div>                    
+                </div>
                 <InviteMemberListBox>
                   <div className="memberList">
                     {this.state.members && this.state.members.length > 0 ?
@@ -1285,23 +1487,19 @@ class CreateDesign extends Component {
                 {step === 1 && 
                 <div className="buttonWrap">
                 <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
-                  {/* <BtnText>뒤로</BtnText> */}
-                  뒤로
+                  <BtnText>뒤로</BtnText>
                 </CustomButton>
                 <CustomButton
                   onClick={this.state.additional ? this.gotoNextStep : this.checkInputForm}
                   isComplete={this.state.additional}>
-                  {/* <BtnText>다음</BtnText> */}
-                  다음
+                  <BtnText>다음</BtnText>
                 </CustomButton>
                 </div>}
 
-            </React.Fragment>
-          }
-          {
-            this.state.step==2&&
-            <React.Fragment>
-          <div className="board">
+          </Section>
+          <Section isNone={ step === 2 } isLast={true}>
+          <div className="grid_wrapper">
+          <div className="board_grid">
           <ResetButtonWrapper
             onClick={() => this.setState({ step: 2, type: "normal", is_project: 0, contents: [], steps: [], template: null })}>
             작업취소하기<i className="undo icon" />
@@ -1382,6 +1580,7 @@ class CreateDesign extends Component {
               </EditorWrapper>
             : null}
             </div>
+            </div>
 
             {step === 2 && 
             <div className="buttonWrap">
@@ -1395,8 +1594,7 @@ class CreateDesign extends Component {
                 <BtnText>완료</BtnText>
               </CustomButton>
             </div>}
-            </React.Fragment>
-          }
+            </Section>
           </ContentWrapper>
 
         </Wrapper>
@@ -1408,6 +1606,7 @@ export default CreateDesign;
 
 
 const ControllerWrap = styled.div`
+  width:100%;
   position: relative;
   text-align: center;
   border: 1px solid #707070;
@@ -1438,12 +1637,14 @@ const ControllerWrap = styled.div`
 const NewController = styled.div`
   font-family:Spoqa Han Sans Neo;
   font-weight:500;
-  font-size:28px;
+  font-size:22px;
   color:black;
   height:40px;
   display:flex;
   align-items:center;
   cursor:pointer;
+  margin-left:10px;
+  margin-right:10px;
 `;
 
 class AddContent extends Component {

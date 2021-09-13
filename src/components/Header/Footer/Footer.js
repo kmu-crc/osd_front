@@ -18,6 +18,7 @@ const FooterContainer = styled.div`
     text-align:center;
     background-color:transparent;
     z-index: 1;
+
     .origin{
         min-width:max-content;
         cursor: pointer;

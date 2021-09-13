@@ -9,7 +9,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-
+    justify-content:center;
     .title {
       width: max-content;
       height: 40px;
@@ -21,6 +21,10 @@ const Wrapper = styled.div`
       letter-spacing: 0px;
       color: #000000;
       opacity: 1;
+    }
+    .icon_wrapper{
+      display:flex;
+      align-items:center;
     }
     .icon {
       height: 18px;
@@ -54,8 +58,15 @@ const Wrapper = styled.div`
       background-position: center center;
       background-size: cover;
       border-radius: 100%;
+      border:1px solid #eaeaea;
+      margin-bottom:10px;
     }
     cursor: pointer;
+  }
+  @media only screen and (min-width : 500px) and (max-width:1600px) {
+    .header{
+      justify-content:space-between;
+    }
   }
 `;
 const IconDiv = styled.div`
@@ -106,8 +117,10 @@ class SectionBasic extends Component {
     return (<Wrapper thumbnail={thumbnailURL} >
       <div className="header" onClick={this.onClicked} >
         <div className="title">프로필 사진</div>
+        <div className="icon_wrapper">
         <div className="icon"><IconDiv width={18} height={18} icon={iconEdit} /></div>
         <div className="find-text">찾아보기</div>
+        </div>
       </div>
 
       <div className="thumbnail-wrapper" onClick={this.onClicked} >

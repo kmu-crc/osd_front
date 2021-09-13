@@ -26,7 +26,7 @@ import new_logo_plus from "source/new_logo_plus.png"
 import osdcss from "opendesign_style";
 
 const Section = styled.div`
-  display:${props=>props.isNone==true?props.isLast==null?"flex":"block":"none"};
+  display:${props=>props.isNone==true?props.isLast==null?"flex":"flex":"none"};
   @media only screen and (min-width : 500px) and (max-width:1700px) {
     display:${props=>props.isNone==true?props.isLast==null?"block":"block":"none"};;
   }
@@ -218,7 +218,6 @@ const IsProblemBox = styled.div`
 `
 const Wrapper = styled.div`
   width:100%;
-  padding:90px 50px 0px 100px;
   display:flex;
   margin-bottom:150px;
   // flex-wrap:wrap;
@@ -243,6 +242,7 @@ const Wrapper = styled.div`
     width:100%;
   }
   .navi_menu{
+    
     width:264px;
     height:100%;
     padding:36px 38px;
@@ -358,9 +358,8 @@ const Wrapper = styled.div`
   }
   .board_Grid{
     max-width:1566px;
-    width:100%;
+    width:96%;
     height:max-content;
-    margin-top:-10px;
   }
   .addImg{
     width:290px;
@@ -456,28 +455,41 @@ const Wrapper = styled.div`
   @media only screen and (min-width : 500px) and (max-width:1700px) {
     display:flex;
     flex-direction:column;
+    align-items:center;
+    .board{
+      padding-left:auto;
+      padding-right:auto;
+    }
+    .grid_wrapper{
+      padding-left:0px;
+      padding-left:auto;
+      padding-right:auto;
+    }
     .vLine{
-      width:100%;
+      width:96%;
       min-width:1000px;
       margin:0;
+      margin-left:auto;
+      margin-right:auto;
       height:0px;
       border-bottom:1px solid #CCCCCC;
-      margin-top:10px;
+      margin-top:60px;
 
     }
     .navi_menu{
-      width:100%;
       min-width:1000px;
-      height:max-content;
-      padding:0px;
+      width:100%;
+      height:100px;
       display:flex;
       flex-direction:row;
       align-items:center;
-      justify-content:center;
       flex-wrap:wrap;
+      justify-content:center;
       .navi_header{
         width:100%;
-        margin-bottom:0px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
       }
       .navi_label{
         min-height:40px;
@@ -514,6 +526,7 @@ const ContentWrapper = styled.div`
   }
   @media only screen and (min-width : 500px) and (max-width:1700px) {
     .buttonWrap{
+      padding-right:30px;
       width:100%;
       min-width:1000px;
       height:max-content;
@@ -1337,7 +1350,7 @@ class ModifyDesign extends Component {
           </Section>
           <Section isNone={ step === 2 } isLast={true}>
               <div className="grid_wrapper">
-                <div className="board_Grid">
+                <div className="board_grid">
                   {this.state.grid ?
                     this.props.DesignDetail &&
                       this.props.DesignDetail.is_project ?

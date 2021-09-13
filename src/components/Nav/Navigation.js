@@ -21,6 +21,7 @@ const Profile = styled.div`
     border-radius:50%;
     box-shadow: 8px 8px 6px #00000029;
     border:1px solid #912525;
+    background-color:white;
     background-image:url(${props=>props.img});
     background-size:cover;
 `
