@@ -112,7 +112,7 @@ const HeaderMenu = styled.div`
         cursor:pointer;
     }
     .login_button{
-        font-family: Spoqa Han Sans;
+        font-family:SpoqaHanSans;
         font-size:18px;
         color:white;
         cursor:pointer;

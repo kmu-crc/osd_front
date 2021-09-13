@@ -43,7 +43,6 @@ import new_logo_msg from "source/new_logo_msg.svg";
 const Wrapper = styled.div`
     padding-top: 42px;
     padding-left: 38px;
-    padding-right: 38px;
 `
 const ChatWrapper = styled.div`
 width:100%;
@@ -77,7 +76,7 @@ align-items:flex-end;
 }
 `;
 const DesignHeader = styled.div`
-
+    width:100%;
     max-width: 1740px;
     min-width: ${1000 - (38 * 2)}px;
     height: 307px;

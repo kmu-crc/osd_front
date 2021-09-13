@@ -18,6 +18,19 @@ padding: 0;
 position: relative;
 margin-left: auto;
 margin-right: auto;
+@media only screen and (min-width : 0px) and (max-width : 1050px) {
+  width: ${props=>props.type=="design"?"720px":props.type=="group"?"1000px":props.type=="designer"?"600px":null};
+}
+@media only screen and (min-width : 1050px) and (max-width : 1350px) {
+  width: ${props=>props.type=="design"?"1090px":props.type=="group"?"1000px":props.type=="designer"?"1200px":null};
+}
+@media only screen and (min-width : 1350px) and (max-width : 1650px) {
+  width: ${props=>props.type=="design"?"1440px":props.type=="group"?"1780px":props.type=="designer"?"1200px":null};
+}
+@media only screen and (min-width : 1650px) {
+  width: ${props=>props.type=="design"?"1780px":props.type=="group"?"1780px":props.type=="designer"?"1780px":null};
+}
+
 // @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
 //   width: 330px;
 // }

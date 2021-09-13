@@ -10,8 +10,8 @@ import styled from 'styled-components';
 import opendesign_style from "opendesign_style";
 
 const Wrapper = styled.div`
-  margin-left:100px;
-  margin-top:90px;
+  // margin-left:100px;
+  // margin-top:90px;
   .category_wrapper{
     padding-left:41px;
     padding-top:19px;

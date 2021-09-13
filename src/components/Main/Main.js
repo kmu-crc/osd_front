@@ -148,7 +148,10 @@ const Head = styled.div`
   margin-bottom: 27px;
 `;
 const ScrollListContainer = styled.div`
-    padding-left:20px;
+    padding-left:100px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
 `;
 
 let settings = {
@@ -197,25 +200,26 @@ export default class Main extends Component {
     return (<React.Fragment>
       {/* banner */}
       <Wrapper>
-        <Slider variableWidth={true} ref={slider => (this.slider = slider)} {...settings}>
-          <Banner width={1920 * ratioW} height={1080 * ratioH} >
-            <img src={new_banner_step1} />
-            <a onclick={() => window.location.href = "/designerdetail/1488"}>
-              <ButtonOnImage width={285 * ratioW} height={51 * ratioH} bottom={164 * ratioH} right={293 * ratioW} />
-            </a>
-          </Banner>
+        <Fade>
+          <Slider ref={slider => (this.slider = slider)} {...settings}>
+            <Banner width={1920 * ratioW} height={1080 * ratioH} >
+              <img src={new_banner_step1} />
+              <a onclick={() => window.location.href = "/designerdetail/1488"}>
+                <ButtonOnImage width={285 * ratioW} height={51 * ratioH} bottom={164 * ratioH} right={293 * ratioW} />
+              </a>
+            </Banner>
 
-          <Banner slider={new_banner_step2} width={1920 * ratioW} height={1080 * ratioH} >
-            <img src={new_banner_step2} />
-            <a onclick={() => window.location.href = "/designerdetail/1488"}>
-              <ButtonOnImage width={232 * ratioW} height={55 * ratioH} bottom={240 * ratioH} right={544 * ratioW} />
-            </a>
-          </Banner>
+            <Banner slider={new_banner_step2} width={1920 * ratioW} height={1080 * ratioH} >
+              <img src={new_banner_step2} />
+              <a onclick={() => window.location.href = "/designerdetail/1488"}>
+                <ButtonOnImage width={232 * ratioW} height={55 * ratioH} bottom={240 * ratioH} right={544 * ratioW} />
+              </a>
+            </Banner>
 
-        </Slider>
-
-        <Pause onClick={() => this.gostop} />
-
+          </Slider>
+        </Fade>
+        <div className="pause"
+          onClick={() => this.gostop} />
       </Wrapper>
 
       {/* scroll-list */}

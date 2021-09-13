@@ -18,7 +18,7 @@ class Message extends Component {
 
     render() {
         return (<div style={{ cursor: "pointer" }} onClick={this.gotoMessagePage}>
-            {this.props.noti && this.props.noti.countMsg > 0 && <div style={{ zIndex: "998", position: "absolute", marginLeft: "29px", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "red" }} />}
+            {this.props.noti && this.props.noti.countMsg > 0 && <div style={{ zIndex: "998", position: "absolute", marginLeft: "40px", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "red" }} />}
             <i style={{ zIndex: "997", opacity: ".9", fontSize: "34px" }} className="material-icons"><MsgIcon/></i>
         </div>)
     }
