@@ -275,10 +275,10 @@ class MypageHeader extends Component {
                                 <div className="modify-icon"><IconDiv width={53} height={53} icon={iconEdit} /></div>
                                 {/* </div> */}
                             </a>
-                            <a className="logout" onClick={this.SignOut}>
+                            {/* <a className="logout" onClick={this.SignOut}>
                                 <div className="logout-text">로그아웃</div>
-                                {/* <div className="logout-icon"><IconDiv width={53} height={53} icon={?} /></div> */}
-                            </a>
+                                <div className="logout-icon"><IconDiv width={53} height={53} icon={?} /></div>
+                            </a> */}
                         </div>
                         <div className="date">
                             <div className="update-date">최근&nbsp;업데이트&nbsp;{MyDetail && DateFormat(MyDetail.update_time)}</div>

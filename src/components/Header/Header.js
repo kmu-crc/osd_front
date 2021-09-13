@@ -20,6 +20,27 @@ import new_logo_mail from "source/new_logo_mail.svg";
 import new_logo_notifications from "source/new_logo_notifications.svg";
 import new_logo_menu_open from "source/new_logo_menu_open.svg";
 import new_logo_menu_close from "source/new_logo_menu_close.svg";
+const Profile = styled.div`
+    min-width:57px;
+    max-width:57px;
+    min-height:57px;
+    max-height:57px;
+    border-radius:50%;
+    box-shadow: 8px 8px 6px #00000029;
+    border:1px solid #912525;
+    background-color:white;
+    background-image:url(${props=>props.img});
+    background-size:cover;
+    border:4px solid ${
+        window.location.pathname.indexOf("designer")!=-1?"#7E1E9B"
+        :window.location.pathname.indexOf("Designer")!=-1?"#7E1E9B"
+        :window.location.pathname.indexOf("design")!=-1?"#1262AB"
+        :window.location.pathname.indexOf("Design")!=-1?"#1262AB"
+        :window.location.pathname.indexOf("group")!=-1?"#1E9B79"
+        :window.location.pathname.indexOf("Group")!=-1?"#1E9B79"
+        :"red"
+    };
+`
 
 const HeaderMenu = styled.div`
     width: 100%;
@@ -43,6 +64,15 @@ const HeaderMenu = styled.div`
         display:flex;
         justify-content:center;
         align-items:center;
+        background-color:${
+            window.location.pathname.indexOf("designer")!=-1?"#522058"
+            :window.location.pathname.indexOf("Designer")!=-1?"#522058"
+            :window.location.pathname.indexOf("design")!=-1?"#193356"
+            :window.location.pathname.indexOf("Design")!=-1?"#193356"
+            :window.location.pathname.indexOf("group")!=-1?"#205847"
+            :window.location.pathname.indexOf("Group")!=-1?"#205847"
+            :"#7A7A7A"
+        };
     }
     .menu_icon{
         width:60px;
@@ -81,261 +111,15 @@ const HeaderMenu = styled.div`
         margin-right:46px;
         cursor:pointer;
     }
-   @media only screen and (min-width: 500px) and (max-width: 1300px) {
-        justify-content: start;
-        .home_logo {
-            margin-left: 15px;
-        }
-        .searchBox {
-            margin-left: 15px;
-        }
-        .marginRight1 {
-            // margin-right: 17px;
-            margin-right: 15px;
-        }
-        .design_button {
-            // margin-right: 25px;
-            margin-right: 15px;
-        }
-        .wrap {
-            // margin-left: 35px;
-            // margin-left: 15px;
-        }
-   } 
+    .login_button{
+        font-family: Spoqa Han Sans;
+        font-size:18px;
+        color:white;
+        cursor:pointer;
+    }
 `
 
-// const WrapperBox = styled.div`
-//     width:100%;
-//     display:flex;
-//     justify-content:center;
-// `
-// const Menu = styled.div`
-//     z-index: 900;
-//     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-//     and (max-width : ${opendesign_style.resolutions.LargeMaxWidth}px) {
-//         width:100%;
-//     }
-//     @media only screen and (min-width : ${opendesign_style.resolutions.LargeMaxWidth}px) {
-//         width:1920px;
-//     }
-//     width: 100%;
-//     position: fixed;
-//     display: flex;
-//     flex-direction:row-reverse;
-//     justify-content: space-between;
-//     align-items:center;
-//     font-size: 20px;
-//     font-weight: 500;
-//     font-family: Noto Sans KR;
-//     color: #707070;
-//     background-color: #FFFFFF;
-//     &.hidemenu {
-//         top: -55px;
-//         opacity: 0;
-//     }
-//     -webkit-transition: all 0.45s;
-//     -moz-transition: all 0.45s;
-//     -ms-transition: all 0.45s;
-//     -o-transition: all 0.45s;
-//     transition: all 0.45s;    
-//     @media only screen and (max-width : 1024px) {
-//         display:block;
-//     }
-// `
-// const LeftMenu = styled.ul`
-//     left: 0px;
-//     min-width: 30%;
-//     margin: 0px;
-//     padding: 0px;
-//     vertical-align: top;
-//     display: flex;
-//     list-style: none;
-//     .logoBox{
-//         height: 55px;
-//         min-width: 55px;
-//         margin-left: 36px;
-//         .logo{
-//             width: 55px;
-//             height: 55px;
-//         }
-//     }
-//        @media only screen and (max-width: 1024px) {
-//            justify-content:center;
-//        }
-//        @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-//        and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
-//           min-width:100%;
-//        }
-// `
-// const MenuItem = styled.li`
-//     min-width:max-content;
-//     height:29px;
-//     margin-left:36px;
-//     margin-top:11px;
-//     text-align:center;
-//     .link_tag{
-//         color:${props => props.isSelect === true ? "#FF0000" : "#707070"}
-//     }
-//     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-//     and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
-//         margin-left:0px;
-//         margin-right:10%;
-//         font-size:18px;
-//     }
-// `
-// const CenterMenu = styled.ul`
-//     min-width:56%;
-//     display:flex;
-//     justify-content:center;
-//     align-items:center;
-//     padding:0px;
-//     .searchItem{
-//         height:36px;
-//         // margin-right:50px;
-//         // margin-top:5px
-//         border:none;
-//     }
-//     @media only screen and (min-width : 1600px) {
-//         // margin-left:40px;
-//     }
-//     @media only screen and (max-width : 1600px) {
-//         min-width:60%;
-//     }
-//     @media only screen and (max-width : 1440px) {
-//         min-width:50%;
-//     }
-//     @media only screen and (max-width : 1024px) {
-//         min-width:40%;
-//         .searchItem{
-//             margin-right:3%;
-//             min-width:200px;
-//             display:flex;
-//             justify-content:center;
-//         }
-//     }
-//     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-//     and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
-//         width:100%;
-//         .searchItem{
-//             min-width:100%;
-//             max-width:300px;
-//             margin-right:0px;
-//             margin-top:5px;
-//             display:flex;
-//             justify-content:center;
-//         }
-//     }
-// `
-// const RightMenu = styled.ul`
-//     width:70%;
-//     background-color:#FFFFFF;
-
-//     right:0px;
-//     margin:0px;
-//     padding:0px;
-//     list-style:none;
-//     display:flex;
-//     justify-content:space-between;
-//     vertical-align:top;
-//     .signnav{
-//         min-width:44%;
-//         display:flex;
-//         justify-content:flex-end;
-//     }
-//     .IconItem{
-//         width:34px;
-//         height:34px;
-//         margin-right:35px;
-//         // margin-top:10px;
-//         position:relative;
-//     }
-//     .redItem{
-//         min-width:max-content;
-//         height:29px;
-//         border-radius:18px;
-//         background-color:red;
-//         color:white;
-//         display:flex;
-//         justify-content:center;
-//         align-items:center;
-//         padding:4px 16px 4px 16px;
-//         margin-right:36px;
-//         cursor: pointer;
-//         font-weight: 900;
-//     }
-//     .profileItem{
-//         *{
-//             cursor:pointer;
-//         }
-//         max-width:150px;
-//         height:29px;
-//         display:flex;
-//         line-height:29px;
-//         margin-right:45px;
-//         // margin-top:11px;
-//         cursor:pointer;
-//         // overflow:hidden;
-//     }
-//     @media only screen and (max-width : 1440px) {
-//         .IconItem{
-//             margin-right:25px;
-//         }
-//         .redItem{
-//             margin-right:25px;
-//             margin-left:15px;
-//         }
-//         .profileItem{
-//         }
-//     }
-//     @media only screen and (max-width : 1024px) {
-
-//         min-width:100%;
-//         background-color:#EFEFEF;
-//         display:flex;
-//         justify-content:center;
-//         flex-wrap:wrap;
-//         .IconItem{
-//             margin-right:3%;
-//             margin-top:5px;
-//             margin-bottom:5px;
-//         }
-//         .redItem{
-//             margin-right:3%;
-//             margin-top:5px;
-//             margin-bottom:5px;
-//         }
-//         .profileItem{
-//             margin-right:3%;
-//             margin-top:5px;
-//             margin-bottom:5px;
-//         }
-//         .signnav{
-//             width:60%;
-//         }
-//     }
-//     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-//     and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) {
-//         max-width:100%;
-//         display:flex;
-//         justify-content:center;
-//         flex-wrap:wrap;
-//         .IconItem{
-//             margin-right:25px;
-//         }
-//         .redItem{
-//             margin-right:25px;
-//         }
-//         .profileItem{
-//             margin-right:0px;
-//         }
-//         .signnav{
-//             width:100%;
-//             justify-content:center;
-//         }
-
-//     }
-
-// `
+   
 function isOpen(ws) { return ws.readyState === ws.OPEN }
 class Header extends Component {
     constructor(props) {
@@ -388,18 +172,27 @@ class Header extends Component {
     };
 
     render() {
-        return (<React.Fragment>
-            {window.location.pathname.indexOf("/sign") != -1 ?
-                <HeaderMenu bgColor={"#cccccc"}>
-                    <div className="wrap">
-                        <div className="menu_nav" onClick={() => { this.props.onClickMenu(); }}>
-                            <img className="menu_icon" src={this.props.sidemenu == true && this.props.isLogin ? new_logo_menu_close : new_logo_menu_open} />
+        return (
+            <React.Fragment>
+                {
+                    window.location.pathname.indexOf("/sign") != -1?
+                    <HeaderMenu bgColor={"#cccccc"}>
+                        <div className="wrap">
+                        <div className="menu_nav" >
+                            {/* {
+                                this.props.sidemenu == true&&this.props.isLogin?
+                                <img className="menu_icon" src={new_logo_menu_close}/>
+                                :<img className="menu_icon" src={new_logo_menu_open}/>
+                            } */}
+
                         </div>
                     </div>
 
                     <div style={{ width: "100%", display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
                         <div className="wrap">
-                            <a href="/"><img src={new_logo_opendesign} className="home_logo" /></a>
+                            <a href="/"><img src={
+                                            new_logo_opendesign
+                            } className="home_logo" /></a>
                         </div>
                         <div className="wrap">
                             {this.props.userInfo != null
@@ -414,15 +207,36 @@ class Header extends Component {
                 </HeaderMenu>
                 :
                 <HeaderMenu bgColor={"#00000033"}>
-                    <div className="menu_nav" onClick={() => this.props.onClickMenu()}>
-                        <img className="menu_icon" src={this.props.sidemenu == true ? new_logo_menu_close : new_logo_menu_open} />
-                    </div>
 
                     <div style={{ width: "100%", display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
                         <div className="wrap">
-                            <a href="/"><img src={new_logo_opendesign} className="home_logo" /></a>
+                        <div className="menu_nav">
+                            {/* {
+                                this.props.sidemenu == true?
+                                <img className="menu_icon" src={new_logo_menu_close}/>
+                                :<img className="menu_icon" src={new_logo_menu_open}/>
+                            } */}
+                            {
+                                this.props.userInfo != null ? 
+                                <a href="/myPage">
+                                <Profile img={this.props.userInfo.thumbnail&&this.props.userInfo.thumbnail.s_img}/>
+                               </a>
+                                :<div className="login_button"
+                                onClick={()=>this.props.onClickLogin()}>로그인</div>
+                            }
                         </div>
-
+                        <div className="wrap">
+                        <a href="/"><img src={
+                            window.location.pathname.indexOf("designer")!=-1?`${new_logo_opendesign_purple}`
+                            :window.location.pathname.indexOf("Designer")!=-1?`${new_logo_opendesign_purple}`
+                            :window.location.pathname.indexOf("design")!=-1?`${new_logo_opendesign_blue}`
+                            :window.location.pathname.indexOf("Design")!=-1?`${new_logo_opendesign_blue}`
+                            :window.location.pathname.indexOf("group")!=-1?`${new_logo_opendesign_green}`
+                            :window.location.pathname.indexOf("Group")!=-1?`${new_logo_opendesign_green}`
+                            :`${new_logo_opendesign}`
+                        } className="home_logo" /></a>
+                        </div>
+                        </div>
                         <div className="wrap">
                             <div className="searchBox">
                                 {window.location.href.search('/search') > -1 ? null : <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={1} />}
