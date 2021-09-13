@@ -22,10 +22,9 @@ import "slick-carousel/slick/slick-theme.css";
 import Fade from 'react-reveal/Fade';
 
 const MainList = styled.div`
+  transform: translate( 0px, -100px);
   // padding-left:100px;
   width: ${props => props.w}px;
-  min-width: 1000px;
-  max-width: 1920px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -34,14 +33,16 @@ const MainList = styled.div`
   //   max-width: 1920px;
   //   width: 100%;
   // }
-`
+`;
 const Wrapper = styled.div`
-  // max-width: 1920px;
-  // min-width: 1000px;
   width: 100%;
+  max-width: 1920px;
+  min-width: 1000px;
   position:relative !important;
   overflow: hidden;
-
+  .slick-list { 
+    width: ${props => props.w}px;
+  }
   transform: translate( 0px, -100px);
   .slick-track{
     overflow:hidden;
@@ -119,7 +120,8 @@ const ButtonOnImage = styled.div`
   z-index: 888;
 `;
 const Banner = styled.div`
-  width: ${props => props.width}px;
+  // width:100%;
+  // width: ${props => props.width}px;
   height: ${props => props.height}px;
   position: relative;
   overflow-y: hidden;
@@ -130,8 +132,6 @@ const Banner = styled.div`
     width: 100%;
     height: 100%;
     object-fit: fill;
-    max-width: 100%;
-    max-height: 100%;
   }
 `;
 const Head = styled.div`
@@ -148,14 +148,11 @@ const Head = styled.div`
   margin-bottom: 27px;
 `;
 const ScrollListContainer = styled.div`
-    padding-left:100px;
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
+    padding-left:20px;
 `;
 
 let settings = {
-  className: "slide",
+  className: "Banner",
   infinite: true,
   speed: 2000,
   slidesToShow: 1,
@@ -168,7 +165,7 @@ let settings = {
 export default class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = { w: window.innerWidth > 1920 ? 1920 : window.innerWidth, play: true };
+    this.state = { w: window.innerWidth > 1920 ? 1920 : window.innerWidth<=1000?1000:window.innerWidth, play: true };
     this.handleResize = this.handleResize.bind(this);
   }
   componentDidMount() {
@@ -178,7 +175,7 @@ export default class Main extends Component {
     window.removeEventListener("resize", this.handleResize, false);
   }
   handleResize = (event) => {
-    this.setState({ w: window.innerWidth > 1920 ? 1920 : window.innerWidth });
+    this.setState({ w: window.innerWidth > 1920 ? 1920 : window.innerWidth<=1000?1000:window.innerWidth });
   }
   gostop = () => {
     this.state.play == true
@@ -194,22 +191,22 @@ export default class Main extends Component {
     const height = width * (1 / 1.76);
     const ratioW = width / 1920;
     const ratioH = height / 1080;
-
+    console.log(this.state.w)
     return (<React.Fragment>
       {/* banner */}
-      <Wrapper>
+      <Wrapper w={1920 * ratioW}>
         <Fade>
           <Slider ref={slider => (this.slider = slider)} {...settings}>
             <Banner width={1920 * ratioW} height={1080 * ratioH} >
               <img src={new_banner_step1} />
-              <a onclick={() => window.location.href = "/designerdetail/1488"}>
+              <a href={"/designerdetail/1488"}>
                 <ButtonOnImage width={285 * ratioW} height={51 * ratioH} bottom={164 * ratioH} right={293 * ratioW} />
               </a>
             </Banner>
 
             <Banner slider={new_banner_step2} width={1920 * ratioW} height={1080 * ratioH} >
               <img src={new_banner_step2} />
-              <a onclick={() => window.location.href = "/designerdetail/1488"}>
+              <a href={"/designerdetail/1488"}>
                 <ButtonOnImage width={232 * ratioW} height={55 * ratioH} bottom={240 * ratioH} right={544 * ratioW} />
               </a>
             </Banner>

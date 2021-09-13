@@ -12,23 +12,25 @@ const Wrapper = styled.div`
   // margin-left:100px;
   // margin-top:90px;
   .category_wrapper{
-    padding-left:24px;
+    padding-left:41px;
     padding-top:19px;
   }
   .content{
-    padding-left:24px;
+    padding-left:41px;
     width:100%;
+    min-width:1000px;
   }
   .scroll_wrapper{
-    margin-top:12px;
+    margin-top:21px;
     margin-bottom:100px;
+    min-width:1000px;
   }
   .header_box{
     width:100%;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-top:32px;
+    margin-top:13px;
     padding-right:39px;
     .category_title{
       min-width:200px;
@@ -36,7 +38,7 @@ const Wrapper = styled.div`
       font-family:Spoqa Han Sans Neo;
       font-weight:Medium;
       font-size:24px;
-      color:#1E9B79;
+      color:#1262AB;
       display:flex;
       align-items:center;
     }
