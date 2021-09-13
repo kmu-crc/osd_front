@@ -22,7 +22,6 @@ import "slick-carousel/slick/slick-theme.css";
 import Fade from 'react-reveal/Fade';
 
 const MainList = styled.div`
-  // padding-left:100px;
   width: ${props => props.w}px;
   min-width: 1000px;
   max-width: 1920px;
@@ -30,10 +29,7 @@ const MainList = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // .list_wrap{
-  //   max-width: 1920px;
-  //   width: 100%;
-  // }
+  transform: translate( 0px, -100px);
 `
 const Wrapper = styled.div`
   // max-width: 1920px;
@@ -59,18 +55,7 @@ const Wrapper = styled.div`
     background-size:cover;
     opacity:1 !important;
   }
-  .pause{
-    max-width: 34px;
-    width: 34px;
-    height: 64px;
-    position: absolute;
-    z-index:999 !important;
-    top: 968px;
-    left: 94%;
-    background-image:url(${new_logo_pause});
-    background-size:cover;
-    cursor: pointer;
-  }
+
   .slick-next{
     position:absolute;
     z-index:999 !important;
@@ -108,6 +93,21 @@ const Wrapper = styled.div`
   // .slick-arrow:hover{
   //   color:rgba(0,0,0,0);
   // }
+`;
+const Pause = styled.div`
+  background-color: red;
+  border: 2px dashed black;
+
+  max-width: 34px;
+  width: 34px;
+  height: 64px;
+  position: absolute;
+  z-index: 999 !important;
+  top: 968px;
+  left: 94%;
+  background-image: url(${new_logo_pause});
+  background-size: cover;
+  cursor: pointer;
 `;
 const ButtonOnImage = styled.div`
   position: absolute;
@@ -160,7 +160,7 @@ let settings = {
   speed: 2000,
   slidesToShow: 1,
   dots: false,
-  autoplay: true,
+  autoplay: false, //true,
   autoplaySpeed: 4000,
   slidesToScroll: 1,
   arrows: true,
@@ -195,6 +195,8 @@ export default class Main extends Component {
     const ratioW = width / 1920;
     const ratioH = height / 1080;
 
+    console.log({ ratioW }, { ratioH }, { width }, { height });
+
     return (<React.Fragment>
       {/* banner */}
       <Wrapper>
@@ -222,6 +224,7 @@ export default class Main extends Component {
 
       {/* scroll-list */}
       <MainList w={w}>
+        {/* <Fade cascade> */}
         {(this.props && this.props.userInfo != null)
           ? <>
             <ScrollListContainer> <MainMyDesignListContainer /> </ScrollListContainer>
@@ -239,6 +242,7 @@ export default class Main extends Component {
           <TopDesignListContainer />
         </ScrollListContainer>
 
+        {/* </Fade> */}
       </MainList>
 
 
