@@ -105,7 +105,7 @@ class SignNav extends Component {
                 <UserMenu ref={this.myRef} display={"block"} top={user_popup.top} left={userinfo.userMenuLeft} >
                     <div><UserMenuItem onClick={this.gotoMyPage}>내 정보</UserMenuItem></div>
                     <hr color="#EFEFEF" width="166px" noshade="none" />
-                    <div><UserMenuItem onClick={this.signout}>로그아웃</UserMenuItem></div>
+                    {/* <div><UserMenuItem onClick={this.signout}>로그아웃</UserMenuItem></div> */}
                 </UserMenu>}
             {/* {this.state.signin_modal && <SignInModal open={signin_modal} CheckEmailRequest={this.props.CheckEmailRequest} FindPwRequest={this.props.FindPwRequest} signinrequest={this.props.SignInRequest} signin={this.signin} close={this.closeModal} />} */}
             {isLoggedIn
