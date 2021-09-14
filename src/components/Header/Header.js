@@ -29,16 +29,15 @@ const Profile = styled.div`
     box-shadow: 8px 8px 6px #00000029;
     border:1px solid #912525;
     background-color:white;
-    background-image:url(${props=>props.img});
+    background-image:url(${props => props.img});
     background-size:cover;
-    border:4px solid ${
-        window.location.pathname.indexOf("designer")!=-1?"#7E1E9B"
-        :window.location.pathname.indexOf("Designer")!=-1?"#7E1E9B"
-        :window.location.pathname.indexOf("design")!=-1?"#1262AB"
-        :window.location.pathname.indexOf("Design")!=-1?"#1262AB"
-        :window.location.pathname.indexOf("group")!=-1?"#1E9B79"
-        :window.location.pathname.indexOf("Group")!=-1?"#1E9B79"
-        :"red"
+    border:4px solid ${window.location.pathname.indexOf("designer") != -1 ? "#7E1E9B"
+        : window.location.pathname.indexOf("Designer") != -1 ? "#7E1E9B"
+            : window.location.pathname.indexOf("design") != -1 ? "#1262AB"
+                : window.location.pathname.indexOf("Design") != -1 ? "#1262AB"
+                    : window.location.pathname.indexOf("group") != -1 ? "#1E9B79"
+                        : window.location.pathname.indexOf("Group") != -1 ? "#1E9B79"
+                            : "red"
     };
 `
 
@@ -64,15 +63,14 @@ const HeaderMenu = styled.div`
         display:flex;
         justify-content:center;
         align-items:center;
-        background-color:${
-            window.location.pathname.indexOf("designer")!=-1?"#522058"
-            :window.location.pathname.indexOf("Designer")!=-1?"#522058"
-            :window.location.pathname.indexOf("design")!=-1?"#193356"
-            :window.location.pathname.indexOf("Design")!=-1?"#193356"
-            :window.location.pathname.indexOf("group")!=-1?"#205847"
-            :window.location.pathname.indexOf("Group")!=-1?"#205847"
-            :"#7A7A7A"
-        };
+        background-color:${window.location.pathname.indexOf("designer") != -1 ? "#522058"
+        : window.location.pathname.indexOf("Designer") != -1 ? "#522058"
+            : window.location.pathname.indexOf("design") != -1 ? "#193356"
+                : window.location.pathname.indexOf("Design") != -1 ? "#193356"
+                    : window.location.pathname.indexOf("group") != -1 ? "#205847"
+                        : window.location.pathname.indexOf("Group") != -1 ? "#205847"
+                            : "#7A7A7A"
+    };
     }
     .menu_icon{
         width:60px;
@@ -111,15 +109,43 @@ const HeaderMenu = styled.div`
         margin-right:46px;
         cursor:pointer;
     }
-    .login_button{
-        font-family:SpoqaHanSans;
-        font-size:18px;
-        color:white;
-        cursor:pointer;
+    .login_button {
+        font-family: Spoqa Han Sans;
+        font-size: 18px;
+        color: white;
+        cursor: pointer;
+    }
+
+    @media only screen and (min-width : 950px) and (max-width:1300px) {
+        .searchBox{
+            margin-left: 10px;
+        }
+        .marginRight1 {
+            margin-right: 25px;
+        }
+        .design_button {
+            margin-right: 20px;
+        }
+    }
+    @media only screen and (min-width : 0px) and (max-width: 950px) {
+        display: flex;
+        justify-content: start;
+        .searchBox{
+            margin-left: 10px;
+        }
+        .marginRight1 {
+            margin-right: 5px;
+        }
+        .design_button {
+            margin-right: 10px;
+        }
+        .home_logo {
+            margin-left: 15px;
+        }
     }
 `
 
-   
+
 function isOpen(ws) { return ws.readyState === ws.OPEN }
 class Header extends Component {
     constructor(props) {
@@ -172,27 +198,21 @@ class Header extends Component {
     };
 
     render() {
-        return (
-            <React.Fragment>
-                {
-                    window.location.pathname.indexOf("/sign") != -1?
-                    <HeaderMenu bgColor={"#cccccc"}>
-                        <div className="wrap">
-                        <div className="menu_nav" >
-                            {/* {
-                                this.props.sidemenu == true&&this.props.isLogin?
-                                <img className="menu_icon" src={new_logo_menu_close}/>
-                                :<img className="menu_icon" src={new_logo_menu_open}/>
-                            } */}
+        return (<React.Fragment>
 
-                        </div>
-                    </div>
+            {window.location.pathname.indexOf("/sign") != -1 ?
+                <HeaderMenu bgColor={"#cccccc"}>
+                    {/* <div className="wrap"> */}
+                    {/* <div className="menu_nav"> */}
+                    {/* {this.props.sidemenu == true&&this.props.isLogin?  <img className="menu_icon" src={new_logo_menu_close}/> :<img className="menu_icon" src={new_logo_menu_open}/> } */}
+                    {/* </div> */}
+                    {/* </div> */}
 
                     <div style={{ width: "100%", display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
                         <div className="wrap">
-                            <a href="/"><img src={
-                                            new_logo_opendesign
-                            } className="home_logo" /></a>
+                            <a href="/">
+                                <img src={new_logo_opendesign} className="home_logo" />
+                            </a>
                         </div>
                         <div className="wrap">
                             {this.props.userInfo != null
@@ -210,39 +230,32 @@ class Header extends Component {
 
                     <div style={{ width: "100%", display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
                         <div className="wrap">
-                        <div className="menu_nav">
-                            {/* {
-                                this.props.sidemenu == true?
-                                <img className="menu_icon" src={new_logo_menu_close}/>
-                                :<img className="menu_icon" src={new_logo_menu_open}/>
-                            } */}
-                            {
-                                this.props.userInfo != null ? 
-                                <a href="/myPage">
-                                <Profile img={this.props.userInfo.thumbnail&&this.props.userInfo.thumbnail.s_img}/>
-                               </a>
-                                :<div className="login_button"
-                                onClick={()=>this.props.onClickLogin()}>로그인</div>
-                            }
+                            <div className="menu_nav">
+                                {/* { this.props.sidemenu == true?  <img className="menu_icon" src={new_logo_menu_close}/> :<img className="menu_icon" src={new_logo_menu_open}/> } */}
+                                {this.props.userInfo != null ?
+                                    <a href="/myPage">
+                                        <Profile img={this.props.userInfo.thumbnail && this.props.userInfo.thumbnail.s_img} />
+                                    </a>
+                                    : <div className="login_button"
+                                        onClick={() => this.props.onClickLogin()}>로그인</div>
+                                }
+                            </div>
+                            <a href="/"><img src={
+                                window.location.pathname.indexOf("designer") != -1 ? `${new_logo_opendesign_purple}`
+                                    : window.location.pathname.indexOf("Designer") != -1 ? `${new_logo_opendesign_purple}`
+                                        : window.location.pathname.indexOf("design") != -1 ? `${new_logo_opendesign_blue}`
+                                            : window.location.pathname.indexOf("Design") != -1 ? `${new_logo_opendesign_blue}`
+                                                : window.location.pathname.indexOf("group") != -1 ? `${new_logo_opendesign_green}`
+                                                    : window.location.pathname.indexOf("Group") != -1 ? `${new_logo_opendesign_green}`
+                                                        : `${new_logo_opendesign}`
+                            } className="home_logo" /></a>
                         </div>
-                        <div className="wrap">
-                        <a href="/"><img src={
-                            window.location.pathname.indexOf("designer")!=-1?`${new_logo_opendesign_purple}`
-                            :window.location.pathname.indexOf("Designer")!=-1?`${new_logo_opendesign_purple}`
-                            :window.location.pathname.indexOf("design")!=-1?`${new_logo_opendesign_blue}`
-                            :window.location.pathname.indexOf("Design")!=-1?`${new_logo_opendesign_blue}`
-                            :window.location.pathname.indexOf("group")!=-1?`${new_logo_opendesign_green}`
-                            :window.location.pathname.indexOf("Group")!=-1?`${new_logo_opendesign_green}`
-                            :`${new_logo_opendesign}`
-                        } className="home_logo" /></a>
-                        </div>
-                        </div>
+
                         <div className="wrap">
                             <div className="searchBox">
                                 {window.location.href.search('/search') > -1 ? null : <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={1} />}
                             </div>
                         </div>
-
                         <div className="wrap">
                             {this.props.userInfo != null ?
                                 <React.Fragment>
@@ -253,11 +266,9 @@ class Header extends Component {
                                 : null}
                         </div>
                     </div>
-                </HeaderMenu>
+                </HeaderMenu >}
 
-            }
-        </React.Fragment>
-        )
+        </React.Fragment>);
     }
 }
 

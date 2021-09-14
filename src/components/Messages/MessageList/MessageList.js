@@ -366,8 +366,11 @@ class Messages extends React.Component {
       });
     if (this.props.id && this.props.name) {
       let id = parseInt(this.props.id, 10);
+      alert(`${this.props.name},${this.props.id}`);
       this.selectMember({
-        email: null, nick_name: this.props.name, uid: id
+        email: null, 
+        nick_name: this.props.name, 
+        uid: id
       })
       try {
         Socket.on("reload_msglist", () => {

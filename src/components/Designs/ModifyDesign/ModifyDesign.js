@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import GridEditor from "components/Designs/GridEditor";
+// import GridEditor from "components/Designs/GridEditor";
+import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer"
 import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer";
 
 import styled from "styled-components";
@@ -26,9 +27,9 @@ import new_logo_plus from "source/new_logo_plus.png"
 import osdcss from "opendesign_style";
 
 const Section = styled.div`
-  display:${props=>props.isNone==true?props.isLast==null?"flex":"flex":"none"};
+  display:${props => props.isNone == true ? props.isLast == null ? "flex" : "flex" : "none"};
   @media only screen and (min-width : 500px) and (max-width:1700px) {
-    display:${props=>props.isNone==true?props.isLast==null?"block":"block":"none"};;
+    display:${props => props.isNone == true ? props.isLast == null ? "block" : "block" : "none"};;
   }
 `
 const LoadingBox = styled.div`
@@ -552,7 +553,7 @@ const QuestionGuide = styled.div`
   position:relative;
   cursor:default;
   .messageBubble{
-    width:${props=>props.bubbleSize}px;
+    width:${props => props.bubbleSize}px;
     font: normal normal normal 20px/27px Noto Sans KR;
     letter-spacing: 0px;
     line-height:25px;
@@ -560,8 +561,8 @@ const QuestionGuide = styled.div`
     font-weight:400;
     padding:10px;
     position:absolute;
-    left:${props=>props.left}px;
-    top:${props=>props.top}px;
+    left:${props => props.left}px;
+    top:${props => props.top}px;
 
     z-index:888;
 
@@ -902,7 +903,7 @@ class ModifyDesign extends Component {
     super(props);
     this.state = {
       deleteModal: false,
-      loading: false, designId: null, isMyDesign: false, editor: false,is_problem:false,
+      loading: false, designId: null, isMyDesign: false, editor: false, is_problem: false,
       basic: false, additional: false, content: false, step: 0, title: "", explanation: "",
       showSearch: false, thumbnail: noimg, thumbnail_name: "", grid: false,
       categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [], license1: true, license2: false, license3: false,
@@ -934,7 +935,7 @@ class ModifyDesign extends Component {
         license1: nextProps.DesignDetail.is_commercial,
         license2: nextProps.DesignDetail.is_display_creater,
         license3: nextProps.DesignDetail.is_modify,
-        is_problem:nextProps.DesignDetail.is_problem,
+        is_problem: nextProps.DesignDetail.is_problem,
       })
     }
     return true;
@@ -1019,7 +1020,7 @@ class ModifyDesign extends Component {
       title: this.state.title, explanation: this.state.explanation,
       files: [{ value: this.state.thumbnail, name: this.state.thumbnail_name, key: "thumbnail[]" }],
       members: { add: this.state.addmem, del: this.state.delmem },
-      is_commercial: this.state.license1 ? 1 : 0, is_display_creater: this.state.license2 ? 1 : 0, is_modify: this.state.license3 ? 1 : 0,is_problem: this.state.is_problem ? 1 : 0
+      is_commercial: this.state.license1 ? 1 : 0, is_display_creater: this.state.license2 ? 1 : 0, is_modify: this.state.license3 ? 1 : 0, is_problem: this.state.is_problem ? 1 : 0
     };
     if (data.files.length <= 0 || data.files[0].value === this.props.DesignDetail.img.m_img) {
       delete data.files;
@@ -1038,18 +1039,18 @@ class ModifyDesign extends Component {
     this.setState({ loading: false });
   }
   onChangeCategory1(event, { value }) {
-    this.setState({ categoryLevel1: { value }.value, categoryLevel2:null,categoryLevel3:null });
+    this.setState({ categoryLevel1: { value }.value, categoryLevel2: null, categoryLevel3: null });
     this.checkFinishAdditional();
   }
   onChangeCategory2(event, { value }) {
-    this.setState({ categoryLevel2: { value }.value,categoryLevel3:null })
+    this.setState({ categoryLevel2: { value }.value, categoryLevel3: null })
     this.checkFinishAdditional();
   }
   onChangeCategory3(event, { value }) {
     this.setState({ categoryLevel3: { value }.value })
     this.checkFinishAdditional();
   }
-  onCheckIsProblem = async()=>{
+  onCheckIsProblem = async () => {
     await this.setState({ is_problem: !this.state.is_problem });
     this.checkFinishAdditional();
   }
@@ -1117,14 +1118,14 @@ class ModifyDesign extends Component {
       });
     }
     let category3Index = -1;
-    let nCount=0;
-    for(let i in this.props.category2){
-      this.props.category2&&this.props.category2[i]&&this.props.category2[i].map((item,index)=>{
-          if(item.value == this.state.categoryLevel2){
-            category3Index = nCount;
-          }
-          nCount++;
-        })
+    let nCount = 0;
+    for (let i in this.props.category2) {
+      this.props.category2 && this.props.category2[i] && this.props.category2[i].map((item, index) => {
+        if (item.value == this.state.categoryLevel2) {
+          category3Index = nCount;
+        }
+        nCount++;
+      })
     }
     const DeleteDesignModal = () => {
       return (<Modal open={this.state.deleteModal} closeOnDimmerClick={true} onClose={this.deleteDialog}
@@ -1147,7 +1148,7 @@ class ModifyDesign extends Component {
     let boardWidth = 125;
     if (step === 3) boardWidth = 0;
     return (
-        <React.Fragment>
+      <React.Fragment>
         {this.state.cropper ?
           <CropperDialog ratio={this.state.ratio} onKeyDown={null} open={this.state.cropper} onClose={null}>
             <div onClick={this.closeCropper} style={{ position: "absolute", width: "max-content", top: "10px", right: "15px" }}>
@@ -1171,214 +1172,213 @@ class ModifyDesign extends Component {
               </div>
             </div>
           </CropperDialog> : null}
-          <Wrapper>
+        <Wrapper>
           <div className="navi_menu">
             <div className="navi_header">디자인 수정하기</div>
-            <div className={`navi_label borderBottom ${this.state.step==0?"select":"black"}`} onClick={() => this.gotoStep(scrollmenu[0])}>{scrollmenu[0].txt}</div>
-            <div className={`navi_label borderBottom ${this.state.step==1?"select":"black"}`}  
-                onClick={() => this.gotoStep(scrollmenu[1])}>{scrollmenu[1].txt}</div>
-            <div className={`navi_label ${this.state.step==2?"select":"black"}`} 
-                onClick={() => this.gotoStep(scrollmenu[2])}>{scrollmenu[2].txt}</div>
+            <div className={`navi_label borderBottom ${this.state.step == 0 ? "select" : "black"}`} onClick={() => this.gotoStep(scrollmenu[0])}>{scrollmenu[0].txt}</div>
+            <div className={`navi_label borderBottom ${this.state.step == 1 ? "select" : "black"}`}
+              onClick={() => this.gotoStep(scrollmenu[1])}>{scrollmenu[1].txt}</div>
+            <div className={`navi_label ${this.state.step == 2 ? "select" : "black"}`}
+              onClick={() => this.gotoStep(scrollmenu[2])}>{scrollmenu[2].txt}</div>
             <div onClick={this.deleteDesign} className="navi_label red delete" >디자인 삭제하기</div>
           </div>
-          <div className="vLine"/>
+          <div className="vLine" />
           <ContentWrapper>
-          <Section isNone={ step === 0 } >
+            <Section isNone={step === 0} >
               <React.Fragment>
                 <div className="board">
                   <div className="board_label">1. 대표 이미지 등록하기<sub className="sub marginRight2">*</sub>
-                      <QuestionGuide left={15} top={-50} bubbleSize={584}>?</QuestionGuide>
+                    <QuestionGuide left={15} top={-50} bubbleSize={584}>?</QuestionGuide>
                   </div>
                   <div className="board_box">
-                  <div className="row" style={{marginTop:"10px"}}>
-                    {
-                        this.state.thumbnail == null||this.state.thumbnail==noimg?
-                        <div className="imageBox"><img src={new_logo_plus} className="plus"/></div>
-                        :
-                        <img className="imageBox" src={this.state.thumbnail} />
+                    <div className="row" style={{ marginTop: "10px" }}>
+                      {
+                        this.state.thumbnail == null || this.state.thumbnail == noimg ?
+                          <div className="imageBox"><img src={new_logo_plus} className="plus" /></div>
+                          :
+                          <img className="imageBox" src={this.state.thumbnail} />
                       }
                       <div className="imageLabel">
-                            <label className="findThumbnailText" htmlFor="file">찾아보기</label>
-                            <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
-                            <div className="thumbnailExplainText"> 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
+                        <label className="findThumbnailText" htmlFor="file">찾아보기</label>
+                        <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />
+                        <div className="thumbnailExplainText"> 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
                       </div>
+                    </div>
                   </div>
-                  </div>
-                  <div className="board_label" style={{marginTop:"12px"}}>2. 디자인 이름<sub className="sub marginRight1">*</sub></div>
+                  <div className="board_label" style={{ marginTop: "12px" }}>2. 디자인 이름<sub className="sub marginRight1">*</sub></div>
                   <div className="board_box">
-                        <InputText onChange={this.onChangeValueTitle} onKeyDown={this.onKeyDownEnter}
-                        name="title" maxLength="100" value={this.state.title} placeholder="디자인의 제목을 입력해주세요. (100자 이내)" onBlur={this.checkFinishBasic} />
+                    <InputText onChange={this.onChangeValueTitle} onKeyDown={this.onKeyDownEnter}
+                      name="title" maxLength="100" value={this.state.title} placeholder="디자인의 제목을 입력해주세요. (100자 이내)" onBlur={this.checkFinishBasic} />
                   </div>
-                  <div className="board_label" style={{marginTop:"22px"}}>3. 디자인 설명<sub className="sub marginRight2">*</sub>
+                  <div className="board_label" style={{ marginTop: "22px" }}>3. 디자인 설명<sub className="sub marginRight2">*</sub>
                   </div>
                   <div className="board_box">
-                        <InputTextArea id="explainBox" onChange={this.onChangeValueExplanation}
-                          name="explanation" maxLength="350" placeholder="디자인 설명을 입력해주세요. (350자 이내)"
-                          value={this.state.explanation} onBlur={this.checkFinishBasic} />
+                    <InputTextArea id="explainBox" onChange={this.onChangeValueExplanation}
+                      name="explanation" maxLength="350" placeholder="디자인 설명을 입력해주세요. (350자 이내)"
+                      value={this.state.explanation} onBlur={this.checkFinishBasic} />
                   </div>
 
                 </div>
-                {step === 0 && 
+                {step === 0 &&
                   <div className="buttonWrap" >
-                  <CustomButton
-                     onClick={async() => 
-                    {    
+                    <CustomButton
+                      onClick={async () => {
                         if (await confirm("수정 중인 내용이 저장되지 않습니다. 취소하시겠습니까?", "예", "아니오")) {
-                        window.history.go(-1)
-                      }
-                    }}
-                    isComplete={false}>
-                    <BtnText>취소</BtnText>
-                  </CustomButton>
-                  <CustomButton
-                    onClick={this.gotoNextStep}
-                    isComplete={true}>
-                    <BtnText>다음</BtnText>
-                  </CustomButton>
+                          window.history.go(-1)
+                        }
+                      }}
+                      isComplete={false}>
+                      <BtnText>취소</BtnText>
+                    </CustomButton>
+                    <CustomButton
+                      onClick={this.gotoNextStep}
+                      isComplete={true}>
+                      <BtnText>다음</BtnText>
+                    </CustomButton>
                   </div>}
               </React.Fragment>
             </Section>
-            <Section isNone={ step === 1} >
-               <div className="board" >
-              <div className="maxFlex">
-               <div className="board_label">1. 카테고리<sub className="sub marginRight1" >*</sub></div>
-
-                <div className="category_wrapper">
-                  <CategoryDropDown
-                    selection
-                    ref="dropdown1"
-                    onChange={this.onChangeCategory1}
-                    options={this.props.category1}
-                    value={this.state.categoryLevel1}
-                    placeholder="카테고리를 선택해주세요"
-                  />
-                  <CategoryDropDown
-                    selection
-                    id="category2"
-                    ref="dropdown2"
-                    onChange={this.onChangeCategory2}
-                    options={this.props.category2[this.state.categoryLevel1 - 1] || emptyCategory}
-                    value={this.state.categoryLevel2}
-                    placeholder="카테고리를 선택해주세요"
-                  />
-                  {this.state.categoryLevel2==28?
-                  <CategoryDropDown
-                  selection
-                  id="category3"
-                  ref="dropdown3"
-                  onChange={this.onChangeCategory3}
-                  options={this.props.category3&&this.props.category3[category3Index] || emptyCategory}
-                  value={this.state.categoryLevel3}
-                  placeholder="카테고리를 선택해주세요"
-                  />:null}
-
-                </div>
-                </div>
-                <div className="board_box paddingLeft1" style={{marginTop:"70px"}}>
-                {
-                  this.state.categoryLevel3!=null?
-                    <IsProblemBox>
-                      <CheckBox2 onChange={this.onCheckIsProblem} checked={this.state.is_problem ? true : false} type="checkbox" />
-                      <span className="textLabel">문제 등록 기능을 사용합니다.</span>
-                    </IsProblemBox>
-                  :null
-                }
-                </div> 
+            <Section isNone={step === 1} >
+              <div className="board" >
                 <div className="maxFlex">
-                  <div className="board_label " style={{marginRight:"5px"}}>2. 멤버 초대하기</div> 
-                  <div style={{width:"400px",marginRight:"10px"}}><SearchDesignMemverContainer className="searchRect" addMember={this.addMember} /></div>
+                  <div className="board_label">1. 카테고리<sub className="sub marginRight1" >*</sub></div>
+
+                  <div className="category_wrapper">
+                    <CategoryDropDown
+                      selection
+                      ref="dropdown1"
+                      onChange={this.onChangeCategory1}
+                      options={this.props.category1}
+                      value={this.state.categoryLevel1}
+                      placeholder="카테고리를 선택해주세요"
+                    />
+                    <CategoryDropDown
+                      selection
+                      id="category2"
+                      ref="dropdown2"
+                      onChange={this.onChangeCategory2}
+                      options={this.props.category2[this.state.categoryLevel1 - 1] || emptyCategory}
+                      value={this.state.categoryLevel2}
+                      placeholder="카테고리를 선택해주세요"
+                    />
+                    {this.state.categoryLevel2 == 28 ?
+                      <CategoryDropDown
+                        selection
+                        id="category3"
+                        ref="dropdown3"
+                        onChange={this.onChangeCategory3}
+                        options={this.props.category3 && this.props.category3[category3Index] || emptyCategory}
+                        value={this.state.categoryLevel3}
+                        placeholder="카테고리를 선택해주세요"
+                      /> : null}
+
+                  </div>
+                </div>
+                <div className="board_box paddingLeft1" style={{ marginTop: "70px" }}>
+                  {
+                    this.state.categoryLevel3 != null ?
+                      <IsProblemBox>
+                        <CheckBox2 onChange={this.onCheckIsProblem} checked={this.state.is_problem ? true : false} type="checkbox" />
+                        <span className="textLabel">문제 등록 기능을 사용합니다.</span>
+                      </IsProblemBox>
+                      : null
+                  }
+                </div>
+                <div className="maxFlex">
+                  <div className="board_label " style={{ marginRight: "5px" }}>2. 멤버 초대하기</div>
+                  <div style={{ width: "400px", marginRight: "10px" }}><SearchDesignMemverContainer className="searchRect" addMember={this.addMember} /></div>
                   <QuestionGuide left={64} top={-10} bubbleSize={600}>?
                     <div className="messageBubble">
-                            함께 디자인을 만들어 갈 멤버를 초대해 주세요. <br/>
-                            초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br/> 
-                            디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.                        
+                      함께 디자인을 만들어 갈 멤버를 초대해 주세요. <br />
+                      초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br />
+                      디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.
                     </div>
                   </QuestionGuide>
                 </div>
                 <div className="messageBubble">
-                  <div className="board_label"/>
+                  <div className="board_label" />
                   <div className="quest">?</div>
                   <div className="board_box">
-                            함께 디자인을 만들어 갈 멤버를 초대해 주세요. <br/>
-                            초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br/> 
-                            디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.    
-                  </div>                    
+                    함께 디자인을 만들어 갈 멤버를 초대해 주세요. <br />
+                    초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br />
+                    디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.
+                  </div>
                 </div>
                 <InviteMemberListBox>
                   <div className="memberList">
                     {this.state.members && this.state.members.length > 0 ?
                       this.state.members.map((item, index) => {
-                        console.log("=====",item)
-                        
+                        console.log("=====", item)
+
                         return (
                           <div onClick={() => this.removeMember(item.user_id)} key={index}>
-                            <Peer s_img={item&&item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
+                            <Peer s_img={item && item.s_img == null ? noface : item.s_img} nick_name={item.nick_name} />
                           </div>
                         )
                       }) : null}</div>
                 </InviteMemberListBox>
                 <div className="board_label">3. 라이센스</div>
                 <div className="board_box paddingLeft1 column">
-                     <div className="licenseItem"><CheckBox2 checked={this.state.license1} onChange={this.onCheckedLicense01} /><span className="textLabel">상업적으로 이용이 가능합니다.</span></div>
-                     <div className="licenseItem"><CheckBox2 checked={this.state.license2} onChange={this.onCheckedLicense02} /><span className="textLabel disabled">원작자를 표시합니다.</span></div>
-                     <div className="licenseItem"><CheckBox2 checked={this.state.license3} onChange={this.onCheckedLicense03} /><span className="textLabel">수정이 가능합니다.</span></div>
+                  <div className="licenseItem"><CheckBox2 checked={this.state.license1} onChange={this.onCheckedLicense01} /><span className="textLabel">상업적으로 이용이 가능합니다.</span></div>
+                  <div className="licenseItem"><CheckBox2 checked={this.state.license2} onChange={this.onCheckedLicense02} /><span className="textLabel disabled">원작자를 표시합니다.</span></div>
+                  <div className="licenseItem"><CheckBox2 checked={this.state.license3} onChange={this.onCheckedLicense03} /><span className="textLabel">수정이 가능합니다.</span></div>
                 </div>
-                </div>
+              </div>
 
-                {step === 1 && 
+              {step === 1 &&
                 <div className="buttonWrap">
-                <CustomButton
-                     onClick={async() => 
-                    {    
-                        if (await confirm("수정 중인 내용이 저장되지 않습니다. 취소하시겠습니까?", "예", "아니오")) {
+                  <CustomButton
+                    onClick={async () => {
+                      if (await confirm("수정 중인 내용이 저장되지 않습니다. 취소하시겠습니까?", "예", "아니오")) {
                         window.history.go(-1)
                       }
                     }}
                     isComplete={false}>
                     <BtnText>취소</BtnText>
-                </CustomButton>
-                <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
-                  <BtnText>뒤로</BtnText>
-                </CustomButton>
-                <CustomButton
-                  onClick={this.gotoNextStep}
-                  isComplete={true}>
-                  <BtnText>다음</BtnText>
-                </CustomButton>
+                  </CustomButton>
+                  <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
+                    <BtnText>뒤로</BtnText>
+                  </CustomButton>
+                  <CustomButton
+                    onClick={this.gotoNextStep}
+                    isComplete={true}>
+                    <BtnText>다음</BtnText>
+                  </CustomButton>
                 </div>}
 
-          </Section>
-          <Section isNone={ step === 2 } isLast={true}>
+            </Section>
+            <Section isNone={step === 2} isLast={true}>
               <div className="grid_wrapper">
                 <div className="board_grid">
                   {this.state.grid ?
                     this.props.DesignDetail &&
-                      this.props.DesignDetail.is_project ?
-                      <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} />
+                      this.props.DesignDetail.is_project
+                      ? <DesignDetailStepContainer design={this.props.DesignDetail} isMyDesign={true} editor={true} />
+                      // <GridEditor editor={true} isMyDesign={true} design={this.props.DesignDetail} {...this.props} />
                       : <DesignDetailViewContainer history={this.props.history} id={this.props.DesignDetail.uid} isMyDesign={true} editor={false} />
                     :
                     <LoadingBox>
                       <LoadingIconBox imageURL={Logo} />
                       <div className="loadingText">컨텐츠 에디터를 가져오고 있습니다...</div>
-                  </LoadingBox>}
+                    </LoadingBox>}
                 </div>
 
-                {step === 2 && 
-                <div className="grid_buttonWrap">
-                  <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
-                    <BtnText>뒤로</BtnText>
-                  </CustomButton>
-                  <CustomButton
-                    isComplete={this.state.type === "grid" && this.state.template == null ? false : true}
-                    onClick={this.submit}
-                  >
-                    <BtnText>완료</BtnText>
-                  </CustomButton>
-                </div>}
-                </div>
+                {step === 2 &&
+                  <div className="grid_buttonWrap">
+                    <CustomButton isComplete={false} onClick={this.gotoPrevStep}>
+                      <BtnText>뒤로</BtnText>
+                    </CustomButton>
+                    <CustomButton
+                      isComplete={this.state.type === "grid" && this.state.template == null ? false : true}
+                      onClick={this.submit}
+                    >
+                      <BtnText>완료</BtnText>
+                    </CustomButton>
+                  </div>}
+              </div>
             </Section>
           </ContentWrapper>
-          </Wrapper>
+        </Wrapper>
       </React.Fragment>)
   }
 }
@@ -1862,7 +1862,7 @@ const NewController = styled.div`
 //   }
 // `
 // const ImageBox = styled.div`
-  
+
 //   margin-left: 67px;
 //     min-width: 210px;
 //     min-height: 210px;
@@ -2021,7 +2021,7 @@ const NewController = styled.div`
 // background-color:#EFEFEF !important;
 // margin-right:30px;
 // @media only screen and (min-width : 780px) and (max-width:1440px) {
-  
+
 // }
 // @media only screen and (min-width : 360px) and (max-width:780px) {
 //   margin-top:10px;

@@ -83,11 +83,10 @@ const SearchContainer = styled.div`
         width:38px;
         height:38px;
     }
-    @media only screen and (min-width: 500px) and (max-width: 1300px) {
+    @media only screen and (min-width: 0px) and (max-width: 1300px) {
         width: 100%;
-        min-width: 290px;
+        min-width: 100px;
         max-width: 450px;
-        // .searchbox{ min-width: 250px; }
     }
 `
 class SearchForm extends Component {

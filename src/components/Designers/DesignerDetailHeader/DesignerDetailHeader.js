@@ -188,6 +188,7 @@ const Additional = styled.div`
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
+        cursor: pointer;
     }
     .modify-text {
         width: max-content;
@@ -266,6 +267,7 @@ const MyAdditional = styled.div`
         letter-spacing: 0px;
         color: #4F4F4F;
         opacity: 1;
+        // cursor: pointer;
 
         margin-top: 6px;
         margin-right: 12px;
@@ -336,6 +338,10 @@ class DesignerPageHeader extends Component {
         }
     }
     sendMessage() {
+        if (!this.props.userInfo) {
+            this.needLogin();
+            return;
+        }
         let href = window.location.href.substring(0, window.location.href.search("designerDetail"))
         window.location.href = href + 'message/' + this.props.DesignerDetail.uid + '/' + this.props.DesignerDetail.nick_name;
     }
