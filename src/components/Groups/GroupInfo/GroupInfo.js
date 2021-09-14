@@ -23,6 +23,10 @@ import new_logo_favorite from "source/new_logo_favorite.svg";
 import iconLike from "source/mypage_icon_like.svg";
 import new_logo_share from "source/new_logo_share.svg";
 import new_logo_note from "source/new_logo_note.svg";
+
+import new_logo_chat from "source/new_logo_chat.svg";
+import new_logo_msg from "source/new_logo_msg.svg";
+
 const NormalIcon = styled.div`
     width: 22px;
     height: 22px;
@@ -32,6 +36,39 @@ const NormalIcon = styled.div`
     background-size: contain;
     background-repeat: no-repeat;
     opacity: ${props => props.opacity};
+`;
+const ChatWrapper = styled.div`
+margin-left: 38px;
+
+width:100%;
+max-width:1740px;
+height:100px;
+display:flex;
+justify-content:flex-end;
+align-items:flex-end;
+.row{
+  display:flex;
+}
+.icon_wrap{
+  margin-left:44px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  cursor:pointer;
+}
+.icon{
+  width:66px;
+  height:66px;
+  object-fit:contain;
+}
+.icon_black{
+    filter: invert(100%);
+}
+.icon_label{
+  font-size:17px;
+  font-family:Spoqa Han Sans Neo;
+  font-weight:Medium;
+}
 `;
 const NewAlarmLogo = styled.div`
     width:10px;
@@ -48,9 +85,9 @@ const NewAlarmLogo = styled.div`
 const GroupSummary = styled.div`
   margin-top: 24px;
   margin-left: 38px;
-  margin-right: 38px;
+//   margin-right: 38px;
 
-  max-width: 1760px;
+  max-width: 1740px;
   min-width: ${props => props.isEditor ? 1124 : 1000}px;
     height: 319px;
     box-shadow: 8px 8px 8px #4141411A;
@@ -335,6 +372,7 @@ class GroupInfoComponent extends Component {
     }
 
 
+
     render() {
         const { like, GroupDetail, userInfo } = this.props;
         const group_user_id = GroupDetail && GroupDetail.user_id;
@@ -342,7 +380,9 @@ class GroupInfoComponent extends Component {
         const isEditor = group_user_id === user_id;
         const { w, couldJoinVChat, manager } = this.state;
 
-        return (<GroupSummary isEditor={isEditor}>
+        return (
+        <React.Fragment>
+        <GroupSummary isEditor={isEditor}>
             <img src={(GroupDetail && GroupDetail.img && GroupDetail.img.l_img) || noimg} className="thumbnail" />
             <div className="content_wrapper">
                 <div className="header_box">
@@ -436,7 +476,27 @@ class GroupInfoComponent extends Component {
                     </div>
                 </div>
             </div>
-        </GroupSummary>);
+        </GroupSummary>
+        {couldJoinVChat ?
+        <ChatWrapper>
+            <div className="row">
+                <div
+                    title="그룹 멤버들과 화상회의를 시작합니다."
+                    className="notice icon_wrap" onClick={this.openVideoChat}>
+                    <img src={new_logo_msg} className="icon" />
+                    <div className="icon_label">화상회의</div>
+                </div>
+                <div
+                    title="디자인 멤버들과 채팅을 시작합니다."
+                    className="notice icon_wrap" onClick={this.openChat}>
+                    <img src={new_logo_chat} className="icon" />
+                    <div className="icon_label">채팅</div>
+                </div>
+            </div>
+        </ChatWrapper>
+        : null}
+        </React.Fragment>
+        );
     }
 };
 

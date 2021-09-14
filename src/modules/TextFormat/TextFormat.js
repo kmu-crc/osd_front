@@ -5,9 +5,11 @@ const TextFormatContainer = styled.div`
   padding: 0 0 0 0; 
   cursor: default;
   overflow: hidden; 
+  height:${props=>props.height == null?null:props.height}px;
   text-overflow: ellipsis;
   width: ${props => props.width + "%" || "max-content"};
   background-color: ${props => props.backgroundColor || "transparent"};
+  
   &.multi {
     display: -webkit-box;
     -webkit-line-clamp: ${props => props.lines || "none"};
@@ -48,6 +50,7 @@ class TextFormat extends Component {
     const { backgroundColor, width, txt, id, lines, chars/*, tip*/ } = this.props;
     return (
       <TextFormatContainer
+        height={this.props.height}
         backgroundColor={backgroundColor}
         width={width}
         title={txt}

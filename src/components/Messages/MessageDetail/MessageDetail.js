@@ -36,7 +36,7 @@ const ReceiveMessageBox = styled.div`
     width: max-content;  
     max-width:100%;    
     padding: 13px 25px 13px 20px;
-    border-radius: 20px;
+    // border-radius: 20px;
     background-color: #FFE8E8;
     word-wrap:break-word;
   }
@@ -87,7 +87,7 @@ const SendMessageBox = styled.div`
       width: max-content;  
       max-width:100%;    
       padding: 13px 25px 13px 20px;
-      border-radius: 20px;
+      // border-radius: 20px;
       background-color: #FFFFFF;
     }
     .messageText {

@@ -13,6 +13,7 @@ const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }];
 const Wrapper =styled.div`
   display:flex;
   .nav{
+      min-width:264px;
       width:264px;
       display:flex;
       flex-direction:column;
@@ -28,10 +29,12 @@ const Wrapper =styled.div`
         font-family:Spoqa Han Sans Neo;
         font-weight:Medium;
         font-size:28px;
-        color:black;
+        color:#1E9B79;
       }
       .delete{
-        color:#1E9B79;
+        color:red;
+        margin-top:781px;
+        cursor:pointer;
       }
       .menu_marginTop{margin-top:57px;}
   }
@@ -63,7 +66,7 @@ const Wrapper =styled.div`
       }
   }
 
-  @media only screen and (min-width : 500px) and (max-width:1700px) {
+  @media only screen and (min-width : 500px) and (max-width:1400px) {
     display:flex;
     flex-direction:column;
     .content{
@@ -100,6 +103,7 @@ const Wrapper =styled.div`
       flex-wrap:wrap;
       justify-content:center;
       .title{
+        min-width:max-content;
         height:40px;
         margin-bottom:32px;
         font-family:Spoqa Han Sans Neo;
@@ -111,6 +115,7 @@ const Wrapper =styled.div`
         justify-content:center;
       }
       .menu{
+        min-width:max-content;
         display:flex;
         justify-content:center;
         align-items:center;
@@ -121,7 +126,7 @@ const Wrapper =styled.div`
       }
       .menu_marginTop{margin-top:0px;}
       .borderBottom{border:none;}
-      .delete{margin:0;margin-left:50px;}
+      .delete{margin:0;margin-left:50px;        min-width:max-content;}
     }
   }
 `

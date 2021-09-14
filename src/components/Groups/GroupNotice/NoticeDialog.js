@@ -69,8 +69,8 @@ const Navi = styled.div`
 `;
 const NoticeModalWrapper = styled(Modal)`
   width:100% !important;
+  min-height:525px;
   max-width:1152px !important;
-  height:525px;
   padding:26px 49px !important;
   background-color: white;
   display: flex;
@@ -94,6 +94,7 @@ const NoticeModalWrapper = styled(Modal)`
     align-items:center;
     cursor: default;
     .text_{
+        min-width:max-content;
         font-family:Spoqa Han Sans Neo;
         font-weight:500;
         font-size:37px;
@@ -191,11 +192,13 @@ const NoticeListWrapper = styled.div`
             min-width:max-content;
         }
         .row-title { 
+            max-width:650px;
             text-align: left; 
             padding-left:120px;
             width: 92%;
             white-space: nowrap; 
             text-overflow: ellipsis; 
+            overflow:hidden;
         }
         .create_time { 
             text-align: center; 
@@ -206,7 +209,6 @@ const NoticeListWrapper = styled.div`
 `;
 const NoticeReadWrapper = styled.div`
     width: 100%;
-    background-color: #CECECE;
     font-weight: 700;
     font-family:Spoqa Han Sans Neo;
     font-weight:Medium;
@@ -222,6 +224,7 @@ const NoticeReadWrapper = styled.div`
         border-top: 1px solid #EAEAEA;
 
         .label {
+            min-width:80px;
             width: 10%;
             background-color: #EAEAEA;
             padding: 10px;
@@ -234,6 +237,8 @@ const NoticeReadWrapper = styled.div`
     }
 
     .content {
+        padding:25px;
+        height:300px;
         border-top: 1px solid #EAEAEA;
         border-bottom: 1px solid #EAEAEA;
         font-weight: 500;
@@ -484,7 +489,7 @@ d      pagination
                             : null}
                     </div>
 
-                    <div style={{ display: "flex", flexDirection: "row", width: "max-content", marginTop: "10px", marginLeft: "auto", marginRight: "10px" }}>
+                    <div style={{ display: "flex", flexDirection: "row", width: "max-content", marginTop: "10px", marginLeft: "auto" }}>
                         {mode === WRITE
                             ? <Button bgcolor="red" color="white" onClick={() => this.write()}>등록</Button>
                             : null}

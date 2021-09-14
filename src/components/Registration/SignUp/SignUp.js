@@ -86,7 +86,7 @@ const JoinCongra = styled.div`
     // animation-fill-mode: forwards;
     // animation-timing-function: ease-out;  
 `
-const Join_Modal = styled.div`
+const Join_Modal = styled(Modal)`
     width:764px;
     height:764px;
     background-color:white;
@@ -100,7 +100,16 @@ const Join_Modal = styled.div`
     }
     .join_logo{
         width:222px;
-        height:232px;
+        height:222px;
+        border-radius:50%;
+        border:1px solid black;
+        font-family:Righteous;
+        font-weight:500;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-size:187px;
+        padding-top:30px;
     }
     .button{
         width:271px;
@@ -118,15 +127,17 @@ const Join_Modal = styled.div`
     .marginBottom3{margin-bottom:17px;}
     .marginBottom4{margin-bottom:50px;}
 `
-const Term_Modal = styled.div`
-    width:764px;
-    height:764px;
+const Term_Modal = styled(Modal)`
+    width:764px !important;
+    height:764px !important;
+    max-width:764px !important;
+    max-height:764px !important;
     background-color:white;
     display:flex;
     flex-direction:column;
     align-items:center;
     padding:43px;
-    .header{
+    .header_{
         width:100%;
         text-align:center;
         font-family:Spoqa Han Sans Neo;
@@ -156,16 +167,21 @@ const Term_Modal = styled.div`
     }
     .marginBottom{margin-bottom:31px;}
 `
-const Signup_Modal = styled.div`
-    width:764px;
-    height:764px;
+const Signup_Modal = styled(Modal)`
+    width:764px !important;
+    height:764px !important;
+    max-width:764px !important;
+    max-height:764px !important;
     background-color:white;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+    
     padding:59px;
     .wrapper{
-        width:300px;
+        width:100%;
+        display:flexl
+        justify-content:center;
+        .in_wrapper{
+            width:300px;
+        }
     }
     .header{
         width:100%;
@@ -531,44 +547,26 @@ class SignUpModal extends Component {
         return (
             <React.Fragment>
 
-
-
                 {this.state.success_signup ? 
                 <JoinCongra>
-                    <Join_Modal open={this.state.success_signup} >
-                        <div className="header marginBottom2">CRC님의 회원가입을 축하합니다!</div>
-                        <img src={new_logo_question} className="join_logo marginBottom1"/>
-                        <div className="header marginBottom3">CRC님은 어떤 분이신가요?</div>
-                        <div className="header marginBottom4">마이페이지에서 프로필을 완성해 주세요!</div>
-                        <div className="button marginBottom4" onClick={this.tmp_goto_mydetail}>내 프로필 완성하기</div>
-                        <div className="button" onClick={this.onClose}>아니요. 다음에 할게요</div>
-                    </Join_Modal>
+                <Join_Modal open={true} >
+                    <div style={{display:"flex",alignItems:"center",flexDirection:"column"}}>
+                    <div className="header marginBottom2">회원가입을 축하합니다!</div>
+                    <div className="join_logo marginBottom1">?</div>
+                    <div className="header marginBottom3">어떤 분이신가요?</div>
+                    <div className="header marginBottom4">마이페이지에서 프로필을 완성해 주세요!</div>
+                    <div className="button marginBottom4" onClick={this.tmp_goto_mydetail}>내 프로필 완성하기</div>
+                    {/* <div className="button" onClick={this.onClose}>아니요. 다음에 할게요</div> */}
+                    </div>
+                </Join_Modal>
                 </JoinCongra>
                 :
                 <React.Fragment>
-                {
-                    this.state.open_term == true?
-                    <Term>
-                        <Term_Modal>
-                            <div className="header marginBottom">이용약관</div>
-                            <div className="term marginBottom">
-                                [차례]
-                                <br/><br/>제1장<br/> 총칙 제1조 목적 제2조 용어의 정의 제3조 약관의 명시, 효력 및 개정 제4조 관련법령과의 관계 
-                                <br/><br/>제2장<br/> 이용계약 체결 제5조 회원가입 및 이용 계약의 성립 제6조 이용 신청의 승낙과 제한 제7조 개인정보의 보호 및 사용 제8조 회원 ID 부여 및 관리 제9조 회원정보의 변경 제10조 회원의 ID 및 비밀번호 관리의무 제11조 회원에 대한 통지 
-                                <br/><br/>제3장<br/> 계약 당사자의 의무 제12조 회사의 의무 제13조 회원의 의무 
-                                <br/><br/>제4장<br/> 서비스의 이용 제14조 서비스 제공 제15조 서비스의 변경 제16조 정보의 제공 및 광고의 게재 제17조 게시물의 관리 제18조 게시물의 저작권 제19조 권리의 귀속 제20조 계약 해지 제21조 서비스 이용제한 또는 중지 및 회원 탈퇴 제22조 손해배상 제23조 책임제한 제24조 재판권 및 준거법
-                            </div>
-                            <div className="row center">
-                                <div onClick={this.agree} className="agree_button">동의 후 닫기</div>
-                            </div>
-                        </Term_Modal>
-                    </Term>
-                    :
-                    null
-                }
+
                 <Wrapper>
-                    <Signup_Modal>
+                    <Signup_Modal open={true}>
                         <div className="wrapper">
+                            <div className="in_wrapper">
                             <div className="header">반갑습니다!</div>
                             
                             <div className="label">
@@ -618,10 +616,33 @@ class SignUpModal extends Component {
                                     </div>
 
                             </div>
+                            </div>
                         </div>
                     </Signup_Modal>
                 </Wrapper>
                 </React.Fragment>
+                }
+                                {
+                    this.state.open_term == true?
+                    <Term>
+                        <Term_Modal open={this.state.open_term}>
+                            <div className="header_ marginBottom">이용약관</div>
+                            <div className="row center">
+                            <div className="term marginBottom">
+                                [차례]
+                                <br/><br/>제1장<br/> 총칙 제1조 목적 제2조 용어의 정의 제3조 약관의 명시, 효력 및 개정 제4조 관련법령과의 관계 
+                                <br/><br/>제2장<br/> 이용계약 체결 제5조 회원가입 및 이용 계약의 성립 제6조 이용 신청의 승낙과 제한 제7조 개인정보의 보호 및 사용 제8조 회원 ID 부여 및 관리 제9조 회원정보의 변경 제10조 회원의 ID 및 비밀번호 관리의무 제11조 회원에 대한 통지 
+                                <br/><br/>제3장<br/> 계약 당사자의 의무 제12조 회사의 의무 제13조 회원의 의무 
+                                <br/><br/>제4장<br/> 서비스의 이용 제14조 서비스 제공 제15조 서비스의 변경 제16조 정보의 제공 및 광고의 게재 제17조 게시물의 관리 제18조 게시물의 저작권 제19조 권리의 귀속 제20조 계약 해지 제21조 서비스 이용제한 또는 중지 및 회원 탈퇴 제22조 손해배상 제23조 책임제한 제24조 재판권 및 준거법
+                            </div>
+                            </div>
+                            <div className="row center">
+                                <div onClick={this.agree} className="agree_button">동의 후 닫기</div>
+                            </div>
+                        </Term_Modal>
+                    </Term>
+                    :
+                    null
                 }
             </React.Fragment>)
     }

@@ -300,6 +300,7 @@ class Mixer {
 
 
 
+
 const RoomDiv = styled.div`
 	position: relative;
 	width: 100%;
@@ -307,80 +308,110 @@ const RoomDiv = styled.div`
 	// *{border:1px solid white;}
 `;
 const MenuBarContainer = styled.div`
-	width: 100%;
-	height: 45px;
-  position: relative; 
-	display: flex;
-  flex-direction: rows;
+  width: 100%;
+  height: max-content;
+  padding:16px 17px;
+  display: flex;
   justify-content: space-between;
+  flex-wrap:wrap;
   background-color: #707070; // transparent;
-	padding: 5px 25px;
-	
-	z-index: 150;
-
+  z-index: 150;
+  .flex{display:flex;height:max-content;width:400px;}
+  .flex-end{justify-content:flex-end;}
   .btn {
     cursor: pointer;
-    text-align: center;
 		&.peer {
 			position: absolute;
-			right: 10%;
+			top:81px;
 			width: max-content;
 			padding: 8px 25px;
-			border-radius: 36px;
 			background: rgba(100,100,100, 0.75);
+			z-index:888;
+		}
+		&.hidepeer{
+			right: 247px;
+		}
+		&.showpeer{
+			right: 5px;
 		}
 		&.start {
-			position: absolute;
-			left: 20%;
-			width: max-content;
-			padding: 8px 25px;
-			border-radius: 36px;
-			background: rgba(100,100,100, 0.75);
+			width:100px;
+			height:44px;
+			box-shadow: 8px 8px 8px #0000002B;
+			display:flex;
+			align-items:center;
+			justify-content:center;
+			color:white;
+			font-size:22px;
+			font-family:Spoqa Han Sans Neo;
+			background-color:black;
+			margin-left:50px;
 		}
 		&.stop {
-			position: absolute;
-			left: 30%;
-			width: max-content;
-			padding: 8px 25px;
-			border-radius: 36px;
-			background: rgba(100,100,100, 0.75);
+			width:100px;
+			height:44px;
+			box-shadow: 8px 8px 8px #0000002B;
+			display:flex;
+			align-items:center;
+			justify-content:center;
+			color:white;
+			font-size:22px;
+			font-family:Spoqa Han Sans Neo;
+			background-color:black;
+			margin-left:50px;
+			opacity:0.75;
 		}
 		&.invite {
-			position: absolute;
-			left: 10%;
-			width: max-content;
-			padding: 8px 25px;
-			border-radius: 36px;
-			background: rgba(100,100,100, 0.75);
+			margin-left:50px;
 		}
 		&.return {
-			position: absolute;
-			right: 20%;
-			width: max-content;
-			padding: 8px 25px;
-			border-radius: 36px;
-			background: rgba(100,100,100, 0.75);			
+			width:150px;
+			height:44px;
+			box-shadow: 8px 8px 8px #0000002B;
+			display:flex;
+			align-items:center;
+			justify-content:center;
+			color:white;
+			font-size:22px;
+			font-family:Spoqa Han Sans Neo;
+			background-color:black;
+			margin-right:50px;
 		}
     &.chat {
-			width: max-content;
-      height: 35px;
-      border-radius: 36px;
-      background: rgba(244, 0, 0, 0.8);
-      padding: 8px 25px;
+		width:100px;
+		height:44px;
+		box-shadow: 8px 8px 8px #0000002B;
+		display:flex;
+		align-items:center;
+		justify-content:center;
+		color:white;
+		font-size:22px;
+		font-family:Spoqa Han Sans Neo;
+		background-color:red;
     }
     &.share {
-      width: max-content;
-      height: 35px;
-      border-radius: 36px;
-      background: rgba(125, 125, 255, 0.5);
-      padding: 8px 25px;
+		width:100px;
+		height:44px;
+		box-shadow: 8px 8px 8px #0000002B;
+		display:flex;
+		align-items:center;
+		justify-content:center;
+		color:white;
+		font-size:22px;
+		font-family:Spoqa Han Sans Neo;
+		background-color:#7E1E9B;
     }
     &.exit {
-      width: 64px;
-      height: 32px;
-      border-radius: 32px;
-      background: rgba(255, 0, 0, 1.0);
-      padding: 6px 12px;
+		width:100px;
+		height:44px;
+		box-shadow: 8px 8px 8px #0000002B;
+		display:flex;
+		align-items:center;
+		justify-content:center;
+		color:white;
+		font-size:22px;
+		font-family:Spoqa Han Sans Neo;
+		background-color:red;
     }    
   }
   .txt {
@@ -391,34 +422,40 @@ const MenuBarContainer = styled.div`
 const ContentContainer = styled.div`
 	width: 100%;
 	height: 100%;
-	background-image: url(${props => props.bg || nobg});
-	background-size: contain;
-	background-position: center center;
-	background-repeat: no-repeat;
 	z-index: 100;
-
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-
+  	
 	.panel {
 		position: absolute;
 		width: 100%;
 		height: 100%;
 		z-index: 101;
-		background-color: rgba(0, 0, 0, .5);
+		background-color: #58585854;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		// background-image: url(${props => props.bg || nobg});
+		// background-size: contain;
+		// background-position: center center;
+		// background-repeat: no-repeat;
+		.logo{
+			height:270px;
+			object-fit:contain;
+		}
 	}
 
 `;
 const RightVerticalScroll = styled.div`
-	padding: 5px 5px 5px 0px; // top, bottom, left, right
-	width: 260px;
+	padding: 5px 10px 5px 15px;
+	min-width: 242px;
 	display: ${props => props.hidden ? "none" : "flex"};
 
 	z-index: 110;
-	background-color: rgba(255,255,255, 0.5);
+	background-color: rgba(0,0,0, 0.3);
 	flex-direction: column;
-	justify-content: flex-start;
+	align-items: center;
 
   .hand {
 		cursor: grab;
@@ -440,17 +477,21 @@ const RightVerticalScroll = styled.div`
 `;
 const MiddleDynamicGrid = styled.div`
 	z-index: 110;
-	background-color: rgba(255,255,255, 0.5);
+	// background-color: rgba(255,255,255, 0.5);
 	width: 100%;
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	margin-bottom:38px;
+	// flex-direction: column;
+	// justify-content: center;
   .hand {
 		cursor: grab;
 	}
 	.container {
+		background-color:#5656561A;
+		width:max-content;
+		min-height:238px;
 		overflow-x: hidden;
-		overflow-y: scroll;
+		overflow-y: auto;
 		:hover {
 			::-webkit-scrollbar {
 				width: 5px;
@@ -469,7 +510,7 @@ const MiddleDynamicGrid = styled.div`
 		align-items: center;
 		margin: auto;
 		margin-bottom: 50px;
-		display: grid;
+		display: flex;
 		grid-template-rows: repeat(${props => props.grid.row || 1}, 252px);
 		grid-template-columns: repeat(${props => props.grid.col || 1}, 252px);
 		gap: 10px 10px;
@@ -477,7 +518,7 @@ const MiddleDynamicGrid = styled.div`
 `;
 const BigScreenContainer = styled.div`
 	min-width: 750px; // ${props => props.scroll ? "max-content" : "100%"};
-	width: 85%;
+	width: 100%;
 	height: 100%;
 	min-height: ${VIDEO_SIZE}px;
 	color: white;

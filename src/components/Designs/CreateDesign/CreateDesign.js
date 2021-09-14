@@ -33,7 +33,7 @@ import new_logo_plus from "source/new_logo_plus.png"
 
 const Section = styled.div`
   display:${props=>props.isNone==true?props.isLast==null?"flex":"flex":"none"};
-  @media only screen and (min-width : 500px) and (max-width:1700px) {
+  @media only screen and (min-width : 500px) and (max-width:1400px) {
     display:${props=>props.isNone==true?props.isLast==null?"block":"block":"none"};;
   }
 `
@@ -248,6 +248,7 @@ const Wrapper = styled.div`
     width:100%;
   }
   .navi_menu{
+    min-width:264px;
     width:264px;
     height:100%;
     padding:36px 38px;
@@ -459,7 +460,7 @@ const Wrapper = styled.div`
       align-items:center;
     }
   }
-  @media only screen and (min-width : 500px) and (max-width:1700px) {
+  @media only screen and (min-width : 500px) and (max-width:1400px) {
     display:flex;
     flex-direction:column;
     .board{
@@ -530,7 +531,7 @@ const ContentWrapper = styled.div`
     .grey{background-color:#8D8D8D;}
     .red{background-color:red;}
   }
-  @media only screen and (min-width : 500px) and (max-width:1700px) {
+  @media only screen and (min-width : 500px) and (max-width:1400px) {
     .buttonWrap{
       padding-right:30px;
       width:100%;
@@ -573,7 +574,7 @@ const QuestionGuide = styled.div`
 
     display:block;
   }
-  @media only screen and (min-width : 500px) and (max-width:1700px) {
+  @media only screen and (min-width : 500px) and (max-width:1400px) {
     display:none;
     .messageBubble{
       display:none;

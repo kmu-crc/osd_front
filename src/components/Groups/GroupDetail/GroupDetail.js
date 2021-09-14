@@ -20,7 +20,7 @@ import Category from "components/Commons/Category";
 const Wrapper = styled.div`
   // margin-top: 90px;
   // margin-left: 100px;
-  max-width: 1740px;
+  // max-width: 1740px;
   min-width: 1000px;
 
   flex-direction: column;

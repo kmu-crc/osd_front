@@ -334,7 +334,7 @@ class GridEditor extends Component {
 
 
         return (
-            <div style={{ position: "relative", width: "100%", overflow: "hidden" }}>
+            <div style={{ position: "relative",width:"100%",overflow:"hidden"}}>
 
                 {/* {wire ? <Wiring gap={gap} wires={design && design.wires} /> : null} */}
 

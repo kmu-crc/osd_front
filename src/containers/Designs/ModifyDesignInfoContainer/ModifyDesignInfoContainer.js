@@ -14,7 +14,13 @@ import { geturl } from "config"
 import Loading from "components/Commons/Loading"
 import { alert } from "components/Commons/Alert/Alert";
 import opendesigncss from "opendesign_style";
-
+import styled from "styled-components";
+const Wrapper =styled.div`
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+`
 // import { confirm } from "components/Commons/Confirm/Confirm";
 
 class ModifyDesignInfoContainer extends Component {
@@ -57,7 +63,7 @@ class ModifyDesignInfoContainer extends Component {
           this.props.userInfo.uid === this.props.DesignDetail.user_id ?
             mobile
             ?<ModifyDesignMobile {...this.props} />
-            :<ModifyDesign {...this.props} />
+            :<Wrapper><ModifyDesign {...this.props} /></Wrapper>
             : this.goBack()
           : this.gotoMyModify()}
     </React.Fragment>)

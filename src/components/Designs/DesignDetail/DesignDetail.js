@@ -6,10 +6,11 @@ import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContai
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  // margin-top:90px;
-  // margin-left:100px;
   max-width: 1740px;
   min-width: 1000px;
+  .marginLeft{
+    margin-left:38px;
+  }
 `
 
 class DesignDetail extends Component {
@@ -65,9 +66,10 @@ class DesignDetail extends Component {
           <DesignInfo {...this.props} {...this.state} />
 
           {/* design detail */}
+          
           {DesignDetail && DesignDetail.is_project === 1
             ? (<DesignDetailStepContainer design={DesignDetail} {...this.state} />)
-            : (<DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />)}
+            : (<div className="marginLeft"><DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} /></div>)}
         </React.Fragment>
         : <Loading />}
     </Wrapper>)

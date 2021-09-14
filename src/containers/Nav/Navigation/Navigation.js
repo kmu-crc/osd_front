@@ -65,6 +65,13 @@ const MenuBox = styled.div`
         .arrow{
             width:24px;
             height:24px;
+        
+        }
+        .folding{
+            transform:rotate(180deg);
+        }
+        .notfolding{
+            transform:rotate(0deg);
         }
     }
     .menu_top{
@@ -197,7 +204,7 @@ class Navigation extends Component {
             <React.Fragment>
                 <MenuBox>
                     <div className="menu_top"/>
-                    <div className="menu_handle" onClick={this.props.onClickFolding}><img className="arrow" src={new_logo_handle_arrow}/></div>
+                    <div className="menu_handle" onClick={this.props.onClickFolding}><img className={`arrow ${this.props.sidemenu==true?"folding":"notfolding"}`}src={new_logo_handle_arrow}/></div>
                     {/* <MenuItem
                     isSelect={window.location.pathname === "/myPage"
                     || window.location.pathname.search("/myPage/") > -1 ? true : false
