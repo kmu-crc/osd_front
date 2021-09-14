@@ -597,7 +597,10 @@ class DesignInfo extends Component {
         }
     }
     sendMessage(user_id, nick_name) {
-        let href = window.location.href.substring(0, window.location.href.search("designDetail"))
+        if (this.props.userInfo === null) {
+            return this.needLogin();
+        }
+        // let href = window.location.href.substring(0, window.location.href.search("designDetail"))
         window.location.href = '/message/' + user_id + '/' + nick_name;
     }
     goParentDesign = (parent) => {
@@ -860,10 +863,12 @@ class DesignInfo extends Component {
                         </div>
                         <div>
                             <div className="button_wrap">
-                                {isMyDesign == true ?
-                                    null :
-                                    <div className="button_wrap pointer" onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}>메시지 보내기<img src={email} className="icon icon_black" /></div>
-                                }
+                                {isMyDesign !== true
+                                    ? <div
+                                        className="button_wrap pointer"
+                                        onClick={() => this.sendMessage(DesignDetail.user_id, DesignDetail.userName)}
+                                    > 메시지 보내기 <img src={email} className="icon icon_black" /> </div>
+                                    : null}
                             </div>
                             <div className="button_wrap">
                                 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">

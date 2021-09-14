@@ -13,9 +13,15 @@ import { alert } from "components/Commons/Alert/Alert";
 import opendesigncss from "opendesign_style";
 
 const SearchContainer = styled.div`
-    margin-top: 90px;
-    margin-left:100px;
+    // margin-top: 90px;
+    // margin-left:100px;
     padding:43px 85px;
+    min-width: 1000px;
+    max-width: 1820px;
+    width: 100%;
+
+    // *{ border: 1px dashed black; }
+
     .search_header{
         width:100%;
         height:47px;
@@ -23,6 +29,8 @@ const SearchContainer = styled.div`
         justify-content:space-between;
         align-items:center;
         margin-bottom:83px;
+
+    
     }
     .search_dropdown{
         min-width:270px;
@@ -51,7 +59,8 @@ const SearchContainer = styled.div`
         width:100%;
         position:relative;
         .inputForm{
-            max-width:930px;
+            max-width: 930px;
+            min-width: 200px;
             width:100%;
             height:47px;
             outline:none;
@@ -70,9 +79,10 @@ const SearchContainer = styled.div`
         }
     }
     .search_order{
-        width:300px;
-        display:flex;
-        justify-content:flex-end;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
     }
     .result_list{
         width:100%;
@@ -100,7 +110,7 @@ class SearchListRe extends Component {
             this_category: { text: null, value: null },
             sub_category: { text: null, value: null },
             main_category: { text: null, value: null },
-            third_category: {text: null, value:null},
+            third_category: { text: null, value: null },
         }
         this.onChangeDropBox = this.onChangeDropBox.bind(this);
         this.onChangeSearchkey = this.onChangeSearchkey.bind(this);
@@ -185,48 +195,47 @@ class SearchListRe extends Component {
     //     }
     //     await this.setState({ main_category: this.props.category1[parent.value - 1], sub_category: category })
     // }
-    
+
     handleChangeOrderOps = async (order) => {
         await this.setState({ this_order: order })
     }
 
     render() {
-        const { category1, category2 } = this.props;
-        const { main_category, sub_category } = this.state;
-        console.log(this.state.selectCate,this.state.urlCate);
+        // const { category1, category2 } = this.props;
+        // const { main_category, sub_category } = this.state;
+        console.log(this.state.selectCate, this.state.urlCate);
 
-        return (
-            <SearchContainer>
-                <div className="search_header">
-                    <div className="search_dropdown">
+        return (<SearchContainer>
+            <div className="search_header">
+                <div className="search_dropdown">
                     <Dropdown
-                            className="dropdown"
-                            id="dropbox"
-                            options={this.state.mainCate}
-                            selection
-                            name="searchcate"
-                            onChange={this.onChangeDropBox}
-                            value={this.state.selectCate} />
-                    </div>
-                    <div className="search_form">
-                        <input
-                            className="inputForm"
-                            id="searchInput"
-                            placeholder="검색어를 입력하세요"
-                            value={this.state.searchKeyword}
-                            onChange={this.onChangeSearchkey}
-                            onKeyDown={this.submitEnter}
-                            maxLength="100"
-                        />
-                        <img src={new_logo_zoom_red} className="button" onClick={this.onClickedIcon} />
-                    </div>
-                    <div className="search_order">
-                        <OrderOption
-                            order_clicked={this.handleChangeOrderOps}
-                            selected={this.state.this_order} />
-                    </div>
+                        className="dropdown"
+                        id="dropbox"
+                        options={this.state.mainCate}
+                        selection
+                        name="searchcate"
+                        onChange={this.onChangeDropBox}
+                        value={this.state.selectCate} />
                 </div>
-                {/* <div className="search-form">
+                <div className="search_form">
+                    <input
+                        className="inputForm"
+                        id="searchInput"
+                        placeholder="검색어를 입력하세요"
+                        value={this.state.searchKeyword}
+                        onChange={this.onChangeSearchkey}
+                        onKeyDown={this.submitEnter}
+                        maxLength="100"
+                    />
+                    <img src={new_logo_zoom_red} className="button" onClick={this.onClickedIcon} />
+                </div>
+                <div className="search_order">
+                    <OrderOption
+                        order_clicked={this.handleChangeOrderOps}
+                        selected={this.state.this_order} />
+                </div>
+            </div>
+            {/* <div className="search-form">
                     <SearchForm >
                         <div className="shadow_button" onClick={this.onClickedIcon} />
                         <input
@@ -259,8 +268,8 @@ class SearchListRe extends Component {
                     </div>
                 </div> */}
 
-                <div className="result_list">
-                    <div className="result">
+            <div className="result_list">
+                <div className="result">
                     <div style={{ display: this.state.urlCate === "design" ? "block" : "none" }}>
                         <ScrollDesignListContainer
                             sort={this.props.sort}
@@ -294,9 +303,9 @@ class SearchListRe extends Component {
                             orderOption={this.state.this_order}
                         />
                     </div>
-                    </div>
                 </div>
-            </SearchContainer >
+            </div>
+        </SearchContainer >
         )
     }
 }

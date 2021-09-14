@@ -1102,7 +1102,7 @@ class CardSourceDetail extends Component {
                 .then(() => this.props.UpdateDesignTime(this.props.DesignDetail.uid, this.props.token))
                 .then(() => this.props.GetDesignSourceRequest(this.props.DesignDetail.uid))
                 .then(() => this.props.GetDesignDetailRequest(this.props.DesignDetail.uid));
-                
+
               const check = () => {
                 this.setState({ loading: true, });
                 fetch(`${host}/design/problem/result-request2/${res.id}`, {
@@ -1544,7 +1544,8 @@ class CardSourceDetail extends Component {
                             }
                             <div
                               style={{
-                                fontSize: `${this.state.fontratio}rem`
+                                fontSize: `${this.state.fontratio}rem`,
+                                lineHeight: `${this.state.fontratio * 1.2}rem`
                               }}
                               dangerouslySetInnerHTML={{
                                 __html: `${
@@ -1620,7 +1621,7 @@ class CardSourceDetail extends Component {
                                     ({IsJsonString(item.content)
                                       ? JSON.parse(item.content).hasOwnProperty('url')
                                         ? JSON.parse(item.content).url : "invalid" : "invalid"})
-                              </a>
+                                  </a>
                                 </div>
                               </LinkPreview>
                             </div>
@@ -1701,7 +1702,7 @@ class CardSourceDetail extends Component {
                                         permission == "LOG" || permission === "LOG SUBMIT" ? "red" : "gray",
                                     }}>
                                     답안 제출하기
-                                </p>
+                                  </p>
                                 </div>
 
 
@@ -2204,7 +2205,7 @@ class SubmitLogContainer extends React.Component {
                         const code = window.open("/codeview", "codeview", options);
                       }}>
                       소스보기
-                </div>
+                    </div>
                   </td>
                 </tr>
               );
