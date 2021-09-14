@@ -1,17 +1,24 @@
 import React, { Component } from 'react'
-import { Modal } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import styled, { keyframes } from "styled-components";
+import cookie from 'react-cookies';
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import ResetPwForm from "components/Registration/ResetPwForm";
+import { FindPwRequest } from "redux/modules/account";
+import { Modal } from 'semantic-ui-react';
+import PxtoRem from "modules/PxtoRem";
+
 // import { SetSession } from "modules/Sessions"
 // import close from "source/close_white.png"
 // import { confirm } from "components/Commons/Confirm/Confirm";
-import cookie from 'react-cookies';
-import { alert } from "components/Commons/Alert/Alert";
-import opendesign_style from "opendesign_style";
+// import { Warning } from 'material-ui-icons';
+// import { alert } from "components/Commons/Alert/Alert";
+// import opendesign_style from "opendesign_style";
 import new_logo_opendesign_shadow from "source/new_logo_opendesign_shadow.png";
 import new_logo_opendesign_shadow_red from "source/new_logo_opendesign_shadow_red.png";
-import new_logo_warning from "source/new_logo_warning.svg"
-import { Warning } from 'material-ui-icons';
+import new_logo_warning from "source/new_logo_warning.svg";
+
 const Warning_Ani1 = keyframes`
   0% {
     opacity:0;
@@ -46,7 +53,6 @@ const Warning_Ani2 = keyframes`
     opacity:0;
   }
 `;
-
 const Warning_Ani3 = keyframes`
   0% {
     border:1px solid rgba(255,255,255,0);
@@ -74,7 +80,7 @@ const Wrapper = styled.div`
     // justify-content:center;
     // align-items:center;
     // position:relative;
-    margin-top:90px;
+    // margin-top:90px;
     .content_{
         width:100%;
         height:100%;
@@ -153,7 +159,7 @@ const Wrapper = styled.div`
     .flexCenter{display:flex;align-items:center;}
     .label{min-width:96px;width:96px;font-size:15px;color:white;font-family:Noto Sans KR;}
     .save{cursor:pointer;margin-left:31px;min-width:max-content;font-size:15px;color:white;font-family:Noto Sans KR;}
-    .save_now{color:red}
+    .save_now{color:#FA80A0;}
     .save_none{color:white}
     .grayButton{
         height:30px;
@@ -194,31 +200,96 @@ const Wrapper = styled.div`
             justify-content:flex-end;
         }
     }
-`
+`;
 const InputText = styled.input`
-    min-width:300px;
+    width:100%;
     height:30px;
-    outline:none;
     border:none;
-    padding:0px 10px;
+    outline:none;
+    background-color:#A5A5A5;
+    color:white;
+    padding:5px 7px;
+    ::placeholder{
+        color:white;
+    }
 `
+const ResetModal = styled(Modal)`
+    width: 764px !important;
+    height: 390px !important;
+`;
+const ModalContent = styled.div`
+// *{border: 1px solid red;}
+    // width: 764px;
+    // height: 764px;
+    background-color:white;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:59px;
+
+    .wrapper{
+        // width:300px;
+    }
+    .header{
+        width:100%;
+        text-align:center;
+        font-family:Noto Sans KR,Noto Sans KR;
+        font-size:27px;
+        margin-bottom:40px;
+    }
+    .justityCenter{
+        justify-content:center;
+    }
+    .relative{position:relative;}
+    .pointer{cursor:pointer;}
+    .font_normal{font-size:15px;}
+    .font_small{font-size:8px;}
+    .marginTop1{margin-top:12px;}
+    .marginTop2{margin-top:44px;}
+    .marginTop3{margin-top:8px;}
+    .marginTop4{margin-top:72px;}
+    .marginLeft1{margin-left:28px;}
+    .marginLeft2{margin-left:47px;}
+    .join_button{
+        margin: auto;
+        width: 200px;
+        height:51px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        border: 1px solid #000000;
+        font-size: 25px;
+        font-family:Noto Sans KR,Noto Sans KR;
+        cursor:pointer;
+    }
+`;
 
 class SignInModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: "", password: "", findPW: false
-            , email: cookie.load('saveid') || ""
-            , password: cookie.load('savepassword') || ""
-            , saveID: cookie.load('saveid') != null ? cookie.load('savepassword') == null ? true : false : false
-            , saveLogin: cookie.load('savepassword') != null ? cookie.load('saveid') != null ? true : false : false
-            , isWarning: false
+            email: "",
+            password: "",
+            findPW: false,
+            isSavedId: false,
+            isSavedPassword: false,
+            isWarning: false,
         }
         this.findIDPW = this.findIDPW.bind(this);
         this.handlesubmitEnter = this.handlesubmitEnter.bind(this);
         this.onCheckSaveID = this.onCheckSaveID.bind(this);
         this.onCheckSaveLogin = this.onCheckSaveLogin.bind(this);
+    }
 
+    componentDidMount() {
+        const email = cookie.load('saveid') || null;
+        const password = cookie.load('savepassword') || null;
+        if (email) {
+            this.setState({ email: email, isSavedId: true });
+        }
+        if (password) {
+            this.setState({ password: password, isSavedPassword: true });
+        }
     }
     signin = async (event) => {
 
@@ -343,93 +414,131 @@ class SignInModal extends Component {
         this.setState({ findPW: true });
     }
     onClose = () => { this.props.close() }
-
     handlesubmitEnter = (e) => {
         if (e.keyCode === 13) {
             e.target.blur();
             this.signin();
         }
     }
-
     handeEmailChange = (e) => {
         this.setState({ email: e.target.value })
     }
     handlePasswordChange = (e) => {
         this.setState({ password: e.target.value })
     }
-    onBack() {
-        window.location.href = "/SignIn";
-    }
-
     onCheckSaveID(event) {
-        const result = !this.state.saveID;
-        if (result === false) {
-            cookie.remove(('saveid'), { path: '/' });
+        const { email, isSavedId } = this.state;
+        if (email === "" || email == null) {
+            return;
         }
-
-        this.setState({ saveID: result, saveLogin: !result });
+        if (isSavedId) {
+            cookie.remove(('saveid'), { path: '/' });
+        } else {
+            cookie.save("saveid", email, { path: '/', });
+        }
+        this.setState({ isSavedId: !isSavedId });
     }
     onCheckSaveLogin(event) {
-        const result = !this.state.saveLogin;
-        if (result) {
+        const { email, password, isSavedId, isSavedPassword } = this.state;
+        if (email === "" || email == null || password === "" || password == null) {
+            return;
+        }
+        if (isSavedPassword) {
             cookie.remove(('saveid'), { path: '/' });
             cookie.remove(('savepassword'), { path: '/' });
+        } else {
+            cookie.save("saveid", email, { path: '/', });
+            cookie.save(('savepassword'), password, { path: '/' });
         }
-        this.setState({ saveLogin: result, saveID: !result });
+        this.setState({ isSavedId: !isSavedPassword, isSavedPassword: !isSavedPassword });
     }
-
+    onChangeValue = async data => {
+        let obj = {};
+        if (data.target) {
+            obj[data.target.name] = data;
+        }
+        await this.setState(obj);
+        console.log(this.state);
+    };
+    onSubmit = async e => {
+        const email = document.getElementById("reset-email").value();
+        alert(email);
+        return;
+        // e.preventDefault();
+        this.props.FindPwRequest({ email: this.state.email });
+    };
     render() {
         const { open } = this.props
-        const { email, password } = this.state
-        return (
-            <React.Fragment>
-                <Wrapper isWarning={this.state.isWarning}>
-                    <div className="content_">
-                        <div className="loginBox">
-                            <img src={new_logo_opendesign_shadow} className="logoBox" />
-                            <img src={new_logo_opendesign_shadow_red} id="warning_logo" className="logoBox_warning" />
-                            <div className="marginTop2">
-                                <div className="row flexCenter ">
-                                    <div className="label">ID</div>
-                                    <div className="textBox ">
-                                        <div id="warning_text1" className="none_display">
-                                            <img src={new_logo_warning} className="warningImg" />
-                                            <span>ID또는 비밀번호 오류입니다.</span>
-                                        </div>
-                                        <InputText onKeyDown={this.handlesubmitEnter} name='email' type='text' value={email || ""}
-                                            onChange={this.handeEmailChange} placeholder="아이디(이메일주소)를 입력하세요" />
+        const { findPW, email, password, isSavedId, isSavedPassword, isWarning } = this.state;
+        return (<React.Fragment>
+            <Wrapper isWarning={isWarning}>
+                <div className="content_">
+                    <div className="loginBox">
+                        <img src={new_logo_opendesign_shadow} className="logoBox" />
+                        <img src={new_logo_opendesign_shadow_red} id="warning_logo" className="logoBox_warning" />
+                        <div className="marginTop2">
+                            <div className="row flexCenter ">
+                                <div className="label">ID</div>
+                                <div className="textBox ">
+                                    <div id="warning_text1" className="none_display">
+                                        <img src={new_logo_warning} className="warningImg" />
+                                        <span>ID또는 비밀번호 오류입니다.</span>
                                     </div>
-                                    <div onClick={this.onCheckSaveID} className={`save ${this.state.saveID == true ? "save_now" : "save_none"}`}>아이디 저장</div>
+                                    <InputText onKeyDown={this.handlesubmitEnter} name='email' type='text' value={email || ""}
+                                        onChange={this.handeEmailChange} placeholder="아이디(이메일주소)를 입력하세요" />
                                 </div>
-                                <div className="row flexCenter marginTop1">
-                                    <div className="label">PW</div>
-                                    <div className="textBox ">
-                                        <div id="warning_text2" className="none_display">
-                                            <img src={new_logo_warning} className="warningImg" />
-                                            ID또는 비밀번호 오류입니다.
-                                        </div>
-                                        <InputText onKeyDown={this.handlesubmitEnter} name='password' type='password' value={password || ""}
-                                            onChange={this.handlePasswordChange} placeholder="비밀번호를 입력하세요." />
-                                    </div>
-                                    <div onClick={this.onCheckSaveLogin} className={`save ${this.state.saveLogin == true ? "save_now" : "save_none"}`}>로그인 상태 유지</div>
-                                </div>
+                                <a onClick={this.onCheckSaveID} className={`save ${isSavedId ? "save_now" : "save_none"}`}>아이디 저장</a>
                             </div>
-                            <div className="row grayButton marginTop1" onClick={this.signin}>로그인</div>
                             <div className="row flexCenter marginTop1">
-                                <div className="halfRow grayEdgeButton" onClick={this.onClose}><Link style={{ color: "white" }} to="/signup" onClick={this.onClose}>회원가입</Link></div>
-                                <div id="warning_text3" className={`halfRow grayEdgeButton`} onClick={this.findIDPW}>비밀번호 찾기</div>
+                                <div className="label">PW</div>
+                                <div className="textBox ">
+                                    <div id="warning_text2" className="none_display">
+                                        <img src={new_logo_warning} className="warningImg" />
+                                        ID또는 비밀번호 오류입니다.
+                                    </div>
+                                    <InputText onKeyDown={this.handlesubmitEnter} name='password' type='password' value={password || ""}
+                                        onChange={this.handlePasswordChange} placeholder="비밀번호를 입력하세요." />
+                                </div>
+                                <a onClick={this.onCheckSaveLogin} className={`save ${isSavedPassword ? "save_now" : "save_none"}`}>로그인 상태유지</a>
                             </div>
                         </div>
-
+                        <div className="row grayButton marginTop1" onClick={this.signin}>로그인</div>
+                        <div className="row flexCenter marginTop1">
+                            <div className="halfRow grayEdgeButton" onClick={this.onClose}><Link style={{ color: "white" }} to="/signup" onClick={this.onClose}>회원가입</Link></div>
+                            <div id="warning_text3" className={`halfRow grayEdgeButton`} onClick={this.findIDPW}>비밀번호 찾기</div>
+                        </div>
                     </div>
-                </Wrapper>
-            </React.Fragment>
-        )
+                </div>
+            </Wrapper>
+
+            {findPW
+                ? <ResetModal open={findPW} onClose={() => this.setState({ findPW: false })}>
+                    <ModalContent>
+                        <div className="wrapper">
+                            <div className="header">비밀번호 찾기</div>
+                            <div className="font_normal">비밀번호를 재발급 하고자는 아이디(메일)를 입력해 주세요.</div>
+                            <InputText className=" marginTop4 " name='reset-email' placeholder="아이디(이메일주소)를 입력하세요" />
+                            <div className="row2 justityCenter marginTop4 relative">
+                                <a onClick={this.onSubmit}> <div className="join_button" >비밀번호 발급</div></a>
+                            </div>
+                        </div>
+                    </ModalContent>
+                </ResetModal>
+                : null}
+        </React.Fragment>)
     }
 }
 
 
-export default SignInModal
+const mapStateToProps = state => ({
+    status: state.Account.FindPw.status,
+    message: state.Account.status.message
+});
+const mapDispatchToProps = dispatch => ({
+    FindPwRequest: data => dispatch(FindPwRequest(data))
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignInModal));
 
 {/* <Wrapper>
 <div className="loginBox">

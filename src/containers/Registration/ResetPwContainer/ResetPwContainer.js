@@ -12,8 +12,8 @@ class ResetPwContainer extends Component {
 
 const mapStateToProps = state => {
   return {
-    status: state.FindPw.FindPw.status,
-    message: state.FindPw.status.message
+    status: state.Account.FindPw.status,
+    message: state.Account.status.message
   };
 };
 

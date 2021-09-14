@@ -261,4 +261,4 @@ export default opendesign_style
 //     big: { marginRightLast: 44, cols: 4, },
 //   },
 // }
-// export default opendesign_style 
+// export default opendesign_style

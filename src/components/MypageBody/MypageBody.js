@@ -61,7 +61,65 @@ const TabMenu = styled.div`
         color: #FF0000; 
     }
 `;
+const CareerListTable = styled.div`
+    width: 100%;
+    min-width: 1000px;
+    max-width: 1737px;
 
+    margin-top: 70px;
+
+    // *{border: 1px solid red;}
+    .head {
+        padding-bottom: 18px;
+        margin-bottom: 23px;
+        border-bottom: 1px solid #707070;
+    }
+    .row {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 58px;
+        :last-child {
+            margin-bottom: 0px;
+        }
+    }
+    .text {
+        max-width: 430px;
+        width: 100%;
+        height: 33px;
+        text-align: left;
+        font-weight: bold;
+        font-size: 22px;
+        line-height: 33px;
+        font-family: Spoqa Han Sans;
+        letter-spacing: 0px;
+        color: #777777;
+        opacity: 1;
+        word-break: break-all;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+    }
+    .cell {
+        margin-left: 4%; //80px;
+        width: ${450 / 1737 * 100}%;
+        height: 40px;
+        opacity: 1;
+        padding-left: 6px;
+        display: flex;
+        align-items: center;
+    }
+    .cell-short {
+        width: ${150 / 1737 * 100}%;
+        height: 40px;
+    }
+    .no-exp {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+`;
 class MypageBody extends Component {
     constructor(props) {
         super(props);
@@ -146,10 +204,10 @@ class MypageBody extends Component {
     };
 
     render() {
-        const { Count, MyLikeDesign, MyLikeDesigner, MyLikeDesignAdded, MyLikeDesignerAdded, MyGroup, MyGroupAdded, MyDesign, MyDesignAdded, MyLikeGroup, MyLikeGroupAdded, RelatedGroup, RelatedGroupAdded } = this.props;
+        const { MyDetail, Count, MyLikeDesign, MyLikeDesigner, MyLikeDesignAdded, MyLikeDesignerAdded, MyGroup, MyGroupAdded, MyDesign, MyDesignAdded, MyLikeGroup, MyLikeGroupAdded, RelatedGroup, RelatedGroupAdded } = this.props;
         const { this_order } = this.state;
 
-        console.log(this.props, this.state);
+        const careerList = (MyDetail && MyDetail.careerlist && MyDetail.careerlist.split('/').slice(0, -1)) || [];
 
         return (<Wrapper>
 
@@ -170,7 +228,27 @@ class MypageBody extends Component {
             </div>
 
             {this.state.cateIndex === 4 &&
-                <div>{ }</div>}
+                <CareerListTable>
+                    <div className="head row">
+                        <div className="cell-short"><div className="text">번호</div></div>
+                        <div className="cell"><div className="text">업무</div></div>
+                        <div className="cell"><div className="text">기간</div></div>
+                        <div className="cell"><div className="text">내용</div></div>
+                    </div>
+                    {careerList.length > 0
+                        ? careerList.map((item, index) => {
+                            const ary = item && item.split(',') || ["-", "-", "-"];
+                            const what = ary[0] || "-", when = ary[1] || "-", which = ary[2] || "-";
+
+                            return (<div className="row" key={index}>
+                                <div className="cell-short"><div className="text"> {index + 1} </div></div>
+                                <div className="cell"><div className="text">{what}</div></div>
+                                <div className="cell"><div className="text">{when}</div></div>
+                                <div className="cell"><div className="text">{which}</div></div>
+                            </div>);
+                        })
+                        : <div className="no-exp"><div className="text">디자이너가 입력한 <br />경력/경험 사항이 없습니다.</div></div>}
+                </CareerListTable>}
 
             {this.state.cateIndex === 0 &&
                 <div style={{ paddingTop: "37px" }}>
