@@ -25,9 +25,13 @@ class SignInForm extends Component {
         // window.history.go(-1)
         // .then(window.location.reload())
       } else {
-        // window.location.reload()
       }
+      window.location.reload()
     }
+    if (this.props.userInfo && window.location.href.search("signin") > -1) {
+
+    }
+    window.history.go(-1)
   }
   closeModal = () => {
     this.setState({ signin_modal: false })

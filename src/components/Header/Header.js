@@ -313,24 +313,24 @@ class Header extends Component {
                     <Menu className={(this.context.hidemenu ? " hidemenu" : "")}>
 
                         <RightMenu>
-                                <CenterMenu>
+                            <CenterMenu>
                                 {window.location.href.search('/search') > -1 ? null :
-                                <div className="searchItem">
-                                    <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={1} />
-                                </div>}
-                                 </CenterMenu>
+                                    <div className="searchItem">
+                                        <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={1} />
+                                    </div>}
+                            </CenterMenu>
                             <div className="signnav">
-                            {this.props.userInfo != null ? (
-                                <React.Fragment>
-                                    <li className="IconItem"><Message noti={this.state.alarm} /></li>
-                                    <li className="IconItem"><AlarmContainer {...this.props} alarm={this.state.alarm} /></li>
-                                    <li className="redItem">
-                                    <div onClick={this.gotoCreateDesignPage}>디자인 등록</div></li>
-                                </React.Fragment>
-                            ) : null}
+                                {this.props.userInfo != null ? (
+                                    <React.Fragment>
+                                        <li className="IconItem"><Message noti={this.state.alarm} /></li>
+                                        <li className="IconItem"><AlarmContainer {...this.props} alarm={this.state.alarm} /></li>
+                                        <li className="redItem">
+                                            <div onClick={this.gotoCreateDesignPage}>디자인 등록</div></li>
+                                    </React.Fragment>
+                                ) : null}
 
-                            <li className="profileItem">
-                                <SignNav formWidth={this.state.screenWidth} {...this.props} /></li> {/* <SignNavContainer /> */}
+                                <li className="profileItem">
+                                    <SignNav formWidth={this.state.screenWidth} {...this.props} /></li> {/* <SignNavContainer /> */}
                             </div>
                         </RightMenu>
 
