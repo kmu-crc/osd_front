@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import noimg from "source/noimg.png"
 import opendesign_style from "opendesign_style";
+import new_logo_plus from "source/new_logo_plus.png"
 
 const GroupImageText = "그룹 이미지";
 
@@ -24,6 +25,9 @@ const ContentBox = styled.div`
     width:290px;
     height:290px;
     background-color:#E9E9E9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
   }
   .imageLabel{
     margin-left:38px;
@@ -137,7 +141,13 @@ class SectionBasic extends Component {
       <ContentBox>
         <div className="label">1. 그룹 이미지</div>
         <div className="row" style={{marginTop:"10px"}}>
-            <img className="imageBox" src={this.props.groupThumbnail==noimg?null:this.props.groupThumbnail}/>
+            {/* <img className="imageBox" src={this.props.groupThumbnail==noimg?null:this.props.groupThumbnail}/> */}
+            {
+                      this.props.groupThumbnail == null||this.props.groupThumbnail==noimg?
+                      <div className="imageBox"><img src={new_logo_plus} className="plus"/></div>
+                      :
+                      <img className="imageBox" src={this.props.groupThumbnail} />
+            }
             <div className="imageLabel">
                   <label className="findThumbnailText" htmlFor="file">찾아보기</label>
                   <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" />

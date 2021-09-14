@@ -27,7 +27,7 @@ import osdcss from "opendesign_style";
 
 const Section = styled.div`
   display:${props=>props.isNone==true?props.isLast==null?"flex":"flex":"none"};
-  @media only screen and (min-width : 500px) and (max-width:1700px) {
+  @media only screen and (min-width : 500px) and (max-width:1400px) {
     display:${props=>props.isNone==true?props.isLast==null?"block":"block":"none"};;
   }
 `
@@ -217,7 +217,6 @@ const IsProblemBox = styled.div`
    }
 `
 const Wrapper = styled.div`
-  width:100%;
   display:flex;
   margin-bottom:150px;
   // flex-wrap:wrap;
@@ -242,7 +241,7 @@ const Wrapper = styled.div`
     width:100%;
   }
   .navi_menu{
-    
+    min-width:264px;
     width:264px;
     height:100%;
     padding:36px 38px;
@@ -274,7 +273,7 @@ const Wrapper = styled.div`
     .red{color:red;}
     .black{color:black;}
     .select{color:#1262AB;}
-    .delete{margin-top:531px;}
+    .delete{margin-top:531px;cursor:pointer;}
     .borderBottom{border-bottom:2px solid #707070;}
   }
   .vLine{
@@ -452,7 +451,7 @@ const Wrapper = styled.div`
       align-items:center;
     }
   }
-  @media only screen and (min-width : 500px) and (max-width:1700px) {
+  @media only screen and (min-width : 500px) and (max-width:1400px) {
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -524,7 +523,7 @@ const ContentWrapper = styled.div`
     .grey{background-color:#8D8D8D;}
     .red{background-color:red;}
   }
-  @media only screen and (min-width : 500px) and (max-width:1700px) {
+  @media only screen and (min-width : 500px) and (max-width:1400px) {
     .buttonWrap{
       padding-right:30px;
       width:100%;
@@ -567,7 +566,7 @@ const QuestionGuide = styled.div`
 
     display:block;
   }
-  @media only screen and (min-width : 500px) and (max-width:1700px) {
+  @media only screen and (min-width : 500px) and (max-width:1400px) {
     display:none;
     .messageBubble{
       display:none;

@@ -14,11 +14,12 @@ import { SetSession } from 'modules/Sessions';
 
 // css
 const Wrapper = styled.div`
-    // margin-top: ${100 + 24}px;
-    // margin-left: ${100 + 38}px;
     margin-top: 24px;
     margin-left: 38px;
     margin-right: 38px;
+
+    // margin-top: ${100 + 24}px;
+    // margin-left: ${100 + 38}px;
     // *{border: 1px solid red;}
 `;
 const MyInfoBox = styled.div`

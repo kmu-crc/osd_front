@@ -28,7 +28,6 @@ const SearchWrap = styled.div`
   width:100%;
   max-width:400px;
   display: ${props => props.display};
-  justify-content:
   position: relative;
   .input-style {
     box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
@@ -44,8 +43,7 @@ const SearchWrap = styled.div`
 `
 const MemberList = styled.ul`
   display: ${props => props.display};
-  width: 353px;
-   margin-left: 20px;
+  width:100%;
   padding: 0.5rem;
   min-height: 0px;
   max-height: 300px;
@@ -54,6 +52,9 @@ const MemberList = styled.ul`
   background: white;
   border-radius: 10px;
   box-shadow:0px 2px 10px 2px rgba(0,0,0,0.1);
+  position:absolute;
+  left:0px;
+  top:40px;
 `
 const MemberListItem = styled.li`
   width: 100%;

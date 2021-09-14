@@ -4,11 +4,11 @@ const opendesign_style = {
     MediumMinWidth: 480, MediumMaxWidth: 1440,
     LargeMinWidth: 1440, LargeMaxWidth: 1920
   },
-  new_resolutions:{
+  newresolutions:{
     mini:0,
-    small:500,
-    medium:1000,
-    large:1500,
+    small:1050,
+    medium:1350,
+    large:1650,
     max:1920
   },
   font: {

@@ -5,7 +5,9 @@ import { GetDesignDetailViewRequest, UpdateDesignTime, ChangeToProjectRequest, D
 
 class DesignDetailViewContainer extends Component {
   render() {
-    return (<DetailView {...this.props} />)
+    return (
+    <DetailView {...this.props} />
+    )
   }
 }
 

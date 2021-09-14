@@ -11,7 +11,8 @@ class MessageListContainer extends Component {
     this.props.userInfo && this.props.GetMyChatRoomsListRequest(this.props.token);
   }
   render() {
-    return (<MessageList {...this.props} />)
+    return (<MessageList {...this.props} 
+    />)
   }
 }
 

@@ -336,7 +336,7 @@ class Designer extends Component {
             <div className="userName">
               <TextFormat txt={designer.nick_name} width={"max-content"} /></div>
             <div className="description">
-              <TextFormat txt={designer.about_me} backgroundColor="#EFEFEF" width={"max-content"} /></div>
+              <TextFormat height={30} txt={designer.about_me} backgroundColor="#EFEFEF" width={"max-content"} /></div>
             <div className="update">
               {DateFormat(designer.update_time)}</div>
             <div className="cate">

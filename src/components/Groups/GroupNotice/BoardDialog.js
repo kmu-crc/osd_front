@@ -74,7 +74,7 @@ const Navi = styled.div`
 `;
 const BoardModalWrapper = styled(Modal)`
     width:100% !important;
-    height:525px;
+    min-height:525px;
     max-width:1152px !important;
     padding:26px 49px !important;
     background-color: white;
@@ -203,10 +203,12 @@ cursor: default;
         min-width:max-content;
     }
     .row-title { 
+        max-width:650px;
         text-align: left; 
         padding-left:120px;
         width: 82%;
         white-space: nowrap; 
+        overflow:hidden;
         text-overflow: ellipsis; 
     }
     .create_time { 
@@ -233,6 +235,7 @@ const NoticeReadWrapper = styled.div`
         border-top: 1px solid #EAEAEA;
 
         .label {
+            min-width:80px;
             width: 10%;
             background-color: #EAEAEA;
             padding: 10px;
@@ -245,6 +248,7 @@ const NoticeReadWrapper = styled.div`
     }
 
     .content {
+        height:200px;
         border-top: 1px solid #EAEAEA;
         border-bottom: 1px solid #EAEAEA;
         padding: 25px;
@@ -255,7 +259,7 @@ const NoticeReadWrapper = styled.div`
     .comment_ {
         background-color: #FAFAFA;
         padding: 15px;
-        max-height: 170px;
+        // max-height: 170px;
         overflow-y: auto;
     }
 `;
@@ -428,10 +432,10 @@ export default class BoardDialog extends Component {
                                 {list && list.length > 0
                                     ? list.map((item, index) =>
                                         <div className="row" key={index} onClick={() => this.readBoard(item)}>
-                                            <div className="num">{count - ((page * per) + index)}</div>
-                                            <div className="row-title">{item.title}{item.comments > 0 ? `(${item.comments})` : null}</div>
+                                            <div className="num ellipsis">{count - ((page * per) + index)}</div>
+                                            <div className="row-title ellipsis">{item.title}{item.comments > 0 ? `(${item.comments})` : null}</div>
                                             <div className="nick-name ellipsis">{item.nick_name}</div>
-                                            <div className="create_time">{DateFormat(item.create_time)}</div>
+                                            <div className="create_time ellipsis">{DateFormat(item.create_time)}</div>
                                         </div >)
                                     : <div className="empty"> 글이 없습니다. </div>}
                             </div>
@@ -515,7 +519,7 @@ export default class BoardDialog extends Component {
                                 : null}
                         </div>
 
-                        <div style={{ display: "flex", flexDirection: "row", width: "max-content", marginLeft: "auto", marginRight: "10px", marginTop:"12px" }}>
+                        <div style={{ display: "flex", flexDirection: "row", width: "max-content", marginLeft: "auto", }}>
                             {mode === WRITE
                                 ? <Button 
                                 bgcolor="red" color="white" onClick={() => this.write()}>등록</Button>

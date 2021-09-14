@@ -16,19 +16,20 @@ import opendesign_style from "opendesign_style";
 
 
 const Wrapper = styled.div`
-  // margin-top: ${90 + 25}px;
-  // margin-left: ${100 + 29}px;
+  max-width:1920px;
+  width:100%;
+  min-width:950px;
   margin-top: ${25}px;
   margin-left: ${29}px;
   
   display: flex;
   flex-direction: row;
 
-  // height: ${props => props.height}px;
   height: ${window.innerHeight - 50}px;
 `;
 const Peers = styled.div`
-  width: 270px;
+  min-width: 270px;
+  width:270px;
   height: ${props => props.height}px;
   max-height: 850px;
   background-color: #E9E9E9;
@@ -56,6 +57,9 @@ const Peers = styled.div`
       letter-spacing: 0px;
       color: #4F4F4F;
       opacity: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-wrap: break-word;
     }
     .plus {
       position: absolute;
@@ -64,11 +68,10 @@ const Peers = styled.div`
     }
   }
   .list {
-    width: 265px;
+    width: 100%;
     height: 100%;
     overflow: hidden scroll;
-    padding: 5px;
-    margin-right: 5px;
+    // margin-right: 5px;
     margin-bottom: 5px;
 
     // scroll
@@ -100,20 +103,15 @@ const PlusIcon = styled.div`
   }
 `;
 const Person = styled.li`
-  width: 277px;
+  *{
+    cursor:pointer;
+  }
+  min-width: 270px;
+  width:270px;
   height: 90px;
 
   display: flex;
   flex-direction: row;
-  
-  &.selected { background-color: rgba(255,255,255,0.53); }
-
-  // *{ border:1px solid red; }
-
-  :hover {
-    background-color: rgba(255,255,255,0.3);
-    &.selected { background-color: rgba(255,255,255,0.53); }
-  }
   .pic {
     position: relative;
     padding-top: 18px;
@@ -146,13 +144,12 @@ const Person = styled.li`
   }
   .text {
     margin-top: 17px;
-    margin-right: 7px;
-    width: 169px; // width: 100%;
+    width: 174px; // width: 100%;
     height: 73px;
     display: flex;
     flex-direction: column;
     .nick {
-      width: 100%;
+      width: 80%;
       height: 19px;
       text-align: left;
       font-weight: 700;
@@ -169,7 +166,7 @@ const Person = styled.li`
     }
     .recent { 
       margin-top: 3px;
-      width: 100%;
+      width: 90%;
       height: 19px;
       text-align: left;
       font-weight: medium;
@@ -186,14 +183,18 @@ const Person = styled.li`
  
     }
   }
+
+  &.selected { background-color: rgba(255,255,255,0.53); }
+  :hover {
+    background-color: rgba(255,255,255,0.3);
+    &.selected { background-color: rgba(255,255,255,0.53); }
+  }
 `;
 const MessageDetail = styled.div`
-
   margin-left: 23px;
   margin-right: 7px;
 
   width: 1450px;
-  // height: 100%;
   max-height: 850px;
 
   background-color: #E9E9E9; 
@@ -205,7 +206,7 @@ const MessageDetail = styled.div`
     position: absolute;
     height: 27px;
     width: max-content;
-    z-index: 1000;
+    z-index: 880;
 
     .title { 
       height: 27px;
@@ -226,11 +227,12 @@ const MessageDetail = styled.div`
     }
   }
   .message-2 {
-    padding: 13px 17px 20px 37px;
     // border: 1px solid red;
     position: relative;
     height: ${props => props.height}px;
     max-height: 850px;
+    display:flex;
+    flex-direction:column;
 
     .list {
       overflow: auto;
@@ -240,10 +242,12 @@ const MessageDetail = styled.div`
     }
     .send {
       width: 96%;
-      bottom: 0px;
+      margin-left:2%;
+      margin-right:2%;
+      bottom: 13px;
       position: absolute;
       height: 121px;
-      border-top: 2px solid #707070;
+      border-top: 1px solid #707070;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -280,6 +284,23 @@ const MessageDetail = styled.div`
     justify-content: center;
     align-items: center;
   }
+
+  @media only screen and (min-width : 0px) and (max-width : 1000px) {
+    width: 100%;
+  }
+  @media only screen and (min-width : 1000px) and (max-width : 1200px) {
+    width: 700px;
+  }
+  @media only screen and (min-width : 1200px) and (max-width : 1400px) {
+    width: 900px;
+  }
+  @media only screen and (min-width : 1400px) and (max-width : 1600px) {
+    width: 1100px;
+  }
+  @media only screen and (min-width : 1600px) and (max-width : 1920px) {
+    width: 1300px;
+  }
+  
 `;
 const SendMessageTextarea = styled.div`
   width: 88%;
@@ -591,7 +612,7 @@ class Messages extends React.Component {
       </Peers>
 
       <MessageDetail height={this.state.h}>
-        {this.state.msgId !== -1
+        {this.state.msgId !== -1 ||this.props.id!=null
           ? <React.Fragment>
             {/* title */}
             <div className="header">
@@ -944,7 +965,7 @@ const SearchMemberBox = styled.div`
   height:max-content;
   // position:absolute;
   // top:50px;
-  z-index:900;
+  z-index:880;
 `;
 const SummaryItemBox = styled.div`
   *{

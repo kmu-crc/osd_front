@@ -13,13 +13,14 @@ const Wrapper = styled.div`
     margin-top: 28px;
     margin-left: 38px;
     margin-right: 38px;
-
+    
     // margin-left: ${100 + 38}px;
     // *{border: 1px solid red;}
 
     .menu-container {
         max-width: 1737px;
         min-width: 1000px;
+        width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-between;

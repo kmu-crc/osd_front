@@ -14,8 +14,8 @@ import new_logo_chat from "source/new_logo_chat.svg";
 import new_logo_msg from "source/new_logo_msg.svg";
 const Wrapper = styled.div`
   max-width: 1740px;
-  min-width: 1000px;
   width: 100%;
+  min-width: 1000px;
   padding-left: 38px;
   padding-right: 38px;
 `;

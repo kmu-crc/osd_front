@@ -13,6 +13,7 @@ const scrollmenu = [{ txt: "기본 정보", tag: "#basics" }];
 const Wrapper =styled.div`
   display:flex;
   .nav{
+      min-width:264px;
       width:264px;
       display:flex;
       flex-direction:column;
@@ -87,6 +88,7 @@ const Wrapper =styled.div`
 
     }
     .nav{
+      
       min-width:1000px;
       width:100%;
       height:100px;
@@ -97,6 +99,7 @@ const Wrapper =styled.div`
       flex-wrap:wrap;
       justify-content:center;
       .title{
+        min-width:max-content;
         height:40px;
         margin-bottom:32px;
         font-family:Spoqa Han Sans Neo;
@@ -108,6 +111,7 @@ const Wrapper =styled.div`
         justify-content:center;
       }
       .menu{
+        min-width:max-content;
         display:flex;
         justify-content:center;
         align-items:center;

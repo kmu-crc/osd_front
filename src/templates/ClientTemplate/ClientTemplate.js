@@ -36,18 +36,18 @@ const NavigationAni = styled.div`
 `;
 const ClientToLeftAni = keyframes`
   0% { 
-    padding-left: 100px;
+    margin-left: 100px;
   }
   100% {
-    padding-left: 0px;
+    margin-left: 0px;
   }
 `;
 const ClientToRightAni = keyframes`
   0% {
-    padding-left: 0px;
+    margin-left: 0px;
   }
   100% {
-    padding-left: 100px;
+    margin-left: 100px;
   }
 `;
 const ClientAni = styled.div`
@@ -62,24 +62,28 @@ const Client = styled.div`
   top: 0px;
   bottom: 0px;
   width:100%;
-  display:flex;
-  @media only screen and (min-width : 0px) and (max-width : 1920px) {
-    justify-content:flex-start;
-  }
-  @media only screen and (min-width : 1920px)  {
-    justify-content:center;
-  }
+  overflow-y: overlay;
+  overflow-x: overlay;
   ${window.location.pathname == "/" ?
     null :
     `
     padding-top:90px;
     `
   }
-  overflow-y: overlay;
-  overflow-x: overlay;
+
   .wrap_children{
     max-width:1920px;
     width:100%;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  @media only screen and (min-width : 0px) and (max-width : 1920px) {
+    display:flex;
+    justify-content:flex-start;
+  }
+  @media only screen and (min-width : 1920px)  {
+    // display:flex;
+    // justify-content:center;
   }
 `
 const Wrapper = styled.div`
@@ -178,7 +182,7 @@ class ClientTemplate extends Component {
               }} />
 
             <NavigationAni sidemenu={this.state.login == null ? window.location.pathname.indexOf("/signup") == -1 ? this.state.sidemenu : false : false} >
-              <NavigationContainer onClickFolding={this.onClickFoldingSideMenu} userInfo={this.props.userInfo} />
+            <NavigationContainer sidemenu={this.state.login == null ? window.location.pathname.indexOf("/signup") == -1 ? this.state.sidemenu : false : false}onClickFolding={this.onClickFoldingSideMenu} userInfo={this.props.userInfo} />
             </NavigationAni>
 
             <Client active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>

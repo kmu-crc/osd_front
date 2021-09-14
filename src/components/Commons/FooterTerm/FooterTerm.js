@@ -21,8 +21,6 @@ const FromFieldCard = styled.div`
 `;
 
 const Wrapper = styled.div`
-  margin-top:90px;
-  margin-left:100px;
   display:flex;
   .content{
     max-width:1511px;
@@ -38,6 +36,7 @@ const Wrapper = styled.div`
   }
 `
 const Navi = styled.div`
+  min-width:264px;
   width:264px;
   padding-top:305px;
   display:flex;
