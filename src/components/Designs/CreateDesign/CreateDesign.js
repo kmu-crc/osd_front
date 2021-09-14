@@ -559,7 +559,7 @@ const QuestionGuide = styled.div`
   cursor:default;
   .messageBubble{
     width:${props=>props.bubbleSize}px;
-    font: normal normal normal 20px/27px Segoe UI;
+    font: normal normal normal 20px/27px Noto Sans KR;
     letter-spacing: 0px;
     line-height:25px;
     color:#707070;

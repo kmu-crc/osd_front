@@ -54,26 +54,50 @@ const Wrapper = styled.div`
   .slick-prev{
     position:absolute;
     z-index:999 !important;
-    top:1001px;
-    left:91.8%;
+    top:${props=>props.h*0.93}px;
+    left:${props=>props.w*0.908}px;
     background-image:url(${new_logo_arrow_left});
     background-size:cover;
     opacity:1 !important;
   }
 
+  .pause{
+    max-width: 65px;
+    max-height: 65px;
+    width: 65px;
+    height: 65px;
+    position: absolute;
+    z-index:999 !important;
+    top:89.5%;
+    left:${props=>props.w*0.939}px;
+    background-image:url(${new_logo_pause});
+    background-size:contain;
+    background-repeat:no-repeat;
+    cursor: pointer;
+    @media only screen and (min-width : 0px) and (max-width : 1100px) {
+      top:86.5%;
+    }
+    @media only screen and (min-width : 1100px) and (max-width : 1400px) {
+      top:88.5%;
+    }
+    @media only screen and (min-width : 1400px) and (max-width : 1700px) {
+      top:89%;
+    }
+  }
+
   .slick-next{
     position:absolute;
     z-index:999 !important;
-    top:1001px;
-    left:95.5%;
+    top:${props=>props.h*0.93}px;
+    left:${props=>props.w*0.965}px;
     background-image:url(${new_logo_arrow_right});
     background-size:cover;
   }
   .slick-next:hover, .slick-next:before{
     position:absolute;
     z-index:999 !important;
-    top:1001px;
-    left:95.5%;
+    top:${props=>props.h*0.93}px;
+    left:${props=>props.w*0.965}px;
     background-image:url(${new_logo_arrow_right});
     background-size:cover;
     opacity:1;
@@ -81,8 +105,8 @@ const Wrapper = styled.div`
   .slick-prev:hover, .slick-prev:before{
     position:absolute;
     z-index:999 !important;
-    top:1001px;
-    left:91.8%;
+    top:${props=>props.h*0.93}px;
+    left:${props=>props.w*0.908}px;
     background-image:url(${new_logo_arrow_left});
     background-size:cover;
     opacity:1 !important;
@@ -198,7 +222,7 @@ export default class Main extends Component {
 
     return (<React.Fragment>
       {/* banner */}
-      <Wrapper w={1920 * ratioW}>
+      <Wrapper w={width} h={height} >
         <Fade>
           <Slider ref={slider => (this.slider = slider)} {...settings}>
             <Banner width={1920 * ratioW} height={1080 * ratioH} >

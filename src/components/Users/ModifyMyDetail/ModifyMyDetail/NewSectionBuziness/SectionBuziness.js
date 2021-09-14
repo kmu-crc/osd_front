@@ -87,7 +87,7 @@ const Wrapper = styled.div`
       font-weight: normal;
       font-size: 20px;
       line-height: 27px;
-      font-family: Segoe UI, Noto Sans KR;
+      font-family:Spoqa Han Sans Neo,Noto Sans KR;
       letter-spacing: 0px;
       color: #707070;
       opacity: 1;
