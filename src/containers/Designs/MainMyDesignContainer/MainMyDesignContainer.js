@@ -6,8 +6,6 @@ import ScrollList from "components/Commons/ScrollList";
 import opendesign_style from 'opendesign_style';
 import styled from 'styled-components';
 
-import Fade from 'react-reveal/Fade';
-
 const Head = styled.div`
   font: normal normal bold 23px/34px Noto Sans KR;
   color: ${opendesign_style.color.grayScale.scale7};
@@ -36,7 +34,6 @@ class MainMyDesignContainer extends Component {
         (this.props.MyMainDesignAdded.length > 0)
         ? <Head>내 디자인 | 관심 디자인</Head>
         : null}
-      <Fade cascade>
         <ScrollList
           height={"max-content"}
           {...opendesign_style.design_margin}
@@ -45,7 +42,6 @@ class MainMyDesignContainer extends Component {
           dataList={this.props.MyMainDesign}
           dataListAdded={this.props.MyMainDesignAdded}
         />
-      </Fade>
     </>);
   }
 }
