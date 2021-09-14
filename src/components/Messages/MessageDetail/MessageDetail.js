@@ -44,7 +44,7 @@ const ReceiveMessageBox = styled.div`
     width: 100%;
     font-size: 20px;
     font-weight: 500;
-    font-family: Segoe UI;
+    font-family:Spoqa Han Sans Neo,Noto Sans KR;
     color: #707070;
     text-align: left;
     line-height: 27px;
