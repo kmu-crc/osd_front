@@ -440,9 +440,9 @@ class SignInModal extends Component {
     }
     onCheckSaveLogin(event) {
         const { email, password, isSavedId, isSavedPassword } = this.state;
-        if (email === "" || email == null || password === "" || password == null) {
-            return;
-        }
+        // if (email === "" || email == null || password === "" || password == null) {
+        //     return;
+        // }
         if (isSavedPassword) {
             cookie.remove(('saveid'), { path: '/' });
             cookie.remove(('savepassword'), { path: '/' });
