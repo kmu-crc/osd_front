@@ -247,7 +247,7 @@ class Navigation extends Component {
                              || window.location.pathname.search("/modifyDesigner/") > -1 ? true : false}
                               className="menu_tag marginTop1"><a className="link_tag" href="/designer">디자이너</a></MenuItem>
                     {/* <MenuItem className="menu_tag marginTop1">NEWS</MenuItem> */}
-                    <MenuItem className="menu_tag marginTop1" onClick={()=>window.location.href="/footerPara"}>ABOUT</MenuItem>
+                    <MenuItem className="menu_tag marginTop1" onClick={()=>window.location.href="/aboutPrivacyPolicy"}>ABOUT</MenuItem>
                     {
                         this.props.userInfo == null?
                         null
