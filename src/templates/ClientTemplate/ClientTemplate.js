@@ -72,19 +72,19 @@ const Client = styled.div`
   }
 
   .wrap_children{
+    min-width:1000px;
     max-width:1920px;
     width:100%;
     margin-left:auto;
     margin-right:auto;
   }
   @media only screen and (min-width : 0px) and (max-width : 1920px) {
-    display:flex;
-    justify-content:flex-start;
-  }
-  @media only screen and (min-width : 1920px)  {
     // display:flex;
-    // justify-content:center;
+    // justify-content:flex-start;
+    display:flex;
+    flex-direction:column;
   }
+
 `
 const Wrapper = styled.div`
   width:100%;

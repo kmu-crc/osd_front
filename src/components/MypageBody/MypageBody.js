@@ -45,7 +45,7 @@ const TabMenu = styled.div`
     .tab {
         text-align: center;
         font-weight: medium;
-        font-size: 28px;
+        font-size: 20px;
         line-height: 40px;
         font-family: Spoqa Han Sans Neo;
         letter-spacing: 0px;
@@ -214,11 +214,11 @@ class MypageBody extends Component {
             <div className="menu-container">
                 <TabMenu>
                     {/* ({NumberFormat(Count.total_group || 0)}) ({NumberFormat(Count.joined_group || 0)})({NumberFormat(Count.total_design || 0) + (Count.joined_design || 0)})({NumberFormat(Count.total_favorite || 0)})*/}
+                    <a onClick={() => this.changeCategory(0)}><div className={`tab ${this.state.cateIndex === 0 ? "selected" : ""}`}>그룹({NumberFormat(Count.total_group || 0)})</div></a>
+                    <a onClick={() => this.changeCategory(1)}><div className={`tab ${this.state.cateIndex === 1 ? "selected" : ""}`}>참여그룹({NumberFormat(Count.joined_group || 0)})</div></a>
+                    <a onClick={() => this.changeCategory(2)}><div className={`tab ${this.state.cateIndex === 2 ? "selected" : ""}`}>디자인({NumberFormat((Count.total_design || 0) + (Count.joined_design || 0))})</div></a>
+                    <a onClick={() => this.changeCategory(3)}><div className={`tab ${this.state.cateIndex === 3 ? "selected" : ""}`}>관심항목({NumberFormat(Count.total_favorite || 0)})</div></a>
                     <a onClick={() => this.changeCategory(4)}><div className={`tab ${this.state.cateIndex === 4 ? "selected" : ""}`}>경험</div></a>
-                    <a onClick={() => this.changeCategory(0)}><div className={`tab ${this.state.cateIndex === 0 ? "selected" : ""}`}>그룹</div></a>
-                    <a onClick={() => this.changeCategory(1)}><div className={`tab ${this.state.cateIndex === 1 ? "selected" : ""}`}>참여그룹</div></a>
-                    <a onClick={() => this.changeCategory(2)}><div className={`tab ${this.state.cateIndex === 2 ? "selected" : ""}`}>디자인</div></a>
-                    <a onClick={() => this.changeCategory(3)}><div className={`tab ${this.state.cateIndex === 3 ? "selected" : ""}`}>관심항목</div></a>
                 </TabMenu>
 
                 {this.state.cateIndex === 0 && <OrderOption style={{ marginBottom: "15px" }} order_clicked={(order) => this.handleChangeOrderOps(order, this.getMyGroupListRequest)} selected={this_order} />}
