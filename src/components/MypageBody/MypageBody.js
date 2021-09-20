@@ -238,7 +238,7 @@ class MypageBody extends Component {
                     {careerList.length > 0
                         ? careerList.map((item, index) => {
                             const ary = item && item.split(',') || ["-", "-", "-"];
-                            const what = ary[0] || "-", when = ary[1] || "-", which = ary[2] || "-";
+                            const what = ary[1] || "-", when = ary[2] || "-", which = ary[3] || "-";
 
                             return (<div className="row" key={index}>
                                 <div className="cell-short"><div className="text"> {index + 1} </div></div>
