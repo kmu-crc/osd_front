@@ -161,7 +161,7 @@ const CommentInputTextContainer = styled.div`
        width: 100%;
 
        textarea {
-           max-width:800px;
+           max-width:100%;
            min-width: 350px;
            width: 100%;
            height: 100%;
@@ -362,7 +362,7 @@ class Comment extends Component {
                                 <div className="flex_Input">
                                     {/* <div className="face" /> */}
                                     <div className="wrapper ">
-                                        <textarea value={this_reply || ""} onChange={this.onChangeValue} name="this_reply" />
+                                        <textarea  value={this_reply || ""} onChange={this.onChangeValue} name="this_reply" />
                                     </div>
                                     <div className="another-wrapper">
                                         <div className="submit" onClick={() => this.requestReply(item.uid)}>게시</div>

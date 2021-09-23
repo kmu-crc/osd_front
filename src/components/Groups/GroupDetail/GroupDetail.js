@@ -57,7 +57,7 @@ const TabMenu = styled.div`
     .tab {
         text-align: center;
         font-weight: medium;
-        font-size: 28px;
+        font-size: 20px;
         line-height: 40px;
         font-family: Spoqa Han Sans Neo;
         letter-spacing: 0px;

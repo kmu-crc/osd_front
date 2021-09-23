@@ -19,8 +19,8 @@ const AlarmIcon = styled.div`
     background-position: center center;
 `;
 const AlarmList = styled.div`
-    width: 290px;
-    height: 539px;
+    width: 310px;
+    height: 500px;
     padding: 12px 14px;
     display: ${props => props.display};
     z-index: 999;
@@ -74,15 +74,19 @@ const NewListItem = styled.div`
     .alarm_header {
         width: 100%;
         height: 19px;
-        font-family: Spoqa Han Sans Neo, Light;
-        font-size: 10px;
+        font-size: 12px;
+        font-family: Spoqa Han Sans Neo;
+        *{
+            font-size:12px;
+        }
+        font-weight:300;
     }
     .alarm_text {
         width: 100%;
-        line-height: 12px;
-        height: 100%;
+        line-height: 22px;
         font-family: Spoqa Han Sans Neo, Light;
-        font-size: 10px;
+        font-size: 15px;
+        font-weight:500;
     }
 `;
 const ListItem = styled.div`
