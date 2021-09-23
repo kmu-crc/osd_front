@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { GetTopGroupListRequest } from "redux/modules/group"
-import ScrollList from "components/Commons/ScrollList"
+import ScrollList from "components/Commons/ScrollListNew"
 import Loading from "components/Commons/Loading"
 import opendesign_style from 'opendesign_style';
 
@@ -14,14 +14,18 @@ class TopGroupListContainer extends Component {
     }
 
     render() {
+        const { Head, width } = this.props;
+
         return (<React.Fragment>
+            <Head>인기 그룹</Head>
             {this.props.status === "INIT" ?
                 <Loading /> :
-                    <ScrollList
-                        type="group"
-                        height={"max-content"}
-                        {...opendesign_style.group_margin}
-                        dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />
+                <ScrollList
+                    width={width}
+                    type="group"
+                    height={"max-content"}
+                    {...opendesign_style.group_margin}
+                    dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />
             }
         </React.Fragment>)
     }

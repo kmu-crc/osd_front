@@ -165,7 +165,7 @@ class ClientTemplate extends Component {
   render() {
     const { scroll, hidemenu, larger } = this.state;
     const scroll_style = (scroll ? "partial-scroll-on " : "partical-scroll-none ");
-    const hidemenu_style = (hidemenu ? "hidemenu " : "");
+    // const hidemenu_style = (hidemenu ? "hidemenu " : "");
     const larger_style = (larger ? "larger " : "");
     console.log(this.props);
 
@@ -196,7 +196,7 @@ class ClientTemplate extends Component {
 
       <Client
         active={this.props.isActive}
-        className={`${scroll_style}${hidemenu_style}${larger_style}`}
+        className={`${scroll_style}${/*hidemenu_style*/""}${larger_style}`}
         onScroll={this.handleScroll}>
 
         <ClientAni sidemenu={this.state.sidemenu}>
