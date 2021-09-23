@@ -547,6 +547,8 @@ class SignUpModal extends Component {
         return (
             <React.Fragment>
 
+
+
                 {this.state.success_signup ? 
                 <JoinCongra>
                 <Join_Modal open={true} >

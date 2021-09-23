@@ -13,9 +13,9 @@ import { alert } from "components/Commons/Alert/Alert";
 import new_logo_chat from "source/new_logo_chat.svg";
 import new_logo_msg from "source/new_logo_msg.svg";
 const Wrapper = styled.div`
-  max-width: 1740px;
   width: 100%;
   min-width: 1000px;
+  max-width: 1740px;
   padding-left: 38px;
   padding-right: 38px;
 `;
@@ -68,8 +68,9 @@ const GoStepBtn = styled(Button)`
 
 `;
 const BtnWrap = styled.div`
-  width:100%;
-  max-width:1740px;
+  width: 100%;
+  min-width: 1000px;
+  max-width: 1740px;
   height:100px;
   margin-left:38px;
   display:flex;
@@ -97,11 +98,10 @@ const BtnWrap = styled.div`
 `;
 const TransFormBtnContainer = styled.div`
   position: relative;
-  // margin-top: 35px;
   margin-bottom:20px;
-
-  max-width: 1740px;
+  width: 100%;
   min-width: 1000px;
+  max-width: 1740px;
 `;
 
 class DetailView extends Component {
