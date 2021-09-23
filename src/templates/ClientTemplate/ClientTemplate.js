@@ -66,23 +66,30 @@ const Client = styled.div`
   overflow-x: overlay;
   ${window.location.pathname == "/" ?
     null :
-    `
+  `
     padding-top:90px;
     `
   }
 
   .wrap_children{
     min-width:1000px;
-    max-width:1920px;
     width:100%;
-    margin-left:auto;
-    margin-right:auto;
+    ${window.location.pathname == "/" ?
+    null :
+    `max-width:1920px;`
+    }
   }
   @media only screen and (min-width : 0px) and (max-width : 1920px) {
-    // display:flex;
-    // justify-content:flex-start;
     display:flex;
     flex-direction:column;
+  }
+  @media only screen and (min-width : 1920px) {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    .wrap_children{
+      min-width:1920px;
+    }
   }
 
 `
@@ -174,21 +181,22 @@ class ClientTemplate extends Component {
             }
 
             <HeaderContainer onClickLogin={() => this.setState({ login: this.state.login == null ? true : !this.state.login })}
-              isLogin={this.state.login} sidemenu={this.state.login == null || this.state.login == true ? this.state.sidemenu : false}
+              isLogin={this.state.login} sidemenu={this.state.sidemenu}
               onClickMenu={() => {
                 this.state.login == true && this.state.sidemenu == true ?
                   this.setState({ sidemenu: this.state.sidemenu }) :
                   this.setState({ sidemenu: !this.state.sidemenu })
               }} />
 
-            <NavigationAni sidemenu={this.state.login == null ? window.location.pathname.indexOf("/signup") == -1 ? this.state.sidemenu : false : false} >
-            <NavigationContainer sidemenu={this.state.login == null ? window.location.pathname.indexOf("/signup") == -1 ? this.state.sidemenu : false : false}onClickFolding={this.onClickFoldingSideMenu} userInfo={this.props.userInfo} />
+            <NavigationAni sidemenu={this.state.sidemenu} >
+            <NavigationContainer sidemenu={this.state.sidemenu} onClickFolding={this.onClickFoldingSideMenu} userInfo={this.props.userInfo} />
             </NavigationAni>
 
             <Client active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
               <ClientAni sidemenu={this.state.sidemenu}>
                 <div className="wrap_children">
-                  {this.props.children}
+                  {/* {this.props.children} */}
+                  {React.cloneElement(this.props.children, { menu: this.state.sidemenu })}
                 </div>
               </ClientAni>
             </Client>
