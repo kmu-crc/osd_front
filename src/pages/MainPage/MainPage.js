@@ -5,7 +5,7 @@ import ClientTemplate from "templates/ClientTemplate"
 class MainPage extends Component {
   render() {
     return (<ClientTemplate>
-      <MainContainer />
+      <MainContainer {...this.props} />
     </ClientTemplate>)
   }
 }

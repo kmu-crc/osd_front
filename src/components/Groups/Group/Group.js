@@ -22,8 +22,10 @@ const GroupElement = styled.div`
   .cover {
     cursor: pointer;
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 860px;
+    height: 230px;
+    // width: 100%;
+    // height: 100%;
     z-index: 100;
   };
   .children {
