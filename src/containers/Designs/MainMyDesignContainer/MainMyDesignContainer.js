@@ -1,26 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyMainDesignListRequest } from "redux/modules/personal";
-// import ScrollList from "components/Commons/ScrollList";
-import ScrollList from "components/Commons/ScrollList";
+import ScrollList from "components/Commons/ScrollListNew";
 import opendesign_style from 'opendesign_style';
-import styled from 'styled-components';
-
-const Head = styled.div`
-  font: normal normal bold 23px/34px Noto Sans KR;
-  color: ${opendesign_style.color.grayScale.scale7};
-  // font-size: ${opendesign_style.font.size.heading2};
-  line-height: ${opendesign_style.font.size.heading2};
-  text-align: center;
-  margin-top: 30px;
-  margin-bottom: 27px;
-`;
 
 class MainMyDesignContainer extends Component {
   componentWillMount() {
-    this.props.token &&
-      this.props.GetMyMainDesignListRequest(
-        this.props.token, 0);
+    const { token } = this.props;
+    token && this.props.GetMyMainDesignListRequest(token, 0);
   }
 
   getList = (page) =>
@@ -29,20 +16,27 @@ class MainMyDesignContainer extends Component {
       this.props.token, page);
 
   render() {
-    return (<>
+    const { Head, width } = this.props;
+
+    return (<React.Fragment>
+
+      {/* title */}
       {this.props.MyMainDesignAdded &&
         (this.props.MyMainDesignAdded.length > 0)
         ? <Head>내 디자인 | 관심 디자인</Head>
         : null}
-        <ScrollList
-          height={"max-content"}
-          {...opendesign_style.design_margin}
-          getListRequest={this.getList}
-          type="design"
-          dataList={this.props.MyMainDesign}
-          dataListAdded={this.props.MyMainDesignAdded}
-        />
-    </>);
+
+      {/* scroll */}
+      <ScrollList
+        height={"max-content"}
+        width={width}
+        type="design"
+        // ListComponent={Design}
+        getListRequest={this.getList}
+        dataList={this.props.MyMainDesign}
+        dataListAdded={this.props.MyMainDesignAdded} />
+
+    </React.Fragment>);
   }
 }
 

@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { GetTopDesignListRequest } from "redux/modules/design"
-import ScrollList from "components/Commons/ScrollList"
+import ScrollList from "components/Commons/ScrollListNew"
 import Loading from "components/Commons/Loading"
 import opendesign_style from 'opendesign_style';
-import Fade from 'react-reveal/Fade';
 
 class TopDesignListContainer extends Component {
     componentDidMount() {
@@ -15,14 +14,20 @@ class TopDesignListContainer extends Component {
     }
 
     render() {
-        return (<React.Fragment>{this.props.status === "INIT" ?
-            <Loading /> :
-            <ScrollList
-                type="design"
-                height={"max-content"}
-                {...opendesign_style.design_margin}
-                dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />
-        }</React.Fragment>);
+        const { Head, width } = this.props;
+        return (<React.Fragment>
+            <Head>인기 디자인</Head>
+            {this.props.status === "INIT" ?
+                <Loading /> :
+                <ScrollList
+                    width={width}
+                    type="design"
+                    height={"max-content"}
+                    // {...opendesign_style.design_margin}
+                    dataList={this.props.dataList}
+                    dataListAdded={this.props.dataListAdded}
+                    getListRequest={this.getList} />
+            }</React.Fragment>);
     }
 }
 

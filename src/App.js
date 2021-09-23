@@ -1,38 +1,35 @@
-import React, { Component } from "react"
-import { BrowserRouter, Route, Switch } from "react-router-dom"
-// + main
-import MainPage from "pages/MainPage"
-import SignUpPage from "pages/SignUpPage"
-import InsertUserDetailPage from "pages/InsertUserDetailPage"
-import SignInPage from "pages/SignInPage"
-import MyDetailPage from "pages/MyDetailPage"
-import MyDetailModifyPage from "pages/MyDetailModifyPage"
-import SearchPage from "pages/SearchPage"
-import MessagePage from "pages/MessagePage"
-// + design
-import DesignListPage, { DesignDetailPage } from "pages/DesignPage"
-import CreateDesignPage from "pages/CreateDesignPage"
-import ModifyDesignPage from "pages/ModifyDesignPage"
-// + group
-import GroupListPage, { GroupDetailPage } from "pages/GroupPage"
-import CreateGroupPage from "pages/CreateGroupPage"
-import ModifyGroupPage from "pages/ModifyGroupPage"
-// + designer
-import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage"
-import CreateDesigner from "containers/Designer/CreateDesignerContainer/CreateDesignerContainer"
-// + etc.
-import RequiresAuth from "containers/Commons/RequiresAuth"
-import NotFoundPage from "pages/NotFoundPage"
-import FooterPrivacy from "components/Commons/FooterPrivacy"
-import FooterPara from "components/Commons/FooterTerm"
-import Notice from "components/Header/Notice"
-import CheckAuth from "containers/Commons/CheckAuth"
-import VChatDesignPage from "pages/VChat2Page"
-import VChatGroupPage from "pages/VChatGroupPage"
-import ChatDesignPage from "pages/ChatPage"
-import ChatGroupPage from "pages/ChatGroupPage"
-import CodeViewPage from "pages/CodeViewPage"
-import PdfViewPage from "pages/PdfViewPage"
+import React, { Component } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+import MainPage from "pages/MainPage";
+import SignUpPage from "pages/SignUpPage";
+import InsertUserDetailPage from "pages/InsertUserDetailPage";
+import SignInPage from "pages/SignInPage";
+import MyDetailPage from "pages/MyDetailPage";
+import MyDetailModifyPage from "pages/MyDetailModifyPage";
+import SearchPage from "pages/SearchPage";
+import MessagePage from "pages/MessagePage";
+import DesignListPage, { DesignDetailPage } from "pages/DesignPage";
+import CreateDesignPage from "pages/CreateDesignPage";
+import ModifyDesignPage from "pages/ModifyDesignPage";
+import GroupListPage, { GroupDetailPage } from "pages/GroupPage";
+import CreateGroupPage from "pages/CreateGroupPage";
+import ModifyGroupPage from "pages/ModifyGroupPage";
+import DesignerListPage, { DesignerDetailPage } from "pages/DesignerPage";
+import CreateDesigner from "containers/Designer/CreateDesignerContainer/CreateDesignerContainer";
+
+import RequiresAuth from "containers/Commons/RequiresAuth";
+import NotFoundPage from "pages/NotFoundPage";
+import CheckAuth from "containers/Commons/CheckAuth";
+import VChatDesignPage from "pages/VChat2Page";
+import VChatGroupPage from "pages/VChatGroupPage";
+import ChatDesignPage from "pages/ChatPage";
+import ChatGroupPage from "pages/ChatGroupPage";
+import CodeViewPage from "pages/CodeViewPage";
+import PdfViewPage from "pages/PdfViewPage";
+import PrivacyPolicyPage from "pages/PrivacyPolicyPage";
+import TermsOfUsePage from "pages/TermsOfUsePage";
+import IntroPage from "pages/IntroPage";
 
 class App extends Component {
   render() {
@@ -73,8 +70,12 @@ class App extends Component {
           <Route path="/designerDetail/:id" component={DesignerDetailPage} />
           <Route path="/designer/:sorting?/:cate1?/:cate2?/:cate3?" component={DesignerListPage} />
           <Route path="/createdesigner" component={RequiresAuth(CreateDesigner)} />
-          <Route path="/footerPrivacy" component={FooterPrivacy} />
-          <Route path="/footerPara" component={FooterPara} />
+
+          {/* About */}
+          <Route path="/aboutPrivacyPolicy" component={PrivacyPolicyPage} />
+          <Route path="/aboutTermsOfUse" component={TermsOfUsePage} />
+          <Route path="/aboutIntro" component={IntroPage} />
+
           <Route component={NotFoundPage} />
           <Route path="/notfound" component={NotFoundPage} />
         </Switch>

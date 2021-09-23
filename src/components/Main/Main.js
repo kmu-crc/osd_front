@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styled from 'styled-components';
+import styled, { keyframes } from "styled-components";
 import TopDesignListContainer from "containers/Designs/TopDesignListContainer";
 import TopGroupListContainer from "containers/Groups/TopGroupListContainer";
 import MainMyDesignListContainer from "containers/Designs/MainMyDesignContainer";
@@ -21,29 +21,32 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Fade from 'react-reveal/Fade';
 
+const BannerWidth = window.innerWidth;
+const BannerHeight = window.innerHeight;
+
 const MainList = styled.div`
   transform: translate( 0px, -100px);
-  // padding-left:100px;
-  width: ${props => props.w}px;
+  width: 100%;
+  max-width: 1720px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // .list_wrap{
-  //   max-width: 1920px;
-  //   width: 100%;
-  // }
 `;
 const Wrapper = styled.div`
   width: 100%;
-  max-width: 1920px;
+  height: 100%;
+
   min-width: 1000px;
-  position:relative !important;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+
   overflow: hidden;
+
   .slick-list { 
     width: ${props => props.w}px;
   }
-  transform: translate( 0px, -100px);
   .slick-track{
     overflow:hidden;
   }
@@ -54,8 +57,8 @@ const Wrapper = styled.div`
   .slick-prev{
     position:absolute;
     z-index:999 !important;
-    top:${props=>props.h*0.93}px;
-    left:${props=>props.w*0.908}px;
+    top: ${props => props.height - 100}px;
+    left:${props => props.w * 0.908}px;
     background-image:url(${new_logo_arrow_left});
     background-size:cover;
     opacity:1 !important;
@@ -69,7 +72,7 @@ const Wrapper = styled.div`
     position: absolute;
     z-index:999 !important;
     top:89.5%;
-    left:${props=>props.w*0.939}px;
+    left:${props => props.w * 0.939}px;
     background-image:url(${new_logo_pause});
     background-size:contain;
     background-repeat:no-repeat;
@@ -88,16 +91,16 @@ const Wrapper = styled.div`
   .slick-next{
     position:absolute;
     z-index:999 !important;
-    top:${props=>props.h*0.93}px;
-    left:${props=>props.w*0.965}px;
+    top: ${props => props.height - 100}px;
+    left:${props => props.w * 0.965}px;
     background-image:url(${new_logo_arrow_right});
     background-size:cover;
   }
   .slick-next:hover, .slick-next:before{
     position:absolute;
     z-index:999 !important;
-    top:${props=>props.h*0.93}px;
-    left:${props=>props.w*0.965}px;
+    top: ${props => props.height - 100}px;
+    left:${props => props.w * 0.965}px;
     background-image:url(${new_logo_arrow_right});
     background-size:cover;
     opacity:1;
@@ -105,8 +108,8 @@ const Wrapper = styled.div`
   .slick-prev:hover, .slick-prev:before{
     position:absolute;
     z-index:999 !important;
-    top:${props=>props.h*0.93}px;
-    left:${props=>props.w*0.908}px;
+    top: ${props => props.height - 100}px;
+    left:${props => props.w * 0.908}px;
     background-image:url(${new_logo_arrow_left});
     background-size:cover;
     opacity:1 !important;
@@ -159,41 +162,136 @@ const Banner = styled.div`
     max-height: 100%;
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    object-fit: cover;
   }
 `;
 const Head = styled.div`
   width: 100%;
   max-width: 1920px;
-  min-width: 1000px;
+  // min-width: 1000px;
   font-weight: bold;
   font-size: 23px;
   line-height: 34px;
   font-family: Noto Sans KR;
   color: ${opendesign_style.color.grayScale.scale7};
   text-align: center;
-  margin-top: 27px;
-  margin-bottom: 27px;
+  // margin-top: 27px;
+  // margin-bottom: 27px;
+  padding-top: 27px;
+  padding-bottom: 27px;
 `;
 const ScrollListContainer = styled.div`
-    padding-left:20px;
+  padding-left: 20px;
 `;
-
+const Wrapper2 = styled.div`
+  position: relative;
+  transform: translate( 0px, ${props => props.y + 90}px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 let settings = {
   className: "Banner",
   infinite: true,
   speed: 2000,
   slidesToShow: 1,
   dots: false,
-  autoplay: false, //true,
+  // autoplay: true,
+  autoplay: false,
   autoplaySpeed: 4000,
   slidesToScroll: 1,
   arrows: true,
 };
+
+const TEST1 = styled.div`
+  position: absolute;
+  width: ${props => props.width}px;
+  height: ${props => props.height}px;
+  background-color: #ECECEC;
+  left: 0;
+  top: 0;
+
+  overflow: hidden;
+
+  // pause button position
+  .pause {
+    max-width: 65px;
+    max-height: 65px;
+    width: 65px;
+    height: 65px;
+    position: absolute;
+    z-index: 1000 !important;
+    top: ${props => props.height - 130}px;
+    left: ${props => props.width * 0.94}px;
+    background-image: url(${new_logo_pause});
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+
+  // previous, next arrow button position
+  .slick-list { 
+    width: ${props => props.width}px;
+  }
+  .slick-track {
+    overflow: hidden;
+  }
+  .slick-dots {
+    z-index: 888;
+    bottom: 50px;
+  }
+  .slick-prev {
+    position: absolute;
+    z-index: 999 !important;
+    top: ${props => props.height - 100}px;
+    left: ${props => props.width * 0.908}px;
+    background-image: url(${new_logo_arrow_left});
+    background-size: cover;
+    opacity: 1 !important;
+  }
+  .slick-next {
+    position: absolute;
+    z-index: 999 !important;
+    top: ${props => props.height - 100}px;
+    left: ${props => props.width * 0.965}px;
+    background-image: url(${new_logo_arrow_right});
+    background-size: cover;
+  }
+  .slick-next:hover, .slick-next:before {
+    position: absolute;
+    z-index: 999 !important;
+    top: ${props => props.height - 100}px;
+    left: ${props => props.width * 0.965}px;
+    background-image: url(${new_logo_arrow_right});
+    background-size: cover;
+    opacity: 1;
+  }
+  .slick-prev:hover, .slick-prev:before {
+    position: absolute;
+    z-index: 999 !important;
+    top: ${props => props.height - 100}px;
+    left: ${props => props.width * 0.908}px;
+    background-image: url(${new_logo_arrow_left});
+    background-size: cover;
+    opacity: 1 !important;
+  }
+  .slick-arrow {
+    // border: 1px dashed red;
+    width: 45px;
+    height: 45px;
+  }
+`;
+const MainScrollWrapper = styled.div`
+  margin-top: ${props => props.marginTop}px;
+  width: ${props => props.width}px;
+  // border: 1px dashed #0ABCDF;
+`;
+
 export default class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = { w: window.innerWidth > 1920 ? 1920 : window.innerWidth<=1000?1000:window.innerWidth, play: true };
+    // this.state = { w: window.innerWidth > 1920 ? 1920 : window.innerWidth <= 1000 ? 1000 : window.innerWidth, play: true };
+    this.state = { w: window.innerWidth < 1000 ? 1000 : window.innerWidth, h: window.innerHeight, play: true };
     this.handleResize = this.handleResize.bind(this);
   }
   componentDidMount() {
@@ -203,74 +301,64 @@ export default class Main extends Component {
     window.removeEventListener("resize", this.handleResize, false);
   }
   handleResize = (event) => {
-    this.setState({ w: window.innerWidth > 1920 ? 1920 : window.innerWidth<=1000?1000:window.innerWidth });
+    // this.setState({ w: window.innerWidth > 1920 ? 1920 : window.innerWidth <= 1000 ? 1000 : window.innerWidth });
+    this.setState({ w: window.innerWidth < 1000 ? 1000 : window.innerWidth, h: window.innerHeight });
   }
   gostop = () => {
-    this.state.play == true
-      ? this.slider.slickPause()
-      : this.slider.slickPlay();
-    this.setState({
-      play: !this.state.play,
-    });
+    if (this.slider) {
+      if (this.state.play) {
+        //stop
+        this.slider.slickPause();
+      } else {
+        //start
+        this.slider.slickPlay();
+      }
+    }
+    this.setState({ play: !this.state.play, });
   }
+
   render() {
-    const { w } = this.state;
+    const { w, h } = this.state;
     const width = w;
-    const height = width * (1 / 1.76);
+    const height = h;
     const ratioW = width / 1920;
     const ratioH = height / 1080;
 
+    const widthScroll = (width > 1920 ? 1920 : width) - (this.props.menu ? 100 : 0);
+
     return (<React.Fragment>
-      {/* banner */}
-      <Wrapper w={width} h={height} >
-        <Fade>
-          <Slider ref={slider => (this.slider = slider)} {...settings}>
-            <Banner width={1920 * ratioW} height={1080 * ratioH} >
-              <img src={new_banner_step1} />
-              <a href={"/designerdetail/1488"}>
-                <ButtonOnImage width={285 * ratioW} height={51 * ratioH} bottom={164 * ratioH} right={293 * ratioW} />
-              </a>
-            </Banner>
 
-            <Banner slider={new_banner_step2} width={1920 * ratioW} height={1080 * ratioH} >
-              <img src={new_banner_step2} />
-              <a href={"/designerdetail/1488"}>
-                <ButtonOnImage width={232 * ratioW} height={55 * ratioH} bottom={240 * ratioH} right={544 * ratioW} />
-              </a>
-            </Banner>
+      <TEST1 width={width} height={height}>
+        <div className="pause" onClick={this.gostop} />
+        <Slider ref={slider => (this.slider = slider)} {...settings}>
+          <Banner height={height} >
+            <img src={new_banner_step1} />
+          </Banner>
 
-          </Slider>
-        </Fade>
-        <div className="pause"
-          onClick={() => this.gostop} />
-      </Wrapper>
+          <Banner height={height} >
+            <img src={new_banner_step2} />
+          </Banner>
+        </Slider>
+      </TEST1>
 
-      {/* scroll-list */}
-      <MainList w={w}>
-        {/* <Fade cascade> */}
-        {(this.props && this.props.userInfo != null)
-          ? <>
-            <ScrollListContainer> <MainMyDesignListContainer /> </ScrollListContainer>
-            <ScrollListContainer> <MainMyGroupListContainer /> </ScrollListContainer>
-          </>
+      <MainScrollWrapper width={widthScroll} marginTop={height}>
+
+        {this.props.userInfo != null
+          ? <MainMyDesignListContainer width={widthScroll} Head={Head} />
           : null}
 
-        <Head>인기 그룹</Head>
-        <ScrollListContainer>
-          <TopGroupListContainer />
-        </ScrollListContainer>
+        {this.props.userInfo != null
+          ? <MainMyGroupListContainer width={widthScroll} Head={Head} />
+          : null}
 
-        <Head>인기 디자인</Head>
-        <ScrollListContainer>
-          <TopDesignListContainer />
-        </ScrollListContainer>
+        <TopGroupListContainer width={widthScroll} Head={Head} />
 
-        {/* </Fade> */}
-      </MainList>
+        <TopDesignListContainer width={widthScroll} Head={Head} />
 
+      </MainScrollWrapper>
 
-    </React.Fragment >
-    )
+    </React.Fragment>);
   }
 }
+
 
