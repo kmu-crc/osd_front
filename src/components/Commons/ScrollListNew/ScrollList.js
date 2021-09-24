@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-import Design from "components/Designs/Design";
-import Group from "components/Groups/Group";
-import Designer from "components/Designers/Designer";
 import styled from "styled-components";
-import osdcss from "opendesign_style";
-import Fade from 'react-reveal/Fade';
 
 // css 
 const FlexContainer = styled.div`
@@ -18,18 +13,18 @@ const FlexContainer = styled.div`
   // border: 1px dashed #0ABCDE;
   overflow: hidden;
 `;
-const OutBtn = styled.button`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  z-index: 900;
-`;
-const AcceptBtn = styled.button`
-  position: absolute;
-  top: 5px;
-  right: 80px;
-  z-index: 900;
-`;
+// const OutBtn = styled.button`
+//   position: absolute;
+//   top: 5px;
+//   right: 5px;
+//   z-index: 900;
+// `;
+// const AcceptBtn = styled.button`
+//   position: absolute;
+//   top: 5px;
+//   right: 80px;
+//   z-index: 900;
+// `;
 const MoreBtn = styled.button`
   position: relative;
   left: 50%;
@@ -128,9 +123,7 @@ class ScrollList extends Component {
         {dataListAdded.map((item, i) => {
           return (<li key={item.uid + "-" + i} style={{ listStyle: "none" }}>
             {ListComponent
-              ? <Fade >
-                <ListComponent data={item} />
-              </Fade>
+              ? <ListComponent data={item} />
               : null}
 
             {/* {handleAccept && <AcceptBtn className="ui button black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>} */}

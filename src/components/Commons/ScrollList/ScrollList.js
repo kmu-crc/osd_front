@@ -19,16 +19,16 @@ position: relative;
 margin-left: auto;
 margin-right: auto;
 @media only screen and (min-width : ${osdcss.newresolutions.mini}px) and (max-width : ${osdcss.newresolutions.small}px) {
-  width: ${props=>props.type=="design"?"720px":props.type=="group"?"800px":props.type=="designer"?"600px":null};
+  width: ${props => props.type == "design" ? "720px" : props.type == "group" ? "800px" : props.type == "designer" ? "600px" : null};
 }
 @media only screen and (min-width : ${osdcss.newresolutions.small}px) and (max-width : ${osdcss.newresolutions.medium}px) {
-  width: ${props=>props.type=="design"?"1090px":props.type=="group"?"800px":props.type=="designer"?"1200px":null};
+  width: ${props => props.type == "design" ? "1090px" : props.type == "group" ? "800px" : props.type == "designer" ? "1200px" : null};
 }
 @media only screen and (min-width : ${osdcss.newresolutions.medium}px) and (max-width : ${osdcss.newresolutions.large}px) {
-  width: ${props=>props.type=="design"?"1200px":props.type=="group"?"1780px":props.type=="designer"?"1200px":null};
+  width: ${props => props.type == "design" ? "1200px" : props.type == "group" ? "1780px" : props.type == "designer" ? "1200px" : null};
 }
 @media only screen and (min-width : ${osdcss.newresolutions.large}px) {
-  width: ${props=>props.type=="design"?"1780px":props.type=="group"?"1780px":props.type=="designer"?"1780px":null};
+  width: ${props => props.type == "design" ? "1780px" : props.type == "group" ? "1780px" : props.type == "designer" ? "1780px" : null};
   }
 
 
@@ -240,9 +240,9 @@ class ScrollList extends Component {
             marginRightLast={marginRightLast} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
             {handleAccept && <AcceptBtn className="ui button black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>}
             {handleReject && <OutBtn className="ui button black" onClick={() => handleReject(item.uid)}>{rejectText || "삭제"}</OutBtn>}
-            {type === "design" ? <Fade><Design data={item} /></Fade> : null}
-            {type === "group" ? <Fade><Group data={item} /></Fade> : null}
-            {type === "designer" ? <Fade><Designer data={item} /></Fade> : null}
+            {type === "design" ? <><Design data={item} /></> : null}
+            {type === "group" ? <><Group data={item} /></> : null}
+            {type === "designer" ? <><Designer data={item} /></> : null}
           </FlexBox>)
         })}
         {loading && <LoadingText>목록을 가져오고 있습니다.</LoadingText>}
