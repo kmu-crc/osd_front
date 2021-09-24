@@ -4,6 +4,7 @@ import { GetTopGroupListRequest } from "redux/modules/group"
 import ScrollList from "components/Commons/ScrollListNew"
 import Loading from "components/Commons/Loading"
 import opendesign_style from 'opendesign_style';
+import Group from "components/Groups/Group";
 
 class TopGroupListContainer extends Component {
     componentDidMount() {
@@ -21,6 +22,7 @@ class TopGroupListContainer extends Component {
             {this.props.status === "INIT" ?
                 <Loading /> :
                 <ScrollList
+                    ListComponent={Group}
                     width={width}
                     type="group"
                     height={"max-content"}
