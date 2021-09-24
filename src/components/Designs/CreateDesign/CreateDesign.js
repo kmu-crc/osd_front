@@ -1521,12 +1521,14 @@ class CreateDesign extends Component {
                             getValue={this.onChangeFile}
                             setController={this.setController} />)
                           : null}
-                        {item.type === "TEXT" ?
+                        {item.type === "TEXT" 
+                         ? item.initClick == true||this.state.selectOrder == item.order?
                           (<TextController
                             item={item}
                             name={item.name}
                             initClick={this.state.click}
                             getValue={(data) => this.onChangeValue(data, item.order)} />)
+                            :<div dangerouslySetInnerHTML={{__html:item.content}} onClick={()=>this.setState({selectOrder:item.order})}/>
                           : null}
                         {item.type === "LINK" ?
                           <LinkController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />

@@ -379,7 +379,7 @@ class GroupInfoComponent extends Component {
         const user_id = userInfo && userInfo.uid;
         const isEditor = group_user_id === user_id;
         const { w, couldJoinVChat, manager } = this.state;
-
+        console.log(GroupDetail && GroupDetail.img && GroupDetail.img.l_img);
         return (
         <React.Fragment>
         <GroupSummary isEditor={isEditor}>

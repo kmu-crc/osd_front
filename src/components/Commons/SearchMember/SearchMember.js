@@ -131,7 +131,7 @@ class SearchMember extends Component {
     return (
       <SearchWrap id="searchRect" style={{ display: "inline-block" }}>
         <SearchInputText InputWidth={this.props.inputWidth} marginLeft={this.props.marginLeft} id="searchRect" type="text"
-          name="search" placeholder="찾고 싶은 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue} />
+          name="search" placeholder="회원 검색" validates={this.props.validates} getValue={this.getValue} />
         <MemberList id="searchRect" style={this.state.open ? { display: "block" } : { display: "none" }}>
           {this.props.members && this.props.members.map((item, index) => {
             return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item)}>{item.nick_name}</MemberListItem>);

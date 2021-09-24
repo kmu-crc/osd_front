@@ -390,7 +390,7 @@ const MenuBarContainer = styled.div`
 		background-color:red;
     }
     &.share {
-		width:100px;
+		width:max-content;
 		height:44px;
 		box-shadow: 8px 8px 8px #0000002B;
 		display:flex;
@@ -400,6 +400,8 @@ const MenuBarContainer = styled.div`
 		font-size:22px;
 		font-family:Spoqa Han Sans Neo;
 		background-color:#7E1E9B;
+		padding-left:10px;
+		padding-right:10px;
     }
     &.exit {
 		width:100px;

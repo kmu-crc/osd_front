@@ -1,10 +1,8 @@
 import React from 'react';
-import plusImg from "source/message_find_person_plus_mark.svg";
-import sendImg from "source/msg_send_btn.svg";
-import noface from "source/thumbnail.png";
-
+import noImage from "source/thumbnail.png"
 import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
+import new_logo_plus2 from "source/new_logo_plus2.svg";
 
 import SearchMemberContainer from "containers/Commons/SearchMemberContainer/SearchMemberContainer"
 import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
@@ -13,83 +11,273 @@ import Socket from "modules/Socket"
 // import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import opendesign_style from "opendesign_style";
+import sendImg from "source/msg_send_btn.svg";
 
-
-const Wrapper = styled.div`
-  max-width:1920px;
+const MainBox = styled.div`
   width:100%;
-  min-width:950px;
-  margin-top: ${25}px;
-  margin-left: ${29}px;
-  
-  display: flex;
-  flex-direction: row;
+  height:${window.innerHeight * 0.8}px;
+  min-height:600px;
+  height:80vh;
+  margin-top:10px;
+  margin-bottom:20px;
+  *{
+    // border:1px solid black;
+    font-family:Noto Sans KR;
+    color:#707070;
+  }
+  .flexBox_column{display:flex;flex-direction:column;}
+  .flexBox_row{display:flex;}
+  .content_center{justify-content:center;}
+  .items_center{align-items:center;}
+  .bg_gray{background-color:#EFEFEF}
+  .font_big{font-size:20px};
+  .font_middle{font-size:18px;}
+  .font_small{font-size:16px;}
+  .font_mini{font-size:12px;}
+  .cursor_pointer{cursor:pointer;}
+  .font_fit{font-weight:300;}
+  .font_bold{font-weight:500;}
+  .border_radius{border-radius:25px;}
+  .fitBox{width:max-content;height:max-content;}
 
-  height: ${window.innerHeight - 50}px;
+  .mainBanner{
+    width:100%;
+    height:40px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    .label{
+      min-width:90%;
+    }
+  }
+  .mainContent{
+    width:100%;
+    height:100%;
+    margin-top:25px;
+    display:flex;
+    justify-content:center;
+    position:relative;
+  }
+  .wrapper{
+    width:90%;
+    height:100%;
+    display:flex;
+    overflow:hidden;
+  }
+  .mobilelistIcon{
+    padding:0px 5px;
+    width:50px;
+    height:50px;
+    display:none;
+    justify-content:center;
+    align-items:center;
+  }
+  @media only screen and (min-width : 0px) and (max-width:1024px) {
+    margin-top:50px;
+    .wrapper{
+      height:90%;
+      flex-direction:column;
+    }
+  }
+  // @media only screen and (min-width : 0px) and (max-width:500px) {
+    
+  //   // border:1px solid black;
+  //   min-height:500px;
+  //   margin-top:100px;
+  //   .wrapper{
+  //     height:90%;
+  //     flex-direction:column;
+  //   }
+  // }
+  // @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  // and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+  //   min-height:300px;
+  //   margin-bottom:0px;
+  //   height:${window.innerHeight * 0.7}px;
+  //   .mobilelistIcon{
+  //     display:flex;
+  //   }
+  //   .mainBanner{
+  //     display:none;
+  //   }
+  //   .wrapper{
+  //     width:100%;
+  //     height:100%;
+  //   }
+  // }
+  @media only screen and (min-width:1920px){
+    min-width:1820px;
+  }
 `;
-const Peers = styled.div`
-  min-width: 270px;
-  width:270px;
-  height: ${props => props.height}px;
-  max-height: 850px;
-  background-color: #E9E9E9;
-  display: flex;
-  flex-direction: column;
-
-  .header {
-    width: 270px;
-    height: 65px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding-top: 16px;
-    padding-left: 24px;
-    position: relative;
-
-    .title {
-      width: max-content;
-      height: 28px;
-      text-align: center;
-      font-weight: medium;
-      font-size: 20px;
-      line-height: 28px;
-      font-family: Spoqa Han Sans Neo;
-      letter-spacing: 0px;
-      color: #4F4F4F;
-      opacity: 1;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      word-wrap: break-word;
+const RoomListBox = styled.div`
+    width:15%;
+    min-width:270px;
+    height:100%;
+    background-color:#EFEFEF;
+    z-index:500;
+    .header{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:relative;
+      
+      .header-item{
+        width:100%;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding-left:24px;
+        *{color:#4F4F4F;}
+      }
+      .opacity_trans{opacity:0;}
     }
-    .plus {
-      position: absolute;
-      right: 0;
-      top: 0;
+    .roomList{
+      width:100%;
+      height:100%;
     }
-  }
-  .list {
-    width: 100%;
-    height: 100%;
-    overflow: hidden scroll;
-    // margin-right: 5px;
-    margin-bottom: 5px;
+    @media only screen and (min-width : 0px) and (max-width:1024px) {
+      padding:10px 40px;
+      width:100%;
+      height:40%;
+      overflow:hidden;
+    }
+    // @media only screen and (min-width : 0px) and (max-width:500px) {
+    //   padding:5px 40px;
+    //   width:100%;
+    //   height:40%;
+    //   overflow:hidden;
+    // }
+  //   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  //   and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+  //     height:${props => props.isSelectMsg === true ? "60px" : "100%"};
+  //     overflow:hidden;
+  // }
+`;
+const WhiteBox = styled.div`
+    width:1%;
+    min-width:5px;
+    height:100%;
+    background-color:white;
+    @media only screen and (min-width : 0px) and (max-width:1024px) {
+      width:100%;
+      height:1%;
+    }
+    // @media only screen and (min-width : 0px) and (max-width:500px) {
+    //   width:100%;
+    //   height:1%;
+    // }
+`;
+const ChatBox = styled.div`
+    // *{
+    //   border:1px solid black;
+    // }
+    width:100%;
+    height:100%;
+    background-color:#EFEFEF;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    .header{
+      margin-top:25px;
+      margin-left:40px;
+      width:100%;
+      height:50px;
+      display:flex;
+      align-items:center;
+    }
+    .wrapper{
+      width:100%;
+      height:100%;
+      // border:1px solid blue;
+    }
+    .content{
+      width:100%;
+      height:75%;
+      display:flex;
+      justify-content:center;
+      padding:0px 2%;
+    }
+    .send{
+      position:absolute;
+      bottom:0px;
+      width:100%;
+      height:20%;
+      display:flex;
+      justify-content:center;
+      padding:20px 37px;
+      .sendBox{
+        min-width:100%;
+        height:100%;
+        border-top:1px solid #707070;
+        background-color:#EFEFEF;
+      }
+      .sendButton_wrap{
+        position:absolute;
+        display:flex;
+        align-items:center;
+        min-width:55px;
+        max-width:55px;
+        max-height:130px;
+        height:100%;
+        right:3%;
+      }
+      .sendButton{
+        min-width:55px;
+        min-height:55px;
+        max-width:55px;
+        max-height:55px;
+        cursor:pointer;
+        background-image:url(${sendImg});
+        background-size:contain;
+      }
+    }
+    @media only screen and (min-width : 0px) and (max-width:1024px) {
+      width:100%;
+      min-height:70%;
+      .send{
+        absolute:fixed;
+        height:25%;
+      }
+    }
+    // @media only screen and (min-width : 0px) and (max-width:500px) {
+    //   width:100%;
+    //   min-height:70%;
+    //   .send{
+    //     absolute:fixed;
+    //     height:25%;
+    //   }
+    // }
+    // @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+    //   and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    //     display:${props => props.isSelectMsg === true ? "flex" : "none"}
+    //     .content{
+    //       padding: 0px 5%;
+    //     }
+    //     .header{
+    //       margin-top:0px;
+    //     }
+    // }
+  `
 
-    // scroll
-    ::-webkit-scrollbar-track { background-color: transparent; }
-    ::-webkit-scrollbar-track { background-color: transparent; }
-    ::-webkit-scrollbar-thumb { background-color: transparent; }
-    :hover{
-      ::-webkit-scrollbar-track { background-color: transparent; }
-      ::-webkit-scrollbar { width: 5px;  background-color: transparent; }
-      ::-webkit-scrollbar-thumb { background-color: #FF0000; }
-    }
-  }
+const SearchMemberBox = styled.div`
+  width:100%;
+  padding-left:10px;
+  padding-right:10px;
+  height:max-content;
+  position:absolute;
+  top:50px;
+  z-index:900;
 `;
 const PlusIcon = styled.div`
+  cursor:pointer;
   width: 65px;
   height: 65px;
+  min-width: 30px;
+  min-height: 30px;
   color: #707070;
-  background: url(${plusImg});
+  background: url(${new_logo_plus2});
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
@@ -99,260 +287,185 @@ const PlusIcon = styled.div`
   }
   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
   and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
-    display:${props => props.isSelectMsg === true ? "none" : "flex"};
+    display:${props => props.isSelectMsg === true ? "none" : "flex"}
   }
 `;
-const Person = styled.li`
+const SendButton = styled.div`
+  min-width:10%;
+  height:100%;
+  background-color:white;
+  border:1px solid #EFEFEF;
+  border-radius:0px 0px 25px 0px;
+  border-top:1px solid #707070;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  &:hover{
+    opacity:0.7;
+  }
+  .sendButton_label{
+    font-family:Noto Sans KR;
+    font-size:18px;
+    font-weight:500;
+    color:#707070;
+  }
+`;
+const SendMessageTextarea = styled.div`
+  max-width:100%;
+  min-width:100%;
+  height:100%;
+  font-size:18px;
+  text-align:left;
+  line-height:27px;
+  background-color:#EFEFEF;
+  resize:none;
+  border:none;
+  outline:none;
+  padding:20px 125px 0px 0px;
+  overflow:auto;
+  @media only screen and (min-width : 780px) and (max-width:1440px) {
+
+  }
+  @media only screen and (min-width : 360px) and (max-width:780px) {
+    height:100%;
+  }
+`;
+const SummaryList = styled.div`
+  width:100%;
+  height:100%;
+  position:relative;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  padding-bottom:50px;
+  &:hover {
+    overflow-y:overlay;
+  }
+  @media only screen and (min-width : 0px) and (max-width:1024px) {
+    padding-top:5px;
+
+  }
+  // @media only screen and (min-width : 0px) and (max-width:500px) {
+  //   padding-top:5px;
+  //   overflow-y:auto;
+  // }
+`;
+const SummaryItemBox = styled.div`
   *{
     cursor:pointer;
   }
-  min-width: 270px;
-  width:270px;
-  height: 90px;
-
-  display: flex;
-  flex-direction: row;
-  .pic {
-    position: relative;
-    padding-top: 18px;
-    padding-left: 22px;
-    padding-right: 22px;
-     
-    .count {
-      position: absolute;
-      left: 60%;
-      top: 20%;
-      width: 22px;
-      height: 22px;
-      border-radius: 100%;
-      text-align: center;
-      color: #FFFFFF;
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 22px;
-    }
-    .thumbnail {
-      width: 57px;
-      height: 57px;
-      background-image: url(${props => props.face});
-      background-position: center center;
-      background-size: cover;
-      border-radius: 100%;
-      border: 1px solid #912525;
-      box-shadow: 7px 7px 1px 1px rgba(0, 0, 0, .1);
-    }
-  }
-  .text {
-    margin-top: 17px;
-    width: 174px; // width: 100%;
-    height: 73px;
-    display: flex;
-    flex-direction: column;
-    .nick {
-      width: 80%;
-      height: 19px;
-      text-align: left;
-      font-weight: 700;
-      font-size: 14px;
-      line-height: 19px;
-      font-family: Spoqa Han Sans Neo;
-      letter-spacing: 0px;
-      color: #4F4F4F;
-      opacity: 1;
-
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .recent { 
-      margin-top: 3px;
-      width: 90%;
-      height: 19px;
-      text-align: left;
-      font-weight: medium;
-      font-size: 14px;
-      line-height: 19px;
-      font-family: Noto Sans KR;
-      letter-spacing: 0px;
-      color: #4F4F4F;
-      opacity: 1;
-
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
- 
-    }
-  }
-
-  &.selected { background-color: rgba(255,255,255,0.53); }
-  :hover {
-    background-color: rgba(255,255,255,0.3);
-    &.selected { background-color: rgba(255,255,255,0.53); }
-  }
-`;
-const MessageDetail = styled.div`
-  margin-left: 23px;
-  margin-right: 7px;
-
-  width: 1450px;
-  max-height: 850px;
-
-  background-color: #E9E9E9; 
-  position: relative;
-
-  .header {
-    left: 25px;
-    top: 16px;
-    position: absolute;
-    height: 27px;
-    width: max-content;
-    z-index: 880;
-
-    .title { 
-      height: 27px;
-      width: max-content;
-      max-width: 800px;
-      text-align: center;
-      font-weight: medium;
-      font-size: 20px;
-      line-height: 27px;
-      font-family: Noto Sans KR;
-      letter-spacing: 0px;
-      color: #4F4F4F;
-      opacity: 1;
-
-      white-space: nowrap; 
-      overflow: hidden; 
-      text-overflow: ellipsis; 
-    }
-  }
-  .message-2 {
-    // border: 1px solid red;
-    position: relative;
-    height: ${props => props.height}px;
-    max-height: 850px;
+  cursor:pointer;
+  position:relative;
+  width:100%;
+  opacity:${props => props.isSelect === true ? 1 : 0.5};
+  display:flex;
+  padding:15px 21px;
+  .summary_box{
+    width:75%;
+    height:100%;
     display:flex;
     flex-direction:column;
-
-    .list {
-      overflow: auto;
-      height: ${props => props.height - 121}px;
-      // background-color: blue;
-      max-height: 730px;
-    }
-    .send {
-      width: 96%;
-      margin-left:2%;
-      margin-right:2%;
-      bottom: 13px;
-      position: absolute;
-      height: 121px;
-      border-top: 1px solid #707070;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-    }
+    justify-content:space-between;
+    padding-left:22px;
   }
-  .messages {
-    // height: 100%;
-    position: relative;
-
-    .list {
-      overflow: hidden;
-      overflow-y: auto;
-      height: ${props => props.h};
-      min-height: 300px;
-      max-height: 691px;
-      padding-bottom: ${121 + 20}px;
-    }
-    .send-wrap {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+  .summary_Name{
+    width:100%;
+    height:19px;
+    font-size:14px;
+    font-weight:500;
+    font-family:Spoqa Han Sans Neo;
+    color:#4F4F4F;
+    text-align:left;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+  }
+  .summary_message{
+    width:100%;
+    height:22px;
+    font-size:14px;
+    font-weight:200;
+    font-family:Noto Sans KR;
+    color:#707070;
+    text-align:left;
+    line-height:19px;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+  }
+  @media only screen and (min-width : 0px) and (max-width:1024px) {
+    padding-top:5px;
+    margin-bottom:0px;
+    height:max-content;
+    .summary_message{
+      // display:none;
     }
   }
-  .not-selected {
-    height: ${props => props.height}px;
-    text-align: center;
-    line-height: 50px;
-    font-size: 25px;
-    color #4A4A4A;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  @media only screen and (min-width : 0px) and (max-width : 1000px) {
-    width: 100%;
-  }
-  @media only screen and (min-width : 1000px) and (max-width : 1200px) {
-    width: 700px;
-  }
-  @media only screen and (min-width : 1200px) and (max-width : 1400px) {
-    width: 900px;
-  }
-  @media only screen and (min-width : 1400px) and (max-width : 1600px) {
-    width: 1100px;
-  }
-  @media only screen and (min-width : 1600px) and (max-width : 1920px) {
-    width: 1300px;
-  }
-  
-`;
-const SendMessageTextarea = styled.div`
-  width: 88%;
-  height: 119px;
-  background-color: #E9E9E9;
-  resize: none;
-  border: none;
-  outline: none;
-  padding: 20px;
-  overflow: auto;
-
-  text-align: left;
-  font-weight: 300;
-  font-size: 25px;
-  line-height: 36px;
-  font-family: Spoqa Han Sans Neo;
-  letter-spacing: 0px;
-  color: #4F4F4F;
-  opacity: 1;
-  // scroll
-  ::-webkit-scrollbar-track { background-color: transparent; }
-  ::-webkit-scrollbar-track { background-color: transparent; }
-  ::-webkit-scrollbar-thumb { background-color: transparent; }
-  :hover{
-    ::-webkit-scrollbar-track { background-color: transparent; }
-    ::-webkit-scrollbar { width: 5px;  background-color: transparent; }
-    ::-webkit-scrollbar-thumb { background-color: #4F4F4F; }
+  // @media only screen and (min-width : 0px) and (max-width:500px) {
+  //   padding-top:5px;
+  //   margin-bottom:0px;
+  //   height:max-content;
+  //   .summary_message{
+  //     display:none;
+  //   }
+  // }
+  &:hover{
+    background-color:rgb(255,255,255,0.53);
   }
 `;
-const SendArrowButton = styled.div`
-
-  // margin-top: 52px;
-  // margin-right: 18px;
-  margin: auto;
-  width: 55px;
-  height: 55px;
-  background-image: url(${sendImg});
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
-
-  cursor: pointer;
-  :hover {
-    background-color: rgba(255,255,255,0.1);
+const SummaryIcon = styled.div`
+  min-width:57px;
+  min-height:57px;
+  max-width:57px;
+  max-height:57px;
+  border-radius:50%;
+  background:url(${props => props.imageURL});
+  background-color:white;
+  background-size:cover;
+  background-position:center center;
+  box-shadow: 8px 8px 6px #00000029;
+  .noti{
+    width:10px;
+    height:10px;
+    background-color:#FF0000;
+    border-radius:50%;
   }
+  // @media only screen and (min-width : 0px) and (max-width:500px) {
+  //   min-width:35px;
+  //   min-height:35px;
+  //   max-width:35px;
+  //   max-height:35px;
+  // }
 `;
+
+function SummaryItem(props) {
+  return (
+    <SummaryItemBox isSelect={props.opacityON}>
+      <SummaryIcon imageURL={props.s_img}>
+        {props.noti ? <div className="noti" /> : undefined}
+      </SummaryIcon>
+      <div className="summary_box">
+        <div className="summary_Name">{props.friend_name}</div>
+        {
+          props.message&&props.message.indexOf("<img")!=-1?
+          <div className="summary_message">
+            <Icon className="picture" size="large"/>사진첨부
+          </div>
+          :
+          <div className="summary_message" 
+          dangerouslySetInnerHTML={{ __html: props.message && props.message.indexOf("<img")!=-1? `<Icon className="picture" size="mini"/>사진첨부`: props.message.replace(/<br\/>/g, "") }}/>
+        }
+        {/* <div className="summary_message" 
+        dangerouslySetInnerHTML={{ __html: props.message && props.message.indexOf("<img")!=-1? `<Icon className="picture" size="mini"/>사진첨부`: props.message.replace(/<br\/>/g, "") }}/> */}
+      </div>
+    </SummaryItemBox>);
+}
+
+
 class Messages extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       w: window.innerWidth > 1920 ? 1920 : window.innerWidth,
-      h: window.innerHeight > 1920 ? 950 : window.innerHeight - 50,
       // msgValue: '',
       msgId: -1,
       selectId: null,
@@ -387,11 +500,8 @@ class Messages extends React.Component {
       });
     if (this.props.id && this.props.name) {
       let id = parseInt(this.props.id, 10);
-      alert(`${this.props.name},${this.props.id}`);
       this.selectMember({
-        email: null, 
-        nick_name: this.props.name, 
-        uid: id
+        email: null, nick_name: this.props.name, uid: id
       })
       try {
         Socket.on("reload_msglist", () => {
@@ -500,6 +610,8 @@ class Messages extends React.Component {
         this.setState({ render: true });
         this.props.history.replace("/message");
       });
+
+
     document.getElementById("sendMsgBox").innerHTML = "";
     // this.initMsgValue();
   }
@@ -518,562 +630,104 @@ class Messages extends React.Component {
   handleOpenMember() {
     this.setState({ showSearch: !this.state.showSearch });
   }
-  handleClickSearchMemberItem(id, name, event) {
-    this.setMsgId(-2, id, name);
+  async handleClickSearchMemberItem(id, name, event) {
+    // this.setMsgId(-2, id, name);
+    let room_id = -2;
+    await this.props.ChatRooms && this.props.ChatRooms.length > 0 &&
+      this.props.ChatRooms.map(chat => {
+        if(chat.friend_id == id && chat.friend_name==name){
+          room_id = chat.uid;
+        }
+      }
+    )
+    await this.props.userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token); await this.setMsgId(room_id, id, name);
     this.setState({ memberSearch: false });
   }
   handleCloseMember() {
-    this.setState({ showSearch: false });
+    this.setState({ showSearch: false })
   }
   handleResize() {
     const w = window.innerWidth > 1920 ? 1920 : window.innerWidth;
-    const h = window.innerHeight > 1920 ? 950 : window.innerHeight - 50;
-    this.setState({ w: w, h: h });
+    this.setState({ w: w });
   }
 
   // member search(+) button
   searchRef = React.createRef();
   checkClickOutSideMemberSearch = event => {
 
-    console.log(event, this.searchRef.current, event.target);
+    console.log(
+      event,
+      this.searchRef.current,
+      event.target);
 
-    if (this.searchRef.current === null) {
-      return;
-    }
+    if (this.searchRef.current === null) return;
     if (!this.searchRef.current.contains(event.target)) {
       document.removeEventListener("mousedown", this.checkClickOutSideMemberSearch);
-      this.setState({ memberSearch: false });
+      this.setState({ memberSearch: false })
     }
   }
   openMemberSearch = event => {
     document.addEventListener("mousedown", this.checkClickOutSideMemberSearch);
-    this.setState({ memberSearch: true });
-  }
-
-  // added
-  onClickPerson = async (uid, fid, fname) => {
-    const { userInfo, token } = this.props;
-    await userInfo && await this.props.GetMyChatRoomsListRequest(token);
-    await this.setMsgId(uid, fid, fname);
+    this.setState({ memberSearch: true })
   }
 
   render() {
     // const { w } = this.state;
-    // const maxH = 869 + 25 + 48 + 8 + 55;
-    // const H = window.innerHeight < maxH ? window.innerHeight - 200 : 869;
-    console.log(this.props, this.state);
-
-    return (<Wrapper height={this.state.h}>
-
-      <Peers height={this.state.h}>
-        <div className="header">
-          <div className="title">받은 메세지함</div>
-          <div className="plus">
-            <PlusIcon
-              isSelectMsg={this.state.msgId == -1 ? false : true}
-              onClick={this.openMemberSearch} />
-          </div>
-        </div>
-        {/* <div onClick={() => { this.setMsgId(-1, this.props.id, this.props.name) }} className="mobilelistIcon"><Icon className="unordered list" size="big" color="grey" /></div> */}
-        {this.state.memberSearch &&
-          (<SearchMemberBox ref={this.searchRef}>
-            <SearchMemberContainer inputWidth={98} marginLeft={2} id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />
-          </SearchMemberBox>)}
-
-        <div className="list">
-          {this.props.MessageList
-            && this.props.MessageList.map((item, index) =>
-              <Person
-                key={index}
-                face={item.s_img || noface}
-                className={this.state.msgId === item.uid ? "selected" : ""}
-                onClick={(e) => this.onClickPerson(item.uid, item.friend_id, item.friend_name)}
-              >
-
-                <div className="pic">
-                  {item.count > 0
-                    ? <div style={{ backgroundColor: "red" }} className="count">
-                      {item.count > 99 ? 99 : item.count}
+    const maxH = 869 + 25 + 48 + 8 + 55
+    const H = window.innerHeight < maxH ? window.innerHeight - 200 : 869
+    return (
+      <React.Fragment>
+        <MainBox>
+          <div className="mainContent flexBox justifyContent">
+            <div className="wrapper">
+              <RoomListBox isSelectMsg={this.state.msgId === -1 ? false : true}>
+                <div className="header">
+                  <div className="header-item fixed">
+                    <div className="fitBox font_big font_bold">받은 메시지함</div>
+                    <PlusIcon isSelectMsg={this.state.msgId == -1 ? false : true} onClick={this.openMemberSearch} /></div>
+                  <div onClick={() => { this.setMsgId(-1, this.props.id, this.props.name) }} className="mobilelistIcon"><Icon className="unordered list" size="big" color="grey" /></div>
+                  {this.state.memberSearch &&
+                    (<SearchMemberBox ref={this.searchRef}>
+                      <SearchMemberContainer inputWidth={100} marginLeft={0} id="searchRect" addMemberItem={this.handleClickSearchMemberItem} />
+                    </SearchMemberBox>)}
+                </div>
+                <div className="roomList">
+                  <SummaryList id="searchRect">
+                    {this.props.ChatRooms && this.props.ChatRooms.length > 0 &&
+                      this.props.ChatRooms.map(chat => chat.recent != null ?
+                        <div key={chat.uid} onClick={async () => { await this.props.userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token); await this.setMsgId(chat.uid, chat.friend_id, chat.friend_name) }}>
+                          <SummaryItem noti={chat.count && chat.count > 0} opacityON={this.state.selectId === chat.friend_id} s_img={chat.thumbnail || noImage} friend_name={chat.friend_name} message={chat.recent} />
+                        </div> : null)}
+                  </SummaryList>
+                </div>
+              </RoomListBox>
+              <WhiteBox />
+              <ChatBox isSelectMsg={this.state.msgId == -1 ? false : true}>
+                <div className="header"><div className="fitBox font_big font_bold">{this.state.selectName}</div></div>
+                <div className="wrapper">
+                  <div className="content">
+                    {this.state.render && <MessageDetailContainer height={H - (64 + 196)} repaint={this.state.render} id={this.state.msgId} />}
+                  </div>
+                  <div className="send">
+                    <div className="sendBox">
+                      <SendMessageTextarea contentEditable="true" id="sendMsgBox">
+                      </SendMessageTextarea>
                     </div>
-                    : null}
-                  <div className="thumbnail" />
+                  <div className="sendButton_wrap">
+                    <div className="sendButton" onClick={this.onSubmitForm}/>
+                  </div>
+                    {/* <div className="sendButton"/> */}
+                    {/* <SendButton className="cursor_pointer" onClick={this.onSubmitForm}>
+                      <div className="sendButton_label">전송하기</div></SendButton> */}
+                  </div>
                 </div>
-
-                <div className="text">
-                  <div className="nick">{item.friend_name}</div>
-
-                  <div className="recent"
-                    dangerouslySetInnerHTML={{
-                      __html: item.message && item.message.indexOf("<img") != -1
-                        ? `[<Icon className="picture" size="mini"/>사진첨부]`
-                        : item.message && item.message.replace(/<br\/>/g, "")
-                    }} />
-
-                </div>
-              </Person>)}
-        </div>
-      </Peers>
-
-      <MessageDetail height={this.state.h}>
-        {this.state.msgId !== -1 ||this.props.id!=null
-          ? <React.Fragment>
-            {/* title */}
-            <div className="header">
-              <div className="title">
-                {this.state.selectName}
-              </div>
+              </ChatBox>
             </div>
-
-            {/* content */}
-            <div className="message-2">
-              <div className="list">
-                {this.state.render
-                  ? <MessageDetailContainer repaint={this.state.render} id={this.state.msgId} />
-                  : null}
-              </div>
-
-              <div className="send">
-                <SendMessageTextarea contentEditable={true} id="sendMsgBox" />
-                <SendArrowButton onClick={this.onSubmitForm} />
-              </div>
-
-            </div>
-
-          </React.Fragment>
-          : <div className="not-selected">
-            오른쪽 목록에서 대화상대를 선택하시면 상대방과의 <br />
-            대화내용을 보실 수 있습니다.
-          </div>}
-      </MessageDetail>
-
-    </Wrapper>);
+          </div>
+        </MainBox>
+      </React.Fragment>
+    );
   }
 }
 
 export default Messages;
-
-// /*
-//        <MainBox>
-//           <div className="mainBanner bg_gray">
-//             <div className="label font_big font_bold">메시지함</div>
-//           </div>
-//           <div className="mainContent flexBox justifyContent">
-//             <div className="wrapper border_radius">
-//               <RoomListBox isSelectMsg={this.state.msgId === -1 ? false : true}>
-//                 <div className="header">
-//                   <div className="header-item fixed">
-//                     <div className="fitBox font_big font_bold">받은 메시지함</div>
-//                     <PlusIcon   /></div>
-
-//                 <div className="roomList">
-//                   <SummaryList id="searchRect">
-//                     {this.props.ChatRooms && this.props.ChatRooms.length > 0 &&
-//                       this.props.ChatRooms.map(chat => chat.recent != null ?
-//                         <div key={chat.uid} onClick={async () => { await this.props.userInfo && await this.props.GetMyChatRoomsListRequest(this.props.token); await this.setMsgId(chat.uid, chat.friend_id, chat.friend_name) }}>
-//                           <SummaryItem noti={chat.count && chat.count > 0} opacityON={this.state.selectId === chat.friend_id} s_img={chat.thumbnail || noImage} friend_name={chat.friend_name} message={chat.recent} />
-//                         </div> : null)}
-//                   </SummaryList>
-//                 </div>
-//               </RoomListBox>
-//               <WhiteBox />
-//               <ChatBox isSelectMsg={this.state.msgId == -1 ? false : true}>
-//                 <div className="header"><div className="fitBox font_big font_bold">{this.state.selectName}</div></div>
-//                 <div className="wrapper">
-//                   <div className="content">
-//                     {this.state.render && <MessageDetailContainer height={H - (64 + 196)} repaint={this.state.render} id={this.state.msgId} />}
-//                   </div>
-//                   <div className="send">
-//                     <div className="sendBox">
-//                       <SendMessageTextarea contentEditable="true" id="sendMsgBox">
-//                       </SendMessageTextarea>
-//                     </div>
-//                     <SendButton className="cursor_pointer">
-//                       <div className="sendButton_label">전송하기</div></SendButton>
-//                   </div>
-//                 </div>
-//               </ChatBox>
-//             </div>
-//           </div>
-//         </MainBox>
-// */
-// const MainBox = styled.div`
-//   width:100%;
-//   height:${window.innerHeight * 0.8}px;
-//   min-height:600px;
-//   margin-top:10px;
-//   margin-bottom:20px;
-//   *{
-//     // border:1px solid black;
-//     font-family:Noto Sans KR;
-//     color:#707070;
-//   }
-//   .flexBox_column{display:flex;flex-direction:column;}
-//   .flexBox_row{display:flex;}
-//   .content_center{justify-content:center;}
-//   .items_center{align-items:center;}
-//   .bg_gray{background-color:#EFEFEF}
-//   .font_big{font-size:20px};
-//   .font_middle{font-size:18px;}
-//   .font_small{font-size:16px;}
-//   .font_mini{font-size:12px;}
-//   .cursor_pointer{cursor:pointer;}
-//   .font_fit{font-weight:300;}
-//   .font_bold{font-weight:500;}
-//   .border_radius{border-radius:25px;}
-//   .fitBox{width:max-content;height:max-content;}
-
-//   .mainBanner{
-//     width:100%;
-//     height:40px;
-//     display:flex;
-//     justify-content:center;
-//     align-items:center;
-
-//     .label{
-//       min-width:90%;
-//     }
-//   }
-//   .mainContent{
-//     width:100%;
-//     height:100%;
-//     margin-top:25px;
-//     display:flex;
-//     justify-content:center;
-//     position:relative;
-//   }
-//   .wrapper{
-//     width:90%;
-//     height:100%;
-//     display:flex;
-//     overflow:hidden;
-//   }
-//   .mobilelistIcon{
-//     padding:0px 5px;
-//     width:50px;
-//     height:50px;
-//     display:none;
-//     justify-content:center;
-//     align-items:center;
-//   }
-//   @media only screen and (min-width : 500px) and (max-width:1024px) {
-//     margin-top:50px;
-//     .wrapper{
-//       height:98%;
-//       flex-direction:column;
-//     }
-//   }
-//   @media only screen and (min-width : 0px) and (max-width:500px) {
-
-//     // border:1px solid black;
-//     min-height:500px;
-//     margin-top:100px;
-//     .wrapper{
-//       height:90%;
-//       flex-direction:column;
-//     }
-//   }
-//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-//   and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
-//     min-height:300px;
-//     margin-bottom:0px;
-//     height:${window.innerHeight * 0.7}px;
-//     .mobilelistIcon{
-//       display:flex;
-//     }
-//     .mainBanner{
-//       display:none;
-//     }
-//     .wrapper{
-//       width:100%;
-//       height:100%;
-//     }
-//   }
-// `;
-// const RoomListBox = styled.div`
-//     width:25%;
-//     min-width:375px;
-//     height:100%;
-//     background-color:#EFEFEF;
-//     padding:25px 40px;
-//     z-index:500;
-//     .header{
-//       width:100%;
-//       display:flex;
-//       justify-content:space-between;
-//       align-items:center;
-//       position:relative;
-
-//       .header-item{
-//         width:100%;
-//         display:flex;
-//         justify-content:space-between;
-//         align-items:center;
-//       }
-//       // .fixed{
-//       //   position:fixed;
-//       // }
-//       .opacity_trans{opacity:0;}
-//     }
-//     .roomList{
-//       width:100%;
-//       height:100%;
-//     }
-//     @media only screen and (min-width : 500px) and (max-width:1024px) {
-//       padding:10px 40px;
-//       width:100%;
-//       height:40%;
-//       overflow:hidden;
-//     }
-//     @media only screen and (min-width : 0px) and (max-width:500px) {
-//       padding:5px 40px;
-//       width:100%;
-//       height:40%;
-//       overflow:hidden;
-//     }
-//     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-//     and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
-//       height:${props => props.isSelectMsg === true ? "60px" : "100%"};
-//       overflow:hidden;
-//   }
-// `;
-// const WhiteBox = styled.div`
-//     width:1%;
-//     min-width:5px;
-//     height:100%;
-//     background-color:white;
-//     @media only screen and (min-width : 500px) and (max-width:1024px) {
-//       width:100%;
-//       height:1%;
-//     }
-//     @media only screen and (min-width : 0px) and (max-width:500px) {
-//       width:100%;
-//       height:1%;
-//     }
-// `;
-// const ChatBox = styled.div`
-//     // *{
-//     //   border:1px solid black;
-//     // }
-//     width:74%;
-//     height:100%;
-//     background-color:#EFEFEF;
-//     position:relative;
-//     display:flex;
-//     flex-direction:column;
-//     .header{
-//       margin-top:25px;
-//       margin-left:40px;
-//       width:100%;
-//       height:50px;
-//       display:flex;
-//       align-items:center;
-//     }
-//     .wrapper{
-//       width:100%;
-//       height:100%;
-//       // border:1px solid blue;
-//     }
-//     .content{
-//       width:100%;
-//       height:75%;
-//       display:flex;
-//       justify-content:center;
-//       padding:0px 2%;
-//     }
-//     .send{
-//       position:absolute;
-//       bottom:0px;
-//       width:100%;
-//       height:25%;
-//       display:flex;
-//       justify-content:center;
-//       .sendBox{
-//         min-width:90%;
-//         height:100%;
-//         border-top:1px solid #707070;
-//         background-color:#dddddd;
-//       }
-//     }
-//     @media only screen and (min-width : 500px) and (max-width:1024px) {
-//       width:100%;
-//       min-height:70%;
-//       .send{
-//         absolute:fixed;
-//         height:25%;
-//       }
-//     }
-//     @media only screen and (min-width : 0px) and (max-width:500px) {
-//       width:100%;
-//       min-height:70%;
-//       .send{
-//         absolute:fixed;
-//         height:25%;
-//       }
-//     }
-//     @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
-//       and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
-//         display:${props => props.isSelectMsg === true ? "flex" : "none"}
-//         .content{
-//           padding: 0px 5%;
-//         }
-//         .header{
-//           margin-top:0px;
-//         }
-//     }
-//   `
-// const SendButton = styled.div`
-//   min-width:10%;
-//   height:100%;
-//   background-color:white;
-//   border:1px solid #EFEFEF;
-//   border-radius:0px 0px 25px 0px;
-//   border-top:1px solid #707070;
-//   display:flex;
-//   justify-content:center;
-//   align-items:center;
-//   &:hover{
-//     opacity:0.7;
-//   }
-//   .sendButton_label{
-//     font-family:Noto Sans KR;
-//     font-size:18px;
-//     font-weight:500;
-//     color:#707070;
-//   }
-// `;
-
-// const SummaryList = styled.div`
-//   width:100%;
-//   height:100%;
-//   position:relative;
-//   overflow-y: hidden;
-//   overflow-x: hidden;
-//   padding-top:15px;
-//   padding-bottom:50px;
-//   &:hover {
-//     overflow-y:overlay;
-//   }
-//   @media only screen and (min-width : 500px) and (max-width:1024px) {
-//     padding-top:5px;
-
-//   }
-//   @media only screen and (min-width : 0px) and (max-width:500px) {
-//     padding-top:5px;
-//     overflow-y:auto;
-//   }
-// `;
-
-const SearchMemberBox = styled.div`
-  width:100%;
-  height:max-content;
-  // position:absolute;
-  // top:50px;
-  z-index:880;
-`;
-const SummaryItemBox = styled.div`
-  *{
-    cursor:pointer;
-  }
-  cursor:pointer;
-  position:relative;
-  // overflow:hidden;
-  width:100%;
-  height:70px;
-  margin-bottom:30px;
-  opacity:${props => props.isSelect === true ? 1 : 0.5};
-  display:flex;
-  .summary_box{
-    width:75%;
-    height:100%;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    padding:10px;
-  }
-  .summary_Name{
-    width:100%;
-    height:29px;
-    font-size:17px;
-    font-weight:500;
-    font-family:Noto Sans KR;
-    color:#707070;
-    text-align:left;
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-  }
-  .summary_message{
-    width:100%;
-    height:28px;
-    font-size:17px;
-    font-weight:100;
-    font-family:Noto Sans KR;
-    color:#707070;
-    text-align:left;
-    line-height:29px;
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-  }
-  @media only screen and (min-width : 500px) and (max-width:1024px) {
-    padding-top:5px;
-    margin-bottom:0px;
-    height:max-content;
-    .summary_message{
-      // display:none;
-    }
-    background-color: red;
-  }
-  @media only screen and (min-width : 0px) and (max-width:500px) {
-    padding-top:5px;
-    margin-bottom:0px;
-    height:max-content;
-    .summary_message{
-      display:none;
-    }
-  }
-`;
-const SummaryIcon = styled.div`
-  min-width:70px;
-  min-height:70px;
-  max-width:70px;
-  max-height:70px;
-  border-radius:50%;
-  background:url(${props => props.imageURL});
-  background-size:cover;
-  background-position:center center;
-  .noti{
-    width:10px;
-    height:10px;
-    background-color:#FF0000;
-    border-radius:50%;
-  }
-  @media only screen and (min-width : 0px) and (max-width:500px) {
-    min-width:35px;
-    min-height:35px;
-    max-width:35px;
-    max-height:35px;
-  }
-`;
-function SummaryItem(props) {
-  return (
-    <SummaryItemBox isSelect={props.opacityON}>
-      <SummaryIcon imageURL={props.s_img}>
-        {props.noti ? <div className="noti" /> : undefined}
-      </SummaryIcon>
-      <div className="summary_box">
-        <div className="summary_Name">{props.friend_name}</div>
-        {
-          props.message && props.message.indexOf("<img") != -1 ?
-            <div className="summary_message">
-              <Icon className="picture" size="large" />사진첨부
-            </div>
-            :
-            <div className="summary_message"
-              dangerouslySetInnerHTML={{ __html: props.message && props.message.indexOf("<img") != -1 ? `<Icon className="picture" size="mini"/>사진첨부` : props.message.replace(/<br\/>/g, "") }} />
-        }
-        {/* <div className="summary_message" 
-        dangerouslySetInnerHTML={{ __html: props.message && props.message.indexOf("<img")!=-1? `<Icon className="picture" size="mini"/>사진첨부`: props.message.replace(/<br\/>/g, "") }}/> */}
-      </div>
-    </SummaryItemBox>);
-};

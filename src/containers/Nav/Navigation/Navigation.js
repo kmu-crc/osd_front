@@ -29,7 +29,7 @@ const Profile = styled.div`
 `
 const MenuBox = styled.div`
     width:100px;
-    height: 100%;
+    height: ${props=>props.h==null?"100vh":props.h+"px"};
     min-width:100px;
     min-height:1080px;
     background-color:${
@@ -119,10 +119,6 @@ const MenuBox = styled.div`
             color:white;
         }
     }
-    @media only screen and (min-width : 500px) {
-        height:${window.innerHeight}px;
-    }
-
 `
 const MenuItem = styled.div`
     *{
@@ -148,7 +144,7 @@ class Navigation extends Component {
             play: false,
             notice: {}, alarm: {},
             selectCate: -1,
-            screenWidth: window.innerWidth,
+            h:null,
         };
         this.gotoCreateDesignPage = this.gotoCreateDesignPage.bind(this);
     }
@@ -194,15 +190,16 @@ class Navigation extends Component {
     gotoCreateDesignPage() {
         window.location.href = "/createDesign"
     }
-    handleResize = () => {
-        this.setState({ screenWidth: window.innerWidth })
-    };
+    handleResize = (event) => {
+        console.log(window.innerHeight);
+        this.setState({ h: window.innerHeight});
+      }
 
     render() {
         console.log(window.location.pathname,window.location.pathname.indexOf("/group"),window.location.pathname.indexOf("/Group"));
         return (
             <React.Fragment>
-                <MenuBox>
+                <MenuBox h={this.state.h}>
                     <div className="menu_top"/>
                     <div className="menu_handle" onClick={this.props.onClickFolding}><img className={`arrow ${this.props.sidemenu==true?"folding":"notfolding"}`}src={new_logo_handle_arrow}/></div>
                     {/* <MenuItem

@@ -586,6 +586,7 @@ class CardSourceDetail extends Component {
       item_uid: null,
       item_user: null,
       item: null,
+      selectOrder:-1,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -1157,7 +1158,7 @@ class CardSourceDetail extends Component {
     __code = __code && __code.replaceAll("   ", "&emsp;");
     let datalist = [];
     const answer = result && JSON.parse(result.answer);
-    // console.log("result",this.props);
+    console.log("result",this.state);
     return (<div id="card-source-detail-root-node">
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
         {loading ? <Loading /> : null}
@@ -1744,10 +1745,13 @@ class CardSourceDetail extends Component {
                       : null}
 
                     {(item.type === "TEXT")
-                      ? <TextController
+                      ? item.initClick == true||this.state.selectOrder == item.order?
+                      <TextController
                         item={item}
                         initClick={this.state.click}
+                        onBlurOrder = {()=>this.setState({selectOrder:-1})}
                         getValue={(data) => this.onChangeValue(data, item.order)} />
+                        :<div dangerouslySetInnerHTML={{__html:item.content}} onClick={()=>this.setState({selectOrder:item.order})}/>
                       : null}
 
                     {(item.type === "LINK")
