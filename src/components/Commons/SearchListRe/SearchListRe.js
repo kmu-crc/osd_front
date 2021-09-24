@@ -104,7 +104,7 @@ class SearchListRe extends Component {
             keyword: "",
             searchKeyword: "",
             mainCate: [{ value: 1, text: "디자인" }, { value: 2, text: "그룹" }, { value: 3, text: "디자이너" }],
-            selectCate: 0,
+            selectCate: 1,
             this_order: { text: "등록순", keyword: "update" },
             urlCate: "design",
             this_category: { text: null, value: null },
