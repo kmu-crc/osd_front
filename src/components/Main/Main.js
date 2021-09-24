@@ -333,6 +333,9 @@ export default class Main extends Component {
         <Slider ref={slider => (this.slider = slider)} {...settings}>
           <Banner height={height} >
             <img src={new_banner_step1} />
+            {/* <a href={"/designerdetail/1488"}> */}
+            {/* <ButtonOnImage width={232 * ratioW} height={55 * ratioH} bottom={240 * ratioH} right={544 * ratioW} /> */}
+            {/* </a> */}
           </Banner>
 
           <Banner height={height} >

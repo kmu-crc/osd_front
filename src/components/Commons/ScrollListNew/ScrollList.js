@@ -12,6 +12,7 @@ const FlexContainer = styled.div`
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: flex-start; 
+  padding-left: 10px;
   gap: ${props => props.row}px ${props => props.col}px; //20px 30px; /* row-gap column gap */
   width: ${props => props.width}px;
   // border: 1px dashed #0ABCDE;
