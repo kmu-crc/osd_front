@@ -14,7 +14,7 @@ const FlexContainer = styled.div`
   justify-content: flex-start; 
   gap: ${props => props.row}px ${props => props.col}px; //20px 30px; /* row-gap column gap */
   width: ${props => props.width}px;
-  border: 1px dashed #0ABCDE;
+  // border: 1px dashed #0ABCDE;
   overflow: hidden;
 `;
 const OutBtn = styled.button`
