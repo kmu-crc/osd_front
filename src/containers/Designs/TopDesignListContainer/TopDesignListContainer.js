@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { GetTopDesignListRequest } from "redux/modules/design"
 import ScrollList from "components/Commons/ScrollListNew"
 import Loading from "components/Commons/Loading"
-import opendesign_style from 'opendesign_style';
+import Design from "components/Designs/Design";
 
 class TopDesignListContainer extends Component {
     componentDidMount() {
@@ -21,6 +21,7 @@ class TopDesignListContainer extends Component {
                 <Loading /> :
                 <ScrollList
                     width={width}
+                    ListComponent={Design}
                     type="design"
                     height={"max-content"}
                     // {...opendesign_style.design_margin}

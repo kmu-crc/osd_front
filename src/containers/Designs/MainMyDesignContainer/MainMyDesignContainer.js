@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyMainDesignListRequest } from "redux/modules/personal";
 import ScrollList from "components/Commons/ScrollListNew";
-import opendesign_style from 'opendesign_style';
+import Design from "components/Designs/Design";
 
 class MainMyDesignContainer extends Component {
   componentWillMount() {
@@ -31,7 +31,7 @@ class MainMyDesignContainer extends Component {
         height={"max-content"}
         width={width}
         type="design"
-        // ListComponent={Design}
+        ListComponent={Design}
         getListRequest={this.getList}
         dataList={this.props.MyMainDesign}
         dataListAdded={this.props.MyMainDesignAdded} />

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetMyMainGroupListRequest } from "redux/modules/personal";
 import ScrollList from "components/Commons/ScrollListNew";
+import Group from "components/Groups/Group";
 
 class MainMyGroupContainer extends Component {
   componentWillMount() {
@@ -30,6 +31,7 @@ class MainMyGroupContainer extends Component {
 
         {/* <ScrollListContainer> */}
         <ScrollList
+          ListComponent={Group}
           width={width}
           height={"max-content"}
           getListRequest={this.getList}
