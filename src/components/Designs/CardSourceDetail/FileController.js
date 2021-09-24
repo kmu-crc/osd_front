@@ -206,32 +206,54 @@ class FileController extends Component {
   };
 
   render() {
-    // console.log("FileWrap: in FC", this.props);
-    const contentImg = this.props.item.content
-      ? this.props.item.content
-      : this.props.item.fileUrl;
-    return (
-      <FileWrap>
-        {(this.props.item.content || this.props.item.fileUrl) &&
-          this.state.is_image ? (
-            <img src={contentImg} alt="이미지" />
-          ) : (this.props.item.content || this.props.item.extension) &&
-            !this.state.is_image ? (
-              <div className="iconWrap">
-                <FileIcon
-                  type={this.props.item.file_type}
-                  extension={this.props.item.extension}
-                />
-                <span className="LinkFileName">{this.props.item.file_name}</span>
-              </div>
-            ) : null}
+    console.log("FileController:", this.props.item);
 
-        {/* {<form action="" enctype="multipart/form-data" method="post">
+    const { item } = this.props;
+    const { is_image } = this.state;
+
+    const contentImg = item.content
+      ? item.content
+      : item.fileUrl;
+
+    return (<FileWrap>
+
+      {/* image */}
+      {(item.content && item.data_type === "image")
+        ? <img src={contentImg} alt="이미지" />
+        : null}
+
+      {/* video */}
+      {(item.content && item.data_type === "video")
+        ? <span>
+          {/* <span className="LinkFileName">{item.file_name}</span> */}
+          <video
+            key={item.content}
+            className="iconWrap"
+            width={`${window.innerWidth > 480 ? "640" : window.innerWidth - 55}`}
+            height={`${window.innerWidth > 480 ? "360" : (window.innerWidth - 55) * .55}`}
+            controls="controls">
+            <source src={item.content} type="video/mp4" download={item.file_name}></source>
+          </video>
+        </span>
+        : null}
+
+      {/* file */}
+      {(item.content && (item.data_type !== "video" && item.data_type !== "image"))
+        ? <div className="iconWrap">
+          <FileIcon
+            type={item.file_type}
+            extension={item.extension}
+          />
+          <span className="LinkFileName">{item.file_name}</span>
+        </div>
+        : null}
+
+      {/* {<form action="" enctype="multipart/form-data" method="post">
           <input type="file" name="file-to-upload" />
           <input type="submit" value="Upload" />
         </form>} */}
 
-        {/* 
+      {/* 
         <FilePond
           // name="file-to-upload"
           ref={ref => (this.pond = ref)}
@@ -249,17 +271,17 @@ class FileController extends Component {
           }}
         /> */}
 
-        <File>
-          <input
-            type="file"
-            name="source"
-            onChange={this.onChangeValue}
-            ref={ref => (this.input = ref)}
-            accept={this.props.accept==null?null:this.props.accept}
-          />
-          <span></span>
-        </File>
-      </FileWrap>
+      <File>
+        <input
+          type="file"
+          name="source"
+          onChange={this.onChangeValue}
+          ref={ref => (this.input = ref)}
+          accept={this.props.accept == null ? null : this.props.accept}
+        />
+        <span></span>
+      </File>
+    </FileWrap>
     );
   }
 }
