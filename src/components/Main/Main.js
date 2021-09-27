@@ -238,47 +238,43 @@ export default class Main extends Component {
     // const ratioW = width / 1920;
     // const ratioH = height / 1080;
 
-    const widthScroll = (width > 1920 ? 1920 : width) - (this.props.menu ? 100 : 0) - 100;
+    const widthScroll = (width > 1920 ? 1920 : width) - (this.props.menu ? 100 : 0) - 10;
 
     return (<React.Fragment>
 
       <TEST1 width={width} height={height}>
         <div className="pause" onClick={this.gostop} />
         <Slider ref={slider => (this.slider = slider)} {...settings}>
-          {/* <Banner height={height} >
+          <Banner height={height} >
             <img src={new_banner_step1} />
             <a href={"/designerdetail/5343"}>
-              <ButtonOnImage {...{ width: 952 * width / 1920, height: 397 * height / 1080, bottom: 272, right: 130 }}>
-                <img src={main_banner_1_button} />
-              </ButtonOnImage>
+              <ButtonOnImage src={main_banner_1_button} {...{ width: 952 * width / 1920, height: 397 * height / 1080, bottom: 272, right: 130 }} />
             </a>
-          </Banner> */}
+          </Banner>
 
           <Banner height={height} >
             <img src={new_banner_step2} />
             <a href={"/designerdetail/5344"}>
-              <ButtonOnImage src={main_banner_2_button} {...{ width: 952 * width / 1920, height: 397 * height / 1080, bottom: 154, right: 85 }}>
-                {/* <img src={main_banner_2_button} /> */}
-              </ButtonOnImage>
+              <ButtonOnImage src={main_banner_2_button} {...{ width: 952 * width / 1920, height: 397 * height / 1080, bottom: 154, right: 85 }} />
             </a>
           </Banner>
         </Slider>
       </TEST1>
 
       <MainScrollWrapper width={widthScroll} marginTop={height}>
+        <div style={{ marginLeft: "10px" }}>
+          {this.props.userInfo != null
+            ? <MainMyDesignListContainer width={widthScroll} Head={Head} />
+            : null}
 
-        {this.props.userInfo != null
-          ? <MainMyDesignListContainer width={widthScroll} Head={Head} />
-          : null}
+          {this.props.userInfo != null
+            ? <MainMyGroupListContainer width={widthScroll} Head={Head} />
+            : null}
 
-        {this.props.userInfo != null
-          ? <MainMyGroupListContainer width={widthScroll} Head={Head} />
-          : null}
+          <TopGroupListContainer width={widthScroll} Head={Head} />
 
-        <TopGroupListContainer width={widthScroll} Head={Head} />
-
-        <TopDesignListContainer width={widthScroll} Head={Head} />
-
+          <TopDesignListContainer width={widthScroll} Head={Head} />
+        </div>
       </MainScrollWrapper>
 
     </React.Fragment>);
