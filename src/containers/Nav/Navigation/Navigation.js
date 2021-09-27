@@ -39,6 +39,7 @@ const MenuBox = styled.div`
         :window.location.pathname.indexOf("Design")!=-1?"#1262AB"
         :window.location.pathname.indexOf("group")!=-1?"#1E9B79"
         :window.location.pathname.indexOf("Group")!=-1?"#1E9B79"
+        :window.location.pathname.indexOf("/about")!=-1?"#39280b"
         :"red"
     };
     position:relative;
@@ -60,6 +61,7 @@ const MenuBox = styled.div`
             :window.location.pathname.indexOf("Design")!=-1?"#1262AB"
             :window.location.pathname.indexOf("group")!=-1?"#1E9B79"
             :window.location.pathname.indexOf("Group")!=-1?"#1E9B79"
+            :window.location.pathname.indexOf("/about")!=-1?"#39280b"
             :"red"
         };
         .arrow{
@@ -196,7 +198,7 @@ class Navigation extends Component {
       }
 
     render() {
-        console.log(window.location.pathname,window.location.pathname.indexOf("/group"),window.location.pathname.indexOf("/Group"));
+        console.log(window.location.pathname==("/"));
         return (
             <React.Fragment>
                 <MenuBox h={this.state.h}>
@@ -211,7 +213,7 @@ class Navigation extends Component {
                     >
                     <div className="menu_exit">
                         {
-                            this.props.userInfo==null?
+                            this.props.userInfo==null?π
                             <div style={{cursor:"pointer"}} onClick={()=>{
                                 this.props.onClickLogin();
                             }}>
@@ -223,6 +225,10 @@ class Navigation extends Component {
                         }
                     </div>
                     </MenuItem> */}
+                    <MenuItem 
+                    isSelect={window.location.pathname==("/")==true?true:false}
+                    className="menu_tag marginTop1"><a className="link_tag" href="/">홈</a>
+                    </MenuItem>
                     <MenuItem 
                     isSelect={window.location.pathname === "/design"
                              || window.location.pathname.search("/design/") > -1 ? true : false
@@ -244,7 +250,10 @@ class Navigation extends Component {
                              || window.location.pathname.search("/modifyDesigner/") > -1 ? true : false}
                               className="menu_tag marginTop1"><a className="link_tag" href="/designer">디자이너</a></MenuItem>
                     {/* <MenuItem className="menu_tag marginTop1">NEWS</MenuItem> */}
-                    <MenuItem className="menu_tag marginTop1" onClick={()=>window.location.href="/aboutPrivacyPolicy"}>ABOUT</MenuItem>
+                    <MenuItem 
+                    isSelect={window.location.pathname.search("/about") >-1?true:false} className="menu_tag marginTop1"
+                    
+                    ><a className="link_tag" href="/aboutIntro">ABOUT</a></MenuItem>
                     {
                         this.props.userInfo == null?
                         null
