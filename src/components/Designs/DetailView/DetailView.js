@@ -16,8 +16,8 @@ const Wrapper = styled.div`
   width: 100%;
   min-width: 1000px;
   max-width: 1740px;
-  padding-left: 38px;
-  padding-right: 38px;
+  // padding-left: 38px;
+  // padding-right: 38px;
 `;
 const ViewWrapper = styled(Grid)`
 max-width: 1740px;
@@ -72,7 +72,7 @@ const BtnWrap = styled.div`
   min-width: 1000px;
   max-width: 1740px;
   height:100px;
-  margin-left:38px;
+  // margin-left:38px;
   display:flex;
   justify-content:space-between;
   align-items:flex-end;

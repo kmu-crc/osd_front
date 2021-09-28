@@ -72,7 +72,10 @@ const Client = styled.div`
   }
 
   .wrap_children {
-    min-width: 1000px;
+    min-width: ${
+      props=>window.location.pathname == "/"?
+      props.hidemenu == true? "900px":"1000px":"1000px"
+    };
     max-width: 1920px;
     width: 100%;
     // margin-left: auto;
@@ -169,7 +172,7 @@ class ClientTemplate extends Component {
     const larger_style = (larger ? "larger " : "");
     console.log(this.props);
 
-    return (<Wrapper>
+    return (<Wrapper >
       {this.state.login ?
         <SignInContainer
           onCloseLogin={() => this.setState({ login: null })}
@@ -195,6 +198,7 @@ class ClientTemplate extends Component {
       </NavigationAni>
 
       <Client
+        hidemenu = {this.state.sidemenu}
         active={this.props.isActive}
         className={`${scroll_style}${/*hidemenu_style*/""}${larger_style}`}
         onScroll={this.handleScroll}>

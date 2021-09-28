@@ -397,7 +397,7 @@ class GridEditor extends Component {
 
                         <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
                             <GridEditorWrapper onScroll={() => console.log('grid-editor: scroll')} ref={this.grid}>
-                                <div style={{ width: window.innerWidth + "px" }} className="Editor" ref={this.temp}>
+                                <div style={{ width:"100%" }} className="Editor" ref={this.temp}>
                                     {/* ------------단계 ------------*/}
                                     {DesignDetailStep && DesignDetailStep.length > 0 &&
                                         <SortableDesignSteps editStep={this.OpenEditStep} design_id={this.props.design.uid} editor={editor ? true : false} items={DesignDetailStep} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} userInfo={userInfo} />}

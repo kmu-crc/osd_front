@@ -8,9 +8,9 @@ const FormWrapper = styled.div`
 `;
 
 const FromFieldCard = styled.div`
-  width: 100%;
-  max-content:1736px;
-  min-content:1000px;
+  width:100%;
+  max-width:1706px;
+  min-width: ${1000 - (38 * 2)}px;
   background-color: white;
   box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
@@ -29,6 +29,12 @@ const FromFieldCard = styled.div`
     font-size: 0.92857143em;
     font-weight: 700;
     text-transform: none;
+  }
+  @media only screen and (max-width: 1000px) {
+    width: 100vw;
+  }
+  @media only screen and (min-width: 1920px) {
+    width:100vw;
   }
 `;
 
