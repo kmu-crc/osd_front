@@ -76,7 +76,7 @@ align-items:flex-end;
 }
 `;
 const DesignHeader = styled.div`
-    width:100%;
+    width: 100%;
     max-width: 1740px;
     min-width: ${1000 - (38 * 2)}px;
     height: 307px;
@@ -199,6 +199,14 @@ const DesignHeader = styled.div`
             text-align:right;
             margin-top:5px;
         }
+    }
+    .parent-title {
+        // border: 1px dashed blue;
+        width: max-content; // 100%;
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     // responsive
     @media only screen and (min-width: 500px) and (max-width: 1300px) {
@@ -786,25 +794,33 @@ class DesignInfo extends Component {
                         <img className="thumbnail" src={thumbnail} />
                     </div>
                     <div className="infoBox">
-                        <div className="design_name">{DesignDetail.title}</div>
+                        <div className="design_name">
+                            {DesignDetail.title}
+                        </div>
                         <div className="row detail_height">
                             <div className="left_box">
                                 <div className="row column">
                                     <div className="row black_label pointer" style={{ cursor: "pointer" }} onClick={this.openMemberList} >
-                                        <TextFormat txt={DesignDetail.userName} chars={6} />
-                                        {(DesignDetail.member && DesignDetail.member.length > 1)
-                                            ? `외 ${(DesignDetail.member.length - 1).toString()}명 `
-                                            : null}
-                                        {WaitingList && WaitingList.length > 0
-                                            ? <div style={{
-                                                fontSize: "10px", color: "red"
-                                            }}>new!</div> : null}
+
+                                        <div className="parent-title">{DesignDetail.userName}</div>
+
+                                        <div style={{ width: "max-content", }}>
+                                            {(DesignDetail.member && DesignDetail.member.length > 1)
+                                                ? `외 ${(DesignDetail.member.length - 1).toString()}명`
+                                                : null}
+                                            {WaitingList && WaitingList.length > 0
+                                                ? <div style={{ fontSize: "10px", color: "red" }}>new!</div>
+                                                : null}
+                                        </div>
                                     </div>
+
                                     {DesignDetail.parent_design &&
                                         <div className="red_label pointer" onClick={() => this.goParentDesign(DesignDetail.parent_design)}>
-                                            {DesignDetail.parent_title.slice(0, 6)}
-                                            {DesignDetail.parent_title.length > 6 && "..."}에서 파생됨
+                                            <div className="parent-title" title={DesignDetail.parent_title}>
+                                                {DesignDetail.parent_title}
+                                            </div>에서 파생됨
                                         </div>}
+
                                     <div className="red_label pointer">
                                         {DesignDetail.children_count["count(*)"] > 0 &&
                                             <div onClick={this.openForkList}>
