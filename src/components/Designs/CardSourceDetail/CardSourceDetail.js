@@ -1549,60 +1549,60 @@ class CardSourceDetail extends Component {
                                 lineHeight: `${this.state.fontratio * 1.2}rem`
                               }}
                               dangerouslySetInnerHTML={{
-                                __html: `${
-                                  // this.replaceFontUnitToRem(item.content)
-                                  item.content
-                                    /*
-                                    10px = 0.625rem
-                                    12px = 0.75rem
-                                    14px = 0.875rem
-                                    16px = 1rem (base)
-                                    18px = 1.125rem
-                                    20px = 1.25rem
-                                    24px = 1.5rem
-                                    30px = 1.875rem
-                                    32px = 2rem
-                                    34px = 2.125rem
-                                    36px = 2.25rem
-                                    38px = 2.5rem
-                                    40px = 2.875rem
-                                    42px = 3rem
-                                    44px = 3.125rem
-                                    46px = 3.25rem
-                                    48px = 3.5rem
-                                    */
+                                __html: `${item.content == null ? "&nbsp;" :
+                                    // this.replaceFontUnitToRem(item.content)
+                                    item.content
+                                  /*
+                                  10px = 0.625rem
+                                  12px = 0.75rem
+                                  14px = 0.875rem
+                                  16px = 1rem (base)
+                                  18px = 1.125rem
+                                  20px = 1.25rem
+                                  24px = 1.5rem
+                                  30px = 1.875rem
+                                  32px = 2rem
+                                  34px = 2.125rem
+                                  36px = 2.25rem
+                                  38px = 2.5rem
+                                  40px = 2.875rem
+                                  42px = 3rem
+                                  44px = 3.125rem
+                                  46px = 3.25rem
+                                  48px = 3.5rem
+                                  */
 
-                                    // .replace("10px", `${this.state.fontratio * 0.625}rem`)
-                                    // .replace("12px", `${this.state.fontratio * 0.75}rem`)
-                                    // .replace("14px", `${this.state.fontratio * 0.875}rem`)
-                                    // .replace("16px", `${this.state.fontratio * 1}rem`)
-                                    // .replace("18px", `${this.state.fontratio * 1.125}rem`)
-                                    // .replace("20px", `${this.state.fontratio * 1.25}rem`)
-                                    // .replace("24px", `${this.state.fontratio * 1.5}rem`)
-                                    // .replace("30px", `${this.state.fontratio * 1.875}rem`)
-                                    // .replace("32px", `${this.state.fontratio * 2}rem`)
-                                    // .replace("34px", `${this.state.fontratio * 2.125}rem`)
-                                    // .replace("36px", `${this.state.fontratio * 2.25}rem`)
-                                    // .replace("38px", `${this.state.fontratio * 2.5}rem`)
-                                    // .replace("40px", `${this.state.fontratio * 2.875}rem`)
-                                    // .replace("42px", `${this.state.fontratio * 3}rem`)
-                                    // .replace("44px", `${this.state.fontratio * 3.125}rem`)
-                                    // .replace("46px", `${this.state.fontratio * 3.25}rem`)
-                                    // .replace("48px", `${this.state.fontratio * 3.5}rem`)
+                                  // .replace("10px", `${this.state.fontratio * 0.625}rem`)
+                                  // .replace("12px", `${this.state.fontratio * 0.75}rem`)
+                                  // .replace("14px", `${this.state.fontratio * 0.875}rem`)
+                                  // .replace("16px", `${this.state.fontratio * 1}rem`)
+                                  // .replace("18px", `${this.state.fontratio * 1.125}rem`)
+                                  // .replace("20px", `${this.state.fontratio * 1.25}rem`)
+                                  // .replace("24px", `${this.state.fontratio * 1.5}rem`)
+                                  // .replace("30px", `${this.state.fontratio * 1.875}rem`)
+                                  // .replace("32px", `${this.state.fontratio * 2}rem`)
+                                  // .replace("34px", `${this.state.fontratio * 2.125}rem`)
+                                  // .replace("36px", `${this.state.fontratio * 2.25}rem`)
+                                  // .replace("38px", `${this.state.fontratio * 2.5}rem`)
+                                  // .replace("40px", `${this.state.fontratio * 2.875}rem`)
+                                  // .replace("42px", `${this.state.fontratio * 3}rem`)
+                                  // .replace("44px", `${this.state.fontratio * 3.125}rem`)
+                                  // .replace("46px", `${this.state.fontratio * 3.25}rem`)
+                                  // .replace("48px", `${this.state.fontratio * 3.5}rem`)
 
-                                    // .replace("14px;", `${0.875 * this.state.fontratio}rem;`)
-                                    // .replace("18px;", `${1.125 * this.state.fontratio}rem;`)
-                                    // .replace("24px;", `${1.500 * this.state.fontratio}rem;`)
-                                    // .replace("30px;", `${1.875 * this.state.fontratio}rem;`)
-                                    // .replace("36px;", `${2.25 * this.state.fontratio}rem;`)
-                                    // .replace("48px;", `${3.5 * this.state.fontratio}rem;`)
+                                  // .replace("14px;", `${0.875 * this.state.fontratio}rem;`)
+                                  // .replace("18px;", `${1.125 * this.state.fontratio}rem;`)
+                                  // .replace("24px;", `${1.500 * this.state.fontratio}rem;`)
+                                  // .replace("30px;", `${1.875 * this.state.fontratio}rem;`)
+                                  // .replace("36px;", `${2.25 * this.state.fontratio}rem;`)
+                                  // .replace("48px;", `${3.5 * this.state.fontratio}rem;`)
 
-                                    .replace(/font-size:14px;/g, `font-size:${0.875 * this.state.fontratio}rem;`)
-                                    .replace(/font-size:18px;/g, `font-size:${1.125 * this.state.fontratio}rem;`)
-                                    .replace(/font-size:24px;/g, `font-size:${1.500 * this.state.fontratio}rem;`)
-                                    .replace(/font-size:30px;/g, `font-size:${1.875 * this.state.fontratio}rem;`)
-                                    .replace(/font-size:36px;/g, `font-size:${2.25 * this.state.fontratio}rem;`)
-                                    .replace(/font-size:48px;/g, `font-size:${3.5 * this.state.fontratio}rem;`)
+                                  .replace(/font-size:14px;/g, `font-size:${0.875 * this.state.fontratio}rem;`)
+                                  .replace(/font-size:18px;/g, `font-size:${1.125 * this.state.fontratio}rem;`)
+                                  .replace(/font-size:24px;/g, `font-size:${1.500 * this.state.fontratio}rem;`)
+                                  .replace(/font-size:30px;/g, `font-size:${1.875 * this.state.fontratio}rem;`)
+                                  .replace(/font-size:36px;/g, `font-size:${2.25 * this.state.fontratio}rem;`)
+                                  .replace(/font-size:48px;/g, `font-size:${3.5 * this.state.fontratio}rem;`)
                                   }`
                               }} />
                           </React.Fragment>

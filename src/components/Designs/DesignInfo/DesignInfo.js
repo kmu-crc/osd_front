@@ -97,7 +97,7 @@ const DesignHeader = styled.div`
         padding:12px 22px 12px 22px;
         width:100%;
         .design_name{
-            // max-width:1200px;
+            max-width:1000px;
             width:100%;
             height:42px;
             overflow: hidden; 
@@ -128,6 +128,7 @@ const DesignHeader = styled.div`
             margin-right:10px;  
         }
         .right_box{
+            max-width: 900px;
             width:100%;
             height:100%;
         }
