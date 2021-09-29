@@ -703,7 +703,8 @@ class Room extends React.Component {
 										await alert(e + '와 같은 이유로 초대에 실패하였습니다. 관리자에게 문의해주시기 바랍니다.');
 									}
 								});
-							this.setState({ selected: null, invite: false });}}>초대</div>
+							this.setState({ selected: null, invite: false });
+						}}>초대</div>
 					<div
 						style={{ cursor: "default", marginRight: "15px", color: "#707070", fontSize: "1.5rem", fontWeight: "500", width: "max-content" }}
 						onClick={() => {
@@ -714,43 +715,43 @@ class Room extends React.Component {
 
 			{/* menubar */}
 			<MenuBarContainer>
-					<div className="flex">
-						{/* chat */}
-						<div className='btn chat' onClick={() => this.openChatWin()}>채팅</div>
-						{/* invite */}
-						<div className="btn chat invite" onClick={() => { this.setState({ invite: true }); }}>초대</div>
-						{/* recording */}
-						{isRecording
-							? <div className="btn start">
-								<div style={{ display: "flex", flexDirection: "row" }}>
-									{/* pause / resume */}
-									{isPaused
-										? <div onClick={() => this.resumeRecording()}>
-											<span className="txt">
-												<i className="icon play" /></span>
-										</div>
-										: <div onClick={() => this.pasueRecording()}>
-											<span className="txt">
-												<i className="icon pause" /></span>
-										</div>}
-									{/* stop */}
-									<div onClick={() => this.stopRecording()}>
-										<span className="txt">
-											<i className="icon stop" /></span>
-									</div>
-
-								</div>
-							</div>
-							:
+				<div className="flex">
+					{/* chat */}
+					<div className='btn chat' onClick={() => this.openChatWin()}>채팅</div>
+					{/* invite */}
+					<div className="btn chat invite" onClick={() => { this.setState({ invite: true }); }}>초대</div>
+					{/* recording */}
+					{isRecording
+						? <div className="btn start">
 							<div style={{ display: "flex", flexDirection: "row" }}>
-								<div className="btn start" onClick={() => this.recording()} // me, peers, consumers)}
-								>
+								{/* pause / resume */}
+								{isPaused
+									? <div onClick={() => this.resumeRecording()}>
+										<span className="txt">
+											<i className="icon play" /></span>
+									</div>
+									: <div onClick={() => this.pasueRecording()}>
+										<span className="txt">
+											<i className="icon pause" /></span>
+									</div>}
+								{/* stop */}
+								<div onClick={() => this.stopRecording()}>
 									<span className="txt">
-										<i className="record icon" />
-									</span>
+										<i className="icon stop" /></span>
 								</div>
-							</div>}
-							<div>
+
+							</div>
+						</div>
+						:
+						<div style={{ display: "flex", flexDirection: "row" }}>
+							<div className="btn start" onClick={() => this.recording()} // me, peers, consumers)}
+							>
+								<span className="txt">
+									<i className="record icon" />
+								</span>
+							</div>
+						</div>}
+					<div>
 
 					</div>
 				</div>
@@ -783,7 +784,7 @@ class Room extends React.Component {
 							}}>
 								<span className="txt">큰 화면 취소</span></div> : null}
 						{mode === "scroll"
-							? <div className={`btn peer ${!hidepeer?"hidepeer":"showpeer"}`} onClick={() => this.setState({ hidepeer: !hidepeer })}>
+							? <div className={`btn peer ${!hidepeer ? "hidepeer" : "showpeer"}`} onClick={() => this.setState({ hidepeer: !hidepeer })}>
 								<span className="txt">{!hidepeer ? "숨기기" : "보이기"}</span>
 							</div>
 							: null}
@@ -806,7 +807,7 @@ class Room extends React.Component {
 			<ContentContainer>
 
 				<div className="panel" >
-						<img src={bg} className="logo"/>
+					<img src={bg} className="logo" />
 				</div>
 
 				{/* middle */}
@@ -842,7 +843,9 @@ class Room extends React.Component {
 									this.setState({ mode: "grid" });
 								}}
 								userInfo={this.props.userInfo}
-								clicked={(me, stream) => shareState ? null : this.clickedview(me, stream)}
+								clicked={(me, stream) =>
+									// shareState ? null : 
+									this.clickedview(me, stream)}
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
 
@@ -863,7 +866,9 @@ class Room extends React.Component {
 									this.setState({ mode: "grid" });
 								}}
 								userInfo={this.props.userInfo}
-								clicked={(me, stream) => shareState ? null : this.clickedview(me, stream)}
+								clicked={(me, stream) =>
+									// shareState ? null : 
+									this.clickedview(me, stream)}
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
 							<Peers
@@ -1687,7 +1692,7 @@ export default RoomContainer;
 // 		</React.Fragment>)
 // 	}
 // }
-    
+
 
 // const mapStateToProps = (state) => ({
 // 	consumers: state.consumers,
