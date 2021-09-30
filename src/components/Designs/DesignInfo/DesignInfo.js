@@ -805,14 +805,16 @@ class DesignInfo extends Component {
 
                                         <div className="parent-title">{DesignDetail.userName}</div>
 
-                                        <div style={{ width: "75px", }}>
-                                            {(DesignDetail.member && DesignDetail.member.length > 1)
-                                                ? `외 ${(DesignDetail.member.length - 1).toString()}명`
-                                                : null}
-                                            {WaitingList && WaitingList.length > 0
-                                                ? <div style={{ fontSize: "10px", color: "red" }}>new!</div>
-                                                : null}
-                                        </div>
+                                        {(DesignDetail.member && DesignDetail.member.length > 1) && (WaitingList && WaitingList.length > 0)
+                                            ? <div style={{ width: "75px", }}>
+                                                {(DesignDetail.member && DesignDetail.member.length > 1)
+                                                    ? `외 ${(DesignDetail.member.length - 1).toString()}명`
+                                                    : null}
+                                                {WaitingList && WaitingList.length > 0
+                                                    ? <div style={{ fontSize: "10px", color: "red" }}>new!</div>
+                                                    : null}
+                                            </div>
+                                            : null}
                                     </div>
 
                                     {DesignDetail.parent_design &&
@@ -901,22 +903,24 @@ class DesignInfo extends Component {
                     </div>
                 </DesignHeader>
 
-                <ChatWrapper>
-                    <div className="row">
-                        <div
-                            title="디자인 멤버들과 화상회의를 시작합니다."
-                            className="icon_wrap" onClick={this.openVideoChat}>
-                            <img src={new_logo_msg} className="icon" />
-                            <div className="icon_label">화상회의</div>
+                {(DesignDetail && DesignDetail.is_project === 1 && DesignDetail.member.length > 1)
+                    ? <ChatWrapper>
+                        <div className="row">
+                            <div
+                                title="디자인 멤버들과 화상회의를 시작합니다."
+                                className="icon_wrap" onClick={this.openVideoChat}>
+                                <img src={new_logo_msg} className="icon" />
+                                <div className="icon_label">화상회의</div>
+                            </div>
+                            <div
+                                title="디자인 멤버들과 채팅을 시작합니다."
+                                className="icon_wrap" onClick={this.openChat}>
+                                <img src={new_logo_chat} className="icon" />
+                                <div className="icon_label">채팅</div>
+                            </div>
                         </div>
-                        <div
-                            title="디자인 멤버들과 채팅을 시작합니다."
-                            className="icon_wrap" onClick={this.openChat}>
-                            <img src={new_logo_chat} className="icon" />
-                            <div className="icon_label">채팅</div>
-                        </div>
-                    </div>
-                </ChatWrapper>
+                    </ChatWrapper>
+                    : null}
             </Wrapper>
         </React.Fragment >
         )
