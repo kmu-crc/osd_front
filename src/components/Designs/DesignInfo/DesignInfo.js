@@ -805,7 +805,7 @@ class DesignInfo extends Component {
 
                                         <div className="parent-title">{DesignDetail.userName}</div>
 
-                                        {(DesignDetail.member && DesignDetail.member.length > 1) && (WaitingList && WaitingList.length > 0)
+                                        {(DesignDetail.member && DesignDetail.member.length > 1) || (WaitingList && WaitingList.length > 0)
                                             ? <div style={{ width: "75px", }}>
                                                 {(DesignDetail.member && DesignDetail.member.length > 1)
                                                     ? `외 ${(DesignDetail.member.length - 1).toString()}명`
