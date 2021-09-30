@@ -306,14 +306,14 @@ class GroupInfoComponent extends Component {
     componentDidMount() {
         window.addEventListener("resize", this.handleResize);
     }
-    async componentDidUpdate(prevProp) {
-        if (prevProp.GroupDetail != this.props.GroupDetail && this.props.GroupDetail != null) {
-            if (this.props.GroupDetail != null && this.props.token != null) {
-                // const couldJoinVChat = await GetPermissionCouldJoinVideoChatRequest(this.props.token, this.props.GroupDetail.uid);
-                // this.setState({ couldJoinVChat: couldJoinVChat });
-            }
-        }
-    }
+    // async componentDidUpdate(prevProp) {
+    // if (prevProp.GroupDetail != this.props.GroupDetail && this.props.GroupDetail != null) {
+    // if (this.props.GroupDetail != null && this.props.token != null) {
+    // const couldJoinVChat = await GetPermissionCouldJoinVideoChatRequest(this.props.token, this.props.GroupDetail.uid);
+    // this.setState({ couldJoinVChat: couldJoinVChat });
+    // }
+    // }
+    // }
     componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize);
     }
