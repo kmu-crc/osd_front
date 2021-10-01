@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Modal } from "semantic-ui-react";
-//import Button from "components/Commons/Button";
 import opendesign_style from "opendesign_style";
 import noface from "source/thumbnail.png";
 import Cross from "components/Commons/Cross";
 import SearchDesignMemverContainer from "containers/Commons/SearchDesignMemberContainer";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
+import GotoDetail from "components/Commons/GotoDetail";
 
 const ModalContent = styled(Modal.Content)`
   & .ui.grid {
@@ -57,20 +57,20 @@ class ModifyDesignMember extends Component {
 
     for (var i = 0; i < this.props.DesignDetail.member.length; i++) {
       if (this.props.DesignDetail.member[i].user_id === member.uid) {
-        await alert("이미 등록된 디자이너입니다.","확인");
+        await alert("이미 등록된 디자이너입니다.", "확인");
         return;
       }
     }
     if (this.state.members.find(mem => mem.uid === member.uid)) {
-      await alert("이미 초대목록에 있는 디자이너입니다.","확인");
+      await alert("이미 초대목록에 있는 디자이너입니다.", "확인");
       return;
     }
     if (this.props.WaitingList.find(mem => mem.user_id === member.uid)) {
-      await alert("\"가입 신청중인 멤버\"에 있는 디자이너입니다.","확인");
+      await alert("\"가입 신청중인 멤버\"에 있는 디자이너입니다.", "확인");
       return;
     }
     if (this.props.WaitingToAcceptList.find(mem => mem.user_id === member.uid)) {
-      await alert("\"승인대기중인 멤버\"에 있는 디자이너입니다.","확인");
+      await alert("\"승인대기중인 멤버\"에 있는 디자이너입니다.", "확인");
       return;
     }
 
@@ -93,11 +93,11 @@ class ModifyDesignMember extends Component {
   }
 
   getoutMember = async (flag, id) => {
-    const msg = flag === "DesignGetout" ? "이 회원을 탈퇴 처리 하시겠습니까?" : flag==="DesignRefuse"?"가입 요청을 거절하시겠습니까?":"가입 초대를 중지하시겠습니까?";
-    if (!await confirm(msg,"예","아니오")) return;
+    const msg = flag === "DesignGetout" ? "이 회원을 탈퇴 처리 하시겠습니까?" : flag === "DesignRefuse" ? "가입 요청을 거절하시겠습니까?" : "가입 초대를 중지하시겠습니까?";
+    if (!await confirm(msg, "예", "아니오")) return;
 
     this.props.GetoutDesignRequest(this.props.match.params.id, id, this.props.token, flag)
-      .then(async(res) => {
+      .then(async (res) => {
         //console.log("res:", res);
         if (res.data && res.data.success) {
           if (flag === "DesignGetout") {
@@ -107,21 +107,21 @@ class ModifyDesignMember extends Component {
           } else if (flag === "DesignRefuse") {
             // alert("가입 요청을 거절하였습니다.");
             this.props.DesignWaitingListRequest(this.props.match.params.id, this.props.token);
-          }else if(flag === "joinRefuse"){
+          } else if (flag === "joinRefuse") {
             this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token)
               .then(this.props.GetDesignCountRequest(this.props.match.params.id));
           }
         } else {
-          await alert("다시 시도해주세요.","확인");
+          await alert("다시 시도해주세요.", "확인");
         }
       });
   }
 
   acceptMember = async (id) => {
-    const isconfirm = await confirm("가입을 승인하시겠습니까?","예","아니오");
+    const isconfirm = await confirm("가입을 승인하시겠습니까?", "예", "아니오");
     if (isconfirm) {
       this.props.AcceptDesignRequest(this.props.match.params.id, id, this.props.token)
-        .then(async(res) => {
+        .then(async (res) => {
           if (res.data && res.data.success) {
             // alert("승인되었습니다.");
             this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token)
@@ -129,7 +129,7 @@ class ModifyDesignMember extends Component {
               .then(this.props.DesignWaitingListRequest(this.props.match.params.id, this.props.token));
           } else {
             window.location.reload();
-            await alert("다시 시도해주세요.","확인");
+            await alert("다시 시도해주세요.", "확인");
           }
         });
     } else {
@@ -137,22 +137,22 @@ class ModifyDesignMember extends Component {
     }
   }
 
-  joinMember = async() => {
+  joinMember = async () => {
     const data = this.state.members;
     //console.log("data:", data);
     if (data.length <= 0 || data == null) {
-      await alert("초대할 멤버를 선택해주세요!","확인");
+      await alert("초대할 멤버를 선택해주세요!", "확인");
       return;
     }
     // return;
     this.props.JoinDesignRequest(this.props.match.params.id, data, 1, this.props.token)
-      .then(async(res) => {
+      .then(async (res) => {
         //console.log("joinMember:", res.data);
         if (res.data && res.data.success) {
-          await alert("가입 요청을 보냈습니다.","확인");
+          await alert("가입 요청을 보냈습니다.", "확인");
           this.props.GetDesignDetailRequest(this.props.match.params.id, this.props.token);
         } else {
-          await alert("다시 시도해주세요.","확인");
+          await alert("다시 시도해주세요.", "확인");
         }
       });
   }
@@ -172,13 +172,39 @@ class ModifyDesignMember extends Component {
               <div style={{ width: "100%", display: "flex", flexWrap: "wrap", flexDirection: "row" }}>
                 {currentDesign.member && currentDesign.member.length > 0 &&
                   currentDesign.member.map((mem, i) =>
-                    <div key={i} style={{marginBottom: "15px", alignItems: "center", padding: "5px 10px 5px 10px", width: "max-content", background: "#EFEFEF", borderRadius: "35px", cursor: "pointer", display: "flex", marginRight: "25px" }}>
-                      <div style={{ backgroundImage: `url(${mem.thumbnail ? mem.thumbnail.s_img : noface})`, backgroundSize: "cover", backgroundPosition: "center", backgroundColor: "#D6D6D6", width: "30px", height: "30px", borderRadius: "50%" }} />
-                      <div style={{ marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070", width: "max-content", height: "29px" }}>{mem.nick_name}</div>
+                    <div key={i} style={{
+                      marginBottom: "15px", alignItems: "center", padding: "5px 10px 5px 10px",
+                      width: "max-content", background: "#EFEFEF", borderRadius: "35px", cursor: "pointer",
+                      display: "flex", marginRight: "25px"
+                    }}>
+                      <div style={{
+                        backgroundImage: `url(${mem.thumbnail ? mem.thumbnail.s_img : noface})`,
+                        backgroundSize: "cover", backgroundPosition: "center", backgroundColor: "#D6D6D6",
+                        width: "30px", height: "30px", borderRadius: "50%"
+                      }} />
+                      <div style={{
+                        marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left",
+                        fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070",
+                        width: "max-content", height: "29px"
+                      }}>
+                        <GotoDetail type="designer" id={mem.user_id}>
+                          {mem.nick_name}
+                        </GotoDetail>
+                      </div>
                       {this.props.mine && this.props.DesignDetail.user_id !== mem.user_id &&
-                        <div title={"내보내기"} onClick={() => this.getoutMember("DesignGetout", mem.user_id)} style={{marginLeft:"10px"}}><Cross angle={45} color={"#707070"} weight={2} width={16} height={16} /></div>}
+                        <div title={"내보내기"} onClick={() => this.getoutMember("DesignGetout", mem.user_id)}
+                          style={{ marginLeft: "10px" }}>
+                          <Cross angle={45} color={"#707070"} weight={2} width={16} height={16} />
+                        </div>}
                       {this.props.DesignDetail.user_id === mem.user_id &&
-                        <div title={"팀장"} style={{ display: "flex", justifyContent: "center", width: "20px", height: "20px", borderRadius: "50%", backgroundColor: "none" }}><i className="star icon" style={{ marginLeft: "auto", marginRight: "auto", color: "#707070" }} /></div>}
+                        <div title={"팀장"}
+                          style={{
+                            display: "flex", justifyContent: "center", width: "20px", height: "20px",
+                            borderRadius: "50%", backgroundColor: "none"
+                          }}>
+                          <i className="star icon"
+                            style={{ marginLeft: "auto", marginRight: "auto", color: "#707070" }} />
+                        </div>}
                     </div>
                   )
                 }
@@ -189,12 +215,38 @@ class ModifyDesignMember extends Component {
                 <Label>가입 신청중인 멤버</Label>
                 <div style={{ width: "100%", display: "flex", flexWrap: "wrap", flexDirection: "row" }}>
                   {this.props.WaitingList.map((mem, i) =>
-                    <div key={i} style={{marginBottom: "15px", alignItems: "center", padding: "5px 10px 5px 10px", width: "max-content", background: "#EFEFEF", borderRadius: "25px", cursor: "pointer", display: "flex", marginRight: "25px" }}>
-                      <div style={{ backgroundImage: `url(${mem ? mem.s_img : noface})`, backgroundSize: "cover", backgroundPosition: "center", backgroundColor: "#D6D6D6", width: "30px", height: "30px", borderRadius: "50%" }} />
-                      <div style={{ marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070", width: "max-content", height: "29px" }}>{mem.nick_name}</div>
-                      <div onClick={() => this.acceptMember(mem.user_id)} title={"가입 요청을 승인합니다"} style={{marginLeft: "25px",  fontWeight: "500", fontSize: "15px", lineHeight: "20px", textAlign: "left", color: "#FF0000" }}>승인</div>
-                      <div onClick={() => this.getoutMember("DesignRefuse", mem.user_id)} title={"가입 요청을 거절합니다"} style={{ marginLeft: "7px", fontWeight: "500", fontSize: "15px", lineHeight: "20px", textAlign: "left", color: "#707070" }}>거절</div>
-                   
+                    <div key={i} style={{
+                      marginBottom: "15px", alignItems: "center", padding: "5px 10px 5px 10px", width: "max-content",
+                      background: "#EFEFEF", borderRadius: "25px", cursor: "pointer", display: "flex", marginRight: "25px"
+                    }}>
+                      <div style={{
+                        backgroundImage: `url(${mem ? mem.s_img : noface})`, backgroundSize: "cover",
+                        backgroundPosition: "center", backgroundColor: "#D6D6D6", width: "30px", height: "30px", borderRadius: "50%"
+                      }} />
+                      <div style={{
+                        marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px",
+                        textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070",
+                        width: "max-content", height: "29px"
+                      }}>
+                        <GotoDetail type="designer" id={mem.user_id}>
+                          {mem.nick_name}
+                        </GotoDetail>
+                      </div>
+                      <div onClick={() => this.acceptMember(mem.user_id)}
+                        title={"가입 요청을 승인합니다"}
+                        style={{
+                          marginLeft: "25px", fontWeight: "500", fontSize: "15px", lineHeight: "20px",
+                          textAlign: "left", color: "#FF0000"
+                        }}>
+                        승인</div>
+                      <div onClick={() => this.getoutMember("DesignRefuse", mem.user_id)}
+                        title={"가입 요청을 거절합니다"}
+                        style={{
+                          marginLeft: "7px", fontWeight: "500", fontSize: "15px", lineHeight: "20px",
+                          textAlign: "left", color: "#707070"
+                        }}>
+                        거절</div>
+
                     </div>
                   )}
                 </div>
@@ -205,33 +257,74 @@ class ModifyDesignMember extends Component {
                 <Label>승인대기중인 멤버</Label>
                 <div style={{ width: "100%", display: "flex", flexWrap: "wrap", flexDirection: "row" }}>
                   {this.props.WaitingToAcceptList.map((mem, i) =>
-                    <div key={i} style={{marginBottom: "15px", alignItems: "center", padding: "5px 10px 5px 10px",  width: "max-content", background: "#EFEFEF", borderRadius: "25px", cursor: "pointer", display: "flex", marginRight: "25px",paddingRight:"10px" }}>
-                      <div style={{ backgroundImage: `url(${mem ? mem.s_img : noface})`, backgroundSize: "cover", backgroundPosition: "center", backgroundColor: "#D6D6D6", width: "30px", height: "30px", borderRadius: "50%" }} />
-                      <div style={{ marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070", width: "max-content", height: "29px" }}>{mem.nick_name}</div>
+                    <div key={i} style={{
+                      marginBottom: "15px", alignItems: "center", padding: "5px 10px 5px 10px",
+                      width: "max-content", background: "#EFEFEF", borderRadius: "25px",
+                      cursor: "pointer", display: "flex", marginRight: "25px", paddingRight: "10px"
+                    }}>
+                      <div style={{
+                        backgroundImage: `url(${mem ? mem.s_img : noface})`, backgroundSize: "cover",
+                        backgroundPosition: "center", backgroundColor: "#D6D6D6", width: "30px", height: "30px",
+                        borderRadius: "50%"
+                      }} />
+                      <div style={{
+                        marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px",
+                        textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070",
+                        width: "max-content", height: "29px"
+                      }}>
+                        <GotoDetail type="designer" id={mem.user_id}>
+                          {mem.nick_name}
+                        </GotoDetail>
+                      </div>
                       {this.props.mine && this.props.DesignDetail.user_id !== mem.user_id &&
-                        <div title={"내보내기"} onClick={() => this.getoutMember("joinRefuse", mem.user_id)} style={{marginLeft:"10px"}}><Cross angle={45} color={"#707070"} weight={2} width={16} height={16} /></div>}
+                        <div title={"내보내기"}
+                          onClick={() => this.getoutMember("joinRefuse", mem.user_id)}
+                          style={{ marginLeft: "10px" }}>
+                          <Cross angle={45} color={"#707070"} weight={2} width={16} height={16} />
+                        </div>}
                     </div>)}
-                    
+
                 </div>
               </form>}
             <form widths="equal" className="newMember">
               <Label>새 멤버 초대</Label>
-              
+
               <SearchDesignMemverContainer className="searchRect" addMember={this.addMember} />
               {this.state.members && this.state.members.length > 0 && <React.Fragment>
                 <div style={{ width: "100%", display: "flex", flexWrap: "wrap", flexDirection: "row" }}>
-                  {this.state.members.map((mem, i) =>{
+                  {this.state.members.map((mem, i) => {
                     console.log(i);
-                    return(
-                    <div key={i} style={{ marginBottom: "15px", alignItems: "center", padding: "5px 10px 5px 10px", width: "max-content", background: "#EFEFEF", borderRadius: "15px", cursor: "pointer", display: "flex", marginRight: "50px" }}>
-                      <div style={{ backgroundImage: `url(${mem.s_img ? mem.s_img : noface})`, backgroundSize: "cover", backgroundPosition: "center", backgroundColor: "#D6D6D6", width: "30px", height: "30px", borderRadius: "50%" }} />
-                      <div style={{ marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px", textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070", width: "max-content", height: "29px" }}>{mem.nick_name}</div>
-                      <div title={"취소"} onClick={() => this.removeMember(i)} style={{ marginTop: "7.34px", marginLeft: "13.86px" }}><Cross angle={45} color={"#707070"} weight={2} width={16} height={16} /></div>
-                    </div>
-                    );}
+                    return (
+                      <div key={i} style={{
+                        marginBottom: "15px", alignItems: "center", padding: "5px 10px 5px 10px",
+                        width: "max-content", background: "#EFEFEF", borderRadius: "15px", cursor: "pointer",
+                        display: "flex", marginRight: "50px"
+                      }}>
+                        <div style={{
+                          backgroundImage: `url(${mem.s_img ? mem.s_img : noface})`,
+                          backgroundSize: "cover", backgroundPosition: "center", backgroundColor: "#D6D6D6",
+                          width: "30px", height: "30px", borderRadius: "50%"
+                        }} />
+                        <div style={{
+                          marginTop: "1px", marginLeft: "10px", fontSize: "20px", lineHeight: "29px",
+                          textAlign: "left", fontWeight: "500", fontFamily: "Noto Sans KR", color: "#707070",
+                          width: "max-content", height: "29px"
+                        }}>
+                          <GotoDetail type="designer" id={mem.user_id}>
+                            {mem.nick_name}
+                          </GotoDetail>
+                        </div>
+                        <div title={"취소"}
+                          onClick={() => this.removeMember(i)}
+                          style={{ marginTop: "7.34px", marginLeft: "13.86px" }}>
+                          <Cross angle={45} color={"#707070"} weight={2} width={16} height={16} />
+                        </div>
+                      </div>
+                    );
+                  }
                   )}
                 </div></React.Fragment>}
-              <div style={{ paddingBottom: "2px", borderBottom: "1.5px solid red", width: "max-content", cursor: "pointer", marginLeft: "auto",marginRight: "0px", fontWeight: "500", fontSize: "23px", lineHeight: "20px", textAlign: "left", color: "#FF0000" }} onClick={this.joinMember}>초대</div>
+              <div style={{ paddingBottom: "2px", borderBottom: "1.5px solid red", width: "max-content", cursor: "pointer", marginLeft: "auto", marginRight: "0px", fontWeight: "500", fontSize: "23px", lineHeight: "20px", textAlign: "left", color: "#FF0000" }} onClick={this.joinMember}>초대</div>
             </form>
           </React.Fragment>
         }

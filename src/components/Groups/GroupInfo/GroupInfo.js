@@ -17,6 +17,7 @@ import opendesign_style from "opendesign_style";
 import { Icon } from 'semantic-ui-react'
 import { GetPermissionCouldJoinVideoChatRequest } from "redux/modules/group";
 import GroupNoticeContainer from "containers/Groups/GroupNoticeContainer";
+import GotoDetail from 'components/Commons/GotoDetail';
 
 import new_logo_view from "source/new_logo_view.svg";
 import new_logo_favorite from "source/new_logo_favorite.svg";
@@ -209,6 +210,7 @@ const GroupSummary = styled.div`
             font-size:16px;
             font-weight:300;
             margin-bottom:10px;
+            cursor: pointer;
         }
         .footerBox{
             width:100%;
@@ -430,8 +432,11 @@ class GroupInfoComponent extends Component {
                                 </div>
                                 {/* explain ---  */}
 
-
-                                <div className="nick_name">{`개설자 : ${GroupDetail.userName}`}</div>
+                                <div className="nick_name">
+                                    <GotoDetail type="designer" id={GroupDetail.user_id}>
+                                        {`개설자 : ${GroupDetail.userName}`}
+                                    </GotoDetail>
+                                </div>
                                 <div className="footerBox">
                                     <img src={new_logo_view} className="asset_icon" />
                                     <div className="asset_text">{NumberFormat(GroupDetail.view || 0)}</div>

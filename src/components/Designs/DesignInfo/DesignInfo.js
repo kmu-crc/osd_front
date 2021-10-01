@@ -23,6 +23,7 @@ import opendesign_style from "opendesign_style";
 import vChatIcon from "source/video-chat-icon.png";
 import Socket from "modules/Socket"
 import Loading from 'components/Commons/Loading';
+import GotoDetail from 'components/Commons/GotoDetail';
 
 import new_logo_view from "source/new_logo_view.svg";
 import new_logo_favorite from "source/new_logo_favorite.svg";
@@ -727,7 +728,11 @@ class DesignInfo extends Component {
                         DesignDetail.member.map((mem, i) =>
                             <DesignMemberListElement face={mem.thumbnail ? mem.thumbnail.s_img : noface} key={i} >
                                 <div className="face" />
-                                <div className="nick-name">{mem.nick_name}</div>
+                                <div className="nick-name">
+                                    <GotoDetail type="designer" id={mem.user_id}>
+                                        {mem.nick_name}
+                                    </GotoDetail>
+                                </div>
                                 {DesignDetail.user_id === mem.user_id &&
                                     <div title={"팀장"} ><i className="star icon" /></div>}
                             </DesignMemberListElement>)}</div>
@@ -751,7 +756,11 @@ class DesignInfo extends Component {
                                     <div className="design-thumbnail" />
                                     <div className="design-title">
                                         <TextFormat txt={item.title} chars={23} />
-                                        <div>{item.nick_name}</div>
+                                        <div>
+                                            <GotoDetail type="designer" id={item.user_id}>
+                                                {item.nick_name}
+                                            </GotoDetail>
+                                        </div>
                                     </div>
                                 </div>
                             </ListItem>)
