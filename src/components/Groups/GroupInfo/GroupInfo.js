@@ -179,7 +179,7 @@ const GroupSummary = styled.div`
             margin-left:20px;
         }
         .infoBox{
-            max-width:1200px;
+            max-width:500px;
             width:100%;
             height:100%;
             display:flex;
@@ -278,7 +278,9 @@ const GroupSummary = styled.div`
         //     }
         // }
     }
-
+    @media only screen and (min-width: 1301px) and (max-width: 1920px) {
+     .content_box { .infoBox { max-width: 900px; } }
+    }
 `
 
 class GroupInfoComponent extends Component {
