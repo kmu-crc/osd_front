@@ -23,6 +23,7 @@ import opendesign_style from "opendesign_style";
 import vChatIcon from "source/video-chat-icon.png";
 import Socket from "modules/Socket"
 import Loading from 'components/Commons/Loading';
+import GotoDetail from 'components/Commons/GotoDetail';
 
 import new_logo_view from "source/new_logo_view.svg";
 import new_logo_favorite from "source/new_logo_favorite.svg";
@@ -84,6 +85,13 @@ const DesignHeader = styled.div`
     box-shadow: 8px 8px 8px #4141411A;
     display:flex;
 
+    .ellipsis {
+        display: -webkit-box;
+        min-width: 300px;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
     .thumbnail {
         max-width: 307px;
         min-width: 307px;
@@ -97,7 +105,7 @@ const DesignHeader = styled.div`
         padding:12px 22px 12px 22px;
         width:100%;
         .design_name{
-            // max-width:1200px;
+            max-width:1000px;
             width:100%;
             height:42px;
             overflow: hidden; 
@@ -128,6 +136,7 @@ const DesignHeader = styled.div`
             margin-right:10px;  
         }
         .right_box{
+            max-width: 900px;
             width:100%;
             height:100%;
         }
@@ -726,7 +735,11 @@ class DesignInfo extends Component {
                         DesignDetail.member.map((mem, i) =>
                             <DesignMemberListElement face={mem.thumbnail ? mem.thumbnail.s_img : noface} key={i} >
                                 <div className="face" />
-                                <div className="nick-name">{mem.nick_name}</div>
+                                <div className="nick-name">
+                                    <GotoDetail type="designer" id={mem.user_id}>
+                                        {mem.nick_name}
+                                    </GotoDetail>
+                                </div>
                                 {DesignDetail.user_id === mem.user_id &&
                                     <div title={"팀장"} ><i className="star icon" /></div>}
                             </DesignMemberListElement>)}</div>
@@ -750,7 +763,11 @@ class DesignInfo extends Component {
                                     <div className="design-thumbnail" />
                                     <div className="design-title">
                                         <TextFormat txt={item.title} chars={23} />
-                                        <div>{item.nick_name}</div>
+                                        <div>
+                                            <GotoDetail type="designer" id={item.user_id}>
+                                                {item.nick_name}
+                                            </GotoDetail>
+                                        </div>
                                     </div>
                                 </div>
                             </ListItem>)
@@ -804,14 +821,16 @@ class DesignInfo extends Component {
 
                                         <div className="parent-title">{DesignDetail.userName}</div>
 
-                                        <div style={{ width: "max-content", }}>
-                                            {(DesignDetail.member && DesignDetail.member.length > 1)
-                                                ? `외 ${(DesignDetail.member.length - 1).toString()}명`
-                                                : null}
-                                            {WaitingList && WaitingList.length > 0
-                                                ? <div style={{ fontSize: "10px", color: "red" }}>new!</div>
-                                                : null}
-                                        </div>
+                                        {(DesignDetail.member && DesignDetail.member.length > 1) || (WaitingList && WaitingList.length > 0)
+                                            ? <div style={{ width: "75px", }}>
+                                                {(DesignDetail.member && DesignDetail.member.length > 1)
+                                                    ? `외 ${(DesignDetail.member.length - 1).toString()}명`
+                                                    : null}
+                                                {WaitingList && WaitingList.length > 0
+                                                    ? <div style={{ fontSize: "10px", color: "red" }}>new!</div>
+                                                    : null}
+                                            </div>
+                                            : null}
                                     </div>
 
                                     {DesignDetail.parent_design &&
@@ -833,7 +852,7 @@ class DesignInfo extends Component {
                             <div className="right_box">
                                 <div className="row column">
                                     <div className="red_label">{DesignDetail.categoryName}</div>
-                                    <div className="black_label">{DesignDetail.explanation}</div>
+                                    <div className="black_label ellipsis">{DesignDetail.explanation}</div>
                                 </div>
                             </div>
                         </div>
@@ -900,22 +919,24 @@ class DesignInfo extends Component {
                     </div>
                 </DesignHeader>
 
-                <ChatWrapper>
-                    <div className="row">
-                        <div
-                            title="디자인 멤버들과 화상회의를 시작합니다."
-                            className="icon_wrap" onClick={this.openVideoChat}>
-                            <img src={new_logo_msg} className="icon" />
-                            <div className="icon_label">화상회의</div>
+                {(DesignDetail && DesignDetail.is_project === 1 && DesignDetail.member.length > 1)
+                    ? <ChatWrapper>
+                        <div className="row">
+                            <div
+                                title="디자인 멤버들과 화상회의를 시작합니다."
+                                className="icon_wrap" onClick={this.openVideoChat}>
+                                <img src={new_logo_msg} className="icon" />
+                                <div className="icon_label">화상회의</div>
+                            </div>
+                            <div
+                                title="디자인 멤버들과 채팅을 시작합니다."
+                                className="icon_wrap" onClick={this.openChat}>
+                                <img src={new_logo_chat} className="icon" />
+                                <div className="icon_label">채팅</div>
+                            </div>
                         </div>
-                        <div
-                            title="디자인 멤버들과 채팅을 시작합니다."
-                            className="icon_wrap" onClick={this.openChat}>
-                            <img src={new_logo_chat} className="icon" />
-                            <div className="icon_label">채팅</div>
-                        </div>
-                    </div>
-                </ChatWrapper>
+                    </ChatWrapper>
+                    : null}
             </Wrapper>
         </React.Fragment >
         )

@@ -1159,7 +1159,7 @@ class CardSourceDetail extends Component {
     let datalist = [];
     const answer = result && JSON.parse(result.answer);
     console.log("result", this.state);
-    return (<div id="card-source-detail-root-node">
+    return (<div id="card-source-detail-root-node" style={{ padding: "15px" }}>
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
         {loading ? <Loading /> : null}
 
@@ -1549,7 +1549,7 @@ class CardSourceDetail extends Component {
                                 lineHeight: `${this.state.fontratio * 1.2}rem`
                               }}
                               dangerouslySetInnerHTML={{
-                                __html: `${
+                                __html: `${item.content == null ? "&nbsp;" :
                                   // this.replaceFontUnitToRem(item.content)
                                   item.content
                                     /*

@@ -211,14 +211,12 @@ class FileController extends Component {
     const { item } = this.props;
     const { is_image } = this.state;
 
-    const contentImg = item.content
-      ? item.content
-      : item.fileUrl;
+    const contentImg = item.fileUrl || item.content;
 
     return (<FileWrap>
 
       {/* image */}
-      {(item.content && item.data_type === "image")
+      {(contentImg && is_image)
         ? <img src={contentImg} alt="이미지" />
         : null}
 
