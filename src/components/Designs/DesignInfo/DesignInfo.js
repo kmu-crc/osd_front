@@ -85,6 +85,13 @@ const DesignHeader = styled.div`
     box-shadow: 8px 8px 8px #4141411A;
     display:flex;
 
+    .ellipsis {
+        display: -webkit-box;
+        min-width: 300px;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
     .thumbnail {
         max-width: 307px;
         min-width: 307px;
@@ -845,7 +852,7 @@ class DesignInfo extends Component {
                             <div className="right_box">
                                 <div className="row column">
                                     <div className="red_label">{DesignDetail.categoryName}</div>
-                                    <div className="black_label">{DesignDetail.explanation}</div>
+                                    <div className="black_label ellipsis">{DesignDetail.explanation}</div>
                                 </div>
                             </div>
                         </div>
