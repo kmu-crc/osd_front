@@ -428,10 +428,12 @@ const LinkPreview = styled.div`
 const ViewContent = styled.div`
   position: relative;
   .imgContent {
-    img {
-      max-width: 100%;
-      // width: 450px;
-    }
+      img {
+        object-fit: scale-down;
+        max-width:100%;
+        // max-width: 100%;
+        // width: 450px;
+      }
     text-align: center;
     margin-bottom: 2rem;
     p {
@@ -1486,7 +1488,7 @@ class CardSourceDetail extends Component {
                     );
                   }}>
                     {/* <Zoom > */}
-                    <img width="100%" src={item.content} alt="이미지" download={item.file_name} />
+                    <img src={item.content} alt="이미지" download={item.file_name} />
                     {/* </Zoom> */}
                     {/* <p>이미지를 클릭하시면 원본크기로 보실 수 있습니다.</p> */}
                   </div>

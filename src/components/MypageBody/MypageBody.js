@@ -52,9 +52,9 @@ const TabMenu = styled.div`
         cursor: pointer;
         color: #000000;
         
-        margin-left: 43px;
+        margin-right 43px;
         :first-child{
-            margin-left: 21px;
+            margin-right: 21px;
         }
     }
     .selected { 

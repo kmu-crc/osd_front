@@ -14,13 +14,16 @@ const Wrapper = styled.div`
     margin-top: 28px;
     margin-left: 38px;
     margin-right: 38px;
+    max-width:1706px;
+    min-width: ${1000 - (38 * 2)}px;
 
     // margin-left: ${100 + 38}px;
     // *{border: 1px solid red;}
 
     .menu-container {
-        max-width: 1737px;
-        min-width: 1000px;
+        // max-width: 1737px;
+        // min-width: 1000px;
+        width:100%;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -40,6 +43,14 @@ const Wrapper = styled.div`
     .scroll-list {
         padding-top: 37px;
     }
+
+    @media only screen and (max-width: 1000px) {
+        width: 100vw;
+    }
+    @media only screen and (min-width: 1920px) {
+        width:100vw;
+    }
+
 `;
 const TabMenu = styled.div`
     display: flex;
@@ -55,9 +66,9 @@ const TabMenu = styled.div`
         cursor: pointer;
         color: #000000;
         
-        margin-left: 43px;
+        margin-right 43px;
         :first-child{
-            margin-left: 21px;
+            margin-right: 21px;
         }
     }
     .selected { 

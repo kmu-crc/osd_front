@@ -72,6 +72,7 @@ const DesignerInfoBox = styled.div`
 
     max-width: 1737px;
     min-width: 1000px;
+    width:100%;
 
     display: flex;
     flex-direction: row;
