@@ -463,6 +463,11 @@ class SignInModal extends Component {
     onSubmit = async e => {
         this.setState({ findPW: false, loading: true });
         const email = document.getElementById("reset-email").value;
+        if (email.length === 0) {
+            alert('이메일주소를 입력해주세요.');
+            this.setState({ findPW: true, loading: false });
+            return;
+        }
         await this.props.FindPwRequest({ email: email })
         alert(`${email}(으)로 재발급된 비밀번호가 전송되었습니다.`);
         this.setState({ loading: false });
