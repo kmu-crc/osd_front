@@ -16,7 +16,7 @@ import { SetSession } from 'modules/Sessions';
 const Wrapper = styled.div`
     margin-top: 24px;
     margin-left: 38px;
-    margin-right: 38px;
+    // margin-right: 38px;
 
     // margin-top: ${100 + 24}px;
     // margin-left: ${100 + 38}px;
@@ -25,7 +25,7 @@ const Wrapper = styled.div`
 const MyInfoBox = styled.div`
     padding: 12px 12px 12px 34px;
 
-    max-width: 1737px;
+    max-width:1740px;
     min-width: ${1000}px;
 
     display: flex;

@@ -13,8 +13,8 @@ import OrderOption from "components/Commons/OrderOption";
 const Wrapper = styled.div`
     margin-top: 28px;
     margin-left: 38px;
-    margin-right: 38px;
-    max-width:1706px;
+    // margin-right: 38px;
+    max-width:1740px;
     min-width: ${1000 - (38 * 2)}px;
 
     // margin-left: ${100 + 38}px;
