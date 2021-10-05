@@ -96,6 +96,7 @@ const DesignHeader = styled.div`
     .infoBox{
         padding:12px 22px 12px 22px;
         width:100%;
+        min-width:500px;
         .design_name{
             // max-width:1200px;
             width:100%;
@@ -154,6 +155,7 @@ const DesignHeader = styled.div`
         }
     }
     .menuBox{
+        width:100%;
         max-width:180px;
         min-width:180px;
         height:100%;

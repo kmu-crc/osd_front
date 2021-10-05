@@ -1203,6 +1203,12 @@ class CreateDesign extends Component {
       }, "image/jpeg");
     });
   };
+  makeClientCrop = async (crop) => {
+    if (this.imageRef && crop.width && crop.height) {
+      const croppedImageUrl = await this.getCroppedImg(this.imageRef, crop, this.state.thumbnail_name/*"newFile.jpeg"*/);
+      this.setState({ croppedImageUrl });
+    }
+  };
   openInfoToProject = () => {
     this.setState({ loading: true });
     this.toProject();

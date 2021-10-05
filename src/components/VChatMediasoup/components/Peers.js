@@ -25,17 +25,20 @@ const DivPeer = styled.div`
 	border: 1px solid transparent;
 	&.active {
 		border: 1px solid white;
+
 	}
 	cursor: default;
 `;
 
-const Peers = ({ clicked, member, peers, activeSpeakerId }) => {
+const Peers = ({ pinned, clicked, member, peers, activeSpeakerId }) => {
 	return (
 		// <DivPeers>
 		// {
 		peers.map((peer) => {
 			// console.log(peer);
-			return (<DivPeer
+			return (
+			<DivPeer
+				style={{border:`${pinned == peer.id? "1px solid red":"1px solid transparent"}`}}
 				className={`${peer.id === activeSpeakerId ? 'active' : ""}`}
 				key={peer.id}>
 				<Peer

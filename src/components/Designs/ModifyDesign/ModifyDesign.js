@@ -902,10 +902,11 @@ class ModifyDesign extends Component {
     super(props);
     this.state = {
       deleteModal: false,
+      crop: { unit: "%", width: 50, aspect: 1 },
       loading: false, designId: null, isMyDesign: false, editor: false, is_problem: false,
       basic: false, additional: false, content: false, step: 0, title: "", explanation: "",
       showSearch: false, thumbnail: noimg, thumbnail_name: "", grid: false,
-      categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [], license1: true, license2: false, license3: false,
+      categoryLevel1: null, categoryLevel2: null, alone: false, members: [], addmem: [], delmem: [], license1: true, license2: false, license3: false, cropper: false,
     }
     this.addMember = this.addMember.bind(this);
     this.removeMember = this.removeMember.bind(this);
@@ -950,6 +951,13 @@ class ModifyDesign extends Component {
     event.preventDefault();
     const reader = new FileReader();
     const file = event.target.files[0];
+    reader.onload = () => {
+      var image = new Image();
+      image.src = reader.result;
+      image.onload = () => {
+        this.setState({ is_rectangle: false, ratio: image.width / image.height, cropper: image.width / image.height !== 1.0 });
+      }
+    }
     reader.onloadend = () => {
       this.setState({ thumbnail: reader.result, thumbnail_name: file.name })
     }
@@ -1090,6 +1098,67 @@ class ModifyDesign extends Component {
       this.setState({ alone: true })
     }
   }
+  closeCropper = () => {
+    if (this.state.is_rectangle === false) {
+      this.setState({ thumbnail_name: "", thumbnail: noimg });
+    }
+    this.setState({ cropper: false, crop: { unit: "%", width: 50, aspect: 1 } });
+    this.checkFinishBasic();
+  };
+  toDataURL = url => fetch(url)
+    .then(response => response.blob())
+    .then(blob => new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result)
+      reader.onerror = reject
+      reader.readAsDataURL(blob)
+    }));
+  crop = async () => {
+    // apply
+    await this.toDataURL(this.state.croppedImageUrl)
+      .then(async (dataUrl) => {
+        this.setState({ thumbnail: dataUrl });
+      })
+    this.setState({ cropper: false });
+    this.checkFinishBasic();
+  };
+  onImageLoaded = image => {
+    this.imageRef = image;
+  };
+  onCropComplete = crop => {
+    this.makeClientCrop(crop);
+  };
+  onCropChange = (crop, percentCrop) => {
+    this.setState({ crop });
+  };
+  getCroppedImg = (image, crop, fileName) => {
+    const canvas = document.createElement("canvas");
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    canvas.width = crop.width;
+    canvas.height = crop.height;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(image, crop.x * scaleX, crop.y * scaleY, crop.width * scaleX, crop.height * scaleY, 0, 0, crop.width, crop.height);
+
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(blob => {
+        if (!blob) {
+          console.error("Canvas is empty");
+          return;
+        }
+        blob.name = fileName;
+        window.URL.revokeObjectURL(this.fileUrl);
+        this.fileUrl = window.URL.createObjectURL(blob);
+        resolve(this.fileUrl);
+      }, "image/jpeg");
+    });
+  };
+  makeClientCrop = async (crop) => {
+    if (this.imageRef && crop.width && crop.height) {
+      const croppedImageUrl = await this.getCroppedImg(this.imageRef, crop, this.state.thumbnail_name/*"newFile.jpeg"*/);
+      this.setState({ croppedImageUrl });
+    }
+  };
   deleteDesign = async () => {
     const answer = await confirm("디자인을 삭제하시겠습니까?", "확인", "취소");
     answer && this.props.DeleteDesignRequest(this.props.id, this.props.token)

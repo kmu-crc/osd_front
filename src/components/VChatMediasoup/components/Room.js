@@ -451,6 +451,7 @@ const ContentContainer = styled.div`
 `;
 const RightVerticalScroll = styled.div`
 	padding: 5px 10px 5px 15px;
+	padding-bottom:100px;
 	min-width: 242px;
 	display: ${props => props.hidden ? "none" : "flex"};
 
@@ -609,7 +610,7 @@ class Room extends React.Component {
 		super(props);
 		this.state = {
 			h: window.innerHeight,
-
+			displayName:"",
 			shareState: "off",
 			mode: "grid", // || "scroll",
 			hidepeer: false,
@@ -776,12 +777,21 @@ class Room extends React.Component {
 					<div>
 						{/* layout */}
 						{mode === "scroll" ?
-							<div className="btn return" onClick={() => {
-								this.setState({ mode: "grid" });
-								this.video.srcObject = null;
-								mixer && mixer.set_pinned_id(null);
-							}}>
-								<span className="txt">큰 화면 취소</span></div> : null}
+							<React.Fragment>
+							<div style={{display:"flex",alignItems:"center"}}>
+								<div style={{width:"200px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",textAlign:"right",marginRight:"20px"}}>
+									{this.state.pinned!=null && this.state.displayName != ""?this.state.displayName:null} 시청 중
+								</div>
+								<div className="btn return" onClick={() => {
+									this.setState({ mode: "grid" });
+									this.video.srcObject = null;
+									mixer && mixer.set_pinned_id(null);
+									this.setState({displayName:""});
+								}}>	
+								<span className="txt">큰 화면 취소</span>
+								</div>
+							</div>
+							</React.Fragment> : null}
 						{mode === "scroll"
 							? <div className={`btn peer ${!hidepeer?"hidepeer":"showpeer"}`} onClick={() => this.setState({ hidepeer: !hidepeer })}>
 								<span className="txt">{!hidepeer ? "숨기기" : "보이기"}</span>
@@ -836,6 +846,7 @@ class Room extends React.Component {
 					? <RightVerticalScroll hidden={hidepeer}>
 						<div className="container">
 							<Me
+								pinned = { this.state.pinned }
 								needReload={() => {
 									this.video.srcObject = null;
 									mixer && mixer.set_pinned_id(null);
@@ -845,8 +856,8 @@ class Room extends React.Component {
 								clicked={(me, stream) => shareState ? null : this.clickedview(me, stream)}
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
-
 							<Peers
+								pinned = { this.state.pinned }
 								clicked={(peer, stream) => this.clickedview(peer, stream)}
 								member={this.props.design.member} />
 
@@ -857,6 +868,7 @@ class Room extends React.Component {
 					? <MiddleDynamicGrid grid={grid[idx]}>
 						<div className="container">
 							<Me
+								pinned = { this.state.pinned }
 								needReload={() => {
 									this.video.srcObject = null;
 									mixer && mixer.set_pinned_id(null);
@@ -867,6 +879,7 @@ class Room extends React.Component {
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
 							<Peers
+								pinned = { this.state.pinned }
 								clicked={(peer, stream) => this.clickedview(peer, stream)}
 								member={this.props.design.member} />
 						</div>
@@ -918,9 +931,9 @@ class Room extends React.Component {
 	}
 
 	clickedview = async (peer, stream) => {
-
+		console.log(peer);
 		mixer && mixer.set_pinned_id(peer.id);
-		await this.setState({ pinned: peer.id });
+		await this.setState({ pinned: peer.id, displayName:peer.displayName });
 
 		if (this.video && stream) {
 			stream.addEventListener('inactive', () => {

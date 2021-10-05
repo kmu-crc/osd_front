@@ -109,7 +109,7 @@ export const Intro = () =>
         <br/> 누구나 쉽고, 재미있게, 시간과 장소에 구애 받지 않고 함께 어울리며 디자인할 수 있는 환경을 만들고자 합니다.
       </div>
       <div className="square"/>
-      <div className="headline">쉬운 디자인, 함께 하는 디자인 디자인은 인간의 창의성을 담는 그릇입니다.</div>
+      <div className="headline">디자인은 인간의 창의성을 담는 그릇입니다.</div>
       <div className="normalline marginBottom1">
        창의력이 핵심 경쟁력이 될 미래는 디자인 중심 사회가 될 것입니다.
        세계 각국은 디자인의 중요성을 깨달아 디자인에 대한 투자를 늘리고 있지만 아직 대부분의 사람들에게 디자인은 어려운 분야입니다.

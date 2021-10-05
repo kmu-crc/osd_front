@@ -194,6 +194,8 @@ class Me extends React.Component {
 
 		return (
 			<DivME
+				// style={`${this.props.pinned == me.id ? `border:1px solid red`: null}`}
+				style={{border:`${this.props.pinned == me.id? "1px solid red":"1px solid transparent"}`}}
 				// style
 				// data-tip={tip}
 				// data-tip-disable={!tip}
