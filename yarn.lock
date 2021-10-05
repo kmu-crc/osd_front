@@ -10868,6 +10868,13 @@ react-awesome-modal@^2.0.5:
   resolved "https://registry.yarnpkg.com/react-awesome-modal/-/react-awesome-modal-2.0.5.tgz#d19702f7e3bc1f43e734f5a60814c2d1593c693a"
   integrity sha512-H+0xKBhcGJCoDtMww5K+XUzQtK+oRNpXr1VZoN1tbBgu+fzrLrF+ZkdRC1XiPLJ5gpVd9uR90yg8nyPTtYj/OQ==
 
+react-cache-buster@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/react-cache-buster/-/react-cache-buster-0.1.5.tgz#573ec67b657e1ef4467dbbfb9b0c3d1f4b822c79"
+  integrity sha512-vBulaGKJUuJvQeV+7+vtj0KAZEL1uJExtEYNmDc7WukVfyVzo35myQ7+/LTRtx6GrLCVjnDzGRdDxpSWVNtanw==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-confirm@^0.1.20:
   version "0.1.20"
   resolved "https://registry.yarnpkg.com/react-confirm/-/react-confirm-0.1.20.tgz#fad38ae75bf02d612566eeba3f6a4f9aa1042d7a"
