@@ -134,7 +134,13 @@ const Details = styled.div`
         color: #777777;
         opacity: 1;
     }
-
+    .ellipsis {
+        display: -webkit-box;
+        min-width: 300px;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
     .count { 
         display: flex;
         flex-direction: row;
@@ -374,7 +380,7 @@ class DesignerPageHeader extends Component {
                         <div className="wrapper">
                             <div className="nick">{DesignerDetail.nick_name}</div>
                             {DesignerDetail.categoryName ? <div className="cate">{DesignerDetail.categoryName}</div> : null}
-                            <div className="about">{DesignerDetail.about_me}</div>
+                            <div className="about ellipsis">{DesignerDetail.about_me}</div>
                         </div>
                         <div className="count">
                             <div className="element">

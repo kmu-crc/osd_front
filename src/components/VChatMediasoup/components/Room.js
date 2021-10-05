@@ -322,7 +322,7 @@ const MenuBarContainer = styled.div`
     cursor: pointer;
 		&.peer {
 			position: absolute;
-			top:81px;
+			top:100px;
 			width: max-content;
 			padding: 8px 25px;
 			background: rgba(100,100,100, 0.75);
@@ -454,7 +454,6 @@ const RightVerticalScroll = styled.div`
 	padding-bottom:100px;
 	min-width: 242px;
 	display: ${props => props.hidden ? "none" : "flex"};
-
 	z-index: 110;
 	background-color: rgba(0,0,0, 0.3);
 	flex-direction: column;
@@ -519,8 +518,30 @@ const MiddleDynamicGrid = styled.div`
 		gap: 10px 10px;
 	}
 `;
+const HideButtonWrapper = styled.div`
+	width:100%;
+	position:relative;
+	.btn{
+		position:absolute;
+		z-index:999;
+		cursor:pointer;
+	}
+	.peer {
+		padding: 8px 25px;
+		background: rgba(100,100,100, 0.75);
+		z-index:888;
+		top:5px;
+		color:white;
+	}
+	.hidepeer{
+		right: 247px;
+	}
+	.showpeer{
+		right: 5px;
+	}
+`
 const BigScreenContainer = styled.div`
-	min-width: 750px; // ${props => props.scroll ? "max-content" : "100%"};
+	min-width: 300px; // ${props => props.scroll ? "max-content" : "100%"};
 	width: 100%;
 	height: 100%;
 	min-height: ${VIDEO_SIZE}px;
@@ -704,7 +725,8 @@ class Room extends React.Component {
 										await alert(e + '와 같은 이유로 초대에 실패하였습니다. 관리자에게 문의해주시기 바랍니다.');
 									}
 								});
-							this.setState({ selected: null, invite: false });}}>초대</div>
+							this.setState({ selected: null, invite: false });
+						}}>초대</div>
 					<div
 						style={{ cursor: "default", marginRight: "15px", color: "#707070", fontSize: "1.5rem", fontWeight: "500", width: "max-content" }}
 						onClick={() => {
@@ -715,43 +737,43 @@ class Room extends React.Component {
 
 			{/* menubar */}
 			<MenuBarContainer>
-					<div className="flex">
-						{/* chat */}
-						<div className='btn chat' onClick={() => this.openChatWin()}>채팅</div>
-						{/* invite */}
-						<div className="btn chat invite" onClick={() => { this.setState({ invite: true }); }}>초대</div>
-						{/* recording */}
-						{isRecording
-							? <div className="btn start">
-								<div style={{ display: "flex", flexDirection: "row" }}>
-									{/* pause / resume */}
-									{isPaused
-										? <div onClick={() => this.resumeRecording()}>
-											<span className="txt">
-												<i className="icon play" /></span>
-										</div>
-										: <div onClick={() => this.pasueRecording()}>
-											<span className="txt">
-												<i className="icon pause" /></span>
-										</div>}
-									{/* stop */}
-									<div onClick={() => this.stopRecording()}>
-										<span className="txt">
-											<i className="icon stop" /></span>
-									</div>
-
-								</div>
-							</div>
-							:
+				<div className="flex" style={{padding:"5px 0px 5px 0px"}}>
+					{/* chat */}
+					<div className='btn chat' onClick={() => this.openChatWin()}>채팅</div>
+					{/* invite */}
+					<div className="btn chat invite" onClick={() => { this.setState({ invite: true }); }}>초대</div>
+					{/* recording */}
+					{isRecording
+						? <div className="btn start">
 							<div style={{ display: "flex", flexDirection: "row" }}>
-								<div className="btn start" onClick={() => this.recording()} // me, peers, consumers)}
-								>
+								{/* pause / resume */}
+								{isPaused
+									? <div onClick={() => this.resumeRecording()}>
+										<span className="txt">
+											<i className="icon play" /></span>
+									</div>
+									: <div onClick={() => this.pasueRecording()}>
+										<span className="txt">
+											<i className="icon pause" /></span>
+									</div>}
+								{/* stop */}
+								<div onClick={() => this.stopRecording()}>
 									<span className="txt">
-										<i className="record icon" />
-									</span>
+										<i className="icon stop" /></span>
 								</div>
-							</div>}
-							<div>
+
+							</div>
+						</div>
+						:
+						<div style={{ display: "flex", flexDirection: "row" }}>
+							<div className="btn start" onClick={() => this.recording()} // me, peers, consumers)}
+							>
+								<span className="txt">
+									<i className="record icon" />
+								</span>
+							</div>
+						</div>}
+					<div>
 
 					</div>
 				</div>
@@ -773,14 +795,17 @@ class Room extends React.Component {
 					</div>
 				</div>
 
-				<div className="flex flex-end">
+				<div className="flex flex-end" style={{padding:"5px 0px 5px 0px"}}>
 					<div>
 						{/* layout */}
 						{mode === "scroll" ?
 							<React.Fragment>
 							<div style={{display:"flex",alignItems:"center"}}>
-								<div style={{width:"200px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",textAlign:"right",marginRight:"20px"}}>
-									{this.state.pinned!=null && this.state.displayName != ""?this.state.displayName:null} 시청 중
+								<div style={{width:"max-content",textAlign:"right",marginRight:"20px"}}>
+									<div style={{maxWidth:"100px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>
+										{this.state.pinned!=null && this.state.displayName != ""?this.state.displayName:null}
+									</div>
+									 시청 중
 								</div>
 								<div className="btn return" onClick={() => {
 									this.setState({ mode: "grid" });
@@ -792,11 +817,6 @@ class Room extends React.Component {
 								</div>
 							</div>
 							</React.Fragment> : null}
-						{mode === "scroll"
-							? <div className={`btn peer ${!hidepeer?"hidepeer":"showpeer"}`} onClick={() => this.setState({ hidepeer: !hidepeer })}>
-								<span className="txt">{!hidepeer ? "숨기기" : "보이기"}</span>
-							</div>
-							: null}
 					</div>
 					<div>
 						{/* exit */}
@@ -811,12 +831,18 @@ class Room extends React.Component {
 					</div>
 				</div>
 			</MenuBarContainer>
-
+			{mode === "scroll"
+							? <HideButtonWrapper>
+								<div className={`btn peer ${!hidepeer ? "hidepeer" : "showpeer"}`} onClick={() => this.setState({ hidepeer: !hidepeer })}>
+								<span className="txt">{!hidepeer ? "숨기기" : "보이기"}</span>
+								</div>
+							</HideButtonWrapper>
+							: null}
 			{/* contents */}
 			<ContentContainer>
 
 				<div className="panel" >
-						<img src={bg} className="logo"/>
+					<img src={bg} className="logo" />
 				</div>
 
 				{/* middle */}
@@ -853,7 +879,9 @@ class Room extends React.Component {
 									this.setState({ mode: "grid" });
 								}}
 								userInfo={this.props.userInfo}
-								clicked={(me, stream) => shareState ? null : this.clickedview(me, stream)}
+								clicked={(me, stream) =>
+									// shareState ? null : 
+									this.clickedview(me, stream)}
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
 							<Peers
@@ -868,18 +896,18 @@ class Room extends React.Component {
 					? <MiddleDynamicGrid grid={grid[idx]}>
 						<div className="container">
 							<Me
-								pinned = { this.state.pinned }
 								needReload={() => {
 									this.video.srcObject = null;
 									mixer && mixer.set_pinned_id(null);
 									this.setState({ mode: "grid" });
 								}}
 								userInfo={this.props.userInfo}
-								clicked={(me, stream) => shareState ? null : this.clickedview(me, stream)}
+								clicked={(me, stream) =>
+									// shareState ? null : 
+									this.clickedview(me, stream)}
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
 							<Peers
-								pinned = { this.state.pinned }
 								clicked={(peer, stream) => this.clickedview(peer, stream)}
 								member={this.props.design.member} />
 						</div>
@@ -1700,7 +1728,7 @@ export default RoomContainer;
 // 		</React.Fragment>)
 // 	}
 // }
-    
+
 
 // const mapStateToProps = (state) => ({
 // 	consumers: state.consumers,

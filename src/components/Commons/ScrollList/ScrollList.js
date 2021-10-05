@@ -4,7 +4,6 @@ import Group from "components/Groups/Group";
 import Designer from "components/Designers/Designer";
 import styled from "styled-components";
 import osdcss from "opendesign_style";
-import Fade from 'react-reveal/Fade';
 
 // @media only screen and (min-width : ${osdcss.resolutions.SmallMinWidth}px) and (max-width : ${osdcss.resolutions.SmallMaxWidth}px) {
 //   margin-right: ${props =>
