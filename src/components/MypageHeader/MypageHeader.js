@@ -203,6 +203,12 @@ const Additional = styled.div`
         letter-spacing: 0px;
         color: #777777;
         opacity: 1;
+        .update-date{
+            min-width:max-content;
+        }
+        .create-date{
+            min-width:max-content;
+        }
     }
 `;
 

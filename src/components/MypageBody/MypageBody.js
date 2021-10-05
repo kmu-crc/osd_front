@@ -8,19 +8,20 @@ import opendesign_style from 'opendesign_style';
 import NumberFormat from 'modules/NumberFormat';
 import OrderOption from "components/Commons/OrderOption";
 
-//css
 const Wrapper = styled.div`
     margin-top: 28px;
     margin-left: 38px;
     margin-right: 38px;
-    
+    max-width:1706px;
+    min-width: ${1000 - (38 * 2)}px;
+
     // margin-left: ${100 + 38}px;
     // *{border: 1px solid red;}
 
     .menu-container {
-        max-width: 1737px;
-        min-width: 1000px;
-        width: 100%;
+        // max-width: 1737px;
+        // min-width: 1000px;
+        width:100%;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -37,6 +38,17 @@ const Wrapper = styled.div`
         padding-top: 42px;
         padding-bottom: 42px;
     }
+    .scroll-list {
+        padding-top: 37px;
+    }
+
+    @media only screen and (max-width: 1000px) {
+        width: 100vw;
+    }
+    @media only screen and (min-width: 1920px) {
+        width:100vw;
+    }
+
 `;
 const TabMenu = styled.div`
     display: flex;
@@ -58,7 +70,7 @@ const TabMenu = styled.div`
         }
     }
     .selected { 
-        color: #FF0000; 
+        color: red; 
     }
 `;
 const CareerListTable = styled.div`
