@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CacheBuster from 'react-cache-buster';
+import Loading from 'components/Commons/Loading';
 import { version } from "../package.json";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
