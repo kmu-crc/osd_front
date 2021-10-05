@@ -249,11 +249,11 @@ class MypageBody extends Component {
                     </div>
                     {careerList.length > 0
                         ? careerList.map((item, index) => {
-                            const ary = item && item.split(',') || ["-", "-", "-"];
-                            const what = ary[1] || "-", when = ary[2] || "-", which = ary[3] || "-";
+                            const ary = item && item.split(',') || ["-", "-", "-", "-"];
+                            const idx = ary[0] || "-", what = ary[1] || "-", which = ary[2] || "-", when = ary[3] ;
 
                             return (<div className="row" key={index}>
-                                <div className="cell-short"><div className="text"> {index + 1} </div></div>
+                                <div className="cell-short"><div className="text"> {idx + 1} </div></div>
                                 <div className="cell"><div className="text">{what}</div></div>
                                 <div className="cell"><div className="text">{when}</div></div>
                                 <div className="cell"><div className="text">{which}</div></div>
