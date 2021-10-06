@@ -921,7 +921,7 @@ class DesignInfo extends Component {
                     </div>
                 </DesignHeader>
 
-                {(DesignDetail && DesignDetail.is_project === 1 && DesignDetail.member.length > 1)
+                {(DesignDetail && /*DesignDetail.is_project === 1 && */DesignDetail.member.length > 1)
                     ? <ChatWrapper>
                         <div className="row">
                             <div
