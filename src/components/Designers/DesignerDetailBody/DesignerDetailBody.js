@@ -13,8 +13,8 @@ import OrderOption from "components/Commons/OrderOption";
 const Wrapper = styled.div`
     margin-top: 28px;
     margin-left: 38px;
-    margin-right: 38px;
-    max-width:1706px;
+    // margin-right: 38px;
+    max-width:1740px;
     min-width: ${1000 - (38 * 2)}px;
 
     // margin-left: ${100 + 38}px;
@@ -259,11 +259,11 @@ class DesignerPageBody extends Component {
                     </div>
                     {careerList.length > 0
                         ? careerList.map((item, index) => {
-                            const ary = item && item.split(',') || ["-", "-", "-"];
-                            const what = ary[0] || "-", when = ary[1] || "-", which = ary[2] || "-";
+                            const ary = item && item.split(',') || ["-", "-", "-", "-"];
+                            const idx = ary[0] || "-", what = ary[1] || "-", which = ary[2] || "-", when = ary[3] ;
 
                             return (<div className="row" key={index}>
-                                <div className="cell-short"><div className="text"> {index + 1} </div></div>
+                                <div className="cell-short"><div className="text"> {idx + 1} </div></div>
                                 <div className="cell"><div className="text">{what}</div></div>
                                 <div className="cell"><div className="text">{when}</div></div>
                                 <div className="cell"><div className="text">{which}</div></div>

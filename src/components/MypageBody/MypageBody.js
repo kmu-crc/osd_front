@@ -8,19 +8,20 @@ import opendesign_style from 'opendesign_style';
 import NumberFormat from 'modules/NumberFormat';
 import OrderOption from "components/Commons/OrderOption";
 
-//css
 const Wrapper = styled.div`
     margin-top: 28px;
     margin-left: 38px;
-    margin-right: 38px;
-    
+    // margin-right: 38px;
+    max-width:1740px;
+    min-width: ${1000 - (38 * 2)}px;
+
     // margin-left: ${100 + 38}px;
     // *{border: 1px solid red;}
 
     .menu-container {
-        max-width: 1737px;
-        min-width: 1000px;
-        width: 100%;
+        // max-width: 1737px;
+        // min-width: 1000px;
+        width:100%;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -37,6 +38,17 @@ const Wrapper = styled.div`
         padding-top: 42px;
         padding-bottom: 42px;
     }
+    .scroll-list {
+        padding-top: 37px;
+    }
+
+    @media only screen and (max-width: 1000px) {
+        width: 100vw;
+    }
+    @media only screen and (min-width: 1920px) {
+        width:100vw;
+    }
+
 `;
 const TabMenu = styled.div`
     display: flex;
@@ -58,7 +70,7 @@ const TabMenu = styled.div`
         }
     }
     .selected { 
-        color: #FF0000; 
+        color: red; 
     }
 `;
 const CareerListTable = styled.div`
@@ -237,11 +249,11 @@ class MypageBody extends Component {
                     </div>
                     {careerList.length > 0
                         ? careerList.map((item, index) => {
-                            const ary = item && item.split(',') || ["-", "-", "-"];
-                            const what = ary[1] || "-", when = ary[2] || "-", which = ary[3] || "-";
+                            const ary = item && item.split(',') || ["-", "-", "-", "-"];
+                            const idx = ary[0] || "-", what = ary[1] || "-", which = ary[2] || "-", when = ary[3] ;
 
                             return (<div className="row" key={index}>
-                                <div className="cell-short"><div className="text"> {index + 1} </div></div>
+                                <div className="cell-short"><div className="text"> {idx + 1} </div></div>
                                 <div className="cell"><div className="text">{what}</div></div>
                                 <div className="cell"><div className="text">{when}</div></div>
                                 <div className="cell"><div className="text">{which}</div></div>
