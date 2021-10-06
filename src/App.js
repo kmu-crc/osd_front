@@ -44,7 +44,6 @@ class App extends Component {
         isEnabled={isProduction}
         isVerboseMode={false}
         loadingComponent={<Loading />}>
-
         <BrowserRouter>
           {/* <Notice /> */}
           <Switch>

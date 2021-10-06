@@ -15,6 +15,8 @@ import new_logo_message_bubble from "source/new_logo_message_bubble.svg";
 import new_logo_handle_arrow from "source/new_logo_handle_arrow.svg";
 import { SetSession } from 'modules/Sessions';
 
+import { version } from "../../../../package.json";
+
 const Profile = styled.div`
     min-width:57px;
     max-width:57px;
@@ -24,23 +26,22 @@ const Profile = styled.div`
     box-shadow: 8px 8px 6px #00000029;
     border:1px solid #912525;
     background-color:white;
-    background-image:url(${props=>props.img});
+    background-image:url(${props => props.img});
     background-size:cover;
 `
 const MenuBox = styled.div`
     width:100px;
-    height: ${props=>props.h==null?"100vh":props.h+"px"};
+    height: ${props => props.h == null ? "100vh" : props.h + "px"};
     min-width:100px;
     min-height:1080px;
-    background-color:${
-        window.location.pathname.indexOf("designer")!=-1?"#7E1E9B"
-        :window.location.pathname.indexOf("Designer")!=-1?"#7E1E9B"
-        :window.location.pathname.indexOf("design")!=-1?"#1262AB"
-        :window.location.pathname.indexOf("Design")!=-1?"#1262AB"
-        :window.location.pathname.indexOf("group")!=-1?"#1E9B79"
-        :window.location.pathname.indexOf("Group")!=-1?"#1E9B79"
-        :window.location.pathname.indexOf("/about")!=-1?"#39280b"
-        :"red"
+    background-color:${window.location.pathname.indexOf("designer") != -1 ? "#7E1E9B"
+        : window.location.pathname.indexOf("Designer") != -1 ? "#7E1E9B"
+            : window.location.pathname.indexOf("design") != -1 ? "#1262AB"
+                : window.location.pathname.indexOf("Design") != -1 ? "#1262AB"
+                    : window.location.pathname.indexOf("group") != -1 ? "#1E9B79"
+                        : window.location.pathname.indexOf("Group") != -1 ? "#1E9B79"
+                            : window.location.pathname.indexOf("/about") != -1 ? "#39280b"
+                                : "red"
     };
     position:relative;
     .menu_handle{
@@ -54,16 +55,15 @@ const MenuBox = styled.div`
         display:flex;
         align-items:center;
         justify-content:center;
-        background-color:${
-            window.location.pathname.indexOf("designer")!=-1?"#7E1E9B"
-            :window.location.pathname.indexOf("Designer")!=-1?"#7E1E9B"
-            :window.location.pathname.indexOf("design")!=-1?"#1262AB"
-            :window.location.pathname.indexOf("Design")!=-1?"#1262AB"
-            :window.location.pathname.indexOf("group")!=-1?"#1E9B79"
-            :window.location.pathname.indexOf("Group")!=-1?"#1E9B79"
-            :window.location.pathname.indexOf("/about")!=-1?"#39280b"
-            :"red"
-        };
+        background-color:${window.location.pathname.indexOf("designer") != -1 ? "#7E1E9B"
+        : window.location.pathname.indexOf("Designer") != -1 ? "#7E1E9B"
+            : window.location.pathname.indexOf("design") != -1 ? "#1262AB"
+                : window.location.pathname.indexOf("Design") != -1 ? "#1262AB"
+                    : window.location.pathname.indexOf("group") != -1 ? "#1E9B79"
+                        : window.location.pathname.indexOf("Group") != -1 ? "#1E9B79"
+                            : window.location.pathname.indexOf("/about") != -1 ? "#39280b"
+                                : "red"
+    };
         .arrow{
             width:24px;
             height:24px;
@@ -121,6 +121,14 @@ const MenuBox = styled.div`
             color:white;
         }
     }
+    .stickToEnd {
+        position: absolute;
+        bottom: 10px;
+        text-alignment: right;
+        font-size: .9rem;
+        font-weight: 500;
+        color: white;
+    }
 `
 const MenuItem = styled.div`
     *{
@@ -131,12 +139,11 @@ const MenuItem = styled.div`
     font-size:18px;
     font-family:Spoqa Han Sans;
     color:white;
-    background-color:${props=>props.isSelect == true ? "rgba(255,255,255,0.53)" : null};
+    background-color:${props => props.isSelect == true ? "rgba(255,255,255,0.53)" : null};
     cursor:pointer;
     &:hover{
         background-color:rgba(255,255,255,0.53);
     }
- 
 `
 function isOpen(ws) { return ws.readyState === ws.OPEN }
 class Navigation extends Component {
@@ -146,7 +153,7 @@ class Navigation extends Component {
             play: false,
             notice: {}, alarm: {},
             selectCate: -1,
-            h:null,
+            h: null,
         };
         this.gotoCreateDesignPage = this.gotoCreateDesignPage.bind(this);
     }
@@ -194,16 +201,16 @@ class Navigation extends Component {
     }
     handleResize = (event) => {
         console.log(window.innerHeight);
-        this.setState({ h: window.innerHeight});
-      }
+        this.setState({ h: window.innerHeight });
+    }
 
     render() {
-        console.log(window.location.pathname==("/"));
+        console.log(window.location.pathname == ("/"));
         return (
             <React.Fragment>
                 <MenuBox h={this.state.h}>
-                    <div className="menu_top"/>
-                    <div className="menu_handle" onClick={this.props.onClickFolding}><img className={`arrow ${this.props.sidemenu==true?"folding":"notfolding"}`}src={new_logo_handle_arrow}/></div>
+                    <div className="menu_top" />
+                    <div className="menu_handle" onClick={this.props.onClickFolding}><img className={`arrow ${this.props.sidemenu == true ? "folding" : "notfolding"}`} src={new_logo_handle_arrow} /></div>
                     {/* <MenuItem
                     isSelect={window.location.pathname === "/myPage"
                     || window.location.pathname.search("/myPage/") > -1 ? true : false
@@ -225,41 +232,42 @@ class Navigation extends Component {
                         }
                     </div>
                     </MenuItem> */}
-                    <MenuItem 
-                    isSelect={window.location.pathname==("/")==true?true:false}
-                    className="menu_tag marginTop1"><a className="link_tag" href="/">홈</a>
+                    <MenuItem
+                        isSelect={window.location.pathname == ("/") == true ? true : false}
+                        className="menu_tag marginTop1"><a className="link_tag" href="/">홈</a>
                     </MenuItem>
-                    <MenuItem 
-                    isSelect={window.location.pathname === "/design"
-                             || window.location.pathname.search("/design/") > -1 ? true : false
-                             || window.location.pathname.search("/designDetail/") > -1 ? true : false
-                             || window.location.pathname.search("/createDesign") > -1 ? true : false
-                             || window.location.pathname.search("/modifyDesign/") > -1 ? true : false}
-                    className="menu_tag marginTop1"><a className="link_tag" href="/design">디자인</a></MenuItem>
+                    <MenuItem
+                        isSelect={window.location.pathname === "/design"
+                            || window.location.pathname.search("/design/") > -1 ? true : false
+                                || window.location.pathname.search("/designDetail/") > -1 ? true : false
+                                    || window.location.pathname.search("/createDesign") > -1 ? true : false
+                                        || window.location.pathname.search("/modifyDesign/") > -1 ? true : false}
+                        className="menu_tag marginTop1"><a className="link_tag" href="/design">디자인</a></MenuItem>
                     <MenuItem isSelect={window.location.pathname === '/group'
-                             || window.location.pathname.search("/group/") > -1 ? true : false
-                             || (window.location.pathname.search('/groupDetail/') > -1 ? true : false)
-                             || window.location.pathname.search("/createGroup") > -1 ? true : false
-                             || window.location.pathname.search("/modifyGroup/") > -1 ? true : false}
-                              className="menu_tag marginTop1"> <a className="link_tag" href="/group">그룹</a></MenuItem>
-                    <MenuItem 
-                    isSelect={window.location.pathname === '/designer'
-                             || window.location.pathname.search("/designer/") > -1 ? true : false
-                             || (window.location.pathname.search('/designerDetail/') > -1 ? true : false)
-                             || window.location.pathname.search("/createDesigner") > -1 ? true : false
-                             || window.location.pathname.search("/modifyDesigner/") > -1 ? true : false}
-                              className="menu_tag marginTop1"><a className="link_tag" href="/designer">디자이너</a></MenuItem>
+                        || window.location.pathname.search("/group/") > -1 ? true : false
+                            || (window.location.pathname.search('/groupDetail/') > -1 ? true : false)
+                            || window.location.pathname.search("/createGroup") > -1 ? true : false
+                                || window.location.pathname.search("/modifyGroup/") > -1 ? true : false}
+                        className="menu_tag marginTop1"> <a className="link_tag" href="/group">그룹</a></MenuItem>
+                    <MenuItem
+                        isSelect={window.location.pathname === '/designer'
+                            || window.location.pathname.search("/designer/") > -1 ? true : false
+                                || (window.location.pathname.search('/designerDetail/') > -1 ? true : false)
+                                || window.location.pathname.search("/createDesigner") > -1 ? true : false
+                                    || window.location.pathname.search("/modifyDesigner/") > -1 ? true : false}
+                        className="menu_tag marginTop1"><a className="link_tag" href="/designer">디자이너</a></MenuItem>
                     {/* <MenuItem className="menu_tag marginTop1">NEWS</MenuItem> */}
-                    <MenuItem 
-                    isSelect={window.location.pathname.search("/about") >-1?true:false} className="menu_tag marginTop1"
-                    
+                    <MenuItem
+                        isSelect={window.location.pathname.search("/about") > -1 ? true : false} className="menu_tag marginTop1"
+
                     ><a className="link_tag" href="/aboutIntro">ABOUT</a></MenuItem>
                     {
-                        this.props.userInfo == null?
-                        null
-                        :
-                        <MenuItem className="menu_tag marginTop1" onClick={this.SignOut}>로그아웃</MenuItem>
+                        this.props.userInfo == null ?
+                            null
+                            :
+                            <MenuItem className="menu_tag marginTop1" onClick={this.SignOut}>로그아웃</MenuItem>
                     }
+                    <MenuItem className="stickToEnd" >ver.{version}</MenuItem>
                 </MenuBox>
             </React.Fragment>
         )
