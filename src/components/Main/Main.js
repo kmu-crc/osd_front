@@ -38,11 +38,13 @@ const Pause = styled.div`
 `;
 const ButtonOnImage = styled.div`
   position: absolute;
-  min-width: 1000px;
+  // min-width: 1000px;
   width: ${props => props.width}px;
   height: ${props => props.height}px;
-  bottom: ${props => props.bottom}px;
-  right: ${props => props.right}px;
+  top: ${props => props.top}px;
+  left: ${props => props.left}px;
+  // bottom: ${props => props.bottom}px;
+  // right: ${props => props.right}px;
   cursor: pointer;
   z-index: 888;
   background-image: url(${props => props.src});
@@ -57,7 +59,7 @@ const ButtonOnImage = styled.div`
 
   // img { max-width: 100%; max-height: 100vh; width: 100%; height: 100vh; object-fit: fit; } 
   // debug
-  // border: 1px dashed black;
+  border: 1px dashed red;
 `;
 const Banner = styled.div`
   // width:100%;
@@ -246,16 +248,30 @@ export default class Main extends Component {
         <Slider ref={slider => (this.slider = slider)} {...settings}>
           <Banner height={height} >
             <img src={new_banner_step1} />
-            <a href={"/designdetail/5157"}>
-              <ButtonOnImage src={main_banner_1_button} {...{ width: 952 * width / 1920, height: 397 * height / 1080, bottom: 272, right: 130 }} />
-            </a>
+            <ButtonOnImage
+              onClick={() => { window.location.href = "/designdetail/5157" }}
+              src={main_banner_1_button}
+              {...{
+                width: (w / 1920) * 952,
+                height: (h / 1080) * 397,
+                left: (w / 1920) * (1920 - 1000),
+                top: (h / 1080) * (1080 - 600),
+              }}
+            />
           </Banner>
 
           <Banner height={height} >
             <img src={new_banner_step2} />
-            <a href={"/designdetail/5344"}>
-              <ButtonOnImage src={main_banner_2_button} {...{ width: 952 * width / 1920, height: 397 * height / 1080, bottom: 154, right: 85 }} />
-            </a>
+            <ButtonOnImage
+              onClick={() => { window.location.href = "/designdetail/5144" }}
+              src={main_banner_2_button}
+              {...{
+                width: 952 * width / 1920,
+                height: 397 * height / 1080,
+                top: (1080 - 550) * (h / 1080),
+                left: (1920 - 1000) * (w / 1920),
+              }}
+            />
           </Banner>
         </Slider>
       </TEST1>
