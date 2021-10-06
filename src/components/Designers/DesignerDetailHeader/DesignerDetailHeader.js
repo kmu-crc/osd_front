@@ -48,7 +48,7 @@ const LikeDialog = styled.div`
 const Wrapper = styled.div`
     margin-top: 24px;
     margin-left: 38px;
-    margin-right: 38px;
+    // margin-right: 38px;
 
     // margin-top: ${100 + 24}px;
     // margin-left: ${100 + 38}px;
@@ -219,6 +219,7 @@ const Additional = styled.div`
         margin-top: 3px;
     }
     .date {
+        
         width: 100%;
         text-align: right;
         font-weight: normal;
@@ -228,6 +229,12 @@ const Additional = styled.div`
         letter-spacing: 0px;
         color: #777777;
         opacity: 1;
+        .update-date{
+            min-width:max-content;
+        }
+        .create-date{
+            min-width:max-content;
+        }
     }
 `;
 const MyAdditional = styled.div`
