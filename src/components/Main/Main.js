@@ -59,7 +59,7 @@ const ButtonOnImage = styled.div`
 
   // img { max-width: 100%; max-height: 100vh; width: 100%; height: 100vh; object-fit: fit; } 
   // debug
-  border: 1px dashed red;
+  // border: 1px dashed red;
 `;
 const Banner = styled.div`
   // width:100%;
