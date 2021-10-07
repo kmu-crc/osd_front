@@ -452,7 +452,7 @@ class Alarm extends Component {
         }
         else if (item.type === "DESIGN" && item.kinds === "INVITE") {
             return <React.Fragment>
-                <div style={{ width: "75%", display: "flex", justifyContent: "space-between" }}>
+                <div style={{width: "100%", display: "flex", justifyContent: "space-between" }}>
                     <div style={{ display: "flex", flexDirection: "row", fontSize: "10px", fontFamily: "Spoqa Han Sans Neo, Light" }}>
                         <TextFormat txt={item.title} chars={MAXLENGTH - 15} />
                     </div>
