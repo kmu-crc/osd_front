@@ -445,12 +445,17 @@ const ViewContent = styled.div`
       color: #707070;
     }
   }
+  .centering{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
   .LinkFileName {
     line-height: 70px;
     font-size: 20px;
   }
   .iconWrap {
-    display: block;
+    display: flex;
     &::after {
       display: block;
       content: "";
@@ -1494,13 +1499,13 @@ class CardSourceDetail extends Component {
                   </div>
 
                   : (item.type === "FILE" && item.data_type === "video") ?
-                    <span >
+                    <span className="centering">
                       <span className="LinkFileName">{item.file_name}</span>
                       <video
                         key={item.content}
                         className="iconWrap"
-                        width={`${window.innerWidth > 480 ? "640" : window.innerWidth - 55}`}
-                        height={`${window.innerWidth > 480 ? "360" : (window.innerWidth - 55) * .55}`}
+                        width={`${window.innerWidth > 480 ? "975" : window.innerWidth - 55}`}
+                        height={`${window.innerWidth > 480 ? "600" : (window.innerWidth - 55) * .55}`}
                         controls="controls">
                         <source src={item.content} type="video/mp4" download={item.file_name}></source></video>
                     </span>

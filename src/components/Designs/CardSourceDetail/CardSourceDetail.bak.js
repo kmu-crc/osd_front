@@ -319,7 +319,7 @@ class CardSourceDetail extends Component {
               ) : item.type === "FILE" && item.data_type === "video" ? (
                 <span>
                   <span className="LinkFileName">{item.file_name}</span>
-                  <video key={index} width="640" height="360" controls="controls" className="iconWrap" >
+                  <video key={index} width="960" height="480" controls="controls" className="iconWrap" >
                     <source src={item.content} type="video/mp4" download={item.file_name}></source>
                   </video>
                 </span>

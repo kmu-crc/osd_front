@@ -22,8 +22,8 @@ ClassicEditor.defaultConfig = {
   alignment: { options: ['left', 'center', 'justify', 'right'] },
   toolbar: { items: ['heading', '|', 'fontSize', /*'fontFamily',*/ 'fontColor', 'fontBackgroundColor', 'bold', 'italic', 'alignment', 'link', 'blockQuote', 'insertTable', 'undo', 'redo'] },
   table: { contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'] },
-  fontSize: { options: [14, 18, 24, 30, 36, 48] },
-  language: 'en'
+  fontSize: { options: [14, 16, 18, 22, 24, 30, 36, 48] },
+  language: 'en',
 };
 
 class TextControllerPlus extends Component {
