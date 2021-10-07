@@ -227,8 +227,8 @@ class FileController extends Component {
           <video
             key={item.content}
             className="iconWrap"
-            width={`${window.innerWidth > 480 ? "640" : window.innerWidth - 55}`}
-            height={`${window.innerWidth > 480 ? "360" : (window.innerWidth - 55) * .55}`}
+            width={`${window.innerWidth > 480 ? "975" : window.innerWidth - 55}`}
+            height={`${window.innerWidth > 480 ? "600" : (window.innerWidth - 55) * .55}`}
             controls="controls">
             <source src={item.content} type="video/mp4" download={item.file_name}></source>
           </video>
