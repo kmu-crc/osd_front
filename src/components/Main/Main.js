@@ -113,7 +113,7 @@ let settings = {
   arrows: true,
 };
 
-const TEST1 = styled.div`
+const SliderWrapper = styled.div`
   position: absolute;
   width: ${props => props.width}px;
   height: ${props => props.height}px;
@@ -150,50 +150,90 @@ const TEST1 = styled.div`
     z-index: 888;
     bottom: 50px;
   }
-  .slick-prev {
-    position: absolute;
-    z-index: 999 !important;
-    top: ${props => props.height - 100}px;
-    left: ${props => props.width * 0.908}px;
-    background-image: url(${new_logo_arrow_left});
-    background-size: cover;
-    opacity: 1 !important;
-  }
-  .slick-next {
-    position: absolute;
-    z-index: 999 !important;
-    top: ${props => props.height - 100}px;
-    left: ${props => props.width * 0.965}px;
-    background-image: url(${new_logo_arrow_right});
-    background-size: cover;
-  }
-  .slick-next:hover, .slick-next:before {
-    position: absolute;
-    z-index: 999 !important;
-    top: ${props => props.height - 100}px;
-    left: ${props => props.width * 0.965}px;
-    background-image: url(${new_logo_arrow_right});
-    background-size: cover;
-    opacity: 1;
-  }
-  .slick-prev:hover, .slick-prev:before {
-    position: absolute;
-    z-index: 999 !important;
-    top: ${props => props.height - 100}px;
-    left: ${props => props.width * 0.908}px;
-    background-image: url(${new_logo_arrow_left});
-    background-size: cover;
-    opacity: 1 !important;
-  }
-  .slick-arrow {
-    // border: 1px dashed red;
+  // .slick-prev {
+  //   position: absolute;
+  //   z-index: 999 !important;
+  //   top: ${props => props.height - 100}px;
+  //   left: ${props => props.width * 0.908}px;
+  //   background-image: url(${new_logo_arrow_left});
+  //   background-size: cover;
+  //   opacity: 1 !important;
+  // }
+  // .slick-next {
+  //   position: absolute;
+  //   z-index: 999 !important;
+  //   top: ${props => props.height - 100}px;
+  //   left: ${props => props.width * 0.965}px;
+  //   background-image: url(${new_logo_arrow_right});
+  //   background-size: cover;
+  // }
+  // .slick-next:hover, .slick-next:before {
+  //   position: absolute;
+  //   z-index: 999 !important;
+  //   top: ${props => props.height - 100}px;
+  //   left: ${props => props.width * 0.965}px;
+  //   background-image: url(${new_logo_arrow_right});
+  //   background-size: cover;
+  //   opacity: 1;
+  // }
+  // .slick-prev:hover, .slick-prev:before {
+  //   position: absolute;
+  //   z-index: 999 !important;
+  //   top: ${props => props.height - 100}px;
+  //   left: ${props => props.width * 0.908}px;
+  //   background-image: url(${new_logo_arrow_left});
+  //   background-size: cover;
+  //   opacity: 1 !important;
+  // }
+  // .slick-arrow {
+  //   // border: 1px dashed red;
+  //   width: 45px;
+  //   height: 45px;
+  // }
+`;
+const NaviBox = styled.div`
+  width: 125px;
+  height: 64px;
+  position: absolute; 
+  z-index: 999 !important;
+  top: ${props => props.top}px;
+  left: ${props => props.left}px;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  .arrow-prev {
     width: 45px;
     height: 45px;
+    background-image: url(${new_logo_arrow_left});
+    background-size: cover;
+    cursor: pointer;
   }
+  .arrow-pause {
+    width: 35px;
+    height: 64px;
+    background-image: url(${new_logo_pause});
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+  .arrow-next {
+    width: 45px;
+    height: 45px;
+    background-image: url(${new_logo_arrow_right});
+    background-size: cover;
+    cursor: pointer;
+  }
+
+  // debug
+  // border: 1px dashed black;
 `;
 const MainScrollWrapper = styled.div`
   margin-top: ${props => props.marginTop}px;
   width: ${props => props.width}px;
+  // debug
   // border: 1px dashed #0ABCDF;
 `;
 
@@ -231,6 +271,16 @@ export default class Main extends Component {
     }
     this.setState({ play: !this.state.play, });
   }
+  next = () => {
+    if (this.slider) {
+      this.slider.slickNext();
+    }
+  }
+  prev = () => {
+    if (this.slider) {
+      this.slider.slickPrev();
+    }
+  }
 
   render() {
     const { w, h } = this.state;
@@ -243,8 +293,13 @@ export default class Main extends Component {
 
     return (<React.Fragment>
 
-      <TEST1 width={width} height={height}>
-        <div className="pause" onClick={this.gostop} />
+      <SliderWrapper width={width} height={height} >
+        <NaviBox top={height - (98)} left={width - (158)}>
+          <div className="arrow-prev" onClick={this.prev}></div>
+          <div className="arrow-pause" onClick={this.gostop}></div>
+          <div className="arrow-next" onClick={this.next}></div>
+        </NaviBox>
+        {/* <div className="pause" onClick={this.gostop} /> */}
         <Slider ref={slider => (this.slider = slider)} {...settings}>
           <Banner height={height} >
             <img src={new_banner_step1} />
@@ -252,10 +307,10 @@ export default class Main extends Component {
               onClick={() => { window.location.href = "/designdetail/5157" }}
               src={main_banner_1_button}
               {...{
-                width: (w / 1920) * 952,
-                height: (h / 1080) * 397,
-                left: (w / 1920) * (1920 - 1000),
-                top: (h / 1080) * (1080 - 600),
+                width: 952,
+                height: 397,
+                top: height - 500,//(h / 1080) * (1080 - 600),
+                left: width - 1000,// (w / 1920) * (1920 - 1000),
               }}
             />
           </Banner>
@@ -263,18 +318,19 @@ export default class Main extends Component {
           <Banner height={height} >
             <img src={new_banner_step2} />
             <ButtonOnImage
+              // style={{ backgroundColor: "skyblue", border: "1px dashed blue" }}
               onClick={() => { window.location.href = "/designdetail/5144" }}
               src={main_banner_2_button}
               {...{
-                width: 952 * width / 1920,
-                height: 397 * height / 1080,
-                top: (1080 - 550) * (h / 1080),
-                left: (1920 - 1000) * (w / 1920),
+                width: 870,//952 * width / 1920,
+                height: 410,//397 * height / 1080,
+                top: height - 516,//(1080 - 516) * (h / 1080),
+                left: width - 965,//(1920 - 965) * (w / 1920),
               }}
             />
           </Banner>
         </Slider>
-      </TEST1>
+      </SliderWrapper>
 
       <MainScrollWrapper width={widthScroll} marginTop={height}>
         <div style={{ marginLeft: "10px" }}>
