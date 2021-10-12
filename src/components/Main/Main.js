@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import TopDesignListContainer from "containers/Designs/TopDesignListContainer";
 import TopGroupListContainer from "containers/Groups/TopGroupListContainer";
 import MainMyDesignListContainer from "containers/Designs/MainMyDesignContainer";
@@ -12,30 +12,17 @@ import new_logo_pause from "source/new_logo_pause.svg";
 
 import new_banner_step1 from "source/new_banner_step1x.png";
 import new_banner_step2 from "source/new_banner_step2x.png";
+import new_banner_step3 from "source/new_banner_step3x.png";
 import main_banner_1_button from "source/main-banner-1-button.png";
 import main_banner_2_button from "source/main-banner-2-button.png";
-
-// import new_banner_upper01 from "source/new_banner_upper01.png";
+import main_banner_3_button from "source/main-banner-3-button.png";
+// import main_banner_3_button_ from "source/main-banner-3-button_.png";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const Pause = styled.div`
-  background-color: red;
-  border: 2px dashed black;
 
-  max-width: 34px;
-  width: 34px;
-  height: 64px;
-  position: absolute;
-  z-index: 999 !important;
-  top: 968px;
-  left: 94%;
-  background-image: url(${new_logo_pause});
-  background-size: cover;
-  cursor: pointer;
-`;
 const ButtonOnImage = styled.div`
   position: absolute;
   // min-width: 1000px;
@@ -150,46 +137,6 @@ const SliderWrapper = styled.div`
     z-index: 888;
     bottom: 50px;
   }
-  // .slick-prev {
-  //   position: absolute;
-  //   z-index: 999 !important;
-  //   top: ${props => props.height - 100}px;
-  //   left: ${props => props.width * 0.908}px;
-  //   background-image: url(${new_logo_arrow_left});
-  //   background-size: cover;
-  //   opacity: 1 !important;
-  // }
-  // .slick-next {
-  //   position: absolute;
-  //   z-index: 999 !important;
-  //   top: ${props => props.height - 100}px;
-  //   left: ${props => props.width * 0.965}px;
-  //   background-image: url(${new_logo_arrow_right});
-  //   background-size: cover;
-  // }
-  // .slick-next:hover, .slick-next:before {
-  //   position: absolute;
-  //   z-index: 999 !important;
-  //   top: ${props => props.height - 100}px;
-  //   left: ${props => props.width * 0.965}px;
-  //   background-image: url(${new_logo_arrow_right});
-  //   background-size: cover;
-  //   opacity: 1;
-  // }
-  // .slick-prev:hover, .slick-prev:before {
-  //   position: absolute;
-  //   z-index: 999 !important;
-  //   top: ${props => props.height - 100}px;
-  //   left: ${props => props.width * 0.908}px;
-  //   background-image: url(${new_logo_arrow_left});
-  //   background-size: cover;
-  //   opacity: 1 !important;
-  // }
-  // .slick-arrow {
-  //   // border: 1px dashed red;
-  //   width: 45px;
-  //   height: 45px;
-  // }
 `;
 const NaviBox = styled.div`
   width: 125px;
@@ -301,7 +248,25 @@ export default class Main extends Component {
         </NaviBox>
         {/* <div className="pause" onClick={this.gostop} /> */}
         <Slider ref={slider => (this.slider = slider)} {...settings}>
-          <Banner height={height} >
+
+          {/* tech pocket */}
+          {/* <Banner height={height} >
+            <img src={new_banner_step2} />
+            <ButtonOnImage
+              // style={{ backgroundColor: "skyblue", border: "1px dashed blue" }}
+              onClick={() => { window.location.href = "/designdetail/5344" }}
+              src={main_banner_2_button}
+              {...{
+                width: 870,//952 * width / 1920,
+                height: 410,//397 * height / 1080,
+                top: height - 516,//(1080 - 516) * (h / 1080),
+                left: width - 965,//(1920 - 965) * (w / 1920),
+              }}
+            />
+          </Banner> */}
+
+          {/* open source design */}
+          {/* <Banner height={height} >
             <img src={new_banner_step1} />
             <ButtonOnImage
               onClick={() => { window.location.href = "/designdetail/5157" }}
@@ -313,22 +278,33 @@ export default class Main extends Component {
                 left: width - 1000,// (w / 1920) * (1920 - 1000),
               }}
             />
+          </Banner> */}
+
+          {/* crc */}
+          <Banner height={height}>
+            <img src={new_banner_step3} />
+            <ButtonOnImage
+              onClick={() => { window.location.href = "/designdetail/5343" }}
+              src={main_banner_3_button}
+              {...{
+                width: 884,
+                height: 346,
+                top: height - 490,
+                left: 126,
+              }}
+            >
+              <div style={{
+                position: "absolute",
+                left: "73px", bottom: "0px",
+                padding: "0px",
+                width: "208px", height: "55px",
+                backgroundColor: "rgba(84,134,199,0.52)",
+                alignItems: "center", textAlign: "center",
+                color: "#fff", fontSize: "33px", lineHeight: "55px", fontFamily: "Spoqa Han Sans Neo", fontWeight: "700"
+              }}>자세히 보기</div>
+            </ButtonOnImage>
           </Banner>
 
-          <Banner height={height} >
-            <img src={new_banner_step2} />
-            <ButtonOnImage
-              // style={{ backgroundColor: "skyblue", border: "1px dashed blue" }}
-              onClick={() => { window.location.href = "/designdetail/5144" }}
-              src={main_banner_2_button}
-              {...{
-                width: 870,//952 * width / 1920,
-                height: 410,//397 * height / 1080,
-                top: height - 516,//(1080 - 516) * (h / 1080),
-                left: width - 965,//(1920 - 965) * (w / 1920),
-              }}
-            />
-          </Banner>
         </Slider>
       </SliderWrapper>
 

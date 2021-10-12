@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import styled from "styled-components"
-import Logo from "source/logo.png";
+import Logo from "source/osd_logo.png";
 
 const LoadingIconBox = styled.div`
   width:100px;

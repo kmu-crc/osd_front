@@ -12,7 +12,7 @@ import noface from "source/thumbnail.png";
 import Cross from "components/Commons/Cross";
 import Loading from "components/Commons/Loading";
 import { Dropdown, Modal } from "semantic-ui-react";
-import Logo from "source/logo.png"
+import Logo from "source/osd_logo.png"
 import CheckBox2 from "components/Commons/CheckBox";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
 import ReactCrop from 'react-image-crop';
