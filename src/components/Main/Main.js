@@ -250,7 +250,7 @@ export default class Main extends Component {
         <Slider ref={slider => (this.slider = slider)} {...settings}>
 
           {/* tech pocket */}
-          {/* <Banner height={height} >
+          <Banner height={height} >
             <img src={new_banner_step2} />
             <ButtonOnImage
               // style={{ backgroundColor: "skyblue", border: "1px dashed blue" }}
@@ -263,10 +263,10 @@ export default class Main extends Component {
                 left: width - 965,//(1920 - 965) * (w / 1920),
               }}
             />
-          </Banner> */}
+          </Banner>
 
           {/* open source design */}
-          {/* <Banner height={height} >
+          <Banner height={height} >
             <img src={new_banner_step1} />
             <ButtonOnImage
               onClick={() => { window.location.href = "/designdetail/5157" }}
@@ -278,7 +278,7 @@ export default class Main extends Component {
                 left: width - 1000,// (w / 1920) * (1920 - 1000),
               }}
             />
-          </Banner> */}
+          </Banner>
 
           {/* crc */}
           <Banner height={height}>
