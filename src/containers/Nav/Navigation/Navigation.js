@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components";
 import MenuContext from "Global/Context/GlobalContext"
 
 import Message from "components/Header/Message"
-import logo from "source/logo.png"
+import logo from "source/osd_logo.png"
 import AlarmContainer from "containers/Header/AlarmContainer"
 import SearchForm from "components/Header/SearchForm"
 import SignNav from "components/Header/SignNav"
