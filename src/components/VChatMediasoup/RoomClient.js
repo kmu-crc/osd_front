@@ -1211,6 +1211,8 @@ export default class RoomClient {
 					}
 				});
 
+			console.log({ stream });
+
 			// May mean cancelled (in some implementations).
 			if (!stream) {
 				store.dispatch(

@@ -1,6 +1,6 @@
 {
   "name": "osd_front",
-  "version": "2.10.0",
+  "version": "2.15.0",
   "private": true,
   "dependencies": {
     "@babel/core": "7.6.0",
@@ -85,6 +85,7 @@
     "react-addons-update": "^15.6.2",
     "react-app-polyfill": "^1.0.6",
     "react-awesome-modal": "^2.0.5",
+    "react-cache-buster": "^0.1.5",
     "react-confirm": "^0.1.20",
     "react-cookie": "^4.0.3",
     "react-cookies": "^0.1.1",
@@ -143,11 +144,12 @@
   },
   "scripts": {
     "generate-build-version": "node generate-build-version",
+    "generate-meta-tag": "node ./node_modules/react-cache-buster/dist/generate-meta-tag.js",
     "prebuild": "npm run generate-build-version",
     "start": "HTTPS=true REACT_APP_TYPE=aws node scripts/start.js",
     "local": "REACT_APP_TYPE=local node scripts/start.js",
     "dev": "HTTPS=true REACT_APP_TYPE=aws_dev node scripts/start.js",
-    "build": "REACT_APP_VERSION=$npm_package_version REACT_APP_BUILD=true REACT_APP_TYPE=aws node scripts/build.js",
+    "build": "yarn generate-meta-tag && REACT_APP_VERSION=$npm_package_version REACT_APP_BUILD=true REACT_APP_TYPE=aws node scripts/build.js",
     "DevBuild": "HTTPS=true REACT_APP_BUILD=true REACT_APP_TYPE=aws_dev node scripts/build.js",
     "test": "node scripts/test.js"
   },

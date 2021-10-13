@@ -8,7 +8,7 @@ import ResetPwForm from "components/Registration/ResetPwForm";
 import { FindPwRequest } from "redux/modules/account";
 import { Modal } from 'semantic-ui-react';
 import PxtoRem from "modules/PxtoRem";
-
+import Loading from 'components/Commons/Loading';
 // import { SetSession } from "modules/Sessions"
 // import close from "source/close_white.png"
 // import { confirm } from "components/Commons/Confirm/Confirm";
@@ -461,16 +461,22 @@ class SignInModal extends Component {
         console.log(this.state);
     };
     onSubmit = async e => {
-        const email = document.getElementById("reset-email").value();
-        alert(email);
-        return;
-        // e.preventDefault();
-        this.props.FindPwRequest({ email: this.state.email });
+        this.setState({ findPW: false, loading: true });
+        const email = document.getElementById("reset-email").value;
+        if (email.length === 0) {
+            alert('이메일주소를 입력해주세요.');
+            this.setState({ findPW: true, loading: false });
+            return;
+        }
+        await this.props.FindPwRequest({ email: email })
+        alert(`${email}(으)로 재발급된 비밀번호가 전송되었습니다.`);
+        this.setState({ loading: false });
     };
     render() {
         const { open } = this.props
-        const { findPW, email, password, isSavedId, isSavedPassword, isWarning } = this.state;
+        const { loading, findPW, email, password, isSavedId, isSavedPassword, isWarning } = this.state;
         return (<React.Fragment>
+            {loading ? <Loading /> : null}
             <Wrapper isWarning={isWarning}>
                 <div className="content_">
                     <div className="loginBox">
@@ -517,7 +523,7 @@ class SignInModal extends Component {
                         <div className="wrapper">
                             <div className="header">비밀번호 찾기</div>
                             <div className="font_normal">비밀번호를 재발급 하고자는 아이디(메일)를 입력해 주세요.</div>
-                            <InputText className=" marginTop4 " name='reset-email' placeholder="아이디(이메일주소)를 입력하세요" />
+                            <InputText className=" marginTop4 " id='reset-email' placeholder="아이디(이메일주소)를 입력하세요" />
                             <div className="row2 justityCenter marginTop4 relative">
                                 <a onClick={this.onSubmit}> <div className="join_button" >비밀번호 발급</div></a>
                             </div>

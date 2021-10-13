@@ -75,6 +75,9 @@ a{
   min-height: 120px;
   height: 120px;
 }
+.ui.dimmer {
+  position: fixed!important;
+}
 /* .partical-scroll-none::-webkit-scrollbar {
   position: absolute;
   width: 0px;

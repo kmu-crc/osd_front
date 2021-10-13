@@ -236,7 +236,11 @@ class FileController extends Component {
         : null}
 
       {/* file */}
-      {(item.content && (item.data_type !== "video" && item.data_type !== "image"))
+      {(
+        ((item.content && item.content.length > 0) || (item.file && item.file.length > 0))
+        &&
+        (item.data_type !== "video" && item.data_type !== "image")
+      )
         ? <div className="iconWrap">
           <FileIcon
             type={item.file_type}

@@ -873,6 +873,8 @@ class CardSourceDetail extends Component {
   }
   async onSubmit(event) {
 
+    // await this.setState({ loading: true });
+    // return;
     let newContent = [...this.state.content];
     let oldContent = [...this.state.origin];
     // console.log(oldContent);
