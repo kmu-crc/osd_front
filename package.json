@@ -1,6 +1,6 @@
 {
   "name": "osd_front",
-  "version": "2.15.2",
+  "version": "2.15.4",
   "private": true,
   "dependencies": {
     "@babel/core": "7.6.0",
