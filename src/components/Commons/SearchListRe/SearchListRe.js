@@ -16,12 +16,16 @@ const SearchContainer = styled.div`
     // margin-top: 90px;
     // margin-left:100px;
     padding:43px 85px;
-    min-width: 1000px;
-    max-width: 1820px;
+    max-width:1920px;
     width: 100%;
 
     // *{ border: 1px dashed black; }
-
+    @media only screen and (max-width: 1000px) {
+        width: 100vw;
+    }
+    @media only screen and (min-width: 1920px) {
+        width:100vw;
+    }
     .search_header{
         width:100%;
         height:47px;
@@ -88,7 +92,7 @@ const SearchContainer = styled.div`
         width:100%;
         display:flex;
         justify-content:center;
-        padding-left:40px;
+        // padding-left:40px;
         .result{
             max-width:1820px;
             width:100%;

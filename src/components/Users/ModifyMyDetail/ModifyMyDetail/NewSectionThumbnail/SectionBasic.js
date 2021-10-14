@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 import iconEdit from "source/mypage_icon_edit.svg";
-import noimg from "source/modifymypage_nothumbnail.svg";
+import noimg from "source/new_logo_default.png";
 
 const Wrapper = styled.div`
   .header {

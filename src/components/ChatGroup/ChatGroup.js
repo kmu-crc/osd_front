@@ -270,7 +270,7 @@ const Chatting = styled.div`
   .chatBody{
     position: relative;  
     height: auto;
-    border: 1px solid black;  
+    // border: 1px solid black;  
     overflow: hidden;
   }
   .chatBody:after {

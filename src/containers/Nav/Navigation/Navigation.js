@@ -253,6 +253,7 @@ class Navigation extends Component {
                         isSelect={window.location.pathname === '/designer'
                             || window.location.pathname.search("/designer/") > -1 ? true : false
                                 || (window.location.pathname.search('/designerDetail/') > -1 ? true : false)
+                                || (window.location.pathname.search('/designerdetail/') > -1 ? true : false)
                                 || window.location.pathname.search("/createDesigner") > -1 ? true : false
                                     || window.location.pathname.search("/modifyDesigner/") > -1 ? true : false}
                         className="menu_tag marginTop1"><a className="link_tag" href="/designer">디자이너</a></MenuItem>

@@ -78,12 +78,12 @@ class SectionAdditional extends Component {
   shouldComponentUpdate(nextProps) {
     if (this.props.MyDetail !== nextProps.MyDetail) {
       this.setState({
-        categoryLevel1: nextProps.MyDetail.category_level1,
-        categoryLevel2: nextProps.MyDetail.category_level2 == null ? 0 : nextProps.MyDetail.category_level2,
+        categoryLevel1: nextProps.MyDetail.category_level1 == null ? 7 : nextProps.MyDetail.category_level1,
+        categoryLevel2: nextProps.MyDetail.category_level2 == null ? 27 : nextProps.MyDetail.category_level2,
         categoryLevel3: nextProps.MyDetail.category_level3 == null ? 0 : nextProps.MyDetail.category_level3
       });
-      this.props.updateCategory1(nextProps.MyDetail.category_level1);
-      this.props.updateCategory2(nextProps.MyDetail.category_level2 == null ? 0 : nextProps.MyDetail.category_level2);
+      this.props.updateCategory1(nextProps.MyDetail.category_level1 == null ? 7 : nextProps.MyDetail.category_level1);
+      this.props.updateCategory2(nextProps.MyDetail.category_level2 == null ? 27 : nextProps.MyDetail.category_level2);
       this.props.updateCategory3(nextProps.MyDetail.category_level3 == null ? 0 : nextProps.MyDetail.category_level3);
 
 
@@ -114,7 +114,7 @@ class SectionAdditional extends Component {
         nCount++;
       })
     }
-
+    console.log(this.state.categoryLevel2,this.state.categoryLevel1)
     return (<Wrapper id="additional">
       <div className="section">
         <div className="label">카테고리</div>
@@ -130,7 +130,7 @@ class SectionAdditional extends Component {
           </div>
           <div className="cate-wrap">
             {/* {category3Index} */}
-            {category3Index > -1
+            {category3Index > -1 && this.state.categoryLevel2==28
               ? <CategoryDropDown value={this.state.categoryLevel3} ref="dropdown2" selection onChange={this.onChangeCategory3} options={this.props.category3[category3Index]} />
               : null}
           </div>

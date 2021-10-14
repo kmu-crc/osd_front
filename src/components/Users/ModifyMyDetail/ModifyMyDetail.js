@@ -157,7 +157,7 @@ class ModifyMyDetail extends Component {
       change_password: false, selected: 0, loading: false,
       thumbnail: "", thumbnail_name: "", nick_name: "", about_me: "",
       password: "", passwordCheck: "",
-      category_level1: 0, category_level2: 0, category_level3: 0,
+      category_level1: 7, category_level2: 27, category_level3: 0,
       is_designer: false, team: "", career: "", location: "", contact: "", screenWidth: window.innerWidth,
       careerlist: [{ number: 0, task: "", explain: "", during: "" }],
     }
@@ -408,6 +408,8 @@ class ModifyMyDetail extends Component {
     const scrollmenu = scrollmenu_data;
     const { MyDetail } = this.props;
 
+    console.log("=====",this.props);
+    console.log("$$$",this.state);
     return (<Wrapper id="basic">
 
       {/* loading */}
