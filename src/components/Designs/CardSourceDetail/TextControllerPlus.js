@@ -13,6 +13,7 @@ import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import Font from '@ckeditor/ckeditor5-font/src/font';
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
+// import Indent from '@ckeditor/ckeditor5-indent/src/indent';
 // import noimg from "source/noimg.png"
 
 // import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
@@ -20,7 +21,7 @@ ClassicEditor.builtinPlugins = [Essentials, Autoformat, Alignment, Font, Bold, I
 ClassicEditor.defaultConfig = {
   startupFocus: true,
   alignment: { options: ['left', 'center', 'justify', 'right'] },
-  toolbar: { items: ['heading', '|', 'fontSize', /*'fontFamily',*/ 'fontColor', 'fontBackgroundColor', 'bold', 'italic', 'alignment', 'link', 'blockQuote', 'insertTable', 'undo', 'redo'] },
+  toolbar: { items: ['heading', '|', 'indent', 'fontSize', /*'fontFamily',*/ 'fontColor', 'fontBackgroundColor', 'bold', 'italic', 'alignment', 'link', 'blockQuote', 'insertTable', 'undo', 'redo'] },
   table: { contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'] },
   fontSize: { options: [14, 16, 18, 22, 24, 30, 36, 48] },
   language: 'en',
@@ -35,8 +36,8 @@ class TextControllerPlus extends Component {
   }
   onSave = async () => {
     let data = this.edit.editor && this.edit.editor.getData()
-    await this.setState({ content: data,initClick:false });
-    this.props.onBlurOrder&&this.props.onBlurOrder();
+    await this.setState({ content: data, initClick: false });
+    this.props.onBlurOrder && this.props.onBlurOrder();
     this.props.getValue(this.state)
   }
   render() {
