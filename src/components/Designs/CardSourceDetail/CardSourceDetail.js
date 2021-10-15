@@ -1779,11 +1779,14 @@ class CardSourceDetail extends Component {
 
           </Wrapper>);
         })}
-        <AddContent
-          is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
-          getValue={this.onAddValue}
-          order={content.length || 0}
-          open={(data) => this.setState({ addProblem: data })} />
+        {this.props.edit ?
+
+          <AddContent
+            is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
+            getValue={this.onAddValue}
+            order={content.length || 0}
+            open={(data) => this.setState({ addProblem: data })} />
+          : null}
 
         <ButtonContainer>
           {(this.props.edit && this.props.uid) &&
