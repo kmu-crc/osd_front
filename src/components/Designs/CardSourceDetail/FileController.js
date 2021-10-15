@@ -216,7 +216,7 @@ class FileController extends Component {
     return (<FileWrap>
 
       {/* image */}
-      {(contentImg && is_image)
+      {(contentImg != "" && is_image)
         ? <img src={contentImg} alt="이미지" />
         : null}
 
