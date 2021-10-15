@@ -98,6 +98,7 @@ let settings = {
   autoplaySpeed: 4000,
   slidesToScroll: 1,
   arrows: true,
+  pauseOnHover:false,
 };
 
 const SliderWrapper = styled.div`
