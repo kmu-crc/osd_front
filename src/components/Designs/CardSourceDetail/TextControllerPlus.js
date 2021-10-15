@@ -13,15 +13,29 @@ import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import Font from '@ckeditor/ckeditor5-font/src/font';
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
+import Indent from '@ckeditor/ckeditor5-indent/src/indent';
+import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
+import styled from 'styled-components';
 // import noimg from "source/noimg.png"
 
+const Wrapper = styled.div`
+.ck-editor__editable { 
+  height:max-content;
+  min-height:max-content; 
+}
+`
+
 // import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
-ClassicEditor.builtinPlugins = [Essentials, Autoformat, Alignment, Font, Bold, Italic, BlockQuote, Heading, Link, Paragraph, Table, TableToolbar]
+ClassicEditor.builtinPlugins = [Essentials, Autoformat, Alignment, Font, Bold, Italic, BlockQuote, Heading, Link, Paragraph, Table, TableToolbar,Indent,IndentBlock]
 ClassicEditor.defaultConfig = {
   startupFocus: true,
   alignment: { options: ['left', 'center', 'justify', 'right'] },
-  toolbar: { items: ['heading', '|', 'fontSize', /*'fontFamily',*/ 'fontColor', 'fontBackgroundColor', 'bold', 'italic', 'alignment', 'link', 'blockQuote', 'insertTable', 'undo', 'redo'] },
+  toolbar: { items: ['heading', '|', 'fontSize', /*'fontFamily',*/ 'fontColor', 'fontBackgroundColor', 'bold', 'italic', 'alignment','|','outdent','indent','|', 'link', 'blockQuote', 'insertTable', 'undo', 'redo'] },
   table: { contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'] },
+  indentBlock: {
+    offset: 5,
+    unit: 'em'
+  },
   fontSize: { options: [14, 16, 18, 22, 24, 30, 36, 48] },
   language: 'en',
 };
@@ -41,7 +55,9 @@ class TextControllerPlus extends Component {
   }
   render() {
     const { item, id, donotfocus } = this.props;
+    console.log(window.document.getElementsByClassName("ck-editor__editable").styled);
     return (
+      <Wrapper height={window.document.getElementsByClassName("ck-editor__editable").height}>
       <CKEditor
         id={id}
         ref={ref => (this.edit = ref)}
@@ -49,6 +65,7 @@ class TextControllerPlus extends Component {
         onBlur={this.onSave}
         onInit={editor => { donotfocus === false && editor.editing.view.focus(); }}
         editor={ClassicEditor} />
+      </Wrapper>
     );
   }
 }
