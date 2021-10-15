@@ -311,6 +311,23 @@ function IsJsonString(str) {
   }
 }
 // CSS STYLED
+const Wrapper = styled.div`
+  position: relative;
+  width: 100%;
+  border: 2px solid transparent;
+  &:hover {
+    border: 2px dashed ${osdcss.color.grayScale.scale3};
+    background-color: ${osdcss.color.grayScale.scale0};
+    .editBtn {
+      display: block;
+    }
+  }
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+`;
 const ControllerWrap = styled.div`
   position: relative;
   width: 100%;
@@ -330,9 +347,9 @@ const ControllerWrap = styled.div`
 `;
 const UpBtn = styled.button`
  display: none;
- position: absolute;
- top: 0;
- left: 85%;
+//  position: absolute;
+//  top: 0;
+//  left: 85%;
  transform: translate(-50%, 0%);
  border: 0;
  padding: 0;
@@ -356,9 +373,9 @@ const UpBtn = styled.button`
 `;
 const DownBtn = styled.button`
  display: none;
- position: absolute;
- top: 0;
- left: 90%;
+//  position: absolute;
+//  top: 0;
+//  left: 90%;
  transform: translate(-50%, 0%);
  border: 0;
  padding: 0;
@@ -382,9 +399,9 @@ const DownBtn = styled.button`
 `;
 const DelBtn = styled.button`
   display: none;
-  position: absolute;
-  top: 0;
-  left: 95%;
+  // position: absolute;
+  // top: 0;
+  // left: 95%;
   transform: translate(-50%, 0%);
   border: 0;
   padding: 0;
@@ -1481,41 +1498,49 @@ class CardSourceDetail extends Component {
       */}
 
         {/*
-[v] text view edit
-file view edit
-image view edit
-video view edit 
-problem view edit
+  text view edit
+  file view edit
+  image view edit
+  video view edit 
+  problem view edit
 */}
         {content.length > 0 && content.map((item, index) => {
-          const itemEdit = item.user_id == null || (item.user_id === this.props.userInfo && this.props.userInfo.uid);
 
-          return (<div key={index + item} style={{ position: "relative" }}>
-            {/* delete button */}
-            {itemEdit &&
-              <DelBtn
-                type="button"
-                className="editBtn"
-                onClick={() => this.onDelete(item.order)}>
-                <i className="trash alternate icon large" />
-              </DelBtn>}
-            {/* move button */}
-            {content.length - 1 >= item.order && item.order !== 0 ?
-              <UpBtn
-                type="button"
-                className="editBtn"
-                onClick={() => this.moveItem(item.order, item.order - 1)}>
-                <i className="angle up alternate icon large" />
-              </UpBtn> : null}
+          const itemEdit = item.user_id == null || (item.user_id === (this.props.userInfo && this.props.userInfo.uid));
 
-            {content.length - 1 !== item.order && item.order >= 0 ?
-              <DownBtn
-                type="button"
-                className="editBtn"
-                onClick={() => this.moveItem(item.order, item.order + 1)}>
-                <i className="angle down alternate icon large" />
-              </DownBtn> : null}
+          return (<Wrapper key={index + item} >
 
+            {/* button wrapper */}
+            {this.props.edit
+              && <div style={{
+                zIndex: "8888",
+                position: "absolute",
+                display: "flex",
+                flexDirection: "row",
+                width: "max-content",
+                left: "90%",
+              }} >
+                {/* move button */}
+                {content.length - 1 >= item.order && item.order !== 0 ?
+                  <UpBtn
+                    type="button"
+                    className="editBtn"
+                    onClick={() => this.moveItem(item.order, item.order - 1)}>
+                    <i className="angle up alternate icon large" />
+                  </UpBtn>
+                  : null}
+
+                {content.length - 1 !== item.order && item.order >= 0 ?
+                  <DownBtn type="button" className="editBtn" onClick={() => this.moveItem(item.order, item.order + 1)}>
+                    <i className="angle down alternate icon large" />
+                  </DownBtn>
+                  : null}
+
+                {/* delete button */}
+                {itemEdit &&
+                  <DelBtn type="button" className="editBtn" onClick={() => this.onDelete(item.order)}> <i className="trash alternate icon large" /> </DelBtn>
+                }
+              </div>}
             {/* item unique id: {item.uid}, permission: {item.user_id}, type: {item.type}, */}
 
             {/* text-controller */}
@@ -1539,8 +1564,9 @@ problem view edit
                       lineHeight: `${this.state.fontratio * 1.2}rem`
                     }}
                     dangerouslySetInnerHTML={{
-                      __html: `${item.content == null ? "&nbsp;" :
-                        item.content
+                      __html: `${(item.content == null || item.content.replace(" ", "").length === 0)
+                        ? "<center><p style=\"color:gray\">(빈 텍스트)</p></center>"
+                        : item.content
                           .replace(/font-size:14px;/g, `font-size:${0.875 * this.state.fontratio}rem;`)
                           .replace(/font-size:18px;/g, `font-size:${1.125 * this.state.fontratio}rem;`)
                           .replace(/font-size:24px;/g, `font-size:${1.500 * this.state.fontratio}rem;`)
@@ -1751,12 +1777,12 @@ problem view edit
 
 
 
-          </div>);
+          </Wrapper>);
         })}
         <AddContent
           is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
           getValue={this.onAddValue}
-          order={content.length}
+          order={content.length || 0}
           open={(data) => this.setState({ addProblem: data })} />
 
         <ButtonContainer>
