@@ -804,6 +804,7 @@ class CardSourceDetail extends Component {
   }
   ///////////
   async onChangeFile(data) {
+    console.log({ data });
     await this.setState({ loading: !this.state.loading });
     let copyContent = [...this.state.content];
     delete data.initClick;
@@ -919,6 +920,8 @@ class CardSourceDetail extends Component {
           // }
           if (old.content !== item.content) {
             formData.updateContent.push(item);
+          } else if (old.option !== item.option) {
+            formData.updateContent.push(item);
           }
         }
       })
@@ -955,7 +958,6 @@ class CardSourceDetail extends Component {
         formData.deleteContent.push(item);
       }
     })
-
     // edit
     await this.setState({ loading: true });
 
@@ -1607,15 +1609,23 @@ class CardSourceDetail extends Component {
                       }}
                     >
                       {/* <Zoom > */}
-                      <img src={item.content} alt="이미지" download={item.file_name} />
+                      <div style={{ width: "100%", overflow: "auto", display: "flex", flexDirection: "row", justifyContent: `${(item.option && item.option.split(",")[0]) || "center"}` }}>
+                        {(item.option && item.option.split(",")[1] === "scale")
+                          ? <img style={{ width: "100%", objectFit: "contain" }} src={item.content} alt="이미지" download={item.file_name} />
+                          : <img style={{ objectFit: "contain" }} src={item.content} alt="이미지" download={item.file_name} />
+                        }
+                      </div>
+                      {/* <img src={item.content} alt="이미지" /> */}
                       {/* </Zoom> */}
                       {/* <p>이미지를 클릭하시면 원본크기로 보실 수 있습니다.</p> */}
                     </div>
 
                     :
                     (item.type === "FILE" && item.data_type === "video") ?
-                      <span className="centering">
-                        <span className="LinkFileName">{item.file_name}</span>
+                      <div style={{ width: "100%", overflow: "auto", display: "flex", flexDirection: "column", justifyContent: `${(item.option && item.option.split(",")[0]) || "center"}` }}>
+                        <span className="centering">
+                          <span className="LinkFileName">{item.file_name}</span>
+                        </span>
                         <video
                           key={item.content}
                           className="iconWrap"
@@ -1623,7 +1633,7 @@ class CardSourceDetail extends Component {
                           height={`${window.innerWidth > 480 ? "600" : (window.innerWidth - 55) * .55}`}
                           controls="controls">
                           <source src={item.content} type="video/mp4" download={item.file_name}></source></video>
-                      </span>
+                      </div>
                       : (item.type === "FILE" && item.extension === "pdf") ?
                         <React.Fragment>
                           <div style={{ display: "flex", flexDirection: "flex-end" }}>
@@ -1779,11 +1789,14 @@ class CardSourceDetail extends Component {
 
           </Wrapper>);
         })}
-        <AddContent
-          is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
-          getValue={this.onAddValue}
-          order={content.length || 0}
-          open={(data) => this.setState({ addProblem: data })} />
+        {this.props.edit ?
+
+          <AddContent
+            is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
+            getValue={this.onAddValue}
+            order={content.length || 0}
+            open={(data) => this.setState({ addProblem: data })} />
+          : null}
 
         <ButtonContainer>
           {(this.props.edit && this.props.uid) &&

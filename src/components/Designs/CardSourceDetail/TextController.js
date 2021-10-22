@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import opendesign_style from 'opendesign_style';
-import middle from "source/middle.png";
-import right from "source/right.png";
-import left from "source/left.png";
+import middle from "source/alignment_middle.png";
+import right from "source/alignment_right.png";
+import left from "source/alignment_left.png";
 import bold from "source/bold.png";
 import italic from "source/italic.png";
 import underline from "source/underline.png";
