@@ -118,6 +118,7 @@ class FileController extends Component {
   }
 
   async shouldComponentUpdate(nextProps) {
+    // alert("gotchanged");
     let newProp = { ...this.props.item };
     delete newProp.target;
     let copyProps = { ...nextProps.item };
@@ -132,7 +133,7 @@ class FileController extends Component {
       };
       if (!copyProps.uid) {
         obj.uid = null;
-        obj.fileUrl = "";
+        // obj.fileUrl = "";
       }
       await this.setInit(obj);
     } else if (
@@ -257,6 +258,7 @@ class FileController extends Component {
 
   returnData = async e => {
     if (this.props.getValue) {
+      console.log("DEBUG::", this.state, this.props.item);
       await this.props.getValue(this.state);
     }
     if (e && this.props.onBlur) await this.props.onBlur();
@@ -269,14 +271,16 @@ class FileController extends Component {
       await this.setState({ option: `${this.state.option.split(",")[0]},${scale}` });
     }
     this.returnData(null);
-  }
+  };
   handleClickedAlignOption = async align => {
     await this.setState({ option: `${align},${this.state.option.split(",")[1]}` });
     this.returnData(null);
-  }
+  };
+
   render() {
-    console.log("FileController:", this.props.item);
-    console.log("THIS-STATE", this.state.option);
+    // console.log("FileController:", this.props.item);
+    // console.log("THIS-STATE", this.state.option);
+
     const { item } = this.props;
     const { is_image } = this.state;
 
@@ -307,6 +311,11 @@ class FileController extends Component {
 
     const { option } = this.state;
     return (<FileWrap >
+
+      {/* <br />
+      is_image: {(is_image || item.is_image) ? "yes" : "no"}<br />
+      contentImg: {contentImg != "" ? "yes" : "no"}<br />
+      <br /> */}
 
       {/* image */}
       {(contentImg != "" && is_image)
