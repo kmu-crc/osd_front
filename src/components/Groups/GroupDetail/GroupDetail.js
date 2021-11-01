@@ -49,6 +49,13 @@ const BodyWrapper = styled.div`
     flex-direction: row;
     justify-content: space-between;
   }
+  max-width:1740px;
+  @media only screen and (max-width: 1000px) {
+    width: 100vw;
+  }
+  @media only screen and (min-width: 1920px) {
+      width:100vw;
+  }
 `;
 const TabMenu = styled.div`
     display: flex;

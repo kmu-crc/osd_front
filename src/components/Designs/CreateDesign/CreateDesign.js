@@ -1321,11 +1321,11 @@ class CreateDesign extends Component {
                 onClick={()=> this.setState({ step: 0 })}
             >{scrollmenu[0].txt}</div>
             <div className={`navi_label borderBottom ${this.state.step==1?"select":"black"}`}  
-                onClick={()=> this.setState({ step: 1 })}
-            >{scrollmenu[1].txt}</div>
+                  onClick={() => this.state.basic ?this.setState({ step: 1 }) :alert("기본 정보의 필수항목(*)을 입력하셔야 합니다.")}
+                  >{scrollmenu[1].txt}</div>
             <div className={`navi_label ${this.state.step==2?"select":"black"}`} 
-                onClick={()=> this.setState({ step: 2 })}
-            >{scrollmenu[2].txt}</div>
+                  onClick={() => this.state.additional ? this.setState({ step: 2 }) : alert("부가 정보의 필수항목(*)을 입력하셔야 합니다.")}
+                  >{scrollmenu[2].txt}</div>
           </div>
           {/* <div className="navi_menu">
             <div className="navi_header">디자인 등록하기</div>
