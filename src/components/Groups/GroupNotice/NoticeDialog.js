@@ -155,7 +155,7 @@ const NoticeListWrapper = styled.div`
         .header-title { 
             height:28px;
             text-align: left; 
-            width: 890%;
+            width: 89%;
             padding-left:110px;
             display:flex;
             align-items:center;
@@ -192,13 +192,19 @@ const NoticeListWrapper = styled.div`
             min-width:max-content;
         }
         .row-title { 
-            max-width:650px;
+            height:28px;
             text-align: left; 
-            padding-left:120px;
-            width: 92%;
-            white-space: nowrap; 
-            text-overflow: ellipsis; 
-            overflow:hidden;
+            width: 89%;
+            padding-left:110px;
+            display:flex;
+            align-items:center;
+            // max-width:650px;
+            // text-align: left; 
+            // padding-left:120px;
+            // width: 92%;
+            // white-space: nowrap; 
+            // text-overflow: ellipsis; 
+            // overflow:hidden;
         }
         .create_time { 
             text-align: center; 
@@ -458,6 +464,7 @@ d      pagination
                             <TextController
                                 donotfocus
                                 item={{ content: "" }}
+                                userHeight="230"
                                 getValue={(data) =>
                                     this.onChangeContent(data)} />
                         </div>

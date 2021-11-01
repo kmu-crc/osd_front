@@ -270,13 +270,6 @@ const GroupSummary = styled.div`
             min-width: 150px;
             object-fit: cover;
         }
-        // .content_wrapper{
-        //     margin-right: 38px;
-        //     .header_box {
-        //         width: 100%;
-        //         min-width: 250px;
-        //     }
-        // }
     }
     @media only screen and (min-width: 1301px) and (max-width: 1920px) {
      .content_box { .infoBox { max-width: 900px; } }

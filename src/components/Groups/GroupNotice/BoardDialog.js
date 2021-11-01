@@ -203,10 +203,17 @@ cursor: default;
         min-width:max-content;
     }
     .row-title { 
-        max-width:650px;
         text-align: left; 
-        padding-left:120px;
-        width: 82%;
+        width: 80%;
+        padding-left:110px;
+        margin-right:50px;
+        display:flex;
+        align-items:center;
+        // height:28px;
+        max-width:1000px;
+        // text-align: left; 
+        // padding-left:120px;
+        // width: 82%;
         white-space: nowrap; 
         overflow:hidden;
         text-overflow: ellipsis; 
@@ -487,6 +494,7 @@ export default class BoardDialog extends Component {
                             <div>
                                 <TextController
                                     donotfocus
+                                    userHeight="230"
                                     item={{ content: "" }}
                                     getValue={(data) =>
                                         this.onChangeContent(data)} />

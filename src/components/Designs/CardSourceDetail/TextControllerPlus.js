@@ -21,7 +21,7 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
 .ck-editor__editable { 
   height:max-content;
-  min-height:max-content; 
+  min-height:${props=>props.userHeight == null ?"max-content":props.userHeight+"px"}; 
 }
 `
 
@@ -55,9 +55,9 @@ class TextControllerPlus extends Component {
   }
   render() {
     const { item, id, donotfocus } = this.props;
-    console.log(window.document.getElementsByClassName("ck-editor__editable").styled);
+    console.log(this.props);
     return (
-      <Wrapper height={window.document.getElementsByClassName("ck-editor__editable").height}>
+      <Wrapper height={window.document.getElementsByClassName("ck-editor__editable").height} userHeight={this.props.userHeight}>
       <CKEditor
         id={id}
         ref={ref => (this.edit = ref)}
