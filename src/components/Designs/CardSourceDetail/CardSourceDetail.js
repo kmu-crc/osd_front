@@ -1689,36 +1689,7 @@ class CardSourceDetail extends Component {
             {/* problem controller */}
             {(item.type === "PROBLEM")
               ? itemEdit
-                ? <ControllerWrap>
-                  <ProblemContainer
-                    open={this.state.addProblem}
-                    openModal={async (show) => {
-                      this.setState({ addProblem: show });
-                      if (show === false && item.content === "") {
-                        let copyContent = [...this.state.content];
-                        for (var i = 0; i < copyContent.length; i++) {
-                          if (copyContent[i].type === "PROBLEM" && copyContent[i].content === "") {
-                            copyContent.splice(i, 1);
-                          }
-                        }
-                        for (i = 0; i < copyContent.length; i++) {
-                          copyContent[i].order = i;
-                        }
-                        await this.setState({ content: copyContent });
-                        this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
-                        // console.log("csd:", item);
-                      }
-                    }}
-                    item={item}
-                    initClick={this.state.click}
-                    getValue={(data) => {
-                      if (data != null) {
-                        this.onChangeValue(data, item.order)
-                      }
-                    }}
-                  />
-                </ControllerWrap>
-                : <ViewContent>
+                ? <ViewContent>
                   <div className="problemWrap">
 
                     <ProblemBox>
@@ -1782,6 +1753,35 @@ class CardSourceDetail extends Component {
                     </div>
                   </div>
                 </ViewContent>
+                : <ControllerWrap>
+                  <ProblemContainer
+                    open={this.state.addProblem}
+                    openModal={async (show) => {
+                      this.setState({ addProblem: show });
+                      if (show === false && item.content === "") {
+                        let copyContent = [...this.state.content];
+                        for (var i = 0; i < copyContent.length; i++) {
+                          if (copyContent[i].type === "PROBLEM" && copyContent[i].content === "") {
+                            copyContent.splice(i, 1);
+                          }
+                        }
+                        for (i = 0; i < copyContent.length; i++) {
+                          copyContent[i].order = i;
+                        }
+                        await this.setState({ content: copyContent });
+                        this.props.handleUpdate && this.props.handleUpdate(this.props.uid ? this.state : this.state.content);
+                        // console.log("csd:", item);
+                      }
+                    }}
+                    item={item}
+                    initClick={this.state.click}
+                    getValue={(data) => {
+                      if (data != null) {
+                        this.onChangeValue(data, item.order)
+                      }
+                    }}
+                  />
+                </ControllerWrap>
               : null}
 
 
