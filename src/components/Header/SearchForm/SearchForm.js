@@ -7,7 +7,7 @@ import new_logo_zoom_green from "source/new_logo_zoom_green.svg";
 import new_logo_zoom_blue from "source/new_logo_zoom_blue.svg";
 // import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
-import Slider from "react-slick";
+// import Slider from "react-slick";
 
 // const flag_MaxWidth = 1440;
 // const flag_MinWidth = 480;
@@ -88,7 +88,37 @@ const SearchContainer = styled.div`
         min-width: 100px;
         max-width: 450px;
     }
-`
+`;
+// mobile
+const MobileSearchContainer = styled.div`
+    width: 100%;
+    height: 22px;
+    border-radius: 10px;
+    border: 1px solid #C3C3C3;
+
+    position: relative;
+
+    input {
+        height: 20px;
+        width: 170px;
+        margin-left: 7px;
+        // padding-left: 5px;
+        border: none;
+        :focus {
+            outline: none;
+        }
+    }
+
+    img {
+        width: 18px;
+        height: 18px;
+        object-fit: cover;
+        border: none;
+        position: absolute;
+        right: 5px;
+        top: 1px;
+    }
+`;
 class SearchForm extends Component {
     state = {
         searchKeyword: "",
@@ -103,7 +133,7 @@ class SearchForm extends Component {
             if (this.state.searchKeyword.trim() === "") {
                 await alert("검색할 내용을 입력하세요.", "확인");
                 await document.getElementById("searchbox").focus();
-            }else{
+            } else {
                 this.goSearch();
             }
         }
@@ -133,20 +163,50 @@ class SearchForm extends Component {
         }
     }
     render() {
+        const { mobile, mobilesearch, } = this.props;
         return (
-            
-            <SearchContainer formSize={this.props.formWidth} visible={this.props.visible === 1 ? "block" : "none"} >
-                <input className="searchbox" id="searchbox" type="text" placeholder="새로운 디자인을 찾아보세요!" maxLength="100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword} />
-                <img src={
-                    window.location.pathname.indexOf("/group")!=-1? new_logo_zoom_green
-                    :window.location.pathname.indexOf("/designer")!=-1? new_logo_zoom_purple
-                    :window.location.pathname.indexOf("/my")!=-1? new_logo_zoom_red 
-                    :window.location.pathname.indexOf("/design")!=-1? new_logo_zoom_blue
-                    :new_logo_zoom_red
-                } className="icon_zoom"  onClick={this.onClickedIcon}/>
-                {/* <div className="shadow_button" onClick={this.onClickedIcon} />
+
+            mobile
+                ? <MobileSearchContainer>
+                    <input
+                        className="searchbox"
+                        id="searchbox"
+                        type="text"
+                        placeholder="새로운 디자인을 찾아보세요!"
+                        maxLength="100"
+                        onChange={this.handleKeyDown}
+                        onKeyDown={this.submitEnter}
+                        value={this.state.searchKeyword} />
+                    <a onClick={() => this.mobileGoSearchPage()}>
+                        <img src={mobilesearch} />
+                    </a>
+                </MobileSearchContainer>
+
+                : <SearchContainer
+                    formSize={this.props.formWidth}
+                    visible={this.props.visible === 1 ? "block" : "none"} >
+
+                    <input
+                        className="searchbox"
+                        id="searchbox"
+                        type="text"
+                        placeholder="새로운 디자인을 찾아보세요!"
+                        maxLength="100"
+                        onChange={this.handleKeyDown}
+                        onKeyDown={this.submitEnter}
+                        value={this.state.searchKeyword} />
+
+                    <img src={window.location.pathname.indexOf("/group") != -1 ? new_logo_zoom_green
+                        : window.location.pathname.indexOf("/designer") != -1 ? new_logo_zoom_purple
+                            : window.location.pathname.indexOf("/my") != -1 ? new_logo_zoom_red
+                                : window.location.pathname.indexOf("/design") != -1 ? new_logo_zoom_blue
+                                    : new_logo_zoom_red}
+                        className="icon_zoom"
+                        onClick={this.onClickedIcon} />
+
+                    {/* <div className="shadow_button" onClick={this.onClickedIcon} />
                 <input id="searchbox" type="text" placeholder={this.props.formWidth > 1200 ? "Search..." : ""} maxLength="100" onChange={this.handleKeyDown} onKeyDown={this.submitEnter} value={this.state.searchKeyword} /> */}
-            </SearchContainer>)
+                </SearchContainer>);
     }
 }
 
