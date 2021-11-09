@@ -7,7 +7,9 @@ import SignInContainer from "containers/Registration/SignInContainer";
 // import MenuContext from "Global/Context/GlobalContext"
 
 // mobile
-import { Dimmer, } from 'semantic-ui-react'
+// import { Dimmer, } from 'semantic-ui-react'
+import { MOBILE_WIDTH, SLIDE_MENU_WIDTH } from "constant";
+import cookie from 'react-cookies';
 
 const OpenAni = keyframes`
   0% {
@@ -99,16 +101,37 @@ const Wrapper = styled.div`
 `;
 
 // mobile
-const MOBILE_WIDTH = 360;
+const fadein = keyframes`
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:0.5;
+  }
+`;
+const Back = styled.div`
+  display:${props => props.visible == true ? "block" : "none"};
+  z-index: 100;
+  position:fixed;
+  width:${window.innerWidth}px;
+  height:${window.innerHeight}px;
+  opacity:0.5;
+  background:transparent linear-gradient(180deg, #707070 0%, #383838 100%) 0% 0% no-repeat padding-box;  
+  animation-name: ${fadein};
+  animation-duration:1s;
+  animation-direction:alternate;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
+
+`
 const MobileWrapper = styled.div`
   z-index: 8888;
   width: ${MOBILE_WIDTH}px;
-  border: 1px dashed blue;
   position: relative;
 `;
 const MobileOpenAni = keyframes`
   0% {
-    left: -100px;
+    left: ${-1 * SLIDE_MENU_WIDTH}px;
   }
   100% {
     left: 0px;
@@ -119,14 +142,14 @@ const MobileCloseAni = keyframes`
     left: 0px;
   }
   100% {
-    left: -100px;
+    left: ${-1 * SLIDE_MENU_WIDTH}px;
   }
 `;
 const MobileNavigationAni = styled.div`
   position: fixed;
   height: 100%;
   z-index: 902;
-  animation-name: ${props => props.sidemenu == true ? MobileOpenAni : MobileCloseAni};
+  animation-name: ${props => props.sidemenu ? MobileOpenAni : MobileCloseAni};
   animation-duration: 1s;
   animation-direction: alternate;
   animation-fill-mode: forwards;
@@ -134,7 +157,9 @@ const MobileNavigationAni = styled.div`
 `;
 const MobileClient = styled.div`
 `;
+
 const isMobile = () => MOBILE_WIDTH >= window.innerWidth;
+
 class ClientTemplate extends Component {
   constructor(props) {
     super(props);
@@ -145,12 +170,17 @@ class ClientTemplate extends Component {
       hidemenu: false,
       prevScroll: 0,
       screenWidth: window.innerWidth,
-      sidemenu: isMobile() ? false : true,
+      sidemenu: cookie.load("side-menu"),
       login: null,
     }
     this.onClickFoldingSideMenu = this.onClickFoldingSideMenu.bind(this);
   }
   componentDidMount() {
+    const sidemenu = cookie.load("side-menu");
+    if (sidemenu === undefined) {
+      cookie.save("side-menu", "open");
+      this.setState({ sidemenu: "open" });
+    }
     window.addEventListener("resize", this.handleResize, false);
   }
   onClose = e => {
@@ -199,7 +229,9 @@ class ClientTemplate extends Component {
     this.setState({ screenWidth: window.innerWidth });
   }
   onClickFoldingSideMenu = async () => {
-    await this.setState({ sidemenu: !this.state.sidemenu });
+    // const sidemenu = await cookie.load("side-menu");
+    await this.setState({ sidemenu: this.state.sidemenu === "open" ? "close" : "open" });
+    await cookie.save("side-menu", this.state.sidemenu, { path: "/" });
   }
 
   render() {
@@ -214,36 +246,34 @@ class ClientTemplate extends Component {
     // Todo: sidemenu 쿠키에서 가져오도록 변경할 것!
 
     return (<React.Fragment>
-
       {isMobile()
 
         ? <MobileWrapper>
-
+          {<Back visible={this.state.sidemenu === "open"} />}
           {/* login */}
           {/* not yet */}
 
           {/* navi */}
-          <MobileNavigationAni sidemenu={this.state.sidemenu} >
+          <MobileNavigationAni sidemenu={this.state.sidemenu === "open"} >
             <div style={{ position: "absolute", height: "100%", width: "160px", }}>
               <NavigationContainer
                 mobile={true}
-                sidemenu={this.state.sidemenu}
+                sidemenu={this.state.sidemenu === "open"}
                 onClickFolding={this.onClickFoldingSideMenu}
               />
             </div>
           </MobileNavigationAni>
-
           {/* header */}
           <HeaderContainer
             // this.setState({ login: this.state.login == null ? true : !this.state.login })}
             onClickLogin={() => alert("아직임!")}
             isLogin={this.state.login}
-            sidemenu={this.state.sidemenu}
-            onClickMenu={() => {
-              this.state.login && this.state.sidemenu ?
-                this.setState({ sidemenu: this.state.sidemenu }) :
-                this.setState({ sidemenu: !this.state.sidemenu })
-            }}
+          //sidemenu={this.state.sidemenu}
+          //onClickMenu={() => {
+          //  this.state.login && this.state.sidemenu ?
+          //    this.setState({ sidemenu: this.state.sidemenu }) :
+          //    this.setState({ sidemenu: !this.state.sidemenu })
+          //}}
           />
 
           {/* client */}

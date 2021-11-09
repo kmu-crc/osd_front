@@ -177,7 +177,7 @@ class SearchForm extends Component {
                         onChange={this.handleKeyDown}
                         onKeyDown={this.submitEnter}
                         value={this.state.searchKeyword} />
-                    <a onClick={() => this.mobileGoSearchPage()}>
+                    <a onClick={() => this.onClickedIcon()}>
                         <img src={mobilesearch} />
                     </a>
                 </MobileSearchContainer>
