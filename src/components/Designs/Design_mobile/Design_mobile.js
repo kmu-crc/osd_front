@@ -11,6 +11,7 @@ import DateFormat from "modules/DateFormat"
 import TextFormat from "modules/TextFormat"
 import NumberFormat from "modules/NumberFormat"
 import { geturl } from "config"
+import Icon from '@material-ui/core/Icon';
 
 const DesignCard = styled.div`
   width: 100px;
@@ -35,7 +36,9 @@ const DesignCard = styled.div`
 
   }
   .info{
-
+    *{
+      color:white;
+    }
     width:100%;
     padding-left:6px;
     padding-right:6px;
@@ -50,9 +53,9 @@ const DesignCard = styled.div`
     .count{
       display:flex;
       align-items:center;
-      margin-top:4px;
-      .icon{width:8px;height:8px;}
-      .text{height:12px;font-size:5px;font-family:SpoqaHanSans;font-weight:400;color:white;margin-left:5px;margin-right:5px;}
+      margin-top:2px;
+      .wrap{height:20px;display:flex;align-items:center;font-size:9px;margin-right:5px;}
+      .icon{width:13px;height:13px;opacity:0.5;margin-right:3px;margin-left:3px;}  
       
     }
   }
@@ -85,12 +88,24 @@ class Design_mobile extends Component {
           <div className="info">
               <div className="title"><TextFormat tip width="100%" txt={data.title} single /></div>
               <div className="count">
-                  <IconView width="6px" height="6px" fill="white" />
+                  <div className="wrap">
+                    <Icon style={{ fontSize: "10px", color:"white" }}>visibility</Icon>
+                    {NumberFormat(data.view_count)}                  
+                  </div>
+                  <div className="wrap">
+                    <Icon style={{ fontSize: "10px", color:"white" }}>favorite_border</Icon>
+                    {NumberFormat(data.like_count)}
+                  </div>
+                  <div className="wrap">
+                    <Icon style={{ fontSize: "10px", color:"white" }}>share</Icon>
+                    {NumberFormat(data.children_count) || 0}
+                  </div>
+                  {/* <IconView width="6px" height="6px" fill="white" />
                   <div className="text">{NumberFormat(data.view_count)}</div>
                   <img className="icon" alt="icon" src={iThumbUp} />
                   <div className="text">{NumberFormat(data.like_count)}</div>
                   <img className="icon" alt="icon" src={iForked} />
-                  <div className="text">{NumberFormat(data.children_count) || 0}</div>
+                  <div className="text">{NumberFormat(data.children_count) || 0}</div> */}
               </div>
           </div>
         </DesignCard>
