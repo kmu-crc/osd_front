@@ -156,6 +156,7 @@ const MobileNavigationAni = styled.div`
   animation-timing-function: ease-out;  
 `;
 const MobileClient = styled.div`
+  width: 100%;
   height: ${window.innerHeight - 39}px;
 
   overflow: scroll;
@@ -166,7 +167,7 @@ const MobileClient = styled.div`
   scrollbar-width: none;  /* Firefox */ 
 `;
 
-const isMobile = () => MOBILE_WIDTH >= window.innerWidth;
+const isMobile = () => 500 >= window.innerWidth;
 
 class ClientTemplate extends Component {
   constructor(props) {
