@@ -156,6 +156,7 @@ const HeaderMenu = styled.div`
 const MobileHeaderMenu = styled.ul`
     z-index: 8888;
     display: flex;
+    justify-content:space-between;
     flex-direction: row;
     // width: 360px;
     width: 100%;

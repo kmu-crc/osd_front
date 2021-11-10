@@ -3,11 +3,12 @@ import Design_mobile from "components/Designs/Design_mobile";
 import Group_mobile from "components/Groups/Group_mobile";
 import Designer_mobile from "components/Designers/Designer_mobile";
 import styled from "styled-components";
-import osdcss from "opendesign_style";
+import osdcss from "opendesign_mobile_style";
 
 const FlexContainer = styled.div`
 padding: 0;
 position: relative;
+padding-left:${props=>props.marginRight};
 margin-left: auto;
 margin-right: auto;
 // @media only screen and (min-width : ${osdcss.newresolutions.mini}px) and (max-width : ${osdcss.newresolutions.small}px) {
@@ -27,12 +28,13 @@ const FlexBox = styled.div`
   flex: 0 0 ${props => props.width}px;
   width: ${props => props.width}px;
   margin-bottom: ${props => props.marginBottom}px;
-  margin-right: ${props => props.marginRight}px;
+  margin-left:${props=>props.marginRight/2}px;
+  margin-right: ${props => props.marginRight/2}px;
   &.bottom-last {
     margin-bottom: ${props => props.marginBottomLast}px;
   }
   &.right-last {
-    margin-right:${props=>props.marginRightLast}px;
+    // margin-right:${props=>props.marginRightLast}px;
   }
   display: inline-block;
   position: relative;
@@ -199,7 +201,9 @@ class ScrollList_mobile extends Component {
           }
         }} >
         {dataListAdded.map((item, i) => {
-          const last = (((i + 1) % cols === 0 && i !== 0) || (cols === 1 && i === 0)) ? "right-last" : "";
+          // const last = (((i + 1) % cols === 0 && i !== 0) || (cols === 1 && i === 0)) ? "right-last" : "";
+          console.log(i,i+1,(i+1)%cols,cols);
+          const last =  (i+1)%cols == 0?"right-last":"";
           const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";
           return (
           

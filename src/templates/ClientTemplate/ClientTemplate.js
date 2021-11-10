@@ -126,8 +126,11 @@ const Back = styled.div`
 `
 const MobileWrapper = styled.div`
   z-index: 8888;
-  width: ${MOBILE_WIDTH}px;
+  // width: ${MOBILE_WIDTH}px;
+  width:100%;
   position: relative;
+  margin-left:auto;
+  margin-right:auto;
 `;
 const MobileOpenAni = keyframes`
   0% {
@@ -156,9 +159,10 @@ const MobileNavigationAni = styled.div`
   animation-timing-function: ease-out;  
 `;
 const MobileClient = styled.div`
-  width: 100%;
+// width: ${MOBILE_WIDTH}px;
+  width:100%;
   height: ${window.innerHeight - 39}px;
-
+  position:relative;
   overflow: scroll;
   ::-webkit-scrollbar {
     display: none;

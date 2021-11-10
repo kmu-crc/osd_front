@@ -36,9 +36,16 @@ const Wrapper = styled.div`
   }
 
 `
-const SliderWrapper = styled.div`
+const SliderBlank=styled.div`
   width:100%;
-  max-height:360px;
+  height:360px;
+`
+const SliderWrapper = styled.div`
+  position:absolute;
+  width: ${window.innerWidth}px;
+  height:360px;
+  left: 0;
+  top: 40;
   .slick-slider{
     height:360px;
   }
@@ -199,6 +206,8 @@ export default class Main_mobile extends Component {
               </Banner>
             </Slider>
           </SliderWrapper>
+          <SliderBlank/>
+
           <TopGroupListContainer_mobile width={widthScroll} />
           <div className="hrline"><div className="line"/></div>
           <TopDesignListContainer_mobile width={widthScroll}/>
