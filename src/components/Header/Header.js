@@ -157,7 +157,8 @@ const MobileHeaderMenu = styled.ul`
     z-index: 8888;
     display: flex;
     flex-direction: row;
-    width: 360px;
+    // width: 360px;
+    width: 100%;
     padding: 0px;
     margin: 0px;
 `;
@@ -277,7 +278,7 @@ class Header extends Component {
 
         return (<React.Fragment>
 
-            {MOBILE_WIDTH >= window.innerWidth
+            {500 >= window.innerWidth
 
                 ? <MobileHeaderMenu>
                     {/* 로그 */}
