@@ -1,0 +1,12 @@
+<svg id="구성_요소_25_1" data-name="구성 요소 25 – 1" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+  <g id="그룹_758" data-name="그룹 758" transform="translate(-215 -7)">
+    <rect id="사각형_245" data-name="사각형 245" width="18" height="18" transform="translate(215 7)" fill="none"/>
+    <g id="그룹_344" data-name="그룹 344" transform="translate(217.908 9.908)">
+      <g id="타원_6" data-name="타원 6" transform="translate(0 0)" fill="none" stroke="red" stroke-width="1">
+        <circle cx="5.337" cy="5.337" r="5.337" stroke="none"/>
+        <circle cx="5.337" cy="5.337" r="4.837" fill="none"/>
+      </g>
+      <path id="패스_7" data-name="패스 7" d="M1784-189l4.384,4.384" transform="translate(-1775.044 197.956)" fill="none" stroke="red" stroke-width="1"/>
+    </g>
+  </g>
+</svg>

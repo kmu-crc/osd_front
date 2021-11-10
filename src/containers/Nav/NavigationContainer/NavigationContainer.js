@@ -3,6 +3,7 @@ import Navigation from "containers/Nav/Navigation/Navigation";
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { SignInRequest, SignOutRequest, CheckEmailRequest, GetDevNoticeRequest } from "redux/modules/auth"
+import { GetCategoryAllRequest } from "redux/modules/category";
 import { FindPwRequest } from "redux/modules/account";
 
 
@@ -13,6 +14,9 @@ class NavigationContainer extends Component {
 };
 
 const mapStateTopProps = (state) => ({
+    category1: state.Category.status.category1,
+    category2: state.Category.status.category2,
+    category3: state.Category.status.category3,
     CheckEmail: state.Authentication.checkStatus.checkEmail,
     status: state.Account.FindPw.status,
     valid: state.Authentication.status.valid,
@@ -27,6 +31,7 @@ const mapDispatchToProps = (dispatch) => ({
     FindPwRequest: (data) => dispatch(FindPwRequest(data)),
     CheckEmailRequest: (email) => dispatch(CheckEmailRequest(email)),
     GetDevNoticeRequest: (token) => dispatch(GetDevNoticeRequest(token)),
+    GetCategoryAllRequest: () => dispatch(GetCategoryAllRequest()),
 });
 
 export default withRouter(connect(mapStateTopProps, mapDispatchToProps)(NavigationContainer))
