@@ -1,48 +1,38 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetGroupListRequest, GetGroupTotalCountRequest } from "redux/modules/group";
-import OrderOption from "components/Commons/OrderOption";
+import OrderOption_mobile from "components/Commons/OrderOption_mobile";
 import styled from 'styled-components';
-import ScrollList from "components/Commons/ScrollList";
+import ScrollList_mobile from "components/Commons/ScrollList_mobile";
 import Loading from "components/Commons/Loading";
-import osdstyle from "opendesign_style";
+import osdstyle from "opendesign_mobile_style";
 import Category from "components/Commons/Category"
 
 const Wrapper = styled.div`
-  .category_wrapper{
-    padding-left:41px;
-    padding-top:19px;
-  }
-  .content{
-    padding-left:41px;
-    width:100%;
-    min-width:1000px;
-  }
-  .scroll_wrapper{
-    margin-top:21px;
-    margin-bottom:100px;
-    min-width:1000px;
+  width:100%;
+  display:flex;
+  padding-left:10px;
+  .contentBox{
+    max-width:354px;
   }
   .header_box{
     width:100%;
+    padding-right:10px;
     display:flex;
     justify-content:space-between;
-    align-items:center;
-    margin-top:13px;
-    padding-right:39px;
-    .category_title{
-      min-width:200px;
-      height:32px;
+    margin-bottom:5px;
+    .category_name{
       font-family:Spoqa Han Sans Neo;
-      font-weight:Medium;
-      font-size:24px;
-      color:#1262AB;
-      display:flex;
-      align-items:center;
+      font-size:12px;
+      font-weight:500;
+      color:#1E9B79;
     }
   }
+  .scroll_wrapper{
+    width:100%;
+  }
 `
-class GroupListContainer extends Component {
+class GroupListContainer_mobile extends Component {
 
   constructor(props) {
     super(props);
@@ -97,26 +87,24 @@ class GroupListContainer extends Component {
     return (
       <React.Fragment>
         <Wrapper>
-        <div className="category_wrapper">
-            <Category/>
-        </div>
-        <div className="content">
-            <div className="header_box">
-                <div className="category_title">그룹({count})</div>
-                <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
-            </div>
-            <div className="scroll_wrapper">
-                {this.props.status === "INIT"
-                ? <Loading />
-                : <ScrollList
-                  {...osdstyle.group_margin}
-                  type="group"
-                  reload={reload}
-                  handleReload={this.handleReload}
-                  dataList={dataList}
-                  dataListAdded={dataListAdded}
-                  getListRequest={this.getList} />}
-              </div>
+          <div className="contentBox">
+          <div className="header_box">
+            <div style={{width:"67px"}}/>
+            <div className="category_name">그룹({count})</div>
+            <OrderOption_mobile type="group" order_clicked={this.handleChangeOrderOps} selected={this_order} />
+          </div>
+          <div className="scroll_wrapper">
+            {this.props.status === "INIT"
+            ? <Loading />
+            : <ScrollList_mobile
+              {...osdstyle.group_margin}
+              type="group"
+              reload={reload}
+              handleReload={this.handleReload}
+              dataList={dataList}
+              dataListAdded={dataListAdded}
+              getListRequest={this.getList} />}
+          </div>
           </div>
         </Wrapper>
       </React.Fragment>
@@ -145,4 +133,63 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupListContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(GroupListContainer_mobile)
+
+{/* <Wrapper>
+<div className="category_wrapper">
+    <Category/>
+</div>
+<div className="content">
+    <div className="header_box">
+        <div className="category_title">그룹({count})</div>
+        <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
+    </div>
+    <div className="scroll_wrapper">
+        {this.props.status === "INIT"
+        ? <Loading />
+        : <ScrollList
+          {...osdstyle.group_margin}
+          type="group"
+          reload={reload}
+          handleReload={this.handleReload}
+          dataList={dataList}
+          dataListAdded={dataListAdded}
+          getListRequest={this.getList} />}
+      </div>
+  </div>
+</Wrapper> */}
+
+// const Wrapper = styled.div`
+//   .category_wrapper{
+//     padding-left:41px;
+//     padding-top:19px;
+//   }
+//   .content{
+//     padding-left:41px;
+//     width:100%;
+//     min-width:1000px;
+//   }
+//   .scroll_wrapper{
+//     margin-top:21px;
+//     margin-bottom:100px;
+//     min-width:1000px;
+//   }
+//   .header_box{
+//     width:100%;
+//     display:flex;
+//     justify-content:space-between;
+//     align-items:center;
+//     margin-top:13px;
+//     padding-right:39px;
+//     .category_title{
+//       min-width:200px;
+//       height:32px;
+//       font-family:Spoqa Han Sans Neo;
+//       font-weight:Medium;
+//       font-size:24px;
+//       color:#1262AB;
+//       display:flex;
+//       align-items:center;
+//     }
+//   }
+// `

@@ -6,7 +6,6 @@ import MenuContext from "Global/Context/GlobalContext"
 
 import NavigationContainer from "containers/Nav/NavigationContainer";
 import SignInContainer from "containers/Registration/SignInContainer";
-// import MenuContext from "Global/Context/GlobalContext"
 
 const Open_ani = keyframes`
   0% {
@@ -58,40 +57,47 @@ const ClientAni = styled.div`
   animation-timing-function: ease-out;  
 `;
 const Client = styled.div`
-  position:absolute;
-  top: 0px;
-  bottom: 0px;
-  width:100%;
-  overflow-y: overlay;
-  overflow-x: overlay;
-  ${window.location.pathname == "/" ?
-    null :
-    `
-    padding-top:90px;
-    `
-  }
+      position:absolute;
+      top: 0px;
+      bottom: 0px;
+      width:100%;
+      overflow-y: overlay;
+      overflow-x: overlay;
+      ${window.location.pathname == "/" ?
+        null :
+        `
+        padding-top:90px;
+        `
+      }
+      .wrap_children {
+        min-width: ${
+          props=>window.location.pathname == "/"?
+          props.hidemenu == true? "900px":"1000px":"1000px"
+        };
+        max-width: 1920px;
+        width: 100%;
+      }
 
-  .wrap_children {
-    min-width: ${
-      props=>window.location.pathname == "/"?
-      props.hidemenu == true? "900px":"1000px":"1000px"
-    };
-    max-width: 1920px;
-    width: 100%;
-    // margin-left: auto;
-    // margin-right: auto;
-  }
-  @media only screen and (min-width : 0px) and (max-width : 1920px) {
-    // display:flex;
-    // justify-content:flex-start;
-    display: flex;
-    flex-direction: column;
-  }
-  @media only screen and (min-width : 1920px) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+
+      @media only screen and (min-width : 1920px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      } 
+      @media only screen and (min-width : 500px) and (max-width : 1920px) {
+        display: flex;
+        flex-direction: column;
+      }
+      @media only screen and (max-width:500px){
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        .wrap_children{
+          min-width: 360px;
+          max-width: 500px;
+          width: 100%;
+        }
+      }
 `;
 const Wrapper = styled.div`
   width: 100%;
@@ -168,12 +174,13 @@ class ClientTemplate extends Component {
   render() {
     const { scroll, hidemenu, larger } = this.state;
     const scroll_style = (scroll ? "partial-scroll-on " : "partical-scroll-none ");
-    // const hidemenu_style = (hidemenu ? "hidemenu " : "");
     const larger_style = (larger ? "larger " : "");
     console.log(this.props);
 
-    return (<Wrapper >
-      {this.state.login ?
+    return (
+    
+    <Wrapper >
+      {/* {this.state.login ?
         <SignInContainer
           onCloseLogin={() => this.setState({ login: null })}
           loginOpen={this.state.login} />
@@ -187,85 +194,31 @@ class ClientTemplate extends Component {
           this.state.login && this.state.sidemenu ?
             this.setState({ sidemenu: this.state.sidemenu }) :
             this.setState({ sidemenu: !this.state.sidemenu })
-        }} />
+        }} /> */}
 
-      <NavigationAni sidemenu={this.state.sidemenu}>
+      {/* <NavigationAni sidemenu={this.state.sidemenu}>
         <NavigationContainer
           onClickFolding={this.onClickFoldingSideMenu}
           sidemenu={this.state.sidemenu}
           userInfo={this.props.userInfo}
         />
-      </NavigationAni>
-
+      </NavigationAni> */}
       <Client
         hidemenu = {this.state.sidemenu}
         active={this.props.isActive}
         className={`${scroll_style}${/*hidemenu_style*/""}${larger_style}`}
         onScroll={this.handleScroll}>
 
-        <ClientAni sidemenu={this.state.sidemenu}>
+        {/* <ClientAni sidemenu={this.state.sidemenu}> */}
           <div className="wrap_children">
             {React.cloneElement(this.props.children, { menu: this.state.sidemenu })}
-            {/* {this.props.children} */}
           </div>
-        </ClientAni>
+        {/* </ClientAni> */}
       </Client>
-
       <Footer />
-
-    </Wrapper>);
+    </Wrapper>
+    );
   }
 }
 
 export default ClientTemplate;
-
-//   onClickFoldingSideMenu = async () => {
-//     await this.setState({ sidemenu: !this.state.sidemenu });
-//   }
-//   render() {
-//     const { scroll, hidemenu, larger } = this.state;
-//     const scroll_style = (scroll ? "partial-scroll-on " : "partical-scroll-none ");
-//     const hidemenu_style = (hidemenu ? "hidemenu " : "");
-//     const larger_style = (larger ? "larger " : "");
-
-//     return (<Wrapper>
-//       <div style={{ width: "100%", minWidth: "1000px" }}>
-//         {this.state.login == true ?
-//           <SignInContainer onCloseLogin={() => this.setState({ login: null })} loginOpen={this.state.login} />
-//           : null}
-
-//         <HeaderContainer onClickLogin={() => this.setState({ login: this.state.login == null ? true : !this.state.login })}
-//           isLogin={this.state.login} sidemenu={this.state.login == null || this.state.login == true ? this.state.sidemenu : false}
-//           onClickMenu={() => {
-//             this.state.login == true && this.state.sidemenu == true ?
-//               this.setState({ sidemenu: this.state.sidemenu }) :
-//               this.setState({ sidemenu: !this.state.sidemenu })
-//           }} />
-
-//         <NavigationAni sidemenu={this.state.login == null ? window.location.pathname.indexOf("/signup") == -1 ? this.state.sidemenu : false : false} >
-//           <NavigationContainer onClickFolding={this.onClickFoldingSideMenu} userInfo={this.props.userInfo} />
-{/* <Navigation onClickLogin={() => this.setState({ login: this.state.login == null ? true : !this.state.login })} userInfo={this.props.userInfo} /> */ }
-
-
-
-//         <div style={{width:"100%",minWidth:"500px"}}>
-//         {
-//           this.state.login == true?
-//           <SignInContainer onCloseLogin={()=>this.setState({login:null})} loginOpen={this.state.login}/>
-//           :null
-//         }
-
-//         <HeaderContainer onClickLogin={()=>this.setState({login:this.state.login==null?true:!this.state.login})}
-//                          isLogin={this.state.login} sidemenu={this.state.login==null||this.state.login==true?this.state.sidemenu:false} 
-//                          onClickMenu={()=>{
-//                            this.state.login==true&&this.state.sidemenu==true?
-//                            this.setState({sidemenu:this.state.sidemenu}):
-//                            this.setState({sidemenu:!this.state.sidemenu})
-//                          }}/>
-//         <NavigationAni sidemenu={this.state.login==null?window.location.pathname.indexOf("/signup")==-1?this.state.sidemenu:false:false} >
-//         <NavigationContainer onClickFolding={this.onClickFoldingSideMenu}  userInfo={this.props.userInfo}/>
-
-//         </NavigationAni>
-//         <Client active={this.props.isActive} className={`${scroll_style}${hidemenu_style}${larger_style}`} onScroll={this.handleScroll}>
-//           <div className="wrap_children">
-//           {this.props.children}

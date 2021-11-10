@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Main from "components/Main"
+import Main from "components/Main";
+import Main_mobile from "components/Main_mobile";
 
 class MainContainer extends Component {
     render() {
-        return <Main {...this.props} />
+        return (
+            <React.Fragment>
+                {
+                    window.innerWidth <= 500?
+                    <Main_mobile {...this.props} />
+                    :
+                    <Main {...this.props} />
+                }
+            </React.Fragment>
+        )
     }
 }
 
