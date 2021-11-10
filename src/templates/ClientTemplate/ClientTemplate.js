@@ -278,7 +278,7 @@ class ClientTemplate extends Component {
 
           {/* client */}
           <MobileClient>
-            {/* {this.props.children} */}
+            {this.props.children}
           </MobileClient>
 
         </MobileWrapper>
@@ -317,7 +317,7 @@ class ClientTemplate extends Component {
             <ClientAni sidemenu={this.state.sidemenu}>
               <div className="wrap_children">
                 {React.cloneElement(this.props.children, { menu: this.state.sidemenu })}
-                {/* {this.props.children} */}
+                {this.props.children}
               </div>
             </ClientAni>
           </Client>

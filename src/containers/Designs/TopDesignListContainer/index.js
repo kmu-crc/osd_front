@@ -1,1 +1,1 @@
-export { default } from "./TopDesignListContainer"
+export { default } from "./ScrollDesignListContainer_mobile"

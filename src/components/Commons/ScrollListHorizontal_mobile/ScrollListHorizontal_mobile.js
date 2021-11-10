@@ -3,30 +3,17 @@ import styled from "styled-components";
 
 // css 
 const FlexContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: flex-start; 
-  padding-left: 10px;
-  gap: ${props => props.row}px ${props => props.col}px; //20px 30px; /* row-gap column gap */
-  width: ${props => props.width}px;
-  // border: 1px dashed #0ABCDE;
-  // overflow-x;
-
+  height:100%;
+  display:flex;
+  flex-wrap:wrap;
+  flex-direction:column;
+  overflow-X:overlay;
+  overflow-Y:hidden;
+  scroll-behavior:smooth;
+  gap: ${props => props.row}px ${props => props.col}px;
   ::-webkit-scrollbar { display: none; }
+
 `;
-// const OutBtn = styled.button`
-//   position: absolute;
-//   top: 5px;
-//   right: 5px;
-//   z-index: 900;
-// `;
-// const AcceptBtn = styled.button`
-//   position: absolute;
-//   top: 5px;
-//   right: 80px;
-//   z-index: 900;
-// `;
 const MoreBtn = styled.button`
   position: relative;
   left: 50%;
@@ -57,13 +44,12 @@ const ScrollIcon = styled.div`
   }
 `;
 
-class ScrollList extends Component {
+class ScrollListHorizontal extends Component {
   state = { hasMore: true, loading: false, page: 0, gap: 100, cols: 0 };
   componentDidMount() {
     !this.props.manual && window.addEventListener("scroll", this.handleScroll, true);
     this.props.manual && this.getLoadData();
     window.addEventListener("resize", this.handleResize, false);
-    // this.getColumnNumber(this.props.type);
   };
   componentWillUnmount() {
     !this.props.manual && window.removeEventListener("scroll", this.handleScroll, true);
@@ -107,9 +93,9 @@ class ScrollList extends Component {
 
     return (dataListAdded && dataListAdded.length > 0 ?
       <FlexContainer
-        width={this.props.width}
-        row={row || 20}
-        col={col || 30}
+        height={this.props.height}
+        row={row || 12}
+        col={col || 12}
         cols={cols}
         type={type}
         ref={this.myRef}
@@ -127,12 +113,6 @@ class ScrollList extends Component {
             {ListComponent
               ? <ListComponent data={item} />
               : null}
-
-            {/* {handleAccept && <AcceptBtn className="ui button black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>} */}
-            {/* {handleReject && <OutBtn className="ui button black" onClick={() => handleReject(item.uid)}>{rejectText || "삭제"}</OutBtn>} */}
-            {/* {type === "design" ? <Design data={item} /> : null} */}
-            {/* {type === "group" ? <Group data={item} /> : null} */}
-            {/* {type === "designer" ? <Designer data={item} /> : null} */}
           </li>)
         })
         }
@@ -141,9 +121,8 @@ class ScrollList extends Component {
         {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>}
 
       </FlexContainer > : null
-      // <NoData>{type === "design" ? "디자인이" : type === "group" ? "그룹이" : "디자이너가"} 없습니다.</NoData>)
     )
   }
 }
 
-export default ScrollList;
+export default ScrollListHorizontal;

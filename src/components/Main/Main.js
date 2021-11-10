@@ -188,7 +188,6 @@ const MainScrollWrapper = styled.div`
 export default class Main extends Component {
   constructor(props) {
     super(props);
-    // this.state = { w: window.innerWidth > 1920 ? 1920 : window.innerWidth <= 1000 ? 1000 : window.innerWidth, play: true };
     this.state = {
       w: window.innerWidth < 1000 ? 1000 : window.innerWidth,
       h: window.innerHeight,
@@ -204,7 +203,6 @@ export default class Main extends Component {
     window.removeEventListener("resize", this.handleResize, false);
   }
   handleResize = (event) => {
-    // this.setState({ w: window.innerWidth > 1920 ? 1920 : window.innerWidth <= 1000 ? 1000 : window.innerWidth });
     this.setState({ w: window.innerWidth < 1000 ? 1000 : window.innerWidth, h: window.innerHeight });
   }
   gostop = () => {
@@ -234,8 +232,6 @@ export default class Main extends Component {
     const { w, h } = this.state;
     const width = w;
     const height = h;
-    // const ratioW = width / 1920;
-    // const ratioH = height / 1080;
 
     const widthScroll = (width > 1920 ? 1920 : width) - (this.props.menu ? 100 : 0) - 10;
 
@@ -247,14 +243,12 @@ export default class Main extends Component {
           <div className="arrow-pause" onClick={this.gostop}></div>
           <div className="arrow-next" onClick={this.next}></div>
         </NaviBox>
-        {/* <div className="pause" onClick={this.gostop} /> */}
         <Slider ref={slider => (this.slider = slider)} {...settings}>
 
           {/* tech pocket */}
           <Banner height={height} >
             <img src={new_banner_step2} />
             <ButtonOnImage
-              // style={{ backgroundColor: "skyblue", border: "1px dashed blue" }}
               onClick={() => { window.location.href = "/designdetail/5344" }}
               src={main_banner_2_button}
               {...{
