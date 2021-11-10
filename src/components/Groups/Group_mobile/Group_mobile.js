@@ -11,6 +11,7 @@ import NumberFormat from "modules/NumberFormat";
 import styled from 'styled-components';
 import { geturl } from "config";
 import opendesign_css from "opendesign_style";
+import Icon from '@material-ui/core/Icon';
 
 const GroupCard = styled.div`
   width:335px;
@@ -19,6 +20,7 @@ const GroupCard = styled.div`
   border:1px solid #7a7a7a;
   display:flex;
   box-shadow: 0px 3px 6px #00000029;
+  background-color:#7A7A7A;
 
   .thumbnail{
     width:100px;
@@ -32,6 +34,9 @@ const GroupCard = styled.div`
     background-position:center;
   }
   .info{
+    *{
+      color:white;
+    }
     width:100%;
     max-width:230px;
     height:100%;
@@ -42,13 +47,11 @@ const GroupCard = styled.div`
       width:100%;
       font-size:12px;
       font-weight:500;
-      color:#707070;
     }
     .description{
       width:100%;
       height:40px;
       font-size:10px;
-      color:#707070;
       line-height:14px;
       overflow:hidden;
       text-overflow: ellipsis; 
@@ -114,16 +117,16 @@ class Group_mobile extends Component {
               <div className="description">{group.explanation}</div>
               <div className="bottom_box">
                   <div className="countBox">
-                    <div className="wrap">
-                        <IconView width="15px" height="15px" fill="#707070" opacity="1" />
+                      <div className="wrap">
+                        <Icon style={{ fontSize: "10px", color:"white" }}>visibility</Icon>
                         {NumberFormat(group.view)}
                       </div>
                       <div className="wrap">
-                        <img className="icon" alt="icon" src={iThumbUp} />
+                        <Icon style={{ fontSize: "10px", color:"white" }}>favorite_border</Icon>
                         {NumberFormat(group.like)}
                       </div>
                       <div className="wrap">
-                        <img className="icon" alt="icon" src={iForked} />
+                        <Icon style={{ fontSize: "10px", color:"white" }}>article</Icon>
                         {NumberFormat(group.design || 0 + group.group || 0)}
                       </div>
                     </div>

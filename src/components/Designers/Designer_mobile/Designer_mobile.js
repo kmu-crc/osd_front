@@ -15,6 +15,7 @@ import DateFormat from "modules/DateFormat"
 
 import { geturl } from "config"
 import opendesign_css from "opendesign_style";
+import Icon from '@material-ui/core/Icon';
 
 const DesignerCard = styled.div`
   width:335px;
@@ -43,7 +44,7 @@ const DesignerCard = styled.div`
     display:flex;
     .blankBox{min-width:62px;height:100%;}
     .contentBox{
-      *{font-family:Spoqa Han Sans Neo;}
+      // *{font-family:Spoqa Han Sans Neo;}
       width:100%;
       height:100%;
       background-color:#7a7a7a;
@@ -63,14 +64,15 @@ const DesignerCard = styled.div`
       }
       .description{
         width:100%;
-        height:40px;
+        min-height:40px;
+  
         font-size:10px;
         color:white;
-        line-height:14px;
+        line-height:18px;
         overflow:hidden;
         text-overflow: ellipsis; 
         display: -webkit-box;
-        -webkit-line-clamp: 3; /* 라인수 */	
+        -webkit-line-clamp: 2; /* 라인수 */	
         -webkit-box-orient: vertical; 
         word-wrap:break-word;
         }
@@ -79,8 +81,9 @@ const DesignerCard = styled.div`
             display:flex;
             align-items:center;
             margin-top:4px;
-            .icon{width:8px;height:8px;}
-            .text{height:12px;font-size:5px;font-family:SpoqaHanSans;font-weight:400;color:white;margin-left:5px;margin-right:5px;}
+            color:white;
+            .wrap{height:20px;display:flex;align-items:center;font-size:9px;margin-right:5px;}
+            .icon{width:13px;height:13px;opacity:0.5;margin-right:3px;margin-left:3px;}  
             
           }
         }
@@ -118,25 +121,25 @@ class Designer_mobile extends Component {
                 <div className="description">{designer.about_me}</div>
                 <div className="bottomBox">
                     <div className="count">
-                      <IconView width="6px" height="6px" fill="white" />
+                        <div className="wrap">
+                          <Icon style={{ fontSize: "10px", color:"white" }}>visibility</Icon>
+                          {NumberFormat(designer.total_view == null ? 0 : designer.total_view)}         
+                        </div>
+                        <div className="wrap">
+                          <Icon style={{ fontSize: "10px", color:"white" }}>favorite_border</Icon>
+                          {NumberFormat(designer.total_like == null ? 0 : designer.total_like)}
+                        </div>
+                        <div className="wrap">
+                          <Icon style={{ fontSize: "10px", color:"white" }}>share</Icon>
+                          {NumberFormat(designer.total_group == null || designer.total_design == null ? 0 : designer.total_group + designer.total_design)}
+                        </div>
+                      {/* <IconView width="6px" height="6px" fill="white" />
                       <div className="text">{NumberFormat(designer.total_view == null ? 0 : designer.total_view)}</div>
                       <img className="icon" alt="icon" src={iThumbUpWhite} />
                       <div className="text">{NumberFormat(designer.total_like == null ? 0 : designer.total_like)}</div>
                       <img className="icon" alt="icon" src={iForkedWhite} />
-                      <div className="text">{NumberFormat(designer.total_group == null || designer.total_design == null ? 0 : designer.total_group + designer.total_design)}</div>
+                      <div className="text">{NumberFormat(designer.total_group == null || designer.total_design == null ? 0 : designer.total_group + designer.total_design)}</div> */}
                     </div>
-                    {/* <div className="view">
-                      <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
-                      <div className="text">{NumberFormat(designer.total_view == null ? 0 : designer.total_view)}</div>
-                    </div>
-                    <div className="like" >
-                      <div><img alt="icon" src={iThumbUp} /></div>
-                      <div className="text">{NumberFormat(designer.total_like == null ? 0 : designer.total_like)}</div>
-                    </div>
-                    <div className="child">
-                      <div><img alt="icon" src={iForked} /></div>
-                      <div className="text">{NumberFormat(designer.total_group == null || designer.total_design == null ? 0 : designer.total_group + designer.total_design)}</div>
-                    </div> */}
                 </div>
             </div>
           </div>
