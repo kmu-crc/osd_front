@@ -11,9 +11,10 @@ import { connect } from "react-redux";
 import opendesign_mobile_style from 'opendesign_mobile_style';
 
 const Wrapper = styled.div`
-  width:100%;
+  width:360px;
+  margin-left:auto;
+  margin-right:auto;
   display:flex;
-  padding-left:10px;
   .contentBox{
     max-width:354px;
   }

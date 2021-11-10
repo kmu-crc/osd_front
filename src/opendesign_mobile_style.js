@@ -94,7 +94,7 @@ const opendesign_mobile_style = {
     big: { marginRightLast: 0, cols: 3, },
   },
   group_margin: {
-    marginRight: 0,
+    marginRight: 16,
     marginBottom: 12,
     marginBottomLast: 0,
     small: { marginRightLast: 0, cols: 1,},
@@ -105,13 +105,13 @@ const opendesign_mobile_style = {
   designer_margin: {
     width: 335,
     height: 124,
-    marginRight: 0,
+    marginRight: 16,
     marginBottom: 7,
     marginBottomLast: 0,
     small: { marginRightLast: 0, cols: 1, },
-    medium: { marginRightLast: 0, cols: 2, },
-    large: { marginRightLast: 0, cols: 3, },
-    big: { marginRightLast: 0, cols: 3, },
+    medium: { marginRightLast: 0, cols: 1, },
+    large: { marginRightLast: 0, cols: 1, },
+    big: { marginRightLast: 0, cols: 1, },
   }
 }
 
