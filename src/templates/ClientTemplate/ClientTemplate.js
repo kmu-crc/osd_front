@@ -183,7 +183,7 @@ class ClientTemplate extends Component {
       hidemenu: false,
       prevScroll: 0,
       screenWidth: window.innerWidth,
-      sidemenu: cookie.load("side-menu"),
+      sidemenu: true,
       login: null,
     }
     this.onClickFoldingSideMenu = this.onClickFoldingSideMenu.bind(this);
@@ -191,8 +191,8 @@ class ClientTemplate extends Component {
   componentDidMount() {
     const sidemenu = cookie.load("side-menu");
     if (sidemenu === undefined) {
-      cookie.save("side-menu", "open");
-      this.setState({ sidemenu: "open" });
+      cookie.save("side-menu", true);
+      this.setState({ sidemenu: true });
     }
     window.addEventListener("resize", this.handleResize, false);
   }
@@ -243,7 +243,7 @@ class ClientTemplate extends Component {
   }
   onClickFoldingSideMenu = async () => {
     // const sidemenu = await cookie.load("side-menu");
-    await this.setState({ sidemenu: this.state.sidemenu === "open" ? "close" : "open" });
+    await this.setState({ sidemenu: this.state.sidemenu === true ? false : true});
     await cookie.save("side-menu", this.state.sidemenu, { path: "/" });
   }
 
@@ -259,17 +259,17 @@ class ClientTemplate extends Component {
 
         ? <MobileWrapper>
 
-          {<Back visible={this.state.sidemenu === "open"} />}
+          {<Back visible={this.state.sidemenu } />}
 
           {/* login */}
 
 
           {/* navi */}
-          <MobileNavigationAni sidemenu={this.state.sidemenu === "open"} >
+          <MobileNavigationAni sidemenu={this.state.sidemenu } >
             <div style={{ position: "absolute", height: "100%", width: "160px", }}>
               <NavigationContainer
                 mobile={true}
-                sidemenu={this.state.sidemenu === "open"}
+                sidemenu={this.state.sidemenu }
                 onClickFolding={this.onClickFoldingSideMenu}
               />
             </div>
@@ -279,13 +279,6 @@ class ClientTemplate extends Component {
           <HeaderContainer
             onClickLogin={() => alert("아직임!")}
             isLogin={this.state.login}
-          // this.setState({ login: this.state.login == null ? true : !this.state.login })}
-          // sidemenu={this.state.sidemenu}
-          // onClickMenu={() => {
-          //  this.state.login && this.state.sidemenu ?
-          //    this.setState({ sidemenu: this.state.sidemenu }) :
-          //    this.setState({ sidemenu: !this.state.sidemenu })
-          //}}
           />
 
           {/* client */}
@@ -332,7 +325,7 @@ class ClientTemplate extends Component {
             <ClientAni sidemenu={this.state.sidemenu}>
               <div className="wrap_children">
                 {React.cloneElement(this.props.children, { menu: this.state.sidemenu })}
-                {this.props.children}
+                {/* {this.props.children} */}
               </div>
             </ClientAni>
           </Client>
