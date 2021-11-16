@@ -1,24 +1,30 @@
 import React, { Component } from 'react'
 import styled, { keyframes } from "styled-components";
-import Message from "components/Header/Message"
-import logo from "source/osd_logo.png"
-import AlarmContainer from "containers/Header/AlarmContainer"
-import SearchForm from "components/Header/SearchForm"
-import SignNav from "components/Header/SignNav"
 import Socket from "modules/Socket"
-import opendesign_style from "opendesign_style"
-import new_logo_exit from "source/new_logo_exit.svg";
-import new_logo_message_bubble from "source/new_logo_message_bubble.svg";
 import new_logo_handle_arrow from "source/new_logo_handle_arrow.svg";
 import { SetSession } from 'modules/Sessions';
-import { version } from "../../../../package.json";
 
 // mobile
-import { SLIDE_MENU_WIDTH, NOT } from "constant";
+import { SLIDE_MENU_WIDTH, } from "constant";
 import mobile_logo_white from "resources/images/mobile_logo_white.svg";
 import mobile_alarm_icon from "resources/images/mobile_alarm_icon.svg";
 import mobile_message_icon from "resources/images/mobile_message_icon.svg";
 
+const BgColorSelector = (id) => {
+    if (id == null)
+        return window.location.pathname.toLowerCase().indexOf("designer") != -1 ? "#7E1E9B"
+            : window.location.pathname.toLowerCase().indexOf("design") != -1 ? "#1262AB"
+                : window.location.pathname.toLowerCase().indexOf("group") != -1 ? "#1E9B79"
+                    : window.location.pathname.toLowerCase().indexOf("/about") != -1 ? "#39280b"
+                        : "red";
+    else
+        return id === "designer" ? "#7E1E9B"
+            : id === "design" ? "#1262AB"
+                : id === "group" ? "#1E9B79"
+                    : id === "aboutIntro" ? "#39280b"
+                        : "red";
+
+};
 const MenuItem = styled.div`
     *{
         cursor:pointer;
@@ -49,22 +55,6 @@ const MenuItem = styled.div`
         color: #FFFFFF;
     }
 `;
-// mobile
-const BgColorSelector = (id) => {
-    if (id == null)
-        return window.location.pathname.toLowerCase().indexOf("designer") != -1 ? "#7E1E9B"
-            : window.location.pathname.toLowerCase().indexOf("design") != -1 ? "#1262AB"
-                : window.location.pathname.toLowerCase().indexOf("group") != -1 ? "#1E9B79"
-                    : window.location.pathname.toLowerCase().indexOf("/about") != -1 ? "#39280b"
-                        : "red";
-    else
-        return id === "designer" ? "#7E1E9B"
-            : id === "design" ? "#1262AB"
-                : id === "group" ? "#1E9B79"
-                    : id === "aboutIntro" ? "#39280b"
-                        : "red";
-
-};
 const MobileMenuBox = styled.div`
     z-index: 9999;
     position: relative;
@@ -315,14 +305,24 @@ class Navigation extends Component {
             selectCate: -1,
             h: null,
 
-            level: [],
-            thislevel: 0,
+            thislevel: { num: 0, color: "", id: "" },
+            // level3: [],
+            level2: [],
+            level1: [],
+            level0:
+                [
+                    { max: 2, text: "디자인", id: "design", },
+                    { max: 1, text: "그룹", id: "group", },
+                    { max: 2, text: "디자이너", id: "designer", },
+                    { max: 0, text: "ABOUT", id: "aboutIntro", },
+                ]
+            ,
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
 
-        this.props.GetCategoryAllRequest();
+        await this.props.GetCategoryAllRequest();
 
         if (isOpen(Socket) && this.props.valid) {
             try {
@@ -341,6 +341,19 @@ class Navigation extends Component {
             }
         }
         window.addEventListener("resize", this.handleResize, false);
+
+        const location = window.location.pathname.toLowerCase().split("/");
+
+        console.log("MOUNT:", location);
+
+        location[1] != null
+            && this.state.level0.find(level => level.id == location[1])
+            && this.gotoLevel1(this.state.level0.find(level => level.id == location[1]));
+
+        location[3] != null
+            && this.state.level1.find(level => level.id == location[3])
+            && this.gotoLevel2(this.state.level1.find(level => level.id == location[3]));
+
     };
     SignOut = () => {
         SetSession("opendesign_token", null)
@@ -365,44 +378,50 @@ class Navigation extends Component {
         this.setState({ h: window.innerHeight });
     };
 
-    nextLevel = (id) =>
-        this.setState({
-            thislevelcolor: BgColorSelector(id),
-            thislevel: this.state.thislevel + 1,
-        });
-
-    prevLevel = (n) =>
-        this.setState({
-            thislevel: this.state.thislevel - 1,
-        });
-
     goGrnLevel = () =>
         this.setState({
-            thislevelcolor: BgColorSelector(),
-            thislevel: 0,
+            thislevel: { num: 0, color: BgColorSelector() }
         });
+    gotoLevel2 = async (level) => {
+        await this.setState({
+            level2: this.props.category2[level.id - 1].map(item => ({ text: item.text, id: item.value })),
+            thislevel: {
+                num: 2,
+                color: this.state.thislevel.color,
+                id: this.state.thislevel.id,
+                prev: level.id,
+            }
+        })
+    };
+    gotoLevel1 = (level) => {
+        if (level.max) {
+            this.setState({
+                level1:
+                    level.max > 1
+                        ? this.props.category1.map(
+                            (item, index) => ({ text: item.text, id: item.value }))
+                        : [],
+                thislevel: {
+                    color: BgColorSelector(level.id),
+                    num: 1,
+                    id: level.id
+                }
+            })
+        }
+        else {
+            this.gotoPage(`/${level.id}`);
+        }
+    };
+    gotoPage = (page) => {
+        window.location.href = page;
+        this.props.onClickFolding();
+    }
 
     render() {
+        const location = window.location.pathname.toLowerCase().split("/");
+        const { level0, level1, level2 } = this.state;
 
-        const location = window.location.pathname.toLowerCase();
-        const ismainmenu =
-            location.indexOf("/design") <= -1
-            && location.indexOf("/designer") <= -1
-            && location.indexOf("/group") <= -1;
-        const loc = location.split("/");
-
-        const level0 = // (loc[1] != "design" && loc[1] != "group" && loc[1] != "designer" &&
-            [
-                { text: "디자인", id: "design", },
-                { text: "그룹", id: "group", },
-                { text: "디자이너", id: "designer", },
-                { text: "ABOUT", id: "aboutIntro", },
-            ]
-            , level1 = []
-            , level2 = []
-            , level3 = [];
-
-        return (<MobileMenuBox bgcolor={this.state.thislevelcolor || BgColorSelector()}>
+        return (<MobileMenuBox bgcolor={this.state.thislevel.color || BgColorSelector()}>
 
             {/* logo */}
             <a className="link_tag" href="/">
@@ -431,7 +450,7 @@ class Navigation extends Component {
 
 
             {/* thumbnail */}
-            {this.props.userInfo && ismainmenu
+            {this.props.userInfo && this.state.thislevel.num === 0
                 ? <div className="thumbnail-container">
                     <div className="thumbnail">
                         <img src={this.props.userInfo.thumbnail.m_img} />
@@ -455,54 +474,89 @@ class Navigation extends Component {
                 </div>
                 : null}
 
+
+            {/* 
+            <SubMenuNavigationAni 
+            open={this.state.thislevel == 3}
+            bgcolor={this.state.thislevel.color || "red"}
+            >
+            </SubMenuNavigationAni> 
+            */}
+
             {/* level 2 = 1st category selected */}
-            <SubMenuNavigationAni open={this.state.thislevel >= 2}>
-                this is level 2<br />
-                <button onClick={() => this.goGrnLevel(0)}>go lv.0</button>
-                <button onClick={() => this.nextLevel(0)}>go lv.3</button>
-                <button onClick={() => this.prevLevel(0)}>go lv.2</button>
-            </SubMenuNavigationAni>
-
-
-            {/* level 1 = design | group | designer | about */}
-            <SubMenuNavigationAni open={this.state.thislevel >= 1} bgcolor={this.state.thislevelcolor || "red"}>
+            <SubMenuNavigationAni
+                open={this.state.thislevel.num == 2}
+                bgcolor={this.state.thislevel.color || "red"}
+            >
                 {/* back */}
                 <a className="link_tag" onClick={this.goGrnLevel}>
-                    <MenuItem className="menu_tag marginTop1 ">
+                    <MenuItem className="menu_tag marginTop1 border-bottom">
                         메인메뉴
                     </MenuItem>
                 </a>
-                {level1.map((level, index) =>
-                    //  href={`/${level.id}`}
-                    <a key={index} className="link_tag"
-                        onClick={this.nextLevel} >
-                        <MenuItem className="menu_tag marginTop1 ">
+                <a className="link_tag" onClick={() => this.gotoPage(`/${this.state.thislevel.id}`)}>
+                    <MenuItem
+                        className={`menu_tag marginTop1 ${level1.length > 0 ? "border-bottom" : ""}`}>
+                        {level0.find(level => level.id === this.state.thislevel.id)
+                            && level0.find(level => level.id === this.state.thislevel.id).text}
+                    </MenuItem>
+                </a>
+                <a className="link_tag" onClick={() => this.gotoPage(`/${this.state.thislevel.id}/update/${this.state.thislevel.prev}/`)}>
+                    <MenuItem
+                        className={`menu_tag marginTop1 ${level2.length > 0 ? "border-bottom" : ""}`}
+                        isSelect={location[3] && !location[4] && location[3] == this.state.thislevel.prev}>
+                        {this.state.thislevel.prev != null
+                            && this.props.category1[this.state.thislevel.prev - 1]
+                            && this.props.category1[this.state.thislevel.prev - 1].text}
+                    </MenuItem>
+                </a>
+                {level2.map((level, index) =>
+                    <a key={index}
+                        className="link_tag"
+                        onClick={() =>
+                            this.gotoPage(`/${this.state.thislevel.id}/update/${this.state.thislevel.prev}/${level.id}`)}>
+                        <MenuItem className="submenu menu_tag marginTop1 " isSelect={location[4] && location[4] == level.id}>
                             {level.text}
                         </MenuItem>
                     </a>
                 )}
             </SubMenuNavigationAni>
 
+            {/* level 1 = design  | designer  */}
+            <SubMenuNavigationAni
+                open={this.state.thislevel.num == 1}
+                bgcolor={this.state.thislevel.color || "red"}>
+
+                {/* back */}
+                <a className="link_tag" onClick={this.goGrnLevel}>
+                    <MenuItem className="menu_tag marginTop1 border-bottom">
+                        메인메뉴
+                    </MenuItem>
+                </a>
+                <a className="link_tag" onClick={() => this.gotoPage(`/${this.state.thislevel.id}`)}>
+                    <MenuItem
+                        className={`menu_tag marginTop1 ${level1.length > 0 ? "border-bottom" : ""}`}
+                        isSelect={location[1] && !location[2] && location[1] == this.state.thislevel.id}>
+                        {level0.find(level => level.id === this.state.thislevel.id)
+                            && level0.find(level => level.id === this.state.thislevel.id).text}
+                    </MenuItem>
+                </a>
+                {level1.map((level, index) =>
+                    <a key={index} className="link_tag" onClick={() => this.gotoLevel2(level)}>
+                        <MenuItem className="submenu menu_tag marginTop1 " isSelect={location.length <= 2 && location[1] === level.id}>
+                            {level.text}
+                        </MenuItem>
+                    </a>)}
+            </SubMenuNavigationAni>
+
             {/* level 0 */}
             {level0.map((level, index) =>
                 <a key={index} className="link_tag"
-                    //  href={`/${level.id}`}
-                    onClick={() => this.nextLevel(level.id)} >
-                    <MenuItem className="menu_tag marginTop1 ">
+                    onClick={() => this.gotoLevel1(level)} >
+                    <MenuItem className="menu_tag marginTop1 " isSelect={location[1] && !location[2] && location[1] == level.id.toLowerCase()}>
                         {level.text}
                     </MenuItem>
-                </a>
-            )}
-
-            {this.state.thislevel}
-
-            {/* 
-            <SubMenuNavigationAni open={this.state.thislevel >= 3}>
-                this is level 3<br />
-                <button onClick={() => this.goGrnLevel(0)}>go lv.0</button>
-                <button onClick={() => this.prevLevel(0)}>go lv.3</button>
-            </SubMenuNavigationAni> 
-            */}
+                </a>)}
 
             {this.props.userInfo == null
                 ? null
@@ -510,204 +564,8 @@ class Navigation extends Component {
                     <MenuItem className="stickToEnd menu_tag border-top" >로그아웃</MenuItem>
                 </a>}
 
-        </MobileMenuBox>);
+        </MobileMenuBox >);
     };
 };
 
 export default Navigation;
-
-
-
-
-//             {/* {tree.map((node, index) => {
-//                 return ()
-//             })} */}
-
-//             {/*  */}
-//             {ismainmenu == NOT
-//                 ? <React.Fragment>
-//                     <a className="link_tag" href="/">
-//                         <MenuItem className="menu_tag marginTop1">
-//                             메인메뉴
-//                         </MenuItem>
-//                     </a>
-
-//                     {/* ********** */}
-//                     {/*   DESIGN   */}
-//                     {/* ********** */}
-//                     {loc[1] === "design"
-//                         ? <React.Fragment>
-//                             <a className="link_tag" href="/design">
-//                                 <MenuItem
-//                                     isSelect={!(loc[3] || loc[4] || loc[5])}
-//                                     className="menu_tag marginTop1 border-top border-bottom">
-//                                     디자인
-//                                 </MenuItem>
-//                             </a>
-
-//                             {loc[3]
-//                                 ? <React.Fragment>
-//                                     <a className="link_tag" href={`/design/update/${loc[3]}`}>
-//                                         <MenuItem
-//                                             isSelect={!loc[4]}
-//                                             className="menu_tag marginTop1 border-bottom">
-//                                             {this.props.category1.find(item => item.value == loc[3])
-//                                                 && this.props.category1.find(item => item.value == loc[3]).text}
-//                                         </MenuItem>
-//                                     </a>
-
-//                                     {this.props.category2
-//                                         && loc[3] > 0
-//                                         && this.props.category2[loc[3] - 1]
-//                                         && this.props.category2[loc[3] - 1].map((item, index) =>
-//                                             <a key={index} className="link_tag" href={`/design/update/${loc[3]}/${item.value}`}>
-//                                                 <MenuItem
-//                                                     isSelect={loc[4] === `${item.value}`}
-//                                                     className="menu_tag submenu">
-//                                                     {item.text}
-//                                                 </MenuItem>
-//                                             </a>
-//                                         )}
-//                                 </React.Fragment>
-//                                 : this.props.category1.map((item, index) =>
-//                                     <a key={index} className="link_tag" href={`/design/update/${item.value}`}>
-//                                         <MenuItem
-//                                             isSelect={loc[3] === `${item.value}`}
-//                                             className="menu_tag submenu ">
-//                                             {item.text}
-//                                         </MenuItem>
-//                                     </a>)}
-
-//                             {/* {!loc[4] ? null : null} */}
-
-//                         </React.Fragment>
-//                         : null}
-
-//                     {/* ********** */}
-//                     {/*   GROUP    */}
-//                     {/* ********** */}
-//                     {loc[1] === "group"
-//                         ? <a className="link_tag" href="/group">
-//                             <MenuItem
-//                                 isSelect={window.location.pathname == ("/group") == true ? true : false}
-//                                 className="menu_tag marginTop1">
-//                                 그룹
-//                             </MenuItem>
-//                         </a>
-//                         : null}
-
-//                     {/* ********** */}
-//                     {/*   DESIGNER */}
-//                     {/* ********** */}
-//                     {loc[1] === "designer"
-//                         ? <React.Fragment>
-//                             <a className="link_tag" href="/designer">
-//                                 <MenuItem
-//                                     isSelect={!(loc[3] || loc[4] || loc[5])}
-//                                     className="menu_tag marginTop1 border-top border-bottom">
-//                                     디자이너
-//                                 </MenuItem>
-//                             </a>
-
-//                             {loc[3]
-//                                 ? <React.Fragment>
-//                                     <a className="link_tag" href={`/designer/update/${loc[3]}`}>
-//                                         <MenuItem
-//                                             isSelect={!loc[4]}
-//                                             className="menu_tag marginTop1 border-bottom">
-//                                             {this.props.category1.find(item => item.value == loc[3])
-//                                                 && this.props.category1.find(item => item.value == loc[3]).text}
-//                                         </MenuItem>
-//                                     </a>
-
-//                                     {this.props.category2
-//                                         && loc[3] > 0
-//                                         && this.props.category2[loc[3] - 1]
-//                                         && this.props.category2[loc[3] - 1].map((item, index) =>
-//                                             <a key={index} className="link_tag" href={`/designer/update/${loc[3]}/${item.value}`}>
-//                                                 <MenuItem
-//                                                     isSelect={loc[4] === `${item.value}`}
-//                                                     className="menu_tag submenu">
-//                                                     {item.text}
-//                                                 </MenuItem>
-//                                             </a>
-//                                         )}
-//                                 </React.Fragment>
-//                                 : this.props.category1.map((item, index) =>
-//                                     <a key={index} className="link_tag" href={`/designer/update/${item.value}`}>
-//                                         <MenuItem
-//                                             isSelect={loc[3] === `${item.value}`}
-//                                             className="menu_tag submenu ">
-//                                             {item.text}
-//                                         </MenuItem>
-//                                     </a>)}
-
-//                             {/* {!loc[4] ? null : null} */}
-
-//                         </React.Fragment>
-//                         : null}
-
-//                 </React.Fragment>
-//                 : <React.Fragment>
-//                     <a className="link_tag" href="/design">
-//                         <MenuItem
-//                             isSelect={window.location.pathname == ("/design") == true ? true : false}
-//                             className="menu_tag marginTop1">
-//                             디자인
-//                         </MenuItem>
-//                     </a>
-
-//                     <a className="link_tag" href="/group">
-//                         <MenuItem
-//                             isSelect={window.location.pathname == ("/group") == true ? true : false}
-//                             className="menu_tag marginTop1">
-//                             그룹
-//                         </MenuItem>
-//                     </a>
-
-//                     <a className="link_tag" href="/designer">
-//                         <MenuItem
-//                             isSelect={window.location.pathname == ("/designer") == true ? true : false}
-//                             className="menu_tag marginTop1">
-//                             디자이너
-//                         </MenuItem>
-//                     </a>
-
-//                     <a className="link_tag" href="/aboutIntro">
-//                         <MenuItem
-//                             isSelect={window.location.pathname == ("/about") == true ? true : false}
-//                             className="menu_tag marginTop1">ABOUT
-//                         </MenuItem>
-//                     </a>
-//                 </React.Fragment>}
-
-
-
-
-
-// const MobileOpenAni = keyframes`
-//   0% {
-//     left: ${-1 * SLIDE_MENU_WIDTH}px;
-//   }
-//   100% {
-//     left: 0px;
-//   }
-// `;
-// const MobileCloseAni = keyframes`
-//   0% {
-//     left: 0px;
-//   }
-//   100% {
-//     left: ${-1 * SLIDE_MENU_WIDTH}px;
-//   }
-// `;
-// const MobileNavigationAni = styled.div`
-//   position: fixed;
-//   height: 100%;
-//   z-index: 902;
-//   animation-name: ${props => props.sidemenu ? MobileOpenAni : MobileCloseAni};
-//   animation-duration: 1s;
-//   animation-direction: alternate;
-//   animation-fill-mode: forwards;
-//   animation-timing-function: ease-out;  
-// `;
