@@ -204,7 +204,7 @@ class ScrollList_mobile extends Component {
         }} >
         {dataListAdded.map((item, i) => {
           // const last = (((i + 1) % cols === 0 && i !== 0) || (cols === 1 && i === 0)) ? "right-last" : "";
-          console.log(i,i+1,(i+1)%cols,cols);
+          // console.log(i,i+1,(i+1)%cols,cols);
           const last =  (i+1)%cols == 0?"right-last":"";
           const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";
           return (

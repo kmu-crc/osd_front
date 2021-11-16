@@ -8,6 +8,8 @@ import new_logo_zoom_blue from "source/new_logo_zoom_blue.svg";
 // import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 // import Slider from "react-slick";
+import { isMobile } from "constant";
+import mobilesearch from "resources/images/mobile_search_icon.svg";
 
 // const flag_MaxWidth = 1440;
 // const flag_MinWidth = 480;
@@ -91,11 +93,10 @@ const SearchContainer = styled.div`
 `;
 // mobile
 const MobileSearchContainer = styled.div`
-    width: 100%;
+    width: ${props => props.width};
     height: 22px;
     border-radius: 10px;
     border: 1px solid #C3C3C3;
-
     position: relative;
 
     input {
@@ -107,6 +108,9 @@ const MobileSearchContainer = styled.div`
         :focus {
             outline: none;
         }
+        color: ${props => props.fontColor};
+        background-color: transparent;
+        // background-color: ${props => props.inputbgcolor};
     }
 
     img {
@@ -163,16 +167,18 @@ class SearchForm extends Component {
         }
     }
     render() {
-        const { mobile, mobilesearch, } = this.props;
         return (
 
-            mobile
-                ? <MobileSearchContainer>
+            isMobile()
+                ? <MobileSearchContainer
+                    fontColor={this.props.transparent ? "white" : "black"}
+                    inputbgcolor={this.props.transparent ? "transparent" : "white"}
+                    width={this.props.formWidth ? `${this.props.formWidth}px` : "100%"} >
                     <input
                         className="searchbox"
                         id="searchbox"
                         type="text"
-                        placeholder="새로운 디자인을 찾아보세요!"
+                        placeholder={this.props.transparent ? "" : "새로운 디자인을 찾아보세요!"}
                         maxLength="100"
                         onChange={this.handleKeyDown}
                         onKeyDown={this.submitEnter}
