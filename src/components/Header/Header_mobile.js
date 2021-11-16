@@ -141,10 +141,7 @@ class Header extends Component {
                 {window.location.href.search('/search') > -1
                     ? null
                     : <SearchForm
-                        mobile={true}
-                        mobilesearch={mobilesearch}
-
-                        formWidth={this.state.screenWidth}
+                        formWidth={200}
                         searchCategory={this.state.selectCate}
                         visible={1}
                     />}

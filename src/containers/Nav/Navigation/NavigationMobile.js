@@ -455,18 +455,14 @@ class Navigation extends Component {
                 </div>
                 : null}
 
-            {/* level 0 */}
-            {level0.map((level, index) =>
-                <a key={index} className="link_tag"
-                    //  href={`/${level.id}`}
-                    onClick={() => this.nextLevel(level.id)} >
-                    <MenuItem className="menu_tag marginTop1 ">
-                        {level.text}
-                    </MenuItem>
-                </a>
-            )}
+            {/* level 2 = 1st category selected */}
+            <SubMenuNavigationAni open={this.state.thislevel >= 2}>
+                this is level 2<br />
+                <button onClick={() => this.goGrnLevel(0)}>go lv.0</button>
+                <button onClick={() => this.nextLevel(0)}>go lv.3</button>
+                <button onClick={() => this.prevLevel(0)}>go lv.2</button>
+            </SubMenuNavigationAni>
 
-            {this.state.thislevel}
 
             {/* level 1 = design | group | designer | about */}
             <SubMenuNavigationAni open={this.state.thislevel >= 1} bgcolor={this.state.thislevelcolor || "red"}>
@@ -487,12 +483,18 @@ class Navigation extends Component {
                 )}
             </SubMenuNavigationAni>
 
-            <SubMenuNavigationAni open={this.state.thislevel >= 2}>
-                this is level 2<br />
-                <button onClick={() => this.goGrnLevel(0)}>go lv.0</button>
-                <button onClick={() => this.nextLevel(0)}>go lv.3</button>
-                <button onClick={() => this.prevLevel(0)}>go lv.2</button>
-            </SubMenuNavigationAni>
+            {/* level 0 */}
+            {level0.map((level, index) =>
+                <a key={index} className="link_tag"
+                    //  href={`/${level.id}`}
+                    onClick={() => this.nextLevel(level.id)} >
+                    <MenuItem className="menu_tag marginTop1 ">
+                        {level.text}
+                    </MenuItem>
+                </a>
+            )}
+
+            {this.state.thislevel}
 
             {/* 
             <SubMenuNavigationAni open={this.state.thislevel >= 3}>

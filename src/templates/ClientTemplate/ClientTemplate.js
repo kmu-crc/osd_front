@@ -3,10 +3,10 @@ import HeaderContainer from "containers/Header/HeaderContainer"
 import Footer from "components/Header/Footer"
 import styled, { keyframes } from "styled-components";
 import NavigationContainer from "containers/Nav/NavigationContainer";
-import NavigationContainerMobile from "containers/Nav/NavigationContainer/NavigationContainerMobile";
 import SignInContainer from "containers/Registration/SignInContainer";
-import { MOBILE_WIDTH, SLIDE_MENU_WIDTH } from "constant";
+import { isMobile, MOBILE_WIDTH, } from "constant";
 import cookie from 'react-cookies';
+import MobileSlideMenu, { Back } from "components/Mobile/MobileSlideMenu";
 
 const OpenAni = keyframes`
   0% {
@@ -97,30 +97,8 @@ const Wrapper = styled.div`
   overflow-x: scroll;
 `;
 
-// mobile
-const fadein = keyframes`
-  0% {
-    opacity:0;
-  }
-  100% {
-    opacity:0.5;
-  }
-`;
-const Back = styled.div`
-  display:${props => props.visible == true ? "block" : "none"};
-  z-index: 100;
-  position:fixed;
-  width:${window.innerWidth}px;
-  height:${window.innerHeight}px;
-  opacity:0.5;
-  background:transparent linear-gradient(180deg, #707070 0%, #383838 100%) 0% 0% no-repeat padding-box;  
-  animation-name: ${fadein};
-  animation-duration:1s;
-  animation-direction:alternate;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
+// MOBILE
 
-`
 const MobileWrapper = styled.div`
   z-index: 8888;
   // width: ${MOBILE_WIDTH}px;
@@ -128,32 +106,6 @@ const MobileWrapper = styled.div`
   position: relative;
   margin-left:auto;
   margin-right:auto;
-`;
-const MobileOpenAni = keyframes`
-  0% {
-    left: ${-1 * SLIDE_MENU_WIDTH}px;
-  }
-  100% {
-    left: 0px;
-  }
-`;
-const MobileCloseAni = keyframes`
-  0% {
-    left: 0px;
-  }
-  100% {
-    left: ${-1 * SLIDE_MENU_WIDTH}px;
-  }
-`;
-const MobileNavigationAni = styled.div`
-  position: fixed;
-  height: 100%;
-  z-index: 902;
-  animation-name: ${props => props.sidemenu ? MobileOpenAni : MobileCloseAni};
-  animation-duration: 1s;
-  animation-direction: alternate;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;  
 `;
 const MobileClient = styled.div`
 // width: ${MOBILE_WIDTH}px;
@@ -167,8 +119,6 @@ const MobileClient = styled.div`
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */ 
 `;
-
-const isMobile = () => !(window.innerWidth > 500);
 
 class ClientTemplate extends Component {
   constructor(props) {
@@ -244,7 +194,9 @@ class ClientTemplate extends Component {
     await this.setState({ sidemenu: this.state.sidemenu === true ? false : true });
     await cookie.save("side-menu", this.state.sidemenu ? "true" : "false", { path: "/" });
   }
-
+  gotoSignInPage = () => {
+    window.location.href = "/signin";
+  }
   render() {
 
     const { scroll, larger /*, hidemenu*/ } = this.state;
@@ -257,22 +209,12 @@ class ClientTemplate extends Component {
 
         <Back visible={this.state.sidemenu} />
 
-        {/* login */}
-        <></>
-
         {/* navi */}
-        <MobileNavigationAni sidemenu={this.state.sidemenu} >
-          <div style={{ position: "absolute", height: "100%", width: "160px", }}>
-            <NavigationContainerMobile
-              sidemenu={this.state.sidemenu}
-              onClickFolding={this.onClickFoldingSideMenu}
-            />
-          </div>
-        </MobileNavigationAni>
+        <MobileSlideMenu setSideMenu={(v) => this.setState({ sidemenu: v })} />
 
         {/* header */}
         <HeaderContainer
-          onClickLogin={() => alert("아직임!")}
+          onClickLogin={this.gotoSignInPage}
           isLogin={this.state.login}
         />
 

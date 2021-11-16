@@ -1,3 +1,6 @@
+export const isMobile = () => !(window.innerWidth > 500);
+
+// 
 export const MOBILE_WIDTH = 360;
 export const SLIDE_MENU_WIDTH = 160;
 

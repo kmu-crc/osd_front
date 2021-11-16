@@ -5,14 +5,15 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { SignInRequest, SignOutRequest, CheckEmailRequest, GetDevNoticeRequest } from "redux/modules/auth"
 import { FindPwRequest } from "redux/modules/account";
+import { isMobile } from "constant";
 
 
 class HeaderContainer extends Component {
     render() {
         return (
-            window.innerWidth > 500
-                ? <Header {...this.props} style={{ margin: "0 auto" }} />
-                : <HeaderMobile {...this.props} />
+            isMobile()
+                ? <HeaderMobile {...this.props} />
+                : <Header {...this.props} style={{ margin: "0 auto" }} />
         );
     };
 };
