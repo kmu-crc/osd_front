@@ -2,13 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import MypageHeader from 'components/MypageHeader';
 import MypageBody from 'components/MypageBody';
+import MypageHeader_mobile from 'components/MypageHeader_mobile';
+import MypageBody_mobile from 'components/MypageBody_mobile';
 import {
   GetMyDetailRequest,
-  // GetMyDesignListRequest,
-  // GetMyLikeDesignRequest,
-  // GetMyLikeDesignerRequest,
-  // GetMyGroupListRequest, 
-  // GetMyLikeGroupRequest
 } from "redux/modules/personal";
 import {
   GetDesignerCountRequest,
@@ -33,8 +30,18 @@ class MyDetailContainer extends Component {
   render() {
     return (
       <React.Fragment>
-        <MypageHeader {...this.props} />
-        <MypageBody {...this.props} id={this.props.userInfo.uid} />
+        {
+          window.innerWidth<500?
+          <React.Fragment>
+          <MypageHeader_mobile {...this.props} />
+          <MypageBody_mobile {...this.props} id={this.props.userInfo.uid} />
+          </React.Fragment>
+          :
+          <React.Fragment>
+          <MypageHeader {...this.props} />
+          <MypageBody {...this.props} id={this.props.userInfo.uid} />  
+          </React.Fragment>
+        }
       </React.Fragment>
     )
   }

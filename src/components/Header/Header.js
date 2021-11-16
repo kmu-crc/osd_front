@@ -306,21 +306,25 @@ class Header extends Component {
                     {/* 로그인 / 디자인 등록 */}
                     {this.props.userInfo
 
-                        ? <a onClick={() => window.location.href = "/createDesign"}>
+                        ?
                             <MenuElement className="create-design-button">
+                                 <a onClick={() => window.location.href = "/createDesign"}>
                                 <p className="text">
                                     {CreateDesign}
                                 </p>
+                                </a>
                             </MenuElement>
-                        </a>
+                        
 
-                        : <a onClick={() => this.props.onClickLogin()}>
+                        : 
                             <MenuElement className="login-button">
+                                <a onClick={() => this.props.onClickLogin()}>
                                 <p className="text">
                                     {LoginText}
                                 </p>
+                                </a>
                             </MenuElement>
-                        </a>}
+                        }
                 </MobileHeaderMenu>
 
                 : window.location.pathname.indexOf("/sign") != -1 ?

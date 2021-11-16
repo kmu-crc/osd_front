@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import Design_mobile from "components/Designs/Design_mobile";
+import Design_mobile_my from "components/Designs/Design_mobile_my";
 import Group_mobile from "components/Groups/Group_mobile";
 import Designer_mobile from "components/Designers/Designer_mobile";
 import styled from "styled-components";
 import osdcss from "opendesign_mobile_style";
 
 const FlexContainer = styled.div`
+width:360px;
 padding: 0;
 position: relative;
 padding-left:${props=>props.marginRight};
@@ -212,6 +214,7 @@ class ScrollList_mobile extends Component {
             {handleAccept && <AcceptBtn className="ui button black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>}
             {handleReject && <OutBtn className="ui button black" onClick={() => handleReject(item.uid)}>{rejectText || "삭제"}</OutBtn>}
             {type === "design" ? <><Design_mobile data={item} /></> : null}
+            {type === "design_my" ? <><Design_mobile_my data={item} /></> : null}
             {type === "group" ? <><Group_mobile data={item} /></> : null}
             {type === "designer" ? <><Designer_mobile data={item} /></> : null}
           </FlexBox>
