@@ -93,6 +93,17 @@ const opendesign_mobile_style = {
     large: { marginRightLast: 0, cols: 3, },
     big: { marginRightLast: 0, cols: 3, },
   },
+  design_my_margin: {
+    width: 160,
+    height: 160,
+    marginRight: 15,
+    marginBottom: 15,
+    marginBottomLast: 0,
+    small: { marginRightLast: 0, cols: 2, },
+    medium: { marginRightLast: 0, cols: 2, },
+    large: { marginRightLast: 0, cols:2, },
+    big: { marginRightLast: 0, cols: 2, },
+  },
   group_margin: {
     marginRight: 16,
     marginBottom: 12,
