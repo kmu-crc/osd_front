@@ -680,6 +680,140 @@ const ResetButtonWrapper = styled.div`
   margin-top: 10px;
   margin-bottom: 20px;
 `;
+
+const ControllerWrap = styled.div`
+  width: 100%;
+  position: relative;
+  text-align: center;
+
+  border: 1px dashed ${opendesign_style.color.grayScale.scale6};
+  & .initWrap {
+    & > ul {
+      display: flex;
+      // box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
+    }
+    & > span {
+      color: ${opendesign_style.color.grayScale.scale6};
+    }
+  }
+  & :hover {
+    background-color: #FAFAFA;
+    & .initWrap {
+      & > ul { display: flex; }
+      & > span { color: ${opendesign_style.color.grayScale.scale6}; }
+    }
+  }
+  .innerBox {
+    display: flex;
+    height: 45px;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+  }
+`;
+const NewController = styled.li`
+  width: max-content;
+  height: 29px;
+  color: #FF0000;
+  margin-left: 15px;
+  &.first {
+    margin-left: 0px;
+  }
+  &.complecated {
+    display: flex;
+    flex-direction: row;
+    .txt{
+      // border-bottom: 1.5px solid #FF0000;
+    }
+  }
+  &.txt{
+    border-bottom: 1.5px solid #FF0000;
+  }
+  line-height: 29px;
+  padding-bottom: 1.5px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: Noto Sans KR;
+  text-align: center;
+  cursor: pointer;
+`;
+class AddContent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      type: null, content: "", order: null
+    };
+  }
+  addContent = async (type) => {
+    if (type === "FILE") {
+      await this.setState({ type, order: this.props.order, content: "", initClick: true });
+      setTimeout(() => {
+        this.setState({ initClick: false });
+      }, 100);
+    } else {
+      await this.setState({ type, order: this.props.order, content: "" });
+      this.returnData();
+    }
+  }
+  changeType = () => {
+    this.props.change && this.props.change();
+  }
+  returnData = async (data) => {
+    if (data) {
+      await this.setState({ type: null, order: this.props.order, content: "", initClick: false })
+      this.props.getValue(data);
+    } else {
+      if (this.props.getValue) this.props.getValue(this.state);
+    }
+  }
+  render() {
+    return (
+      <ControllerWrap>
+        <div className="innerBox">
+          <NewController
+            className="first txt"
+            onClick={() => this.addContent("FILE")}
+            width="max-content"
+            minWidth="116px"
+            height="29px">
+
+            파일 등록하기</NewController>
+
+          <NewController
+            className="txt"
+            onClick={() => this.addContent("TEXT")}
+            width="max-content"
+            minWidth="134px"
+            height="29px">
+
+            텍스트 입력하기</NewController>
+
+          <NewController
+            onClick={() => this.addContent("LINK")}
+            width="max-content" minWidth="134px" height="29px">
+            하이퍼링크 등록하기</NewController>
+
+          {this.props.order === 0 ?
+            <NewController
+              className="txt complecated"
+              width="max-content"
+              height="29px">
+              <div
+                onClick={this.changeType}
+                className="txt">
+                템플릿 선택하기</div>
+
+            </NewController> : null}
+        </div>
+        {this.state.type === "FILE" &&
+          <FileController
+            item={this.state}
+            getValue={this.returnData} />}
+      </ControllerWrap>
+    );
+  }
+};
+
 class CreateDesignMobile extends Component {
   constructor(props) {
     super(props);
@@ -799,7 +933,7 @@ class CreateDesignMobile extends Component {
   };
   checkFinishAdditional = async () => {
     const { categoryLevel1, alone, members, license1, license2, license3 } = this.state;
-    if (categoryLevel1 != null && ((alone && members.length === 0) || (!alone && members.length > 0)) ) {
+    if (categoryLevel1 != null && ((alone && members.length === 0) || (!alone && members.length > 0))) {
       await this.setState({ additional: true, content: true });
     } else {
       await this.setState({ additional: false });
@@ -1018,429 +1152,21 @@ class CreateDesignMobile extends Component {
 
   render() {
 
-    const { cropper, ratio, loading, members, is_project, contents, categoryLevel1, categoryLevel2 } = this.state;
-    const thumbnailURL = this.state.thumbnail;
-    console.log(this.props, this.state);
-
-    return (
-      <React.Fragment>
-        {loading ?
-          <Loading /> : null}
+    // const { cropper, ratio, loading, members, is_project, contents, categoryLevel1, categoryLevel2 } = this.state;
+    // const thumbnailURL = this.state.thumbnail;
+    // console.log(this.props, this.state);
 
 
-        {cropper ?
-          <CropperDialog
-            open={cropper}
-            ratio={ratio}
-            onKeyDown={null}
-            onClose={null}>
-            <div onClick={this.closeCropper} style={{ position: "absolute", width: "max-content", top: "10px", right: "15px" }}>
-              <Cross angle={45} color={"#000000"} weight={2} width={32} height={32} />
-            </div>
-            <div style={{ width: "max-content", height: "20px", lineHeight: "20px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", fontWeight: "500", textAlign: "left", marginTop: "45px", marginLeft: "75px" }}>{designImageText} 등록</div>
-            <div style={{ width: "max-content", height: "15px", lineHeight: "15px", color: "#FF0000", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>[!]등록하신 {designImageText}가 정사각형이 아닙니다.</div>
-            <div style={{ width: "max-content", height: "30px", lineHeight: "15px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "15px", fontWeight: "300", textAlign: "left", marginTop: "5px", marginLeft: "75px" }}>아래의 이미지에서 {designImageText}로 등록하고자하는 영역을 <br /> 조절하여 등록하기를 클릭하시면 {designImageText}가 등록됩니다.</div>
-            <div className="imagebox">
-              <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "20px", marginBottom: "20px", width: this.state.ratio > 1.0 ? "370px" : "240px", height: "max-content" }}>
-                <ReactCrop
-                  src={this.state.thumbnail} crop={this.state.crop}
-                  onImageLoaded={this.onImageLoaded} onComplete={this.onCropComplete} onChange={this.onCropChange} />
-              </div>
-              <div style={{ marginTop: "20px", display: "flex" }} >
-                <div style={{
-                  marginLeft: "25px", marginRight: "25px", width: "max-content", border: "none", background: "none", height: "40px", lineHeight: "40px", color: "#707070", paddingBottom: "1.5px", borderBottom: "1.5px solid #707070", fontSize: "20px", fontWeight: "500",
-                  fontFamily: "Noto Sans KR", textAlign: "left", cursor: "pointer"
-                }} onClick={() => this.closeCropper()} >취소</div>
-                <div style={{ marginLeft: "auto", textAlign: "middle", color: "#FF0000", fontSize: "20px", fontWeight: "500", fontFamily: "Noto Sans KR", lineHeight: "40px", borderBottom: "1.5px solid #FF0000", border: "1px splid black", cursor: "pointer" }} onClick={() => this.crop()} >등록하기</div>
-              </div>
-            </div>
-          </CropperDialog> : null}
+    const { loading } = this.state;
+
+    return (<React.Fragment>
+
+      {loading ? <Loading /> : null}
 
 
-        <MainBanner>
-          <div className="title">디자인 등록하기</div>
-        </MainBanner>
 
-
-        <MainSection>
-          {/* FORM */}
-          <InputBoard>
-
-            {/* THUMBNAIL */}
-            <ContentsBox>
-              <ThumbnailBox>
-                <div className="title">{designImageText}<sup style={{ color: "red" }}>*</sup></div>
-                <ImageBox imageURL={thumbnailURL == null ? noimg : thumbnailURL} />
-                <div className="findThumbnailBox">
-                  <div className="findThumbnailBtn">
-                    <label className="findThumbnailText" htmlFor="file">찾아보기</label>
-                    <input hidden onChange={this.handleOnChangeThumbnail} id="file" type="file" accept="image/png, image/bmp, image/jpeg, image/jpg" />
-                  </div>
-                  <div className="thumbnailExplainText"> {designImageText}는 대표적으로 보이게 되는 사진으로, <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
-                </div>
-              </ThumbnailBox>
-              {/* TITLE */}
-              <TitleBox>
-                <div className="title">제목<sup style={{ color: "red" }}>*</sup></div>
-                <input onChange={this.onChangeValueTitle} onKeyDown={this.onKeyDownEnter}
-                  className="inputText" name="title" maxLength="100" placeholder="디자인의 제목을 입력해주세요. (100자 이내)" />
-              </TitleBox>
-              {/* EXPLANATION */}
-              <ExplainBox>
-                <div className="title">디자인 설명</div>
-                <textarea id="explainBox" onChange={this.onChangeValueExplanation} className="inputTextareaBox"
-                  maxLength="350" placeholder="디자인 설명을 입력해주세요. (350자 이내)" />
-              </ExplainBox>
-            </ContentsBox>
-
-            {/* CATEGORY */}
-            <ContentsBox>
-              {this.props.category1.length > 0 ?
-                <CategoryBox>
-                  <TitleBox>
-                    <div className="title">카테고리<sup style={{ color: "red" }}>*</sup></div>
-                  </TitleBox>
-                  <CategoryDropDown
-                    selection
-                    ref="dropdown1"
-                    onChange={this.onChangeCategory1}
-                    options={this.props.category1}
-                    value={categoryLevel1}
-                    placeholder="카테고리를 선택해주세요(필수사항)"
-                  />
-                  <CategoryDropDown
-                    selection
-                    id="category2"
-                    ref="dropdown2"
-                    onChange={this.onChangeCategory2}
-                    options={this.props.category2[categoryLevel1 - 1] || emptyCategory}
-                    value={categoryLevel2}
-                    placeholder="서브 카테고리를 선택해주세요(선택사항)"
-                  />
-                </CategoryBox>
-                : <p>카테고리를 가져오고 있습니다.</p>}
-            </ContentsBox>
-
-            {/* MEMBERS */}
-            <ContentsBox>
-              <TitleBox>
-                <div className="title">멤버 초대하기</div>
-              </TitleBox>
-              {/* INVITE MEMBER */}
-              <InviteMemberBox>
-                <div className="searchBox">
-                  <SearchDesignMemverContainer
-                    className="searchRect"
-                    addMember={this.addMember} />
-                </div>
-                <div className="tipTitle">TIP</div>
-                <div className="tipDescription">
-                  함께 디자인을 만들어 갈 멤버를 초대해 주세요.<br />
-                  초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br />
-                  디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.</div>
-              </InviteMemberBox>
-
-              {/* INVITED MEMBER */}
-              <InviteMemberListBox>
-                <div className="memberList">
-                  {members &&
-                    members.length > 0 ?
-                    members.map((item, index) =>
-                      <div
-                        key={index}
-                        onClick={() => this.removeMember(item.user_id)}>
-                        <Peer
-                          s_img={item.s_img == null ? noface : item.s_img}
-                          nick_name={item.nick_name} />
-                      </div>) : null}
-                </div>
-              </InviteMemberListBox>
-              {/* <HRline /> */}
-            </ContentsBox>
-
-            {/* LICENSE */}
-            <ContentsBox>
-              <TitleBox>
-                <div className="title">라이센스<sup style={{ color: "red" }}>*</sup></div>
-              </TitleBox>
-              <LicenseBox>
-                <div className="licenseList">
-                  <div className="licenseItem">
-                    <CheckBox2
-                      checked={this.state.license1}
-                      onChange={this.onCheckedLicense01} />
-                    <span className="textLabel">상업적으로 이용이 가능합니다.</span>
-                  </div>
-                  <div className="licenseItem">
-                    <CheckBox2
-                      checked={this.state.license2}
-                      onChange={this.onCheckedLicense02} />
-                    <span className="textLabel">원작자를 표시합니다.</span>
-                  </div>
-                  <div className="licenseItem">
-                    <CheckBox2
-                      checked={this.state.license3}
-                      onChange={this.onCheckedLicense03} />
-                    <span className="textLabel">추후에 수정이 가능합니다.</span>
-                  </div>
-                </div>
-              </LicenseBox>
-            </ContentsBox>
-
-            {/* DESIGN CONTENTS */}
-            <ContentsBox>
-              <TitleBox>
-                <div className="title">디자인 컨텐츠</div>
-              </TitleBox>
-              <ResetButtonWrapper
-                onClick={() => this.setState({ step: 2, type: "normal", is_project: 0, contents: [], steps: [], template: null })}>
-                작업취소하기<i className="undo icon" />
-              </ResetButtonWrapper>
-
-              {is_project === 0 ?
-                <React.Fragment>
-                  {/* edit mode */}
-                  {contents && contents.length > 0 ?
-                    (<React.Fragment>
-                      {contents.map(item => {
-                        return (<ControllerWrap key={item.order}>
-                          {/* <div className="contentWrap"> */}
-                          {item.type === "FILE" ?
-                            (<FileController
-                              item={item}
-                              name="source"
-                              initClick={this.state.click}
-                              getValue={this.onChangeFile}
-                              setController={this.setController} />)
-                            : null}
-                          {item.type === "TEXT" ?
-                            <TextController
-                              item={item}
-                              name={item.name}
-                              initClick={this.state.click}
-                              getValue={(data) => this.onChangeValue(data, item.order)} />
-                            : null}
-
-                          {item.type === "LINK" ?
-                            <LinkController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
-                            : null}
-
-                          {/* {item.type === "EMBED" ? */}
-                          {/* (<EmbController />) */}
-                          {/* : null} */}
-                          {/* </div> */}
-                          <DelBtn
-                            type="button"
-                            className="editBtn"
-                            onClick={() => this.onDelete(item.order)}>
-                            <i className="trash alternate icon large" />
-                          </DelBtn>
-                          {/* {content.length - 1 >= item.order && item.order !== 0 ? <UpBtn type="button" className="editBtn" onClick={() => this.moveUpItem(item.order)}><i className="angle up alternate icon large" /></UpBtn> : null} */}
-                          {/* {content.length - 1 !== item.order && item.order >= 0 ? <DownBtn type="button" className="editBtn" onClick={() => this.moveDownItem(item.order)}><i className="angle down alternate icon large" /></DownBtn> : null} */}
-                        </ControllerWrap>)
-                      })}
-                      <AddContent getValue={this.onAddValue} order={contents.length} />
-                    </React.Fragment>)
-                    : <AddContent getValue={this.onAddValue} order={0} change={() => this.setState({ type: "grid", is_project: 1 })} />}
-                </React.Fragment>
-                : null}
-
-              {/* selected grid */}
-              {this.state.type === "grid" ?
-                /* first suggest design templete */
-                <DesignTemplateSelector>
-                  <div className="title">
-                    템플릿을 선택하시면 보다 편하게 작업을 시작하실 수 있습니다!
-                  </div>
-
-                  <div className="template-wrapper">
-                    {template &&
-                      template.length > 0 &&
-                      template.map(item =>
-                        <label
-                          className="element"
-                          key={item.type}
-                          onClick={async () => await this.setState({ template: item.type })}>
-                          {item.text}
-                          <DesignElement>
-                            <img alt="" src={item.img} /></DesignElement>
-                        </label>
-                      )}
-                  </div>
-                </DesignTemplateSelector>
-                : null}
-
-              {(this.state.type === "grid" && this.state.template != null && this.state.template !== "my-design") &&
-                <EditorWrapper>
-                  <div className="preview-text">
-                    미리보기
-                  </div>
-
-                  <div className="editor">
-                    <TemplateGridEditor
-                      mobile
-                      selected={content => this.setState({ steps: content, is_project: 1 })}
-                      type={this.state.template} />
-                  </div>
-
-                  <div className="title">
-                    선택하신 템플릿으로 시작하시고 싶으시다면<br />
-                    아래에 완료 버튼을 클릭해주세요.
-                    </div>
-                </EditorWrapper>}
-            </ContentsBox>
-
-            {/* BUTTONS */}
-            <div className="buttonBox">
-              <CustomButton
-                onClick={() => window.history.go(-1)}
-                isComplete={false}>
-                <BtnText>취소</BtnText>
-              </CustomButton>
-              <CustomButton
-                isComplete={this.state.type === "grid" && this.state.template == null ? false : true}
-                onClick={this.submit}>
-                <BtnText>완료</BtnText>
-              </CustomButton>
-            </div>
-          </InputBoard>
-        </MainSection>
-
-      </React.Fragment >)
+    </React.Fragment>);
   };
-}
-export default CreateDesignMobile;
-
-
-const ControllerWrap = styled.div`
-  width: 100%;
-  position: relative;
-  text-align: center;
-
-  border: 1px dashed ${opendesign_style.color.grayScale.scale6};
-  & .initWrap {
-    & > ul {
-      display: flex;
-      // box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
-    }
-    & > span {
-      color: ${opendesign_style.color.grayScale.scale6};
-    }
-  }
-  & :hover {
-    background-color: #FAFAFA;
-    & .initWrap {
-      & > ul { display: flex; }
-      & > span { color: ${opendesign_style.color.grayScale.scale6}; }
-    }
-  }
-  .innerBox {
-    display: flex;
-    height: 45px;
-    align-items: center;
-    justify-content: center;
-    list-style: none;
-  }
-`;
-const NewController = styled.li`
-  width: max-content;
-  height: 29px;
-  color: #FF0000;
-  margin-left: 15px;
-  &.first {
-    margin-left: 0px;
-  }
-  &.complecated {
-    display: flex;
-    flex-direction: row;
-    .txt{
-      // border-bottom: 1.5px solid #FF0000;
-    }
-  }
-  &.txt{
-    border-bottom: 1.5px solid #FF0000;
-  }
-  line-height: 29px;
-  padding-bottom: 1.5px;
-  font-size: 15px;
-  font-weight: 500;
-  font-family: Noto Sans KR;
-  text-align: center;
-  cursor: pointer;
-`;
-class AddContent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      type: null, content: "", order: null
-    };
-  }
-  addContent = async (type) => {
-    if (type === "FILE") {
-      await this.setState({ type, order: this.props.order, content: "", initClick: true });
-      setTimeout(() => {
-        this.setState({ initClick: false });
-      }, 100);
-    } else {
-      await this.setState({ type, order: this.props.order, content: "" });
-      this.returnData();
-    }
-  }
-  changeType = () => {
-    this.props.change && this.props.change();
-  }
-  returnData = async (data) => {
-    if (data) {
-      await this.setState({ type: null, order: this.props.order, content: "", initClick: false })
-      this.props.getValue(data);
-    } else {
-      if (this.props.getValue) this.props.getValue(this.state);
-    }
-  }
-  render() {
-    return (
-      <ControllerWrap>
-        <div className="innerBox">
-          <NewController
-            className="first txt"
-            onClick={() => this.addContent("FILE")}
-            width="max-content"
-            minWidth="116px"
-            height="29px">
-
-            파일 등록하기</NewController>
-
-          <NewController
-            className="txt"
-            onClick={() => this.addContent("TEXT")}
-            width="max-content"
-            minWidth="134px"
-            height="29px">
-
-            텍스트 입력하기</NewController>
-
-          <NewController
-            onClick={() => this.addContent("LINK")}
-            width="max-content" minWidth="134px" height="29px">
-            하이퍼링크 등록하기</NewController>
-
-          {this.props.order === 0 ?
-            <NewController
-              className="txt complecated"
-              width="max-content"
-              height="29px">
-              <div
-                onClick={this.changeType}
-                className="txt">
-                템플릿 선택하기</div>
-
-            </NewController> : null}
-        </div>
-        {this.state.type === "FILE" &&
-          <FileController
-            item={this.state}
-            getValue={this.returnData} />}
-      </ControllerWrap>
-    );
-  }
 };
+
+export default CreateDesignMobile;

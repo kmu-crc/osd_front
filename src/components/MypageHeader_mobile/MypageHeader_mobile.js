@@ -36,7 +36,7 @@ const NameWrapper = styled.div`
         text-overflow: ellipsis;
         white-space: normal;
 
-        font-family:SpoqaHanSans;
+        font-family:Spoqa Han Sans;
         font-weight:700;
         font-size:26px;
 
@@ -93,7 +93,7 @@ const InfoWrapper = styled.div`
                 text-overflow: ellipsis;
                 white-space: normal;
 
-                font: normal normal normal 18px/24px SpoqaHanSans;
+                font: normal normal normal 18px/24px Spoqa Han Sans;
                 color:#777777;
             }
         }

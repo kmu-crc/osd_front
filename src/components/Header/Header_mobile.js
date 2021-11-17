@@ -5,9 +5,10 @@ import MenuContext from "Global/Context/GlobalContext"
 import SearchForm from "components/Header/SearchForm"
 import Socket from "modules/Socket"
 
-import { LoginText, CreateDesign, } from "constant";
-import mobilelogo from "resources/images/mobile_logo.svg";
-import mobilesearch from "resources/images/mobile_search_icon.svg";
+import { LoginText, CreateDesign, DeleteDesign, } from "constant";
+import mobilelogored from "resources/images/mobile_logo.svg";
+import mobilelogoblue from "resources/images/mobile_header_log_blue.svg";
+// import mobilesearch from "resources/images/mobile_search_icon.svg";
 
 const MobileHeaderMenu = styled.ul`
     z-index: 8888;
@@ -127,12 +128,18 @@ class Header extends Component {
     };
 
     render() {
+        console.log(window.location.href);
 
         return (<MobileHeaderMenu>
             {/* 로그 */}
             <a href="/">
                 <MenuElement className="logo">
-                    <img src={mobilelogo} />
+                    {/* const location = window.location.pathname.toLowerCase().split("/"); */}
+                    {window.location.pathname.toLowerCase() === "/design" ||
+                        window.location.pathname.toLowerCase() === "/createdesign"
+                        ? <img src={mobilelogoblue} />
+                        : <img src={mobilelogored} />
+                    }
                 </MenuElement>
             </a>
 
@@ -146,17 +153,25 @@ class Header extends Component {
                         visible={1}
                     />}
             </MenuElement>
-
             {/* 로그인 / 디자인 등록 */}
             {this.props.userInfo
 
-                ? <a onClick={() => window.location.href = "/createDesign"}>
-                    <MenuElement className="create-design-button">
-                        <p className="text">
-                            {CreateDesign}
-                        </p>
-                    </MenuElement>
-                </a>
+                ?
+                window.location.href.toLowerCase().indexOf("/createdesign") > -1
+                    ? <a onClick={() => alert("delete design")}>
+                        <MenuElement className="create-design-button">
+                            <p className="text">
+                                {DeleteDesign}
+                            </p>
+                        </MenuElement>
+                    </a>
+                    : <a onClick={() => window.location.href = "/createDesign"}>
+                        <MenuElement className="create-design-button">
+                            <p className="text">
+                                {CreateDesign}
+                            </p>
+                        </MenuElement>
+                    </a>
 
                 : <a onClick={() => this.props.onClickLogin()}>
                     <MenuElement className="login-button">
