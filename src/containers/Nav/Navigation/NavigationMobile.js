@@ -492,11 +492,8 @@ class Navigation extends Component {
                 : null}
 
 
-            {/* 
-            <SubMenuNavigationAni 
-            open={this.state.thislevel == 3}
-            bgcolor={this.state.thislevel.color || "red"}
-            >
+            {/*
+            <SubMenuNavigationAni open={this.state.thislevel == 3} bgcolor={this.state.thislevel.color || "red"} >
             </SubMenuNavigationAni> 
             */}
 
@@ -511,7 +508,7 @@ class Navigation extends Component {
                         메인메뉴
                     </MenuItem>
                 </a>
-                <a className="link_tag" onClick={() => this.gotoPage(`/${this.state.thislevel.id}`)}>
+                <a className="link_tag" onClick={() => this.gotoLevel1(level0.find(level => level.id === this.state.thislevel.id))}>
                     <MenuItem
                         className={`menu_tag marginTop1 ${level1.length > 0 ? "border-bottom" : ""}`}>
                         {level0.find(level => level.id === this.state.thislevel.id)
@@ -570,7 +567,9 @@ class Navigation extends Component {
             {level0.map((level, index) =>
                 <a key={index} className="link_tag"
                     onClick={() => this.gotoLevel1(level)} >
-                    <MenuItem className="menu_tag marginTop1 " isSelect={location[1] && !location[2] && location[1] == level.id.toLowerCase()}>
+                    <MenuItem
+                        className="menu_tag marginTop1 "
+                        isSelect={location[1] && !location[2] && location[1] == level.id.toLowerCase()}>
                         {level.text}
                     </MenuItem>
                 </a>)}
@@ -578,10 +577,10 @@ class Navigation extends Component {
             {this.props.userInfo == null
                 ? null
                 : <a className="link_tag" onClick={this.SignOut}>
-                    <MenuItem className="stickToEnd menu_tag border-top" >로그아웃</MenuItem>
+                    <MenuItem className="stickToEnd menu_tag border-top">로그아웃</MenuItem>
                 </a>}
 
-        </MobileMenuBox >);
+        </MobileMenuBox>);
     };
 };
 
