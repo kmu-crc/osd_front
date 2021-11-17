@@ -416,6 +416,16 @@ class Navigation extends Component {
         window.location.href = page;
         this.props.onClickFolding();
     }
+    gotoMyPage = () => {
+        alert("!");
+        window.location.href = `/mypage`;
+    };
+    gotoAlarmPage = () => {
+        window.location.href = `/alarm`;
+    };
+    gotoMessagePage = () => {
+        window.location.href = `/message`;
+    };
 
     render() {
         const location = window.location.pathname.toLowerCase().split("/");
@@ -448,38 +458,42 @@ class Navigation extends Component {
                     src={new_logo_handle_arrow} />
             </div>
 
-
             {/* thumbnail */}
             {this.props.userInfo && this.state.thislevel.num === 0
                 ? <div className="thumbnail-container">
-                    <div className="thumbnail">
-                        <img src={this.props.userInfo.thumbnail.m_img} />
-                    </div>
+                    <a onClick={this.gotoMyPage}>
+                        <div className="thumbnail">
+                            <img src={this.props.userInfo.thumbnail.m_img} />
+                        </div>
+                    </a>
+
                     <div className="alarm-message-icon-wrapper">
-                        <div className="alarm-icon-wrapper">
-                            {this.state.alarm.count > 0
-                                ? <div className="alarm-count">
-                                    <p>{this.state.alarm.count > 99 ? 99 : this.state.alarm.count}</p>
-                                </div> : null}
-                            <img src={mobile_alarm_icon} />
-                        </div>
-                        <div className="message-icon-wrapper">
-                            {this.state.alarm.countMsg > 0
-                                ? <div className="message-count">
-                                    <p>{this.state.alarm.countMsg > 99 ? 99 : this.state.alarm.countMsg}</p>
-                                </div> : null}
-                            <img src={mobile_message_icon} />
-                        </div>
+                        <a onClick={this.gotoAlarmPage}>
+                            <div className="alarm-icon-wrapper">
+                                {this.state.alarm.count > 0
+                                    ? <div className="alarm-count">
+                                        <p>{this.state.alarm.count > 99 ? 99 : this.state.alarm.count}</p>
+                                    </div> : null}
+                                <img src={mobile_alarm_icon} />
+                            </div>
+                        </a>
+                        <a onClick={this.gotoMessagePage}>
+                            <div className="message-icon-wrapper">
+                                {this.state.alarm.countMsg > 0
+                                    ? <div className="message-count">
+                                        <p>{this.state.alarm.countMsg > 99 ? 99 : this.state.alarm.countMsg}</p>
+                                    </div> : null}
+                                <img src={mobile_message_icon} />
+                            </div>
+                        </a>
                     </div>
+
                 </div>
                 : null}
 
 
-            {/* 
-            <SubMenuNavigationAni 
-            open={this.state.thislevel == 3}
-            bgcolor={this.state.thislevel.color || "red"}
-            >
+            {/*
+            <SubMenuNavigationAni open={this.state.thislevel == 3} bgcolor={this.state.thislevel.color || "red"} >
             </SubMenuNavigationAni> 
             */}
 
@@ -494,7 +508,7 @@ class Navigation extends Component {
                         메인메뉴
                     </MenuItem>
                 </a>
-                <a className="link_tag" onClick={() => this.gotoPage(`/${this.state.thislevel.id}`)}>
+                <a className="link_tag" onClick={() => this.gotoLevel1(level0.find(level => level.id === this.state.thislevel.id))}>
                     <MenuItem
                         className={`menu_tag marginTop1 ${level1.length > 0 ? "border-bottom" : ""}`}>
                         {level0.find(level => level.id === this.state.thislevel.id)
@@ -553,7 +567,9 @@ class Navigation extends Component {
             {level0.map((level, index) =>
                 <a key={index} className="link_tag"
                     onClick={() => this.gotoLevel1(level)} >
-                    <MenuItem className="menu_tag marginTop1 " isSelect={location[1] && !location[2] && location[1] == level.id.toLowerCase()}>
+                    <MenuItem
+                        className="menu_tag marginTop1 "
+                        isSelect={location[1] && !location[2] && location[1] == level.id.toLowerCase()}>
                         {level.text}
                     </MenuItem>
                 </a>)}
@@ -561,10 +577,10 @@ class Navigation extends Component {
             {this.props.userInfo == null
                 ? null
                 : <a className="link_tag" onClick={this.SignOut}>
-                    <MenuItem className="stickToEnd menu_tag border-top" >로그아웃</MenuItem>
+                    <MenuItem className="stickToEnd menu_tag border-top">로그아웃</MenuItem>
                 </a>}
 
-        </MobileMenuBox >);
+        </MobileMenuBox>);
     };
 };
 

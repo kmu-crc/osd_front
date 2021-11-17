@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Navigation from "containers/Nav/Navigation/NavigationMobile";
+import NavigationMobile from "containers/Nav/Navigation/NavigationMobile";
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { SignInRequest, SignOutRequest, CheckEmailRequest, GetDevNoticeRequest } from "redux/modules/auth"
@@ -9,7 +9,7 @@ import { FindPwRequest } from "redux/modules/account";
 
 class NavigationContainer extends Component {
     render() {
-        return (<Navigation {...this.props} style={{ margin: "0 auto" }} />)
+        return (<NavigationMobile {...this.props} style={{ margin: "0 auto" }} />)
     }
 };
 
