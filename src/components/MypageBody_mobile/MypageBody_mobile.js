@@ -39,7 +39,7 @@ const MenuBox = styled.div`
     justify-content:space-around;
     align-items:center;
     .tab{
-        font-family:SpoqaHanSans;
+        font-family:Spoqa Han Sans;
         font-size:15px;
         color:#7A7A7A;
     }
@@ -63,14 +63,14 @@ const CareerListTable = styled.div`
     .row{
         display:flex;
         .bold{
-           font-family: SpoqaHanSans;
+           font-family: Spoqa Han Sans;
            font-size:20px;
            font-weight:700;
            color:#777777;
            margin-right:28px;
         }
         .light{
-            font-family: SpoqaHanSans;
+            font-family: Spoqa Han Sans;
             font-size:20px;
             font-weight:400;
             color:#777777;
