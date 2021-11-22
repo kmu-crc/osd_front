@@ -4,12 +4,9 @@ import Footer from "components/Header/Footer"
 import styled, { keyframes } from "styled-components";
 import NavigationContainer from "containers/Nav/NavigationContainer";
 import SignInContainer from "containers/Registration/SignInContainer";
-// import MenuContext from "Global/Context/GlobalContext"
-
-// mobile
-// import { Dimmer, } from 'semantic-ui-react'
-import { MOBILE_WIDTH, SLIDE_MENU_WIDTH } from "constant";
+import { isMobile, MOBILE_WIDTH, } from "constant";
 import cookie from 'react-cookies';
+import MobileSlideMenu, { Back } from "components/Mobile/MobileSlideMenu";
 
 const OpenAni = keyframes`
   0% {
@@ -100,30 +97,8 @@ const Wrapper = styled.div`
   overflow-x: scroll;
 `;
 
-// mobile
-const fadein = keyframes`
-  0% {
-    opacity:0;
-  }
-  100% {
-    opacity:0.5;
-  }
-`;
-const Back = styled.div`
-  display:${props => props.visible == true ? "block" : "none"};
-  z-index: 100;
-  position:fixed;
-  width:${window.innerWidth}px;
-  height:${window.innerHeight}px;
-  opacity:0.5;
-  background:transparent linear-gradient(180deg, #707070 0%, #383838 100%) 0% 0% no-repeat padding-box;  
-  animation-name: ${fadein};
-  animation-duration:1s;
-  animation-direction:alternate;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
+// MOBILE
 
-`
 const MobileWrapper = styled.div`
   z-index: 8888;
   // width: ${MOBILE_WIDTH}px;
@@ -131,32 +106,6 @@ const MobileWrapper = styled.div`
   position: relative;
   margin-left:auto;
   margin-right:auto;
-`;
-const MobileOpenAni = keyframes`
-  0% {
-    left: ${-1 * SLIDE_MENU_WIDTH}px;
-  }
-  100% {
-    left: 0px;
-  }
-`;
-const MobileCloseAni = keyframes`
-  0% {
-    left: 0px;
-  }
-  100% {
-    left: ${-1 * SLIDE_MENU_WIDTH}px;
-  }
-`;
-const MobileNavigationAni = styled.div`
-  position: fixed;
-  height: 100%;
-  z-index: 902;
-  animation-name: ${props => props.sidemenu ? MobileOpenAni : MobileCloseAni};
-  animation-duration: 1s;
-  animation-direction: alternate;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;  
 `;
 const MobileClient = styled.div`
 // width: ${MOBILE_WIDTH}px;
@@ -170,8 +119,6 @@ const MobileClient = styled.div`
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */ 
 `;
-
-const isMobile = () => 500 >= window.innerWidth;
 
 class ClientTemplate extends Component {
   constructor(props) {
@@ -191,8 +138,10 @@ class ClientTemplate extends Component {
   componentDidMount() {
     const sidemenu = cookie.load("side-menu");
     if (sidemenu === undefined) {
-      cookie.save("side-menu", true);
+      cookie.save("side-menu", "true");
       this.setState({ sidemenu: true });
+    } else {
+      this.setState({ sidemenu: sidemenu === "true" });
     }
     window.addEventListener("resize", this.handleResize, false);
   }
@@ -242,100 +191,87 @@ class ClientTemplate extends Component {
     this.setState({ screenWidth: window.innerWidth });
   }
   onClickFoldingSideMenu = async () => {
-    // const sidemenu = await cookie.load("side-menu");
-    await this.setState({ sidemenu: this.state.sidemenu === true ? false : true});
-    await cookie.save("side-menu", this.state.sidemenu, { path: "/" });
+    await this.setState({ sidemenu: this.state.sidemenu === true ? false : true });
+    await cookie.save("side-menu", this.state.sidemenu ? "true" : "false", { path: "/" });
   }
-
+  gotoSignInPage = () => {
+    window.location.href = "/signin";
+  }
   render() {
 
     const { scroll, larger /*, hidemenu*/ } = this.state;
     const scroll_style = (scroll ? "partial-scroll-on " : "partical-scroll-none ");
     const larger_style = (larger ? "larger " : "");
-    // const hidemenu_style = (hidemenu ? "hidemenu " : "");
 
-    return (<React.Fragment>
-      {isMobile()
+    return (isMobile()
 
-        ? <MobileWrapper>
+      ? <MobileWrapper>
 
-          {<Back visible={this.state.sidemenu } />}
+        <Back visible={this.state.sidemenu} />
 
-          {/* login */}
+        {/* navi */}
+        <MobileSlideMenu setSideMenu={(v) => this.setState({ sidemenu: v })} />
 
+        {/* header */}
+        <HeaderContainer
+          onClickLogin={this.gotoSignInPage}
+          isLogin={this.state.login}
+        />
 
-          {/* navi */}
-          <MobileNavigationAni sidemenu={this.state.sidemenu } >
-            <div style={{ position: "absolute", height: "100%", width: "160px", }}>
-              <NavigationContainer
-                mobile={true}
-                sidemenu={this.state.sidemenu }
-                onClickFolding={this.onClickFoldingSideMenu}
-              />
-            </div>
-          </MobileNavigationAni>
+        {/* client */}
+        <MobileClient>
+          {this.props.children}
+        </MobileClient>
 
-          {/* header */}
-          <HeaderContainer
-            onClickLogin={() => alert("아직임!")}
-            isLogin={this.state.login}
-          />
+        <Footer />
 
-          {/* client */}
-          <MobileClient>
-            {this.props.children}
-          </MobileClient>
+      </MobileWrapper>
 
-          <Footer />
+      : <Wrapper>
 
-        </MobileWrapper>
+        {this.state.login ?
+          <SignInContainer
+            onCloseLogin={() => this.setState({ login: null })}
+            loginOpen={this.state.login} />
+          : null}
 
-        : <Wrapper>
+        <HeaderContainer
+          onClickLogin={() => this.setState({ login: this.state.login == null ? true : !this.state.login })}
+          isLogin={this.state.login}
+          sidemenu={this.state.sidemenu}
+          onClickMenu={() => {
+            this.state.login && this.state.sidemenu ?
+              this.setState({ sidemenu: this.state.sidemenu }) :
+              this.setState({ sidemenu: !this.state.sidemenu })
+          }} />
 
-          {this.state.login ?
-            <SignInContainer
-              onCloseLogin={() => this.setState({ login: null })}
-              loginOpen={this.state.login} />
-            : null}
-
-          <HeaderContainer
-            onClickLogin={() => this.setState({ login: this.state.login == null ? true : !this.state.login })}
-            isLogin={this.state.login}
+        <NavigationAni sidemenu={this.state.sidemenu}>
+          <NavigationContainer
+            onClickFolding={this.onClickFoldingSideMenu}
             sidemenu={this.state.sidemenu}
-            onClickMenu={() => {
-              this.state.login && this.state.sidemenu ?
-                this.setState({ sidemenu: this.state.sidemenu }) :
-                this.setState({ sidemenu: !this.state.sidemenu })
-            }} />
+            userInfo={this.props.userInfo}
+          />
+        </NavigationAni>
 
-          <NavigationAni sidemenu={this.state.sidemenu}>
-            <NavigationContainer
-              onClickFolding={this.onClickFoldingSideMenu}
-              sidemenu={this.state.sidemenu}
-              userInfo={this.props.userInfo}
-            />
-          </NavigationAni>
+        <Client
+          hidemenu={this.state.sidemenu}
+          active={this.props.isActive}
+          className={`${scroll_style} ${/*hidemenu_style*/""} ${larger_style}`}
+          onScroll={this.handleScroll}>
 
-          <Client
-            hidemenu={this.state.sidemenu}
-            active={this.props.isActive}
-            className={`${scroll_style} ${/*hidemenu_style*/""} ${larger_style}`}
-            onScroll={this.handleScroll}>
+          <ClientAni sidemenu={this.state.sidemenu}>
+            <div className="wrap_children">
+              {React.cloneElement(this.props.children, { menu: this.state.sidemenu })}
+              {/* {this.props.children} */}
+            </div>
+          </ClientAni>
+        </Client>
 
-            <ClientAni sidemenu={this.state.sidemenu}>
-              <div className="wrap_children">
-                {React.cloneElement(this.props.children, { menu: this.state.sidemenu })}
-                {/* {this.props.children} */}
-              </div>
-            </ClientAni>
-          </Client>
+        <Footer />
 
-          <Footer />
-
-        </Wrapper>
-      }
-    </React.Fragment >);
-  }
-}
+      </Wrapper>
+    );
+  };
+};
 
 export default ClientTemplate;
