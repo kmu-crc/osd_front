@@ -150,13 +150,15 @@ class Header extends Component {
             {/* 로그인 / 디자인 등록 */}
             {this.props.userInfo
 
-                ? <a onClick={() => window.location.href = "/createDesign"}>
+                ? 
                     <MenuElement className="create-design-button">
                         <p className="text">
+                        <a onClick={() => window.location.href = "/createDesign"}>
                             {CreateDesign}
+                        </a>
                         </p>
                     </MenuElement>
-                </a>
+                
 
                 : <a onClick={() => this.props.onClickLogin()}>
                     <MenuElement className="login-button">
