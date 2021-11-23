@@ -9,8 +9,10 @@ export const LoginText = "로그인";
 export const CreateDesign = "디자인 등록";
 export const DeleteDesign = "디자인 삭제";
 export const strButtonNext = "다음";
+export const strButtonPrev = "뒤로";
 export const strButtonCancel = "취소";
 export const strButtonComplete = "완료";
+export const strErrorDoNotNextStep = "현재 단계를 완료해주세요.";
 
 // bool
 export const NOT = false;

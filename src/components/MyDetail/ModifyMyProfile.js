@@ -187,7 +187,7 @@ const PannelMenu = styled.div`
         width: 168px; 
         height: 77px;
         display: flex;
-        align-item: center;
+        align-items: center;
         .text {
             height: 40px;
             margin: auto;

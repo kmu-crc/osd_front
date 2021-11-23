@@ -43,7 +43,7 @@ import { Dropdown } from "semantic-ui-react";
 //     }
 // `
 
-const RoundComobo = styled.div`
+const OrderDrop = styled.div`
     width:67px;
     height:16px;
     border-radius:7px;
@@ -51,6 +51,8 @@ const RoundComobo = styled.div`
     display:flex;
     align-items:center;
     justify-content:center;
+
+    position:relative;
     .text{
         font-family:Spoqa Han Sans Neo;
         font-size:8px;
@@ -58,27 +60,66 @@ const RoundComobo = styled.div`
         color:${props=>props.type=="design"?"#1262AB":props.type=="designer"?"#7E1E9B":props.type=="group"?"#1E9B79":"red"};
     }
 
+    .dropWrap{
+        width:67px;
+        position:absolute;
+        top:16px;
+        z-index:888;
+        .item{
+            width:100%;
+            height:16px;
+            background-color:#1262AB;
+            color:white;
+            border-radius:7px;
+
+            margin-top:1px;
+
+            font-family:Spoqa Han Sans Neo;
+            font-size:8px;
+            font-weight:500;
+            
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+    }
 `
+
 class OrderOption_mobile extends Component {
     state = {
+        drop:false,
+        select:this.props.selected.keyword=="like"?0:1,
         options:
             [{ text: "인기순", keyword: "like", marginRight: "30px" },
             { text: "최신순", keyword: "update", marginRight: "30px" }]
     }
 
-    handleClicked = (order) => {
-        console.log(order);
-        this.props.order_clicked(order)
+    handleClicked = (order,index) => {
+        console.log(order,index);
+        this.setState({select:order.keyword=="like"?0:1});
+        this.props.order_clicked(order);
     }
     render() {
-        console.log(this.state.options[0].text,this.props.selected)
+        console.log(this.props.selected)
         const { options } = this.state
         const { selected, style } = this.props
         return (
-            <RoundComobo type={this.props.type}>
-                <div className="text">인기순보기</div>
+            <OrderDrop type={this.props.type}>
+                <div className="text" onClick={()=>this.setState({drop:!this.state.drop})}>{options[this.state.select].text}</div>
                 <div className="text">∨</div>
-            </RoundComobo>
+                {
+                    this.state.drop&&
+                    <div className="dropWrap">
+                    {options.map((opt,index) => {
+                            return (
+                                <div className="item" onClick={() => this.handleClicked(opt,index)}>
+                                    {opt.text}
+                                </div>
+                            )
+                    })}
+                    </div>
+                }
+            </OrderDrop>
             // <OrderWrapper wrap={this.props.wrap} style={style}>
 
             //     {options.map(opt => {
