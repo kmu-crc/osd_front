@@ -5,6 +5,7 @@ import Loading from "components/Commons/Loading";
 import required from "resources/images/mobile_create_design_required.svg";
 import thumbnailSVG from "resources/images/mobile_create_design_thumbnail.svg";
 import { strButtonPrev, strErrorDoNotNextStep, strButtonComplete, strButtonCancel, strButtonNext } from "constant";
+import { geturl } from "config";
 import helpIcon from "resources/images/help_black_24dp.svg";
 import closeIcon from "resources/images/icon_close.svg";
 import checkedIcon from "resources/images/icon_checked.svg";
@@ -667,7 +668,7 @@ class CreateDesignMobile extends React.Component {
     super(props);
     this.state = {
       // common
-      step: STEP_CONTENT, // STEP_BASIC,
+      step: STEP_BASIC,
       basic: false,
       additional: false,
       loading: false,
@@ -688,14 +689,10 @@ class CreateDesignMobile extends React.Component {
       // step 2 - content
       is_project: 0,
       contents: [],
-
-      // info_dialog: false, 
-      // crop: { unit: "%", width: 50, aspect: 1 },
-      // designId: null, isMyDesign: false, editor: false,
       showSearch: false,
-      // cropper: false, is_rectangle: false,
-      // type: null, 
-      // template: null,
+
+      // info_dialog: false, crop: { unit: "%", width: 50, aspect: 1 }, designId: null, isMyDesign: false, 
+      // editor: false, cropper: false, is_rectangle: false, type: null, template: null,
     };
   }
 
@@ -772,16 +769,21 @@ class CreateDesignMobile extends React.Component {
       : alert(strErrorDoNotNextStep);
 
   checkFinishAdditional = async () => {
-    const { categoryLevel1, alone, members, license1, license2, license3 } = this.state;
+    const { categoryLevel1, /*alone, members,*/ license1, license2, license3 } = this.state;
+
+    // category
+    if (categoryLevel1 == null) {
+      await this.setState({ additional: false });
+      return;
+    }
+
+    // license
     if (!(license1 && license2 && license3)) {
       await this.setState({ additional: false });
       return;
     }
-    if (categoryLevel1 != null && ((alone && members.length === 0) || (!alone && members.length > 0))) {
-      await this.setState({ additional: true, content: true });
-      return;
-    }
-    await this.setState({ additional: false });
+
+    await this.setState({ additional: true, content: true });
   };
   onChangeCategory1 = async () => {
     await this.setState({
@@ -859,7 +861,6 @@ class CreateDesignMobile extends React.Component {
   Submit = () => {
     this.setState({ loading: true });
 
-    return;
     const {
       contents, categoryLevel1, categoryLevel2, title, explanation,
       license1, license2, license3,
@@ -885,12 +886,12 @@ class CreateDesignMobile extends React.Component {
 
     };
 
-    let designId = null;
+    // let designId = null;
     this.props.CreateDesignRequest(data, this.props.token)
       .then(async (res) => {
         if (res.success) {
-          designId = res.design_id;
-          // window.location.href = geturl() + `/designDetail/` + designId;
+          // designId = res.design_id;
+          window.location.href = geturl() + `/designDetail/` + res.design_id; // designId;
         }
       })
       .catch(err => alert(err + "와 같은 이유로 다음 단계로 진행할 수 없습니다."));
@@ -912,7 +913,28 @@ class CreateDesignMobile extends React.Component {
     );
     await this.setState({ contents: copyContent });
   };
-
+  onAddValue = async (data) => {
+    let copyContent = [...this.state.contents];
+    let copyData = { ...data };
+    copyData.initClick = true;
+    for (let item of copyContent) {
+      if ((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")) {
+        await copyContent.splice(item.order, 1, null);
+      }
+    }
+    await copyContent.splice(copyData.order, 0, copyData);
+    let newContent = copyContent.filter((item) => { return item !== null })
+    newContent = await Promise.all(
+      newContent.map(async (item, index) => {
+        item.order = await index;
+        delete item.target;
+        if (item.type === "FILE") delete item.initClick;
+        if (item.order !== copyData.order) delete item.initClick;
+        return item;
+      })
+    );
+    await this.setState({ contents: newContent });
+  };
   render() {
 
     console.log(this.props, this.state);
@@ -1294,7 +1316,7 @@ class CreateDesignMobile extends React.Component {
 
           {step === STEP_CONTENT &&
             <button
-              onClick={() => basic && additional ? this.Submit : alert(strErrorDoNotNextStep)}
+              onClick={() => basic && additional ? this.Submit() : alert(strErrorDoNotNextStep)}
               className={`${basic && additional ? "" : "impossible"} next`}>
               {strButtonComplete}</button>}
 
