@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
+import update from "react-addons-update";
 import styled from 'styled-components';
 import Loading from "components/Commons/Loading";
 import required from "resources/images/mobile_create_design_required.svg";
@@ -8,6 +9,17 @@ import helpIcon from "resources/images/help_black_24dp.svg";
 import closeIcon from "resources/images/icon_close.svg";
 import checkedIcon from "resources/images/icon_checked.svg";
 import uncheckedIcon from "resources/images/icon_unchecked.svg";
+
+import FileController from "../CardSourceDetail/FileController";
+import LinkController from "../CardSourceDetail/LinkController";
+import TextController from "../CardSourceDetail/TextControllerPlus";
+import TemplateGridEditor from "components/Designs/CreateDesign/TemplateGridEditor";
+import opendesign_style from "opendesign_style";
+import AddContent, { ControllerWrap } from "./AddContentMobile";
+import templateImgDesign from "source/template-image-design.png";
+import templateImgSofware from "source/template-image-software.png";
+import templateImgEngineering from "source/template-image-engineering.png";
+import templateImgEmpty from "source/template-image-empty.png";
 
 const Wrapper = styled.div`
   margin-top: 2px;
@@ -287,7 +299,7 @@ const AdditionalForm = styled.div`
   margin-top: 25px;
   width: 335px;
 
-  *{border: 1px dashed black; }
+  // *{border: 1px dashed black; }
   .label {
     width: max-content;
     text-align: center;
@@ -346,6 +358,7 @@ const AdditionalForm = styled.div`
         background-color: #C9C9C9;
         border: none;
         outline: none;
+        margin-bottom: 10px;
 
         ::placeholder { color: white; opacity: 1; } /* Chrome, Firefox, Opera, Safari 10.1+ */ /* Firefox */
         :-ms-input-placeholder { color: white; } /* Internet Explorer 10-11 */
@@ -432,37 +445,254 @@ const AdditionalForm = styled.div`
   }
 `;
 const ContentEditorForm = styled.div`
+  width: 335px;
+
+  .reset-wrapper {
+    width: max-content;
+    margin-left: auto;
+    margin-right: 5px;
+    color: #707070;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 `;
 
-class CreateDesignMobile extends Component {
+const DesignTemplateSelector = styled.div`
+  .title {
+    width: max-content;
+    color: #707070;
+    padding: 10px 5px;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1rem;
+  }
+  .template-wrapper {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+  .element {
+    min-width: 150px;
+    margin: 5px;
+    border: 2px solid #EFEFEF;
+    padding: 5px;
+    :hover {
+      border: 2px solid #777777;
+    }
+  }
+`;
+const DesignElement = styled.div`
+  *{
+    cursor:pointer;
+  }
+  position: relative;
+  cursor: pointer;
+  color: white;
+  font-size: 20px;
+  font-family: "Noto Sans KR";
+  z-index: 700;
+  width: 300px;
+  height: 150px;
+  border-radius: 15px;
+  // background-size: cover;
+  img{
+    max-width: 100%;
+    max-height: 100%;
+    // background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(${props => props.img});
+  }
+  
+  .cover {
+    // cursor: default;
+    z-index: 701;
+    position: absolute;
+    border-radius: 15px;
+    background-image: linear-gradient(180deg, rgba(255,255,255,0) 60%, rgba(32,32,32, 0.7)100%); 
+    width: 330px;
+    height: 330px;
+  }
+  .innerbox {
+    z-index: 703;
+    position: absolute;
+    width: 274.08px;
+    color: #FFFFFF;
+    line-height: 40px;
+    height: 35px;
+    font-family: Noto Sans KR;
+    margin-left: 25px;
+    margin-top: 201px;
+    .design-title {
+      font-size: 20px;
+      font-weight: 700;
+      text-shadow:2px 2px 6px gray;
+      display: flex;
+      justify-content: space-between;
+    }
+    .update-time { 
+      margin-top: 5px;
+      font-weight: 300;
+      border: 1px solid red;
+      width: max-content;
+      height: 25px;
+      font-size: 17px;
+      font-family: Noto Sans KR;
+      text-shadow:2px 2px 6px gray;
+      line-height: 25px;
+      text-align: right;
+      // cursor: default;
+    }
+    .user-name {
+      font-size: 20px;
+      font-weight: 300;
+      text-shadow:2px 2px 6px gray;
+      // cursor: default;
+    }  
+    .user-update-wrapper {
+      width: 285px;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  .counter {
+    z-index: 703;
+    position: absolute;
+    left: 24.92px;
+    top: 286px;
+    display: flex;
+    justify-content: space-start;
+    width: 291px;
+    height: 22px;
+    text-align: left;
+    line-height: 40px;
+    font-size: 15px;
+    font-weight: 500;
+    align-items: center;
+  }
+  .view {
+    z-index: 703;
+    margin-right: 4.25px;
+  }
+  .view-count {
+    z-index: 703;
+    margin-right: 6px;
+    // cursor: default;
+  }
+  .like {
+    z-index: 703;
+    margin-right: 4px;
+    img{
+      width: 13px;
+      height: 13px;
+    }
+  } 
+  .like-count {
+    z-index: 703;
+    margin-right: 6px;
+    // cursor: default;
+  }
+  .fork {
+    z-index: 703;
+    margin-right: 4px;
+    img {
+      width: 22px;
+      height: 11px;
+    }
+  }
+  .fork-count {
+    z-index: 703;
+    margin-right: 0px;
+    // cursor: default;
+  }
+`;
+const DelBtn = styled.button`
+  position: absolute;
+  top: 80%;
+  left: 95%;
+  transform: translate(-50%, -50%);
+  border: 0;
+  padding: 0;
+  width: 45px;
+  height: 45px;
+  border-radius: 25px;
+  line-height: 25px;
+  box-sizing: border-box;
+  font-size: 12px;
+  background-color: ${opendesign_style.color.main.basic};
+  color: white;
+  text-align: center;
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
+  outline: 0;
+  i.icon {
+    margin: 0;
+  }
+  &:focus .subMenu {
+    display: block;
+  }
+`;
+const EditorWrapper = styled.div`
+  color: #707070;
+  .preview-text {
+    margin: 10px;
+    font-size: 1.2rem;
+    line-height: 1rem;
+    font-weight: 500;
+  }
+  .title {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1rem;
+    margin: 10px;
+  }
+  .editor{
+    opacity: .75;
+    width: ${window.innerWidth - 30}px;
+    overflow: auto;
+  }
+`;
+const template = [
+  { type: "empty", text: "빈 템플릿", img: templateImgEmpty },
+  { type: "fashion", text: "일반디자인 템플릿", img: templateImgDesign },
+  { type: "engineering", text: "공학디자인 템플릿", img: templateImgEngineering },
+  { type: "software", text: "소프트웨어디자인 템플릿", img: templateImgSofware },
+];
+const STEP_BASIC = 0;
+const STEP_ADDITIONAL = 1;
+const STEP_CONTENT = 2;
+
+class CreateDesignMobile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       // common
-      // step: 0,
-      step: 1,
+      step: STEP_CONTENT, // STEP_BASIC,
       basic: false,
       additional: false,
+      loading: false,
 
-      // step 0
+      // step 0 - basic
       thumbnail: thumbnailSVG,
       thumbnail_name: "",
       title: "",
       explanation: "",
 
-      // step 1
+      // step 1 - additional
       categoryLevel1: this.props.userInfo.category1 || null,
       categoryLevel2: null,
       categoryLevel3: null,
-      alone: true, members: [], addmem: [], delmem: [],
+      members: [], addmem: [], delmem: [], // alone: true, 
       license1: true, license2: true, license3: true,
 
+      // step 2 - content
+      is_project: 0,
+      contents: [],
 
-      // is_project: 0, info_dialog: false, contents: [],
+      // info_dialog: false, 
       // crop: { unit: "%", width: 50, aspect: 1 },
-      // loading: false, designId: null, isMyDesign: false, editor: false,
-      // content: false,
-      // showSearch: false,
+      // designId: null, isMyDesign: false, editor: false,
+      showSearch: false,
       // cropper: false, is_rectangle: false,
       // type: null, 
       // template: null,
@@ -519,28 +749,39 @@ class CreateDesignMobile extends Component {
     //this.checkFinishBasic();
   };
   goStep1 = () => {
-    this.setState({ step: 1 });
+    this.checkFinishAdditional();
+    this.setState({ step: STEP_ADDITIONAL });
+  }
+  goStep2 = () => {
+    this.checkFinishAdditional();
+    this.setState({ step: STEP_CONTENT });
   }
   StepMenu1Clicked = () =>
-    this.state.step != 0
-      ? this.setState({ step: 0 })
+    this.state.step != STEP_BASIC
+      ? this.setState({ step: STEP_BASIC })
       : null;
 
   StepMenu2Clicked = () =>
-    this.state.step != 1 && this.state.basic
-      ? this.setState({ step: 1 })
+    this.state.basic || this.state.step >= STEP_ADDITIONAL
+      ? this.setState({ step: STEP_ADDITIONAL })
       : alert(strErrorDoNotNextStep);
 
   StepMenu3Clicked = () =>
-    alert(this.state.step);
+    ((this.state.additional && this.state.step === STEP_BASIC) || this.state.step === STEP_ADDITIONAL)
+      ? this.setState({ step: STEP_CONTENT })
+      : alert(strErrorDoNotNextStep);
 
   checkFinishAdditional = async () => {
     const { categoryLevel1, alone, members, license1, license2, license3 } = this.state;
+    if (!(license1 && license2 && license3)) {
+      await this.setState({ additional: false });
+      return;
+    }
     if (categoryLevel1 != null && ((alone && members.length === 0) || (!alone && members.length > 0))) {
       await this.setState({ additional: true, content: true });
-    } else {
-      await this.setState({ additional: false });
+      return;
     }
+    await this.setState({ additional: false });
   };
   onChangeCategory1 = async () => {
     await this.setState({
@@ -549,7 +790,7 @@ class CreateDesignMobile extends Component {
       categoryLevel3: null
     });
     this.checkFinishAdditional();
-  }
+  };
   onChangeCategory2 = async () => {
     const value = await document.getElementById("cate2").value;
     await this.setState({
@@ -562,12 +803,115 @@ class CreateDesignMobile extends Component {
       categoryLevel3: document.getElementById("cate3").value
     });
   };
-  onClickedLicense1 = () => { this.setState({ license1: !this.state.license1 }); this.checkFinishAdditional(); }
-  onClickedLicense2 = () => { this.setState({ license2: !this.state.license2 }); this.checkFinishAdditional(); }
-  onClickedLicense3 = () => { this.setState({ license3: !this.state.license3 }); this.checkFinishAdditional(); }
+  onClickedLicense1 = async () => {
+    await this.setState({ license1: !this.state.license1 });
+    this.checkFinishAdditional();
+  };
+  onClickedLicense2 = async () => {
+    await this.setState({ license2: !this.state.license2 });
+    this.checkFinishAdditional();
+  };
+  onClickedLicense3 = async () => {
+    await this.setState({ license3: !this.state.license3 });
+    this.checkFinishAdditional();
+  };
   searchMember = async (event) => {
-
+    const value = await document.getElementById("search-member-input").value.trim();
+    if (value.length === 0) {
+      this.setState({ showSearch: false });
+    } else {
+      this.setState({ showSearch: true });
+      this.props.searchMember(value);
+    }
+  };
+  selectedMember = async (member) => {
+    const { email, s_img, nick_name, uid } = member;
+    this.addMember(email, s_img, nick_name, uid);
   }
+  addMember = async (email, s_img, nick_name, uid) => {
+    let member = { email: email, s_img: s_img, nick_name: nick_name, user_id: uid, uid: uid };
+    await this.setState({
+      members: this.state.members.concat(member),
+      addmem: this.state.addmem.concat(member)
+    });
+    this.checkFinishAdditional();
+    this.setState({ alone: false });
+    this.setState({ showSearch: false });
+    document.getElementById("search-member-input").value = "";
+  };
+  removeMember = async (user_id) => {
+    // remove from addmem
+    if (this.state.addmem.find(mem => { return mem.user_id === user_id })) {
+      await this.setState({ addmem: this.state.addmem.filter(member => { return member.user_id !== user_id }) });
+    } else { // remove if not in addmem
+      await this.setState({ delmem: this.state.delmem.concat(this.state.members.filter((member) => { return user_id === member.user_id })) });
+    }
+    // display member list
+    console.log("removeMember:", this.state.members, user_id);
+    await this.setState({ members: this.state.members.filter((member) => { return user_id !== member.user_id }) });
+    this.checkFinishAdditional();
+
+    if (this.state.members.length === 0) {
+      this.setState({ alone: true });
+    }
+  };
+
+  Submit = () => {
+    this.setState({ loading: true });
+
+    return;
+    const {
+      contents, categoryLevel1, categoryLevel2, title, explanation,
+      license1, license2, license3,
+      thumbnail, thumbnail_name } = this.state;
+    contents && contents.map(content => {
+      delete content.initClick;
+      return content;
+    });
+    let data = {
+      uid: this.props.userInfo.uid,
+      is_project: this.state.is_project,
+      contents: contents, // [*]
+      category_level1: categoryLevel1, category_level2: categoryLevel2, explanation: explanation,
+      files: [{ key: "thumbnail[]", value: thumbnail, name: thumbnail_name }],
+      is_commercial: license1 ? 1 : 0, is_display_creater: license2 ? 1 : 0, is_modify: license3 ? 1 : 0,
+      members: {
+        add: this.state.addmem, del: this.state.delmem
+      },
+      title: title,
+
+      // added
+      type: this.state.type, steps: this.state.steps,
+
+    };
+
+    let designId = null;
+    this.props.CreateDesignRequest(data, this.props.token)
+      .then(async (res) => {
+        if (res.success) {
+          designId = res.design_id;
+          // window.location.href = geturl() + `/designDetail/` + designId;
+        }
+      })
+      .catch(err => alert(err + "와 같은 이유로 다음 단계로 진행할 수 없습니다."));
+    this.setState({ loading: false });
+  };
+  onChangeValue = async (data, order) => {
+    this.setState({ contents: update(this.state.contents, { [order]: { contents: { $set: data.content } } }) });
+  };
+  onChangeFile = async (data) => {
+    let copyContent = [...this.state.contents];
+    delete data.initClick;
+    delete data.target;
+    await copyContent.splice(data.order, 1, data);
+    copyContent = await Promise.all(
+      copyContent.map(async (item, index) => {
+        delete item.initClick;
+        return item;
+      })
+    );
+    await this.setState({ contents: copyContent });
+  };
 
   render() {
 
@@ -578,8 +922,9 @@ class CreateDesignMobile extends Component {
       thumbnail: thumbnailURL,
       title, explanation,
       categoryLevel1, categoryLevel2, categoryLevel3,
+      showSearch,
       license1, license2, license3,
-
+      is_project, contents,
     } = this.state;
 
     return (<React.Fragment>
@@ -589,15 +934,15 @@ class CreateDesignMobile extends Component {
       <Wrapper>
 
         <StepMenu>
-          <Step onClick={this.StepMenu1Clicked} className={`${step === 0 ? "selected" : ""}`}>기본정보</Step>
-          <Step onClick={this.StepMenu2Clicked} className={`${step === 1 ? "selected" : ""}`}>부가정보</Step>
-          <Step onClick={this.StepMenu3Clicked} className={`${step === 2 ? "selected" : ""}`}>컨텐츠정보</Step>
+          <Step onClick={this.StepMenu1Clicked} className={`${step === STEP_BASIC ? "selected" : ""}`}>기본정보</Step>
+          <Step onClick={this.StepMenu2Clicked} className={`${step === STEP_ADDITIONAL ? "selected" : ""}`}>부가정보</Step>
+          <Step onClick={this.StepMenu3Clicked} className={`${step === STEP_CONTENT ? "selected" : ""}`}>컨텐츠정보</Step>
         </StepMenu>
 
         <CreateForm>
           {/* 기본정보 */}
-          {step === 0 &&
-            <BasicForm>
+          {step === STEP_BASIC
+            && <BasicForm>
               {/* 1. 디자인 이미지 */}
               <div className=" fadein design-image-title">
                 <p>1.디자인 이미지</p>
@@ -657,8 +1002,8 @@ class CreateDesignMobile extends Component {
             </BasicForm>}
 
           {/* 부가정보 */}
-          {step === 1 && <React.Fragment>
-            <AdditionalForm>
+          {step === STEP_ADDITIONAL
+            && <AdditionalForm>
               {/* 1. 카테고리 */}
               <div className="category-wrapper fadein">
                 <div className="label">
@@ -733,29 +1078,50 @@ class CreateDesignMobile extends Component {
                     </div>
                     <div className="member-input">
                       {/* input */}
-                      <input onKeyPress={this.searchMember} placeholder="추가할 멤버의 닉네임을 입력해 주세요" />
+                      <input
+                        id="search-member-input"
+                        onKeyDown={this.searchMember}
+                        placeholder="추가할 멤버의 닉네임을 입력해 주세요" />
 
                       {/* searched */}
-                      <div>searched</div>
+                      {<div style={{
+                        backgroundColor: "white",
+                        position: "absolute",
+                        width: "205px",
+                        height: `${showSearch ? "50px" : "0px"}`,
+                        maxHeight: "150px",
+                        overflow: "hidden scroll",
+                      }}>
+                        {this.props.members
+                          && this.props.members
+                            //.filter(mem => this.state.members.map(_mem => _mem.uid).includes(mem.uid))
+                            .filter(mem => mem.uid !== this.props.userInfo.uid)
+                            .filter(mem => !this.state.members.map(m => m.uid).includes(mem.uid))
+                            .map((mem, index) =>
+                              <div key={index}
+                                onClick={() => this.addMember(
+                                  mem.email, mem.s_img, mem.nick_name, mem.uid, mem.uid
+                                )}>
+                                {mem.nick_name}
+                              </div>)}
+                      </div>}
 
                       {/* list */}
                       {
-                        [
-                          { uid: 1, img: "https://s3.ap-northeast-2.amazonaws.com/osd.uploads.com/thumbnails/1615109185448-x200.jpeg", nick: "닉네임1", },
-                          { uid: 2, img: "https://s3.ap-northeast-2.amazonaws.com/osd.uploads.com/thumbnails/1615109185448-x200.jpeg", nick: "닉네임2닉네임2닉네임2닉네임2닉네임2닉네임2", }
-                        ].map((mem, index) =>
-                          <div className="added-member-element flex-row space-between" key={index}>
-                            <img className="face" src={mem.img} />
-                            <p className="nick">{mem.nick}</p>
-                            <a onClick={() => this.removeMember(mem)}>
-                              <img className="close" src={closeIcon} />
-                            </a>
-                          </div>)}
+                        this.state.members
+                          .map((mem, index) =>
+                            <div className="added-member-element flex-row space-between" key={index}>
+                              <img className="face" src={mem.s_img} />
+                              <p className="nick">{mem.nick_name}</p>
+                              <a onClick={() => this.removeMember(mem.uid)}>
+                                <img className="close" src={closeIcon} />
+                              </a>
+                            </div>)}
 
                     </div>
                   </div>
 
-                  <div className="member-tip-wrapper">
+                  <div className="member-tip-wrapper top15">
                     <img src={helpIcon} />
                     <p>
                       함께 디자인을 만들어 갈 멤버를 초대해 주세요.<br />
@@ -797,30 +1163,116 @@ class CreateDesignMobile extends Component {
                 </div>
                 : null}
 
-            </AdditionalForm>
-          </React.Fragment>}
+            </AdditionalForm>}
 
           {/* 컨텐츠정보 */}
-          {step === 2 && <React.Fragment>
-            <ContentEditorForm>
+          {step === STEP_CONTENT
+            && <ContentEditorForm>
+              <div
+                className="reset-wrapper"
+                onClick={() => this.setState({ step: STEP_CONTENT, type: "normal", is_project: 0, contents: [], steps: [], template: null })}>
+                작업취소하기<i className="undo icon" />
+              </div>
+              {is_project === 0
+                ? <React.Fragment>
+                  {/* edit mode */}
+                  {contents && contents.length > 0
+                    ? (<React.Fragment>
+                      {contents.map(item => {
+                        return (<ControllerWrap key={item.order}>
+                          {/* <div className="contentWrap"> */}
+                          {item.type === "FILE" ?
+                            (<FileController
+                              item={item}
+                              name="source"
+                              initClick={this.state.click}
+                              getValue={this.onChangeFile}
+                              setController={this.setController} />)
+                            : null}
+                          {item.type === "TEXT" ?
+                            <TextController
+                              item={item}
+                              name={item.name}
+                              initClick={this.state.click}
+                              getValue={(data) => this.onChangeValue(data, item.order)} />
+                            : null}
 
-            </ContentEditorForm>
-          </React.Fragment>}
+                          {item.type === "LINK" ?
+                            <LinkController item={item} name={item.name} initClick={this.state.click} getValue={(data) => this.onChangeValue(data, item.order)} />
+                            : null}
+
+                          <DelBtn
+                            type="button"
+                            className="editBtn"
+                            onClick={() => this.onDelete(item.order)}>
+                            <i className="trash alternate icon large" />
+                          </DelBtn>
+                        </ControllerWrap>)
+                      })}
+                      <AddContent getValue={this.onAddValue} order={contents.length} />
+                    </React.Fragment>)
+                    : <AddContent getValue={this.onAddValue} order={0} change={() => this.setState({ type: "grid", is_project: 1 })} />}
+                </React.Fragment>
+                : null}
+
+              {/* selected grid */}
+              {this.state.type === "grid" ?
+                /* first suggest design templete */
+                <DesignTemplateSelector>
+                  <div className="title">템플릿을 선택하시면 보다 편하게 작업을 시작하실 수 있습니다!</div>
+
+                  <div className="template-wrapper">
+                    {template &&
+                      template.length > 0 &&
+                      template.map(item =>
+                        <label
+                          className="element"
+                          key={item.type}
+                          onClick={async () => await this.setState({ template: item.type })}>
+                          {item.text}
+                          <DesignElement>
+                            <img alt="" src={item.img} /></DesignElement>
+                        </label>
+                      )}
+                  </div>
+                </DesignTemplateSelector>
+                : null}
+
+              {(this.state.type === "grid" && this.state.template != null && this.state.template !== "my-design") &&
+                <EditorWrapper>
+                  <div className="preview-text">
+                    미리보기
+                  </div>
+
+                  <div className="editor">
+                    <TemplateGridEditor
+                      mobile
+                      selected={content => this.setState({ steps: content, is_project: 1 })}
+                      type={this.state.template} />
+                  </div>
+
+                  <div className="title">
+                    선택하신 템플릿으로 시작하시고 싶으시다면<br />
+                    아래에 완료 버튼을 클릭해주세요.
+                  </div>
+                </EditorWrapper>}
+
+            </ContentEditorForm>}
 
         </CreateForm>
 
         <StepButtonWrapper>
 
-          <button onClick={null} className="cancel">{strButtonCancel}</button>
+          <button onClick={() => window.history.go(-1)} className="cancel">{strButtonCancel}</button>
 
-          {step !== 0 &&
+          {step !== STEP_BASIC &&
             <button
-              onClick={null}
+              onClick={() => this.setState({ step: this.state.step - 1 })}
               className="cancel"
             >
               {strButtonPrev}</button>}
 
-          {step === 0 &&
+          {step === STEP_BASIC &&
             <button
               onClick={
                 () => basic
@@ -831,16 +1283,19 @@ class CreateDesignMobile extends Component {
               className={`${basic ? "" : "impossible"} next`}>
               {strButtonNext}</button>}
 
-          {step === 1 &&
+          {step === STEP_ADDITIONAL &&
             <button
-              onClick={null}
-              className={`${additional ? "active" : ""} next`}>
+              onClick={() => basic && additional
+                ? this.goStep2()
+                : alert("단계를 완성하여 주세요.")
+              }
+              className={`${additional ? "" : "impossible"} next`}>
               {strButtonNext}</button>}
 
-          {step === 2 &&
+          {step === STEP_CONTENT &&
             <button
-              onClick={null}
-              className={`${basic ? "active" : ""} next`}>
+              onClick={() => basic && additional ? this.Submit : alert(strErrorDoNotNextStep)}
+              className={`${basic && additional ? "" : "impossible"} next`}>
               {strButtonComplete}</button>}
 
         </StepButtonWrapper>
@@ -852,54 +1307,3 @@ class CreateDesignMobile extends Component {
 };
 
 export default CreateDesignMobile;
-
-
-
-// class SearchMember extends Component {
-//   state = { member: [], open: false, listOpen: false, }
-//   componentDidMount() { if (this.props.originalMember) { this.setState({ member: this.props.originalMember }); } }
-//   getValue = (value) => {
-//     this.setState({ open: true }); if (!value) { this.setState({ open: false }); return; }
-//     this.props.SearchMemberRequest(null, { key: value }, this.props.token).then(data => { })
-//   }
-//   addMember = async (data) => { this.getValue(""); this.props.addMember && this.props.addMember(data.email, data.s_img, data.nick_name, data.uid); }
-//   closeList = () => { this.setState({ open: false }); }
-//   onChangeInput() { this.setState({ listOpen: true }); }
-//   deleteMember = (index) => { let newArray = [...this.state.member]; newArray.splice(index, 1); this.setState({ member: newArray }); this.returnData(); }
-
-//   returnData = () => { setTimeout(() => { if (this.props.onChangeMembers) this.props.onChangeMembers(this.state.member); }, 100) }
-
-//   render() {
-//     return (
-//       <div>
-//         <FormInput
-//           className="form-input"
-//           type="text"
-//           name="search"
-//           placeholder="추가할 멤버의 닉네임을 입력해 주세요"
-//           validates={this.props.validates}
-//           getValue={this.getValue}
-//         />
-//         <div style={{ width: "100%", height: "100%", }}>
-//           <div display={this.state.open ? "block" : "none"}>
-//             {this.props.members && this.props.members.map((item, index) => {
-//               return (<div key={`member${index}`} onClick={() => this.addMember(item)}>{item.email}</div>);
-//             })}
-//           </div>
-//         </div>
-//         <div >
-//           {this.state.member.map((data, index) => {
-//             return (<div key={index}>
-//               {data.nick_name}
-//               <span>
-//                 <button type="button" onClick={() => this.deleteMember(index)}>
-//                   <Icon name="remove" />
-//                 </button>
-//               </span>
-//             </div>)
-//           })}
-//         </div>
-//       </div>
-//     );
-//   }
-// }

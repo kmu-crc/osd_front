@@ -10,11 +10,13 @@ import {
 import { SearchMemberRequest } from "redux/modules/search"
 import { GetCategoryAllRequest } from "redux/modules/category"
 import opendesigncss from "opendesign_style"
+import { isMobile } from "constant";
 
 class CreateDesignFormContainer extends Component {
   constructor(props) {
     super(props);
     this.gotoMyModify = this.gotoMyModify.bind(this);
+    this.searchMember = this.searchMember.bind(this);
   }
   componentDidMount() {
     // if (this.props.userInfo.is_designer === 0) {
@@ -27,11 +29,13 @@ class CreateDesignFormContainer extends Component {
     // alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.")
     // this.props.history.push("/myModify")
   }
+  searchMember(value) {
+    this.props.SearchMemberRequest(null, { key: value }, this.props.token);
+  }
   render() {
-    const mobile = window.innerWidth <= opendesigncss.resolutions.SmallMaxWidth;
 
-    return (mobile
-      ? <CreateDesignMobile {...this.props} />
+    return (isMobile()
+      ? <CreateDesignMobile searchMember={this.searchMember} {...this.props} />
       : <CreateDesign {...this.props} />)
   }
 }
