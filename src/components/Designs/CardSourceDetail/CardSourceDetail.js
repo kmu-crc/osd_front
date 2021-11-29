@@ -509,6 +509,9 @@ const ViewContent = styled.div`
       opacity: .75;
     }
   }
+  .align-right { margin-left: auto; }
+  .align-left { margin-right: auto; }
+  .align-center { margin: auto; }
 `;
 const ButtonContainer = styled.div`
   // margin-bottom: 35px;
@@ -1628,7 +1631,7 @@ class CardSourceDetail extends Component {
                         </span>
                         <video
                           key={item.content}
-                          className="iconWrap"
+                          className={`${item.option && item.option.split(",")[0] === "center" ? "align-center" : item.option && item.option.split(",")[0] === "left" ? "align-left" : "align-right"} iconWrap`}
                           width={`${window.innerWidth > 480 ? "975" : window.innerWidth - 55}`}
                           height={`${window.innerWidth > 480 ? "600" : (window.innerWidth - 55) * .55}`}
                           controls="controls">
