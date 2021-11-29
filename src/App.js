@@ -8,6 +8,7 @@ import MainPage from "pages/MainPage";
 import SignUpPage from "pages/SignUpPage";
 import InsertUserDetailPage from "pages/InsertUserDetailPage";
 import SignInPage from "pages/SignInPage";
+import FindPWPage from "pages/FindPWPage";
 import MyDetailPage from "pages/MyDetailPage";
 import MyDetailModifyPage from "pages/MyDetailModifyPage";
 import SearchPage from "pages/SearchPage";
@@ -60,6 +61,7 @@ class App extends Component {
             <Route exact path="/" component={MainPage} />
             <Route path="/signup" component={SignUpPage} />
             <Route path="/signin" component={SignInPage} />
+            <Route path="/findpw" component={FindPWPage} />
             <Route path="/insertUserDetail" component={RequiresAuth(InsertUserDetailPage)} />
             <Route path="/myPage/:type?/:type2?" component={RequiresAuth(MyDetailPage)} />
             <Route path="/myPage" component={RequiresAuth(MyDetailPage)} />

@@ -13,6 +13,7 @@ export const strButtonPrev = "뒤로";
 export const strButtonCancel = "취소";
 export const strButtonComplete = "완료";
 export const strErrorDoNotNextStep = "현재 단계를 완료해주세요.";
+export const STRING_ALREADY_LOGINED = "이미 로그인 상태입니다.";
 
 // bool
 export const NOT = false;
