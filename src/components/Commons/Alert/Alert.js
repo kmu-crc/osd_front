@@ -14,7 +14,7 @@ const ModalBox = styled(Modal)`
     border-radius: 0px;
     
     padding: 20px;
-
+    
     .titleBox{
         margin-bottom: 10px;
 

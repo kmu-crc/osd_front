@@ -5,6 +5,7 @@ import { GetCategoryAllRequest } from "redux/modules/category"
 import { CheckNickNameRequest, SignOutRequest } from "redux/modules/auth"
 
 import ModifyMyDetail from "components/Users/ModifyMyDetail"
+import ModifyMyDetail_mobile from "components/Users/ModifyMyDetail_mobile"
 
 class ModifyMyDetailContainer extends Component {
   componentDidMount() {
@@ -13,7 +14,12 @@ class ModifyMyDetailContainer extends Component {
   }
   render() {
     console.log("MYDETAIL::::::", this.props);
-    return (<ModifyMyDetail {...this.props} />)
+    return (
+      window.innerWidth<500?
+      <ModifyMyDetail_mobile {...this.props}/>
+      : 
+      <ModifyMyDetail {...this.props} />
+    )
   }
 }
 

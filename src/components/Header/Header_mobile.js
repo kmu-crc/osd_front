@@ -5,7 +5,7 @@ import MenuContext from "Global/Context/GlobalContext"
 import SearchForm from "components/Header/SearchForm"
 import Socket from "modules/Socket"
 
-import { LoginText, CreateDesign, DeleteDesign, } from "constant";
+import { LoginText, CreateDesign, DeleteDesign,CreateDesigner } from "constant";
 import mobilelogored from "resources/images/mobile_logo.svg";
 import mobilelogoblue from "resources/images/mobile_header_log_blue.svg";
 // import mobilesearch from "resources/images/mobile_search_icon.svg";
@@ -78,6 +78,25 @@ const MenuElement = styled.li`
             font-size: 10px;
         }
     }
+    &.create-designer-button { 
+        margin: 9px 8px 9px 0px;
+        width: 67px;
+        height: 21px;
+        border-radius: 10px;
+        border: red;
+        background-color: #39280B;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .text {
+            font-family: Spoqa Han Sans Neo-Medium, Spoqa Han Sans Neo;
+            font-weight: 500;
+            color: white;
+            text-align: center;
+            line-height: 14px;
+            font-size: 10px;
+        }
+    }
 `;
 
 
@@ -128,7 +147,7 @@ class Header extends Component {
     };
 
     render() {
-        console.log(window.location.href);
+        console.log(window.location.href.toLowerCase(),window.location.href.toLowerCase().indexOf("/aboutIntro"));
 
         return (<MobileHeaderMenu>
             {/* 로그 */}
@@ -154,10 +173,46 @@ class Header extends Component {
                     />}
             </MenuElement>
             {/* 로그인 / 디자인 등록 */}
-            {this.props.userInfo
+            {
+                this.props.userInfo==null?//유저정보o
+                <a onClick={() => this.props.onClickLogin()}>
+                <MenuElement className="login-button">
+                        <p className="text">
+                            {LoginText}
+                        </p>
+                    </MenuElement>
+                </a>
+                :
+                    window.location.href.toLowerCase().indexOf("createdesign")!=-1?
+                    <a onClick={() => alert("delete design")}>
+                        <MenuElement className="create-design-button">
+                            <p className="text">
+                                {DeleteDesign}
+                            </p>
+                        </MenuElement>
+                    </a>
+                    :window.location.href.toLowerCase().indexOf("aboutintro")!=-1?
+                    <a onClick={() => window.location.href = "/createdesigner"}>
+                        <MenuElement className="create-designer-button">
+                            <p className="text">
+                                {CreateDesigner}
+                            </p>
+                        </MenuElement>
+                    </a>
+                    :
+                    <a onClick={() => window.location.href = "/createdesign"}>
+                    <MenuElement className="create-design-button">
+                        <p className="text">
+                            {CreateDesign}
+                        </p>
+                    </MenuElement>
+            </a>
+
+            }
+            {/* {this.props.userInfo
 
                 ?
-                window.location.href.toLowerCase().indexOf("/createdesign") > -1
+                window.location.href.toLowerCase().indexOf("/createdesign") >0
                     ? <a onClick={() => alert("delete design")}>
                         <MenuElement className="create-design-button">
                             <p className="text">
@@ -165,7 +220,17 @@ class Header extends Component {
                             </p>
                         </MenuElement>
                     </a>
-                    : <a onClick={() => window.location.href = "/createDesign"}>
+                    : 
+                    window.location.href.toLowerCase().indexOf("/aboutIntro") >0
+                    ?<a onClick={() => window.location.href = "/createdesigner"}>
+                        <MenuElement className="create-designer-button">
+                            <p className="text">
+                                {CreateDesigner}
+                            </p>
+                        </MenuElement>
+                    </a>
+                    :
+                    <a onClick={() => window.location.href = "/createdesign"}>
                         <MenuElement className="create-design-button">
                             <p className="text">
                                 {CreateDesign}
@@ -179,7 +244,7 @@ class Header extends Component {
                             {LoginText}
                         </p>
                     </MenuElement>
-                </a>}
+                </a>} */}
         </MobileHeaderMenu>);
     };
 };

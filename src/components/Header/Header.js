@@ -252,7 +252,7 @@ class Header extends Component {
                         <div className="wrap">
                             {this.props.userInfo != null ?
                                 <React.Fragment>
-                                    <div className="design_button" onClick={() => { window.location.href = "/createDesign" }}>디자인 등록</div>
+                                    {/* <div className="design_button" onClick={() => { window.location.href = "/createDesign" }}>디자인 등록</div> */}
                                     <div className="icon_wrap marginRight1"><AlarmContainer {...this.props} alarm={this.state.alarm} /></div>
                                     <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
                                 </React.Fragment>

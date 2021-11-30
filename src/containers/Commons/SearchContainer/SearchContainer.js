@@ -1,15 +1,27 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import SearchListRe from "components/Commons/SearchListRe";
+import SearchListRe_mobile from "components/Commons/SearchListRe_mobile";
+
 import { GetDesignListCountRequest } from "redux/modules/design";
 import { GetCategoryAllRequest } from "redux/modules/category"
 
 class SearchContainer extends Component {
   render() {
     return (
-      <SearchListRe
-        {...this.props}
-      />);
+      <React.Fragment>
+        {
+          window.innerWidth<500?
+          <SearchListRe_mobile
+          {...this.props}
+          />
+          :        
+          <SearchListRe
+          {...this.props}
+          />
+        }
+      </React.Fragment>
+      );
   }
 }
 

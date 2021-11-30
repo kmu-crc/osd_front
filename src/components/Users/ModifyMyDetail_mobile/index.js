@@ -1,0 +1,1 @@
+export { default } from "./ModifyMyDetail_mobile";
