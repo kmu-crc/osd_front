@@ -13,10 +13,11 @@ import new_logo_pause from "source/new_logo_pause.svg";
 import new_banner_step1 from "source/new_banner_step1x.png";
 import new_banner_step2 from "source/new_banner_step2x.png";
 import new_banner_step3 from "source/new_banner_step3x.png";
+import new_banner_step4 from "source/new_banner_step4x.jpeg";
 import main_banner_1_button from "source/main-banner-1-button.png";
 import main_banner_2_button from "source/main-banner-2-button.png";
 import main_banner_3_button from "source/main-banner-3-button.png";
-// import main_banner_3_button_ from "source/main-banner-3-button_.png";
+// import main_banner_4_button from "source/main-banner-4-button.png";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -40,7 +41,7 @@ const ButtonOnImage = styled.div`
   background-size: contain;
   // background-color: red;
   // :hover {
-    // border: 1px dashed rgba(0,0,0,0.01);
+    // border: 1px dashed rgba(0,0,0,1);
     // background-color: rgba(0,0,0,0.01);
   // }
 
@@ -98,7 +99,7 @@ let settings = {
   autoplaySpeed: 4000,
   slidesToScroll: 1,
   arrows: true,
-  pauseOnHover:false,
+  pauseOnHover: false,
 };
 
 const SliderWrapper = styled.div`
@@ -244,7 +245,6 @@ export default class Main extends Component {
           <div className="arrow-next" onClick={this.next}></div>
         </NaviBox>
         <Slider ref={slider => (this.slider = slider)} {...settings}>
-
           {/* tech pocket */}
           <Banner height={height} >
             <img src={new_banner_step2} />
@@ -300,6 +300,25 @@ export default class Main extends Component {
             </ButtonOnImage>
           </Banner>
 
+          {/* PWS */}
+          <Banner height={height}>
+            <img src={new_banner_step4} />
+            <ButtonOnImage
+              onClick={() => { window.location.href = "/designdetail/5369" }}
+              // src={main_banner_4_button}
+              {...{ width: 400, height: 250, top: height - (window.innerHeight * 0.3), left: 10, }}
+            >
+              <div style={{
+                position: "absolute",
+                left: "173px", bottom: "100px",
+                padding: "0px",
+                width: "208px", height: "55px",
+                backgroundColor: "black", //rgba(84,134,199,0.52)",
+                alignItems: "center", textAlign: "center",
+                color: "#fff", fontSize: "33px", lineHeight: "55px", fontFamily: "Spoqa Han Sans Neo", fontWeight: "700"
+              }}>{"자세히 보기 →"}</div>
+            </ButtonOnImage>
+          </Banner>
         </Slider>
       </SliderWrapper>
 

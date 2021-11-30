@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import SignInContainer from "containers/Registration/SignInContainer";
+import FindPWContainer from "containers/Registration/FindPWContainer";
 import ClientTemplate from "templates/ClientTemplate";
 import { isMobile } from "constant";
 
@@ -10,8 +10,9 @@ class SignInPage extends Component {
     return (
 
       <ClientTemplate hideheader={isMobile()}>
-        <SignInContainer loginOpen={true} history={this.props.history} />
+        <FindPWContainer loginOpen={true} history={this.props.history} />
       </ClientTemplate>
+
     );
   }
 }

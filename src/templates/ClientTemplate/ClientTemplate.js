@@ -202,21 +202,20 @@ class ClientTemplate extends Component {
     const { scroll, larger /*, hidemenu*/ } = this.state;
     const scroll_style = (scroll ? "partial-scroll-on " : "partical-scroll-none ");
     const larger_style = (larger ? "larger " : "");
-
+    const { hideheader } = this.props;
     return (isMobile()
-
       ? <MobileWrapper>
-
         <Back visible={this.state.sidemenu} />
 
         {/* navi */}
         <MobileSlideMenu setSideMenu={(v) => this.setState({ sidemenu: v })} />
 
         {/* header */}
-        <HeaderContainer
-          onClickLogin={this.gotoSignInPage}
-          isLogin={this.state.login}
-        />
+        {hideheader ? null
+          : <HeaderContainer
+            onClickLogin={this.gotoSignInPage}
+            isLogin={this.state.login}
+          />}
 
         {/* client */}
         <MobileClient>

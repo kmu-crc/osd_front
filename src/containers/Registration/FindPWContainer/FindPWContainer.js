@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import SignInForm from "components/Registration/SignInForm";
-import SignInFormMobile from "components/Registration/SignInForm/SignInFormMobile";
+import FindPWFormMobile from "components/Registration/FindPWForm/FindPWFormMobile";
 import { SignInRequest, SignOutRequest, CheckEmailRequest } from "redux/modules/auth";
 import { FindPwRequest } from "redux/modules/account";
 import styled, { keyframes } from "styled-components";
@@ -48,24 +48,25 @@ const Close_ani = keyframes`
     opacity:0;
   }
 `;
-
-class SignInContainer extends Component {
+class FindPWContainer extends Component {
 
   componentDidUpdate() {
-    const { userInfo, isLoggedIn } = this.props;
-    if (userInfo || isLoggedIn) {
-      alert(STRING_ALREADY_LOGINED)
-      window.location.href = "/";
+    const { userInfo } = this.props;
+    if (userInfo) {
+      alert(STRING_ALREADY_LOGINED);
+      window.location.href = "/myModify";
     }
   }
 
   render() {
+    console.log(this.props.userInfo);
     return (
 
       isMobile()
 
         ? <React.Fragment>
-          <SignInFormMobile {...this.props} />
+          {this.props.isLoggedIn}
+          <FindPWFormMobile {...this.props} />
         </React.Fragment>
 
         : <React.Fragment>
@@ -93,4 +94,4 @@ const mapDispatchToProps = (dispatch) => ({
   CheckEmailRequest: (email) => { return dispatch(CheckEmailRequest(email)) }
 });
 
-export default withRouter(connect(mapStateTopProps, mapDispatchToProps)(SignInContainer));
+export default withRouter(connect(mapStateTopProps, mapDispatchToProps)(FindPWContainer));
