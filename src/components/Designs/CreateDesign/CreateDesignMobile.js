@@ -318,7 +318,6 @@ const AdditionalForm = styled.div`
   }
   .select-wrapper {
     position: relative;
-    
     select {
       margin: 0px;
       padding: 0px;
