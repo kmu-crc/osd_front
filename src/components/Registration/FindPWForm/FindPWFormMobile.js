@@ -6,7 +6,7 @@ import Loading from 'components/Commons/Loading';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { FindPwRequest } from "redux/modules/account";
-import cookie from "react-cookies";
+// import cookie from "react-cookies";
 import { CheckEmailRequest, } from "redux/modules/auth";
 
 const Wrapper = styled.div`
