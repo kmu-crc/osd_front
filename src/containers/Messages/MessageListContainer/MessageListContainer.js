@@ -1,20 +1,24 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import MessageList from "components/Messages/MessageList"
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import MessageList from "components/Messages/MessageList";
+import MessageListMobile from "components/Messages/MessageListMobile";
 import {
   GetMyChatRoomsListRequest, GetMyMsgListRequest, SendMessageRequest
-} from "redux/modules/message"
-import { SearchMemberRequest } from "redux/modules/search"
+} from "redux/modules/message";
+import { SearchMemberRequest } from "redux/modules/search";
+import { isMobile } from "constant";
 
 class MessageListContainer extends Component {
   componentDidMount() {
     this.props.userInfo && this.props.GetMyChatRoomsListRequest(this.props.token);
   }
   render() {
-    return (<MessageList {...this.props} 
-    />)
-  }
-}
+    return (
+      isMobile()
+        ? <MessageListMobile {...this.props} />
+        : <MessageList {...this.props} />);
+  };
+};
 
 const mapStateToProps = (state) => ({
   MyDetail: state.Personal.status.MyDetail,
