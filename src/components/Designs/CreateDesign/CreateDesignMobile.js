@@ -662,7 +662,8 @@ const STEP_BASIC = 0;
 const STEP_ADDITIONAL = 1;
 const STEP_CONTENT = 2;
 
-class CreateDesignMobile extends React.Component {
+export default
+  class CreateDesignMobile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -1326,5 +1327,3 @@ class CreateDesignMobile extends React.Component {
     </React.Fragment >);
   };
 };
-
-export default CreateDesignMobile;
