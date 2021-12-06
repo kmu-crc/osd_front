@@ -105,10 +105,7 @@ export function GetCategoryAllRequest() {
             let arr = data.map(item => { return { text: item.name, value: item.uid, parent: item.parents_id } })
           return (arr);
           }
-          // let arr = data.length>0?()=>{data.map(item => { return { text: item.name, value: item.uid, parent: item.parents_id } })
-          // return (arr)}:[];
         });
-        // category2.unshift([{ text: "전체", value: 0 }])
         console.log("cate1:", category1, "cate2:", category2,"cate3:",category3)
         return dispatch(GetCategoryAllSuccess(category1, category2, category3))
       }).catch((error) => {
