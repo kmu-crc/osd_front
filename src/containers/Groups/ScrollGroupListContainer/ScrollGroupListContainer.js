@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetGroupListRequest } from "redux/modules/group";
 import ScrollList from "components/Commons/ScrollList";
+import ScrollList_mobile from "components/Commons/ScrollList_mobile";
 import opendesign_style from "opendesign_style";
+import opendesign_mobile_style from "opendesign_mobile_style";
 import styled from "styled-components";
 
 const NoDataMsg = styled.div`
@@ -43,6 +45,19 @@ class ScrollGroupListContainer extends Component {
           <NoDataMsg>
             {this.props.message || "등록된 그룹이 없습니다."}</NoDataMsg>
           :
+          this.props.isMobile == true?
+          this.props.display == false?
+          null:
+          <ScrollList_mobile
+            manual={this.props.manual || false}
+            {...opendesign_mobile_style.group_margin}
+            getListRequest={this.getList}
+            type="group"
+            dataList={this.props.dataList}
+            dataListAdded={this.props.dataListAdded} />
+          :
+          this.props.display == false?
+          null:
           <ScrollList
             manual={this.props.manual || false}
             {...opendesign_style.group_margin}
@@ -50,6 +65,7 @@ class ScrollGroupListContainer extends Component {
             type="group"
             dataList={this.props.dataList}
             dataListAdded={this.props.dataListAdded} />
+          
         }
       </div>
     );

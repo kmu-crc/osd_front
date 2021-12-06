@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignerListRequest } from "redux/modules/designer";
 import ScrollList from "components/Commons/ScrollList";
+import ScrollList_mobile from "components/Commons/ScrollList_mobile";
 import opendesign_style from "opendesign_style";
+import opendesign_mobile_style from "opendesign_mobile_style";
 import styled from "styled-components";
 
 const NoDataMsg = styled.div`
@@ -44,7 +46,7 @@ class ScrollDesignerListContainer extends Component {
       this.props.GetDesignerListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.cate3, this.props.keyword);
   }
   getList = async (page) => {
-    this.props.GetDesignerListRequest(page, this.props.orderOption.keyword, this.props.cate1, this.props.cate2, this.props.cate3, this.props.keyword);
+    await this.props.GetDesignerListRequest(page, this.props.orderOption.keyword, this.props.cate1, this.props.cate2, this.props.cate3, this.props.keyword);
   };
   handleReload = () => {
     this.setState({ reload: !this.state.reload });
@@ -58,6 +60,19 @@ class ScrollDesignerListContainer extends Component {
         {dataListAdded.length <= 0 ?
           <NoDataMsg>{this.props.message || "등록된 디자이너가 없습니다."}</NoDataMsg>
           :
+          this.props.isMobile==true?
+          this.props.display == false?
+          null:
+          <ScrollList_mobile
+            manual={this.props.manual || false}
+            type="designer"
+            getListRequest={this.getList}
+            dataList={this.props.dataList}
+            dataListAdded={this.props.dataListAdded}
+            {...opendesign_mobile_style.designer_margin} />
+          :
+          this.props.display == false?
+          null:
           <ScrollList
             manual={this.props.manual || false}
             type="designer"

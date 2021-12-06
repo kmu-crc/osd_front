@@ -50,7 +50,7 @@ const CategoryDropDown = styled(Dropdown)`
 
   .icon{
     max-width: 10px !important;
-    max-height: 10px !important;;
+    max-height: 10px !important;
 
     font-size:0.7em !important  ;
     background-image:url(${dropdown_arrow});

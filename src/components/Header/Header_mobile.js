@@ -165,8 +165,14 @@ class Header extends Component {
             {/* 검색 */}
             <MenuElement className="search">
                 {window.location.href.search('/search') > -1
-                    ? null
+                    ? <SearchForm
+                    {...this.props}
+                    formWidth={200}
+                    searchCategory={this.state.selectCate}
+                    visible={1}
+                    />
                     : <SearchForm
+                        {...this.props}
                         formWidth={200}
                         searchCategory={this.state.selectCate}
                         visible={1}

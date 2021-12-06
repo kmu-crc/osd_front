@@ -7,6 +7,7 @@ import { GetDesignListCountRequest } from "redux/modules/design";
 import { GetCategoryAllRequest } from "redux/modules/category"
 
 class SearchContainer extends Component {
+  
   render() {
     return (
       <React.Fragment>

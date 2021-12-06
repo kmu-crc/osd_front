@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GetDesignListRequest } from "redux/modules/design";
 import ScrollList from "components/Commons/ScrollList";
+import ScrollList_mobile from "components/Commons/ScrollList_mobile";
+
 import opendesign_style from 'opendesign_style';
+import opendesign_mobile_style from "opendesign_mobile_style";
+
 import styled from "styled-components";
 
 const NoDataMsg = styled.div`
@@ -58,6 +62,21 @@ class ScrollDesignListContainer extends Component {
         {dataListAdded.length <= 0 ?
           <NoDataMsg>{this.props.message || "등록된 디자인이 없습니다."}</NoDataMsg>
           :
+          this.props.isMobile==true?
+          this.props.display == false?
+          null:
+          <ScrollList_mobile
+            manual={this.props.manual || false}
+            {...opendesign_mobile_style.design_margin}
+            getListRequest={this.getList}
+            reload={this.state.reload}
+            type="design"
+            handleReload={this.handleReload}
+            dataList={this.props.dataList}
+            dataListAdded={this.props.dataListAdded} />
+          :
+          this.props.display == false?
+          null:
           <ScrollList
             manual={this.props.manual || false}
             {...opendesign_style.design_margin}

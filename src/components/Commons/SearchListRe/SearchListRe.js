@@ -282,6 +282,7 @@ class SearchListRe extends Component {
                             cate2={this.state.sub_category.value}
                             cate3={this.state.third_category.value}
                             orderOption={this.state.this_order}
+                            display={this.state.urlCate=="design"}
                         />
 
                     </div>
@@ -294,6 +295,7 @@ class SearchListRe extends Component {
                             cate2={this.state.sub_category.value}
                             cate3={this.state.third_category.value}
                             orderOption={this.state.this_order}
+                            display={this.state.urlCate=="group"}
                         />
                     </div>
 
@@ -305,6 +307,7 @@ class SearchListRe extends Component {
                             cate2={this.state.sub_category.value}
                             cate3={this.state.third_category.value}
                             orderOption={this.state.this_order}
+                            display={this.state.urlCate=="designer"}
                         />
                     </div>
                 </div>

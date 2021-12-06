@@ -131,6 +131,12 @@ class SearchForm extends Component {
         window.location.href = `/search/update/${this.state.searchKeyword}`;
     };
 
+    componentDidMount(){
+       if(window.location.pathname.indexOf("/search/update/")!=-1){
+           this.setState({searchKeyword:this.props.match.params.keyword})
+       }
+    }
+
     submitEnter = async (e) => {
         if (e.keyCode === 13) {
             document.getElementById("searchbox").blur();
@@ -167,6 +173,7 @@ class SearchForm extends Component {
         }
     }
     render() {
+        console.log(this.props)
         return (
 
             isMobile()
