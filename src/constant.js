@@ -1,4 +1,5 @@
 export const isMobile = () => !(window.innerWidth > 500);
+export const isOpen = ws => ws.readyState === ws.OPEN;
 
 // 
 export const MOBILE_WIDTH = 360;
