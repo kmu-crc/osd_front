@@ -68,7 +68,7 @@ const OrderDrop = styled.div`
         .item{
             width:100%;
             height:16px;
-            background-color:#1262AB;
+            background-color:${props=>props.type=="design"?"#1262AB":props.type=="designer"?"#7E1E9B":props.type=="group"?"#1E9B79":"red"};
             color:white;
             border-radius:7px;
 
@@ -96,7 +96,7 @@ class OrderOption_mobile extends Component {
 
     handleClicked = (order,index) => {
         console.log(order,index);
-        this.setState({select:order.keyword=="like"?0:1});
+        this.setState({select:order.keyword=="like"?0:1,drop:false});
         this.props.order_clicked(order);
     }
     render() {

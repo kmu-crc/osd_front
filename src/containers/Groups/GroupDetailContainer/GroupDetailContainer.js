@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import GroupDetail from "components/Groups/GroupDetail";
+import GroupDetail_mobile from "components/Groups/GroupDetail_mobile";
+
 import {
   DesignInGroupClear, GroupInGroupClear,
   GetGroupDetailRequest, GetGroupCountRequest,
@@ -21,7 +23,18 @@ class GroupDetailContainer extends Component {
 
   }
   render() {
-    return (<GroupDetail {...this.props} getCountGroup={GetTotalCountGroupInGroupRequest} />)
+    return (
+    <React.Fragment>
+      {
+        window.innerWidth<500?
+        <GroupDetail_mobile {...this.props} getCountGroup={GetTotalCountGroupInGroupRequest} />
+        :
+        <GroupDetail {...this.props} getCountGroup={GetTotalCountGroupInGroupRequest} />
+      }
+    </React.Fragment>
+    
+    
+    )
   }
 }
 

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import CreateGroup from "components/Groups/CreateGroup";
+import CreateGroup_mobile from "components/Groups/CreateGroup_mobile";
 import { CreateNewGroupRequest } from "redux/modules/group";
 
 import styled from "styled-components";
@@ -15,7 +16,13 @@ class CreateGroupContainer extends Component {
   render() {
     return (
       <Content>
-        <CreateGroup {...this.props} />
+        {
+          window.innerWidth<500?
+          <CreateGroup_mobile {...this.props} />
+          :
+          <CreateGroup {...this.props} />
+        }
+
       </Content>
     );
   }

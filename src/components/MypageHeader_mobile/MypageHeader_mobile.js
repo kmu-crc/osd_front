@@ -80,6 +80,7 @@ const InfoWrapper = styled.div`
                 min-height:85px;
 
                 border-radius:50%;
+                background-color:white;
                 background-image:url(${props=>props.url});
                 background-size:cover;
                 background-position:center;
@@ -87,15 +88,16 @@ const InfoWrapper = styled.div`
                 margin-right:10px;
             }
             .info{
+                border:1px solid black;
                 width:100%;
                 height:120px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: normal;
-                display: -webkit-box;
-                -webkit-line-clamp: 5; /* 라인수 */	
-                -webkit-box-orient: vertical; 
-                word-wrap:break-word;
+                overflow-Y: scroll;
+                // text-overflow: ellipsis;
+                // white-space: normal;
+                // display: -webkit-box;
+                // -webkit-line-clamp: 5; /* 라인수 */	
+                // -webkit-box-orient: vertical; 
+                // word-wrap:break-word;
 
                 font: normal normal normal 18px/24px Spoqa Han Sans;
                 color:#777777;

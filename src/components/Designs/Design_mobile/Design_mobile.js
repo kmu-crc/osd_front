@@ -28,6 +28,7 @@ const DesignCard = styled.div`
     min-width:100px;
     min-height:100px;
     border:1px solid #7A7A7A;
+    background-color:white;
     background-image:url(${props=>props.url});
     background-position:center;
     background-size:cover;

@@ -29,6 +29,7 @@ const GroupCard = styled.div`
     min-heighπt:100px;
     border-radius:12px;
     border:1px solid #707070;
+    background-color:white;
     background-image:url(${props=>props.url});
     background-size:cover;
     background-position:center;
