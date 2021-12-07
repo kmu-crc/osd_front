@@ -547,7 +547,7 @@ export default
     super(props);
     this.state = {
       // common
-      step: STEP_BASIC,
+      step: 2, //STEP_BASIC,
       basic: false,
       additional: false,
       loading: false,
@@ -570,18 +570,16 @@ export default
       contents: [],
       showSearch: false,
 
-      // info_dialog: false, crop: { unit: "%", width: 50, aspect: 1 }, designId: null, isMyDesign: false, 
-      // editor: false, cropper: false, is_rectangle: false, type: null, template: null,
     };
   }
 
   componentDidMount() {
     const { DesignDetail: detail } = this.props;
     if (!detail) {
-      alert("!");
+      alert("디자인정보를 가져오지 못하였습니다.");
+      window.history.go(-1);
       return;
     }
-    console.log({ detail });
     const initstate = {
       // categoryName: "C/C++"
       // children_count: {count(*): 1}

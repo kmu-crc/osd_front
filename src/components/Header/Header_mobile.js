@@ -118,7 +118,7 @@ class Header extends Component {
                     Socket.emit("INIT", this.props.userInfo.uid)
                 Socket.on("getNoti", alarm => {
                     this.setState({ alarm: alarm })
-                    console.log(alarm)
+                    // console.log(alarm)
                     if (alarm.count) {
                     }
                 })

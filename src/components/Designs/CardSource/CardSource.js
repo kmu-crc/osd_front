@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import CardSourceDetailContainer from "containers/Designs/CardSourceDetailContainer";
+import { isMobile } from "constant";
 
 // css styling
 const FormWrapper = styled.div`
   width: 100%;
 `;
-
 const FromFieldCard = styled.div`
   width:100%;
   max-width:1706px;
@@ -37,6 +37,11 @@ const FromFieldCard = styled.div`
     width:100vw;
   }
 `;
+const FromFieldCardMobile = styled.div`
+  background-color: white;
+  box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+`;
 
 class CardSource extends Component {
   state = {
@@ -54,20 +59,36 @@ class CardSource extends Component {
   render() {
     const view = this.props.view;
     return (
-      <FormWrapper>
-        <FromFieldCard>
-          <CardSourceDetailContainer
-            design_id={view.design_id}
-            uid={view.uid}
-            isTeam={view.is_team}
-            edit={this.props.edit}
-            closeEdit={this.props.closeEdit}
-            openEdit={this.props.openEdit}
-            isCancel={this.props.isCancel}
-            onCancel={this.props.onCancel}
-          />
-        </FromFieldCard>
-      </FormWrapper>
+      isMobile() ?
+        <FormWrapper>
+          <FromFieldCardMobile>
+            <CardSourceDetailContainer
+              design_id={view.design_id}
+              uid={view.uid}
+              isTeam={view.is_team}
+              edit={this.props.edit}
+              closeEdit={this.props.closeEdit}
+              openEdit={this.props.openEdit}
+              isCancel={this.props.isCancel}
+              onCancel={this.props.onCancel}
+            />
+          </FromFieldCardMobile>
+        </FormWrapper>
+
+        : <FormWrapper>
+          <FromFieldCard>
+            <CardSourceDetailContainer
+              design_id={view.design_id}
+              uid={view.uid}
+              isTeam={view.is_team}
+              edit={this.props.edit}
+              closeEdit={this.props.closeEdit}
+              openEdit={this.props.openEdit}
+              isCancel={this.props.isCancel}
+              onCancel={this.props.onCancel}
+            />
+          </FromFieldCard>
+        </FormWrapper>
     );
   }
 }
