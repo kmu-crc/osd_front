@@ -35,6 +35,8 @@ import PrivacyPolicyPage from "pages/PrivacyPolicyPage";
 import TermsOfUsePage from "pages/TermsOfUsePage";
 import IntroPage from "pages/IntroPage";
 
+import AlarmPage from "pages/AlarmPage";
+
 class App extends Component {
 
   render() {
@@ -88,6 +90,10 @@ class App extends Component {
             <Route path="/aboutTermsOfUse" component={TermsOfUsePage} />
             <Route path="/aboutIntro" component={IntroPage} />
 
+            {/* only Mobile */}
+            <Route component={AlarmPage} path="/alarm" />
+
+            {/* 404 [!] 이 라우터 밑으로 추가하지 말고, 위로 .*/}
             <Route component={NotFoundPage} />
             <Route path="/notfound" component={NotFoundPage} />
           </Switch>

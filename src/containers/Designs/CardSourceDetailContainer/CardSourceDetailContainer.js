@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { GetDesignDetailRequest, GetCardDetailRequest, UpdateDesignTime, UpdateDesignCardTime, GetDesignSourceRequest, UpdateDesignSourceRequest, DesignSourceResetRequest, } from "redux/modules/design";
 import CardSourceDetail from "components/Designs/CardSourceDetail";
+import { CardSourceDetailMobile } from "components/Designs/CardSourceDetail";
+import { isMobile } from "constant";
 
 class CardSourceDetailContainer extends Component {
   async componentDidMount() {
     await this.props.GetDesignDetailRequest(this.props.design_id, this.props.token);
   }
   render() {
-    console.log(this.props.PDFURL);
     return (
-      <CardSourceDetail {...this.props} upDateRequest={this.props.UpdateDesignSourceRequest} />
+      isMobile()
+        ? <CardSourceDetailMobile {...this.props} upDateRequest={this.props.UpdateDesignSourceRequest} />
+        : <CardSourceDetail {...this.props} upDateRequest={this.props.UpdateDesignSourceRequest} />
     );
   }
 }
