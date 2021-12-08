@@ -8,8 +8,8 @@ import Category from "components/Commons/Category"
 import ScrollDesignerListContainer from "containers/Designer/ScrollDesignerListContainer"
 import ScrollDesignListContainer from "containers/Designs/ScrollDesignListContainer"
 import ScrollGroupListContainer from "containers/Groups/ScrollGroupListContainer"
-// import { confirm } from "components/Commons/Confirm/Confirm";
-// import { alert } from "components/Commons/Alert/Alert";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 import opendesigncss from "opendesign_style";
 import search_dropdown_arrow from "source/search_dropdown_arrow.svg";
 const Wrapper = styled.div`

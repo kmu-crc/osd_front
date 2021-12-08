@@ -395,7 +395,7 @@ and (max-width : ${1024}px) {
 @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
 and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
     min-width:100%;
-
+    padding:15px !important;
  }
 `;
 
@@ -432,7 +432,6 @@ and (max-width : ${1024}px) {
 @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
 and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px) { 
     min-width:100%;
-
  }
 `;
 

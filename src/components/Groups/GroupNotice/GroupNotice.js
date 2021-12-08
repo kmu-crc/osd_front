@@ -6,7 +6,7 @@ import BoardDialog from "./BoardDialog";
 import DueDateDialog from "./DueDateDialog";
 import ExportExcelFile from './ExportExcelFile';
 // import host from "config";
-// import { alert } from "components/Commons/Alert/Alert";
+import { alert } from "components/Commons/Alert/Alert";
 
 const Wrapper = styled.div`
   display: flex;

@@ -6,7 +6,7 @@ import new_logo_zoom_purple from "source/new_logo_zoom_purple.svg";
 import new_logo_zoom_green from "source/new_logo_zoom_green.svg";
 import new_logo_zoom_blue from "source/new_logo_zoom_blue.svg";
 // import { confirm } from "components/Commons/Confirm/Confirm";
-// import { alert } from "components/Commons/Alert/Alert";
+import { alert } from "components/Commons/Alert/Alert";
 // import Slider from "react-slick";
 import { isMobile } from "constant";
 import mobilesearch from "resources/images/mobile_search_icon.svg";

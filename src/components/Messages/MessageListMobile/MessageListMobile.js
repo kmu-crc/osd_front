@@ -12,7 +12,7 @@ import MessageDetailContainer from "containers/Messages/MessageDetailContainer";
 import Cross from "components/Commons/Cross";
 
 // import { confirm } from "components/Commons/Confirm/Confirm";
-// import { alert } from "components/Commons/Alert/Alert";
+import { alert } from "components/Commons/Alert/Alert";
 
 const Wrapper = styled.div`
   // *{border:1px solid red;}
