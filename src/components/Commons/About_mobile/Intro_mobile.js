@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { TabMenu } from "components/Commons/About"
 import new_banner_intro from "source/new_banner_intro.png";
+
 const Wrapper = styled.div`
   width:100%;
   display:flex;
@@ -54,6 +55,24 @@ const Wrapper = styled.div`
   .marginTop1{margin-top:5px;}
 
 `;
+
+const Header = styled.div`
+  width:100%;
+  height:30px;
+  display:flex;
+  justify-content:center;
+  align-items:cener;
+  .text{
+    font-size:15px;
+    font-family:Spoqa Han Sans Neo;
+    font-weight:700;
+    color:#39280B;
+    margin-right:10px;
+    margin-left:10px;
+  }
+  .select{color:red;}
+`
+
 const Content = () =>
   <div>
     <h1>쉬운 디자인, 함께 하는 디자인</h1>
@@ -90,6 +109,11 @@ const Content = () =>
 
 export const Intro_mobile = () =>
   <Wrapper>
+    <Header>
+      <div className="text " onClick={()=>window.location.href="/aboutTermsOfUse"}>이용약관</div>
+      <div className="text " onClick={()=>window.location.href="/aboutPrivacyPolicy"}>개인정보보호</div>
+      <div className="text select" onClick={()=>window.location.href="/aboutIntro"}>사이트소개</div>
+    </Header>
     {/* <TabMenu /> */}
     <div className="content">
       {/* <Content /> */}

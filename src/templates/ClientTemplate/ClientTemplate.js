@@ -100,7 +100,7 @@ const Wrapper = styled.div`
 // MOBILE
 
 const MobileWrapper = styled.div`
-  z-index: 8888;
+  z-index: 100;
   // width: ${MOBILE_WIDTH}px;
   width:100%;
   position: relative;

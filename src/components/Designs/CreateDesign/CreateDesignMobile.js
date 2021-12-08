@@ -269,6 +269,8 @@ const BasicForm = styled.div`
       letter-spacing: 0px;
       color: #707070;
     }
+    .inputText{height:40px;}
+
     .textarea-wrapper{
       width: 303px;
       height: 323px;
@@ -995,6 +997,7 @@ export default
                 </div>
                 <div>
                   <input
+                    className="inputText"
                     value={title}
                     name="title"
                     maxLength="100"

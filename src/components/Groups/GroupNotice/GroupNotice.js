@@ -56,6 +56,31 @@ const Wrapper = styled.div`
 
 `;
 
+
+const Wrapper_mobile = styled.div`
+  width:100%;
+  margin-top:10px;
+
+  display:flex;
+  justify-content:flex-end;
+  .marginLeft{margin-left:10px;}
+  .marginRight{margin-right:10px;}
+  .button{
+      width:120px;
+      height:30px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      color:white;
+      font-size:15px;
+      font-weight:500;
+      background-color:#1e9b79;
+  }
+  .black{
+      background-color:black;
+  }
+`;
+
 export default class GroupNotice extends Component {
   constructor(props) {
     super(props);
@@ -99,7 +124,9 @@ export default class GroupNotice extends Component {
     const { /*dialog*/notice, board, /**/submitStatus, data, due } = this.state;
     const user_id = userInfo && userInfo.uid;
     console.log(this.props);
-    return (<React.Fragment>
+    return (
+    
+    <React.Fragment>
       {notice
         ? <NoticeDialog user_id={user_id} group_owner_id={GroupDetail.user_id} token={token} group_id={GroupDetail.uid} open={notice} close={this.closeNoticeDialog} />
         : null}
@@ -112,20 +139,29 @@ export default class GroupNotice extends Component {
       {due
         ? <DueDateDialog id={GroupDetail.uid} token={token} open={due} close={() => this.setState({ due: false })} />
         : null}
+        {
+          window.innerWidth<500?
+          
+          <Wrapper_mobile>
+          <div className="button " onClick={() => this.setState({ notice: true })}>공지사항</div>
+          <div className="button marginLeft" onClick={() => this.setState({ board: true })}>게시판</div>
+  
+          {user_id === GroupDetail.user_id && hasProgrammingDesign
+            ? <div className="button black marginLeft" onClick={this.getExportFile}>제출현황보기</div>
+            : null}
+          </Wrapper_mobile>
+          :
+          <Wrapper>
+          <div className="button_ bg_green marginRight2" onClick={() => this.setState({ notice: true })}>공지사항</div>
+          <div className="button_ bg_green marginRight2" onClick={() => this.setState({ board: true })}>게시판</div>
+  
+          {user_id === GroupDetail.user_id && hasProgrammingDesign
+            ? <div className="button_ bg_black" onClick={this.getExportFile}>제출현황보기</div>
+            : null}
+          </Wrapper>
 
-      <Wrapper>
-        <div className="button_ bg_green marginRight2" onClick={() => this.setState({ notice: true })}>공지사항</div>
-        <div className="button_ bg_green marginRight2" onClick={() => this.setState({ board: true })}>게시판</div>
+        }
 
-        {user_id === GroupDetail.user_id && hasProgrammingDesign
-          ? <div className="button_ bg_black" onClick={this.getExportFile}>제출현황보기</div>
-          : null}
-
-        {/* {user_id === GroupDetail.user_id && hasProgrammingDesign
-          ? <ButtonOSD onClick={() => this.setState({ due: true })}>마감기한설정</ButtonOSD>
-          : null} */}
-
-      </Wrapper>
 
     </React.Fragment>
     )

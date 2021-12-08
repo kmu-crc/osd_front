@@ -106,7 +106,7 @@ export function GetCategoryAllRequest() {
             return (arr);
           }
         });
-        // console.log("cate1:", category1, "cate2:", category2, "cate3:", category3)
+      
         return dispatch(GetCategoryAllSuccess(category1, category2, category3))
       }).catch((error) => {
         console.error(error)

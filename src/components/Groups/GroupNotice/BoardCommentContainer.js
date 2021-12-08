@@ -6,6 +6,7 @@ import {
     DeleteGroupBoardCommentRequest,
 } from "redux/modules/group";
 import Comment from 'components/Commons/Comment';
+import Comment_mobile from 'components/Commons/Comment_mobile';
 import styled from "styled-components";
 
 const CommentWrapper = styled.div`
@@ -76,13 +77,25 @@ export default class BoardCommentContainer extends Component {
             })
         }
         return (<CommentWrapper>
-            <Comment
+            {
+                window.innerWidth<500?
+                <Comment_mobile
                 disabledBlink={true}
                 disabledReply={true}
                 comments={comments}
                 my={this.props.userInfo}
                 comment={this.comment}
                 removeComment={this.removecomment} />
+                :
+                <Comment
+                disabledBlink={true}
+                disabledReply={true}
+                comments={comments}
+                my={this.props.userInfo}
+                comment={this.comment}
+                removeComment={this.removecomment} />                
+            }
+
         </CommentWrapper>)
     }
 }

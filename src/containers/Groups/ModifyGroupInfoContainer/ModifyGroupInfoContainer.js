@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DeleteGroupRequest, GetGroupDetailRequest, UpdateGroupRequest } from "redux/modules/group";
 import ModifyGroup from "components/Groups/ModifyGroupInfo";
+import ModifyGroupInfo_mobile from "components/Groups/ModifyGroupInfo_mobile";
 import { alert } from "components/Commons/Alert/Alert";
 import styled from "styled-components";
 
@@ -29,7 +30,12 @@ class ModifyGroupInfoContainer extends Component {
     //console.log("ModifyGroupInfo", this.props)
     return (
       <Content>
-        <ModifyGroup {...this.props} />
+        {
+          window.innerWidth<500?
+          <ModifyGroupInfo_mobile {...this.props}/>
+          :
+          <ModifyGroup {...this.props} />
+        }
       </Content>
     )
   }
