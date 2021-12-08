@@ -28,7 +28,7 @@ const GetCategoryLevel2Failure = () => ({ type: GET_CATEGORY_LEVEL2_FAILURE })
 
 const initialState = {
   category: { status: "INIT" },
-  status: { level1: [], level2: [], category1: [], category2: [], category3:[] }
+  status: { level1: [], level2: [], category1: [], category2: [], category3: [] }
 }
 
 
@@ -44,7 +44,7 @@ export default function Category(state, action) {
     case GET_CATEGORY_ALL_SUCCESS:
       return update(state, {
         category: { status: { $set: "SUCCESS" } },
-        status: { category1: { $set: action.category1 }, category2: { $set: action.category2 }, category3: {$set:action.category3} }
+        status: { category1: { $set: action.category1 }, category2: { $set: action.category2 }, category3: { $set: action.category3 } }
       })
     case GET_CATEGORY_ALL_FAILURE:
       return update(state, {
@@ -100,13 +100,13 @@ export function GetCategoryAllRequest() {
         let category3 = []
         category3 = res.data.category3.map(data => {
           // console.log(data);
-          if(data==null)return [];
-          else{
+          if (data == null) return [];
+          else {
             let arr = data.map(item => { return { text: item.name, value: item.uid, parent: item.parents_id } })
-          return (arr);
+            return (arr);
           }
         });
-        console.log("cate1:", category1, "cate2:", category2,"cate3:",category3)
+      
         return dispatch(GetCategoryAllSuccess(category1, category2, category3))
       }).catch((error) => {
         console.error(error)

@@ -1,4 +1,5 @@
-export const isMobile = () => !(window.innerWidth > 500);
+export const isMobile = () => 500 > window.innerWidth;
+export const isOpen = ws => ws.readyState === ws.OPEN;
 
 // 
 export const MOBILE_WIDTH = 360;
@@ -13,6 +14,7 @@ export const strButtonNext = "다음";
 export const strButtonPrev = "뒤로";
 export const strButtonCancel = "취소";
 export const strButtonComplete = "완료";
+export const strButtonSave= "저장";
 export const strErrorDoNotNextStep = "현재 단계를 완료해주세요.";
 export const STRING_ALREADY_LOGINED = "이미 로그인 상태입니다.";
 

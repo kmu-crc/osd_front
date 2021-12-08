@@ -131,10 +131,10 @@ class SearchForm extends Component {
         window.location.href = `/search/update/${this.state.searchKeyword}`;
     };
 
-    componentDidMount(){
-       if(window.location.pathname.indexOf("/search/update/")!=-1){
-           this.setState({searchKeyword:this.props.match.params.keyword})
-       }
+    componentDidMount() {
+        if (window.location.pathname.indexOf("/search/update/") != -1) {
+            this.setState({ searchKeyword: this.props.match.params.keyword })
+        }
     }
 
     submitEnter = async (e) => {
@@ -173,7 +173,7 @@ class SearchForm extends Component {
         }
     }
     render() {
-        console.log(this.props)
+
         return (
 
             isMobile()

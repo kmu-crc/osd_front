@@ -13,30 +13,55 @@ import { GetCategoryAllRequest } from "redux/modules/category"
 import { geturl } from "config"
 import Loading from "components/Commons/Loading"
 import { alert } from "components/Commons/Alert/Alert";
-import opendesigncss from "opendesign_style";
 import styled from "styled-components";
-const Wrapper =styled.div`
+import { isMobile } from "constant";
+
+const Wrapper = styled.div`
   width:100%;
   display:flex;
   flex-direction:column;
   align-items:center;
-`
-// import { confirm } from "components/Commons/Confirm/Confirm";
+`;
+const ValidationWrapper = styled.div`
+  margin: auto;
+  width: 50wh;
+  height: 29px; 
+  font-family: Noto Sans KR;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 29px;
+  color: #7C7C7C;
+`;
 
 class ModifyDesignInfoContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { loading: true };
+    this.state = {
+      valid: 0 /* 0:init, 1:, 2:, 3: */,
+      loading: false,
+    };
     this.gotoMyModify = this.gotoMyModify.bind(this);
+    this.goBack = this.goBack.bind(this);
   }
+
   async componentDidMount() {
+    await this.setState({ valid: 1 });
     if (this.props.userInfo.is_designer === 0) {
-      await alert("디자이너가 아닙니다. 개인정보 페이지에 가셔서 디자이너로 등록하여주세요.", "확인")
-      this.props.history.push("/myModify")
+      this.gotoMyModify();
     }
+
+    await this.setState({ valid: 2, loading: true });
     this.props.GetCategoryAllRequest()
       .then(() => {
         this.props.GetDesignDetailRequest(this.props.id, this.props.token)
+          .then(detail => {
+            if (this.props.userInfo.uid !== detail.user_id) {
+              this.goBack();
+            }
+            if (detail) {
+              this.setState({ valid: true, loading: false });
+            }
+          })
       })
   }
   async gotoMyModify() {
@@ -47,26 +72,32 @@ class ModifyDesignInfoContainer extends Component {
     await alert("디자인 수정 권한이 없습니다", "확인");
     window.location.href = geturl() + '/designDetail/' + this.props.id;
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.DesignDetail.uid != null) {
-      if ((nextProps.DesignDetail !== this.props.DesignDetail) && nextProps.DesignDetail.uid != null) {
-        this.setState({ loading: false });
-      }
+  componentDidUpdate(prevProps) {
+    if (this.props.DesignDetail.uid && prevProps.DesignDetail.uid == null) {
+      this.setState({ loading: false });
     }
   }
+
   render() {
-    const mobile = window.innerWidth <= opendesigncss.resolutions.SmallMaxWidth;
+    const { loading, valid } = this.state;
 
     return (<React.Fragment>
-      {this.state.loading ? <Loading /> :
-        this.props.userInfo.is_designer === 1 ?
-          this.props.userInfo.uid === this.props.DesignDetail.user_id ?
-            mobile
-            ?<ModifyDesignMobile {...this.props} />
-            :<Wrapper><ModifyDesign {...this.props} /></Wrapper>
-            : this.goBack()
-          : this.gotoMyModify()}
-    </React.Fragment>)
+
+      {loading ? <Loading /> : null}
+
+      {/* verification  */}
+      {valid === 0 && <ValidationWrapper>인증을 거쳐야 디자인 정보를 수정할 수 있습니다.</ValidationWrapper>}
+      {valid === 1 && <ValidationWrapper>수정 권한을 체크합니다.</ValidationWrapper>}
+      {valid === 2 && <ValidationWrapper>디자인 정보를 가져오고 있습니다.</ValidationWrapper>}
+
+      {/* rendering after verifying */}
+      {valid === true ? isMobile()
+        ? <ModifyDesignMobile {...this.props} />
+        : <Wrapper>
+          <ModifyDesign {...this.props} />
+        </Wrapper> : null}
+
+    </React.Fragment>);
   }
 }
 

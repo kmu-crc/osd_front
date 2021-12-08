@@ -30,6 +30,7 @@ import { PdfViewer } from "./PDFviewer";
 // import DateFormat from "modules/DateFormat";
 // import { resolve } from "core-js/fn/promise";
 
+import AddContent, { ControllerWrap } from "../CreateDesign/AddContentMobile";
 
 /*
   PROBLEM SUBMIT MODAL
@@ -328,23 +329,23 @@ const Wrapper = styled.div`
     clear: both;
   }
 `;
-const ControllerWrap = styled.div`
-  position: relative;
-  width: 100%;
-  border: 2px solid transparent;
-  &:hover {
-    border: 2px dashed ${osdcss.color.grayScale.scale3};
-    background-color: ${osdcss.color.grayScale.scale0};
-    .editBtn {
-      display: block;
-    }
-  }
-  &::after {
-    display: block;
-    content: "";
-    clear: both;
-  }
-`;
+// const ControllerWrap = styled.div`
+//   position: relative;
+//   width: 100%;
+//   border: 2px solid transparent;
+//   &:hover {
+//     border: 2px dashed ${osdcss.color.grayScale.scale3};
+//     background-color: ${osdcss.color.grayScale.scale0};
+//     .editBtn {
+//       display: block;
+//     }
+//   }
+//   &::after {
+//     display: block;
+//     content: "";
+//     clear: both;
+//   }
+// `;
 const UpBtn = styled.button`
  display: none;
 //  position: absolute;
@@ -594,7 +595,7 @@ const EditorBottonWrapper = styled.div`
     }
 `;
 
-class CardSourceDetail extends Component {
+export class CardSourceDetailMobile extends Component {
   constructor(props) {
     super(props);
 
@@ -1194,10 +1195,13 @@ class CardSourceDetail extends Component {
     let __code = result && result.code && result.code.replaceAll("\n", "<br/>");
     __code = __code && __code.replaceAll("   ", "&emsp;");
 
-    return (<div id="card-source-detail-root-node" style={{ padding: "15px" }}>
-      <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
-        {loading ? <Loading /> : null}
+    return (<div id="card-source-detail-root-node"
+      style={{ padding: "5px", width: "98wh", backgroundColor: "white" }}>
+      <Worker
+        workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
 
+        {loading ? <Loading /> : null}
+        {/*  */}
         {content.find(item => item.type === "TEXT") != null ?
           <div style={{
             zIndex: "900",
@@ -1490,24 +1494,7 @@ class CardSourceDetail extends Component {
           // <SubmitModal open={submit} close={this.setState({ submit: false })} /> : null}
           : null
         }
-
-        {/* 
-        <ButtonContainer>
-        {edit === false && !this.props.edit && this.props.isTeam && (content && content.length > 0 ?
-          (<div className="content-edit-wrapper">
-            <button onClick={() => this.setState({ edit: !edit })} className="content-edit-button">컨텐츠 수정</button></div>) :
-          (<div className="content-add-wrapper">
-            <button onClick={() => this.setState({ edit: !edit })} className="content-add-button" >컨텐츠 추가</button></div>))}
-      </ButtonContainer> 
-      */}
-
-        {/*
-  text view edit
-  file view edit
-  image view edit
-  video view edit 
-  problem view edit
-*/}
+        {/*  */}
         {content.length > 0 && content.map((item, index) => {
 
           const itemEdit = item.user_id == null || (item.user_id === (this.props.userInfo && this.props.userInfo.uid));
@@ -1605,8 +1592,8 @@ class CardSourceDetail extends Component {
                         popup.document.write(img);
                         const imgnode = popup.document.getElementById("image");
                         popup.resizeTo(
-                      /* width */imgnode.naturalWidth > window.screen.width ? window.screen.width / 2 : imgnode.naturalWidth * 1.06,
-                      /* height */imgnode.naturalHeight > window.screen.height ? window.screen.height / 2 : imgnode.naturalHeight * 1.06
+              /* width */imgnode.naturalWidth > window.screen.width ? window.screen.width / 2 : imgnode.naturalWidth * 1.06,
+              /* height */imgnode.naturalHeight > window.screen.height ? window.screen.height / 2 : imgnode.naturalHeight * 1.06
                         );
                       }}
                     >
@@ -1791,15 +1778,18 @@ class CardSourceDetail extends Component {
 
           </Wrapper>);
         })}
-        {this.props.edit ?
 
-          <AddContent
+
+        
+        {/*  */}
+        {this.props.edit
+          ? <AddContent
             is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
             getValue={this.onAddValue}
             order={content.length || 0}
             open={(data) => this.setState({ addProblem: data })} />
           : null}
-
+        {/*  */}
         <ButtonContainer>
           {(this.props.edit && this.props.uid) &&
             <EditorBottonWrapper>
@@ -1809,14 +1799,11 @@ class CardSourceDetail extends Component {
                 <i className="icon trash" />취소</button>
             </EditorBottonWrapper>}
         </ButtonContainer>
-
       </Worker>
-
     </div>);
   }
 }
 
-export default CardSourceDetail;
 
 
 const ControllerWrap2 = styled.div`
@@ -1928,61 +1915,61 @@ const NewTable = styled.table`
 //   }
 
 // `
-class AddContent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { type: null, content: "", order: null };
-  }
-  addContent = async (type) => {
-    if (type === "FILE") {
-      await this.setState({ type, order: this.props.order, content: "", initClick: true });
-      setTimeout(() => {
-        this.setState({ initClick: false });
-      }, 100);
-    } else {
-      await this.setState({ type, order: this.props.order, content: "" });
-      this.returnData();
-    }
-  }
+// class AddContent extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = { type: null, content: "", order: null };
+//   }
+//   addContent = async (type) => {
+//     if (type === "FILE") {
+//       await this.setState({ type, order: this.props.order, content: "", initClick: true });
+//       setTimeout(() => {
+//         this.setState({ initClick: false });
+//       }, 100);
+//     } else {
+//       await this.setState({ type, order: this.props.order, content: "" });
+//       this.returnData();
+//     }
+//   }
 
-  returnData = async (data) => {
-    if (data) {
-      await this.setState({ type: null, order: this.props.order, content: "", initClick: false })
-      this.props.getValue(data);
-    } else {
-      if (this.props.getValue) this.props.getValue(this.state);
-    }
-  }
+//   returnData = async (data) => {
+//     if (data) {
+//       await this.setState({ type: null, order: this.props.order, content: "", initClick: false })
+//       this.props.getValue(data);
+//     } else {
+//       if (this.props.getValue) this.props.getValue(this.state);
+//     }
+//   }
 
-  render() {
-    return (
-      <ControllerWrap2>
-        <div className="innerBox" >
-          <NewController
-            onClick={() => this.addContent("FILE")}
-            width="max-content" minWidth="116px" height="29px">
-            파일 등록하기</NewController>
-          <NewController
-            onClick={() => this.addContent("TEXT")}
-            width="max-content" minWidth="134px" height="29px">
-            텍스트 입력하기</NewController>
-          <NewController
-            onClick={() => this.addContent("LINK")}
-            width="max-content" minWidth="134px" height="29px">
-            하이퍼링크 등록하기</NewController>
-          {this.props.is_problem ? <NewController
-            onClick={() => { this.addContent("PROBLEM"); this.props.open(true); }}
-            width="max-content" minWidth="134px" height="29px">
-            문제 등록하기</NewController> : null}
-        </div>
+//   render() {
+//     return (
+//       <ControllerWrap2>
+//         <div className="innerBox" >
+//           <NewController
+//             onClick={() => this.addContent("FILE")}
+//             width="max-content" minWidth="116px" height="29px">
+//             파일 등록하기</NewController>
+//           <NewController
+//             onClick={() => this.addContent("TEXT")}
+//             width="max-content" minWidth="134px" height="29px">
+//             텍스트 입력하기</NewController>
+//           <NewController
+//             onClick={() => this.addContent("LINK")}
+//             width="max-content" minWidth="134px" height="29px">
+//             하이퍼링크 등록하기</NewController>
+//           {this.props.is_problem ? <NewController
+//             onClick={() => { this.addContent("PROBLEM"); this.props.open(true); }}
+//             width="max-content" minWidth="134px" height="29px">
+//             문제 등록하기</NewController> : null}
+//         </div>
 
-        {this.state.type === "FILE" &&
-          <FileController item={this.state} getValue={this.returnData} />}
+//         {this.state.type === "FILE" &&
+//           <FileController item={this.state} getValue={this.returnData} />}
 
-      </ControllerWrap2>
-    );
-  }
-}
+//       </ControllerWrap2>
+//     );
+//   }
+// }
 
 // 코딩 컨트롤러
 class CodingContent extends Component {
