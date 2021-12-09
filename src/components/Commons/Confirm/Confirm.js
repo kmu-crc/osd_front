@@ -3,6 +3,56 @@ import { Modal } from "semantic-ui-react";
 import styled from "styled-components"
 import { confirmable, createConfirmation } from "react-confirm";
 
+const ModalBox_mobile = styled(Modal)`
+    min-width:265px;
+    max-width:265px;
+    min-height:152px;
+    border-radius: 0px !important;
+    padding: 18px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+
+    .titleBox{
+        margin-bottom: 10px;
+    }
+    .messageBox{
+        width: 100%;
+        height:80%;
+        min-height:110px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:20px;
+
+        .message{
+            font-size:14px;
+            font-weight:400;
+            line-height:19px;           
+            font-family:Spoqa Han Sans Neo;
+        }
+    }
+    .buttonBox{
+        width: 100%;
+        height:20%;
+        margin-top:5px;
+        display:flex;
+        justify-content:center;
+    }
+    animation:modalSlide 0.5s ease-out forwards;
+    @keyframes modalSlide {
+        from {
+          transform: translateY(-10%);
+          opacity: 0;
+        }
+      
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+`
 const ModalBox = styled(Modal)`
     *{
         font-family: Noto Sans KR;
@@ -30,7 +80,8 @@ const ModalBox = styled(Modal)`
         .message{
             font-size:37px;
             font-weight:500;
-            line-height:44px;            font-family:Spoqa Han Sans Neo;
+            line-height:44px;            
+            font-family:Spoqa Han Sans Neo;
         }
     }
     .buttonBox{
@@ -52,6 +103,26 @@ const ModalBox = styled(Modal)`
           opacity: 1;
         }
       }
+`
+const Button_mobile = styled.div`
+    z-index:1200;
+    max-width:64px;
+    width:100%;
+    height:17px;
+    background-color:${props => props.color === "red" ? "red" : "black"};
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-left:20px;
+    margin-right:20px;
+    cursor:pointer;
+    box-shadow: 8px 8px 8px #4141411A;
+
+    .text{
+        font-family:Noto Sans KR;
+        font-size:10px;
+    }
 `
 const Button = styled.div`
     z-index:1200;
@@ -83,31 +154,62 @@ class Confirm extends React.Component {
         } = this.props;
 
         return (
-            <ModalBox
+            <React.Fragment>
+                {
+                    window.innerWidth<500?
+                <ModalBox_mobile
+                    open={show}
+                    onClose={() => proceed(false)}
+                    >
+    
+                    {title ?
+                        <div className="titleBox">
+                            {title}</div>
+                        : null}
+    
+                    <div className="messageBox">
+                        <div className="message">
+                            {confirmation}
+                        </div>
+                    </div>
+    
+                    <div className="buttonBox">
+                        <Button_mobile id="redbtn" color="red" onClick={() => proceed(true)}>
+                            <div className="text">{proceedLabel}</div>
+                        </Button_mobile>
+                        <Button_mobile id="graybtn" color="gray" onClick={() => proceed(false)}>
+                            <div className="text">{cancelLabel}</div>
+                        </Button_mobile>
+                    </div>
+                </ModalBox_mobile>
+                :
+                <ModalBox
                 open={show}
                 onClose={() => proceed(false)}
-            >
+                >
 
-                {title ?
-                    <div className="titleBox">
-                        {title}</div>
-                    : null}
+                    {title ?
+                        <div className="titleBox">
+                            {title}</div>
+                        : null}
 
-                <div className="messageBox">
-                    <div className="message">
-                        {confirmation}
+                    <div className="messageBox">
+                        <div className="message">
+                            {confirmation}
+                        </div>
                     </div>
-                </div>
 
-                <div className="buttonBox">
-                    <Button id="redbtn" color="red" onClick={() => proceed(true)}>
-                        <div className="text">{proceedLabel}</div>
-                    </Button>
-                    <Button id="graybtn" color="gray" onClick={() => proceed(false)}>
-                        <div className="text">{cancelLabel}</div>
-                    </Button>
-                </div>
-            </ModalBox>
+                    <div className="buttonBox">
+                        <Button id="redbtn" color="red" onClick={() => proceed(true)}>
+                            <div className="text">{proceedLabel}</div>
+                        </Button>
+                        <Button id="graybtn" color="gray" onClick={() => proceed(false)}>
+                            <div className="text">{cancelLabel}</div>
+                        </Button>
+                    </div>
+                </ModalBox>
+                }
+            </React.Fragment>
         );
     }
 }
