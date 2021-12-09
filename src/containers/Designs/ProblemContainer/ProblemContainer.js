@@ -25,6 +25,10 @@ const ModalBox = styled(Modal)`
       font-size:30px;
     }
   }
+
+  @media only screen and (max-width: 500px) {
+    padding:20px;
+  }
 `
 
 class ProblemContainer extends Component {
