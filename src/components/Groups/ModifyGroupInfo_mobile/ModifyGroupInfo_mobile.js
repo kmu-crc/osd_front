@@ -271,6 +271,7 @@ class CreateGroup extends Component {
            
            <StepButtonWrapper>
             <button onClick={this.handleOnClickDeleteDesign} className="cancel">삭제</button>
+
             <button onClick={async() => {
               if (await confirm("등록 중인 내용이 저장되지 않습니다. 취소하시겠습니까?", "예", "아니오")) {
                 window.history.go(-1);

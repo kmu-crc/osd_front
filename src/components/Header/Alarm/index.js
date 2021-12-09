@@ -1,1 +1,1 @@
-export { default } from "./Alarm"
+export { default } from "./Alarm";
