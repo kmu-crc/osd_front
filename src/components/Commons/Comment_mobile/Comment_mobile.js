@@ -8,12 +8,8 @@ import { alert } from "components/Commons/Alert/Alert";
 import opendesign_style from "opendesign_style"
 
 const CommentBox = styled.div`
-    
     *{
         font-family:Spoqa Han Sans Neo;
-        font-size:18px;
-        color:black;
-        font-weight:400;
     }
 `;
 const blinker = keyframes`
@@ -32,105 +28,96 @@ const Comments = styled.div`
     width:100%;
 `;
 const CommentInner = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 22px;
-  width:100%;
-  &.blinking {
-    animation: ${blinker} 1.15s 5;
-  }
-  &.reply {
-    margin-left: 82px;
-  };
-  .face {
-    min-width: 57px;
-    min-height: 57px;
-    max-width: 57px;
-    max-height: 57px;
-    border-radius: 50%;
+width:100%;
+display:flex;
+padding-bottom:15px;
+.face{
+    min-width:40px;
+    min-height:40px;
+    max-width:40px;
+    max-height:40px;
+    border-radius:50%;
+    background-color:white;
     background-image: url(${props => props.face});
     background-size: cover;
     background-position:center;
-    border: 1px solid #EFEFEF;
     box-shadow: 8px 8px 6px #00000029;  
-    };
-    .text-wrapper {
-        *{
-            font-family:Spoqa Han Sans Neo;
-            font-size:18px;
-            font-weight:400;
-            color:black;
-        }
-        margin-left: 27px;
-        width: max-content;
-        .nick {
-            display: flex;
-            .name {
-                width: 122px;
-                white-space:nowrap;
-                overflow:hidden;
-                text-overflow:ellipsis;
-                margin-right:20px;
-            };
-            .create-time {
-                width: 80px;
-                margin-right:20px;
-            };
-        };
-    };
-
-    .button-wrapper {
-        display: flex;
-        *{
-            font-family:Spoqa Han Sans Neo;
-            font-size:18px;
-            color:black;
-        }
-        .reply {
-            width: max-content;
-            cursor: pointer;
-       }
-        .del {
-            color: red;
-            cursor: pointer;
-            margin-left:20px;
-        }
-    };
-    .comment{
-        margin-top:8px;
-        line-height:26px;
+}
+.flex{display:flex;}
+.text-wrapper {
+    margin-left: 15px;
+    width: 100%;
+    .nick{
+        display:flex;
+        justify-content:space-between;
+        margin-bottom:5px;
+        .name{font-size:15px;font-weight:700;}
+        .create-time{font-size:15px;font-weight:400;}
     }
+}
+
+.button-wrapper {
+    display: flex;
+    *{
+        font-family:Spoqa Han Sans Neo;
+        font-size:12px;
+        color:black;
+    }
+    .reply {
+        color:#707070;
+        width: max-content;
+        cursor: pointer;
+   }
+    .del {
+        color: red;
+        cursor: pointer;
+        margin-left:5px;
+    }
+};
+&.blinking {
+    animation: ${blinker} 1.15s 5;
+  }
+&.reply {
+    padding-left: 20px;
+  };
 
 `;
 const CommentInputTextContainer = styled.div`
    height:max-content;
-   margin-top: 15px;
    display: flex;
    width:100%;
+   padding-bottom:15px;
     &.reply {
-        margin-left: 86px;
+        padding-left: 55px;
+    }
+    .body_wrap{
+        width:100%;
+    }
+    .header{
+        width:100%;
+        display:flex;
+        justify-content:space-between;
+        margin-bottom:5px;
     }
     .writeBox {
         font-size: 15px;
-        line-height: 22px;
-        color: #707070;
-        font-weight: 500;
-        font-family: Noto Sans KR;
-        margin-bottom:5px;
+        font-weight:700;
+        font-weight: 700;
     }
     .face {
-        min-width: 57px;
-        min-height: 57px;
-        max-width: 57px;
-        max-height: 57px;
+        min-width: 40px;
+        min-height: 40px;
+        max-width: 40px;
+        max-height: 40px;
         border-radius: 50%;
         background-image: url(${props => props.face});
         background-size: cover;
         background-position:center;
         border: 1px solid #EFEFEF;
         box-shadow: 8px 8px 6px #00000029;  
-        margin-right:27px;
+        margin-right:15px;
     };
+
    .wrapper {
        width: 100%;
 
@@ -142,8 +129,8 @@ const CommentInputTextContainer = styled.div`
            outline: none;
            border: none;
            resize: none;
-           color: #cccccc;
-           font-size: 20px;
+           color: #707070;
+           font-size: 12px;
            font-weight: 300;
            font-family: Noto Sans KR;
            line-height: 22px;
@@ -158,54 +145,22 @@ const CommentInputTextContainer = styled.div`
    .flex_Input{
        width: 100%;
        display: flex;
-       justify-content: space-between;
+       flex-direction:column;
    }
    .another-wrapper { 
        display: flex;
        align-items:center;
-       margin-top:5px;
-       .submit {
-           width: max-content;
-           height:max-content;
-           margin-left: 18px;
-           font-size: 20px;
-           font-weight: 500;
-           text-align: left;
-           color: #707070;
-           cursor: pointer;
-           letter-spacing: 0;
-           margin-right:10px;       
+       .button{
+           font-size:12px;
+           font-weight:500;
+           margin-left:10px;
        }
-       .cancel {
-           width: max-content; 
-           height:max-content;
-           margin-left: 18px;
-           font-size: 20px;
-           font-weight: 500;
-           text-align: left;
-           color: red;
-           cursor: pointer;
-           margin-left:44px;
-       }
+       .red{color:red;}
+       .grey{color:grey;}
    }
-   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) and (max-width : ${opendesign_style.resolutions.SmallMaxWidth}px){
-       display:flex;
-       .wrapper{
-           margin-left:0px;
-           width:100%;
-       }
-       .flex_Input{
-           flex-direction:column;
-           align-items:flex-end;
-       }
-       .another-wrapper{
-           .cancel{
-               margin-left:0px;
-           }
-       }
-   }
+
 `;
-class Comment extends Component {
+class Comment_mobile extends Component {
     constructor(props) {
         super(props);
         this.state = { reply: false, targetId: undefined, this_comment: "", this_reply: "", ing: false };
@@ -290,15 +245,19 @@ class Comment extends Component {
         return (<CommentBox>
             {comments && comments.length > 0 && comments.map((item, index) => {
                 const face = item && item.s_img ? item.s_img : noface;
-                return (<Comments key={item.nick_name + index}>
+                return (
+                
+                <Comments key={item.nick_name + index}>
                     {/* comments */}
                     <CommentInner face={face} className={!disabledBlink && item.read === 0 ? "blinking" : ""} >
 
                         <div className="face" />
                         <div className="text-wrapper">
                             <div className="nick">
+                                <div className="flex">
                                 <div className="name">{item.nick_name}</div>
                                 <div className="create-time">({DateFormat(item.create_time)})</div>
+                                </div>
                                 <div className="button-wrapper">
                                     {!disabledReply && !reply && <div onClick={() => this.reply(item.uid)} className="reply">답글달기</div>}
                                     {my && my.uid === item.user_id && <div onClick={() => this.removeComment(item.uid)} className="reply del">삭제하기</div>}
@@ -306,7 +265,6 @@ class Comment extends Component {
                             </div>
                             <div className="comment"
                                 dangerouslySetInnerHTML={{ __html: item.comment }}></div>
-                            {/* <div className="comment">{item.comment}</div> */}
                         </div>
                     </CommentInner>
 
@@ -317,31 +275,37 @@ class Comment extends Component {
                             <div className="face" />
                             <div className="text-wrapper">
                                 <div className="nick">
+                                    <div className="flex">
                                     <div className="nick">{repli.nick_name}</div>
                                     <div className="create-time">({DateFormat(item.create_time)})</div>
+                                    </div>
+                                    <div className="button-wrapper">
+                                        {my && my.uid === repli.user_id && <div onClick={() => this.removeReply(repli.uid)} className="del">삭제하기</div>}
+                                    </div>
                                 </div>
                                 <div className="comment" dangerouslySetInnerHTML={{ __html: repli.comment }}></div>
                             </div>
-                            <div className="button-wrapper">
-                                {my && my.uid === repli.user_id && <div onClick={() => this.removeReply(repli.uid)} className="del">삭제하기</div>}
-                            </div>
-                        </CommentInner>)
+
+                        </CommentInner>
+                        )
                     })}
 
                     {/* input-text of replie */}
                     {reply && item.uid === this.state.targetId &&
                         <React.Fragment>
                             <CommentInputTextContainer className="reply" style={{ flexDirection: "column" }} face={myface}>
+                                <div className="header">
                                 <div className="writeBox" >{this.state.ing ? "답글 다는 중..." : my.nickName}</div>
+                                <div className="another-wrapper">
+                                        <div className="button red" onClick={() => this.requestReply(item.uid)}>게시</div>
+                                        <div className="button grey" onClick={this.undoReply}>취소</div>
+                                </div>
+                                </div>
                                 <div className="flex_Input">
-                                    {/* <div className="face" /> */}
                                     <div className="wrapper ">
                                         <textarea  value={this_reply || ""} onChange={this.onChangeValue} name="this_reply" />
                                     </div>
-                                    <div className="another-wrapper">
-                                        <div className="submit" onClick={() => this.requestReply(item.uid)}>게시</div>
-                                        <div className="cancel" onClick={this.undoReply}>취소</div>
-                                    </div>
+
                                 </div>
                             </CommentInputTextContainer>
                         </React.Fragment>
@@ -353,19 +317,24 @@ class Comment extends Component {
             {/* input-text of comment */}
             <CommentInputTextContainer face={myface}>
                 <div className="face" />
+                <div className="body_wrap">
+                <div className="header">
+                    <div className="writeBox" >{ my.nickName}</div>
+                    <div className="another-wrapper">
+                        <div className="button red" onClick={this.requestComment}>게시</div>
+                        <div className="button grey" onClick={this.undoComment}>취소</div>
+                    </div>
+                </div>
                 <div className="flex_Input">
                     <div className="wrapper">
                         <textarea value={this_comment || ""} onChange={this.onChangeValue} name="this_comment" />
                     </div>
-                    <div className="another-wrapper">
-                        <div className="submit" onClick={this.requestComment}>게시</div>
-                        <div className="cancel" onClick={this.undoComment}>취소</div>
-                    </div>
+                </div>
                 </div>
             </CommentInputTextContainer>
         </CommentBox >)
     }
 };
 
-export default Comment;
+export default Comment_mobile;
 

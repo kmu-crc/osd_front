@@ -51,7 +51,7 @@ const GroupCard = styled.div`
     }
     .description{
       width:100%;
-      height:40px;
+      height:30px;
       font-size:10px;
       line-height:14px;
       overflow:hidden;

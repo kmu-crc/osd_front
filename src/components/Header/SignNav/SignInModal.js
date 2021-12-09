@@ -11,9 +11,9 @@ import PxtoRem from "modules/PxtoRem";
 import Loading from 'components/Commons/Loading';
 // import { SetSession } from "modules/Sessions"
 // import close from "source/close_white.png"
-// import { confirm } from "components/Commons/Confirm/Confirm";
+import { confirm } from "components/Commons/Confirm/Confirm";
 // import { Warning } from 'material-ui-icons';
-// import { alert } from "components/Commons/Alert/Alert";
+import { alert } from "components/Commons/Alert/Alert";
 // import opendesign_style from "opendesign_style";
 import new_logo_opendesign_shadow from "source/new_logo_opendesign_shadow.png";
 import new_logo_opendesign_shadow_red from "source/new_logo_opendesign_shadow_red.png";

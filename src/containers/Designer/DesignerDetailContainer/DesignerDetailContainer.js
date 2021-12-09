@@ -10,6 +10,8 @@ import {
 
 import DesignerDetailHeader from "components/Designers/DesignerDetailHeader"
 import DesignerDetailBody from "components/Designers/DesignerDetailBody"
+import DesignerDetailHeader_mobile from "components/Designers/DesignerDetailHeader_mobile"
+import DesignerDetailBody_mobile from "components/Designers/DesignerDetailBody_mobile"
 class DesignerDetailContainer extends Component {
 
   componentWillMount() {
@@ -20,8 +22,18 @@ class DesignerDetailContainer extends Component {
   render() {
     return (
       <React.Fragment>
-        <DesignerDetailHeader {...this.props} />
-        <DesignerDetailBody {...this.props} />
+        {
+          window.innerWidth<500?
+          <React.Fragment>
+            <DesignerDetailHeader_mobile {...this.props} />
+            <DesignerDetailBody_mobile {...this.props} />
+          </React.Fragment>
+          :
+          <React.Fragment>
+            <DesignerDetailHeader {...this.props} />
+            <DesignerDetailBody {...this.props} />
+          </React.Fragment>
+        }
       </React.Fragment>
     );
   }

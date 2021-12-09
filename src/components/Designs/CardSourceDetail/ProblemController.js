@@ -7,6 +7,7 @@ import { PdfViewer } from './PDFviewer';
 import { alert } from "components/Commons/Alert/Alert";
 import { Pagination } from 'semantic-ui-react';
 import { Dropdown } from "semantic-ui-react";
+import Icon from '@material-ui/core/Icon';
 
 
 const ModalBox = styled(Modal)`
@@ -49,7 +50,9 @@ const ModalBox = styled(Modal)`
     }
   }
 
-
+  @media only screen and (max-width: 500px) {
+    padding:20px;
+  }
 `
 const SelectBox = styled.div`
   width:100%;
@@ -281,7 +284,7 @@ class ProblemController extends Component {
             <div className="boardBox">
               <div className="board">
                 {this.state.contents &&
-                  <PdfViewer pdf={this.state.contents.contents} />}
+                  <PdfViewer pdf={this.state.contents.contents} height={true}/>}
               </div>
             </div>
           </ProblemBox>
@@ -325,13 +328,17 @@ class ProblemController extends Component {
                     <div className="contentsBox" style={{backgroundColor:"#FFE4E1"}} key={index} >
                       <div className="td one" >{30*(this.state.page-1)+index+1}</div>
                       <div className="td two cursor_pointer" onClick={() => this.handleSelectProblem(item.id)}>{item.name}</div>
-                      <div className="td three cursor_pointer" onClick={() => this.handleShowModal(item.id)}>보기</div>
+                      <div className="td three cursor_pointer" onClick={() => this.handleShowModal(item.id)}>
+                        {window.innerWidth<500 ? <Icon style={{ fontSize: "10px", color:"black" }}>launch</Icon>:"보기"}
+                      </div>
                     </div>
                     :
                     <div className="contentsBox"  key={index}>
                     <div className="td one" >{30*(this.state.page-1)+index+1}</div>
                     <div className="td two cursor_pointer"   onClick={() => this.handleSelectProblem(item.id)}>{item.name}</div>
-                    <div className="td three cursor_pointer" onClick={() => this.handleShowModal(item.id)}>보기</div>
+                    <div className="td three cursor_pointer" onClick={() => this.handleShowModal(item.id)}>
+                        {window.innerWidth<500 ? <Icon style={{ fontSize: "10px", color:"black" }}>launch</Icon>:"보기"}
+                    </div>
                   </div>
                   );
                 })}

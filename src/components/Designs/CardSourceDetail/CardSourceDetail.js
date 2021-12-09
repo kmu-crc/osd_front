@@ -25,6 +25,9 @@ import "ace-builds/src-noconflict/theme-github";
 import { Worker } from '@react-pdf-viewer/core';
 import { PdfViewer } from "./PDFviewer";
 
+import Icon from '@material-ui/core/Icon';
+
+
 // FOR SUBMIT LIST
 // import Table from "rc-table";
 // import DateFormat from "modules/DateFormat";
@@ -168,6 +171,20 @@ const SubmitResultModal = styled(Modal)`
         cursor:pointer;
       }
     }
+
+    @media only screen and (max-width: 500px) {
+      padding:20px;
+      .title{font-size:15px;}
+      .content_box{
+        margin-top:10px;
+        .name{font-size:12px;line-height:17px;}
+        .msg{font-size:12px;font-weight:500;line-height:17px;}
+        .button-wrapper{
+          margin-top:20px;
+          .close{font-size:15px;}
+        }
+      }
+    }
 `
 const SubmitModalWrapper = styled(Modal)`
   width: 873px;
@@ -288,6 +305,10 @@ const SubmitModalWrapper = styled(Modal)`
       color: #707070;
       margin-left: 47.5px;
     }
+  }
+
+  @media only screen and (max-width: 500px) {
+    padding:20px;
   }
 `;
 const LanguageDropDown = styled(Dropdown)`
@@ -416,6 +437,7 @@ const DelBtn = styled.button`
   text-align: center;
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   outline: 0;
+  z-index:777;
   i.icon {
     margin: 0;
   }
@@ -1182,7 +1204,7 @@ class CardSourceDetail extends Component {
   render() {
 
     const { edit, content, loading, submit, tab, item, result, coding, permission, item_uid, item_user } = this.state;
-
+    console.log(this.props.isEdit);
     // console.log("codecode", this.props.code)
     // console.log("content:", content.find(item => item.type === "TEXT"));
     // console.log("result:", this.props, this.state)// && this.props.DesignDetail.category_level3 - 1);
@@ -1190,7 +1212,6 @@ class CardSourceDetail extends Component {
     const fontoffset = 0.3;
     // let datalist = [];
     // const answer = result && JSON.parse(result.answer);
-
     let __code = result && result.code && result.code.replaceAll("\n", "<br/>");
     __code = __code && __code.replaceAll("   ", "&emsp;");
 
@@ -1260,7 +1281,7 @@ class CardSourceDetail extends Component {
                 </div>
                 <div className="title">문제</div>
                 <div className="content_box">
-                  <div className="name">제출 언어: </div>
+                  <div className="name">제출 언어 </div>
                   <div className="msg">
                     {this.props.DesignDetail ?
                       this.props.DesignDetail.category_level3 === 1 ?
@@ -1510,8 +1531,7 @@ class CardSourceDetail extends Component {
 */}
         {content.length > 0 && content.map((item, index) => {
 
-          const itemEdit = item.user_id == null || (item.user_id === (this.props.userInfo && this.props.userInfo.uid));
-
+          const itemEdit = this.props.isEdit==false && item.user_id == null || (item.user_id === (this.props.userInfo && this.props.userInfo.uid));
           return (<Wrapper key={index + item} >
 
             {/* button wrapper */}
@@ -1690,7 +1710,7 @@ class CardSourceDetail extends Component {
 
             {/* problem controller */}
             {(item.type === "PROBLEM")
-              ? itemEdit
+              ? itemEdit && this.props.isEdit == false
                 ? <ViewContent>
                   <div className="problemWrap">
 
@@ -1725,6 +1745,7 @@ class CardSourceDetail extends Component {
                         </div>
                       </div>
                     </ProblemBox>
+                    
                     <div
                       onClick={async () => {
                         if (permission === "LOG SUBMIT" || permission === "LOG") {
@@ -1753,6 +1774,7 @@ class CardSourceDetail extends Component {
                         답안 제출하기
                       </p>
                     </div>
+                    
                   </div>
                 </ViewContent>
                 : <ControllerWrap>
@@ -1884,14 +1906,17 @@ const NewTable = styled.table`
   .header_result{
     padding:10px;
     width:70%;
+    min-width:max-content;
     background-color:#efefef;
   }
   .header_time{
+    min-width:max-content;
     padding:10px;
     width:20%;
     background-color:#efefef;
   }
   .header_code{
+    min-width:max-content;
     padding:10px;
     width:10%;
     background-color:#efefef;
@@ -1907,6 +1932,16 @@ const NewTable = styled.table`
   .code{
     padding:10px;
     background-color:white;
+  }
+
+  @media only screen and (max-width: 480px) {
+    font-size:12px;
+    .header_result{width:50%;}
+    .header_time{width:30%;}
+    .header_code{width:20%;}
+    .result{font-size:10px;}
+    .time{font-size:10px;}
+    .code{font-size:10px;}
   }
 `
 // const TableWrapper = styled.div`
@@ -2179,7 +2214,14 @@ class SubmitLogContainer extends React.Component {
                         localStorage.setItem("code", item.code);
                         const code = window.open("/codeview", "codeview", options);
                       }}>
-                      소스보기
+                        {
+                          window.innerWidth<500?
+                          <React.Fragment>
+                          <Icon style={{ fontSize: "10px", color:"black" }}>launch</Icon>소스
+                          </React.Fragment>
+                          :
+                          "소스보기"
+                        }
                     </div>
                   </td>
                 </tr>

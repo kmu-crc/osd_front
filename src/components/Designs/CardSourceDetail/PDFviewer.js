@@ -19,6 +19,11 @@ const PDFwrapper = styled.div`
   background-color: #EFEFEF;
   border: 1px dashed #707070;
   overflow-y: hidden;
+  @media only screen and (max-width: 480px) {
+    &.fixed-height{
+      height:300px;
+    }
+  }
 `;
 const ZoomBox = styled.div`
   display:flex;

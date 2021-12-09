@@ -6,6 +6,13 @@ import Designer_mobile from "components/Designers/Designer_mobile";
 import styled from "styled-components";
 import osdcss from "opendesign_mobile_style";
 
+const EmptyBox = styled.div`
+  height:300px;
+  font-size:15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+`
 const FlexContainer = styled.div`
 width:360px;
 padding: 0;
@@ -225,7 +232,7 @@ class ScrollList_mobile extends Component {
         {!manual && hasMore && <ScrollIcon onMouseOver={this.getLoadData}>
         </ScrollIcon>}
         {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>}
-      </FlexContainer> : null
+      </FlexContainer> : <EmptyBox>내용이 없습니다</EmptyBox>
     )
   }
 }

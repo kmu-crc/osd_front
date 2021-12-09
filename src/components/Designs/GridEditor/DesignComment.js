@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import Comment from 'components/Commons/Comment';
+import Comment_mobile from 'components/Commons/Comment_mobile';
+
 import {
     GetCountDesignCommentRequest, GetDesignCountRequest, GetDesignCommentRequest,
     CreateDesignCommentRequest, DeleteDesignCommentRequest
@@ -39,7 +41,14 @@ class DesignComment extends Component {
         })
         console.log(comments);
         return (
-            <Comment comments={comments} my={this.props.userInfo} comment={this.comment} removeComment={this.removeComment} />
+            <React.Fragment>
+                {
+                    window.innerWidth<500?
+                    <Comment_mobile comments={comments} my={this.props.userInfo} comment={this.comment} removeComment={this.removeComment} />
+                    :
+                    <Comment comments={comments} my={this.props.userInfo} comment={this.comment} removeComment={this.removeComment} />
+                }
+            </React.Fragment>
         )
     }
 };
