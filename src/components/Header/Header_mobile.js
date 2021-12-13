@@ -189,7 +189,7 @@ class Header extends Component {
                     </MenuElement>
                 </a>
                 :
-                    window.location.href.toLowerCase().indexOf("createdesign")!=-1?
+                    window.location.href.toLowerCase().indexOf("designModify")!=-1?
                     <a onClick={() => alert("delete design")}>
                         <MenuElement className="create-design-button">
                             <p className="text">

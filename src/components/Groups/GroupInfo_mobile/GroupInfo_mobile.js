@@ -35,6 +35,9 @@ const Wrapper = styled.div`
     margin-top:10px;
 
     .content{
+        width:100%;
+    }
+    .buttonContent{
         width:360px;
     }
 
@@ -295,7 +298,9 @@ class GroupInfo_mobile extends Component {
                         </div>
                     </div>
                 </InfoWrapper>
+                <div className="buttonContent">
                 {GroupDetail.uid ? <GroupNoticeContainer loading={this.props.loading} id={GroupDetail.uid} /> : ""}
+                </div>
                 </div>
             </Wrapper>
         );

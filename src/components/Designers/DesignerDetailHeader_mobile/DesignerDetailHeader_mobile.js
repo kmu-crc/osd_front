@@ -220,7 +220,7 @@ class DesignerDetailHeader_mobile extends Component {
                             </div>
                             :
                             <div className="flexEnd">
-                                <div className="box"
+                                <div className="box" style={{marginBottom:"5px"}}
                                 onClick={this.props.userInfo == null
                                         ? async () => await alert("로그인 해주세요", "확인")
                                         : () => this.like()}
