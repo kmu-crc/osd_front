@@ -23,15 +23,20 @@ const Wrapper = styled.div`
   justify-content:center;
 
   .content{
-    width:360px;
+    width:100%;
   }
 `
 const Info = styled.div`
   width:100%;
+  display:flex;
+  justify-content:center;
   .order{
     display:flex;
     justify-content:center;
     margin-top:7px;
+  }
+  .content{
+    width:360px;
   }
   .list{margin-top:5px;}
 `
@@ -137,6 +142,7 @@ class GroupDetail_mobile extends Component {
         </div>
       </Wrapper>
       <Info>
+        <div className="content">
        {managerMode ?
          <div style={{ marginTop: "32px" }}>
            <WaitingGroupContainer id={this.props.id} sort={this.props.sort} />
@@ -180,6 +186,7 @@ class GroupDetail_mobile extends Component {
              </div>
          </React.Fragment>
        }
+       </div>
       </Info>
     </React.Fragment>);
   }

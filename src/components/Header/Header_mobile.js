@@ -180,9 +180,18 @@ class Header extends Component {
             </MenuElement>
             {/* 로그인 / 디자인 등록 */}
             {
-                this.props.userInfo == null ?//유저정보o
-                    <a onClick={() => this.props.onClickLogin()}>
-                        <MenuElement className="login-button">
+                this.props.userInfo==null?//유저정보o
+                <a onClick={() => this.props.onClickLogin()}>
+                <MenuElement className="login-button">
+                        <p className="text">
+                            {LoginText}
+                        </p>
+                    </MenuElement>
+                </a>
+                :
+                    window.location.href.toLowerCase().indexOf("designModify")!=-1?
+                    <a onClick={() => alert("delete design")}>
+                        <MenuElement className="create-design-button">
                             <p className="text">
                                 {LoginText}
                             </p>
