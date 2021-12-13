@@ -150,7 +150,8 @@ class MyDesigner extends Component {
   gotoDesignerDetailPage = (where, event) => {
     const id = event.target.id
     if (id === "") {
-      window.location.href = geturl() + `/designerDetail/${where}`;
+      // window.location.href = geturl() + `/designerDetail/${where}`;
+      window.location.href = `/designerDetail/${where}`;
     }
   }
   render() {
@@ -159,31 +160,31 @@ class MyDesigner extends Component {
     const img = (designer && designer.imgURL != null) ? designer.imgURL.l_img : noimg;
 
     return (
-    <React.Fragment>
-      <Designer_card onClick={event => this.gotoDesignerDetailPage(designer.uid, event)}>
-        <img src={img} className="thumbnail"/>
+      <React.Fragment>
+        <Designer_card onClick={event => this.gotoDesignerDetailPage(designer.uid, event)}>
+          <img src={img} className="thumbnail" />
           <div className="infoBox">
-          <div className="wrap_">
-            <div className="title">
-              <div className="designer_name ellipsis">{designer.nick_name}</div>
-              <div className="category_name">{designer.level3_name || designer.level2_name || designer.level1_name || "전체"}</div>
+            <div className="wrap_">
+              <div className="title">
+                <div className="designer_name ellipsis">{designer.nick_name}</div>
+                <div className="category_name">{designer.level3_name || designer.level2_name || designer.level1_name || "전체"}</div>
+              </div>
+              <div className="content_">
+                <div className="updateTime">{DateFormat(designer.update_time)}</div>
+                <div className="about_me">{designer.about_me}</div>
+              </div>
             </div>
-            <div className="content_">
-              <div className="updateTime">{DateFormat(designer.update_time)}</div>
-              <div className="about_me">{designer.about_me}</div>
+            <div className="counter">
+              <img className="icon" src={new_logo_view} />
+              <div className="text">{NumberFormat(designer.total_view == null ? 0 : designer.total_view)}</div>
+              <img className="icon" src={new_logo_heart_red} />
+              <div className="text">{NumberFormat(designer.total_like == null ? 0 : designer.total_like)}</div>
+              <img className="icon" src={new_logo_share} />
+              <div className="text">{NumberFormat(designer.total_group == null || designer.total_design == null ? 0 : designer.total_group + designer.total_design)}</div>
             </div>
           </div>
-          <div className="counter">
-                <img className="icon" src={new_logo_view}/>
-                <div className="text">{NumberFormat(designer.total_view == null ? 0 : designer.total_view)}</div>
-                <img className="icon" src={new_logo_heart_red}/>
-                <div className="text">{NumberFormat(designer.total_like == null ? 0 : designer.total_like)}</div>
-                <img className="icon" src={new_logo_share}/>
-                <div className="text">{NumberFormat(designer.total_group == null || designer.total_design == null ? 0 : designer.total_group + designer.total_design)}</div>
-          </div>
-        </div>
-      </Designer_card>
-    </React.Fragment>)
+        </Designer_card>
+      </React.Fragment>)
   }
 }
 export default MyDesigner

@@ -1079,7 +1079,7 @@ class CreateDesign extends Component {
       .then(async (res) => {
         if (res.success) {
           designId = res.design_id;
-          window.location.href = geturl() + `/designDetail/` + designId;
+          window.location.href = `/designDetail/${designId}`;
         }
       })
       .catch(err => alert(err + "와 같은 이유로 다음 단계로 진행할 수 없습니다."));

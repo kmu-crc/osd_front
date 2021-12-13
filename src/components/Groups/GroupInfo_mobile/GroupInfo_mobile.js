@@ -244,9 +244,8 @@ class GroupInfo_mobile extends Component {
         const user_id = userInfo && userInfo.uid;
         const isEditor = group_user_id === user_id;
         const { w, couldJoinVChat, manager } = this.state;
-        console.log(GroupDetail && GroupDetail.img && GroupDetail.img.l_img);
-        return (
-            <Wrapper>
+
+        return (<Wrapper>
                 <div className="content">
                 <NameWrapper>
                     <div className="name_" onClick={async()=>await alert(GroupDetail.title)}>
@@ -281,16 +280,37 @@ class GroupInfo_mobile extends Component {
                                     {NumberFormat(GroupDetail.design || 0 + GroupDetail.group || 0)}
                                 </div>
                             </div>
+
                             <div className="box">
-                                <div>
-                                <div className="box alignRight" onClick={this.changeEditMode} >
-                                {this.props.waitingDesign.length > 0 || this.props.waitingGroup.length > 0 ?
-                                manager ? null : <NewAlarmLogo><div className="circle" /></NewAlarmLogo>: null}
-                                <div className="modi"> {manager ? "관리모드 종료" : "그룹 관리하기"}</div>                            
-                                <Icon style={{ fontSize: "18px", color:"black"}}>apps</Icon></div>
-                                <div className="box alignRight"  onClick={this.gotoGroupModify}><div className="modi">그룹 정보 수정하기</div><Icon style={{ fontSize: "18px", color:"black"}}>create</Icon></div>
-                                </div>
-                                
+{isEditor
+                    ? <React.Fragment>
+                        <div className="ButtonItem" onClick={this.gotoGroupModify}>
+                            <div className="button_text_label">그룹 정보 수정하기</div>
+                            {/* <NormalIcon imageURL={iEdit} opacity={0.5} />*/}</div> 
+                        <div className="ButtonItem" onClick={this.changeEditMode}>
+                            <div className="button_text_label displayFlex">
+                                {manager ? "관리모드 종료" : "그룹 관리하기"}</div>
+                            {/* <NormalIcon imageURL={iINOUT} opacity={0.5} /> */}
+                            {this.props.waitingDesign.length > 0 || this.props.waitingGroup.length > 0 ?
+                                manager ? null : <NewAlarmLogo><div className="circle" /></NewAlarmLogo>
+                                : null}
+                        </div>
+                    </React.Fragment>
+                    : <React.Fragment>
+                        <div className="ButtonItem" onClick={this.like}>
+                            <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
+                            {/* <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} /> */}
+                            </div>
+                    </React.Fragment>}
+
+                            </div>
+                            <div>
+                            <div className="box alignRight" onClick={this.changeEditMode} >
+                            {this.props.waitingDesign.length > 0 || this.props.waitingGroup.length > 0 ?
+                            manager ? null : <NewAlarmLogo><div className="circle" /></NewAlarmLogo>: null}
+                            <div className="modi"> {manager ? "관리모드 종료" : "그룹 관리하기"}</div>                            
+                            <Icon style={{ fontSize: "18px", color:"black"}}>apps</Icon></div>
+                            <div className="box alignRight"  onClick={this.gotoGroupModify}><div className="modi">그룹 정보 수정하기</div><Icon style={{ fontSize: "18px", color:"black"}}>create</Icon></div>
                             </div>
                         </div>
                     </div>
