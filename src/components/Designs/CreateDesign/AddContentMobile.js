@@ -101,10 +101,12 @@ export default class AddContent extends React.Component {
         }
     };
 
+
     render() {
 
+        console.log("--------", this.props);
+
         return (<React.Fragment>
-            {this.props.uid}
             {this.props.order === 0 && this.props.uid != "new"
                 ? <React.Fragment>
                     <Caption>프로젝트형으로 시작하기</Caption>

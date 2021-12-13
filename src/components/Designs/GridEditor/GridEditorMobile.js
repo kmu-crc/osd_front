@@ -156,7 +156,7 @@ class GridEditorMobile extends Component {
 
     // edit step
     async EditStep(data) {
-        console.log({ data }); return;
+        // console.log({ data }); return;
         await this.props.UpdateDesignBoardRequest(data.where, this.props.token, { title: data.title })
             .then(() =>
                 this.props.UpdateDesignTime(this.props.design.uid, this.props.token))

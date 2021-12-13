@@ -547,7 +547,7 @@ export default
     super(props);
     this.state = {
       // common
-      step: 2, //STEP_BASIC,
+      step: STEP_BASIC,
       basic: false,
       additional: false,
       loading: false,
@@ -1171,8 +1171,13 @@ export default
                 className={`${basic ? "" : "impossible"} next`}>
                 {strButtonNext}</button>
               <button
-                onClick={() => basic ? this.update() : alert(strErrorDoNotNextStep)}
-                className={`${basic ? "" : "impossible"} next`}>
+                onClick={() =>
+                  basic && additional
+                    ? this.update() :
+                    basic && !additional
+                      ? alert("추가정보 단계를 완료해주세요.")
+                      : !basic && additional ? alert("기본단계를 완료해주세요.") : alert(strErrorDoNotNextStep)}
+                className={`${(basic && additional) ? "" : "impossible"} next`}>
                 {strButtonSave}</button>
 
             </React.Fragment>
