@@ -102,6 +102,7 @@ const InputTextArea = styled.textarea`
     padding:6px;
     border:none;
     outline:none;
+    resize: none;
 `
 
 

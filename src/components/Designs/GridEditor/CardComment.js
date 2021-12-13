@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import Comment from 'components/Commons/Comment';
+import Comment_mobile from 'components/Commons/Comment_mobile';
 import { GetCardCommentRequest, CreateCardCommentRequest, DeleteCardCommentRequest } from "redux/modules/design";
+import { isMobile } from "constant";
+
 
 class CardComment extends Component {
     componentDidMount() {
@@ -27,7 +30,10 @@ class CardComment extends Component {
             return { ...parent, replies };
         })
         return (<div >
-            <Comment comments={comments} my={this.props.my} comment={this.comment} removeComment={this.removeComment} />
+            {isMobile()
+                ? <Comment_mobile comments={comments} my={this.props.my} comment={this.comment} removeComment={this.removeComment} />
+                : <Comment comments={comments} my={this.props.my} comment={this.comment} removeComment={this.removeComment} />
+            }
         </div>)
     }
 };

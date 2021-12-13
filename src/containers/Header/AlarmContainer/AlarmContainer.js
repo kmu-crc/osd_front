@@ -1,12 +1,13 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { AcceptDesignRequest, GetoutDesignRequest } from "redux/modules/design"
-import { GetWaitingGroupRequest, GetWaitingDesignRequest, UpdateDesignInGroupRequest, UpdateGroupInGroupRequest, DeleteGroupInGroupRequest, DeleteDesignInGroupRequest } from "redux/modules/group"
-import Alarm from "components/Header/Alarm"
-import Socket from "modules/Socket"
+import React from 'react';
+import { connect } from 'react-redux';
+import { AcceptDesignRequest, GetoutDesignRequest } from "redux/modules/design";
+import { GetWaitingGroupRequest, GetWaitingDesignRequest, UpdateDesignInGroupRequest, UpdateGroupInGroupRequest, DeleteGroupInGroupRequest, DeleteDesignInGroupRequest } from "redux/modules/group";
+import Alarm from "components/Header/Alarm";
+import AlarmMobile from "components/Header/AlarmMobile";
+import Socket from "modules/Socket";
+import { isMobile, isOpen } from "constant";
 
-function isOpen(ws) { return ws.readyState === ws.OPEN }
-class AlarmContainer extends Component {
+class AlarmContainer extends React.Component {
     handleAlarmConfirm = (userID, alarmID) => {
         try {
             if (isOpen(Socket))
@@ -25,14 +26,26 @@ class AlarmContainer extends Component {
             console.error(err);
         }
     }
-    render() {
-        return (<Alarm
-            {...this.props}
-            handleAllAlarmConfirm={this.handleAllAlarmConfirm}
-            handleAlarmConfirm={this.handleAlarmConfirm}
-        />)
+    componentDidMount() {
+        if (!isMobile() && window.location.pathname === "/alarm") {
+            alert("It's only for mobile version");
+            window.history.go(-1);
+        }
     }
-}
+    render() {
+        return (isMobile()
+            ? <AlarmMobile
+                {...this.props}
+                handleAllAlarmConfirm={this.handleAllAlarmConfirm}
+                handleAlarmConfirm={this.handleAlarmConfirm}
+            />
+            : <Alarm
+                {...this.props}
+                handleAllAlarmConfirm={this.handleAllAlarmConfirm}
+                handleAlarmConfirm={this.handleAlarmConfirm}
+            />);
+    }
+};
 const mapDisaptchToProps = (dispatch) => {
     return {
         AcceptDesignRequest: (design_id, member_id, token) => {
@@ -67,4 +80,4 @@ const mapStateToProps = (state) => {
         userInfo: state.Authentication.status.userInfo,
     }
 }
-export default connect(mapStateToProps, mapDisaptchToProps)(AlarmContainer)
+export default connect(mapStateToProps, mapDisaptchToProps)(AlarmContainer);

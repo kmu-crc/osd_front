@@ -34,7 +34,7 @@ const DesignerCard = styled.div`
     position:absolute;
     background-color:white;
     background-image:url(${props=>props.url});
-    background-size:contain;
+    background-size:cover;
     background-position:center;
   }
   .info{

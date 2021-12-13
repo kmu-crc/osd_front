@@ -101,11 +101,13 @@ export default class AddContent extends React.Component {
         }
     };
 
+
     render() {
 
-        return (<React.Fragment>
+        console.log("--------", this.props);
 
-            {this.props.order === 0
+        return (<React.Fragment>
+            {this.props.order === 0 && this.props.uid != "new"
                 ? <React.Fragment>
                     <Caption>프로젝트형으로 시작하기</Caption>
                     <ControllerWrap>
@@ -120,8 +122,10 @@ export default class AddContent extends React.Component {
                 </React.Fragment>
                 : null}
 
-            {this.props.order === 0 ?
-                <Caption>블로그형형으로 시작하기</Caption> : null}
+            {this.props.order === 0 && this.props.uid != "new"
+                ? <Caption>블로그형형으로 시작하기</Caption>
+                : null}
+
             <ControllerWrap>
                 <div className="innerBox">
                     <NewController

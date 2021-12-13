@@ -12,6 +12,9 @@ import DesignerDetailHeader from "components/Designers/DesignerDetailHeader"
 import DesignerDetailBody from "components/Designers/DesignerDetailBody"
 import DesignerDetailHeader_mobile from "components/Designers/DesignerDetailHeader_mobile"
 import DesignerDetailBody_mobile from "components/Designers/DesignerDetailBody_mobile"
+
+import { isMobile } from "constant";
+
 class DesignerDetailContainer extends Component {
 
   componentWillMount() {
@@ -20,22 +23,16 @@ class DesignerDetailContainer extends Component {
       .then(this.props.userInfo && this.props.GetLikeDesignerRequest(this.props.id, this.props.token))
   }
   render() {
-    return (
-      <React.Fragment>
-        {
-          window.innerWidth<500?
-          <React.Fragment>
-            <DesignerDetailHeader_mobile {...this.props} />
-            <DesignerDetailBody_mobile {...this.props} />
-          </React.Fragment>
-          :
-          <React.Fragment>
-            <DesignerDetailHeader {...this.props} />
-            <DesignerDetailBody {...this.props} />
-          </React.Fragment>
-        }
+    return (isMobile()
+      ? <React.Fragment>
+        <DesignerDetailHeader_mobile {...this.props} />
+        <DesignerDetailBody_mobile {...this.props} />
       </React.Fragment>
-    );
+
+      : <React.Fragment>
+        <DesignerDetailHeader {...this.props} />
+        <DesignerDetailBody {...this.props} />
+      </React.Fragment>);
   }
 }
 
