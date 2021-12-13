@@ -73,7 +73,7 @@ class DesignDetail extends Component {
             ? <DesignDetailStepContainer
               design={detail}
               {...this.state} />
-            : <div className="marginLeft">
+            : <div style={{ width: `${window.innerWidth - 10}px` }} className="marginLeft">
               <DesignDetailViewContainer
                 id={this.props.id}
                 {...this.state}
