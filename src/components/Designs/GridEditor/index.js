@@ -8,3 +8,4 @@ export * from "./CardModal";
 export * from "./CardComment";
 export * from "./DesignComment";
 export * from "./SortableDesignSteps";
+export * from "./NewStepModalMobile";

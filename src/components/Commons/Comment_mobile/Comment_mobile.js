@@ -191,16 +191,16 @@ class Comment_mobile extends Component {
         }
         return true
     };
-    reply(itemId) {
-        if (this.checkPermission() === false) {
+    async reply(itemId) {
+        if (await this.checkPermission() === false) {
             return;
         }
         this.setState({ reply: true, targetId: itemId });
     };
     undoReply() { this.setState({ reply: false, this_reply: "" }); };
     undoComment() { this.setState({ this_comment: "" }); };
-    requestReply(where) {
-        if (this.checkPermission() === false)
+    async requestReply(where) {
+        if (await this.checkPermission() === false)
             return;
         if (this.state.this_reply.length > 0) {
             const comment = this.state.this_reply.replace(/\n/g, "<br/>");
@@ -209,8 +209,8 @@ class Comment_mobile extends Component {
         // this.props.comment({ comment: this.state.this_reply, d_flag: where });
         this.reset();
     };
-    requestComment() {
-        if (this.checkPermission() === false)
+    async requestComment() {
+        if (await this.checkPermission() === false)
             return;
         if (this.state.this_comment.length > 0) {
             const comment = this.state.this_comment.replace(/\n/g, "<br/>");
@@ -246,71 +246,71 @@ class Comment_mobile extends Component {
             {comments && comments.length > 0 && comments.map((item, index) => {
                 const face = item && item.s_img ? item.s_img : noface;
                 return (
-                
-                <Comments key={item.nick_name + index}>
-                    {/* comments */}
-                    <CommentInner face={face} className={!disabledBlink && item.read === 0 ? "blinking" : ""} >
 
-                        <div className="face" />
-                        <div className="text-wrapper">
-                            <div className="nick">
-                                <div className="flex">
-                                <div className="name">{item.nick_name}</div>
-                                <div className="create-time">({DateFormat(item.create_time)})</div>
-                                </div>
-                                <div className="button-wrapper">
-                                    {!disabledReply && !reply && <div onClick={() => this.reply(item.uid)} className="reply">답글달기</div>}
-                                    {my && my.uid === item.user_id && <div onClick={() => this.removeComment(item.uid)} className="reply del">삭제하기</div>}
-                                </div>
-                            </div>
-                            <div className="comment"
-                                dangerouslySetInnerHTML={{ __html: item.comment }}></div>
-                        </div>
-                    </CommentInner>
+                    <Comments key={item.nick_name + index}>
+                        {/* comments */}
+                        <CommentInner face={face} className={!disabledBlink && item.read === 0 ? "blinking" : ""} >
 
-                    {/* replies of comment */}
-                    {item.replies && item.replies.length > 0 && item.replies.map((repli, repli_index) => {
-                        const repli_face = repli && repli.s_img !== null ? repli.s_img : noface
-                        return (<CommentInner className={!disabledBlink && repli.read === 0 ? "reply blinking" : "reply"} key={repli.nick_name + repli.uid + repli_index} face={repli_face} >
                             <div className="face" />
                             <div className="text-wrapper">
                                 <div className="nick">
                                     <div className="flex">
-                                    <div className="nick">{repli.nick_name}</div>
-                                    <div className="create-time">({DateFormat(item.create_time)})</div>
+                                        <div className="name">{item.nick_name}</div>
+                                        <div className="create-time">({DateFormat(item.create_time)})</div>
                                     </div>
                                     <div className="button-wrapper">
-                                        {my && my.uid === repli.user_id && <div onClick={() => this.removeReply(repli.uid)} className="del">삭제하기</div>}
+                                        {!disabledReply && !reply && <div onClick={() => this.reply(item.uid)} className="reply">답글달기</div>}
+                                        {my && my.uid === item.user_id && <div onClick={() => this.removeComment(item.uid)} className="reply del">삭제하기</div>}
                                     </div>
                                 </div>
-                                <div className="comment" dangerouslySetInnerHTML={{ __html: repli.comment }}></div>
+                                <div className="comment"
+                                    dangerouslySetInnerHTML={{ __html: item.comment }}></div>
                             </div>
-
                         </CommentInner>
-                        )
-                    })}
 
-                    {/* input-text of replie */}
-                    {reply && item.uid === this.state.targetId &&
-                        <React.Fragment>
-                            <CommentInputTextContainer className="reply" style={{ flexDirection: "column" }} face={myface}>
-                                <div className="header">
-                                <div className="writeBox" >{this.state.ing ? "답글 다는 중..." : my.nickName}</div>
-                                <div className="another-wrapper">
-                                        <div className="button red" onClick={() => this.requestReply(item.uid)}>게시</div>
-                                        <div className="button grey" onClick={this.undoReply}>취소</div>
-                                </div>
-                                </div>
-                                <div className="flex_Input">
-                                    <div className="wrapper ">
-                                        <textarea  value={this_reply || ""} onChange={this.onChangeValue} name="this_reply" />
+                        {/* replies of comment */}
+                        {item.replies && item.replies.length > 0 && item.replies.map((repli, repli_index) => {
+                            const repli_face = repli && repli.s_img !== null ? repli.s_img : noface
+                            return (<CommentInner className={!disabledBlink && repli.read === 0 ? "reply blinking" : "reply"} key={repli.nick_name + repli.uid + repli_index} face={repli_face} >
+                                <div className="face" />
+                                <div className="text-wrapper">
+                                    <div className="nick">
+                                        <div className="flex">
+                                            <div className="nick">{repli.nick_name}</div>
+                                            <div className="create-time">({DateFormat(item.create_time)})</div>
+                                        </div>
+                                        <div className="button-wrapper">
+                                            {my && my.uid === repli.user_id && <div onClick={() => this.removeReply(repli.uid)} className="del">삭제하기</div>}
+                                        </div>
                                     </div>
-
+                                    <div className="comment" dangerouslySetInnerHTML={{ __html: repli.comment }}></div>
                                 </div>
-                            </CommentInputTextContainer>
-                        </React.Fragment>
-                    }
-                </Comments>)
+
+                            </CommentInner>
+                            )
+                        })}
+
+                        {/* input-text of replie */}
+                        {reply && item.uid === this.state.targetId &&
+                            <React.Fragment>
+                                <CommentInputTextContainer className="reply" style={{ flexDirection: "column" }} face={myface}>
+                                    <div className="header">
+                                        <div className="writeBox" >{this.state.ing ? "답글 다는 중..." : my.nickName}</div>
+                                        <div className="another-wrapper">
+                                            <div className="button red" onClick={() => this.requestReply(item.uid)}>게시</div>
+                                            <div className="button grey" onClick={this.undoReply}>취소</div>
+                                        </div>
+                                    </div>
+                                    <div className="flex_Input">
+                                        <div className="wrapper ">
+                                            <textarea value={this_reply || ""} onChange={this.onChangeValue} name="this_reply" />
+                                        </div>
+
+                                    </div>
+                                </CommentInputTextContainer>
+                            </React.Fragment>
+                        }
+                    </Comments>)
             })
             }
 
@@ -318,18 +318,18 @@ class Comment_mobile extends Component {
             <CommentInputTextContainer face={myface}>
                 <div className="face" />
                 <div className="body_wrap">
-                <div className="header">
-                    <div className="writeBox" >{ my.nickName}</div>
-                    <div className="another-wrapper">
-                        <div className="button red" onClick={this.requestComment}>게시</div>
-                        <div className="button grey" onClick={this.undoComment}>취소</div>
+                    <div className="header">
+                        <div className="writeBox">{my && my.nickName}</div>
+                        <div className="another-wrapper">
+                            <div className="button red" onClick={this.requestComment}>게시</div>
+                            <div className="button grey" onClick={this.undoComment}>취소</div>
+                        </div>
                     </div>
-                </div>
-                <div className="flex_Input">
-                    <div className="wrapper">
-                        <textarea value={this_comment || ""} onChange={this.onChangeValue} name="this_comment" />
+                    <div className="flex_Input">
+                        <div className="wrapper">
+                            <textarea value={this_comment || ""} onChange={this.onChangeValue} name="this_comment" />
+                        </div>
                     </div>
-                </div>
                 </div>
             </CommentInputTextContainer>
         </CommentBox >)

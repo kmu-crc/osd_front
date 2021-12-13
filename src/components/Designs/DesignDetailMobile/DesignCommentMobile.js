@@ -63,7 +63,7 @@ class DesignComment extends React.Component {
       .catch(err => console.log("error", err));
     await this.setState({
       render: false
-    });
+    })
     this.setState({
       render: true
     });
@@ -79,15 +79,15 @@ class DesignComment extends React.Component {
       d_flag: d_flag,
     }
     if (!this.props.token) {
-      await alert("로그인 해주세요.","확인");
+      await alert("로그인 해주세요.", "확인");
       return;
     }
     if (!this.state.reply && (packet.comment.length === 0 || packet.comment.trim() === "")) {
-      await alert("내용을 입력해 주세요.","확인");
+      await alert("내용을 입력해 주세요.", "확인");
       return;
     }
     if (this.state.reply && packet.comment.replace(toWhom, "").trim() === "") {
-      await alert("내용을 입력해 주세요.","확인");
+      await alert("내용을 입력해 주세요.", "확인");
       return;
     }
 
@@ -99,7 +99,7 @@ class DesignComment extends React.Component {
   }
   onDeleteComment = async (data) => {
     if (data.replies.length > 0) {
-      await alert("이 댓글에 답변글이 있어 지우실 수 없습니다.","확인");
+      await alert("이 댓글에 답변글이 있어 지우실 수 없습니다.", "확인");
       return;
     }
     this.props.DeleteDesignCommentRequest(this.props.id, data.uid, this.props.token)
@@ -176,12 +176,12 @@ class DesignComment extends React.Component {
                       </div>
                     </div>
                     <div style={{ zIndex: "100", width: "35px", display: "inline-block" }}>&nbsp;
-                    {this.props.userInfo && this.props.userInfo.uid === comm.user_id && <div onClick={() => this.onDeleteComment(comm)} style={{ verticalAlign: "bottom" }}>삭제</div>}
+                      {this.props.userInfo && this.props.userInfo.uid === comm.user_id && <div onClick={() => this.onDeleteComment(comm)} style={{ verticalAlign: "bottom" }}>삭제</div>}
                     </div>
                     <div style={{ position: "relative" }}>
                       <div style={{ left: "50px", position: "absolute", display: "inline-block" }}>
-                        {DateFormat(comm.create_time)},{}&nbsp;
-                      <div style={{ display: "inline-block", cursor: "pointer" }} onClick={this.onClickedReply(comm.uid, comm.nick_name)}>답글</div>
+                        {DateFormat(comm.create_time)},{ }&nbsp;
+                        <div style={{ display: "inline-block", cursor: "pointer" }} onClick={this.onClickedReply(comm.uid, comm.nick_name)}>답글</div>
                       </div>
                     </div>
                     {this.state.reply === comm.uid &&
@@ -211,7 +211,7 @@ class DesignComment extends React.Component {
                               </div>
                             </div>
                             <div style={{ zIndex: "100", width: "35px", display: "inline-block" }}>&nbsp;
-                                {this.props.userInfo && this.props.userInfo.uid === reply.user_id && <div onClick={() => this.deleteComment(reply.uid)} style={{ verticalAlign: "bottom" }}>삭제</div>}
+                              {this.props.userInfo && this.props.userInfo.uid === reply.user_id && <div onClick={() => this.deleteComment(reply.uid)} style={{ verticalAlign: "bottom" }}>삭제</div>}
                             </div>
                             <div style={{ position: "relative" }}>
                               <div style={{ left: "50px", position: "absolute", display: "inline-block" }}>

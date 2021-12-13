@@ -5,6 +5,7 @@ export * from "./FormSelect";
 export * from "./FormFile";
 export * from "./FormThumbnail";
 export * from "./FormThumbnailEx";
+export * from "./FormThumbnailExMobile";
 export * from "./MultiUpload";
 export * from "./AsyncInput";
 export * from "./AsyncInputEx";
