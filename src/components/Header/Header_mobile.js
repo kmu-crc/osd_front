@@ -188,9 +188,18 @@ class Header extends Component {
             </MenuElement>
             {/* 로그인 / 디자인 등록 */}
             {
-                this.props.userInfo == null ?//유저정보o
-                    <a onClick={() => this.props.onClickLogin()}>
-                        <MenuElement className="login-button">
+                this.props.userInfo==null?//유저정보o
+                <a onClick={() => this.props.onClickLogin()}>
+                <MenuElement className="login-button">
+                        <p className="text">
+                            {LoginText}
+                        </p>
+                    </MenuElement>
+                </a>
+                :
+                    window.location.href.toLowerCase().indexOf("designModify")!=-1?
+                    <a onClick={() => alert("delete design")}>
+                        <MenuElement className="create-design-button">
                             <p className="text">
                                 {LoginText}
                             </p>
@@ -205,12 +214,13 @@ class Header extends Component {
                                 </p>
                             </MenuElement>
                         </a>
-                        : pathname.toLowerCase().indexOf("aboutintro") != -1
-                            ? <a onClick={() => window.location.href = "/createdesigner"}>
+                        : window.location.href.toLowerCase().indexOf("aboutintro") != -1 ?
                                 <MenuElement className="create-designer-button">
+                                    <a onClick={() => window.location.href = "/createdesigner"}>
                                     <p className="text">
                                         {CreateDesigner}
                                     </p>
+                                    </a>
                                 </MenuElement>
                             </a>
                             : (pathname === ("/group") || pathname === ("/group/"))

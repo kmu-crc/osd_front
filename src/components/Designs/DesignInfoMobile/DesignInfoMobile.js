@@ -18,7 +18,7 @@ import DesignComment from "components/Designs/GridEditor/DesignComment";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 import { YesIHaveReadNewComment, } from "redux/modules/design";
-import { Icon } from 'semantic-ui-react';
+import Icon from '@material-ui/core/Icon';
 import opendesign_style from "opendesign_style";
 import vChatIcon from "source/video-chat-icon.png";
 import Socket from "modules/Socket"
@@ -45,13 +45,17 @@ const Wrapper = styled.div`
     // padding-top: 42px;
     // border: 1px dashed blue;
     // *{border: 1px solid red;}
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
     button {
         border: none;
         padding: 1px;
     }
 `;
 const NameBox = styled.div`
-    // width: 360px;
+    width: 360px;
     padding-left: 38px;
     display: flex;
     flex-direction: column;
@@ -92,36 +96,20 @@ const NameBox = styled.div`
     }
 `;
 const InfoWrapper = styled.div`
-    width: 100%;
-    background-color: #E0E0E0;
-    display: flex;
-    justify-content: center;
-    position: relative;
+    width:100%;
+    min-height:177px;
+    background-color:#E0E0E0;
+    display:flex;
+    justify-content:center;
 
-    // *{border: 1px dashed red;}
-
-    .ssl{
-        width:20px;
-        height:20px;
-        object-fit:contain;
-        margin-left:5px;
-    }
-    .textOnThumbnail {
-        position: absolute;
-        width: max-content;
-        top: 95px;
-        left: 5px;
-        color: #F00;
-    }
     .infoBox{
         width:360px;
         display:flex;
         flex-direction:column;
-        justify-content:space-between;
-        padding: 6px 4px 6px 4px;
+        padding:12px 7px 12px 7px;
+
         .top{
             display:flex;
-            // height:134px;
             .thumbnail{
                 width:85px;
                 height:85px;
@@ -130,7 +118,7 @@ const InfoWrapper = styled.div`
 
                 border-radius:5%;
                 background-color:white;
-                background-image:url(${props => props.url});
+                background-image:url(${props=>props.url});
                 background-size:cover;
                 background-position:center;
                 box-shadow: 8px 8px 6px #00000029;
@@ -138,57 +126,52 @@ const InfoWrapper = styled.div`
             }
             .info{
                 width:100%;
-                height:85px;
+                height:70px;
                 overflow-y:auto;
-                word-wrap: break-word;
-
-                // overflow: hidden;
-                // text-overflow: ellipsis;
-                // white-space: normal;
-                // display: -webkit-box;
-                // -webkit-line-clamp: 5; /* 라인수 */	
-                // -webkit-box-orient: vertical; 
-                // word-wrap:break-word;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: normal;
+                display: -webkit-box;
+                -webkit-line-clamp: 5; /* 라인수 */	
+                -webkit-box-orient: vertical; 
+                word-wrap:break-word;
 
                 font: normal normal normal 18px/24px Spoqa Han Sans;
                 color:#777777;
             }
-            .group_user {
-                width: 100%;
-                height: 25px;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-            }
-        }
 
-        .bottom{
-            .bottom_box {
-                width: max-content;
-                height: 37px;
-                display: flex;
-                align-items: center;
-                .asset_icon {
-                    max-width: 25px;
-                    max-height: 25px;
-                    object-fit: contain;
-                }
-                .asset_text {
-                    width: max-content;
-                    max-width: 40px;
-                    margin-left: 4px;
-                    margin-right: 8px;
-                    font-family: Spoqa Han Sans;
-                    font-size: 16px;
-                    font-weight: 400;
-                }
+        }
+        .group_user{
+            width:100%;
+            display:flex;
+            align-items:center;
+            justify-content:flex-end;
+        }
+        .ssl{
+            width:20px;
+            height:20px;
+            object-fit:contain;
+            opacity:0.8;
+            margin-right:5px;
+        }
+        .middle_box{
+            width:100%;
+            display:flex;
+            justify-content:space-between;
+            .category_name{
+                color:red;
+                display:flex;
+                align-items:center;
             }
+
+        }
+        .bottom{
             width:100%;
             // height:44px;
             display:flex;
             justify-content:space-between;
             align-items:flex-end;
+            margin-bottom:3px;
             .box{display:flex;}
             .alignRight{justify-content:flex-end;}
             .modi{font-family:Spoqa Han Sans Neo;font-size:15px;color:#4F4F4F;margin-right:5px;}
@@ -196,7 +179,119 @@ const InfoWrapper = styled.div`
         }
 
     }
-`;
+`
+// const InfoWrapper = styled.div`
+//     width: 100%;
+//     background-color: #E0E0E0;
+//     display: flex;
+//     justify-content: center;
+//     .iconwrap{height:22px;display:flex;font-size:18px;margin-right:12px;}
+//     .info_wrapper{
+//         width:360px;
+//         border:1px solid black;
+//         position: relative;
+
+//     }
+//     // *{border: 1px dashed red;}
+
+//     .ssl{
+//         width:20px;
+//         height:20px;
+//         object-fit:contain;
+//         margin-left:5px;
+//     }
+//     .textOnThumbnail {
+//         position: absolute;
+//         width: max-content;
+//         top: 95px;
+//         left: 5px;
+//         color: #F00;
+//     }
+//     .infoBox{
+//         width:360px;
+//         display:flex;
+//         flex-direction:column;
+//         justify-content:space-between;
+//         padding: 6px 4px 6px 4px;
+//         .top{
+//             display:flex;
+//             // height:134px;
+//             .thumbnail{
+//                 width:85px;
+//                 height:85px;
+//                 min-width:85px;
+//                 min-height:85px;
+
+//                 border-radius:5%;
+//                 background-color:white;
+//                 background-image:url(${props=>props.url});
+//                 background-size:cover;
+//                 background-position:center;
+//                 box-shadow: 8px 8px 6px #00000029;
+//                 margin-right:10px;
+//             }
+//             .info{
+//                 width:100%;
+//                 height:85px;
+//                 overflow-y:auto;
+//                 word-wrap: break-word;
+
+//                 // overflow: hidden;
+//                 // text-overflow: ellipsis;
+//                 // white-space: normal;
+//                 // display: -webkit-box;
+//                 // -webkit-line-clamp: 5; /* 라인수 */	
+//                 // -webkit-box-orient: vertical; 
+//                 // word-wrap:break-word;
+
+//                 font: normal normal normal 18px/24px Spoqa Han Sans;
+//                 color:#777777;
+//             }
+//             .group_user {
+//                 border:1px solid black;
+
+//                 width: 100%;
+//                 height: 25px;
+//                 display: flex;
+//                 align-items: center;
+//                 justify-content:flex-end;
+//             }
+//         }
+
+//         .bottom{
+//             .bottom_box {
+//                 width: max-content;
+//                 height: 37px;
+//                 display: flex;
+//                 align-items: center;
+//                 .asset_icon {
+//                     max-width: 25px;
+//                     max-height: 25px;
+//                     object-fit: contain;
+//                 }
+//                 .asset_text {
+//                     width: max-content;
+//                     max-width: 40px;
+//                     margin-left: 4px;
+//                     margin-right: 8px;
+//                     font-family: Spoqa Han Sans;
+//                     font-size: 16px;
+//                     font-weight: 400;
+//                 }
+//             }
+//             width:100%;
+//             // height:44px;
+//             display:flex;
+//             justify-content:space-between;
+//             align-items:flex-end;
+//             .box{display:flex;}
+//             .alignRight{justify-content:flex-end;}
+//             .modi{font-family:Spoqa Han Sans Neo;font-size:15px;color:#4F4F4F;margin-right:5px;}
+//             .iconwrap{height:22px;display:flex;font-size:18px;margin-right:12px;}
+//         }
+
+//     }
+// `;
 
 const ChatWrapper = styled.div`
 width:100%;
@@ -959,39 +1054,53 @@ export default
                                         .toLocaleDateString('ko-KR').length - 1)}
                         </div>
                     </div>
+                    <div style={{width:"100%",display:"flex",justifyContent:"flex-end",color:"red"}}>
+                                        {detail.parent_design &&
+                                            <span
+                                                style={{ textAlign:"right"}}
+                                                onClick={() => this.goParentDesign(detail.parent_design)}>
+                                                원본디자인 바로가기
+                                            </span>}
+                                        {detail.parent_design&&detail.children_count["count(*)"] > 0 &&<span style={{color:"black"}}>&nbsp;|&nbsp;</span>}
+                                        {detail.children_count["count(*)"] > 0 &&
+                                            <span
+                                                style={{ textAlign:"right"}}
+                                                onClick={this.openForkList}>
+                                                파생목록(<b>{detail.children_count["count(*)"]}</b>)
+                                            </span>}
+                    </div>
                 </NameBox>
                 <InfoWrapper url={thumbnail}>
-
-                    <div className="textOnThumbnail">
-                        {`${detail.categoryName}`}
-                    </div>
                     <div className="infoBox">
                         <div className="top">
-                            <div className="thumbnail" />
-                            <div style={{ width: "100%" }}>
-                                <div className="info">
-                                    {detail.explanation
-                                        ? detail.explanation.replace(/\n/g, "<br/>")
+                            <div className="thumbnail"/>
+                            <div style={{width:"100%"}}>
+                            <div className="info">
+                                {detail.explanation
+                                 ? detail.explanation.replace(/\n/g, "<br/>")
+                                 : null}
+                            </div>
+                            <div className="group_user">
+                                {`${detail.userName}`}&nbsp;
+                                {(detail.member && detail.member.length > 1)
+                                || (WaitingList && WaitingList.length > 0)
+                                ? <span>
+                                    {(detail.member && detail.member.length > 1)
+                                        ? `외 ${(detail.member.length - 1).toString()}명`
                                         : null}
-                                </div>
-                                <div className="group_user">
-                                    <a onClick={this.openMemberList}>
-                                        <div style={{ display: "flex", }} >
-                                            {`${detail.userName}`}&nbsp;
-                                            {(detail.member && detail.member.length > 1)
-                                                || (WaitingList && WaitingList.length > 0)
-                                                ? <div>
-                                                    {(detail.member && detail.member.length > 1)
-                                                        ? `외 ${(detail.member.length - 1).toString()}명`
-                                                        : null}
-                                                    {WaitingList && WaitingList.length > 0
-                                                        ? <span style={{ fontSize: "10px", color: "red" }}>new!</span>
-                                                        : null}
-                                                </div>
-                                                : null}
-                                        </div>
-                                    </a>
-                                    <div style={{ display: "flex", alignItems: "center" }}>
+                                    {WaitingList && WaitingList.length > 0
+                                        ? <span style={{ fontSize: "10px", color: "red" }}>new!</span>
+                                        : null}
+                                </span>
+                                : null}
+                            </div>
+                            </div>
+                        </div>
+                        <div className="middle_box">
+                            <div className="category_name">
+                                {`${detail.categoryName}`}
+                            </div>
+                            <div style={{ display: "flex", alignItems: "center",marginTop:"10px" }}>
                                         <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
                                             <img className="ssl" src={CCL2} />
                                             <img className="ssl" src={CCL3} />
@@ -1000,102 +1109,13 @@ export default
                                             {detail && detail.is_commercial == false
                                                 ? <img className="ssl" src={CCL5} /> : null}
                                         </a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
-                        <div style={{ width: "100%", display: "flex", flexDirection: "row", }}>
-                            <div style={{
-                                width: "100%", marginRight: "0px",
-                                display: "flex", flexDirection: "column",
-                            }}>
+                        <div className="bottom">
                                 {/* count box */}
-                                <div style={{ width: "100%", display: "flex", flexDirection: "row" }}>
-                                    <div style={{
-                                        display: "flex", alignItems: "center", justifyContent: "space-between",
-                                        marginRight: "7px"
-                                    }}>
-                                        <img style={{ width: "25px", height: "25px", marginRight: "3px" }}
-                                            src={new_logo_view} />
-                                        <div className="asset_text">{NumberFormat(Count.view_count || 0)}</div>
-                                    </div>
-
-                                    <div style={{
-                                        marginLeft: "5px", display: "flex", alignItems: "center",
-                                        justifyContent: "space-between", marginRight: "7px"
-                                    }}>
-                                        <img style={{ width: "25px", height: "25px", marginRight: "3px" }}
-                                            src={iconLike} />
-                                        <div className="asset_text">{NumberFormat(Count.like_count || 0)}</div>
-                                    </div>
-
-                                    <div style={{
-                                        marginLeft: "5px", display: "flex", alignItems: "center",
-                                        justifyContent: "space-between", marginRight: "7px"
-                                    }}>
-                                        <img style={{ width: "25px", height: "25px", marginRight: "3px" }}
-                                            src={new_logo_note} />
-                                        <div className="asset_text">{NumberFormat(Count.comment_count || 0)}</div>
-                                    </div>
-                                </div>
-
-                                {/* forked info */}
-                                <div style={{
-                                    display: "flex", flexDirection: "row", justifyContent: "flex-start",
-                                    color: "red", fontSize: "0.8rem",
-                                }}>
-                                    {detail.parent_design &&
-                                        <div
-                                            style={{ width: "max-content", marginRight: "5px", }}
-                                            onClick={() => this.goParentDesign(detail.parent_design)}>
-                                            원본디자인 보기
-                                        </div>}
-                                    {detail.children_count["count(*)"] > 0 &&
-                                        <div
-                                            style={{ width: "50%" }}
-                                            onClick={this.openForkList}>
-                                            파생목록(<b>{detail.children_count["count(*)"]}</b>)
-                                        </div>}
-                                </div>
-                            </div>
-                            {/* buttons */}
-                            <div style={{
-                                width: "100%", marginLeft: "auto", marginRight: "0px",
-                                display: "flex", flexDirection: "column",
-                            }}>
-                                <div style={{
-                                    width: "100%", display: "flex", flexDirection: "row", justifyContent: "flex-end"
-                                }}>
-                                    {isMyDesign !== true
-                                        && <a onClick={this.like}>
-                                            <div style={{
-                                                display: "flex", alignItems: "center",
-                                                marginLeft: "auto", marginRight: "5px",
-                                            }}>
-                                                <img src={thumbup}
-                                                    style={{
-                                                        width: "25px", height: "25px", marginRight: "5px",
-                                                    }} />
-                                                <span>{like ? "좋아요 취소" : "좋아요"}</span>
-                                            </div>
-                                        </a>}
-                                    {isMyDesign !== true
-                                        && <a onClick={() => this.sendMessage(detail.user_id, detail.userName)}>
-                                            <div style={{ display: "flex", alignItems: "center", }}>
-                                                <img src={email} style={{ width: "25px", height: "25px", marginRight: "5px", }} />
-                                                <span>{like ? "" : "메시지"}</span>
-                                            </div>
-                                        </a>}
-                                </div>
-                                <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
-                                    {isMyDesign === true
-                                        && <a onClick={this.gotoDesignModify} >
-                                            <div style={{ width: "max-content", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                                                <img src={iEdit} style={{ width: "25px", height: "25px" }} />
-                                                <span>디자인수정</span>
-                                            </div>
-                                        </a>}
+                                <div className="box" style={{display:"flex",flexDirection:"column"}}>
+                                <div className="box">
                                     {editor === false
                                         ? detail && detail.waitingStatus === 1
                                             ? <div style={{ color: "red" }}>(가입승인 대기중)</div>
@@ -1105,23 +1125,79 @@ export default
                                                     background: "none", color: "red", padding: "3px"
                                                 }}>
                                                 디자인 가입신청</button >
-                                        : null}
-                                    <button
-                                        style={{ marginLeft: "auto", color: "red", background: "none" }}
-                                        onClick={this.forkDesign}>
-                                        디자인 파생</button>
-                                </div >
+                                    : null}
+                                </div>
+                                <div className="box">
+                                    <div className="iconwrap">
+                                        <Icon style={{ fontSize: "18px", color:"black",marginRight:"5px" }}>visibility</Icon>
+                                        {NumberFormat(Count.view_count || 0)}
+                                    </div>
+                                    <div className="iconwrap">
+                                        <Icon style={{ fontSize: "18px", color:"red",marginRight:"5px" }}>favorite_border</Icon>
+                                        {NumberFormat(Count.like_count || 0)}
+                                    </div>
+                                    <div className="iconwrap">
+                                        <Icon style={{ fontSize: "18px", color:"black",marginRight:"5px" }}>article</Icon>
+                                        {NumberFormat(Count.comment_count || 0)}
+                                    </div>
+                                </div>
+                                </div>
+                                <div className="box" style={{display:"flex",flexDirection:"column"}}>
+                                    {isMyDesign !== true?
+                                    <a onClick={this.like} style={{display:"flex"}}>
+                                    <div className="modi">관심 디자인</div>
+                                    {isMyDesign !== true&&like?
+                                    <Icon style={{ fontSize: "18px", color:"red"}}>favorite</Icon>
+                                    :
+                                    <Icon style={{ fontSize: "18px", color:"black"}}>favorite</Icon>
+                                    }
+                                    </a>
+                                    :
+                                    null
+                                    }
+                                    {/* <a onClick={this.like} style={{display:"flex"}}>
+                                    <div className="modi">관심 디자인</div>
+                                    {isMyDesign !== true&&like?
+                                    <Icon style={{ fontSize: "18px", color:"red"}}>favorite</Icon>
+                                    :
+                                    <Icon style={{ fontSize: "18px", color:"black"}}>favorite</Icon>
+                                    }
+                                    </a> */}
+                                    {isMyDesign === true
+                                    && 
+                                    <a onClick={this.gotoDesignModify} >
+                                      <div style={{ width: "max-content", display:"flex", alignItems: "center", justifyContent:"space-between" }}>
+                                      <div className="modi">디자인 수정</div>
+                                      <Icon style={{ fontSize: "18px", color:"black"}}>create</Icon>
+                                      </div>
+                                    </a>}
+                                <div>
+                                </div>     
                             </div>
                         </div>
+
                     </div>
                 </InfoWrapper>
 
                 <div style={{
                     marginTop: "5px",
-                    width: "100%",
+                    width: "360px",
                     display: "flex",
                     justifyContent: "flex-start"
                 }}>
+                    <a
+                        onClick={this.forkDesign}
+                        style={{
+                            marginLeft: "5px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            marginRight: "7px"
+                        }}
+                    >
+                        <Icon style={{ fontSize:"18px", color:"black"}}>share</Icon>
+                        <span>&nbsp;디자인 파생</span>
+                    </a>
 
                     <a
                         onClick={this.getDesignComment}

@@ -88,7 +88,6 @@ const InfoWrapper = styled.div`
                 margin-right:10px;
             }
             .info{
-                border:1px solid black;
                 width:100%;
                 height:120px;
                 overflow-Y: scroll;

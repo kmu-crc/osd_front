@@ -986,6 +986,7 @@ export default
                         </select>
                         <div className="select-arrow"></div>
                       </div>
+                      {console.log(this.props)}
                       {categoryLevel1
                         ? <div className="select-wrapper top15 fadein">
                           <select
@@ -1004,7 +1005,7 @@ export default
                         </div>
                         : null}
 
-                      {categoryLevel2 === 28
+                        {this.state.categoryLevel2 == 28     
                         ? <div className="select-wrapper top15 fadein">
                           <select
                             onChange={this.onChangeCategory3}
