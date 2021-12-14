@@ -1776,8 +1776,7 @@ class CardSourceDetail extends Component {
 
                 {/* text-controller */}
                 {item.type === "TEXT" ? (
-
-                  (itemEdit &&
+                  (this.props.edit&& 
                     (item.initClick || this.state.selectOrder == item.order)) ? (
                     <ControllerWrap>
                       <TextController
