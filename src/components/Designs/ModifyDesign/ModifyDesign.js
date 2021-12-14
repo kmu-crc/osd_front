@@ -1177,6 +1177,7 @@ class ModifyDesign extends Component {
   }
 
   render() {
+    console.log(this.props);
     let arrSummaryList = [];
     if (this.state.members != null && this.state.members.length > 0) {
       arrSummaryList = this.state.members.map((item, index) => {

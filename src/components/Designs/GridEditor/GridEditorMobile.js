@@ -390,9 +390,11 @@ class GridEditorMobile extends Component {
                         </div>
 
                         <div style={{
-                            height: "9px",
-                            margin: "auto",
-                            width: "max-content",
+                            width:"100%",
+                            height: "20px",
+                            display:"flex",
+                            justifyContent:"center",
+                            marginTop:"7px",
                             marginBottom: "7px"
                         }}>
                             <img src={arrow} />

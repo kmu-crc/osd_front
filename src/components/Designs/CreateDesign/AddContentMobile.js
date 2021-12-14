@@ -155,6 +155,10 @@ export default class AddContent extends React.Component {
                         하이퍼링크  등록</NewController>
 
                 </div>
+                {this.props.is_problem ? <NewController
+                    onClick={() => { this.addContent("PROBLEM"); this.props.open(true); }}
+                    width="max-content" minWidth="134px" height="29px">
+                    문제 등록하기</NewController> : null}
 
                 {this.state.type === "FILE" &&
                     <FileController

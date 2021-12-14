@@ -36,6 +36,21 @@ const Wrapper = styled.div`
   }
 
 `
+const Head = styled.div`
+  width: 100%;
+  max-width: 1920px;
+  // min-width: 1000px;
+  font-weight: bold;
+  font-size: 23px;
+  line-height: 34px;
+  font-family: Noto Sans KR;
+  color: ${opendesign_style.color.grayScale.scale7};
+  text-align: center;
+  // margin-top: 27px;
+  // margin-bottom: 27px;
+  padding-top: 27px;
+  padding-bottom: 27px;
+`;
 const SliderBlank = styled.div`
   width:100%;
   height:360px;
@@ -207,6 +222,33 @@ export default class Main_mobile extends Component {
             </Slider>
           </SliderWrapper>
           <SliderBlank />
+
+
+
+          {this.props.userInfo != null
+          ? 
+          <React.Fragment>
+          <div className="hrline">
+            <div className="line" />
+          </div>
+          <MainMyDesignListContainer width={widthScroll} Head={Head} />
+          </React.Fragment>
+          
+          : null}
+
+        {this.props.userInfo != null
+          ? 
+          <React.Fragment>
+          <div className="hrline">
+            <div className="line" />
+          </div>
+          <MainMyGroupListContainer width={widthScroll} Head={Head} />
+          </React.Fragment>
+          : null}
+
+          <div className="hrline">
+            <div className="line" />
+          </div>
 
           <TopGroupListContainer_mobile width={widthScroll} />
 

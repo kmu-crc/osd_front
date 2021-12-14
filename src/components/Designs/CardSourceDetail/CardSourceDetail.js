@@ -1570,7 +1570,7 @@ class CardSourceDetail extends Component {
             {/* text-controller */}
             {(item.type === "TEXT")
               ? itemEdit
-                && (item.initClick || this.state.selectOrder == item.order)
+                && (item.initClick || this.state.selectOrder == item.order)&&this.props.edit
                 ? <ControllerWrap>
                   <TextController
                     item={item}

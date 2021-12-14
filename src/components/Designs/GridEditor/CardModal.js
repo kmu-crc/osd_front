@@ -605,7 +605,7 @@ class CardModal extends Component {
         // const goPrev = wires && wires.filter(wire => wire.to_card_id === card.uid);
         // const goNext = wires && wires.filter(wire => wire.from_card_id === card.uid);
         // console.log('go prev', goPrev, wires, card);
-
+        console.log(this.props);
         return (
             <React.Fragment>
                 <CardDialog open={this.props.open ? true : false} onClose={this.onClose}>
