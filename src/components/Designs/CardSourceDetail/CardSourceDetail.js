@@ -1050,9 +1050,6 @@ class CardSourceDetail extends Component {
         })
       );
     }
-    alert(this.props.uid);
-    console.log({ formData });
-    return;
     if (this.props.uid !== "new") {
       // console.log(formData);
       if (this.props.handleSubmit) {
