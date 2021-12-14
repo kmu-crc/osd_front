@@ -1776,8 +1776,9 @@ class CardSourceDetail extends Component {
 
                 {/* text-controller */}
                 {item.type === "TEXT" ? (
-                  itemEdit &&
-                    (item.initClick || this.state.selectOrder == item.order) ? (
+
+                  (itemEdit &&
+                    (item.initClick || this.state.selectOrder == item.order)) ? (
                     <ControllerWrap>
                       <TextController
                         item={item}
@@ -1846,7 +1847,7 @@ class CardSourceDetail extends Component {
 
                 {/* file & image controller */}
                 {item.type === "FILE" ? (
-                  itemEdit ? (
+                  itemEdit && this.props.edit ? (
                     <ControllerWrap>
                       <FileController
                         item={item}
@@ -2039,7 +2040,7 @@ class CardSourceDetail extends Component {
 
                 {/* link controller */}
                 {item.type === "LINK" ? (
-                  itemEdit || this.props.edit ? (
+                  itemEdit && this.props.edit ? (
                     <ControllerWrap>
                       <LinkController
                         item={item}
@@ -2062,25 +2063,27 @@ class CardSourceDetail extends Component {
                             : ""}
                         </div>
                         <div className="url">
-                          <a
-                            target="_blank"
-                            href={`${IsJsonString(item.content)
-                              ? JSON.parse(item.content).hasOwnProperty(
-                                "url"
-                              )
-                                ? JSON.parse(item.content).url
-                                : "invalid"
-                              : "invalid"
-                              }`}
-                          >
-                            (
-                            {IsJsonString(item.content)
-                              ? JSON.parse(item.content).hasOwnProperty("url")
-                                ? JSON.parse(item.content).url
-                                : "invalid"
-                              : "invalid"}
+                          {IsJsonString(item.content)
+                            && JSON.parse(item.content).hasOwnProperty(
+                              "url"
                             )
-                          </a>
+                            && JSON.parse(item.content).url
+                            &&
+                            <a
+                              target="_blank"
+                              href={
+                                JSON.parse(item.content).hasOwnProperty("url") ||
+                                JSON.parse(item.content).url
+                              }
+                            >
+                              (
+                              {IsJsonString(item.content)
+                                ? JSON.parse(item.content).hasOwnProperty("url")
+                                  ? JSON.parse(item.content).url
+                                  : "invalid"
+                                : "invalid"}
+                              )
+                            </a>}
                         </div>{" "}
                         {/* */}
                       </LinkPreview>
