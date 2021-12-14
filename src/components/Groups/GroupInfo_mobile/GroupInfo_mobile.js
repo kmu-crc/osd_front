@@ -1,23 +1,23 @@
-import React, { Component } from 'react'
-import styled from 'styled-components';
-import IconView from "source/IconView"
-import iEdit from "source/edit.png"
-import iForked from "source/baseline_library_books_black_48dp.png"
-import iThumbUp from "source/thumbup_icon_black.png"
-import iINOUT from "source/inout.svg"
-import thumbup from "source/thumbup_icon_black.png"
+import React, { Component } from "react";
+import styled from "styled-components";
+import IconView from "source/IconView";
+import iEdit from "source/edit.png";
+import iForked from "source/baseline_library_books_black_48dp.png";
+import iThumbUp from "source/thumbup_icon_black.png";
+import iINOUT from "source/inout.svg";
+import thumbup from "source/thumbup_icon_black.png";
 import noimg from "source/noimg.png";
 import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";
-import { geturl } from 'config';
+import { geturl } from "config";
 import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
-import TextFormat from 'modules/TextFormat';
+import TextFormat from "modules/TextFormat";
 import { alert } from "components/Commons/Alert/Alert";
 import opendesign_style from "opendesign_style";
-import Icon from '@material-ui/core/Icon';
+import Icon from "@material-ui/core/Icon";
 import { GetPermissionCouldJoinVideoChatRequest } from "redux/modules/group";
 import GroupNoticeContainer from "containers/Groups/GroupNoticeContainer";
-import GotoDetail from 'components/Commons/GotoDetail';
+import GotoDetail from "components/Commons/GotoDetail";
 
 import new_logo_view from "source/new_logo_view.svg";
 import new_logo_favorite from "source/new_logo_favorite.svg";
@@ -29,307 +29,434 @@ import new_logo_chat from "source/new_logo_chat.svg";
 import new_logo_msg from "source/new_logo_msg.svg";
 
 const Wrapper = styled.div`
-    width:100%;
-    display:flex;
-    justify-content:center;
-    margin-top:10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 
-    .content{
-        width:100%;
-    }
-    .buttonContent{
-        width:360px;
-    }
-
-` 
+  .content {
+    width: 100%;
+  }
+  .buttonContent {
+    width: 360px;
+  }
+`;
 
 const NameWrapper = styled.div`
-    width:360px;
-    height:38px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding-left:44px;
-    padding-right:10px;
-    margin-bottom:5px;
-    .name_{
-        width:200px;
-        height:38px;
+  width: 360px;
+  height: 38px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 44px;
+  padding-right: 10px;
+  margin-bottom: 5px;
+  .name_ {
+    width: 200px;
+    height: 38px;
 
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
-        font-family:Spoqa Han Sans;
-        font-weight:700;
-        font-size:26px;
-        line-height:38px;
+    font-family: Spoqa Han Sans;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 38px;
+  }
+  .date {
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    .text {
+      font-family: Spoqa Han Sans;
+      font-weight: 400;
+      font-size: 12px;
+      color: #777777;
+      text-align: right;
     }
-    .date{
-        width:120px;
-        display:flex;
-        flex-direction:column;
-        justify-content:flex-end;
-        .text{
-            font-family:Spoqa Han Sans;
-            font-weight:400;
-            font-size:12px;
-            color:#777777;
-            text-align:right;
-        }
-    }
-`
+  }
+`;
 const NewAlarmLogo = styled.div`
-    width:10px;
-    height:100%;
-    display:flex;
-    margin-right:2px;
-    .circle{
-        background-color:red;
-        width:7px;
-        height:7px;
-        border-radius:50%;
-    }
+  width: 10px;
+  height: 100%;
+  display: flex;
+  margin-right: 2px;
+  .circle {
+    background-color: red;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+  }
 `;
 const InfoWrapper = styled.div`
-    width:100%;
-    height:177px;
-    background-color:#E0E0E0;
-    display:flex;
-    justify-content:center;
-    .infoBox{
-        width:360px;
-        display:flex;
-        flex-direction:column;
-        justify-content:space-between;
-        padding:12px 7px 12px 7px;
-        .top{
-            display:flex;
-            height:134px;
-            .thumbnail{
-                width:85px;
-                height:85px;
-                min-width:85px;
-                min-height:85px;
+  width: 100%;
+  height: 177px;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  .infoBox {
+    width: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 5px;
+    position: relative;
 
-                border-radius:5%;
-                background-color:white;
-                background-image:url(${props=>props.url});
-                background-size:cover;
-                background-position:center;
-                box-shadow: 8px 8px 6px #00000029;
-                margin-right:10px;
-            }
-            .info{
-                width:100%;
-                height:85px;
-                overflow-y:auto;
-                // overflow: hidden;
-                // text-overflow: ellipsis;
-                // white-space: normal;
-                // display: -webkit-box;
-                // -webkit-line-clamp: 5; /* 라인수 */	
-                // -webkit-box-orient: vertical; 
-                // word-wrap:break-word;
+    .top {
+      display: flex;
+      height: 134px;
+      .thumbnail {
+        width: 85px;
+        height: 85px;
+        min-width: 85px;
+        min-height: 85px;
 
-                font: normal normal normal 18px/24px Spoqa Han Sans;
-                color:#777777;
-            }
-            .group_user{
-                width:100%;
-                height:30px;
-                display:flex;
-                align-items:center;
-                justify-content:flex-end;
-            }
-        }
-        .bottom{
-            width:100%;
-            height:44px;
-            display:flex;
-            justify-content:space-between;
-            align-items:flex-end;
-            .box{display:flex;}
-            .alignRight{justify-content:flex-end;}
-            .modi{font-family:Spoqa Han Sans Neo;font-size:15px;color:#4F4F4F;margin-right:5px;}
-            .iconwrap{height:22px;display:flex;font-size:18px;margin-right:12px;}
-        }
+        border-radius: 5%;
+        background-color: white;
+        background-image: url(${(props) => props.url});
+        background-size: cover;
+        background-position: center;
+        box-shadow: 8px 8px 6px #00000029;
+        margin-right: 10px;
+      }
+      .info {
+        width: 100%;
+        height: 85px;
+        overflow-y: auto;
+        // overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 5; /* 라인수 */
+        -webkit-box-orient: vertical;
+        word-wrap: break-word;
 
+        font: normal normal normal 18px/24px Spoqa Han Sans;
+        color: #777777;
+      }
+      .group_user {
+        top: 95px;
+        left: 15px;
+        position: absolute;
+        width: 100%;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
     }
-`
+    .bottom {
+      width: 100%;
+      height: 44px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      .box {
+        display: flex;
+      }
+      .alignRight {
+        justify-content: flex-end;
+      }
+      .modi {
+        font-family: Spoqa Han Sans Neo;
+        font-size: 15px;
+        color: #4f4f4f;
+        margin-right: 5px;
+      }
+      .iconwrap {
+        height: 22px;
+        display: flex;
+        font-size: 18px;
+        margin-right: 12px;
+      }
+    }
+  }
+`;
 class GroupInfo_mobile extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            w: window.innerWidth > 1920 ? 1920 : window.innerWidth,
-            joinDialog: false,
-            likeDialog: false,
-            forkDialog: 0,
-            manager: false,
-            isSeeMore: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      w: window.innerWidth > 1920 ? 1920 : window.innerWidth,
+      joinDialog: false,
+      likeDialog: false,
+      forkDialog: 0,
+      manager: false,
+      isSeeMore: false,
+    };
+    this.needLogin = this.needLogin.bind(this);
+    this.like = this.like.bind(this);
+    this.handleMoreViewDescription = this.handleMoreViewDescription.bind(this);
+    this.gotoGroupModify = this.gotoGroupModify.bind(this);
+    this.changeEditMode = this.changeEditMode.bind(this);
+    this.gotoGroup = this.gotoGroup.bind(this);
+    this.handleResize = this.handleResize.bind(this);
+  }
 
-        };
-        this.needLogin = this.needLogin.bind(this);
-        this.like = this.like.bind(this);
-        this.handleMoreViewDescription = this.handleMoreViewDescription.bind(this);
-        this.gotoGroupModify = this.gotoGroupModify.bind(this);
-        this.changeEditMode = this.changeEditMode.bind(this);
-        this.gotoGroup = this.gotoGroup.bind(this);
-        this.handleResize = this.handleResize.bind(this);
+  handleResize = () => {
+    this.setState({ w: window.innerWidth > 1920 ? 1920 : window.innerWidth });
+  };
+  componentDidMount() {
+    window.addEventListener("resize", this.handleResize);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+  }
+  gotoGroup(id) {
+    window.location.href = geturl() + `/groupDetail/${id}`;
+  }
+  async needLogin() {
+    await alert("로그인 해주세요.", "확인");
+  }
+  async like() {
+    if (!this.props.userInfo) {
+      this.needLogin();
+      return;
     }
+    if (this.props.like) {
+      //dislike
+      this.props
+        .UnlikeGroupRequest(this.props.id, this.props.token)
+        .then(() => {
+          this.props.GetGroupDetailRequest(this.props.id);
+        })
+        .then(() => {
+          this.props.GetLikeGroupRequest(this.props.id, this.props.token);
+        });
+    } else {
+      // like
+      await this.setState({ likeDialog: true });
+      this.props
+        .LikeGroupRequest(this.props.id, this.props.token)
+        .then(() => {
+          this.props.GetGroupDetailRequest(this.props.id);
+        })
+        .then(() => {
+          this.props.GetLikeGroupRequest(this.props.id, this.props.token);
+        });
+      setTimeout(() => {
+        this.setState({ likeDialog: false });
+      }, 2500);
+    }
+  }
+  async handleMoreViewDescription(description) {
+    await alert(description, "확인");
+  }
+  gotoGroupModify() {
+    let href = window.location.href.substring(
+      0,
+      window.location.href.search("groupDetail")
+    );
+    window.location.href = href + "modifygroup/" + this.props.GroupDetail.uid;
+  }
+  changeEditMode() {
+    this.setState({ manager: !this.state.manager });
+    this.props.handleSwitchMode();
+    if (!this.state.manager === false) {
+      window.location.reload();
+    }
+  }
 
-    handleResize = () => {
-        this.setState({ w: window.innerWidth > 1920 ? 1920 : window.innerWidth });
-    }
-    componentDidMount() {
-        window.addEventListener("resize", this.handleResize);
-    }
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.handleResize);
-    }
-    gotoGroup(id) {
-        window.location.href = geturl() + `/groupDetail/${id}`
-    }
-    async needLogin() {
-        await alert("로그인 해주세요.", "확인");
-    }
-    async like() {
-        if (!this.props.userInfo) {
-            this.needLogin();
-            return;
-        }
-        if (this.props.like) { //dislike
-            this.props.UnlikeGroupRequest(this.props.id, this.props.token)
-                .then(() => { this.props.GetGroupDetailRequest(this.props.id) })
-                .then(() => { this.props.GetLikeGroupRequest(this.props.id, this.props.token) })
-        } else { // like
-            await this.setState({ likeDialog: true })
-            this.props.LikeGroupRequest(this.props.id, this.props.token)
-                .then(() => { this.props.GetGroupDetailRequest(this.props.id) })
-                .then(() => { this.props.GetLikeGroupRequest(this.props.id, this.props.token) })
-            setTimeout(() => { this.setState({ likeDialog: false }) }, 2500);
-        }
-    }
-    async handleMoreViewDescription(description) {
-        await alert(description, "확인");
-    }
-    gotoGroupModify() {
-        let href = window.location.href.substring(0, window.location.href.search("groupDetail"));
-        window.location.href = href + 'modifygroup/' + this.props.GroupDetail.uid;
-    }
-    changeEditMode() {
-        this.setState({ manager: !this.state.manager });
-        this.props.handleSwitchMode();
-        if (!this.state.manager === false) {
-            window.location.reload();
-        }
-    }
+  openVideoChat = () => {
+    const url = geturl() + `/vchatg/${this.props.GroupDetail.uid}`;
+    const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,scrollbars=no,\\
+        top=0,left=0,width=${window.screen.width},height=${
+      window.screen.height - 100
+    }`;
+    this.vchatwindow = window.open(url, "vchat", options);
+  };
 
-    openVideoChat = () => {
-        const url = geturl() + `/vchatg/${this.props.GroupDetail.uid}`
-        const options =
-            `toolbar=no,status=no,menubar=no,resizable=0,location=no,scrollbars=no,\\
-        top=0,left=0,width=${window.screen.width},height=${window.screen.height - 100}`;
-        this.vchatwindow = window.open(url, "vchat", options);
-    }
+  openChat = () => {
+    const url = geturl() + `/chatg/${this.props.GroupDetail.uid}`;
+    const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
+    this.chatwindow = window.open(url, "chat", options);
+  };
 
-    openChat = () => {
-        const url = geturl() + `/chatg/${this.props.GroupDetail.uid}`;
-        const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
-        this.chatwindow = window.open(url, "chat", options);
-    }
+  render() {
+    const { like, GroupDetail, userInfo } = this.props;
+    const group_user_id = GroupDetail && GroupDetail.user_id;
+    const user_id = userInfo && userInfo.uid;
+    const isEditor = group_user_id === user_id;
+    const { w, couldJoinVChat, manager } = this.state;
 
+    return (
+      <Wrapper>
+        <div className="content">
+          <NameWrapper>
+            <div
+              className="name_"
+              onClick={async () => await alert(GroupDetail.title)}
+            >
+              {GroupDetail.title}
+            </div>
+            <div className="date">
+              <div className="text">
+                업데이트&nbsp;{" "}
+                {GroupDetail && DateFormat(GroupDetail.update_time)}
+              </div>
+              <div className="text">
+                등록일자&nbsp;
+                {GroupDetail &&
+                  new Date(GroupDetail.create_time)
+                    .toLocaleDateString("ko-KR")
+                    .substring(
+                      0,
+                      new Date(GroupDetail.create_time).toLocaleDateString(
+                        "ko-KR"
+                      ).length - 1
+                    )}
+              </div>
+            </div>
+          </NameWrapper>
+          <InfoWrapper
+            url={
+              (GroupDetail && GroupDetail.img && GroupDetail.img.l_img) || noimg
+            }
+          >
+            <div className="infoBox">
+              <div className="top">
+                <div className="thumbnail" />
+                <div className="group_user">{`개설자 : ${GroupDetail.userName}`}</div>
+                <div className="info">
+                  {GroupDetail.explanation
+                    ? GroupDetail.explanation.replace(/\n/g, "<br/>")
+                    : null}
+                </div>
+              </div>
+              <div className="bottom">
+                <div className="box">
+                  <div className="iconwrap">
+                    <Icon
+                      style={{
+                        fontSize: "18px",
+                        color: "black",
+                        marginRight: "5px",
+                      }}
+                    >
+                      visibility
+                    </Icon>
+                    {NumberFormat(GroupDetail.view || 0)}
+                  </div>
+                  <div className="iconwrap">
+                    <Icon
+                      style={{
+                        fontSize: "18px",
+                        color: "red",
+                        marginRight: "5px",
+                      }}
+                    >
+                      favorite_border
+                    </Icon>
+                    {NumberFormat(GroupDetail.like || 0)}
+                  </div>
+                  <div className="iconwrap">
+                    <Icon
+                      style={{
+                        fontSize: "18px",
+                        color: "black",
+                        marginRight: "5px",
+                      }}
+                    >
+                      article
+                    </Icon>
+                    {NumberFormat(
+                      GroupDetail.design || 0 + GroupDetail.group || 0
+                    )}
+                  </div>
+                </div>
 
-
-    render() {
-        const { like, GroupDetail, userInfo } = this.props;
-        const group_user_id = GroupDetail && GroupDetail.user_id;
-        const user_id = userInfo && userInfo.uid;
-        const isEditor = group_user_id === user_id;
-        const { w, couldJoinVChat, manager } = this.state;
-
-        return (<Wrapper>
-                <div className="content">
-                <NameWrapper>
-                    <div className="name_" onClick={async()=>await alert(GroupDetail.title)}>
-                        {GroupDetail.title}
-                    </div>
-                    <div className="date">
-                        <div className="text">업데이트&nbsp; {GroupDetail && DateFormat(GroupDetail.update_time)}</div>
-                        <div className="text">등록일자&nbsp;{GroupDetail && new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
-                    </div>
-                </NameWrapper>
-                <InfoWrapper url={(GroupDetail && GroupDetail.img && GroupDetail.img.l_img) || noimg}>
-                    <div className="infoBox">
-                        <div className="top">
-                            <div className="thumbnail"/>
-                            <div>
-                            <div className="info">{GroupDetail.explanation? GroupDetail.explanation.replace(/\n/g, "<br/>"): null}</div>
-                            <div className="group_user">{`개설자 : ${GroupDetail.userName}`}</div>
-                            </div>
+                <div className="box">
+                  {isEditor ? (
+                    <div>
+                      <div
+                        className="box alignRight"
+                        onClick={this.changeEditMode}
+                      >
+                        {this.props.waitingDesign.length > 0 ||
+                        this.props.waitingGroup.length > 0 ? (
+                          manager ? null : (
+                            <NewAlarmLogo>
+                              <div className="circle" />
+                            </NewAlarmLogo>
+                          )
+                        ) : null}
+                        <div className="modi">
+                          {" "}
+                          {manager ? "관리모드 종료" : "그룹 관리하기"}
                         </div>
-                        <div className="bottom">
-                            <div className="box">
-                                <div className="iconwrap">
-                                    <Icon style={{ fontSize: "18px", color:"black",marginRight:"5px" }}>visibility</Icon>
-                                    {NumberFormat(GroupDetail.view || 0)}
-                                </div>
-                                <div className="iconwrap">
-                                    <Icon style={{ fontSize: "18px", color:"red",marginRight:"5px" }}>favorite_border</Icon>
-                                    {NumberFormat(GroupDetail.like || 0)}
-                                </div>
-                                <div className="iconwrap">
-                                    <Icon style={{ fontSize: "18px", color:"black",marginRight:"5px" }}>article</Icon>
-                                    {NumberFormat(GroupDetail.design || 0 + GroupDetail.group || 0)}
-                                </div>
-                            </div>
-
-                            <div className="box">
-{isEditor
-                    ? <React.Fragment>
-                        <div className="ButtonItem" onClick={this.gotoGroupModify}>
-                            <div className="button_text_label">그룹 정보 수정하기</div>
-                            {/* <NormalIcon imageURL={iEdit} opacity={0.5} />*/}</div> 
-                        <div className="ButtonItem" onClick={this.changeEditMode}>
-                            <div className="button_text_label displayFlex">
-                                {manager ? "관리모드 종료" : "그룹 관리하기"}</div>
-                            {/* <NormalIcon imageURL={iINOUT} opacity={0.5} /> */}
-                            {this.props.waitingDesign.length > 0 || this.props.waitingGroup.length > 0 ?
-                                manager ? null : <NewAlarmLogo><div className="circle" /></NewAlarmLogo>
-                                : null}
+                        <Icon style={{ fontSize: "18px", color: "black" }}>
+                          apps
+                        </Icon>
+                      </div>
+                      <div
+                        className="box alignRight"
+                        onClick={this.gotoGroupModify}
+                      >
+                        <div className="modi">그룹 정보 수정하기</div>
+                        <Icon style={{ fontSize: "18px", color: "black" }}>
+                          create
+                        </Icon>
+                      </div>
+                    </div>
+                  ) : (
+                    <React.Fragment>
+                      <div className="ButtonItem" onClick={this.like}>
+                        <div className="button_text_label">
+                          관심 그룹 {like ? "취소하기" : "등록하기"}
                         </div>
+                        {/* <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} /> */}
+                      </div>
                     </React.Fragment>
-                    : <React.Fragment>
-                        <div className="ButtonItem" onClick={this.like}>
-                            <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
-                            {/* <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} /> */}
-                            </div>
-                    </React.Fragment>}
-
-                            </div>
-                            <div>
-                            <div className="box alignRight" onClick={this.changeEditMode} >
-                            {this.props.waitingDesign.length > 0 || this.props.waitingGroup.length > 0 ?
-                            manager ? null : <NewAlarmLogo><div className="circle" /></NewAlarmLogo>: null}
-                            <div className="modi"> {manager ? "관리모드 종료" : "그룹 관리하기"}</div>                            
-                            <Icon style={{ fontSize: "18px", color:"black"}}>apps</Icon></div>
-                            <div className="box alignRight"  onClick={this.gotoGroupModify}><div className="modi">그룹 정보 수정하기</div><Icon style={{ fontSize: "18px", color:"black"}}>create</Icon></div>
-                            </div>
+                  )}
+                </div>
+                {/* 
+                <React.Fragment>
+                      <div
+                        className="ButtonItem"
+                        onClick={this.gotoGroupModify}
+                      >
+                        <div className="button_text_label">
+                          그룹 정보 수정하기
                         </div>
-                    </div>
-                </InfoWrapper>
-                <div className="buttonContent">
-                {GroupDetail.uid ? <GroupNoticeContainer loading={this.props.loading} id={GroupDetail.uid} /> : ""}
-                </div>
-                </div>
-            </Wrapper>
-        );
-    }
-};
+                        {/* <NormalIcon imageURL={iEdit} opacity={0.5} />* /}
+                      </div>
+                      <div className="ButtonItem" onClick={this.changeEditMode}>
+                        <div className="button_text_label displayFlex">
+                          {manager ? "관리모드 종료" : "그룹 관리하기"}
+                        </div>
+                        {/* <NormalIcon imageURL={iINOUT} opacity={0.5} /> * /}
+                        {this.props.waitingDesign.length > 0 ||
+                        this.props.waitingGroup.length > 0 ? (
+                          manager ? null : (
+                            <NewAlarmLogo>
+                              <div className="circle" />
+                            </NewAlarmLogo>
+                          )
+                        ) : null}
+                      </div>
+                    </React.Fragment>
+                     */}
+              </div>
+            </div>
+          </InfoWrapper>
+          <div className="buttonContent">
+            {GroupDetail.uid ? (
+              <GroupNoticeContainer
+                loading={this.props.loading}
+                id={GroupDetail.uid}
+              />
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
+      </Wrapper>
+    );
+  }
+}
 
 export default GroupInfo_mobile;
-
-
 
 // <GroupSummary isEditor={isEditor}>
 // <img src={(GroupDetail && GroupDetail.img && GroupDetail.img.l_img) || noimg} className="thumbnail" />
@@ -448,10 +575,6 @@ export default GroupInfo_mobile;
 // </ChatWrapper>
 // : null}
 
-
-
-
-
 // const NormalIcon = styled.div`
 //     width: 22px;
 //     height: 22px;
@@ -543,9 +666,9 @@ export default GroupInfo_mobile;
 //         padding:16px;
 //     }
 //     .ellipsis{
-//         white-space: nowrap; 
-//         overflow: hidden; 
-//         text-overflow: ellipsis; 
+//         white-space: nowrap;
+//         overflow: hidden;
+//         text-overflow: ellipsis;
 //       }
 //     .header_box{
 //         width:100%;
@@ -686,7 +809,7 @@ export default GroupInfo_mobile;
 //     .marginRight{margin-right:17px;}
 //     .bg_black{background-color:black;}
 //     .bg_green{background-color:#1E9B79;}
-    
+
 //     // responsive
 //     @media only screen and (min-width: 500px) and (max-width: 1300px) {
 //         .thumbnail {
