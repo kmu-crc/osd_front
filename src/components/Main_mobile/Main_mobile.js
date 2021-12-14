@@ -189,7 +189,7 @@ export default class Main_mobile extends Component {
                   {...{
                     width: 300,
                     height: 130,
-                    top: height - 490,
+                    top: height - 540,
                     left: 50,
                   }}
                 >

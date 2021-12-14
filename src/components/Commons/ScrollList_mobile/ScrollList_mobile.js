@@ -20,6 +20,7 @@ position: relative;
 padding-left:${props=>props.marginRight};
 margin-left: auto;
 margin-right: auto;
+margin-bottom:100px;
 // @media only screen and (min-width : ${osdcss.newresolutions.mini}px) and (max-width : ${osdcss.newresolutions.small}px) {
 //   width: ${props => props.type == "design" ? "720px" : props.type == "group" ? "800px" : props.type == "designer" ? "600px" : null};
 // }

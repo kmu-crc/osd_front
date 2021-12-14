@@ -92,7 +92,7 @@ class GroupListContainer_mobile extends Component {
           <div className="header_box">
             <div style={{width:"67px"}}/>
             <div className="category_name">그룹({count})</div>
-            <OrderOption_mobile type="group" order_clicked={this.handleChangeOrderOps} selected={this_order} />
+            <OrderOption_mobile type="group" order_clicked={this.changeOrderOps} selected={this_order} />
           </div>
           <div className="scroll_wrapper">
             {this.props.status === "INIT"

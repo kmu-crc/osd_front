@@ -86,6 +86,10 @@ const OrderDrop = styled.div`
 `
 
 class OrderOption_mobile extends Component {
+    constructor(props) {
+        super(props);
+        this.handleClicked=this.handleClicked.bind(this);
+      }
     state = {
         drop:false,
         select:this.props.selected.keyword=="like"?0:1,
@@ -95,7 +99,8 @@ class OrderOption_mobile extends Component {
     }
 
     handleClicked = (order,index) => {
-        console.log(order,index);
+        // console.log(this.props);
+        // console.log(order,index);
         this.setState({select:order.keyword=="like"?0:1,drop:false});
         this.props.order_clicked(order);
     }
@@ -112,7 +117,7 @@ class OrderOption_mobile extends Component {
                     <div className="dropWrap">
                     {options.map((opt,index) => {
                             return (
-                                <div className="item" onClick={() => this.handleClicked(opt,index)}>
+                                <div className="item" key={index} onClick={() => this.handleClicked(opt,index)}>
                                     {opt.text}
                                 </div>
                             )

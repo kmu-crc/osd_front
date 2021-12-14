@@ -207,21 +207,22 @@ class Header extends Component {
                             </MenuElement>
                         </a>
                         : window.location.href.toLowerCase().indexOf("aboutintro") != -1 ?
-                            <a onClick={() => window.location.href = "/createdesigner"}>
+                            
                                 <MenuElement className="create-designer-button">
+                                    <a onClick={() => window.location.href = "/createdesigner"}>
                                     <p className="text">
                                         {CreateDesigner}
                                     </p>
+                                    </a>
                                 </MenuElement>
-                            </a>
                             :
-                            <a onClick={() => window.location.href = "/createdesign"}>
                                 <MenuElement className="create-design-button">
+                                    <a onClick={() => window.location.href = "/createdesign"}>
                                     <p className="text">
                                         {CreateDesign}
                                     </p>
+                                    </a>
                                 </MenuElement>
-                            </a>
 
             }
             {/* {this.props.userInfo
