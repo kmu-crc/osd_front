@@ -1716,13 +1716,6 @@ class CardSourceDetail extends Component {
       </ButtonContainer> 
       */}
 
-          {/*
-  text view edit
-  file view edit
-  image view edit
-  video view edit 
-  problem view edit
-*/}
           {content.length > 0 &&
             content.map((item, index) => {
               const itemEdit =
@@ -2268,18 +2261,21 @@ class CardSourceDetail extends Component {
                   ) : null}
                 </Wrapper>
               );
-            })}
-          {this.props.edit ? (
-            <AddContent
-              is_problem={
-                this.props.is_problem ||
-                (this.props.DesignDetail && this.props.DesignDetail.is_problem)
-              }
-              getValue={this.onAddValue}
-              order={content.length || 0}
-              open={(data) => this.setState({ addProblem: data })}
-            />
-          ) : null}
+            })
+          }
+          {
+            this.props.edit ? (
+              <AddContent
+                is_problem={
+                  this.props.is_problem ||
+                  (this.props.DesignDetail && this.props.DesignDetail.is_problem)
+                }
+                getValue={this.onAddValue}
+                order={content.length || 0}
+                open={(data) => this.setState({ addProblem: data })}
+              />
+            ) : null
+          }
 
           <ButtonContainer>
             {this.props.edit && this.props.uid && (
@@ -2303,8 +2299,8 @@ class CardSourceDetail extends Component {
               </EditorBottonWrapper>
             )}
           </ButtonContainer>
-        </Worker>
-      </div>
+        </Worker >
+      </div >
     );
   }
 }

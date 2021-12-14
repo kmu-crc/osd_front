@@ -603,7 +603,7 @@ class GridEditorMobile extends Component {
                   </div>
                 </div>
               ) : null}
-            </div>
+</div>
           ))}
 
           {editor ? (

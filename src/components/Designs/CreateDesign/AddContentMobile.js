@@ -178,7 +178,7 @@ export default class AddContent extends React.Component {
             {this.props.is_problem === 1 && (
               <NewController
                 className="txt"
-                onClick={() => {this.addContent("PROBLEM");this.props.open(true);}}
+                onClick={() => { this.addContent("PROBLEM"); this.props.open(true); }}
                 width="max-content"
                 minWidth="134px"
                 height="29px"

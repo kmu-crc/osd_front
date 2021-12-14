@@ -22,6 +22,7 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 
 import GridEditorMobile from "components/Designs/GridEditor/GridEditorMobile";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
+import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer"
 
 const Wrapper = styled.div`
   margin-top: 2px;
@@ -749,7 +750,7 @@ export default class ModifyDesignMobile extends React.Component {
 
   StepMenu3Clicked = () =>
     (this.state.additional && this.state.step === STEP_BASIC) ||
-    this.state.step === STEP_ADDITIONAL
+      this.state.step === STEP_ADDITIONAL
       ? this.setState({ step: STEP_CONTENT })
       : alert(strErrorDoNotNextStep);
 
@@ -1335,7 +1336,7 @@ export default class ModifyDesignMobile extends React.Component {
               <ContentEditorForm>
                 {this.state.grid ? (
                   this.props.DesignDetail &&
-                  this.props.DesignDetail.is_project ? (
+                    this.props.DesignDetail.is_project ? (
                     <GridEditorMobile
                       editor={true}
                       isMyDesign={true}
@@ -1386,8 +1387,8 @@ export default class ModifyDesignMobile extends React.Component {
                     basic
                       ? this.goStep1()
                       : thumbnailURL === thumbnailSVG
-                      ? alert("섬네일을 선택해주세요.")
-                      : alert("디자인제목을 입력해주세요.")
+                        ? alert("섬네일을 선택해주세요.")
+                        : alert("디자인제목을 입력해주세요.")
                   }
                   className={`${basic ? "" : "impossible"} next`}
                 >
@@ -1398,10 +1399,10 @@ export default class ModifyDesignMobile extends React.Component {
                     basic && additional
                       ? this.update()
                       : basic && !additional
-                      ? alert("추가정보 단계를 완료해주세요.")
-                      : !basic && additional
-                      ? alert("기본단계를 완료해주세요.")
-                      : alert(strErrorDoNotNextStep)
+                        ? alert("추가정보 단계를 완료해주세요.")
+                        : !basic && additional
+                          ? alert("기본단계를 완료해주세요.")
+                          : alert(strErrorDoNotNextStep)
                   }
                   className={`${basic && additional ? "" : "impossible"} next`}
                 >
