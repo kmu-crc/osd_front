@@ -1235,7 +1235,7 @@ export default
                       })}
                       <AddContent getValue={this.onAddValue} order={contents.length} />
                     </React.Fragment>)
-                    : <AddContent getValue={this.onAddValue} order={0} change={() => this.setState({ type: "grid", is_project: 1 })} />}
+                    : <AddContent getValue={this.onAddValue} uid="new" order={0} change={() => this.setState({ type: "grid", is_project: 1 })} />}
                 </React.Fragment>
                 : null}
 

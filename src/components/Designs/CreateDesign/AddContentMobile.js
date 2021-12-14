@@ -4,6 +4,7 @@ import opendesign_style from "opendesign_style";
 import FileController from "../CardSourceDetail/FileController";
 
 export const ControllerWrap = styled.div`
+*{border: 1px dashed green;}
   width: 100%;
   position: relative;
   text-align: center;
@@ -36,7 +37,7 @@ export const ControllerWrap = styled.div`
   }
   .innerBox {
     display: flex;
-    height: 45px;
+    // height: 45px;
     align-items: center;
     justify-content: center;
     list-style: none;
@@ -44,7 +45,7 @@ export const ControllerWrap = styled.div`
 `;
 const NewController = styled.li`
   width: max-content;
-  height: 29px;
+  // height: 29px;
   color: red;
   margin-left: 15px;
 
@@ -58,7 +59,7 @@ const NewController = styled.li`
   &.txt {
     border-bottom: 1.5px solid red;
   }
-  line-height: 29px;
+  // line-height: 29px;
   padding-bottom: 1.5px;
   font-size: 15px;
   font-weight: 500;
@@ -118,81 +119,77 @@ export default class AddContent extends React.Component {
 
   render() {
 
-    return (
-      <React.Fragment>
-        {this.props.order === 0 && this.props.uid != "new" ? (
-          <React.Fragment>
-            <Caption>프로젝트형으로 시작하기</Caption>
-            <ControllerWrap>
-              <div className="innerBox">
-                <NewController
-                  className="txt complecated"
-                  width="max-content"
-                  height="29px"
-                >
-                  <div onClick={this.changeType} className="txt">
-                    템플릿 선택
-                  </div>
-                </NewController>
-              </div>
-            </ControllerWrap>
-          </React.Fragment>
-        ) : null}
-
-        {this.props.order === 0 && this.props.uid != "new" ? (
-          <Caption>블로그형형으로 시작하기</Caption>
-        ) : null}
-
-        <ControllerWrap>
-          <div className="innerBox">
-            <NewController
-              className="first txt"
-              onClick={() => this.addContent("FILE")}
-              width="max-content"
-              minWidth="116px"
-              height="29px"
-            >
-              파일 등록
-            </NewController>
-
-            <NewController
-              className="txt"
-              onClick={() => this.addContent("TEXT")}
-              width="max-content"
-              minWidth="134px"
-              height="29px"
-            >
-              텍스트 등록
-            </NewController>
-
-            <NewController
-              className="txt"
-              onClick={() => this.addContent("LINK")}
-              width="max-content"
-              minWidth="134px"
-              height="29px"
-            >
-              하이퍼링크 등록
-            </NewController>
-
-            {this.props.is_problem === 1 && (
+    return (<React.Fragment>
+      {this.props.uid === "new"
+        ? <React.Fragment>
+          <Caption>프로젝트형으로 시작하기</Caption>
+          <ControllerWrap>
+            <div className="innerBox">
               <NewController
-                className="txt"
-                onClick={() => { this.addContent("PROBLEM"); this.props.open(true); }}
+                className="txt complecated"
                 width="max-content"
-                minWidth="134px"
                 height="29px"
               >
-                문제 등록하기
+                <div onClick={this.changeType} className="txt">
+                  템플릿 선택
+                </div>
               </NewController>
-            )}
-          </div>
+            </div>
+          </ControllerWrap>
 
-          {this.state.type === "FILE" && (
-            <FileController item={this.state} getValue={this.returnData} />
+          <Caption>블로그형형으로 시작하기</Caption>
+        </React.Fragment> : null}
+
+      <ControllerWrap>
+        <div className="innerBox">
+          <NewController
+            className="first txt"
+            onClick={() => this.addContent("FILE")}
+            width="max-content"
+            minWidth="116px"
+            height="29px"
+          >
+            파일<br /> 등록
+          </NewController>
+
+          <NewController
+            className="txt"
+            onClick={() => this.addContent("TEXT")}
+            width="max-content"
+            minWidth="134px"
+            height="29px"
+          >
+            텍스트<br /> 등록
+          </NewController>
+
+          <NewController
+            className="txt"
+            onClick={() => this.addContent("LINK")}
+            width="max-content"
+            minWidth="134px"
+            height="29px"
+          >
+            하이퍼링크<br /> 등록
+          </NewController>
+
+          {this.props.is_problem === 1 && (
+            <NewController
+              className="txt"
+              onClick={() => { this.addContent("PROBLEM"); this.props.open(true); }}
+              width="max-content"
+              minWidth="134px"
+              height="29px"
+            >
+              문제<br /> 등록하기
+            </NewController>
           )}
-        </ControllerWrap>
-      </React.Fragment>
+        </div>
+
+        {this.state.type === "FILE" && (
+          <FileController item={this.state} getValue={this.returnData} />
+        )}
+      </ControllerWrap>
+    </React.Fragment>
     );
   }
 }

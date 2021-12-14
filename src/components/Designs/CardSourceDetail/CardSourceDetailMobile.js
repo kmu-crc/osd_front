@@ -1630,7 +1630,7 @@ export class CardSourceDetailMobile extends Component {
                       </div>
                       : (item.type === "FILE" && item.extension === "pdf") ?
                         <React.Fragment>
-                          <div style={{ display: "flex", flexDirection: "flex-end",marginBottom:"10px" }}>
+                          <div style={{ display: "flex", flexDirection: "flex-end", marginBottom: "10px" }}>
                             <div style={{ cursor: "pointer", fontSize: "1.25rem", color: "#707070", marginLeft: "auto", border: "1px solid transparent", width: "max-content" }}>
                               <a onClick={() => window.open(`/pdfview/${Encrypt(item.content, "opendesign")}`, "_blank", null)}>
                                 <i className="file pdf outline icon large" />새탭으로열기</a>
@@ -1681,7 +1681,6 @@ export class CardSourceDetailMobile extends Component {
               : null}
 
             {/* problem controller */}
-            {item.type, itemEdit ? "itemEdit" : ""}
             {(item.type === "PROBLEM")
               ? itemEdit && !this.state.addProblem
                 ? <ViewContent>
@@ -1704,7 +1703,7 @@ export class CardSourceDetailMobile extends Component {
                         <div className="board">
                           {item.content &&
                             <React.Fragment>
-                              <div style={{ display: "flex", flexDirection: "flex-end",marginBottom:"10px" }}>
+                              <div style={{ display: "flex", flexDirection: "flex-end", marginBottom: "10px" }}>
                                 <div style={{ cursor: "pointer", fontSize: "1.25rem", color: "#707070", marginLeft: "auto", border: "1px solid transparent", width: "max-content" }}>
                                   <a onClick={() => window.open(window.open(`/pdfview/${Encrypt(JSON.parse(item.content).contents, "opendesign")}`, "_blank", null))}>
                                     <i className="file pdf outline icon large" />새탭으로열기</a>
@@ -1790,6 +1789,7 @@ export class CardSourceDetailMobile extends Component {
         {/*  */}
         {this.props.edit
           ? <AddContent
+            is_project={this.props.DesignDetail && this.props.DesignDetail.is_project}
             uid={this.props.uid}
             is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
             getValue={this.onAddValue}

@@ -114,23 +114,6 @@ const Wrapper = styled.div`
     width: 1px;
   }
 `;
-const ArrowBelow = (
-  <svg
-    id="구성_요소_34_2"
-    data-name="구성 요소 34 – 2"
-    xmlns="http://www.w3.org/2000/svg"
-    width="10.85"
-    height="9.435"
-    viewBox="0 0 10.85 9.435"
-  >
-    <path
-      id="다각형_5"
-      data-name="다각형 5"
-      d="M5.425,0,10.85,9.435H0Z"
-      transform="translate(10.85 9.435) rotate(180)"
-    />
-  </svg>
-);
 
 class GridEditorMobile extends Component {
   constructor(props) {
@@ -445,7 +428,8 @@ class GridEditorMobile extends Component {
               <div
                 style={{
                   height: "9px",
-                  margin: "auto",
+                  marginLeft: "auto",
+                  marginRight: "auto",
                   width: "max-content",
                   marginBottom: "7px",
                 }}
