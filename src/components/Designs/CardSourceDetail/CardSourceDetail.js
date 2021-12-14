@@ -1087,6 +1087,7 @@ class CardSourceDetail extends Component {
         origin: this.props.origin,
         edit: false,
         loading: false,
+        selectOrder: -1,
       });
       this.props.handleCancel && this.props.handleCancel();
     } else {
