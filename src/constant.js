@@ -9,6 +9,7 @@ export const SLIDE_MENU_WIDTH = 160;
 export const LoginText = "로그인";
 export const CreateDesign = "디자인 등록";
 export const CreateDesigner = "디자이너 등록";
+export const CreateGroup = "그룹 등록";
 export const DeleteDesign = "디자인 삭제";
 export const strButtonNext = "다음";
 export const strButtonPrev = "뒤로";

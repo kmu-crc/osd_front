@@ -32,7 +32,8 @@ const Wrapper = styled.div`
   .scroll_wrapper{
     width:100%;
   }
-`
+`;
+
 class GroupListContainer_mobile extends Component {
 
   constructor(props) {
@@ -42,7 +43,7 @@ class GroupListContainer_mobile extends Component {
       reload: false,
       search: null,
       count: 0,
-      this_order: this.props.sort=="like"?{text:"인기순",keyword:"like"}:{ text: "최신순", keyword: "update" }
+      this_order: this.props.sort == "like" ? { text: "인기순", keyword: "like" } : { text: "최신순", keyword: "update" }
     }
     this.handleResize = this.handleResize.bind(this);
   }
@@ -71,8 +72,8 @@ class GroupListContainer_mobile extends Component {
     await this.setState({ this_order: order });
     this.handleReload();
     this.getList(0);
-    const orderkeyword = order.keyword==null?"update":`${order.keyword}`;
-    window.location.href = "/group/"+orderkeyword;
+    const orderkeyword = order.keyword == null ? "update" : `${order.keyword}`;
+    window.location.href = "/group/" + orderkeyword;
   }
   getList = async (page) => {
     const keyword = this.state.search
@@ -84,18 +85,17 @@ class GroupListContainer_mobile extends Component {
 
   render() {
     const { this_order, count, reload } = this.state;
-    const { dataList, dataListAdded } = this.props
-    return (
-      <React.Fragment>
-        <Wrapper>
-          <div className="contentBox">
-          <div className="header_box">
-            <div style={{width:"67px"}}/>
-            <div className="category_name">그룹({count})</div>
-            <OrderOption_mobile type="group" order_clicked={this.changeOrderOps} selected={this_order} />
-          </div>
-          <div className="scroll_wrapper">
-            {this.props.status === "INIT"
+    const { dataList, dataListAdded } = this.props;
+
+    return (<Wrapper>
+      <div className="contentBox">
+        <div className="header_box">
+          <div style={{ width: "67px" }} />
+          <div className="category_name">그룹({count})</div>
+          <OrderOption_mobile type="group" order_clicked={this.handleChangeOrderOps} selected={this_order} />
+        </div>
+        <div className="scroll_wrapper">
+          {this.props.status === "INIT"
             ? <Loading />
             : <ScrollList_mobile
               {...osdstyle.group_margin}
@@ -105,92 +105,23 @@ class GroupListContainer_mobile extends Component {
               dataList={dataList}
               dataListAdded={dataListAdded}
               getListRequest={this.getList} />}
-          </div>
-          </div>
-        </Wrapper>
-      </React.Fragment>
-    )
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    dataList: state.GroupList.status.GroupList,
-    dataListAdded: state.GroupList.status.GroupListAdded,
-    valid: state.Authentication.status.valid,
-    userInfo: state.Authentication.status.userInfo,
-    Count: state.GroupList.status.GroupCount
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    GetGroupListRequest(page, sort, keyword) {
-      return dispatch(GetGroupListRequest(page, sort, keyword))
-    },
-    GetGroupTotalCountRequest: () => {
-      return dispatch(GetGroupTotalCountRequest())
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(GroupListContainer_mobile)
-
-{/* <Wrapper>
-<div className="category_wrapper">
-    <Category/>
-</div>
-<div className="content">
-    <div className="header_box">
-        <div className="category_title">그룹({count})</div>
-        <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
-    </div>
-    <div className="scroll_wrapper">
-        {this.props.status === "INIT"
-        ? <Loading />
-        : <ScrollList
-          {...osdstyle.group_margin}
-          type="group"
-          reload={reload}
-          handleReload={this.handleReload}
-          dataList={dataList}
-          dataListAdded={dataListAdded}
-          getListRequest={this.getList} />}
+        </div>
       </div>
-  </div>
-</Wrapper> */}
+    </Wrapper>)
+  }
+}
 
-// const Wrapper = styled.div`
-//   .category_wrapper{
-//     padding-left:41px;
-//     padding-top:19px;
-//   }
-//   .content{
-//     padding-left:41px;
-//     width:100%;
-//     min-width:1000px;
-//   }
-//   .scroll_wrapper{
-//     margin-top:21px;
-//     margin-bottom:100px;
-//     min-width:1000px;
-//   }
-//   .header_box{
-//     width:100%;
-//     display:flex;
-//     justify-content:space-between;
-//     align-items:center;
-//     margin-top:13px;
-//     padding-right:39px;
-//     .category_title{
-//       min-width:200px;
-//       height:32px;
-//       font-family:Spoqa Han Sans Neo;
-//       font-weight:Medium;
-//       font-size:24px;
-//       color:#1262AB;
-//       display:flex;
-//       align-items:center;
-//     }
-//   }
-// `
+const mapStateToProps = (state) => ({
+  dataList: state.GroupList.status.GroupList,
+  dataListAdded: state.GroupList.status.GroupListAdded,
+  valid: state.Authentication.status.valid,
+  userInfo: state.Authentication.status.userInfo,
+  Count: state.GroupList.status.GroupCount
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  GetGroupListRequest: (page, sort, keyword) => dispatch(GetGroupListRequest(page, sort, keyword)),
+  GetGroupTotalCountRequest: () => dispatch(GetGroupTotalCountRequest()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroupListContainer_mobile);

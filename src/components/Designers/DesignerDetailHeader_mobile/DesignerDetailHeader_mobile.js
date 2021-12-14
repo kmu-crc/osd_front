@@ -171,7 +171,8 @@ class DesignerDetailHeader_mobile extends Component {
             return;
         }
         let href = window.location.href.substring(0, window.location.href.search("designerDetail"))
-        window.location.href = href + 'message/' + this.props.DesignerDetail.uid + '/' + this.props.DesignerDetail.nick_name;
+        // window.location.href = href + 'message/' + this.props.DesignerDetail.uid + '/' + this.props.DesignerDetail.nick_name;
+        window.location.href = `/message/${this.props.DesignerDetail.uid}/${this.props.DesignerDetail.nick_name}`;
     }
     render() {
         const { DesignerDetail, Count, like } = this.props;

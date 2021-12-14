@@ -34,17 +34,17 @@ class MyGroupList extends Component {
     joinList: []
   }
 
-  componentWillMount(){
-    this.props.GetMyGroupListRequest(this.props.token, this.props.match.params.id);
+  componentWillMount() {
+    // this.props.GetMyGroupListRequest(this.props.token, this.props.match.params.id);
   }
 
   handleSubmit = (data) => {
     const list = this.state.joinList;
     if (list.length > 0) {
-      this.props.GroupJoinGroupRequest({"join_group": this.state.joinList}, this.props.token, this.props.match.params.id)
-      .then(data => {
-        this.props.handleCloseModal();
-      });
+      this.props.GroupJoinGroupRequest({ "join_group": this.state.joinList }, this.props.token, this.props.match.params.id)
+        .then(data => {
+          this.props.handleCloseModal();
+        });
     } else {
       return;
     }
@@ -58,29 +58,54 @@ class MyGroupList extends Component {
 
   render() {
     console.log(this.props);
-    return(
-      <ValidateForm ignore={true} onSubmit={this.handleSubmit}>
+    console.log(this.props.waitingGroup.length > 0 && this.props.waitingGroup.map(g => g.uid));
+    return (<ValidateForm ignore={true} onSubmit={this.handleSubmit}>
       <Field>
-        <label style={{fontSize:"20px",fontFamily:"Spoqa Han Sans Neo",marginBottom:"15px"}}>내 그룹 리스트</label>
-        <FormField  name="join_group" options={this.props.groupList} RenderComponent={FormMultiSelect} getValue={this.getValue}/>
-        <label style={{height:"30px",marginTop:"20px",display:"flex",alignItems:"center",fontWeight:"300",fontSize:"15px"}}/>
-      </Field>
-      <div style={{width:"100%",display:"flex",justifyContent:"center"}}>
-      <Btn style={{backgroundColor:"#1E9B79",marginRight:"64px"}} type="submit" onClick={this.handleSubmit}>가입 신청</Btn>
-      <Btn style={{backgroundColor:"black"}} type="button" onClick={this.props.handleCloseModal}>취소</Btn>
-      </div>
-    </ValidateForm>
+        <label style={{
+          fontSize: "20px",
+          fontFamily: "Spoqa Han Sans Neo",
+          marginBottom: "15px"
+        }}>내 그룹 리스트</label>
+        <FormField
+          name="join_group"
+          options={
+            this.props.waitingGroup.length != 0
+              ? this.props.groupList.filter(group =>
+                !this.props.waitingGroup.map(wait => wait.uid).includes(group.value))
+              : this.props.groupList}
+          RenderComponent={FormMultiSelect}
+          getValue={this.getValue} />
 
-      // <ValidateForm onSubmit={this.handleSubmit}>
-      //   <div style={{fontSize:"17px",paddingLeft:"20px"}}>
-      //   <FormField name="join_group" label="내 그룹 리스트" options={this.props.groupList} RenderComponent={FormMultiSelect} getValue={this.getValue}/>
-      //   </div>
-      //   <div style={{height:"70px",marginBottom:"10px"}}>
-      //   <Btn type="button" style={{bottom:"0px",left:"170px"}} onClick={this.props.handleCloseModal}>취소</Btn>
-      //   <Btn type="submit" style={{bottom:"0px",left:"20px",background:"#FF0000"}} >가입 신청</Btn>
-      //   </div>
-      // </ValidateForm>
-    );
+        <label style={{
+          height: "30px",
+          marginTop: "20px",
+          display: "flex",
+          alignItems: "center",
+          fontWeight: "300",
+          fontSize: "15px"
+        }} />
+      </Field>
+
+      <div style={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "center"
+      }}>
+        <Btn style={{
+          backgroundColor: "#1E9B79",
+          marginRight: "64px"
+        }}
+          type="submit"
+          onClick={this.handleSubmit}>
+          가입 신청</Btn>
+        <Btn style={{
+          backgroundColor: "black"
+        }}
+          type="button"
+          onClick={this.props.handleCloseModal}>
+          취소</Btn>
+      </div>
+    </ValidateForm>);
   }
 }
 

@@ -5,10 +5,11 @@ import MenuContext from "Global/Context/GlobalContext"
 import SearchForm from "components/Header/SearchForm"
 import Socket from "modules/Socket"
 
-import { LoginText, CreateDesign, DeleteDesign, CreateDesigner } from "constant";
+import { LoginText, CreateDesign, DeleteDesign, CreateDesigner, CreateGroup } from "constant";
 import mobilelogored from "resources/images/mobile_logo.svg";
 import mobilelogoblue from "resources/images/mobile_header_log_blue.svg";
 // import mobilesearch from "resources/images/mobile_search_icon.svg";
+import { isOpen } from "constant";
 
 const MobileHeaderMenu = styled.ul`
     z-index: 8888;
@@ -78,6 +79,9 @@ const MenuElement = styled.li`
             font-size: 10px;
         }
     }
+    &.create-group-button {
+        background-color: #1E9B79;
+    }
     &.create-designer-button { 
         margin: 9px 8px 9px 0px;
         width: 67px;
@@ -100,7 +104,7 @@ const MenuElement = styled.li`
 `;
 
 
-const isOpen = ws => ws.readyState === ws.OPEN;
+// const isOpen = ws => ws.readyState === ws.OPEN;
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -148,6 +152,10 @@ class Header extends Component {
 
     render() {
         // console.log(window.location.href.toLowerCase(), window.location.href.toLowerCase().indexOf("/aboutIntro"));
+
+        const pathname = window.location.pathname.toLowerCase();
+        // href.toLowerCase();
+        console.log({ pathname });
 
         return (<MobileHeaderMenu>
             {/* 로그 */}
@@ -198,7 +206,7 @@ class Header extends Component {
                         </MenuElement>
                     </a>
                     :
-                    window.location.href.toLowerCase().indexOf("createdesign") != -1 ?
+                    pathname.indexOf("createdesign") != -1 ?
                         <a onClick={() => alert("delete design")}>
                             <MenuElement className="create-design-button">
                                 <p className="text">
@@ -207,7 +215,6 @@ class Header extends Component {
                             </MenuElement>
                         </a>
                         : window.location.href.toLowerCase().indexOf("aboutintro") != -1 ?
-                            
                                 <MenuElement className="create-designer-button">
                                     <a onClick={() => window.location.href = "/createdesigner"}>
                                     <p className="text">
@@ -215,14 +222,22 @@ class Header extends Component {
                                     </p>
                                     </a>
                                 </MenuElement>
-                            :
-                                <MenuElement className="create-design-button">
-                                    <a onClick={() => window.location.href = "/createdesign"}>
-                                    <p className="text">
-                                        {CreateDesign}
-                                    </p>
-                                    </a>
-                                </MenuElement>
+                            </a>
+                            : (pathname === ("/group") || pathname === ("/group/"))
+                                ? <a onClick={() => window.location.href = "/createdesign"}>
+                                    <MenuElement className="create-design-button create-group-button ">
+                                        <p className="text">
+                                            {CreateGroup}
+                                        </p>
+                                    </MenuElement>
+                                </a>
+                                : <a onClick={() => window.location.href = "/createdesign"}>
+                                    <MenuElement className="create-design-button">
+                                        <p className="text">
+                                            {CreateDesign}
+                                        </p>
+                                    </MenuElement>
+                                </a>
 
             }
             {/* {this.props.userInfo

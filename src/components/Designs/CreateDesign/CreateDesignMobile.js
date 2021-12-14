@@ -892,8 +892,7 @@ export default
     this.props.CreateDesignRequest(data, this.props.token)
       .then(async (res) => {
         if (res.success) {
-          // designId = res.design_id;
-          window.location.href = geturl() + `/designDetail/` + res.design_id; // designId;
+          window.location.href = `/designDetail/${res.design_id}`;
         }
       })
       .catch(err => alert(err + "와 같은 이유로 다음 단계로 진행할 수 없습니다."));

@@ -29,7 +29,7 @@ const DesignCard = styled.div`
     min-height:100px;
     border:1px solid #7A7A7A;
     background-color:white;
-    background-image:url(${props=>props.url});
+    background-image:url(${props => props.url});
     background-position:center;
     background-size:cover;
     border-radius:12px;
@@ -69,7 +69,8 @@ const DesignEmpty = {
 
 class Design_mobile extends Component {
   gotoDetailPage = () => {
-    window.location.href = geturl() + "/designDetail/" + this.props.data.uid
+    // window.location.href = geturl() + "/designDetail/" + this.props.data.uid
+    window.location.href = `/designDetail/${this.props.data.uid}`;
   }
   state = { data: this.props.data || DesignEmpty }
   shouldComponentUpdate(nextProps) {
@@ -85,29 +86,29 @@ class Design_mobile extends Component {
     return (
       <React.Fragment>
         <DesignCard onClick={this.gotoDetailPage} url={(thumbnail === null ? noimg : thumbnail.l_img === null ? noimg : thumbnail.l_img)}>
-          <div className="thumbnail"/>
+          <div className="thumbnail" />
           <div className="info">
-              <div className="title"><TextFormat tip width="100%" txt={data.title} single /></div>
-              <div className="count">
-                  <div className="wrap">
-                    <Icon style={{ fontSize: "10px", color:"white" }}>visibility</Icon>
-                    {NumberFormat(data.view_count)}                  
-                  </div>
-                  <div className="wrap">
-                    <Icon style={{ fontSize: "10px", color:"white" }}>favorite_border</Icon>
-                    {NumberFormat(data.like_count)}
-                  </div>
-                  <div className="wrap">
-                    <Icon style={{ fontSize: "10px", color:"white" }}>share</Icon>
-                    {NumberFormat(data.children_count) || 0}
-                  </div>
-                  {/* <IconView width="6px" height="6px" fill="white" />
+            <div className="title"><TextFormat tip width="100%" txt={data.title} single /></div>
+            <div className="count">
+              <div className="wrap">
+                <Icon style={{ fontSize: "10px", color: "white" }}>visibility</Icon>
+                {NumberFormat(data.view_count)}
+              </div>
+              <div className="wrap">
+                <Icon style={{ fontSize: "10px", color: "white" }}>favorite_border</Icon>
+                {NumberFormat(data.like_count)}
+              </div>
+              <div className="wrap">
+                <Icon style={{ fontSize: "10px", color: "white" }}>share</Icon>
+                {NumberFormat(data.children_count) || 0}
+              </div>
+              {/* <IconView width="6px" height="6px" fill="white" />
                   <div className="text">{NumberFormat(data.view_count)}</div>
                   <img className="icon" alt="icon" src={iThumbUp} />
                   <div className="text">{NumberFormat(data.like_count)}</div>
                   <img className="icon" alt="icon" src={iForked} />
                   <div className="text">{NumberFormat(data.children_count) || 0}</div> */}
-              </div>
+            </div>
           </div>
         </DesignCard>
       </React.Fragment>
