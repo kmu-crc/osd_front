@@ -222,7 +222,7 @@ class Header extends Component {
             </a>
           </MenuElement>
         ) : pathname === "/group" || pathname === "/group/" ? (
-          <a onClick={() => (window.location.href = "/createdesign")}>
+          <a onClick={() => (window.location.href = "/creategroup")}>
             <MenuElement className="create-design-button create-group-button ">
               <p className="text">{CreateGroup}</p>
             </MenuElement>

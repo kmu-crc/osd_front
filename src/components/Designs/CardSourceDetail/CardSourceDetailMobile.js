@@ -975,6 +975,9 @@ export class CardSourceDetailMobile extends Component {
         })
       );
     }
+    // alert(this.props.uid);
+    // console.log({ formData });
+    // return;
     if (this.props.uid !== "new") {
       // console.log(formData);
       if (this.props.handleSubmit) {
@@ -1194,6 +1197,8 @@ export class CardSourceDetailMobile extends Component {
 
     let __code = result && result.code && result.code.replaceAll("\n", "<br/>");
     __code = __code && __code.replaceAll("   ", "&emsp;");
+
+    console.log(this.state.addProblem);
 
     return (<div id="card-source-detail-root-node"
       style={{ padding: "5px", width: "98wh", backgroundColor: "white" }}>
@@ -1566,7 +1571,7 @@ export class CardSourceDetailMobile extends Component {
                           .replace(/font-size:48px;/g, `font-size:${3.5 * this.state.fontratio}rem;`)
                         }`
                     }}
-                    onClick={() => this.setState({ selectOrder: item.order })}
+                    onClick={() => this.props.edit && this.setState({ selectOrder: item.order })}
                   />
                 </ViewContent> : null}
 
@@ -1676,8 +1681,9 @@ export class CardSourceDetailMobile extends Component {
               : null}
 
             {/* problem controller */}
+            {item.type, itemEdit ? "itemEdit" : ""}
             {(item.type === "PROBLEM")
-              ? itemEdit
+              ? itemEdit && !this.state.addProblem
                 ? <ViewContent>
                   <div className="problemWrap">
 
