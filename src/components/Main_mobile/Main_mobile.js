@@ -117,21 +117,11 @@ export default class Main_mobile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      w: window.innerWidth < 1000 ? 1000 : window.innerWidth,
+      w: window.innerWidth,
       h: window.innerHeight,
       play: true,
       button2: { width: 952, height: 397, bottom: 150, right: 100 },
     };
-    this.handleResize = this.handleResize.bind(this);
-  }
-  componentDidMount() {
-    window.addEventListener("resize", this.handleResize, false);
-  }
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.handleResize, false);
-  }
-  handleResize = (event) => {
-    this.setState({ w: window.innerWidth < 1000 ? 1000 : window.innerWidth, h: window.innerHeight });
   }
   gostop = () => {
     if (this.slider) {
@@ -176,8 +166,8 @@ export default class Main_mobile extends Component {
                   {...{
                     width: 300,//952 * width / 1920,
                     height: 150,//397 * height / 1080,
-                    top: height - 516,//(1080 - 516) * (h / 1080),
-                    left: width - 965,//(1920 - 965) * (w / 1920),
+                    top: height / 4 - 10,//(1080 - 516) * (h / 1080),
+                    left: 10,//(1920 - 965) * (w / 1920),
                   }}
                 />
               </Banner>
@@ -190,8 +180,8 @@ export default class Main_mobile extends Component {
                   {...{
                     width: 300,
                     height: 120,
-                    top: height - 500,//(h / 1080) * (1080 - 600),
-                    left: width - 1000,// (w / 1920) * (1920 - 1000),
+                    top: height / 4,
+                    left: 10,
                   }}
                 />
               </Banner>
@@ -203,9 +193,9 @@ export default class Main_mobile extends Component {
                   src={main_banner_3_button}
                   {...{
                     width: 300,
-                    height: 130,
-                    top: height - 540,
-                    left: 50,
+                    height: 120,
+                    top: height / 4,
+                    left: 10,
                   }}
                 >
                   <div style={{
@@ -219,6 +209,7 @@ export default class Main_mobile extends Component {
                   }}>자세히 보기</div>
                 </ButtonOnImage>
               </Banner>
+
             </Slider>
           </SliderWrapper>
           <SliderBlank />
@@ -226,25 +217,25 @@ export default class Main_mobile extends Component {
 
 
           {this.props.userInfo != null
-          ? 
-          <React.Fragment>
-          <div className="hrline">
-            <div className="line" />
-          </div>
-          <MainMyDesignListContainer width={widthScroll} Head={Head} />
-          </React.Fragment>
-          
-          : null}
+            ?
+            <React.Fragment>
+              <div className="hrline">
+                <div className="line" />
+              </div>
+              <MainMyDesignListContainer width={widthScroll} Head={Head} />
+            </React.Fragment>
 
-        {this.props.userInfo != null
-          ? 
-          <React.Fragment>
-          <div className="hrline">
-            <div className="line" />
-          </div>
-          <MainMyGroupListContainer width={widthScroll} Head={Head} />
-          </React.Fragment>
-          : null}
+            : null}
+
+          {this.props.userInfo != null
+            ?
+            <React.Fragment>
+              <div className="hrline">
+                <div className="line" />
+              </div>
+              <MainMyGroupListContainer width={widthScroll} Head={Head} />
+            </React.Fragment>
+            : null}
 
           <div className="hrline">
             <div className="line" />

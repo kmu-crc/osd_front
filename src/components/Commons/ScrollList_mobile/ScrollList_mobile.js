@@ -17,10 +17,10 @@ const FlexContainer = styled.div`
 width:360px;
 padding: 0;
 position: relative;
-padding-left:${props=>props.marginRight};
+padding-left:${props => props.marginRight};
 margin-left: auto;
 margin-right: auto;
-margin-bottom:100px;
+margin-bottom: 20px;
 // @media only screen and (min-width : ${osdcss.newresolutions.mini}px) and (max-width : ${osdcss.newresolutions.small}px) {
 //   width: ${props => props.type == "design" ? "720px" : props.type == "group" ? "800px" : props.type == "designer" ? "600px" : null};
 // }
@@ -38,13 +38,13 @@ const FlexBox = styled.div`
   flex: 0 0 ${props => props.width}px;
   width: ${props => props.width}px;
   margin-bottom: ${props => props.marginBottom}px;
-  margin-left:${props=>props.marginRight/2}px;
-  margin-right: ${props => props.marginRight/2}px;
+  margin-left:${props => props.marginRight / 2}px;
+  margin-right: ${props => props.marginRight / 2}px;
   &.bottom-last {
     margin-bottom: ${props => props.marginBottomLast}px;
   }
   &.right-last {
-    // margin-right:${props=>props.marginRightLast}px;
+    // margin-right:${props => props.marginRightLast}px;
   }
   display: inline-block;
   position: relative;
@@ -93,9 +93,10 @@ const LoadingText = styled.p`
   font-family: Noto Sans KR;
   font-weight: 300;
   font-size: 24px; 
+  line-height: 24px;
   text-align: center;
   width: 100%;
-  transform: translateY(-25px);
+  // transform: translateY(-25px);
 `;
 const ScrollIcon = styled.div`
   cursor: default;
@@ -116,12 +117,10 @@ class ScrollList_mobile extends Component {
   componentDidMount() {
     !this.props.manual && window.addEventListener("scroll", this.handleScroll, true);
     this.props.manual && this.getLoadData();
-    window.addEventListener("resize", this.handleResize, false);
     this.getColumnNumber(this.props.type);
   };
   componentWillUnmount() {
     !this.props.manual && window.removeEventListener("scroll", this.handleScroll, true);
-    window.removeEventListener("resize", this.handleResize, false);
   };
   handleScroll = (e) => {
     const reach = e.target.scrollTop + e.target.clientHeight > e.target.scrollHeight - this.state.gap;
@@ -134,7 +133,8 @@ class ScrollList_mobile extends Component {
       this.props.getListRequest(this.state.page)
         .then(() => {
           this.setState({ hasMore: this.checkHasMore(dataList), loading: false });
-        }).catch((err) => {
+        })
+        .catch((err) => {
           console.error(err);
           this.setState({ loading: false, hasMore: false });
         });
@@ -147,6 +147,24 @@ class ScrollList_mobile extends Component {
     }
     return list && list.length < 10 ? false : true;
   };
+  checkEmptySpace = () => {
+    const list = document.getElementById("scroll-list");
+    const rect = list && list.getBoundingClientRect();
+    if (!list) {
+      return false;
+    }
+    if ((window.innerHeight - rect.top) > rect.height) {
+      return true;
+    }
+    return false;
+  }
+  async componentDidUpdate(props) {
+    if (props.dataList != this.props.dataList) {
+      await this.checkEmptySpace()
+        && this.checkHasMore(this.props.dataList)
+        && this.getLoadData();
+    }
+  }
   componentWillReceiveProps(nextProps) {
     if (!nextProps.dataList || !this.props.dataList) {
       this.setState({ hasMore: false });
@@ -186,9 +204,6 @@ class ScrollList_mobile extends Component {
     this.setState({ cols: cols });
   };
 
-  handleResize = () => {
-    this.getColumnNumber(this.props.type);
-  };
 
   myRef = React.createRef();
 
@@ -196,44 +211,48 @@ class ScrollList_mobile extends Component {
     const { type, manual, handleAccept, handleReject, height, width, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded, rejectText } = this.props;
     const { hasMore, loading, cols } = this.state;
     console.log(this.props);
-    return (dataListAdded && dataListAdded.length > 0 ?
-      <FlexContainer
-        cols={cols}
-        type={type}
-        ref={this.myRef}
-        onLoad={() => {
-          const { loading, page } = this.state;
-          let footer = document.getElementById("footer-div");
-          footer = footer.getBoundingClientRect();
-          const box = this.myRef.current.getBoundingClientRect();
-          if (loading == false && page === 0 && this.myRef && footer.y > box.y + box.height) {
-            this.getLoadData();
-          }
-        }} >
-        {dataListAdded.map((item, i) => {
-          // const last = (((i + 1) % cols === 0 && i !== 0) || (cols === 1 && i === 0)) ? "right-last" : "";
-          // console.log(i,i+1,(i+1)%cols,cols);
-          const last =  (i+1)%cols == 0?"right-last":"";
-          const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";
-          return (
-          
-          <FlexBox width={width} height={height} marginRight={marginRight} marginBottom={marginBottom}
-            marginRightLast={marginRightLast} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
-            {handleAccept && <AcceptBtn className="ui button black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>}
-            {handleReject && <OutBtn className="ui button black" onClick={() => handleReject(item.uid)}>{rejectText || "삭제"}</OutBtn>}
-            {type === "design" ? <><Design_mobile data={item} /></> : null}
-            {type === "design_my" ? <><Design_mobile_my data={item} /></> : null}
-            {type === "group" ? <><Group_mobile data={item} /></> : null}
-            {type === "designer" ? <><Designer_mobile data={item} /></> : null}
-          </FlexBox>
-          
-          )
-        })}
-        {loading && <LoadingText>목록을 가져오고 있습니다.</LoadingText>}
-        {!manual && hasMore && <ScrollIcon onMouseOver={this.getLoadData}>
-        </ScrollIcon>}
-        {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>}
-      </FlexContainer> : <EmptyBox>내용이 없습니다</EmptyBox>
+    return (
+      this.props.status === "INIT"
+        ? <h2>데이터를 요청중입니다.</h2>
+        : dataListAdded && dataListAdded.length > 0 ?
+          <FlexContainer
+            id="scroll-list"
+            cols={cols}
+            type={type}
+            ref={this.myRef}
+            onLoad={() => {
+              const { loading, page } = this.state;
+              let footer = document.getElementById("footer-div");
+              footer = footer.getBoundingClientRect();
+              const box = this.myRef.current.getBoundingClientRect();
+              if (loading == false && page === 0 && this.myRef && footer.y > box.y + box.height) {
+                this.getLoadData();
+              }
+            }} >
+            {dataListAdded.map((item, i) => {
+              // const last = (((i + 1) % cols === 0 && i !== 0) || (cols === 1 && i === 0)) ? "right-last" : "";
+              // console.log(i,i+1,(i+1)%cols,cols);
+              const last = (i + 1) % cols == 0 ? "right-last" : "";
+              const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";
+              return (
+
+                <FlexBox width={width} height={height} marginRight={marginRight} marginBottom={marginBottom}
+                  marginRightLast={marginRightLast} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
+                  {handleAccept && <AcceptBtn className="ui button black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>}
+                  {handleReject && <OutBtn className="ui button black" onClick={() => handleReject(item.uid)}>{rejectText || "삭제"}</OutBtn>}
+                  {type === "design" ? <><Design_mobile data={item} /></> : null}
+                  {type === "design_my" ? <><Design_mobile_my data={item} /></> : null}
+                  {type === "group" ? <><Group_mobile data={item} /></> : null}
+                  {type === "designer" ? <><Designer_mobile data={item} /></> : null}
+                </FlexBox>
+
+              )
+            })}
+            {loading && <LoadingText>목록을 가져오고 있습니다.</LoadingText>}
+            {!manual && hasMore && <ScrollIcon onMouseOver={this.getLoadData}>
+            </ScrollIcon>}
+            {manual && hasMore && <div><MoreBtn className="ui button red" onClick={this.getLoadData}>더보기</MoreBtn></div>}
+          </FlexContainer> : <EmptyBox>내용이 없습니다</EmptyBox>
     )
   }
 }

@@ -118,7 +118,7 @@ const InfoWrapper = styled.div`
 
                 border-radius:5%;
                 background-color:white;
-                background-image:url(${props=>props.url});
+                background-image:url(${props => props.url});
                 background-size:cover;
                 background-position:center;
                 box-shadow: 8px 8px 6px #00000029;
@@ -1054,67 +1054,68 @@ export default
                                         .toLocaleDateString('ko-KR').length - 1)}
                         </div>
                     </div>
-                    <div style={{width:"100%",display:"flex",justifyContent:"flex-end",color:"red"}}>
-                                        {detail.parent_design &&
-                                            <span
-                                                style={{ textAlign:"right"}}
-                                                onClick={() => this.goParentDesign(detail.parent_design)}>
-                                                원본디자인 바로가기
-                                            </span>}
-                                        {detail.parent_design&&detail.children_count["count(*)"] > 0 &&<span style={{color:"black"}}>&nbsp;|&nbsp;</span>}
-                                        {detail.children_count["count(*)"] > 0 &&
-                                            <span
-                                                style={{ textAlign:"right"}}
-                                                onClick={this.openForkList}>
-                                                파생목록(<b>{detail.children_count["count(*)"]}</b>)
-                                            </span>}
+                    <div style={{ width: "100%", display: "flex", justifyContent: "flex-end", color: "red" }}>
+                        {detail.parent_design &&
+                            <span
+                                style={{ textAlign: "right" }}
+                                onClick={() => this.goParentDesign(detail.parent_design)}>
+                                원본디자인 바로가기
+                            </span>}
+                        {detail.parent_design && detail.children_count["count(*)"] > 0 && <span style={{ color: "black" }}>&nbsp;|&nbsp;</span>}
+                        {detail.children_count["count(*)"] > 0 &&
+                            <span
+                                style={{ textAlign: "right" }}
+                                onClick={this.openForkList}>
+                                파생목록(<b>{detail.children_count["count(*)"]}</b>)
+                            </span>}
                     </div>
                 </NameBox>
                 <InfoWrapper url={thumbnail}>
                     <div className="infoBox">
                         <div className="top">
-                            <div className="thumbnail"/>
-                            <div style={{width:"100%"}}>
-                            <div className="info">
-                                {detail.explanation
-                                 ? detail.explanation.replace(/\n/g, "<br/>")
-                                 : null}
-                            </div>
-                            <div className="group_user">
-                                {`${detail.userName}`}&nbsp;
-                                {(detail.member && detail.member.length > 1)
-                                || (WaitingList && WaitingList.length > 0)
-                                ? <span>
+                            <div className="thumbnail" />
+                            <div style={{ width: "100%" }}>
+                                <div className="info">
+                                    {detail.explanation
+                                        ? detail.explanation.replace(/\n/g, "<br/>")
+                                        : null}
+                                </div>
+                                <div className="group_user"
+                                    onClick={() => this.setState({ memberList: true })}>
+                                    {`${detail.userName}`}&nbsp;
                                     {(detail.member && detail.member.length > 1)
-                                        ? `외 ${(detail.member.length - 1).toString()}명`
+                                        || (WaitingList && WaitingList.length > 0)
+                                        ? <span>
+                                            {(detail.member && detail.member.length > 1)
+                                                ? `외 ${(detail.member.length - 1).toString()}명`
+                                                : null}
+                                            {WaitingList && WaitingList.length > 0
+                                                ? <span style={{ fontSize: "10px", color: "red" }}>new!</span>
+                                                : null}
+                                        </span>
                                         : null}
-                                    {WaitingList && WaitingList.length > 0
-                                        ? <span style={{ fontSize: "10px", color: "red" }}>new!</span>
-                                        : null}
-                                </span>
-                                : null}
-                            </div>
+                                </div>
                             </div>
                         </div>
                         <div className="middle_box">
                             <div className="category_name">
                                 {`${detail.categoryName}`}
                             </div>
-                            <div style={{ display: "flex", alignItems: "center",marginTop:"10px" }}>
-                                        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-                                            <img className="ssl" src={CCL2} />
-                                            <img className="ssl" src={CCL3} />
-                                            {detail && detail.is_modify == false
-                                                ? <img className="ssl" src={CCL4} /> : null}
-                                            {detail && detail.is_commercial == false
-                                                ? <img className="ssl" src={CCL5} /> : null}
-                                        </a>
+                            <div style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
+                                <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                                    <img className="ssl" src={CCL2} />
+                                    <img className="ssl" src={CCL3} />
+                                    {detail && detail.is_modify == false
+                                        ? <img className="ssl" src={CCL4} /> : null}
+                                    {detail && detail.is_commercial == false
+                                        ? <img className="ssl" src={CCL5} /> : null}
+                                </a>
                             </div>
                         </div>
 
                         <div className="bottom">
-                                {/* count box */}
-                                <div className="box" style={{display:"flex",flexDirection:"column"}}>
+                            {/* count box */}
+                            <div className="box" style={{ display: "flex", flexDirection: "column" }}>
                                 <div className="box">
                                     {editor === false
                                         ? detail && detail.waitingStatus === 1
@@ -1125,37 +1126,37 @@ export default
                                                     background: "none", color: "red", padding: "3px"
                                                 }}>
                                                 디자인 가입신청</button >
-                                    : null}
+                                        : null}
                                 </div>
                                 <div className="box">
                                     <div className="iconwrap">
-                                        <Icon style={{ fontSize: "18px", color:"black",marginRight:"5px" }}>visibility</Icon>
+                                        <Icon style={{ fontSize: "18px", color: "black", marginRight: "5px" }}>visibility</Icon>
                                         {NumberFormat(Count.view_count || 0)}
                                     </div>
                                     <div className="iconwrap">
-                                        <Icon style={{ fontSize: "18px", color:"red",marginRight:"5px" }}>favorite_border</Icon>
+                                        <Icon style={{ fontSize: "18px", color: "red", marginRight: "5px" }}>favorite_border</Icon>
                                         {NumberFormat(Count.like_count || 0)}
                                     </div>
                                     <div className="iconwrap">
-                                        <Icon style={{ fontSize: "18px", color:"black",marginRight:"5px" }}>article</Icon>
+                                        <Icon style={{ fontSize: "18px", color: "black", marginRight: "5px" }}>article</Icon>
                                         {NumberFormat(Count.comment_count || 0)}
                                     </div>
                                 </div>
-                                </div>
-                                <div className="box" style={{display:"flex",flexDirection:"column"}}>
-                                    {isMyDesign !== true?
-                                    <a onClick={this.like} style={{display:"flex"}}>
-                                    <div className="modi">관심 디자인</div>
-                                    {isMyDesign !== true&&like?
-                                    <Icon style={{ fontSize: "18px", color:"red"}}>favorite</Icon>
-                                    :
-                                    <Icon style={{ fontSize: "18px", color:"black"}}>favorite</Icon>
-                                    }
+                            </div>
+                            <div className="box" style={{ display: "flex", flexDirection: "column" }}>
+                                {isMyDesign !== true ?
+                                    <a onClick={this.like} style={{ display: "flex" }}>
+                                        <div className="modi">관심 디자인</div>
+                                        {isMyDesign !== true && like ?
+                                            <Icon style={{ fontSize: "18px", color: "red" }}>favorite</Icon>
+                                            :
+                                            <Icon style={{ fontSize: "18px", color: "black" }}>favorite</Icon>
+                                        }
                                     </a>
                                     :
                                     null
-                                    }
-                                    {/* <a onClick={this.like} style={{display:"flex"}}>
+                                }
+                                {/* <a onClick={this.like} style={{display:"flex"}}>
                                     <div className="modi">관심 디자인</div>
                                     {isMyDesign !== true&&like?
                                     <Icon style={{ fontSize: "18px", color:"red"}}>favorite</Icon>
@@ -1163,16 +1164,16 @@ export default
                                     <Icon style={{ fontSize: "18px", color:"black"}}>favorite</Icon>
                                     }
                                     </a> */}
-                                    {isMyDesign === true
-                                    && 
+                                {isMyDesign === true
+                                    &&
                                     <a onClick={this.gotoDesignModify} >
-                                      <div style={{ width: "max-content", display:"flex", alignItems: "center", justifyContent:"space-between" }}>
-                                      <div className="modi">디자인 수정</div>
-                                      <Icon style={{ fontSize: "18px", color:"black"}}>create</Icon>
-                                      </div>
+                                        <div style={{ width: "max-content", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                                            <div className="modi">디자인 수정</div>
+                                            <Icon style={{ fontSize: "18px", color: "black" }}>create</Icon>
+                                        </div>
                                     </a>}
                                 <div>
-                                </div>     
+                                </div>
                             </div>
                         </div>
 
@@ -1195,7 +1196,7 @@ export default
                             marginRight: "7px"
                         }}
                     >
-                        <Icon style={{ fontSize:"18px", color:"black"}}>share</Icon>
+                        <Icon style={{ fontSize: "18px", color: "black" }}>share</Icon>
                         <span>&nbsp;디자인 파생</span>
                     </a>
 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { Modal } from "semantic-ui-react";
 // import { StepCard, ContentCard, CreateCard, CreateStep, } from "./GridTools";
 import NewStepModal from "./NewStepModalMobile";
 import EditStepModal from "./EditStepModal";
@@ -13,88 +14,27 @@ import new_logo_cross from "source/new_logo_cross.svg";
 import arrow from "source/mobile_step_arrow_below.svg";
 import Cross from "components/Commons/Cross";
 
-const EditorWrapper = styled.div`
-  // border: 1px solid blue;
-  margin-top: 10px;
-  padding-bottom: 35px;
-  width: 100%;
+const MoreOptions = styled(Modal)`
+  padding: 15px;
+  width: 175px;
+  // height: 95px;
+  border-radius: 5px;
+  background-color: #FFFFFF;
+  box-shadow: 0px 3px 6px #FF0000;
 
-  .step-wrapper {
+  .close-box {
+    position: absolute;
     width: max-content;
-    margin: auto;
-    position: relative;
-    display: flex;
-    flex-direction: row;
-
-    .more-button {
-      position: absolute;
-      right: -50px;
-    }
-    .more-menu {
-      position: absolute;
-      border: 2px solid #707070;
-      border-radius: 5px;
-      box-shadow: 2.5px 2.5px #efefef;
-      background-color: white;
-      width: 150px;
-      right: -50px;
-      top: 30px;
-      display: none;
-      ul {
-        text-align: center;
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      }
-      li {
-        padding: 10px;
-        font-size: 1rem;
-        color: #707070;
-        font-weight: 500;
-      }
-      &.active {
-        display: block;
-      }
-    }
+    top: 10px;
+    right: 15px;
   }
-  .navigation {
-    position: relative;
-    .normal {
-      position: absolute;
-      top: 50px;
+  ul {
+    li {
+      margin: 10px;
     }
-    .left {
-      left: 5px;
-    }
-    .right {
-      right: 5px;
-    }
-  }
-  .cards-wrapper {
-    width: max-content;
-    margin: auto;
-    .card {
-      margin: 15px;
-    }
+    list-style: none;
   }
 `;
-const Arrow = styled.div`
-  width: 17px;
-  height: 48px;
-  z-index: 831;
-  border: none;
-  background-image: url(${arrow});
-  background-size: cover;
-  background-position: 50%;
-  transform: rotate(${(props) => props.angle});
-  opacity: 0.9;
-  cursor: pointer;
-
-  :hover {
-    opacity: 1;
-  }
-`;
-
 const Wrapper = styled.div`
   // *{border:1px solid red;}
 
@@ -112,6 +52,11 @@ const Wrapper = styled.div`
     background-color: red;
     height: 1px;
     width: 1px;
+  }
+  .more-button {
+    position: absolute;
+    top: 21px;
+    right: -7px;
   }
 `;
 
@@ -222,8 +167,8 @@ class GridEditorMobile extends Component {
   }
 
   // re-order
-  StepReOrderModal() {
-    this.setState({ stepreorder: true, more: false });
+  StepReOrderModal(steporder) {
+    this.setState({ stepreorder: true, current: steporder, more: false });
   }
   CardReOrderModal() {
     this.setState({ cardreorder: true, more: false });
@@ -287,29 +232,37 @@ class GridEditorMobile extends Component {
 
     return (
       <Wrapper>
-        {/* {editor &&
-                <StepReOrderModal
-                    title={"단계"}
-                    open={stepreorder}
-                    close={() => this.setState({ stepreorder: false })}
-                    current={Step.order}
-                    options={DesignDetailStep.map(step =>
-                        ({ value: step.order, text: `(${step.order}) ${step.title}`, uid: step.uid }))}
-                    reorder={this.requestReorder}
-                />}
+        {editor &&
+          <StepReOrderModal
+            title={"단계"}
+            open={stepreorder}
+            close={() => this.setState({ stepreorder: false })}
+            current={this.state.selectedStep && this.state.selectedStep.order}
+            options={steps.map(step =>
+            ({
+              value: step.order,
+              text: `(${step.order}) ${step.title}`,
+              uid: step.uid
+            }))}
+            reorder={this.requestReorder}
+          />}
 
-            {editor &&
-                <CardReOrderModal
-                    title={"카드"}
-                    open={cardreorder}
-                    close={() => this.setState({ cardreorder: false })}
-                    options={Step.cards &&
-                        Step.cards.length > 0 &&
-                        Step.cards.map(card =>
-                            ({ value: card.order, text: `(${card.order}) ${card.title}`, uid: card.uid }))}
-                    reorder={(data) =>
-                        this.requestCardReorder(data, Step.uid)}
-                />} */}
+        {editor &&
+          <CardReOrderModal
+            title={"카드"}
+            open={cardreorder}
+            close={() => this.setState({ cardreorder: false })}
+            options={this.state.selectedStep &&
+              this.state.selectedStep.cards.length > 0 &&
+              this.state.selectedStep.cards.map(card =>
+              ({
+                value: card.order,
+                text: `(${card.order}) ${card.title}`,
+                uid: card.uid
+              }))}
+            reorder={(data) =>
+              this.requestCardReorder(data, this.state.selectedStep.uid)}
+          />}
 
         {/* edit step modal */}
         {editor && (
@@ -359,6 +312,29 @@ class GridEditorMobile extends Component {
             card={card}
           />
         )}
+        {/* reorder modal */}
+        <MoreOptions open={this.state.more}>
+          <h3>순서변경</h3>
+          <div className="close-box" onClick={() => this.setState({ more: false })} >
+            <Cross angle={45} color={"#707070"} weight={2} width={25} height={25} />
+          </div>
+          <hr />
+          <div ref={this.moreRef} className="more-menu " >
+            <ul>
+              <li
+                onClick={() => this.StepReOrderModal(this.state.selectedStep.order)}>
+                ↔ 단계 순서변경</li>
+              <li
+                onClick={() => this.CardReOrderModal()}>
+                ↕ 카드 순서변경</li>
+            </ul>
+          </div>
+        </MoreOptions>
+
+
+
+
+
 
         <div
           style={{
@@ -375,12 +351,6 @@ class GridEditorMobile extends Component {
           }}
           id="style-2"
         >
-          {/* <div ref={this.moreRef} className="more-menu active" >
-                    <ul>
-                        <li onClick={() => this.StepReOrderModal()}>단계 순서변경</li>
-                        <li onClick={() => this.CardReOrderModal()}>카드 순서변경</li>
-                    </ul>
-                </div> */}
 
           {steps.map((step, index) => (
             <div
@@ -389,6 +359,7 @@ class GridEditorMobile extends Component {
                 marginRight: "29px",
                 display: "flex",
                 flexDirection: "column",
+                position: "relative",
               }}
             >
               {/* step */}
@@ -424,6 +395,13 @@ class GridEditorMobile extends Component {
                   {step.title}
                 </p>
               </div>
+
+              {this.state.more == false && <div
+                className="more-button"
+                onClick={() => this.setState({ more: true, selectedStep: step })}>
+                ⚙️
+              </div>}
+
 
               <div
                 style={{
@@ -587,7 +565,7 @@ class GridEditorMobile extends Component {
                   </div>
                 </div>
               ) : null}
-</div>
+            </div>
           ))}
 
           {editor ? (
