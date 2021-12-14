@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
 import ProblemController from "components/Designs/CardSourceDetail/ProblemController";
-import { getProblemListFilterRequest,getProblemCategoryRequest, getProblemListRequest, getProblemDetailRequest, UpdateAnswerRequest } from "redux/modules/design/card";
+import { getProblemListFilterRequest, getProblemCategoryRequest, getProblemListRequest, getProblemDetailRequest, UpdateAnswerRequest } from "redux/modules/design/card";
 import { Modal } from "semantic-ui-react"
 import styled from 'styled-components';
 import Cross from "components/Commons/Cross";
@@ -34,14 +34,14 @@ const ModalBox = styled(Modal)`
 class ProblemContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { category:[]}
+    this.state = { category: [] }
   }
   async componentDidMount() {
     await this.props.getProblemListRequest(1);
-    this.props.getProblemCategoryRequest().then(async()=>{
-      await this.setState({category:[{value:0,text:"전체"}]})
-      this.props.ProblemCategory.map((item,index)=>{
-        this.setState({category:this.state.category.concat({value:item.id,text:item.category_name})});
+    this.props.getProblemCategoryRequest().then(async () => {
+      await this.setState({ category: [{ value: 0, text: "전체" }] })
+      this.props.ProblemCategory.map((item, index) => {
+        this.setState({ category: this.state.category.concat({ value: item.id, text: item.category_name }) });
       })
     })
   }

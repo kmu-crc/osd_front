@@ -1,16 +1,24 @@
 import React from "react";
 import update from "react-addons-update";
-import styled from 'styled-components';
+import styled from "styled-components";
 import Loading from "components/Commons/Loading";
 import required from "resources/images/mobile_create_design_required.svg";
 import thumbnailSVG from "resources/images/mobile_create_design_thumbnail.svg";
-import { strButtonPrev, strErrorDoNotNextStep, strButtonSave, strButtonComplete, strButtonCancel, strButtonNext } from "constant";
+import {
+  strButtonPrev,
+  strErrorDoNotNextStep,
+  strButtonSave,
+  strButtonComplete,
+  strButtonCancel,
+  strButtonNext,
+} from "constant";
 import { geturl } from "config";
 import helpIcon from "resources/images/help_black_24dp.svg";
 import closeIcon from "resources/images/icon_close.svg";
 import checkedIcon from "resources/images/icon_checked.svg";
 import uncheckedIcon from "resources/images/icon_unchecked.svg";
 import Logo from "source/osd_logo.png";
+import { confirm } from "components/Commons/Confirm/Confirm";
 
 import GridEditorMobile from "components/Designs/GridEditor/GridEditorMobile";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
@@ -38,20 +46,39 @@ const Wrapper = styled.div`
     -webkit-animation: fadein 2s; /* Safari and Chrome */
     -o-animation: fadein 2s; /* Opera */
     @keyframes fadein {
-      from { opacity:0; }
-      to { opacity:1; }
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
-    @-moz-keyframes fadein { /* Firefox */
-      from { opacity:0; }
-      to { opacity:1; }
+    @-moz-keyframes fadein {
+      /* Firefox */
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
-    @-webkit-keyframes fadein { /* Safari and Chrome */
-      from { opacity:0; }
-      to { opacity:1; }
+    @-webkit-keyframes fadein {
+      /* Safari and Chrome */
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
-    @-o-keyframes fadein { /* Opera */
-      from { opacity:0; }
-      to { opacity: 1; }
+    @-o-keyframes fadein {
+      /* Opera */
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
   }
   .separator {
@@ -87,17 +114,16 @@ const Step = styled.div`
   font-weight: 22px;
   font-familiy: Spoqa Han Sans;
   letter-spacing: 0px;
-  color: #7A7A7A;
+  color: #7a7a7a;
   &.selected {
-    color: #1262AB;
+    color: #1262ab;
   }
   margin-right: 20px;
   :last-child {
     margin-right: 0px;
   }
 `;
-const CreateForm = styled.div`
-`;
+const CreateForm = styled.div``;
 const StepButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -114,7 +140,7 @@ const StepButtonWrapper = styled.div`
     border: none;
     width: 40px;
     height: 26px;
-    box-shadow: 2px 2px 2px #0000002B;
+    box-shadow: 2px 2px 2px #0000002b;
 
     &.next {
       background-color: red;
@@ -131,7 +157,7 @@ const StepButtonWrapper = styled.div`
       background-color: black;
     }
     &.cancel {
-      background-color: #C9C9C9;
+      background-color: #c9c9c9;
       text-align: center;
       font-weight: 500;
       font-size: 15px;
@@ -140,7 +166,6 @@ const StepButtonWrapper = styled.div`
       letter-spacing: 0px;
       color: black;
     }
-
   }
 `;
 
@@ -158,7 +183,7 @@ const BasicForm = styled.div`
     justify-content: center;
     position: relative;
     height: 28px;
-    
+
     p {
       width: max-content;
       height: 28px;
@@ -180,7 +205,7 @@ const BasicForm = styled.div`
       object-fit: contain;
     }
   }
-  
+
   .design-image-content {
     display: flex;
     flex-direction: column;
@@ -192,7 +217,10 @@ const BasicForm = styled.div`
     .thumbnail {
       width: 137px;
       height: 137px;
-      img { width: 137px; height: 137px; }
+      img {
+        width: 137px;
+        height: 137px;
+      }
       margin-bottom: 8px;
     }
     .find {
@@ -204,7 +232,7 @@ const BasicForm = styled.div`
       line-height: 28px;
       font-family: Spoqa Han Sans Neo;
       letter-spacing: 0px;
-      color: #FF0000;
+      color: #ff0000;
       margin-bottom: 10px;
     }
     .tip {
@@ -251,8 +279,10 @@ const BasicForm = styled.div`
       height: 40px;
       border: none;
       outline: none;
-      :active { outline: none; }
-      background-color: #E9E9E9;
+      :active {
+        outline: none;
+      }
+      background-color: #e9e9e9;
       padding: 8px 11px;
       height: 22px;
       text-align: left;
@@ -263,13 +293,15 @@ const BasicForm = styled.div`
       letter-spacing: 0px;
       color: #707070;
     }
-    .textarea-wrapper{
+    .textarea-wrapper {
       width: 303px;
       height: 323px;
     }
     textarea {
-      :active { outline: none; }
-      background-color: #E9E9E9;
+      :active {
+        outline: none;
+      }
+      background-color: #e9e9e9;
       width: 303px;
       height: 323px;
       padding: 10px 9px;
@@ -319,7 +351,7 @@ const AdditionalForm = styled.div`
       font-size: 14px;
       width: 205px;
       height: 23px;
-      background-color: #C9C9C9;
+      background-color: #c9c9c9;
       border: none;
 
       -webkit-appearance: none;
@@ -349,14 +381,21 @@ const AdditionalForm = styled.div`
       input {
         width: 205px;
         height: 21px;
-        background-color: #C9C9C9;
+        background-color: #c9c9c9;
         border: none;
         outline: none;
         margin-bottom: 10px;
 
-        ::placeholder { color: white; opacity: 1; } /* Chrome, Firefox, Opera, Safari 10.1+ */ /* Firefox */
-        :-ms-input-placeholder { color: white; } /* Internet Explorer 10-11 */
-        ::-ms-input-placeholder { color: white; } /* Microsoft Edge */
+        ::placeholder {
+          color: white;
+          opacity: 1;
+        } /* Chrome, Firefox, Opera, Safari 10.1+ */ /* Firefox */
+        :-ms-input-placeholder {
+          color: white;
+        } /* Internet Explorer 10-11 */
+        ::-ms-input-placeholder {
+          color: white;
+        } /* Microsoft Edge */
 
         :active {
           border: none;
@@ -378,7 +417,8 @@ const AdditionalForm = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    img {}
+    img {
+    }
     p {
       margin-top: 6px;
       text-align: left;
@@ -392,7 +432,7 @@ const AdditionalForm = styled.div`
   }
   .added-member-element {
     width: max-content;
-    
+
     .face {
       margin-right: 9px;
       width: 43px;
@@ -418,11 +458,11 @@ const AdditionalForm = styled.div`
       text-overflow: ellipsis;
     }
     .close {
-      
     }
   }
 
-  .license-wrapper { }
+  .license-wrapper {
+  }
   .license-check-wrapper {
     margin-top: 21px;
   }
@@ -434,7 +474,7 @@ const AdditionalForm = styled.div`
     line-height: 33px;
     font-family: Spoqa Han Sans;
     letter-spacing: 0px;
-    color: #8E8E8E;
+    color: #8e8e8e;
     text-transform: lowercase;
   }
 `;
@@ -459,7 +499,7 @@ const LoadingBox = styled.div`
     height: 100px;
     margin: 0 auto;
   }
-  .loadingText{
+  .loadingText {
     margin-top: 20px;
     width: 100%;
     font-family: Noto Sans KR;
@@ -468,73 +508,73 @@ const LoadingBox = styled.div`
   }
 `;
 const LoadingIconBox = styled.div`
-  width:100px;
-  height:100px;
-  margin:0 auto;
-  background: ${props => `url(${props.imageURL})`};
-  background-position:center center;
-  background-repeat:no-repeat;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  background: ${(props) => `url(${props.imageURL})`};
+  background-position: center center;
+  background-repeat: no-repeat;
   -webkit-animation: jello-horizontal 0.9s infinite both;
-            animation: jello-horizontal 0.9s infinite both;
-  
+  animation: jello-horizontal 0.9s infinite both;
+
   @-webkit-keyframes jello-horizontal {
     0% {
       -webkit-transform: scale3d(1, 1, 1);
-              transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
     }
     30% {
       -webkit-transform: scale3d(1.25, 0.75, 1);
-              transform: scale3d(1.25, 0.75, 1);
+      transform: scale3d(1.25, 0.75, 1);
     }
     40% {
       -webkit-transform: scale3d(0.75, 1.25, 1);
-              transform: scale3d(0.75, 1.25, 1);
+      transform: scale3d(0.75, 1.25, 1);
     }
     50% {
       -webkit-transform: scale3d(1.15, 0.85, 1);
-              transform: scale3d(1.15, 0.85, 1);
+      transform: scale3d(1.15, 0.85, 1);
     }
     65% {
       -webkit-transform: scale3d(0.95, 1.05, 1);
-              transform: scale3d(0.95, 1.05, 1);
+      transform: scale3d(0.95, 1.05, 1);
     }
     75% {
       -webkit-transform: scale3d(1.05, 0.95, 1);
-              transform: scale3d(1.05, 0.95, 1);
+      transform: scale3d(1.05, 0.95, 1);
     }
     100% {
       -webkit-transform: scale3d(1, 1, 1);
-              transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
     }
   }
   @keyframes jello-horizontal {
     0% {
       -webkit-transform: scale3d(1, 1, 1);
-              transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
     }
     30% {
       -webkit-transform: scale3d(1.25, 0.75, 1);
-              transform: scale3d(1.25, 0.75, 1);
+      transform: scale3d(1.25, 0.75, 1);
     }
     40% {
       -webkit-transform: scale3d(0.75, 1.25, 1);
-              transform: scale3d(0.75, 1.25, 1);
+      transform: scale3d(0.75, 1.25, 1);
     }
     50% {
       -webkit-transform: scale3d(1.15, 0.85, 1);
-              transform: scale3d(1.15, 0.85, 1);
+      transform: scale3d(1.15, 0.85, 1);
     }
     65% {
       -webkit-transform: scale3d(0.95, 1.05, 1);
-              transform: scale3d(0.95, 1.05, 1);
+      transform: scale3d(0.95, 1.05, 1);
     }
     75% {
       -webkit-transform: scale3d(1.05, 0.95, 1);
-              transform: scale3d(1.05, 0.95, 1);
+      transform: scale3d(1.05, 0.95, 1);
     }
     100% {
       -webkit-transform: scale3d(1, 1, 1);
-              transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
     }
   }
 `;
@@ -542,8 +582,7 @@ const STEP_BASIC = 0;
 const STEP_ADDITIONAL = 1;
 const STEP_CONTENT = 2;
 
-export default
-  class ModifyDesignMobile extends React.Component {
+export default class ModifyDesignMobile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -563,14 +602,17 @@ export default
       categoryLevel1: this.props.userInfo.category1 || null,
       categoryLevel2: null,
       categoryLevel3: null,
-      members: [], addmem: [], delmem: [], // alone: true, 
-      license1: true, license2: true, license3: true,
+      members: [],
+      addmem: [],
+      delmem: [], // alone: true,
+      license1: true,
+      license2: true,
+      license3: true,
 
       // step 2 - content
       is_project: 0,
       contents: [],
       showSearch: false,
-
     };
   }
 
@@ -606,7 +648,7 @@ export default
       categoryLevel2: detail.category_level2,
       categoryLevel3: detail.category_level3,
 
-      members: detail.member.filter(item => item.uid === detail.user_id),
+      members: detail.member.filter((item) => item.uid === detail.user_id),
       license1: detail.is_commercial === 1,
       license2: detail.is_display_creater === 1,
       license3: detail.is_modify === 1,
@@ -621,18 +663,21 @@ export default
     });
 
     if (this.props.id) {
-      this.props.GetDesignBoardRequest(this.props.id)
-      this.setState({ content: true, designId: this.props.id, grid: true, loading: false });
+      this.props.GetDesignBoardRequest(this.props.id);
+      this.setState({
+        content: true,
+        designId: this.props.id,
+        grid: true,
+        loading: false,
+      });
     } else {
       alert("디자인 정보가 없습니다.");
       window.history.go(-1);
     }
-
   }
 
-
   checkFinishBasic = async () => {
-    const { title, thumbnail, } = this.state;
+    const { title, thumbnail } = this.state;
     if (title && thumbnail !== thumbnailSVG) {
       await this.setState({ basic: true });
     } else {
@@ -645,19 +690,26 @@ export default
     const file = event.target.files[0];
     const regExp = /.(jpe?g|png|bmp)$/i;
     if (!regExp.test(file.name)) {
-      await alert('파일의 확장자가 올바른지 확인해주세요.', "확인");
+      await alert("파일의 확장자가 올바른지 확인해주세요.", "확인");
       return;
     }
     reader.onload = () => {
       var image = new Image();
       image.src = reader.result;
       image.onload = () => {
-        this.setState({ is_rectangle: false, ratio: image.width / image.height, cropper: image.width / image.height !== 1.0 });
-      }
-    }
+        this.setState({
+          is_rectangle: false,
+          ratio: image.width / image.height,
+          cropper: image.width / image.height !== 1.0,
+        });
+      };
+    };
     reader.onloadend = async () => {
-      await this.setState({ thumbnail: reader.result, thumbnail_name: file.name });
-    }
+      await this.setState({
+        thumbnail: reader.result,
+        thumbnail_name: file.name,
+      });
+    };
     if (event.target.files[0]) {
       reader.readAsDataURL(file);
     }
@@ -668,13 +720,13 @@ export default
       document.getElementById("explainBox").focus();
     }
   }
-  onChangeValueTitle = async event => {
+  onChangeValueTitle = async (event) => {
     if (event.target) {
       await this.setState({ title: event.target.value });
     }
     this.checkFinishBasic();
   };
-  onChangeValueExplanation = async event => {
+  onChangeValueExplanation = async (event) => {
     if (event.target) {
       await this.setState({ explanation: event.target.value });
     }
@@ -683,15 +735,13 @@ export default
   goStep1 = () => {
     this.checkFinishAdditional();
     this.setState({ step: STEP_ADDITIONAL });
-  }
+  };
   goStep2 = () => {
     this.checkFinishAdditional();
     this.setState({ step: STEP_CONTENT });
-  }
+  };
   StepMenu1Clicked = () =>
-    this.state.step != STEP_BASIC
-      ? this.setState({ step: STEP_BASIC })
-      : null;
+    this.state.step != STEP_BASIC ? this.setState({ step: STEP_BASIC }) : null;
 
   StepMenu2Clicked = () =>
     this.state.basic || this.state.step >= STEP_ADDITIONAL
@@ -699,7 +749,8 @@ export default
       : alert(strErrorDoNotNextStep);
 
   StepMenu3Clicked = () =>
-    ((this.state.additional && this.state.step === STEP_BASIC) || this.state.step === STEP_ADDITIONAL)
+    (this.state.additional && this.state.step === STEP_BASIC) ||
+      this.state.step === STEP_ADDITIONAL
       ? this.setState({ step: STEP_CONTENT })
       : alert(strErrorDoNotNextStep);
 
@@ -724,7 +775,7 @@ export default
     await this.setState({
       categoryLevel1: document.getElementById("cate1").value,
       categoryLevel2: null,
-      categoryLevel3: null
+      categoryLevel3: null,
     });
     this.checkFinishAdditional();
   };
@@ -732,12 +783,12 @@ export default
     const value = await document.getElementById("cate2").value;
     await this.setState({
       categoryLevel2: value === "-1" ? null : value,
-      categoryLevel3: null
+      categoryLevel3: null,
     });
   };
   onChangeCategory3 = async () => {
     await this.setState({
-      categoryLevel3: document.getElementById("cate3").value
+      categoryLevel3: document.getElementById("cate3").value,
     });
   };
   onClickedLicense1 = async () => {
@@ -753,7 +804,9 @@ export default
     this.checkFinishAdditional();
   };
   searchMember = async (event) => {
-    const value = await document.getElementById("search-member-input").value.trim();
+    const value = await document
+      .getElementById("search-member-input")
+      .value.trim();
     if (value.length === 0) {
       this.setState({ showSearch: false });
     } else {
@@ -764,12 +817,18 @@ export default
   selectedMember = async (member) => {
     const { email, s_img, nick_name, uid } = member;
     this.addMember(email, s_img, nick_name, uid);
-  }
+  };
   addMember = async (email, s_img, nick_name, uid) => {
-    let member = { email: email, s_img: s_img, nick_name: nick_name, user_id: uid, uid: uid };
+    let member = {
+      email: email,
+      s_img: s_img,
+      nick_name: nick_name,
+      user_id: uid,
+      uid: uid,
+    };
     await this.setState({
       members: this.state.members.concat(member),
-      addmem: this.state.addmem.concat(member)
+      addmem: this.state.addmem.concat(member),
     });
     this.checkFinishAdditional();
     this.setState({ alone: false });
@@ -778,14 +837,33 @@ export default
   };
   removeMember = async (user_id) => {
     // remove from addmem
-    if (this.state.addmem.find(mem => { return mem.user_id === user_id })) {
-      await this.setState({ addmem: this.state.addmem.filter(member => { return member.user_id !== user_id }) });
-    } else { // remove if not in addmem
-      await this.setState({ delmem: this.state.delmem.concat(this.state.members.filter((member) => { return user_id === member.user_id })) });
+    if (
+      this.state.addmem.find((mem) => {
+        return mem.user_id === user_id;
+      })
+    ) {
+      await this.setState({
+        addmem: this.state.addmem.filter((member) => {
+          return member.user_id !== user_id;
+        }),
+      });
+    } else {
+      // remove if not in addmem
+      await this.setState({
+        delmem: this.state.delmem.concat(
+          this.state.members.filter((member) => {
+            return user_id === member.user_id;
+          })
+        ),
+      });
     }
     // display member list
     console.log("removeMember:", this.state.members, user_id);
-    await this.setState({ members: this.state.members.filter((member) => { return user_id !== member.user_id }) });
+    await this.setState({
+      members: this.state.members.filter((member) => {
+        return user_id !== member.user_id;
+      }),
+    });
     this.checkFinishAdditional();
 
     if (this.state.members.length === 0) {
@@ -801,38 +879,52 @@ export default
       category_level3: this.state.categoryLevel3,
       title: this.state.title,
       explanation: this.state.explanation,
-      files:
-        [{
+      files: [
+        {
           value: this.state.thumbnail,
           name: this.state.thumbnail_name,
-          key: "thumbnail[]"
-        }],
+          key: "thumbnail[]",
+        },
+      ],
       members: {
         add: this.state.addmem,
-        del: this.state.delmem
+        del: this.state.delmem,
       },
       is_commercial: this.state.license1 ? 1 : 0,
       is_display_creater: this.state.license2 ? 1 : 0,
-      is_modify: this.state.license3 ? 1 : 0
+      is_modify: this.state.license3 ? 1 : 0,
     };
-    if (data.files[0].name === '') {
+    if (data.files[0].name === "") {
       delete data.files;
     }
     this.setState({ loading: true });
-    this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid, this.props.token)
+    this.props
+      .UpdateDesignInfoRequest(
+        data,
+        this.props.DesignDetail.uid,
+        this.props.token
+      )
       .then(async (data) => {
         console.log(data, data.res && data.res.success);
         if (data.res && data.res.success) {
-          await alert("디자인 정보 수정이 완료되었습니다. 디자인보기 화면으로 이동합니다.", "확인");
-          window.location.href = geturl() + '/designDetail/' + this.props.DesignDetail.uid;
+          await alert(
+            "디자인 정보 수정이 완료되었습니다. 디자인보기 화면으로 이동합니다.",
+            "확인"
+          );
+          window.location.href =
+            geturl() + "/designDetail/" + this.props.DesignDetail.uid;
         } else {
           await alert("디자인 정보 수정에 실패하였습니다.", "확인");
         }
-      })
+      });
     this.setState({ loading: false });
   };
   onChangeValue = async (data, order) => {
-    this.setState({ contents: update(this.state.contents, { [order]: { contents: { $set: data.content } } }) });
+    this.setState({
+      contents: update(this.state.contents, {
+        [order]: { contents: { $set: data.content } },
+      }),
+    });
   };
   onChangeFile = async (data) => {
     let copyContent = [...this.state.contents];
@@ -852,12 +944,19 @@ export default
     let copyData = { ...data };
     copyData.initClick = true;
     for (let item of copyContent) {
-      if ((item.type === "FILE" && item.fileUrl == null) && (item.type === "FILE" && item.content === "")) {
+      if (
+        item.type === "FILE" &&
+        item.fileUrl == null &&
+        item.type === "FILE" &&
+        item.content === ""
+      ) {
         await copyContent.splice(item.order, 1, null);
       }
     }
     await copyContent.splice(copyData.order, 0, copyData);
-    let newContent = copyContent.filter((item) => { return item !== null })
+    let newContent = copyContent.filter((item) => {
+      return item !== null;
+    });
     newContent = await Promise.all(
       newContent.map(async (item, index) => {
         item.order = await index;
@@ -869,353 +968,477 @@ export default
     );
     await this.setState({ contents: newContent });
   };
-
+  deleteDesign = async () => {
+    const answer = await confirm("디자인을 삭제하시겠습니까?", "확인", "취소");
+    answer &&
+      this.props
+        .DeleteDesignRequest(this.props.id, this.props.token)
+        .then(async () => {
+          window.location.href = geturl() + `/design`;
+        })
+        .catch(async () => {
+          await alert("삭제에 실패하였습니다.", "확인");
+        });
+  };
 
   render() {
-
     const {
-      loading, step, basic, additional,
+      loading,
+      step,
+      basic,
+      additional,
       thumbnail: thumbnailURL,
-      title, explanation,
-      categoryLevel1, categoryLevel2, categoryLevel3,
+      title,
+      explanation,
+      categoryLevel1,
+      categoryLevel2,
+      categoryLevel3,
       showSearch,
-      license1, license2, license3,
-      is_project, contents,
+      license1,
+      license2,
+      license3,
+      is_project,
+      contents,
     } = this.state;
 
-    return (<React.Fragment>
+    return (
+      <React.Fragment>
+        {loading ? <Loading /> : null}
 
-      {loading ? <Loading /> : null}
+        <Wrapper>
+          <StepMenu>
+            <Step
+              onClick={this.StepMenu1Clicked}
+              className={`${step === STEP_BASIC ? "selected" : ""}`}
+            >
+              기본정보
+            </Step>
+            <Step
+              onClick={this.StepMenu2Clicked}
+              className={`${step === STEP_ADDITIONAL ? "selected" : ""}`}
+            >
+              부가정보
+            </Step>
+            <Step
+              onClick={this.StepMenu3Clicked}
+              className={`${step === STEP_CONTENT ? "selected" : ""}`}
+            >
+              컨텐츠정보
+            </Step>
+          </StepMenu>
 
-      <Wrapper>
-
-        <StepMenu>
-          <Step onClick={this.StepMenu1Clicked} className={`${step === STEP_BASIC ? "selected" : ""}`}>기본정보</Step>
-          <Step onClick={this.StepMenu2Clicked} className={`${step === STEP_ADDITIONAL ? "selected" : ""}`}>부가정보</Step>
-          <Step onClick={this.StepMenu3Clicked} className={`${step === STEP_CONTENT ? "selected" : ""}`}>컨텐츠정보</Step>
-        </StepMenu>
-
-        <CreateForm>
-          {/* 기본정보 */}
-          {step === STEP_BASIC
-            && <BasicForm>
-              {/* 1. 디자인 이미지 */}
-              <div className=" fadein design-image-title">
-                <p>1.디자인 이미지</p>
-                <img src={required} alt="image" title="필수항목입니다:)" />
-              </div>
-
-              <div className=" fadein design-image-content">
-                <div onClick={() => { document.getElementById("file").click() }} className="thumbnail">
-                  <img src={thumbnailURL || thumbnailSVG} />
-                </div>
-                <label className="find" htmlFor="file">찾아보기</label>
-                <input
-                  hidden
-                  onChange={this.handleOnChangeThumbnail}
-                  id="file"
-                  type="file"
-                  accept="image/png, image/bmp, image/jpeg, image/jpg" />
-                <div className="tip">디자인 이미지는 대표적으로 보이게 되는 사진으로,<br />
-                  JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.</div>
-              </div>
-
-              {/* 2. 제목 */}
-              {<div className="fadein separator " />}
-              {<div className="fadein design-title">
-                <div className="design-image-title">
-                  <p>2. 제목</p>
+          <CreateForm>
+            {/* 기본정보 */}
+            {step === STEP_BASIC && (
+              <BasicForm>
+                {/* 1. 디자인 이미지 */}
+                <div className=" fadein design-image-title">
+                  <p>1.디자인 이미지</p>
                   <img src={required} alt="image" title="필수항목입니다:)" />
                 </div>
-                <div>
+
+                <div className=" fadein design-image-content">
+                  <div
+                    onClick={() => {
+                      document.getElementById("file").click();
+                    }}
+                    className="thumbnail"
+                  >
+                    <img src={thumbnailURL || thumbnailSVG} />
+                  </div>
+                  <label className="find" htmlFor="file">
+                    찾아보기
+                  </label>
                   <input
-                    value={title}
-                    name="title"
-                    maxLength="100"
-                    onKeyDown={this.onKeyDownEnter}
-                    onChange={this.onChangeValueTitle}
-                    placeholder="디자인의 제목을 입력해주세요.(100자이내)"
+                    hidden
+                    onChange={this.handleOnChangeThumbnail}
+                    id="file"
+                    type="file"
+                    accept="image/png, image/bmp, image/jpeg, image/jpg"
                   />
+                  <div className="tip">
+                    디자인 이미지는 대표적으로 보이게 되는 사진으로,
+                    <br />
+                    JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.
+                  </div>
                 </div>
-              </div>}
 
-              {/* 3. 디자인 설명 */}
-              {<div className="fadein separator " />}
-              {<div className="fadein design-title">
-                <p>3. 디자인 설명</p>
-                <div className="textarea-wrapper">
-                  <textarea
-                    value={explanation}
-                    id="explainBox"
-                    onChange={this.onChangeValueExplanation}
-                    maxLength="350"
-                    placeholder="디자인 설명을 입력해주세요. (350자 이내)" />
-                </div>
-              </div>}
-
-              <div className="fadein separator " />
-
-            </BasicForm>}
-
-          {/* 부가정보 */}
-          {step === STEP_ADDITIONAL
-            && <AdditionalForm>
-              {/* 1. 카테고리 */}
-              <div className="category-wrapper fadein">
-                <div className="label">
-                  1. 카테고리
-                </div>
-                <div>
-                  {this.props.category1.length > 0
-                    ? <React.Fragment>
-                      <div className="select-wrapper">
-                        <select
-                          onChange={this.onChangeCategory1}
-                          id="cate1"
-                          value={categoryLevel1} >
-                          {categoryLevel1 == null
-                            ? <option selected disabled value>{"카테고리(필수)"}</option>
-                            : null}
-                          {this.props.category1.map((cate1, index) =>
-                            <option
-                              // selected={categoryLevel1 === cate1.value}
-                              value={cate1.value}
-                              key={index}>
-                              {cate1.text}
-                            </option>
-                          )}
-                        </select>
-                        <div className="select-arrow"></div>
-                      </div>
-                      {console.log(this.props)}
-                      {categoryLevel1
-                        ? <div className="select-wrapper top15 fadein">
-                          <select
-                            onChange={this.onChangeCategory2}
-                            id="cate2"
-                            value={categoryLevel2}>
-                            {!categoryLevel2
-                              ? <option selected disabled>{"서브 카테고리(옵션)"}</option>
-                              : <option value={-1}>{"선택취소"}</option>
-                            }
-                            {this.props.category2[categoryLevel1 - 1].map((cate2, index) =>
-                              <option value={cate2.value} key={index}>{cate2.text}</option>
-                            )}
-                          </select>
-                          <div className="select-arrow"></div>
-                        </div>
-                        : null}
-
-                        {this.state.categoryLevel2 == 28     
-                        ? <div className="select-wrapper top15 fadein">
-                          <select
-                            onChange={this.onChangeCategory3}
-                            id="cate3"
-                            value={categoryLevel3}>
-                            <option disabled value>{"3차 카테고리(옵션)"}</option>
-                            {this.props.category3[categoryLevel2 - 2].map((cate3, index) =>
-                              <option value={cate3.value} key={index}>{cate3.text}</option>
-                            )}
-                          </select>
-                          <div className="select-arrow"></div>
-                        </div>
-                        : null}
-                    </React.Fragment>
-                    : null}
-                </div>
-              </div>
-              {/* 2. 멤버 초대하기 */}
-              {categoryLevel1
-                ? <React.Fragment>
-                  <div className="fadein separator2 " />
-
-                  <div className="member-wrapper fadein">
-                    <div className="label">
-                      2. 멤버 초대하기
+                {/* 2. 제목 */}
+                {<div className="fadein separator " />}
+                {
+                  <div className="fadein design-title">
+                    <div className="design-image-title">
+                      <p>2. 제목</p>
+                      <img
+                        src={required}
+                        alt="image"
+                        title="필수항목입니다:)"
+                      />
                     </div>
-                    <div className="member-input">
-                      {/* input */}
+                    <div>
                       <input
-                        id="search-member-input"
-                        onKeyDown={this.searchMember}
-                        placeholder="추가할 멤버의 닉네임을 입력해 주세요" />
-
-                      {/* searched */}
-                      {<div style={{
-                        backgroundColor: "white",
-                        position: "absolute",
-                        width: "205px",
-                        height: `${showSearch ? "50px" : "0px"}`,
-                        maxHeight: "150px",
-                        overflow: "hidden scroll",
-                      }}>
-                        {this.props.members
-                          && this.props.members
-                            //.filter(mem => this.state.members.map(_mem => _mem.uid).includes(mem.uid))
-                            .filter(mem => mem.uid !== this.props.userInfo.uid)
-                            .filter(mem => !this.state.members.map(m => m.uid).includes(mem.uid))
-                            .map((mem, index) =>
-                              <div key={index}
-                                onClick={() => this.addMember(
-                                  mem.email, mem.s_img, mem.nick_name, mem.uid, mem.uid
-                                )}>
-                                {mem.nick_name}
-                              </div>)}
-                      </div>}
-
-                      {/* list */}
-                      {
-                        this.state.members
-                          .map((mem, index) =>
-                            <div className="added-member-element flex-row space-between" key={index}>
-                              <img className="face" src={mem.s_img} />
-                              <p className="nick">{mem.nick_name}</p>
-                              <a onClick={() => this.removeMember(mem.uid)}>
-                                <img className="close" src={closeIcon} />
-                              </a>
-                            </div>)}
-
+                        value={title}
+                        name="title"
+                        maxLength="100"
+                        onKeyDown={this.onKeyDownEnter}
+                        onChange={this.onChangeValueTitle}
+                        placeholder="디자인의 제목을 입력해주세요.(100자이내)"
+                      />
                     </div>
                   </div>
+                }
 
-                  <div className="member-tip-wrapper top15">
-                    <img src={helpIcon} />
-                    <p>
-                      함께 디자인을 만들어 갈 멤버를 초대해 주세요.<br />
-                      초대된 멤버는 함께 정보에 뜨며, 수정할 권한이 주어집니다.<br />
-                      디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수 있습니다.<br />
-                    </p>
+                {/* 3. 디자인 설명 */}
+                {<div className="fadein separator " />}
+                {
+                  <div className="fadein design-title">
+                    <p>3. 디자인 설명</p>
+                    <div className="textarea-wrapper">
+                      <textarea
+                        value={explanation}
+                        id="explainBox"
+                        onChange={this.onChangeValueExplanation}
+                        maxLength="350"
+                        placeholder="디자인 설명을 입력해주세요. (350자 이내)"
+                      />
+                    </div>
                   </div>
-                </React.Fragment>
-                : null}
+                }
 
-              {/* 3. 라이센스 */}
-              {categoryLevel1
-                ? <div className="license-wrapper fadein">
+                <div className="fadein separator " />
+              </BasicForm>
+            )}
 
-                  <div className="fadein separator2 " />
+            {/* 부가정보 */}
+            {step === STEP_ADDITIONAL && (
+              <AdditionalForm>
+                {/* 1. 카테고리 */}
+                <div className="category-wrapper fadein">
+                  <div className="label">1. 카테고리</div>
+                  <div>
+                    {this.props.category1.length > 0 ? (
+                      <React.Fragment>
+                        <div className="select-wrapper">
+                          <select
+                            onChange={this.onChangeCategory1}
+                            id="cate1"
+                            value={categoryLevel1}
+                          >
+                            {categoryLevel1 == null ? (
+                              <option selected disabled value>
+                                {"카테고리(필수)"}
+                              </option>
+                            ) : null}
+                            {this.props.category1.map((cate1, index) => (
+                              <option
+                                // selected={categoryLevel1 === cate1.value}
+                                value={cate1.value}
+                                key={index}
+                              >
+                                {cate1.text}
+                              </option>
+                            ))}
+                          </select>
+                          <div className="select-arrow"></div>
+                        </div>
+                        {console.log(this.props)}
+                        {categoryLevel1 ? (
+                          <div className="select-wrapper top15 fadein">
+                            <select
+                              onChange={this.onChangeCategory2}
+                              id="cate2"
+                              value={categoryLevel2}
+                            >
+                              {!categoryLevel2 ? (
+                                <option selected disabled>
+                                  {"서브 카테고리(옵션)"}
+                                </option>
+                              ) : (
+                                <option value={-1}>{"선택취소"}</option>
+                              )}
+                              {this.props.category2[categoryLevel1 - 1].map(
+                                (cate2, index) => (
+                                  <option value={cate2.value} key={index}>
+                                    {cate2.text}
+                                  </option>
+                                )
+                              )}
+                            </select>
+                            <div className="select-arrow"></div>
+                          </div>
+                        ) : null}
 
-                  <div className="label">
-                    3. 라이센스
-                  </div>
-
-                  <div className="license-check-wrapper flex-row space-between" >
-                    <div className="license-text">{"상업적으로 이용이 가능합니다."}</div>
-                    <a onClick={this.onClickedLicense1}>
-                      {license1 ? <img src={checkedIcon} /> : <img src={uncheckedIcon} />}
-                    </a>
-                  </div>
-                  <div className="license-check-wrapper flex-row space-between" >
-                    <div className="license-text">{"원작자를 표시합니다."}</div>
-                    <a onClick={this.onClickedLicense2}>
-                      {license2 ? <img src={checkedIcon} /> : <img src={uncheckedIcon} />}
-                    </a>
-                  </div>
-                  <div className="license-check-wrapper flex-row space-between" >
-                    <div className="license-text">{"추후 수정이 가능합니다."}</div>
-                    <a onClick={this.onClickedLicense3}>
-                      {license3 ? <img src={checkedIcon} /> : <img src={uncheckedIcon} />}
-                    </a>
+                        {this.state.categoryLevel2 == 28 ? (
+                          <div className="select-wrapper top15 fadein">
+                            <select
+                              onChange={this.onChangeCategory3}
+                              id="cate3"
+                              value={categoryLevel3}
+                            >
+                              <option disabled value>
+                                {"3차 카테고리(옵션)"}
+                              </option>
+                              {this.props.category3[categoryLevel2 - 2].map(
+                                (cate3, index) => (
+                                  <option value={cate3.value} key={index}>
+                                    {cate3.text}
+                                  </option>
+                                )
+                              )}
+                            </select>
+                            <div className="select-arrow"></div>
+                          </div>
+                        ) : null}
+                      </React.Fragment>
+                    ) : null}
                   </div>
                 </div>
-                : null}
+                {/* 2. 멤버 초대하기 */}
+                {categoryLevel1 ? (
+                  <React.Fragment>
+                    <div className="fadein separator2 " />
 
-            </AdditionalForm>}
+                    <div className="member-wrapper fadein">
+                      <div className="label">2. 멤버 초대하기</div>
+                      <div className="member-input">
+                        {/* input */}
+                        <input
+                          id="search-member-input"
+                          onKeyDown={this.searchMember}
+                          placeholder="추가할 멤버의 닉네임을 입력해 주세요"
+                        />
 
-          {/* 컨텐츠정보 */}
-          {step === STEP_CONTENT
-            && <ContentEditorForm>
+                        {/* searched */}
+                        {
+                          <div
+                            style={{
+                              backgroundColor: "white",
+                              position: "absolute",
+                              width: "205px",
+                              height: `${showSearch ? "50px" : "0px"}`,
+                              maxHeight: "150px",
+                              overflow: "hidden scroll",
+                            }}
+                          >
+                            {this.props.members &&
+                              this.props.members
+                                //.filter(mem => this.state.members.map(_mem => _mem.uid).includes(mem.uid))
+                                .filter(
+                                  (mem) => mem.uid !== this.props.userInfo.uid
+                                )
+                                .filter(
+                                  (mem) =>
+                                    !this.state.members
+                                      .map((m) => m.uid)
+                                      .includes(mem.uid)
+                                )
+                                .map((mem, index) => (
+                                  <div
+                                    key={index}
+                                    onClick={() =>
+                                      this.addMember(
+                                        mem.email,
+                                        mem.s_img,
+                                        mem.nick_name,
+                                        mem.uid,
+                                        mem.uid
+                                      )
+                                    }
+                                  >
+                                    {mem.nick_name}
+                                  </div>
+                                ))}
+                          </div>
+                        }
 
-          {this.state.grid ?
-                this.props.DesignDetail &&
-                this.props.DesignDetail.is_project
-                ? <DesignDetailStepContainer design={this.props.DesignDetail} isMyDesign={true} editor={true} />
+                        {/* list */}
+                        {this.state.members.map((mem, index) => (
+                          <div
+                            className="added-member-element flex-row space-between"
+                            key={index}
+                          >
+                            <img className="face" src={mem.s_img} />
+                            <p className="nick">{mem.nick_name}</p>
+                            <a onClick={() => this.removeMember(mem.uid)}>
+                              <img className="close" src={closeIcon} />
+                            </a>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
 
-                  // ? <GridEditorMobile
-                  //   editor={true}
-                  //   isMyDesign={true}
-                  //   design={this.props.DesignDetail}
-                  //   {...this.props}
-                  // />
+                    <div className="member-tip-wrapper top15">
+                      <img src={helpIcon} />
+                      <p>
+                        함께 디자인을 만들어 갈 멤버를 초대해 주세요.
+                        <br />
+                        초대된 멤버는 함께 정보에 뜨며, 수정할 권한이
+                        주어집니다.
+                        <br />
+                        디자인 개설자가 언제든 추후에 멤버 리스트를 수정할 수
+                        있습니다.
+                        <br />
+                      </p>
+                    </div>
+                  </React.Fragment>
+                ) : null}
 
-                  : <DesignDetailViewContainer
-                    history={this.props.history}
-                    id={this.props.DesignDetail.uid}
-                    isMyDesign={true}
-                    editor={false}
-                  />
-                : <LoadingBox>
-                  <LoadingIconBox imageURL={Logo} />
-                  <div className="loadingText">컨텐츠 에디터를 가져오고 있습니다...</div>
-                </LoadingBox>}
+                {/* 3. 라이센스 */}
+                {categoryLevel1 ? (
+                  <div className="license-wrapper fadein">
+                    <div className="fadein separator2 " />
 
-            </ContentEditorForm>}
+                    <div className="label">3. 라이센스</div>
 
-        </CreateForm>
+                    <div className="license-check-wrapper flex-row space-between">
+                      <div className="license-text">
+                        {"상업적으로 이용이 가능합니다."}
+                      </div>
+                      <a onClick={this.onClickedLicense1}>
+                        {license1 ? (
+                          <img src={checkedIcon} />
+                        ) : (
+                          <img src={uncheckedIcon} />
+                        )}
+                      </a>
+                    </div>
+                    <div className="license-check-wrapper flex-row space-between">
+                      <div className="license-text">
+                        {"원작자를 표시합니다."}
+                      </div>
+                      <a onClick={this.onClickedLicense2}>
+                        {license2 ? (
+                          <img src={checkedIcon} />
+                        ) : (
+                          <img src={uncheckedIcon} />
+                        )}
+                      </a>
+                    </div>
+                    <div className="license-check-wrapper flex-row space-between">
+                      <div className="license-text">
+                        {"추후 수정이 가능합니다."}
+                      </div>
+                      <a onClick={this.onClickedLicense3}>
+                        {license3 ? (
+                          <img src={checkedIcon} />
+                        ) : (
+                          <img src={uncheckedIcon} />
+                        )}
+                      </a>
+                    </div>
+                  </div>
+                ) : null}
+              </AdditionalForm>
+            )}
 
-        <StepButtonWrapper>
+            {/* 컨텐츠정보 */}
+            {step === STEP_CONTENT && (
+              <ContentEditorForm>
+                {this.state.grid ? (
+                  this.props.DesignDetail &&
+                    this.props.DesignDetail.is_project ? (
+                    <GridEditorMobile
+                      editor={true}
+                      isMyDesign={true}
+                      design={this.props.DesignDetail}
+                      {...this.props}
+                    />
+                  ) : (
+                    <DesignDetailViewContainer
+                      history={this.props.history}
+                      id={this.props.DesignDetail.uid}
+                      isMyDesign={true}
+                      editor={false}
+                    />
+                  )
+                ) : (
+                  <LoadingBox>
+                    <LoadingIconBox imageURL={Logo} />
+                    <div className="loadingText">
+                      컨텐츠 에디터를 가져오고 있습니다...
+                    </div>
+                  </LoadingBox>
+                )}
+              </ContentEditorForm>
+            )}
+          </CreateForm>
 
-          <button onClick={() => window.history.go(-1)} className="cancel">{strButtonCancel}</button>
+          <StepButtonWrapper>
+            <button onClick={this.deleteDesign} className="cancel">
+              삭제
+            </button>
+            <button onClick={() => window.history.go(-1)} className="cancel">
+              {strButtonCancel}
+            </button>
 
-          {step !== STEP_BASIC &&
-            <button
-              onClick={() => this.setState({ step: this.state.step - 1 })}
-              className="cancel"
-            >
-              {strButtonPrev}</button>}
-
-          {step === STEP_BASIC
-            ? <React.Fragment>
+            {step !== STEP_BASIC && (
               <button
-                onClick={
-                  () => basic
-                    ? this.goStep1()
-                    : thumbnailURL === thumbnailSVG
-                      ? alert("섬네일을 선택해주세요.")
-                      : alert("디자인제목을 입력해주세요.")}
-                className={`${basic ? "" : "impossible"} next`}>
-                {strButtonNext}</button>
-              <button
-                onClick={() =>
-                  basic && additional
-                    ? this.update() :
-                    basic && !additional
-                      ? alert("추가정보 단계를 완료해주세요.")
-                      : !basic && additional ? alert("기본단계를 완료해주세요.") : alert(strErrorDoNotNextStep)}
-                className={`${(basic && additional) ? "" : "impossible"} next`}>
-                {strButtonSave}</button>
+                onClick={() => this.setState({ step: this.state.step - 1 })}
+                className="cancel"
+              >
+                {strButtonPrev}
+              </button>
+            )}
 
-            </React.Fragment>
-            : null}
+            {step === STEP_BASIC ? (
+              <React.Fragment>
+                <button
+                  onClick={() =>
+                    basic
+                      ? this.goStep1()
+                      : thumbnailURL === thumbnailSVG
+                        ? alert("섬네일을 선택해주세요.")
+                        : alert("디자인제목을 입력해주세요.")
+                  }
+                  className={`${basic ? "" : "impossible"} next`}
+                >
+                  {strButtonNext}
+                </button>
+                <button
+                  onClick={() =>
+                    basic && additional
+                      ? this.update()
+                      : basic && !additional
+                        ? alert("추가정보 단계를 완료해주세요.")
+                        : !basic && additional
+                          ? alert("기본단계를 완료해주세요.")
+                          : alert(strErrorDoNotNextStep)
+                  }
+                  className={`${basic && additional ? "" : "impossible"} next`}
+                >
+                  {strButtonSave}
+                </button>
+              </React.Fragment>
+            ) : null}
 
-          {step === STEP_ADDITIONAL
-            ? <React.Fragment>
-              <button
-                onClick={() => basic && additional
-                  ? this.goStep2()
-                  : alert("단계를 완성하여 주세요.")
-                }
-                className={`${additional ? "" : "impossible"} next`}>
-                {strButtonNext}</button>
-              <button
-                onClick={() => additional ? this.update() : alert(strErrorDoNotNextStep)}
-                className={`${additional ? "" : "impossible"} next`}>
-                {strButtonSave}</button>
-            </React.Fragment>
-            : null}
-
-        </StepButtonWrapper>
-
-      </Wrapper>
-
-    </React.Fragment >);
-  };
-};
-
-
-
-
-
+            {step === STEP_ADDITIONAL ? (
+              <React.Fragment>
+                <button
+                  onClick={() =>
+                    basic && additional
+                      ? this.goStep2()
+                      : alert("단계를 완성하여 주세요.")
+                  }
+                  className={`${additional ? "" : "impossible"} next`}
+                >
+                  {strButtonNext}
+                </button>
+                <button
+                  onClick={() =>
+                    additional ? this.update() : alert(strErrorDoNotNextStep)
+                  }
+                  className={`${additional ? "" : "impossible"} next`}
+                >
+                  {strButtonSave}
+                </button>
+              </React.Fragment>
+            ) : null}
+          </StepButtonWrapper>
+        </Wrapper>
+      </React.Fragment>
+    );
+  }
+}
 
 // import React, { Component } from "react";
 // import GridEditorMobile from "components/Designs/GridEditor/GridEditorMobile";
@@ -1330,14 +1553,14 @@ export default
 //     line-height: 29px;
 //     color: #707070;
 //   }
-//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px)
 //   and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
 //   padding:15px;
 //     .title{
 //       margin-bottom:10px;
 //     }
 //   }
-//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px)
 //   and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
 //       padding:15px;
 //       display:flex;
@@ -1394,11 +1617,11 @@ export default
 //     }
 //   }
 
-//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px)
 //   and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
 //       flex-direction:column;
 //   }
-//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px)
 //   and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
 //       flex-direction:column;
 //       width:100%;
@@ -1450,14 +1673,14 @@ export default
 //       width:80%;
 //     }
 //   }
-//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px) 
+//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMaxWidth}px)
 //   and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
 //     flex-direction:column;
 //     .inputText{
 //       margin-left:0px;
 //     }
 //   }
-//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px)
 //   and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
 //     flex-direction:column;
 //     width:100%;
@@ -1503,7 +1726,7 @@ export default
 //       margin-left: 0px;
 //     }
 //   }
-//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+//   @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px)
 //   and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
 //     width:100%;
 //   }
@@ -1523,7 +1746,7 @@ export default
 // `;
 // const CategoryDropDown = styled(Dropdown)`
 //   width:410px;
-//   height:56px;     
+//   height:56px;
 //   border-radius:5px;
 //   font-size:20px;
 //   background-color:#EFEFEF !important;
@@ -1561,7 +1784,7 @@ export default
 //     text-align:left;
 //     color:#FF0000;
 //   }
-//   .tipDescription{  
+//   .tipDescription{
 //     margin-left:17px;
 //     font-size: 13px;
 //     font-weight:100;
@@ -1569,7 +1792,7 @@ export default
 //     text-align:left;
 //     line-height:25px;
 //     color:#707070;
-//   }      
+//   }
 //   @media only screen and (min-width : 780px) and (max-width:1440px) {
 //     flex-direction:column;
 //     .searchBox{
@@ -1580,7 +1803,7 @@ export default
 //     .searchBox{
 //       width:92%;
 //     }
-//   }   
+//   }
 // `;
 // const InviteMemberListBox = styled.div`
 //   margin-top:20px;
@@ -1932,16 +2155,7 @@ export default
 //       this.setState({ alone: true })
 //     }
 //   }
-//   deleteDesign = async () => {
-//     const answer = await confirm("디자인을 삭제하시겠습니까?", "확인", "취소");
-//     answer && this.props.DeleteDesignRequest(this.props.id, this.props.token)
-//       .then(async () => {
-//         window.location.href = geturl() + `/design`;
-//       })
-//       .catch(async () => {
-//         await alert("삭제에 실패하였습니다.", "확인");
-//       });
-//   }
+
 //   cancelDeleteDesign = () => {
 //     this.setState({ deleteModal: !this.state.deleteModal })
 //   }

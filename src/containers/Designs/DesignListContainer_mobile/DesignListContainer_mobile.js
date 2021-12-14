@@ -31,8 +31,9 @@ const Wrapper = styled.div`
     }
   }
   .scroll_wrapper{
-    width:100%;
-    height: 100vh;
+    width: 100%;
+    // height: 100vh;
+    // height: ${props => props.wrapper_height}px;
 
   }
 `
@@ -44,7 +45,7 @@ class DesignListContainer extends Component {
       reload: false, screenWidth: window.innerWidth,
       this_order: this.props.sort == "like" ? { text: "인기순", keyword: "like" } : { text: "등록순", keyword: "update" },
       this_category: { text: null, value: null },
-      main_category: { text: null, value: null }, sub_category: { text: null, value: null }, third_category:{text:null,value:null},
+      main_category: { text: null, value: null }, sub_category: { text: null, value: null }, third_category: { text: null, value: null },
       category2: [],
     };
     this.handleReload = this.handleReload.bind(this);
@@ -59,9 +60,9 @@ class DesignListContainer extends Component {
   componentDidMount() {
     this.props.GetCategoryAllRequest()
       .then(() => { this.props.GetDesignListCountRequest(this.props.cate1, this.props.cate2, this.props.cate3) });
-    this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, this.props.cate2,this.props.cate3, null);
+    this.props.GetDesignListRequest(0, this.props.sort, this.props.cate1, this.props.cate2, this.props.cate3, null);
     window.addEventListener("resize", this.handleResize, false);
-
+    // setTimeout(() => { },0);
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleResize, false);
@@ -101,18 +102,18 @@ class DesignListContainer extends Component {
     }
 
     if (this.props.category3 !== nextProps.category3) {
-      let third_category = {text:null,value:null};
-      let nCount=0;
+      let third_category = { text: null, value: null };
+      let nCount = 0;
       let nParent;
-      for(let i in nextProps.category2){
-        nextProps.category2&&nextProps.category2[i]&&nextProps.category2[i].map((item,index)=>{
-          if(this.props.cate2==item.value){
+      for (let i in nextProps.category2) {
+        nextProps.category2 && nextProps.category2[i] && nextProps.category2[i].map((item, index) => {
+          if (this.props.cate2 == item.value) {
             nParent = nCount;
           }
           nCount++;
         })
       }
-      nParent != -1 &&nextProps.category3[nParent]&&nextProps.category3[nParent].map((item, index) => {
+      nParent != -1 && nextProps.category3[nParent] && nextProps.category3[nParent].map((item, index) => {
         if (this.props.cate3 == item.value) {
           third_category.text = item.text;
           third_category.value = item.value;
@@ -143,7 +144,7 @@ class DesignListContainer extends Component {
     window.location.href = "/design" + `/${orderkeyword}` + "/" + category.value;
   }
   async handleChangeSubCategory(parent, category) {
-    console.log("handleChangeSubCategory:::::",category);
+    console.log("handleChangeSubCategory:::::", category);
     await this.setState({ main_category: parent, this_category: category, sub_category: category });
     this.props.GetDesignListCountRequest(this.state.main_category.value, category.value, null);
     this.handleReload();
@@ -152,14 +153,14 @@ class DesignListContainer extends Component {
 
     window.location.href = "/design" + `/${orderkeyword}` + "/" + parent.value + "/" + category.value;
   }
-  async handleChangeThirdCategory(old_parent,parent,category){
-    console.log(old_parent,parent,category.value);
-    await this.setState({ main_category: old_parent, this_category: category, sub_category: parent, third_category:category });
+  async handleChangeThirdCategory(old_parent, parent, category) {
+    console.log(old_parent, parent, category.value);
+    await this.setState({ main_category: old_parent, this_category: category, sub_category: parent, third_category: category });
     this.props.GetDesignListCountRequest(this.state.main_category.value, this.state.sub_category.value, category.value);
     this.handleReload();
     this.getList(0);
     const orderkeyword = this.props.sort == null ? "update" : `${this.props.sort}`;
-    window.location.href = "/design" + `/${orderkeyword}` + "/" + old_parent.value + "/" + parent.value+ "/" + category.value;
+    window.location.href = "/design" + `/${orderkeyword}` + "/" + old_parent.value + "/" + parent.value + "/" + category.value;
   }
   async handleChangeOrderOps(order) {
     await this.setState({ this_order: order })
@@ -174,7 +175,7 @@ class DesignListContainer extends Component {
   }
   async getList(page) {
     const { main_category, sub_category, third_category, keyword, this_order } = this.state;
-    return this.props.GetDesignListRequest(page, this_order.keyword || null, main_category.value || null, sub_category.value || null, third_category.value||null ,keyword || null);
+    return this.props.GetDesignListRequest(page, this_order.keyword || null, main_category.value || null, sub_category.value || null, third_category.value || null, keyword || null);
   }
   changeCategory(category) {
     if (this.state.this_category === category) {
@@ -184,27 +185,33 @@ class DesignListContainer extends Component {
   }
 
   render() {
-    const { main_category, this_category, sub_category,third_category, reload, this_order } = this.state
+    const { main_category, this_category, sub_category, third_category, reload, this_order } = this.state
     const { category1, category2, category3, Count, status } = this.props;
-    return(
-      <React.Fragment>
-        <Wrapper>
-          <div className="contentBox">
-          <div className="header_box">
-            <div style={{width:"67px"}}/>
-            <div className="category_name">{(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count})</div>
-            <OrderOption_mobile type="design" order_clicked={this.handleChangeOrderOps} selected={this_order} />
-          </div>
-          <div className="scroll_wrapper">
+    return (<Wrapper>
+      <div className="contentBox">
+
+        <div className="header_box">
+          <div style={{ width: "67px" }} />
+          <div className="category_name">{(this_category && this_category.text === "전체" ? "디자인" : this_category.text) || "디자인"}&nbsp;({Count})</div>
+          <OrderOption_mobile type="design" order_clicked={this.handleChangeOrderOps} selected={this_order} />
+        </div>
+        <div id="scroll-wrapper" className="scroll_wrapper">
           {status === "INIT"
             ? <Loading />
-            : <ScrollList_mobile {...opendesign_mobile_style.design_margin} reload={reload} handleReload={this.handleReload}
-              type="design" dataList={this.props.DesignList} dataListAdded={this.props.DesignListAdded} getListRequest={this.getList} />}
-          </div>
-          </div>
-        </Wrapper>
-      </React.Fragment>
-    )
+            : <ScrollList_mobile
+              id="scroll-list"
+              {...opendesign_mobile_style.design_margin}
+              reload={reload}
+              handleReload={this.handleReload}
+              type="design"
+              status={this.props.status}
+              dataList={this.props.DesignList}
+              dataListAdded={this.props.DesignListAdded}
+              getListRequest={this.getList}
+            />}
+        </div>
+      </div>
+    </Wrapper>)
   }
 }
 
@@ -217,7 +224,7 @@ const mapStateToProps = (state) => {
     category2: state.Category.status.category2,
     category3: state.Category.status.category3,
     Count: state.DesignList.status.Count,
-    status: state.DesignList.status
+    status: state.DesignList.DesignList.status,
   }
 }
 

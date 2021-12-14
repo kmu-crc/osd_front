@@ -360,9 +360,17 @@ class NewCardModal extends Component {
             return;
         }
         // new card
+
         await ValidationGroup(this.state, false)
             .then(async data => {
                 files = await data && data.files;
+                // console.log("NEWCARD:",
+                //     this.state.title, 
+                //     this.props.designId, 
+                //     this.props.boardId, 
+                //     this.props.token,
+                //     data, this.state);
+                // return;
                 await this.props.CreateDesignCardRequest({ title: this.state.title }, this.props.designId, this.props.boardId, this.props.token)
                     .then(async (res) => {
                         if (res.success) {

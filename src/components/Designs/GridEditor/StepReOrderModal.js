@@ -5,8 +5,8 @@ import { Modal, Dropdown } from 'semantic-ui-react';
 
 
 const ReOrderStepDialog = styled(Modal)`
-   min-width: 320px;
-   max-width: 849px;
+//    min-width: 320px;
+//    max-width: 849px;
    border-radius: 5px;
    background-color: #FFFFFF;
    box-shadow: 0px 3px 6px #FF0000;
@@ -151,7 +151,6 @@ class StepReOrderModal extends Component {
     render() {
         const { title, options, open, current } = this.props;
         const { target } = this.state;
-        // console.log(options);
 
         return (<ReOrderStepDialog
             onKeyDown={this.handleKeyDown}
