@@ -305,6 +305,7 @@ const RoomDiv = styled.div`
 	position: relative;
 	width: 100%;
 	height: ${props => props.h}px;
+	overflow-y: auto;
 	// *{border:1px solid white;}
 	.btn {
 		display: flex;
@@ -340,6 +341,18 @@ const RoomDiv = styled.div`
 		color: rgba(255, 255, 255, 1.0);
 		width: max-content;
 	  }
+
+	::-webkit-scrollbar {
+		position: block;
+		width: 2px;   
+		padding-right: 2px;
+	}
+	::-webkit-scrollbar * {
+		background: transparent;
+	}
+	::-webkit-scrollbar-thumb {
+		background: rgba(255, 0, 0, 1) !important;
+	}
 `;
 const MenuBarContainer = styled.div`
   width: 100%;
@@ -386,21 +399,6 @@ const ContentContainer = styled.div`
 		justify-content: center;
 		padding: 5px;
 		width: 100%;
-		height: 500px;
-		overflow-y: auto;
-		overflow-x: hidden;
-
-		::-webkit-scrollbar {
-			position: block;
-			width: 4px;   
-			padding-right: 2px;
-		}
-		::-webkit-scrollbar * {
-			background: transparent;
-		}
-		::-webkit-scrollbar-thumb {
-			background: rgba(255, 0, 0, 1) !important;
-		}
 	}
 
 `;
@@ -596,7 +594,7 @@ class Room extends React.Component {
 				: null}
 
 			{/* contents */}
-			<ContentContainer bigscreen={mode === "scroll" ? true : false}>
+			<ContentContainer>
 				{/* <div className="panel" >
 					<img src={bg} className="logo" />
 				</div> */}
@@ -622,82 +620,6 @@ class Room extends React.Component {
 				</BigScreenContainer>
 
 				<div className="grid-container">
-					<Me
-						needReload={() => {
-							this.video.srcObject = null;
-							mixer && mixer.set_pinned_id(null);
-							this.setState({ mode: "grid" });
-						}}
-						userInfo={this.props.userInfo}
-						clicked={(me, stream) => { this.clickedview(me, stream) }}
-						thumbnail={this.props.userInfo.thumbnail}
-					/>
-					<Me
-						needReload={() => {
-							this.video.srcObject = null;
-							mixer && mixer.set_pinned_id(null);
-							this.setState({ mode: "grid" });
-						}}
-						userInfo={this.props.userInfo}
-						clicked={(me, stream) => { this.clickedview(me, stream) }}
-						thumbnail={this.props.userInfo.thumbnail}
-					/>					<Me
-						needReload={() => {
-							this.video.srcObject = null;
-							mixer && mixer.set_pinned_id(null);
-							this.setState({ mode: "grid" });
-						}}
-						userInfo={this.props.userInfo}
-						clicked={(me, stream) => { this.clickedview(me, stream) }}
-						thumbnail={this.props.userInfo.thumbnail}
-					/>					<Me
-						needReload={() => {
-							this.video.srcObject = null;
-							mixer && mixer.set_pinned_id(null);
-							this.setState({ mode: "grid" });
-						}}
-						userInfo={this.props.userInfo}
-						clicked={(me, stream) => { this.clickedview(me, stream) }}
-						thumbnail={this.props.userInfo.thumbnail}
-					/>					<Me
-						needReload={() => {
-							this.video.srcObject = null;
-							mixer && mixer.set_pinned_id(null);
-							this.setState({ mode: "grid" });
-						}}
-						userInfo={this.props.userInfo}
-						clicked={(me, stream) => { this.clickedview(me, stream) }}
-						thumbnail={this.props.userInfo.thumbnail}
-					/>					<Me
-						needReload={() => {
-							this.video.srcObject = null;
-							mixer && mixer.set_pinned_id(null);
-							this.setState({ mode: "grid" });
-						}}
-						userInfo={this.props.userInfo}
-						clicked={(me, stream) => { this.clickedview(me, stream) }}
-						thumbnail={this.props.userInfo.thumbnail}
-					/>					<Me
-						needReload={() => {
-							this.video.srcObject = null;
-							mixer && mixer.set_pinned_id(null);
-							this.setState({ mode: "grid" });
-						}}
-						userInfo={this.props.userInfo}
-						clicked={(me, stream) => { this.clickedview(me, stream) }}
-						thumbnail={this.props.userInfo.thumbnail}
-					/>
-					<Me
-						needReload={() => {
-							this.video.srcObject = null;
-							mixer && mixer.set_pinned_id(null);
-							this.setState({ mode: "grid" });
-						}}
-						userInfo={this.props.userInfo}
-						clicked={(me, stream) => { this.clickedview(me, stream) }}
-						thumbnail={this.props.userInfo.thumbnail}
-					/>
-
 					<Me
 						needReload={() => {
 							this.video.srcObject = null;
