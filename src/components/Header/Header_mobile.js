@@ -22,13 +22,15 @@ const MobileHeaderMenu = styled.ul`
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  // width: 360px;
-  width: 100%;
+  width: ${window.innerWidth}px;
   padding: 0px;
   margin: 0px;
 `;
 const MenuElement = styled.li`
   list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 
   &.logo {
     border: none;
@@ -130,7 +132,7 @@ class Header extends Component {
           if (alarm.count) {
           }
         });
-        Socket.on("disconnect", () => {});
+        Socket.on("disconnect", () => { });
       } catch (err) {
         console.error(err);
       }
@@ -170,7 +172,7 @@ class Header extends Component {
           <MenuElement className="logo">
             {/* const location = window.location.pathname.toLowerCase().split("/"); */}
             {window.location.pathname.toLowerCase() === "/design" ||
-            window.location.pathname.toLowerCase() === "/createdesign" ? (
+              window.location.pathname.toLowerCase() === "/createdesign" ? (
               <img src={mobilelogoblue} />
             ) : (
               <img src={mobilelogored} />
@@ -180,21 +182,12 @@ class Header extends Component {
 
         {/* 검색 */}
         <MenuElement className="search">
-          {window.location.href.search("/search") > -1 ? (
-            <SearchForm
-              {...this.props}
-              formWidth={200}
-              searchCategory={this.state.selectCate}
-              visible={1}
-            />
-          ) : (
-            <SearchForm
-              {...this.props}
-              formWidth={200}
-              searchCategory={this.state.selectCate}
-              visible={1}
-            />
-          )}
+          <SearchForm
+            {...this.props}
+            // formWidth={170}
+            searchCategory={this.state.selectCate}
+            visible={1}
+          />
         </MenuElement>
         {/* 로그인 / 디자인 등록 */}
         {this.props.userInfo == null ? ( //유저정보o

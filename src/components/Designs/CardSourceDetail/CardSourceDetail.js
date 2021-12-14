@@ -2039,7 +2039,7 @@ class CardSourceDetail extends Component {
 
                 {/* link controller */}
                 {item.type === "LINK" ? (
-                  itemEdit ? (
+                  itemEdit || this.props.edit ? (
                     <ControllerWrap>
                       <LinkController
                         item={item}

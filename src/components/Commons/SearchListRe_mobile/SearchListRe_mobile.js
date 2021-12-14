@@ -17,14 +17,15 @@ const Wrapper = styled.div`
     display:flex;
     justify-content:center;
     .content{
-        width:360px;
+        width:${window.innerWidth}px;
     }
     .header{
-        width:100%;
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        padding-left:7px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 35px;
+        padding-right: 5px;
     }
     .list{
         margin-top:20px;

@@ -21,6 +21,7 @@ const DesignCard = styled.div`
   flex-direction:column;
   background-color:#7A7A7A;
   box-shadow: 0px 3px 6px #00000029;
+  position: relative;
 
   .thumbnail{
     width:100px;
@@ -35,6 +36,15 @@ const DesignCard = styled.div`
     border-radius:12px;
     box-shadow: 0px 3px 6px #00000029;
 
+  }
+  .forked {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    width: 16px;
+    height: 35px;
+    background-image: url(${forked});
+    background-size: cover;
   }
   .info{
     *{
@@ -86,6 +96,7 @@ class Design_mobile extends Component {
     return (
       <React.Fragment>
         <DesignCard onClick={this.gotoDetailPage} url={(thumbnail === null ? noimg : thumbnail.l_img === null ? noimg : thumbnail.l_img)}>
+          {isForked && <div className="forked" />}
           <div className="thumbnail" />
           <div className="info">
             <div className="title"><TextFormat tip width="100%" txt={data.title} single /></div>
