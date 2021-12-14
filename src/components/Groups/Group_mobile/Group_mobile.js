@@ -132,7 +132,7 @@ class Group_mobile extends Component {
                       </div>
                     </div>
                     <div className="nickname">
-                      <TextFormat tip txt={group.nick_name} width="100%" />
+                      <TextFormat tip txt={group.userName || "닉네임"} width="100%" />
                     </div>
               </div>
           </div>

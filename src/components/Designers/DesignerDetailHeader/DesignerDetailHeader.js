@@ -327,7 +327,7 @@ class DesignerPageHeader extends Component {
     }
     gotoMyModify() {
         let href = window.location.href.substring(0, window.location.href.search("designerDetail"))
-        window.location.href = href + 'mymodify';
+        window.location.href = "/mymodify";
     }
     async needLogin() {
         await alert("로그인 해주세요.", "확인");

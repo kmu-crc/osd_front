@@ -330,7 +330,7 @@ class Navigation extends Component {
                     Socket.emit("INIT", this.props.userInfo.uid)
                 Socket.on("getNoti", alarm => {
                     this.setState({ alarm: alarm })
-                    console.log(alarm)
+                    // console.log(alarm)
                     if (alarm.count) {
                     }
                 })
@@ -344,7 +344,7 @@ class Navigation extends Component {
 
         const location = window.location.pathname.toLowerCase().split("/");
 
-        console.log("MOUNT:", location);
+        // console.log("MOUNT:", location);
 
         location[1] != null
             && this.state.level0.find(level => level.id == location[1])

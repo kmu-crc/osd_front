@@ -2,16 +2,21 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import DesignDetail from "components/Designs/DesignDetail";
+import DesignDetailMobile from "components/Designs/DesignDetailMobile";
 import {
   ForkDesignRequest, ForkDesignListRequest, JoinDesignRequest, GetoutDesignRequest,
   DesignWaitingListRequest, GetCountDesignCommentRequest,
   GetDesignDetailRequest, DesignDetailResetRequest, UpdateDesignViewRequest,
   GetDesignCountRequest, GetLikeDesignRequest, LikeDesignRequest, UnlikeDesignRequest
 } from "redux/modules/design";
+import { isMobile } from "constant";
 
 class DesignDetailContainer extends Component {
   render() {
-    return (<DesignDetail {...this.props} />)
+    return (
+      isMobile()
+        ? <DesignDetailMobile {...this.props} />
+        : <DesignDetail {...this.props} />)
   }
 };
 

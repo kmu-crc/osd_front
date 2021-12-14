@@ -36,7 +36,7 @@ const Wrapper = styled.div`
   }
 
 `
-const SliderBlank=styled.div`
+const SliderBlank = styled.div`
   width:100%;
   height:360px;
 `
@@ -96,7 +96,7 @@ let settings = {
   autoplaySpeed: 4000,
   slidesToScroll: 1,
   arrows: false,
-  pauseOnHover:false,
+  pauseOnHover: false,
 };
 export default class Main_mobile extends Component {
   constructor(props) {
@@ -189,7 +189,7 @@ export default class Main_mobile extends Component {
                   {...{
                     width: 300,
                     height: 130,
-                    top: height - 490,
+                    top: height - 540,
                     left: 50,
                   }}
                 >
@@ -206,14 +206,18 @@ export default class Main_mobile extends Component {
               </Banner>
             </Slider>
           </SliderWrapper>
-          <SliderBlank/>
+          <SliderBlank />
 
           <TopGroupListContainer_mobile width={widthScroll} />
-          <div className="hrline"><div className="line"/></div>
-          <TopDesignListContainer_mobile width={widthScroll}/>
+
+          <div className="hrline">
+            <div className="line" />
+          </div>
+
+          <TopDesignListContainer_mobile width={widthScroll} />
+
         </Wrapper>
-      </React.Fragment>
-    );
+      </React.Fragment>);
   }
 }
 {/* <React.Fragment>

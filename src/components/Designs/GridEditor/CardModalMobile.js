@@ -14,7 +14,7 @@ import {
 } from "redux/modules/design";
 import CardSourceDetailContainer from 'containers/Designs/CardSourceDetailContainer';
 import CardComment from './CardComment';
-import { FormThumbnailEx } from "components/Commons/FormItems";
+import { FormThumbnailExMobile as FormThumbnailEx } from "components/Commons/FormItems";
 // import TextFormat from 'modules/TextFormat';
 import Loading from "components/Commons/Loading";
 import { ValidationGroup } from "modules/FormControl";
@@ -22,18 +22,13 @@ import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
 
 const ContentBorder = styled.div`
-//    font-family: Noto Sans KR;
-//    font-size: 20px;
-//    color: #707070;
-//    font-weight: 500;
-//    line-height: 29px;
-//    margin-top:20px;
-//    margin-bottom:20px;
-//    .border-line {
-//        border-bottom: 1px solid #707070;
-//    }
+   .border-line {
+       border-bottom: 1px solid #707070;
+   }
 `;
 const CommentWrapper = styled.div`
+   margin-top: 15px;
+   
    .comment-title {
        margin-left: 15px;
    }
@@ -208,9 +203,13 @@ const CardDialog = styled(Modal)`
         }
 `;
 const EditCardHeaderContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+
     .edit-header-container {
         display: flex;
-        margin-top: 15px;
+        margin-top: 5px;
         margin-left: 5px;
         width: max-content;
         .edit-card-info {
@@ -226,8 +225,8 @@ const EditCardHeaderContainer = styled.div`
     }
     .edit-header-thumbnail {
         width: max-content;
-        margin-top: 25px;
-        margin-left: 15px;
+        margin-top: 5px;
+        // margin-left: 15px;
         .thumbnail-txt {
             width: max-content;
             height: 29px;
@@ -507,109 +506,130 @@ class CardModalMobile extends Component {
         const imgURL = (this.props.card && this.props.card.first_img && this.props.card.first_img.l_img) || null;
         const { card, isTeam, open } = this.props;
 
-        return (
-            <React.Fragment>
-                <CardDialog open={open ? true : false} onClose={this.onClose}>
+        return (<CardDialog open={open ? true : false} onClose={this.onClose}>
 
-                    {this.state.loading && <Loading />}
+            {this.state.loading && <Loading />}
 
-                    <div className="close-box" onClick={this.onClose} >
-                        <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
+            <div className="close-box" onClick={this.onClose} >
+                <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
+            </div>
+
+            <div className="content-wrapper">
+                {this.state.edit === false
+                    ? <div>
+                        <div className="card-header-first">
+                            <div className="header-title">{card.title}</div>
+                            <div className="header-edit-button">
+                                {this.props.edit ?
+                                    <React.Fragment>
+                                        <button
+                                            className="cancel-btn"
+                                            onClick={(event) => this.removeCard(event)}>
+                                            삭제</button>
+                                        <button
+                                            className="edit-btn"
+                                            onClick={() => this.setState({
+                                                edit: !this.state.edit,
+                                                title: card.title,
+                                                content: card.content
+                                            })}>
+                                            수정</button>
+                                    </React.Fragment> : undefined}
+                            </div>
+                        </div>
+                        <div className="card-header-second" >
+                            <div className="contents">{card.content || ""}</div>
+                            {/* <div className="contents"><TextFormat txt={card.content || ""}/></div> */}
+                            <div className="card-header-third">
+                                <div className="nick-name">{card.nick_name}</div>
+                                <div className="update-time">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="content-wrapper" >
-                        {this.state.edit === false
-                            ? <div>
-                                <div className="card-header-first">
-                                    <div className="header-title">{card.title}</div>
-                                    <div className="header-edit-button">
-                                        {this.props.edit ?
-                                            <React.Fragment>
-                                                <button className="cancel-btn" onClick={(event) => this.removeCard(event)} >삭제</button>
-                                                <button className="edit-btn" onClick={() => this.setState({ edit: !this.state.edit, title: card.title, content: card.content })} >수정</button>
-                                            </React.Fragment> : undefined}
-                                    </div>
+                    : <EditCardHeaderContainer>
+
+                        {(card.user_id === (this.props.userInfo && this.props.userInfo.uid)) ?
+                            <div className="private-box-toggle">
+                                <div className={`icon-wrapper ${this.state.private ? "lock" : "unlock"}`}
+                                    onClick={() => this.setState({ private: !this.state.private })}>
+                                    {this.state.private
+                                        ? <i className="lock big icon" />
+                                        : <i className="unlock big icon" />}
                                 </div>
-                                <div className="card-header-second" >
-                                    <div className="contents">{card.content || ""}</div>
-                                    {/* <div className="contents"><TextFormat txt={card.content || ""}/></div> */}
-                                    <div className="card-header-third">
-                                        <div className="nick-name">{card.nick_name}</div>
-                                        <div className="update-time">(업데이트&nbsp;:&nbsp;{DateFormat(card.update_time)})</div>
-                                    </div>
+                                <div>
+                                    {this.state.private ? "비공개" : "공개"}
                                 </div>
                             </div>
+                            : null}
 
-                            : <React.Fragment>
-                                <EditCardHeaderContainer>
-                                    {(card.user_id === (this.props.userInfo && this.props.userInfo.uid)) ?
-                                        <div className="private-box-toggle" >
-                                            <div className={`icon-wrapper ${this.state.private ? "lock" : "unlock"}`} onClick={() => this.setState({ private: !this.state.private })}>
-                                                {this.state.private
-                                                    ? <i className="lock big icon" />
-                                                    : <i className="unlock big icon" />}
-                                                {/* {card.private !== 1 ? */}
-                                                {/* } */}
-                                            </div>
-                                            <div>
-                                                {this.state.private ? "비공개" : "공개"}
-                                                </div>
-                                        </div>
-                                        : null}
-                                    <div className="edit-header-container">
-                                        <div className="edit-card-info">컨텐츠 정보 수정</div>
-                                    </div>
-                                    <div className="edit-header-thumbnail">
-                                        <div className="thumbnail-txt">컨텐츠 이미지</div>
-                                        <FormThumbnailEx style={{ width: "210px", height: "210px", marginLeft: "30px", borderRadius: "10px", backgroundColor: "#EFEFEF" }}
-                                            name="thumbnail" image={imgURL} placeholder="썸네일 등록" getValue={this.onChangeValueThumbnail} validates={["OnlyImages", "MaxFileSize(10000000)"]} />
-                                    </div>
-                                    <div className="edit-header-title">
-                                        <div className="title-txt">컨텐츠 제목</div>
-                                        <div className="title-input-container">
-                                            <input className="title-input-style" name="title" onChange={this.onChangeTitle} value={this.state.title} maxLength="20" placeholder="제목을 입력해주세요." />
-                                        </div>
-                                    </div>
-                                    <div className="edit-header-description">
-                                        <div className="description-txt">컨텐츠 설명</div>
-                                        <div className="description-input-container">
-                                            <input className="description-input-style" name="content" onChange={this.onChangeContent} value={this.state.content} maxLength="200" placeholder="설명을 입력해주세요." />
-                                        </div>
-                                    </div>
-                                </EditCardHeaderContainer>
-                            </React.Fragment>}
-
-
-
-                        <div className="content" >
-                            <ContentBorder><div className="border-line" /></ContentBorder>
-                            <CardSourceDetailContainer
-                                isEdit={this.state.edit}
-                                design_id={this.props.designId}
-                                handleUpdate={this.handleUpdate}
-                                handleSubmit={this.handleHeaderSubmit}
-                                uid={card.uid}
-                                isTeam={isTeam}
-                                edit={this.state.edit}
-                                handleClosed={this.handleClosed}
-                                handleCancel={this.handleClosed}
-                                closeEdit={this.handleClosed}
-                                openEdit={this.onChangeEditMode}
-                                closed={this.state.closed}
-                            />
+                        <div className="edit-header-container">
+                            <div className="edit-card-info">컨텐츠 정보 수정</div>
                         </div>
 
-                        <ContentBorder><div className="border-line" /></ContentBorder>
-
-                        <CommentWrapper>
-                            <div className="comment-title"><h3>댓글</h3></div>
-                            <div className="comment-body">
-                                <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} />
+                        <div className="edit-header-thumbnail">
+                            <div className="thumbnail-txt">컨텐츠 이미지</div>
+                            <FormThumbnailEx style={{
+                                width: "180px",
+                                height: "180px",
+                                marginLeft: `${(window.innerWidth - 180 - 20) / 2}`,
+                                borderRadius: "10px",
+                                backgroundColor: "#EFEFEF"
+                            }}
+                                name="thumbnail"
+                                image={imgURL}
+                                placeholder="썸네일 등록"
+                                getValue={this.onChangeValueThumbnail}
+                                validates={["OnlyImages", "MaxFileSize(10000000)"]} />
+                        </div>
+                        <div className="edit-header-title">
+                            <div className="title-txt">컨텐츠 제목</div>
+                            <div className="title-input-container">
+                                <input className="title-input-style" name="title" onChange={this.onChangeTitle} value={this.state.title} maxLength="20" placeholder="제목을 입력해주세요." />
                             </div>
-                        </CommentWrapper>
+                        </div>
+                        <div className="edit-header-description">
+                            <div className="description-txt">컨텐츠 설명</div>
+                            <div className="description-input-container">
+                                <input className="description-input-style" name="content" onChange={this.onChangeContent} value={this.state.content} maxLength="200" placeholder="설명을 입력해주세요." />
+                            </div>
+                        </div>
+                    </EditCardHeaderContainer>}
+
+
+
+                <div className="content" >
+
+                    <ContentBorder>
+                        <div className="border-line" />
+                    </ContentBorder>
+
+                    <CardSourceDetailContainer
+                        isEdit={this.state.edit}
+                        design_id={this.props.designId}
+                        handleUpdate={this.handleUpdate}
+                        handleSubmit={this.handleHeaderSubmit}
+                        uid={card.uid}
+                        isTeam={isTeam}
+                        edit={this.state.edit}
+                        handleClosed={this.handleClosed}
+                        handleCancel={this.handleClosed}
+                        closeEdit={this.handleClosed}
+                        openEdit={this.onChangeEditMode}
+                        closed={this.state.closed}
+                    />
+                </div>
+
+                <ContentBorder><div className="border-line" /></ContentBorder>
+
+                <CommentWrapper>
+                    <div className="comment-title"><h3>댓글</h3></div>
+                    <div className="comment-body">
+                        <CardComment designId={this.props.design_id} cardId={this.props.card.uid} my={this.props.userInfo} />
                     </div>
-                </CardDialog>
-            </React.Fragment >)
+                </CommentWrapper>
+            </div>
+        </CardDialog>);
     }
 }
 
