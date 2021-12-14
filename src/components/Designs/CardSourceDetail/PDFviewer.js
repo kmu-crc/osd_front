@@ -30,21 +30,25 @@ const ZoomBox = styled.div`
   width:100%;
 `
 export const PdfViewer = (props) => {
-  const zoomPluginInstance = zoomPlugin();
+  const zoomPluginInstance = zoomPlugin(
+
+  );
   const { ZoomInButton, ZoomOutButton, ZoomPopover } = zoomPluginInstance;
-  const defaultLayoutPluginInstance = defaultLayoutPlugin({
-    toolbarPlugin: {
-      fullScreenPlugin: {
-        // Zoom to fit the screen after entering and exiting the full screen mode
-        onEnterFullScreen: (zoom) => {
-          zoom(SpecialZoomLevel.PageFit);
-        },
-        onExitFullScreen: (zoom) => {
-          zoom(SpecialZoomLevel.PageFit);
-        },
-      },
-    },
-  });
+//   const defaultLayoutPluginInstance = defaultLayoutPlugin({
+//     toolbarPlugin: {
+//         fullScreenPlugin: {
+//             // Zoom to fit the screen after entering and exiting the full screen mode
+//             onEnterFullScreen: (zoom) => {
+//                 zoom(SpecialZoomLevel.PageFit);
+//             },
+//             onExitFullScreen: (zoom) => {
+//                 zoom(SpecialZoomLevel.PageFit);
+//             },
+//         },
+//     },
+// });
+const defaultLayoutPluginInstance = defaultLayoutPlugin();
+
   return (<PDFwrapper className={props.height ? "fixed-height" : ""}>
     <div className="ZoomBox">
       <div
@@ -65,6 +69,7 @@ export const PdfViewer = (props) => {
 
     <Viewer
       fileUrl={props.pdf}
+      defaultScale={SpecialZoomLevel.PageFit}
       plugins={[
         zoomPluginInstance,
       ]}

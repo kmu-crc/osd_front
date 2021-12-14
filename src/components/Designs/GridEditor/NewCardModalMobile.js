@@ -353,6 +353,7 @@ class NewCardModal extends Component {
         await this.setState({ hook: false });
     };
     submit = async (obj) => {
+
         let files = null;
         if (!this.state.title || this.state.title === "") {
             await alert("컨텐츠의 제목을 입력하세요.", "확인");

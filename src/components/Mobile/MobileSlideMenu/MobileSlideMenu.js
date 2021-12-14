@@ -3,6 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import NavigationContainerMobile from "containers/Nav/NavigationContainer/NavigationContainerMobile";
 import { SLIDE_MENU_WIDTH } from "constant";
 import cookie from 'react-cookies';
+import { Back } from "components/Mobile/MobileSlideMenu";
 
 const MobileOpenAni = keyframes`
   0% { left: ${-1 * SLIDE_MENU_WIDTH}px; }
@@ -53,6 +54,8 @@ export default class MobileSlideMenu extends React.Component {
 
     render() {
         return (
+            <React.Fragment>
+            <Back onClick={this.onClickFoldingSideMenu} visible={this.state.sidemenu} /> 
             <MobileNavigationAni sidemenu={this.state.sidemenu} >
                 <div className="container-wrapper">
                     <NavigationContainerMobile
@@ -61,6 +64,7 @@ export default class MobileSlideMenu extends React.Component {
                     />
                 </div>
             </MobileNavigationAni>
+            </React.Fragment>
         );
     };
 };

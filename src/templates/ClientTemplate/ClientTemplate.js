@@ -205,10 +205,10 @@ class ClientTemplate extends Component {
     const { hideheader } = this.props;
     return (isMobile()
       ? <MobileWrapper>
-        <Back visible={this.state.sidemenu} />
+        {/* <Back visible={this.state.sidemenu} /> */}
 
         {/* navi */}
-        <MobileSlideMenu setSideMenu={(v) => this.setState({ sidemenu: v })} />
+        <MobileSlideMenu setSideMenu={(visible) => this.setState({ sidemenu: visible })} />
 
         {/* header */}
         {hideheader ? null

@@ -14,6 +14,7 @@ import Logo from "source/osd_logo.png";
 
 import GridEditorMobile from "components/Designs/GridEditor/GridEditorMobile";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
+import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer"
 
 const Wrapper = styled.div`
   margin-top: 2px;
@@ -1125,14 +1126,17 @@ export default
           {step === STEP_CONTENT
             && <ContentEditorForm>
 
-              {this.state.grid ?
-                this.props.DesignDetail && this.props.DesignDetail.is_project
-                  ? <GridEditorMobile
-                    editor={true}
-                    isMyDesign={true}
-                    design={this.props.DesignDetail}
-                    {...this.props}
-                  />
+          {this.state.grid ?
+                this.props.DesignDetail &&
+                this.props.DesignDetail.is_project
+                ? <DesignDetailStepContainer design={this.props.DesignDetail} isMyDesign={true} editor={true} />
+
+                  // ? <GridEditorMobile
+                  //   editor={true}
+                  //   isMyDesign={true}
+                  //   design={this.props.DesignDetail}
+                  //   {...this.props}
+                  // />
 
                   : <DesignDetailViewContainer
                     history={this.props.history}
