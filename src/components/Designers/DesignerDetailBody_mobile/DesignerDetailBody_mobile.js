@@ -220,7 +220,48 @@ class DesignerDetailBody_mobile extends Component {
                 <div className="list">
                 {this.props.status === "INIT"
                     ? <Loading />
-                    : <ScrollList_mobile {...opendesign_mobile_style.design_margin} handleReload={this.handleReload} reloader={reload} type="design" dataList={MyDesignInDesigner} dataListAdded={MyDesignInDesignerAdded} getListRequest={this.getMyDesignInDesignerRequest} />}
+                    // : <ScrollList_mobile {...opendesign_mobile_style.design_margin} handleReload={this.handleReload} reloader={reload} type="design_my" dataList={MyDesignInDesigner} dataListAdded={MyDesignInDesignerAdded} getListRequest={this.getMyDesignInDesignerRequest} />}
+                    : <ScrollList_mobile {...opendesign_mobile_style.design_my_margin} type="design_my" dataList={MyDesignInDesigner} dataListAdded={MyDesignInDesignerAdded} getListRequest={this.getMyDesignInDesignerRequest} />}
+
+                </div>}
+                 {this.state.cateIndex === 3 &&
+                <div className="list">
+                {Count.like_design > 0
+                    ? <React.Fragment>
+                        <div className="interested">관심있는 디자인({NumberFormat(Count.like_design)})</div>
+                        {this.props.status === "INIT" ?
+                            <Loading /> 
+                            // :<ScrollList_mobile {...opendesign_mobile_style.design_margin} handleReload={this.handleReload} reloader={reload}
+                            //     manual type="design" dataList={LikeInDesigner} dataListAdded={LikeInDesignerAdded} getListRequest={this.getLikeInDesignerRequest} />
+                            : <ScrollList_mobile manual handleReload={this.handleReload} reloader={reload} {...opendesign_mobile_style.design_my_margin} type="design_my" dataList={LikeInDesigner} dataListAdded={LikeInDesignerAdded} getListRequest={this.getLikeInDesignerRequest} />}
+                    </React.Fragment>
+                    : null}
+                {Count.like_group > 0
+                    ? <React.Fragment>
+                        <div className="interested">관심있는 그룹({NumberFormat(Count.like_group)})</div>
+                        {this.props.status === "INIT" ?
+                            <Loading /> 
+                            //: <ScrollList_mobile {...opendesign_mobile_style.group_margin} handleReload={this.handleReload} reloader={reload}
+                            //     manual type="group" dataList={LikeGroupInDesigner} dataListAdded={LikeGroupInDesignerAdded} getListRequest={this.getLikeGroupInDesignerRequest} />}
+                            : <ScrollList_mobile manual handleReload={this.handleReload} reloader={reload} {...opendesign_mobile_style.group_margin} type="group" dataList={LikeGroupInDesigner} dataListAdded={LikeGroupInDesignerAdded} getListRequest={this.getLikeGroupInDesignerRequest} />}
+                            </React.Fragment>
+                    : null}
+
+
+                {Count.like_designer > 0
+                    ? <React.Fragment>
+                        <div className="interested">관심있는 디자이너({NumberFormat(Count.like_designer)})</div>
+                        {this.props.status === "INIT" ?
+                            <Loading /> 
+                            // :<ScrollList_mobile {...opendesign_mobile_style.designer_margin} handleReload={this.handleReload} reloader={reload}
+                            //     manual type="designer" dataList={LikeDesignerInDesigner} dataListAdded={LikeDesignerInDesignerAdded} getListRequest={this.getLikeDesignerInDesignerRequest} />
+                            : <ScrollList_mobile manual handleReload={this.handleReload} reloader={reload} {...opendesign_mobile_style.designer_margin} type="designer" dataList={LikeDesignerInDesigner} dataListAdded={LikeDesignerInDesignerAdded} getListRequest={this.getLikeDesignerInDesignerRequest} />
+                        }
+                        </React.Fragment>
+                        : null}
+                {/* {this.props.status === "INIT"
+                    ? <Loading />
+                    : <ScrollList_mobile {...opendesign_mobile_style.design_my_margin} type="design_my" dataList={MyDesign} dataListAdded={MyDesignAdded} getListRequest={this.getMyDesignListRequest} />}
                 </div>}
                  {this.state.cateIndex === 3 &&
                 <div className="list">
@@ -229,7 +270,7 @@ class DesignerDetailBody_mobile extends Component {
                         <div className="interested">관심있는 디자인({NumberFormat(Count.like_design)})</div>
                         {this.props.status === "INIT"
                             ? <Loading />
-                            : <ScrollList_mobile {...opendesign_mobile_style.group_margin} handleReload={this.handleReload} reloader={reload} manual type="group" dataList={LikeGroupInDesigner} dataListAdded={LikeGroupInDesignerAdded} getListRequest={this.getLikeGroupInDesignerRequest}  />}
+                            : <ScrollList_mobile manual {...opendesign_mobile_style.design_my_margin} type="design_my" dataList={MyLikeDesign} dataListAdded={MyLikeDesignAdded} getListRequest={this.getLikeDesignList} />}
                     </React.Fragment>
                     : null}
                 {Count.like_group > 0
@@ -237,7 +278,7 @@ class DesignerDetailBody_mobile extends Component {
                         <div className="interested">관심있는 그룹({NumberFormat(Count.like_group)})</div>
                         {this.props.status === "INIT"
                             ? <Loading />
-                            : <ScrollList_mobile {...opendesign_mobile_style.design_margin} handleReload={this.handleReload} reloader={reload} manual type="design" dataList={LikeInDesigner} dataListAdded={LikeInDesignerAdded} getListRequest={this.getLikeInDesignerRequest} manual type="designer" dataList={LikeDesignerInDesigner} dataListAdded={LikeDesignerInDesignerAdded} getListRequest={this.getLikeDesignerInDesignerRequest} />}
+                            : <ScrollList_mobile manual {...opendesign_mobile_style.group_margin} type="group" dataList={MyLikeGroup} dataListAdded={MyLikeGroupAdded} getListRequest={this.getLikeGroupList} />}
                     </React.Fragment>
                     : null}                
                 {Count.like_designer > 0
@@ -245,9 +286,38 @@ class DesignerDetailBody_mobile extends Component {
                         <div className="interested">관심있는 디자이너({NumberFormat(Count.like_designer)})</div>
                         {this.props.status === "INIT"
                             ? <Loading />
-                            : <ScrollList_mobile {...opendesign_mobile_style.designer_margin} handleReload={this.handleReload} reloader={reload} />}
+                            : <ScrollList_mobile manual {...opendesign_mobile_style.designer_margin} type="designer" dataList={MyLikeDesigner} dataListAdded={MyLikeDesignerAdded} getListRequest={this.getLikeDesignerList} />}
                     </React.Fragment>
                     : null}
+                     </div>} */}
+
+
+                {/* {Count.like_design > 0
+                    ? <React.Fragment>
+                        <div className="interested">관심있는 디자인({NumberFormat(Count.like_design)})</div>
+                        {this.props.status === "INIT"
+                            ? <Loading />
+                            : <ScrollList_mobile manual {...opendesign_mobile_style.design_my_margin} type="design_my" handleReload={this.handleReload} reloader={reload} dataList={LikeInDesigner} dataListAdded={LikeInDesignerAdded} getListRequest={this.getLikeIndesign} manual type="design" dataList={LikeDesignerInDesigner} dataListAdded={LikeDesignerInDesignerAdded} getListRequest={this.getLikeInDesignerRequest}  />}
+                    </React.Fragment>
+                    : null}
+                {Count.like_group > 0
+                    ? <React.Fragment>
+                        <div className="interested">관심있는 그룹({NumberFormat(Count.like_group)})</div>
+                        {this.props.status === "INIT"
+                            ? <Loading />
+                            : <ScrollList_mobile manual {...opendesign_mobile_style.group_margin} type="group" handleReload={this.handleReload} reloader={reload} dataList={LikeGroupInDesigner} dataListAdded={LikeGroupInDesignerAdded} getListRequest={this.getLikeGroupInDesignerRequest} />}
+                    </React.Fragment>
+                    : null}                
+                {Count.like_designer > 0
+                    ? <React.Fragment>
+                        <div className="interested">관심있는 디자이너({NumberFormat(Count.like_designer)})</div>
+                        {this.props.status === "INIT"
+                            ? <Loading />
+                            : <ScrollList_mobile manual {...opendesign_mobile_style.designer_margin} type="designer" handleReload={this.handleReload} reloader={reload} dataList={LikeDesignerInDesigner} dataListAdded={LikeDesignerInDesignerAdded} getListRequest={this.getLikeInDesignerRequest} />}
+                    </React.Fragment>
+                    : null} */}
+
+
                 {Count.like_design<=0&&Count.like_group<=0&&Count.like_designer<=0?<EmptyBox>내용이 없습니다</EmptyBox>:null}
                      </div>}
                 {this.state.cateIndex === 4 &&

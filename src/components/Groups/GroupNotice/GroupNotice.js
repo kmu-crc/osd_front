@@ -30,6 +30,7 @@ const Wrapper = styled.div`
     line-height: 1rem;
   }
   .bg_green{background-color:#1E9B79;}
+  .bg_black{background-color:#000000;}
   .marginRight2{margin-right:38px;}
   .button_{
     width:142px;

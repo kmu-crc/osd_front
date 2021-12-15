@@ -812,7 +812,7 @@ class DesignInfo extends Component {
                         <img className="thumbnail" src={thumbnail} />
                     </div>
                     <div className="infoBox">
-                        <div className="design_name">
+                        <div title={DesignDetail.title} className="design_name">
                             {DesignDetail.title}
                         </div>
                         <div className="row detail_height">

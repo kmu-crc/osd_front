@@ -386,7 +386,7 @@ class DesignerPageHeader extends Component {
                 <div className="wrapper">
                     <Details>
                         <div className="wrapper">
-                            <div className="nick">{DesignerDetail.nick_name}</div>
+                            <div title={DesignerDetail.nick_name} className="nick">{DesignerDetail.nick_name}</div>
                             {DesignerDetail.categoryName ? <div className="cate">{DesignerDetail.categoryName}</div> : null}
                             <div className="about ellipsis">{DesignerDetail.about_me}</div>
                         </div>

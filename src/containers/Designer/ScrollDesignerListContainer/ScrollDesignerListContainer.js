@@ -54,7 +54,7 @@ class ScrollDesignerListContainer extends Component {
 
   render() {
     const { dataListAdded } = this.props;
-
+    console.log("designer:",this.props.display);
     return (
       <div>
         {dataListAdded.length <= 0 ?

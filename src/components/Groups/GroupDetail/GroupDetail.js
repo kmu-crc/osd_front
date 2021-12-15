@@ -22,7 +22,8 @@ const Wrapper = styled.div`
   // margin-left: 100px;
   // max-width: 1740px;
   min-width: 1000px;
-
+  padding-top: 42px;
+  padding-left: 38px;
   flex-direction: column;
   display:flex;
 
@@ -40,11 +41,12 @@ const Wrapper = styled.div`
 `;
 const BodyWrapper = styled.div`
   padding-top: 28px;
-  padding-left: 38px;
-  padding-right: 38px;
+  // padding-left: 38px;
+  // padding-right: 38px;
   .menu-container {
+    width:100%;
     max-width: 1737px;
-    min-width: 1000px;
+    min-width: 900px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
