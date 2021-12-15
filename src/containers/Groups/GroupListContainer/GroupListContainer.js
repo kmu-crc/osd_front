@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetGroupListRequest, GetGroupTotalCountRequest } from "redux/modules/group";
 import OrderOption from "components/Commons/OrderOption";
@@ -36,7 +36,7 @@ const Wrapper = styled.div`
       font-family:Spoqa Han Sans Neo;
       font-weight:Medium;
       font-size:24px;
-      color:#1262AB;
+      color:#1E9B79;
       display:flex;
       align-items:center;
     }
