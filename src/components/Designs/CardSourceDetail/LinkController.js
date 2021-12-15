@@ -152,8 +152,8 @@ class LinkController extends Component {
       <LinkPreview>
         <div className="title_">미리보기</div>
         <div className="preview_">
-        <div className="description">{description}</div>
-        <div className="url">{url}</div>
+          <div className="description">{description}</div>
+          <div className="url">{url}</div>
         </div>
       </LinkPreview>
 
@@ -162,6 +162,7 @@ class LinkController extends Component {
 
         <div className="content">
           <input
+            value={url}
             // <ContentEditable
             // getText
             // html={url}
@@ -179,6 +180,7 @@ class LinkController extends Component {
 
         <div className="content">
           <input
+            value={description}
             // <ContentEditable
             // getText
             // html={description}

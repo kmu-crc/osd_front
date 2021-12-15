@@ -464,6 +464,7 @@ const LinkPreview = styled.div`
     line-height: 0.9rem;
     padding: 0.5rem;
     color: #0645ad;
+    cursor: pointer;
   }
   .description {
     font-size: 1.5rem;
@@ -1050,9 +1051,6 @@ class CardSourceDetail extends Component {
         })
       );
     }
-    alert(this.props.uid);
-    console.log({ formData });
-    return;
     if (this.props.uid !== "new") {
       // console.log(formData);
       if (this.props.handleSubmit) {
@@ -1090,6 +1088,7 @@ class CardSourceDetail extends Component {
         origin: this.props.origin,
         edit: false,
         loading: false,
+        selectOrder: -1,
       });
       this.props.handleCancel && this.props.handleCancel();
     } else {
@@ -1778,8 +1777,8 @@ class CardSourceDetail extends Component {
 
                 {/* text-controller */}
                 {item.type === "TEXT" ? (
-                  itemEdit &&
-                    (item.initClick || this.state.selectOrder == item.order) ? (
+                  (this.props.edit &&
+                    (item.initClick || this.state.selectOrder == item.order)) ? (
                     <ControllerWrap>
                       <TextController
                         item={item}
@@ -1848,7 +1847,7 @@ class CardSourceDetail extends Component {
 
                 {/* file & image controller */}
                 {item.type === "FILE" ? (
-                  itemEdit ? (
+                  itemEdit && this.props.edit ? (
                     <ControllerWrap>
                       <FileController
                         item={item}
@@ -2041,7 +2040,7 @@ class CardSourceDetail extends Component {
 
                 {/* link controller */}
                 {item.type === "LINK" ? (
-                  itemEdit ? (
+                  this.props.edit && (item.user_id == null || this.props.userInfo.uid === item.user_id) ? (
                     <ControllerWrap>
                       <LinkController
                         item={item}
@@ -2055,36 +2054,19 @@ class CardSourceDetail extends Component {
                     <ViewContent>
                       <LinkPreview>
                         <div className="description">
-                          {IsJsonString(item.content)
-                            ? JSON.parse(item.content).hasOwnProperty(
-                              "description"
-                            )
-                              ? "*" + JSON.parse(item.content).description
-                              : ""
-                            : ""}
+                          {((IsJsonString(item.content)
+                            && JSON.parse(item.content).hasOwnProperty("description")
+                            && JSON.parse(item.content).description)) || "-"}
                         </div>
                         <div className="url">
-                          <a
-                            target="_blank"
-                            href={`${IsJsonString(item.content)
-                              ? JSON.parse(item.content).hasOwnProperty(
-                                "url"
-                              )
-                                ? JSON.parse(item.content).url
-                                : "invalid"
-                              : "invalid"
-                              }`}
-                          >
-                            (
-                            {IsJsonString(item.content)
-                              ? JSON.parse(item.content).hasOwnProperty("url")
-                                ? JSON.parse(item.content).url
-                                : "invalid"
-                              : "invalid"}
-                            )
-                          </a>
-                        </div>{" "}
-                        {/* */}
+                          {(((IsJsonString(item.content)
+                            && JSON.parse(item.content).hasOwnProperty("url")
+                            && JSON.parse(item.content).url))
+                            &&
+                            <a target="_blank" onClick={() => window.location.href = JSON.parse(item.content).url} >
+                              {JSON.parse(item.content).url}</a>) || "-"}
+                        </div>
+
                       </LinkPreview>
                     </ViewContent>
                   )

@@ -101,9 +101,7 @@ const MobileSearchContainer = styled.div`
 
     input {
         height: 20px;
-        width: 170px;
         margin-left: 7px;
-        // padding-left: 5px;
         border: none;
         :focus {
             outline: none;

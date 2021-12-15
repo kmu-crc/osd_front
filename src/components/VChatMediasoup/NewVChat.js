@@ -16,6 +16,8 @@ import RoomContext from './RoomContext';
 import * as stateActions from './redux/stateActions';
 import reducers from './redux/reducers';
 import Room from './components/Room';
+import RoomMobile from './components/RoomMobile';
+import { isMobile } from 'constant';
 
 const logger = new Logger();
 const reduxMiddlewares = [thunk];
@@ -124,7 +126,10 @@ async function run(props) {
   render(
     <Provider store={store}>
       <RoomContext.Provider value={roomClient}>
-        <Room {...props} roomClient={roomClient} />
+        {isMobile()
+          ? <RoomMobile {...props} roomClient={roomClient} />
+          : <Room {...props} roomClient={roomClient} />
+        }
       </RoomContext.Provider>
     </Provider>,
     document.getElementById('mediasoup-demo-app-container')
