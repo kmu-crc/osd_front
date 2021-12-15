@@ -21,16 +21,16 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
 .ck-editor__editable { 
   height:max-content;
-  min-height:${props=>props.userHeight == null ?"max-content":props.userHeight+"px"}; 
+  min-height:${props => props.userHeight == null ? "max-content" : props.userHeight + "px"}; 
 }
 `
 
 // import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
-ClassicEditor.builtinPlugins = [Essentials, Autoformat, Alignment, Font, Bold, Italic, BlockQuote, Heading, Link, Paragraph, Table, TableToolbar,Indent,IndentBlock]
+ClassicEditor.builtinPlugins = [Essentials, Autoformat, Alignment, Font, Bold, Italic, BlockQuote, Heading, Link, Paragraph, Table, TableToolbar, Indent, IndentBlock]
 ClassicEditor.defaultConfig = {
   startupFocus: true,
   alignment: { options: ['left', 'center', 'justify', 'right'] },
-  toolbar: { items: ['heading', '|', 'fontSize', /*'fontFamily',*/ 'fontColor', 'fontBackgroundColor', 'bold', 'italic', 'alignment','|','outdent','indent','|', 'link', 'blockQuote', 'insertTable', 'undo', 'redo'] },
+  toolbar: { items: ['heading', '|', 'fontSize', /*'fontFamily',*/ 'fontColor', 'fontBackgroundColor', 'bold', 'italic', 'alignment', '|', 'outdent', 'indent', '|', 'link', 'blockQuote', 'insertTable', 'undo', 'redo'] },
   table: { contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'] },
   indentBlock: {
     offset: 5,
@@ -58,13 +58,14 @@ class TextControllerPlus extends Component {
     console.log(this.props);
     return (
       <Wrapper height={window.document.getElementsByClassName("ck-editor__editable").height} userHeight={this.props.userHeight}>
-      <CKEditor
-        id={id}
-        ref={ref => (this.edit = ref)}
-        data={item.content}
-        onBlur={this.onSave}
-        onInit={editor => { donotfocus === false && editor.editing.view.focus(); }}
-        editor={ClassicEditor} />
+        <CKEditor
+          id={id}
+          ref={ref => (this.edit = ref)}
+          data={item.content}
+          onBlur={this.onSave}
+          // onInit={editor => { donotfocus === false && editor.editing.view.focus(); }}
+          onInit={editor => { editor.editing.view.focus(); }}
+          editor={ClassicEditor} />
       </Wrapper>
     );
   }
