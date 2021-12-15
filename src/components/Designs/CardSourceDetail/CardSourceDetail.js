@@ -2054,7 +2054,9 @@ class CardSourceDetail extends Component {
                               </div>
                             </div>
                             <PdfViewer pdf={item.content} height={true} />
-                          </React.Fragment> : item.data_type !== "image" &&
+                          </React.Fragment> :
+                          item.extension !== "pdf" &&
+                            item.data_type !== "image" &&
                             item.data_type !== "video" ?
                             <a
                               className="iconWrap"
