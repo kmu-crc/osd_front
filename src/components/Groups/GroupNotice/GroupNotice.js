@@ -33,6 +33,7 @@ const Wrapper = styled.div`
   .marginRight2{margin-right:38px;}
   .button_{
     width:142px;
+    min-width:100px;
     height: 41px;
     display:flex;
     font-size:20px;

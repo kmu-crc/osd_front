@@ -56,7 +56,7 @@ class ScrollDesignListContainer extends Component {
   }
   render() {
     const { dataListAdded } = this.props;
-    console.log("-----",this.props)
+    console.log("design:",this.props.display);
     return (
       <React.Fragment>
         {dataListAdded.length <= 0 ?

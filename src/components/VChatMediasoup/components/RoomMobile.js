@@ -306,6 +306,10 @@ const RoomDiv = styled.div`
 	width: 100%;
 	height: ${props => props.h}px;
 	overflow-y: auto;
+	background-color:#efefef;
+	background-image:url(${new_logo_osd_big});
+	background-repeat:no-repeat;
+	background-position:center center;
 	// *{border:1px solid white;}
 	.btn {
 		display: flex;
@@ -382,10 +386,6 @@ const ContentContainer = styled.div`
 		display:flex;
 		justify-content:center;
 		align-items:center;
-		// background-image: url(${props => props.bg || nobg});
-		// background-size: contain;
-		// background-position: center center;
-		// background-repeat: no-repeat;
 		.logo{
 			height:270px;
 			object-fit:contain;
