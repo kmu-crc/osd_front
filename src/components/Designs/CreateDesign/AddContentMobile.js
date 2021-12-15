@@ -4,7 +4,7 @@ import opendesign_style from "opendesign_style";
 import FileController from "../CardSourceDetail/FileController";
 
 export const ControllerWrap = styled.div`
-*{border: 1px dashed green;}
+// *{border: 1px dashed green;}
   width: 100%;
   position: relative;
   text-align: center;

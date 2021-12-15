@@ -91,6 +91,7 @@ class SearchListRe extends Component {
             sub_category: { text: null, value: null },
             main_category: { text: null, value: null },
             third_category: { text: null, value: null },
+            update:false,
         }
         this.onChangeDropBox = this.onChangeDropBox.bind(this);
         this.onChangeSearchkey = this.onChangeSearchkey.bind(this);
@@ -101,6 +102,7 @@ class SearchListRe extends Component {
             .then(async () => {  });
         const keyword = this.props.keyword == null ? "" : this.props.keyword;
         this.setState({ searchKeyword: keyword, keyword: keyword });
+        this.setState({ selectCate: 1, urlCate: "design" });
     }
     componentDidUpdate(prevProps, prevState) {
         if ((JSON.stringify(prevProps.designs) !== JSON.stringify(this.props.designs)) ||
@@ -110,11 +112,11 @@ class SearchListRe extends Component {
             const designs = this.props.designs.length || 0
                 , groups = this.props.groups.length || 0
                 , designers = this.props.designers.length || 0;
-
-            console.log(designs, groups, designers);
-            if (designs) { this.setState({ selectCate: 1, urlCate: "design" }); }
-            else if (groups) { this.setState({ selectCate: 2, urlCate: "group" }); }
-            else if (designers) { this.setState({ selectCate: 3, urlCate: "designer" }); }
+            if(this.props.design_status != "INIT" && this.props.group_status != "INIT" && this.props.designer_status != "INIT"&&this.state.update==false){
+                if (designs) { this.setState({ update:true, selectCate: 1, urlCate: "design" }); }
+                else if (groups) { this.setState({ update:true, selectCate: 2, urlCate: "group" }); }
+                else if (designers) { this.setState({ update:true, selectCate: 3, urlCate: "designer" }); }
+            }
         }
         if (prevState.searchKeyword !== this.state.searchKeyword) {
             this.setState({ searchKeyword: this.state.searchKeyword });
@@ -216,43 +218,7 @@ class SearchListRe extends Component {
                             selected={this.state.this_order} />
                     </div>
                     <div className="list">
-                        {/* {
-                            this.state.urlCate == "design"?
-                            <ScrollDesignListContainer
-                                sort={this.props.sort}
-                                keyword={this.state.keyword}
-                                cate1={this.state.main_category.value}
-                                cate2={this.state.sub_category.value}
-                                cate3={this.state.third_category.value}
-                                orderOption={this.state.this_order}
-                                isMobile={true}
-                            /> 
-                            :
-                            this.state.urlCate == "group"?
-                            <ScrollGroupListContainer
-                                sort={this.props.sort}
-                                keyword={this.state.keyword}
-                                cate1={this.state.main_category.value}
-                                cate2={this.state.sub_category.value}
-                                cate3={this.state.third_category.value}
-                                orderOption={this.state.this_order}
-                                isMobile={true}
-                            />
-                            :this.state.urlCate == "designer"?
-                            <ScrollDesignerListContainer
-                                sort={this.props.sort}
-                                keyword={this.state.keyword}
-                                cate1={this.state.main_category.value}
-                                cate2={this.state.sub_category.value}
-                                cate3={this.state.third_category.value}
-                                orderOption={this.state.this_order}
-                                isMobile={true}
-                            />
-                            :
-                            null
-
-                        } */}
-                        <div id="design" style={{ display: this.state.urlCate === "design" ? "block" : "none" }}>
+                        <div id="design">
                             <ScrollDesignListContainer
                                 sort={this.props.sort}
                                 keyword={this.state.keyword}
@@ -264,7 +230,7 @@ class SearchListRe extends Component {
                                 display={this.state.urlCate=="design"}
                             />               
                         </div>               
-                        <div id="group" style={{ display: this.state.urlCate === "group" ? "block" : "none" }}>
+                        <div id="group">
                             <ScrollGroupListContainer
                                 sort={this.props.sort}
                                 keyword={this.state.keyword}
@@ -276,7 +242,7 @@ class SearchListRe extends Component {
                                 display={this.state.urlCate=="group"}
                             />
                         </div>               
-                        <div id="designer" style={{ display: this.state.urlCate === "designer" ? "block" : "none" }}>
+                        <div id="designer">
                             <ScrollDesignerListContainer
                                 sort={this.props.sort}
                                 keyword={this.state.keyword}

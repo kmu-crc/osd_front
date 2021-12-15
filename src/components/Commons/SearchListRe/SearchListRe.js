@@ -115,6 +115,7 @@ class SearchListRe extends Component {
             sub_category: { text: null, value: null },
             main_category: { text: null, value: null },
             third_category: { text: null, value: null },
+            update:false,
         }
         this.onChangeDropBox = this.onChangeDropBox.bind(this);
         this.onChangeSearchkey = this.onChangeSearchkey.bind(this);
@@ -130,8 +131,12 @@ class SearchListRe extends Component {
         // else { this.setState({ selectCate: 1 }) }
         const keyword = this.props.keyword == null ? "" : this.props.keyword;
         this.setState({ searchKeyword: keyword, keyword: keyword });
+        this.setState({ selectCate: 1, urlCate: "design" });
+
     }
     componentDidUpdate(prevProps, prevState) {
+        console.log(this.props)
+
         if ((JSON.stringify(prevProps.designs) !== JSON.stringify(this.props.designs)) ||
             (JSON.stringify(prevProps.groups) !== JSON.stringify(this.props.groups)) ||
             (JSON.stringify(prevProps.designers) !== JSON.stringify(this.props.designers))
@@ -139,11 +144,12 @@ class SearchListRe extends Component {
             const designs = this.props.designs.length || 0
                 , groups = this.props.groups.length || 0
                 , designers = this.props.designers.length || 0;
-
             console.log(designs, groups, designers);
-            if (designs) { this.setState({ selectCate: 1, urlCate: "design" }); }
-            else if (groups) { this.setState({ selectCate: 2, urlCate: "group" }); }
-            else if (designers) { this.setState({ selectCate: 3, urlCate: "designer" }); }
+            if(this.props.design_status != "INIT" && this.props.group_status != "INIT" && this.props.designer_status != "INIT"&&this.state.update==false){
+                if (designs) { this.setState({ update:true, selectCate: 1, urlCate: "design" }); }
+                else if (groups) { this.setState({ update:true, selectCate: 2, urlCate: "group" }); }
+                else if (designers) { this.setState({ update:true, selectCate: 3, urlCate: "designer" }); }
+            }
         }
         if (prevState.searchKeyword !== this.state.searchKeyword) {
             this.setState({ searchKeyword: this.state.searchKeyword });

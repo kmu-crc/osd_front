@@ -37,6 +37,7 @@ class ScrollGroupListContainer extends Component {
     
   render() {
     const { dataListAdded } = this.props;
+    console.log("group:",this.props.display);
 
     return (
 
