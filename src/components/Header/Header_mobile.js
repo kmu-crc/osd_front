@@ -25,6 +25,8 @@ const MobileHeaderMenu = styled.ul`
   width: ${window.innerWidth}px;
   padding: 0px;
   margin: 0px;
+
+    // *{border: 1px dashed red;}
 `;
 const MenuElement = styled.li`
   list-style: none;
@@ -44,8 +46,8 @@ const MenuElement = styled.li`
   }
 
   &.search {
-    margin: 9px 5px 8px 0px;
-    width: 199px;
+    margin: 9px 3px 8px 0px;
+    width: ${window.innerWidth - (80 + 75)}px;
   }
 
   &.login-button {
