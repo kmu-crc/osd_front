@@ -156,13 +156,17 @@ const ContentBorder = styled.div`
     }
 `;
 const EditCardHeaderContainer = styled.div`
+
     .edit-header-container {
         display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-item: center;
         margin-top: 15px;
-        margin-left: 5px;
+        padding: 0 5px;
+
         .edit-card-info {
             width: max-content;
-            height: 29px;
             font-size: 20px;
             font-weight: 700;
             font-family: Noto Sans KR;
@@ -172,19 +176,19 @@ const EditCardHeaderContainer = styled.div`
         }
     }
     .subtitle-txt{
-            width: max-content;
-            height: 22px;
-            font-size: 15px;
-            font-weight: 700;
-            font-family: Noto Sans KR;
-            text-align: right;
-            color: #707070;   
+        width: max-content;
+        height: 22px;
+        font-size: 15px;
+        font-weight: 700;
+        font-family: Noto Sans KR;
+        text-align: right;
+        color: #707070;   
     }
     .edit-header-thumbnail {
         display: flex;
         flex-direction: column;
+        margin: 0 15px;
         margin-top: 15px;
-        margin-left: 15px;
     }
     .txt {
         padding-left: 15px;
@@ -198,7 +202,6 @@ const EditCardHeaderContainer = styled.div`
         color: #707070;   
     }
     .edit-header-title {
-        width: ${window.innerWidth - 35}px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -208,6 +211,7 @@ const EditCardHeaderContainer = styled.div`
             height: 56px;
             background-color: #EFEFEF;
             border-radius: 5px;
+            width: 90%;
         }
         .title-input-style{
             border-radius: 5px;
@@ -230,6 +234,7 @@ const EditCardHeaderContainer = styled.div`
             height: 56px;
             background-color: #EFEFEF;
             border-radius: 5px;
+            width: 90%;
         }
         .description-input-style {
             border-radius: 5px;
@@ -280,19 +285,13 @@ const EditCardHeaderContainer = styled.div`
         }
     }
     .private-box-toggle {
-        min-width:150px;
-        position: absolute;
-        top: 0px;
-        right: 0px;
         width: max-content;
-        display:flex;
-        jusitfy-content:flex-start;
-        align-items:center;
+        display: flex;
+        jusitfy-content: flex-start;
+        align-items: center;
         .icon-wrapper {
-            min-width:50px;
-            min-height:50px;
-            max-width:50px;
-            max-height:50px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background-color: #707070;
             display:flex;
@@ -407,85 +406,96 @@ class NewCardModal extends Component {
     };
     render() {
         const { hook } = this.state;
-        return (<React.Fragment>
-            <NewCardDialogWrapper open={this.props.open} onClose={this.onClose}>
-                <div className="close-box"
-                    onClick={this.onClose} >
-                    <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
-                </div>
-                {this.state.loading && <Loading />}
 
-                <div className="content-wrapper">
-                    <EditCardHeaderContainer>
-                        <div className="private-box-toggle" >
-                            <div className={`icon-wrapper ${this.state.private ? "lock" : "unlock"}`} onClick={() => this.setState({ private: !this.state.private })}>
-                                {this.state.private
-                                    ? <i className="lock big icon" />
-                                    : <i className="unlock big icon" />}
-                                {/* {card.private !== 1 ? */}
-                                {/* } */}
+        return (<NewCardDialogWrapper open={this.props.open} onClose={this.onClose}>
+
+            <div className="close-box"
+                onClick={this.onClose} >
+                <Cross angle={45} color={"#000000"} weight={3} width={33} height={33} />
+            </div>
+
+
+            {this.state.loading && <Loading />}
+
+
+            <div className="content-wrapper">
+                <EditCardHeaderContainer>
+                    <div className="edit-header-container">
+                        <div className="edit-card-info">새 컨텐츠</div>
+                        <a onClick={() => this.setState({ private: !this.state.private })} >
+                            <div className="private-box-toggle" >
+
+                                <div className={`icon-wrapper ${this.state.private ? "lock" : "unlock"}`} >
+                                    {this.state.private
+                                        ? <i className="lock big icon" />
+                                        : <i className="unlock big icon" />}
+                                </div>
+
+                                <div> {this.state.private ? "비공개" : "공개"} </div>
                             </div>
-                            <div>
-                                {this.state.private ? "비공개" : "공개"}
-                            </div>
-                        </div>
-
-
-                        <div className="edit-header-container">
-                            <div className="edit-card-info">새 컨텐츠</div>
-                        </div>
-                        <div className="edit-header-thumbnail">
-                            <div className="subtitle-txt">썸네일</div>
-                            <FormThumbnailEx
-                                name="thumbnail"
-                                placeholder="썸네일 등록"
-                                getValue={this.onChangeValueThumbnail}
-                                validates={["OnlyImages", "MaxFileSize(10000000)"]}
-                                style={{
-                                    width: "156px",
-                                    height: "156px",
-                                    backgroundColor: "#EFEFEF",
-                                    borderRadius: "10px"
-                                }} />
-                        </div>
-                        <div className="edit-header-title">
-                            <div className="txt">제목</div>
-                            <div className="title-input-container">
-                                <input className="title-input-style" name="title" onChange={this.onChangeTitle} maxLength="20" placeholder="제목을 입력해주세요." />
-                            </div>
-                        </div>
-                        <div className="edit-header-description">
-                            <div className="txt">설명</div>
-                            <div className="description-input-container">
-                                <input className="description-input-style" name="content" onChange={this.onChangeContent} maxLength="1000" placeholder="설명을 입력해주세요." />
-                            </div>
-                        </div>
-                    </EditCardHeaderContainer>
-
-                    <ContentBorder>
-                        <div className="border-line" />
-                    </ContentBorder>
-
-                    <div className="content" >
-                        <div className="title">내용</div>
-                        <CardSourceDetail
-                            {...this.props}
-                            uid={"new"}
-                            isTeam={true}
-                            edit={true}
-                            handleUpdate={this.handleUpdate}
-                            closed={this.state.closed}
-                            handleClosed={this.handleClosed}
-                            handleCancel={this.onClose}//this.handleCancel}
-                            closeEdit={this.onCloseEditMode}
-                            openEdit={this.onChangeEditMode}
-                            hook={hook}
-                            handleResetHook={this.handleResetHook}
-                            upDateRequest={this.submit} />
+                        </a>
                     </div>
+                    <div className="edit-header-thumbnail">
+                        <div className="subtitle-txt">썸네일</div>
+                        <FormThumbnailEx
+                            name="thumbnail"
+                            placeholder="썸네일 등록"
+                            getValue={this.onChangeValueThumbnail}
+                            validates={["OnlyImages", "MaxFileSize(10000000)"]}
+                            style={{
+                                width: "156px",
+                                height: "156px",
+                                backgroundColor: "#EFEFEF",
+                                borderRadius: "10px"
+                            }} />
+                    </div>
+                    <div className="edit-header-title">
+                        <div className="txt">제목</div>
+                        <div className="title-input-container">
+                            <input
+                                className="title-input-style"
+                                name="title"
+                                onChange={this.onChangeTitle}
+                                maxLength="20"
+                                placeholder="제목을 입력해주세요." />
+                        </div>
+                    </div>
+                    <div className="edit-header-description">
+                        <div className="txt">설명</div>
+                        <div className="description-input-container">
+                            <input
+                                className="description-input-style"
+                                name="content"
+                                onChange={this.onChangeContent}
+                                maxLength="1000"
+                                placeholder="설명을 입력해주세요." />
+                        </div>
+                    </div>
+                </EditCardHeaderContainer>
+
+                <ContentBorder>
+                    <div className="border-line" />
+                </ContentBorder>
+
+                <div className="content" >
+                    <div className="title">내용</div>
+                    <CardSourceDetail
+                        {...this.props}
+                        uid={"new"}
+                        isTeam={true}
+                        edit={true}
+                        handleUpdate={this.handleUpdate}
+                        closed={this.state.closed}
+                        handleClosed={this.handleClosed}
+                        handleCancel={this.onClose}//this.handleCancel}
+                        closeEdit={this.onCloseEditMode}
+                        openEdit={this.onChangeEditMode}
+                        hook={hook}
+                        handleResetHook={this.handleResetHook}
+                        upDateRequest={this.submit} />
                 </div>
-            </NewCardDialogWrapper>
-        </React.Fragment>)
+            </div>
+        </NewCardDialogWrapper>)
     }
 }
 

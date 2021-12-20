@@ -120,7 +120,7 @@ export default class AddContent extends React.Component {
   render() {
 
     return (<React.Fragment>
-      {this.props.uid === "new"
+      {!this.props.designId
         ? <React.Fragment>
           <Caption>프로젝트형으로 시작하기</Caption>
           <ControllerWrap>
@@ -138,7 +138,8 @@ export default class AddContent extends React.Component {
           </ControllerWrap>
 
           <Caption>블로그형형으로 시작하기</Caption>
-        </React.Fragment> : null}
+        </React.Fragment>
+        : null}
 
       <ControllerWrap>
         <div className="innerBox">
@@ -169,7 +170,7 @@ export default class AddContent extends React.Component {
             minWidth="134px"
             height="29px"
           >
-            하이퍼링크<br /> 등록
+            링크<br /> 등록
           </NewController>
 
           {this.props.is_problem === 1 && (
@@ -180,7 +181,7 @@ export default class AddContent extends React.Component {
               minWidth="134px"
               height="29px"
             >
-              문제<br /> 등록하기
+              문제<br /> 등록
             </NewController>
           )}
         </div>

@@ -72,6 +72,7 @@ const BasicForm = styled.div`
     align-items: center;
 
     margin-top: 8px;
+    margin-bottom: 18px;
 
     .thumbnail {
       width: 137px;
@@ -271,7 +272,7 @@ class GroupBasicInfo extends Component {
           </div>
     
           {/* 2. 제목 */}
-          {thumbnailURL != thumbnailSVG && <div className="fadein separator " />}
+          {/* {thumbnailURL != thumbnailSVG && <div className="fadein separator " />} */}
           {thumbnailURL != thumbnailSVG && 
           <div className="fadein design-title">
             <div className="design-image-title">
@@ -295,7 +296,7 @@ class GroupBasicInfo extends Component {
           {thumbnailURL != thumbnailSVG && <div className="fadein separator " />}
           {thumbnailURL != thumbnailSVG && 
           <div className="fadein design-title">
-            <p>3. 디자인 설명</p>
+            <p>3. 그룹 설명</p>
             <div className="textarea-wrapper">
               <textarea
                 value={this.props.groupExplain}

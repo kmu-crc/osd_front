@@ -396,7 +396,7 @@ class GridEditorMobile extends Component {
                 </p>
               </div>
 
-              {this.state.more == false && <div
+              {this.state.more == false && editor && <div
                 className="more-button"
                 onClick={() => this.setState({ more: true, selectedStep: step })}>
                 ⚙️

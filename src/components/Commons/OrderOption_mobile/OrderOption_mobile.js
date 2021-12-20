@@ -44,20 +44,27 @@ import { Dropdown } from "semantic-ui-react";
 // `
 
 const OrderDrop = styled.div`
-    width:67px;
-    height:16px;
-    border-radius:7px;
-    border:1px solid #707070;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    width: 70px;
+    height: 19px;
+    border-radius: 7px;
+    border: 1px solid #707070;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 
-    position:relative;
-    .text{
-        font-family:Spoqa Han Sans Neo;
-        font-size:8px;
-        font-weight:500;
-        color:${props=>props.type=="design"?"#1262AB":props.type=="designer"?"#7E1E9B":props.type=="group"?"#1E9B79":"red"};
+    .text {
+        font-family: Spoqa Han Sans Neo;
+        font-size: 0.9rem; // 8px;
+        font-weight: 500;
+        color:${props => props.type == "design"
+        ? "#1262AB"
+        : props.type == "designer"
+            ? "#7E1E9B"
+            : props.type == "group"
+                ? "#1E9B79"
+                : "red"
+        }
     }
 
     .dropWrap{
@@ -68,7 +75,7 @@ const OrderDrop = styled.div`
         .item{
             width:100%;
             height:16px;
-            background-color:${props=>props.type=="design"?"#1262AB":props.type=="designer"?"#7E1E9B":props.type=="group"?"#1E9B79":"red"};
+            background-color:${props => props.type == "design" ? "#1262AB" : props.type == "designer" ? "#7E1E9B" : props.type == "group" ? "#1E9B79" : "red"};
             color:white;
             border-radius:7px;
 
@@ -88,20 +95,20 @@ const OrderDrop = styled.div`
 class OrderOption_mobile extends Component {
     constructor(props) {
         super(props);
-        this.handleClicked=this.handleClicked.bind(this);
-      }
+        this.handleClicked = this.handleClicked.bind(this);
+    }
     state = {
-        drop:false,
-        select:this.props.selected.keyword=="like"?0:1,
+        drop: false,
+        select: this.props.selected.keyword == "like" ? 0 : 1,
         options:
             [{ text: "인기순", keyword: "like", marginRight: "30px" },
             { text: "최신순", keyword: "update", marginRight: "30px" }]
     }
 
-    handleClicked = (order,index) => {
+    handleClicked = (order, index) => {
         // console.log(this.props);
         // console.log(order,index);
-        this.setState({select:order.keyword=="like"?0:1,drop:false});
+        this.setState({ select: order.keyword == "like" ? 0 : 1, drop: false });
         this.props.order_clicked(order);
     }
     render() {
@@ -110,18 +117,18 @@ class OrderOption_mobile extends Component {
         const { selected, style } = this.props
         return (
             <OrderDrop type={this.props.type}>
-                <div className="text" onClick={()=>this.setState({drop:!this.state.drop})}>{options[this.state.select].text}</div>
+                <div className="text" onClick={() => this.setState({ drop: !this.state.drop })}>{options[this.state.select].text}</div>
                 <div className="text">∨</div>
                 {
-                    this.state.drop&&
+                    this.state.drop &&
                     <div className="dropWrap">
-                    {options.map((opt,index) => {
+                        {options.map((opt, index) => {
                             return (
-                                <div className="item" key={index} onClick={() => this.handleClicked(opt,index)}>
+                                <div className="item" key={index} onClick={() => this.handleClicked(opt, index)}>
                                     {opt.text}
                                 </div>
                             )
-                    })}
+                        })}
                     </div>
                 }
             </OrderDrop>

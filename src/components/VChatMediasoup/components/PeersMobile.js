@@ -25,35 +25,15 @@ const Peers = ({ pinned, clicked, member, peers, activeSpeakerId }) => {
 		peers.map((peer) => {
 			// console.log(peer);
 			return (
-				<>
-					<DivPeer
-						style={{ border: `${pinned == peer.id ? "1px solid red" : "1px solid transparent"}` }}
-						className={`${peer.id === activeSpeakerId ? 'active' : ""}`}
-						key={peer.id}>
-						<Peer
-							clicked={clicked}
-							info={member.find(mem => mem.user_id === parseInt(peer.id, 10))}
-							id={peer.id} />
-					</DivPeer>
-					<DivPeer
-						style={{ border: `${pinned == peer.id ? "1px solid red" : "1px solid transparent"}` }}
-						className={`${peer.id === activeSpeakerId ? 'active' : ""}`}
-						key={peer.id}>
-						<Peer
-							clicked={clicked}
-							info={member.find(mem => mem.user_id === parseInt(peer.id, 10))}
-							id={peer.id} />
-					</DivPeer>
-					<DivPeer
-						style={{ border: `${pinned == peer.id ? "1px solid red" : "1px solid transparent"}` }}
-						className={`${peer.id === activeSpeakerId ? 'active' : ""}`}
-						key={peer.id}>
-						<Peer
-							clicked={clicked}
-							info={member.find(mem => mem.user_id === parseInt(peer.id, 10))}
-							id={peer.id} />
-					</DivPeer>
-				</>
+				<DivPeer
+					style={{ border: `${pinned == peer.id ? "1px solid red" : "1px solid transparent"}` }}
+					className={`${peer.id === activeSpeakerId ? 'active' : ""}`}
+					key={peer.id}>
+					<Peer
+						clicked={clicked}
+						info={member.find(mem => mem.user_id === parseInt(peer.id, 10))}
+						id={peer.id} />
+				</DivPeer>
 			);
 		})
 		// }

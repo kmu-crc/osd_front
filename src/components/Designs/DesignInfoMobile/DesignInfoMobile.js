@@ -1211,7 +1211,7 @@ export default
                         }}
                     >
                         <img
-                            style={{ width: "25px", height: "25px", marginRight: "3px" }}
+                            style={{ width: "18px", height: "18px", marginRight: "3px" }}
                             src={new_logo_note} />
                         <span>&nbsp;댓글</span>
                     </a>
@@ -1246,7 +1246,7 @@ export default
                                 <img
                                     src={new_logo_chat}
                                     style={{ width: "25px", height: "25px", }} />
-                                <span>&nbsp;채팅</span>
+                                <span>&nbsp;채팅(새탭)</span>
                             </div>
                         </a>}
 

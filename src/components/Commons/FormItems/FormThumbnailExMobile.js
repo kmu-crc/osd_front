@@ -8,29 +8,29 @@ const InputWrap = styled.div`
   display: flex;
   flex-direction: column;
 
-  .textWrapper{
+  .textWrapper {
     // width:100%;
   }
-  label{
+  label {
     width: 63px;
     // height: 25px;
     cursor: pointer;
   }
-  .wrapper{
-    margin-left: 18px;
+  .wrapper {
+    // margin-left: 18px;
   }        
-  .inside-wrapper{
+  .inside-wrapper {
     width: 63px;
     height: 25px;
   }
-  .find{
+  .find {
     font-weight: 700;
     font-size: 16px;
     line-height: 25px;
     text-align: left;
     color: #FF0000;
   }
-  .text{
+  .text {
     // width: 341px;
     height: 45px;
     margin-top: 5px;
@@ -53,6 +53,8 @@ const ThumbnailImgEx = styled.label`
   background-size: cover;
   background-color: #EFEFEF;
   cursor:arrow;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 export class FormThumbnailExMobile extends Component {
@@ -109,34 +111,37 @@ export class FormThumbnailExMobile extends Component {
     const { name, placeholder, id, validates, style } = this.props;
     let newstyle = { ...style };
     newstyle.backgroundImage = this.state.imageUrl ? `url(${this.state.imageUrl})` : null
-    return (
-      <InputWrap>
-        <FormFile
-          name={name}
-          id={id ? id : name}
-          placeholder={placeholder && placeholder}
-          onChange={this.onChangeValue}
-          getValue={this.onChangeValue}
-          hidden={true}
-          validates={validates}
-          onlyImage={true}
-        />
-        <ThumbnailImgEx style={newstyle} />
-        <div className="textWrapper">
-          <label htmlFor={id ? id : name} >
-            <div className="wrapper">
-              <div className="inside-wrapper">
-                <div className="find">찾아보기</div>
-              </div>
-              <div className="text">
-                프로필 사진은 대표적으로 보이게 되는 사진으로,
-                <br />JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.
-              </div>
+
+    return (<InputWrap>
+
+      <FormFile
+        name={name}
+        id={id ? id : name}
+        placeholder={placeholder && placeholder}
+        onChange={this.onChangeValue}
+        getValue={this.onChangeValue}
+        hidden={true}
+        validates={validates}
+        onlyImage={true}
+      />
+
+      <ThumbnailImgEx style={newstyle} />
+
+      <div className="textWrapper">
+        <label htmlFor={id ? id : name} >
+          <div className="wrapper">
+            <div className="inside-wrapper">
+              <div className="find">찾아보기</div>
             </div>
-          </label>
-        </div>
-      </InputWrap >
-    );
+            <div className="text">
+              프로필 사진은 대표적으로 보이게 되는 사진으로,<br />
+              JPG/JPEG/PNG/BMP 파일을 등록 가능합니다.
+            </div>
+          </div>
+        </label>
+      </div>
+
+    </InputWrap>);
   }
 }
 

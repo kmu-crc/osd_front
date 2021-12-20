@@ -93,7 +93,8 @@ const SearchContainer = styled.div`
 `;
 // mobile
 const MobileSearchContainer = styled.div`
-    width: ${props => props.width};
+    // width: ${props => props.width};
+    
     height: 22px;
     border-radius: 10px;
     border: 1px solid #C3C3C3;
@@ -101,11 +102,16 @@ const MobileSearchContainer = styled.div`
 
     input {
         height: 20px;
+        padding-right: 21px;
         margin-left: 7px;
         border: none;
         :focus {
             outline: none;
         }
+        ::placeholder { 
+            font-size: 0.75rem;
+        }
+
         color: ${props => props.fontColor};
         background-color: transparent;
         // background-color: ${props => props.inputbgcolor};
@@ -176,9 +182,10 @@ class SearchForm extends Component {
 
             isMobile()
                 ? <MobileSearchContainer
-                    fontColor={this.props.transparent ? "white" : "black"}
-                    inputbgcolor={this.props.transparent ? "transparent" : "white"}
-                    width={this.props.formWidth ? `${this.props.formWidth}px` : "100%"} >
+                // fontColor={this.props.transparent ? "white" : "black"}
+                // inputbgcolor={this.props.transparent ? "transparent" : "white"}
+                // width={this.props.formWidth ? `${this.props.formWidth}px` : "100%"}
+                >
                     <input
                         className="searchbox"
                         id="searchbox"

@@ -6,7 +6,7 @@ import { FormControl } from "modules/FormControl";
 
 const InputWrap = styled.div`
   position: relative;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
   input {
     display: ${props => props.display};
   }

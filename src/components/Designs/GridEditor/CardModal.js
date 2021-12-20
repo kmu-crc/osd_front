@@ -720,6 +720,7 @@ class CardModal extends Component {
                             <CardSourceDetailContainer
                                 isEdit={this.state.edit}
                                 design_id={this.props.designId}
+                                designId={this.props.designId}
                                 handleUpdate={this.handleUpdate}
                                 handleSubmit={this.handleHeaderSubmit}
                                 uid={card.uid}
