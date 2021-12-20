@@ -258,7 +258,6 @@ class FileController extends Component {
 
   returnData = async e => {
     if (this.props.getValue) {
-      console.log("DEBUG::", this.state, this.props.item);
       await this.props.getValue(this.state);
     }
     if (e && this.props.onBlur) await this.props.onBlur();

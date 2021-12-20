@@ -313,39 +313,40 @@ class DesignBoardCard extends Component {
                   />
                 </div>
               ) : (
-                  <div>
-                    {this.props.userInfo &&
-                      this.props.userInfo.uid === this.props.card.user_id &&
-                      !this.state.edit ? (
-                        <div>
-                          <Button
-                            type="button"
-                            size="small"
-                            onClick={this.onChangeEditMode}
-                          >
-                            수정
+                <div>
+                  {this.props.userInfo &&
+                    this.props.userInfo.uid === this.props.card.user_id &&
+                    !this.state.edit ? (
+                    <div>
+                      <Button
+                        type="button"
+                        size="small"
+                        onClick={this.onChangeEditMode}
+                      >
+                        수정
                       </Button>
-                          <Button
-                            type="button"
-                            color="Solid"
-                            size="small"
-                            onClick={this.onDelete}
-                          >
-                            삭제
+                      <Button
+                        type="button"
+                        color="Solid"
+                        size="small"
+                        onClick={this.onDelete}
+                      >
+                        삭제
                       </Button>
-                        </div>
-                      ) : null}
-                    <h2> {detail.title} <CardUpdateDate> ({DateFormat(detail.update_time)}) </CardUpdateDate> </h2>
-                    <p>{detail.content ? detail.content : ""}</p>
-                    <CardSourceDetailContainer
-                      uid={card.uid}
-                      isTeam={this.props.isTeam}
-                      edit={this.state.edit}
-                      closeEdit={this.onCloseEditMode}
-                      openEdit={this.onChangeEditMode}
-                    />
-                  </div>
-                )}
+                    </div>
+                  ) : null}
+                  <h2> {detail.title} <CardUpdateDate> ({DateFormat(detail.update_time)}) </CardUpdateDate> </h2>
+                  <p>{detail.content ? detail.content : ""}</p>
+                  <CardSourceDetailContainer
+                    designId={detail.design_id}
+                    uid={card.uid}
+                    isTeam={this.props.isTeam}
+                    edit={this.state.edit}
+                    closeEdit={this.onCloseEditMode}
+                    openEdit={this.onChangeEditMode}
+                  />
+                </div>
+              )}
 
               {/* --------------------- 댓글 섹션 ---------------------- */}
               <CommentContainer className="ui comments">
@@ -386,8 +387,8 @@ class DesignBoardCard extends Component {
                     </div>
                   ))
                 ) : (
-                    <p>{/*등록된 코멘트가 없습니다.*/}</p>
-                  )}
+                  <p>{/*등록된 코멘트가 없습니다.*/}</p>
+                )}
                 {this.state.render ? <CommentForm /> : null}
               </CommentContainer>
             </Modal.Content>

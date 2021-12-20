@@ -120,7 +120,7 @@ export default class AddContent extends React.Component {
   render() {
 
     return (<React.Fragment>
-      {this.props.uid === "new"
+      {!this.props.designId
         ? <React.Fragment>
           <Caption>프로젝트형으로 시작하기</Caption>
           <ControllerWrap>
@@ -138,7 +138,8 @@ export default class AddContent extends React.Component {
           </ControllerWrap>
 
           <Caption>블로그형형으로 시작하기</Caption>
-        </React.Fragment> : null}
+        </React.Fragment>
+        : null}
 
       <ControllerWrap>
         <div className="innerBox">

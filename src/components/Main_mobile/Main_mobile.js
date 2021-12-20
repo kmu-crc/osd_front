@@ -80,6 +80,7 @@ const Banner = styled.div`
   overflow-y: hidden;
 
   img {
+    image-orientation: none;
     max-width: 100%;
     max-height: 100%;
     width: 100%;
