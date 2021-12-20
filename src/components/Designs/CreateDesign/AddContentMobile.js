@@ -169,7 +169,7 @@ export default class AddContent extends React.Component {
             minWidth="134px"
             height="29px"
           >
-            하이퍼링크<br /> 등록
+            링크<br /> 등록
           </NewController>
 
           {this.props.is_problem === 1 && (
@@ -180,7 +180,7 @@ export default class AddContent extends React.Component {
               minWidth="134px"
               height="29px"
             >
-              문제<br /> 등록하기
+              문제<br /> 등록
             </NewController>
           )}
         </div>
