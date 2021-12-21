@@ -29,52 +29,52 @@ import new_logo_chat from "source/new_logo_chat.svg";
 import new_logo_msg from "source/new_logo_msg.svg";
 
 const Wrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 
   .content {
     width: 100%;
   }
   .buttonContent {
-    width: 360px;
+    width: 100%;
+    display:flex;
+    justify-content:center;
   }
 `;
 
 const NameWrapper = styled.div`
-  width: 360px;
-  height: 38px;
+  width: 100%;
+  padding-left: 38px;
+  padding-right:38px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding-left: 44px;
-  padding-right: 10px;
   margin-bottom: 5px;
   .name_ {
-    width: 200px;
-    height: 38px;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
+    width:100%;
+    text-align:right;
     font-family: Spoqa Han Sans;
     font-weight: 700;
     font-size: 26px;
-    line-height: 38px;
+    line-height: 32px;
   }
   .date {
-    width: 120px;
+    margin-top:5px;
+    width:100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     .text {
+      margin-left: auto;
       font-family: Spoqa Han Sans;
       font-weight: 400;
       font-size: 12px;
-      color: #777777;
-      text-align: right;
+      line-height: 15px;
+      align-items: center;
+      color: #777;
     }
   }
 `;
@@ -92,7 +92,6 @@ const NewAlarmLogo = styled.div`
 `;
 const InfoWrapper = styled.div`
   width: 100%;
-  height: 177px;
   background-color: #e0e0e0;
   display: flex;
   justify-content: center;
@@ -106,7 +105,6 @@ const InfoWrapper = styled.div`
 
     .top {
       display: flex;
-      height: 134px;
       .thumbnail {
         width: 85px;
         height: 85px;
@@ -133,23 +131,22 @@ const InfoWrapper = styled.div`
         -webkit-box-orient: vertical;
         word-wrap: break-word;
 
-        font: normal normal normal 18px/24px Spoqa Han Sans;
+        font: normal normal normal 14px/20px Spoqa Han Sans;
         color: #777777;
       }
-      .group_user {
-        top: 95px;
-        left: 15px;
-        position: absolute;
-        width: 100%;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-      }
+
+    }
+    .group_user {
+      margin-top:5px;
+      width: 100%;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
     }
     .bottom {
+
       width: 100%;
-      height: 44px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
@@ -317,13 +314,13 @@ class GroupInfo_mobile extends Component {
             <div className="infoBox">
               <div className="top">
                 <div className="thumbnail" />
-                <div className="group_user">{`개설자 : ${GroupDetail.userName}`}</div>
                 <div className="info">
                   {GroupDetail.explanation
                     ? GroupDetail.explanation.replace(/\n/g, "<br/>")
                     : null}
                 </div>
               </div>
+              <div className="group_user">{`개설자 : ${GroupDetail.userName}`}</div>
               <div className="bottom">
                 <div className="box">
                   <div className="iconwrap">
@@ -369,6 +366,9 @@ class GroupInfo_mobile extends Component {
                 <div className="box">
                   {isEditor ? (
                     <div>
+                      <div className="box alignRight">
+                      <JoinGroupContainer isIcon={false} />
+                      </div>
                       <div
                         className="box alignRight"
                         onClick={this.changeEditMode}
@@ -402,8 +402,13 @@ class GroupInfo_mobile extends Component {
                   ) : (
                     <React.Fragment>
                       <div className="ButtonItem" onClick={this.like}>
-                        <div className="button_text_label">
+                        <div className="button_text_label" style={{display:"flex",alignItems:"center"}}>
                           관심 그룹 {like ? "취소하기" : "등록하기"}
+                          {like ?
+                            <Icon style={{ fontSize: "18px", color: "red" }}>favorite</Icon>
+                            :
+                            <Icon style={{ fontSize: "18px", color: "black" }}>favorite</Icon>
+                          }
                         </div>
                         {/* <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} /> */}
                       </div>
