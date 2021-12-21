@@ -1810,7 +1810,7 @@ export class CardSourceDetailMobile extends Component {
         {/*  */}
         {this.props.edit
           ? <AddContent
-            designId={this.props.designId}
+            designId={this.props.designId || (this.props.DesignDetail && this.props.DesignDetail.design_id) || this.props.design_id}
             is_project={this.props.DesignDetail && this.props.DesignDetail.is_project}
             uid={this.props.uid}
             is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}

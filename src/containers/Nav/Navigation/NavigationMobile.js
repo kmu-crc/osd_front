@@ -314,7 +314,14 @@ class Navigation extends Component {
                     { max: 2, text: "디자인", id: "design", },
                     { max: 1, text: "그룹", id: "group", },
                     { max: 2, text: "디자이너", id: "designer", },
-                    { max: 0, text: "ABOUT", id: "aboutIntro", },
+                    {
+                        max: 1, text: "ABOUT", id: "aboutIntro",
+                        sub: [
+                            { leaf: true, text: "사이드 소개", id: "aboutIntro", },
+                            { leaf: true, text: "이용약관", id: "aboutTermsOfUse", },
+                            { leaf: true, text: "개인정보 보호", id: "aboutPrivacyPolicy", },
+                        ]
+                    },
                 ]
             ,
         };
@@ -383,6 +390,10 @@ class Navigation extends Component {
             thislevel: { num: 0, color: BgColorSelector() }
         });
     gotoLevel2 = async (level) => {
+        if (level.leaf) {
+            this.gotoPage(`/${level.id}`);
+            return;
+        }
         await this.setState({
             level2: this.props.category2[level.id - 1].map(item => ({ text: item.text, id: item.value })),
             thislevel: {
@@ -394,6 +405,15 @@ class Navigation extends Component {
         })
     };
     gotoLevel1 = (level) => {
+        if (level.sub) {
+            this.setState({
+                level1: level.sub,
+                thislevel: {
+                    color: BgColorSelector(level.id), num: 1, id: level.id
+                }
+            })
+            return;
+        }
         if (level.max) {
             this.setState({
                 level1:
