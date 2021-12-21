@@ -8,8 +8,19 @@ import osdstyle from "opendesign_style";
 import Loading from 'components/Commons/Loading';
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
-
+import opendesign_mobile_style from "opendesign_mobile_style";
+import ScrollList_mobile from "components/Commons/ScrollList_mobile";
 const GroupBox = styled.div`
+  margin-bottom: 5px;
+  & .boxTitle {
+    margin-bottom:5px;
+    font-size: 20px;
+  }
+  .boxContent{
+    margin-top:22px;
+  }
+`;
+const GroupBox_mobile = styled.div`
   margin-bottom: 5px;
   & .boxTitle {
     margin-bottom:5px;
@@ -45,7 +56,38 @@ class EditGroupListContainer extends Component {
   render() {
     const { reload } = this.state;
     return (
-      <GroupBox style={{marginBottom:`${this.props.EditDesignList&&this.props.EditDesignList.length==0?"0px":"75px"}`}}>
+      <React.Fragment>
+        {
+          window.innerWidth<500?
+          <GroupBox_mobile style={{marginBottom:`${this.props.EditDesignList&&this.props.EditDesignList.length==0?"0px":"75px"}`}}>
+          <div className="boxTitle">등록된 그룹 ({this.props.EditGroupList.length})</div>
+          {this.props.status === "INIT" ?
+            <Loading /> :
+            <div className="boxContent">
+            <ScrollList_mobile
+              height={"max-content"}
+              {...opendesign_mobile_style.group_margin}
+              reload={reload}
+              handleReload={this.handleReload}
+              type="group"
+              dataListAdded={this.props.EditGroupList}
+              getListRequest={null}
+              acceptText={"삭제"}
+              handleAccept={this.setOut}/>
+            {/* <ScrollList_mobile
+              {...opendesign_mobile_style.group_margin}
+              reload={reload}
+              handleReload={this.handleReload}
+              type="group"
+              dataListAdded={this.props.EditGroupList}
+              getListRequest={null}
+              rejectText={"삭제"}
+              handleReject={this.setOut} /> */}
+              </div>
+              }
+        </GroupBox_mobile>
+        :
+        <GroupBox style={{marginBottom:`${this.props.EditDesignList&&this.props.EditDesignList.length==0?"0px":"75px"}`}}>
         <div className="boxTitle">등록된 그룹 ({this.props.EditGroupList.length})</div>
         {this.props.status === "INIT" ?
           <Loading /> :
@@ -62,6 +104,8 @@ class EditGroupListContainer extends Component {
             </div>
             }
       </GroupBox>
+        }
+      </React.Fragment>
     );
   }
 }

@@ -21,18 +21,6 @@ padding-left:${props => props.marginRight};
 margin-left: auto;
 margin-right: auto;
 margin-bottom: 20px;
-// @media only screen and (min-width : ${osdcss.newresolutions.mini}px) and (max-width : ${osdcss.newresolutions.small}px) {
-//   width: ${props => props.type == "design" ? "720px" : props.type == "group" ? "800px" : props.type == "designer" ? "600px" : null};
-// }
-// @media only screen and (min-width : ${osdcss.newresolutions.small}px) and (max-width : ${osdcss.newresolutions.medium}px) {
-//   width: ${props => props.type == "design" ? "1090px" : props.type == "group" ? "800px" : props.type == "designer" ? "1200px" : null};
-// }
-// @media only screen and (min-width : ${osdcss.newresolutions.medium}px) and (max-width : ${osdcss.newresolutions.large}px) {
-//   width: ${props => props.type == "design" ? "1200px" : props.type == "group" ? "1780px" : props.type == "designer" ? "1200px" : null};
-// }
-// @media only screen and (min-width : ${osdcss.newresolutions.large}px) {
-//   width: ${props => props.type == "design" ? "1780px" : props.type == "group" ? "1780px" : props.type == "designer" ? "1780px" : null};
-//   }
 `;
 const FlexBox = styled.div`
   flex: 0 0 ${props => props.width}px;
@@ -44,42 +32,24 @@ const FlexBox = styled.div`
     margin-bottom: ${props => props.marginBottomLast}px;
   }
   &.right-last {
-    // margin-right:${props => props.marginRightLast}px;
+    margin-right:${props => props.marginRightLast}px;
   }
   display: inline-block;
   position: relative;
 `;
-
-// &.right-last {
-//   @media only screen and (min-width : ${osdcss.resolutions.MediumMinWidth}px) and (max-width : ${osdcss.resolutions.MediumMaxWidth}px) {
-//     margin-right: ${props =>
-//   props.type === "design" ? osdcss.design_margin.medium.marginRightLast :
-//     props.type === "group" ? osdcss.group_margin.medium.marginRightLast :
-//       props.type === "designer" ? osdcss.designer_margin.medium.marginRightLast : 0}px;
-//   }
-//   @media only screen and (min-width : ${osdcss.resolutions.LargeMinWidth}px) and (max-width : ${osdcss.resolutions.LargeMaxWidth}px) {
-//     margin-right: ${props =>
-//   props.type === "design" ? osdcss.design_margin.large.marginRightLast :
-//     props.type === "group" ? osdcss.group_margin.large.marginRightLast :
-//       props.type === "designer" ? osdcss.designer_margin.large.marginRightLast : 0}px;
-//   }
-//   @media only screen and (min-width : ${osdcss.resolutions.LargeMaxWidth}px){
-//     margin-right: ${props =>
-//   props.type === "design" ? osdcss.design_margin.big.marginRightLast :
-//     props.type === "group" ? osdcss.group_margin.big.marginRightLast :
-//       props.type === "designer" ? osdcss.designer_margin.big.marginRightLast : 0}px;
-//   }
-// }
 const OutBtn = styled.button`
+  width:max-content;
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top:${props=>props.type=="design"?"5px":"5px"};
+  right:${props=>props.type=="design"?"5px":"80px"};
   z-index: 900;
 `;
 const AcceptBtn = styled.button`
+  width:max-content;
   position: absolute;
-  top: 5px;
-  right: 80px;
+  top:${props=>props.type=="design"?"45px":"5px"};
+  right:${props=>props.type=="design"?"5px":"5px"};
+
   z-index: 900;
 `;
 const MoreBtn = styled.button`
@@ -208,7 +178,7 @@ class ScrollList_mobile extends Component {
   myRef = React.createRef();
 
   render() {
-    const { type, manual, handleAccept, handleReject, height, width, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded, rejectText } = this.props;
+    const { type, manual, handleAccept, handleReject, height, width, marginRight, marginRightLast, marginBottom, marginBottomLast, dataListAdded, rejectText,acceptText } = this.props;
     const { hasMore, loading, cols } = this.state;
     console.log(this.props);
     return (
@@ -236,10 +206,10 @@ class ScrollList_mobile extends Component {
               const bottom = (dataListAdded.length - (dataListAdded.length % cols)) - 1 < i || dataListAdded.length - cols === 0 ? "bottom-last" : "";
               return (
 
-                <FlexBox width={width} height={height} marginRight={marginRight} marginBottom={marginBottom}
+                <FlexBox style={{flexWrap:"wrap"}} width={width} height={height} marginRight={marginRight} marginBottom={marginBottom}
                   marginRightLast={marginRightLast} marginBottomLast={marginBottomLast} key={i} className={`${last} ${bottom}`}>
-                  {handleAccept && <AcceptBtn className="ui button black" onClick={() => handleAccept(item.uid)}>가입승인</AcceptBtn>}
-                  {handleReject && <OutBtn className="ui button black" onClick={() => handleReject(item.uid)}>{rejectText || "삭제"}</OutBtn>}
+                  {handleAccept && <AcceptBtn type={type} className="ui button black" onClick={() => handleAccept(item.uid)}>{acceptText || "승인"}</AcceptBtn>}
+                  {handleReject && <OutBtn type={type} className="ui button black" onClick={() => handleReject(item.uid)}>{rejectText || "삭제"}</OutBtn>}
                   {type === "design" ? <><Design_mobile data={item} /></> : null}
                   {type === "design_my" ? <><Design_mobile_my data={item} /></> : null}
                   {type === "group" ? <><Group_mobile data={item} /></> : null}

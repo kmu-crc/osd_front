@@ -5,8 +5,21 @@ import opendesign_style from 'opendesign_style';
 import styled from 'styled-components';
 import ScrollList from 'components/Commons/ScrollList';
 import osdstyle from 'opendesign_style';
+import ScrollList_mobile from 'components/Commons/ScrollList_mobile';
+import opendesign_mobile_style from "opendesign_mobile_style";
+
 
 const DesignBox = styled.div`
+margin-bottom: 5px;
+& .boxTitle {
+  margin-bottom:5px;
+  font-size: 20px;
+}
+.boxContent{
+  margin-top:22px;
+}
+`
+const DesignBox_mobile = styled.div`
 margin-bottom: 5px;
 & .boxTitle {
   margin-bottom:5px;
@@ -50,7 +63,40 @@ class WaitingDesignContainer extends Component {
 
   render() {
     return (
-      <DesignBox style={{marginBottom:`${this.props.waitingDesign&&this.props.waitingDesign.length==0?"0px":"75px"}`}}>
+      <React.Fragment>
+        {
+          window.innerWidth<500?
+          <DesignBox_mobile style={{marginBottom:`${this.props.waitingDesign&&this.props.waitingDesign.length==0?"0px":"75px"}`}}>
+          <div className="boxTitle">가입 신청중인 디자인 ({this.props.waitingDesign.length})</div>
+          <div className="boxContent">
+          <ScrollList_mobile
+              id="scroll-list"
+              {...opendesign_mobile_style.design_margin}
+              reload={this.state.reload}
+              handleReload={this.handleReload}
+              type="design"
+              status={this.props.status}
+              dataList={this.props.DesignList}
+              dataListAdded={this.props.waitingDesign}
+              getListRequest={null}
+              rejectText={"거절"}
+              handleReject={this.setOut}
+              handleAccept={this.setAccept}
+            />
+          {/* <ScrollList_mobile
+            reload={this.state.reload}
+            handleReload={this.handleReload}
+            {...osdstyle_mobile.design_margin}
+            type="design"
+            dataListAdded={this.props.waitingDesign}
+            getListRequest={null}
+            handleReject={this.setOut}
+            rejectText={"거절"}
+            handleAccept={this.setAccept} /> */}
+            </div>
+        </DesignBox_mobile>
+        :
+        <DesignBox style={{marginBottom:`${this.props.waitingDesign&&this.props.waitingDesign.length==0?"0px":"75px"}`}}>
         <div className="boxTitle">가입 신청중인 디자인 ({this.props.waitingDesign.length})</div>
         <div className="boxContent">
         <ScrollList
@@ -65,6 +111,8 @@ class WaitingDesignContainer extends Component {
           handleAccept={this.setAccept} />
           </div>
       </DesignBox>
+        }
+      </React.Fragment>
     );
   }
 }

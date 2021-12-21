@@ -24,7 +24,7 @@ const GroupCard = styled.div`
 
   .thumbnail{
     width:100px;
-    height:100px;
+    height:98px;
     min-width:100px;
     min-heighπt:100px;
     border-radius:12px;

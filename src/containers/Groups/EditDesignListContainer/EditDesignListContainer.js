@@ -7,8 +7,20 @@ import styled from 'styled-components';
 import osdstyle from "opendesign_style";
 import Loading from 'components/Commons/Loading';
 import { confirm } from 'components/Commons/Confirm/Confirm';
+import opendesign_mobile_style from "opendesign_mobile_style";
+import ScrollList_mobile from "components/Commons/ScrollList_mobile";
 
 const DesignBox = styled.div`
+margin-bottom: 5px;
+& .boxTitle {
+  margin-bottom:5px;
+  font-size: 20px;
+}
+.boxContent{
+  margin-top:22px;
+}
+`;
+const DesignBox_mobile = styled.div`
 margin-bottom: 5px;
 & .boxTitle {
   margin-bottom:5px;
@@ -46,7 +58,37 @@ class EditDesignListContainer extends Component {
   render() {
     const { reload } = this.state;
     return (
-      <DesignBox style={{marginBottom:`${this.props.EditDesignList&&this.props.EditDesignList.length==0?"0px":"75px"}`}}>
+      <React.Fragment>
+        {
+          window.innerWidth<500?
+          <DesignBox_mobile style={{marginBottom:`${this.props.EditDesignList&&this.props.EditDesignList.length==0?"0px":"75px"}`}}>
+          <div className="boxTitle">등록된 디자인 ({this.props.EditDesignList.length})</div>
+          {this.props.status === "INIT" ?
+            <Loading /> :
+            <div className="boxContent">
+              <ScrollList_mobile
+              id="scroll-list"
+              {...opendesign_mobile_style.design_margin}
+              reload={reload}
+              handleReload={this.handleReload}
+              type="design"
+              dataListAdded={this.props.EditDesignList}
+              getListRequest={null}
+              handleReject={this.setOut}
+              />
+            {/* <ScrollList_mobile
+              {...opendesign_mobile_style.design_margin}
+              reload={reload}
+              handleReload={this.handleReload}
+              type="design"
+              dataListAdded={this.props.EditDesignList}
+              getListRequest={null}
+              handleReject={this.setOut} /> */}
+              </div>
+              }
+        </DesignBox_mobile>
+        :
+        <DesignBox style={{marginBottom:`${this.props.EditDesignList&&this.props.EditDesignList.length==0?"0px":"75px"}`}}>
         <div className="boxTitle">등록된 디자인 ({this.props.EditDesignList.length})</div>
         {this.props.status === "INIT" ?
           <Loading /> :
@@ -62,6 +104,8 @@ class EditDesignListContainer extends Component {
             </div>
             }
       </DesignBox>
+        }
+      </React.Fragment>
     );
   }
 }

@@ -496,12 +496,19 @@ color: #707070;
     .design-thumbnail {
         width: 50px;
         height: 50px;
+        min-width: 50px;
+        min-height: 50px;
+        max-width: 50px;
+        max-height: 50px;
         border-radius: 5px;
         background-image: url(${props => props.img});
         background-size: cover;
         background-position: center;
     }
     .design-title {
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
         margin-left: 16px;
         font-size: 17px;
     }
@@ -613,7 +620,7 @@ width:100% !important;
 
 min-height: 450px;
 border-radius:0px !important;
-padding:23px 65px 51px 65px !important;
+padding:20px !important;
 margin-bottom: 100px;
 
 .close-box {
@@ -628,7 +635,7 @@ margin-bottom: 100px;
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:37px;
+    font-size:30px;
     font-family:Spoqa Han Sans Neo;
     font-weight:Medium;
     margin-bottom:32px;

@@ -61,9 +61,10 @@ const Wrapper = styled.div`
 const Wrapper_mobile = styled.div`
   width:100%;
   margin-top:10px;
-
+  padding-left:10px;
+  padding-right:10px;
   display:flex;
-  justify-content:flex-end;
+  justify-content:center;
   .marginLeft{margin-left:10px;}
   .marginRight{margin-right:10px;}
   .button{
