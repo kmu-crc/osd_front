@@ -118,6 +118,7 @@ export default class AddContent extends React.Component {
   };
 
   render() {
+    console.log("debug::", this.props, this.state);
 
     return (<React.Fragment>
       {!this.props.designId

@@ -1077,8 +1077,9 @@ export default
                             <div style={{ width: "100%" }}>
                                 <div className="info">
                                     {detail.explanation
-                                        ? detail.explanation.replace(/\n/g, "<br/>")
-                                        : null}
+                                        // ? detail.explanation.replace(/\n/g, "<br/>")
+                                        // : null
+                                    }
                                 </div>
                                 <div className="group_user"
                                     onClick={() => this.setState({ memberList: true })}>
