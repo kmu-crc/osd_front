@@ -1557,10 +1557,31 @@ export class CardSourceDetailMobile extends Component {
                     style={{
                       minHeight: "50px",
                       fontSize: `${this.state.fontratio}rem`,
-                      lineHeight: `${this.state.fontratio * 1.2}rem`
+                      lineHeight: `${this.state.fontratio * 1.2}rem`,
                     }}
                     dangerouslySetInnerHTML={{
-                      __html: `${(item.content == null || item.content.replace(" ", "").length === 0)
+                      __html: `${
+                        window.innerWidth<500?
+                        (item.content == null || item.content.replace(" ", "").length === 0)
+                        ? "<center><p style=\"color:gray\">(빈 텍스트)</p></center>"
+                        : item.content
+                          .replace(/font-size:14px;/g, `font-size:${0.875 * this.state.fontratio}rem;`)
+                          .replace(/font-size:18px;/g, `font-size:${1.125 * this.state.fontratio}rem;`)
+                          .replace(/font-size:24px;/g, `font-size:${1.500 * this.state.fontratio}rem;`)
+                          .replace(/font-size:30px;/g, `font-size:${1.875 * this.state.fontratio}rem;`)
+                          .replace(/font-size:36px;/g, `font-size:${2.25 * this.state.fontratio}rem;`)
+                          .replace(/font-size:48px;/g, `font-size:${3.5 * this.state.fontratio}rem;`)
+                          .replace(/margin-left:5em;/g, `margin-left:0px;`)
+                          .replace(/margin-left:10em;/g, `margin-left:0px;`)
+                          .replace(/margin-left:15em;/g, `margin-left:0px;`)
+                          .replace(/margin-left:20em;/g, `margin-left:0px;`)
+                          .replace(/margin-left:25em;/g, `margin-left:0px;`)
+                          .replace(/margin-left:30em;/g, `margin-left:0px;`)
+                          .replace(/margin-left:35em;/g, `margin-left:0px;`)
+                          .replace(/margin-left:40em;/g, `margin-left:0px;`)
+                          .replace(/margin-left:45em;/g, `margin-left:0px;`)
+                        :
+                        (item.content == null || item.content.replace(" ", "").length === 0)
                         ? "<center><p style=\"color:gray\">(빈 텍스트)</p></center>"
                         : item.content
                           .replace(/font-size:14px;/g, `font-size:${0.875 * this.state.fontratio}rem;`)
