@@ -52,10 +52,10 @@ const Wrapper = styled.div`
 
     input { 
       width: 256px;
-      height: 19px;
       background-color: rgb( 160, 160, 160);
       border: none; 
-      outline: none; 
+      outline: none;
+      padding:5px 10px;
       :focus { 
         outline: none;
       }

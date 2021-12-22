@@ -91,6 +91,7 @@ const Wrapper = styled.div`
       button {
         border: none;
         width: 72px;
+        min-width:max-content;
         height: 18px;
         background-color: #7A7A7A;
         font-size: 8px;
@@ -98,10 +99,10 @@ const Wrapper = styled.div`
         font-weight: 500;
         color: #FFFFFF;
         :first-child {
-          margin-left: 35px;
+          margin-left: 30px;
         }
         :last-child {
-          margin-left: 39px;
+          margin-left: 35px;
         }
     }
   }

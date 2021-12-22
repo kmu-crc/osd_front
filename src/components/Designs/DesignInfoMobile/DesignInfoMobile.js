@@ -493,6 +493,7 @@ color: #707070;
 .wrapper {
     cursor: pointer;
     display: flex;
+    padding:2px;
     .design-thumbnail {
         width: 50px;
         height: 50px;

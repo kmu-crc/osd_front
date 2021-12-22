@@ -526,7 +526,7 @@ class GridEditorMobile extends Component {
                       letterSpacing: "0px",
                       color: card.first_img ? "#000" : "#707070",
                       backgroundColor: card.first_img
-                        ? "rgba(255,255,255,0.35)"
+                        ? "rgba(255,255,255,0.25)"
                         : "none",
                     }}
                   >
