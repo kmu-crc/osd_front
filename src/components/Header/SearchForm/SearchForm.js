@@ -101,6 +101,7 @@ const MobileSearchContainer = styled.div`
     position: relative;
 
     input {
+        width: 90%;
         height: 20px;
         padding-right: 21px;
         margin-left: 7px;
