@@ -52,7 +52,8 @@ const MenuElement = styled.li`
 
   &.login-button {
     margin: 9px 8px 9px 0px;
-    width: 67px;
+    min-width: 67px;
+    width: auto;
     height: 21px;
     border-radius: 10px;
     border: red;
@@ -72,7 +73,8 @@ const MenuElement = styled.li`
 
   &.create-design-button {
     margin: 9px 8px 9px 0px;
-    width: 67px;
+    min-width: 67px;
+    width: auto;
     height: 21px;
     border-radius: 10px;
     border: red;
@@ -94,7 +96,8 @@ const MenuElement = styled.li`
   }
   &.create-designer-button {
     margin: 9px 8px 9px 0px;
-    width: 67px;
+    min-width: 67px;
+    width: auto;
     height: 21px;
     border-radius: 10px;
     border: red;
