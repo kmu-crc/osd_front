@@ -59,18 +59,14 @@ import mobilesearch from "resources/images/mobile_search_icon.svg";
 //     }
 // `;
 const SearchContainer = styled.div`
-    // border:1px solid black;
-    width:579px;
-    // max-width:579px;
-    // min-width:100px;
-    height:40px;
-    border-bottom:2px solid white;
-    display:flex;
+    height: 40px;
+    border-bottom: 2px solid white;
+    display: flex;
     justify-content:space-between;
-    align-items:center;
-    padding:5px 0px;
+    align-items: center;
+    padding: 5px 0px;
+
     .searchbox{
-        width:80%;
         font-size:23px;
         font-family:Spoqa Han Sans;
         border:none;
@@ -88,7 +84,7 @@ const SearchContainer = styled.div`
     @media only screen and (min-width: 0px) and (max-width: 1300px) {
         width: 100%;
         min-width: 100px;
-        max-width: 450px;
+        // max-width: 450px;
     }
 `;
 // mobile
@@ -101,6 +97,7 @@ const MobileSearchContainer = styled.div`
     position: relative;
 
     input {
+        width: 90%;
         height: 20px;
         padding-right: 21px;
         margin-left: 7px;

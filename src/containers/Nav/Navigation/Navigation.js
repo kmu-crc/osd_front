@@ -669,7 +669,7 @@ class Navigation extends Component {
                         </a>}
                 </MobileMenuBox>
 
-                : <MenuBox h={this.state.h}>
+                : <MenuBox h={this.state.h} id="menubox">
                     <div className="menu_top" />
                     <div className="menu_handle" onClick={this.props.onClickFolding}>
                         <img

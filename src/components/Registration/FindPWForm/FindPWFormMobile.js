@@ -79,7 +79,8 @@ const Wrapper = styled.div`
       border: none; 
       outline: none;
 
-      width: 124px;
+      min-width: 124px;
+      width: auto;
       height: 33px;
       background-color: #FFFFFF;
       border: 1px solid #707070;

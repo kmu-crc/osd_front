@@ -41,7 +41,7 @@ const Profile = styled.div`
     .nickname{width:200px;height:38px;font-family:Spoqa Han Sans;font-weight:800;font-size:26px;            
               display:flex;align-items:center;overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
     .button_wrap{display:flex;}
-    .button{width:40px;height:26px;box-shadow: 0px 0px 5px 0px #ABABAB;
+    .button{min-width:40px;width: auto;height:26px;box-shadow: 0px 0px 5px 0px #ABABAB;
             display:flex;justify-content:center;align-items:center;font-weight:500;}
     .red{background-color:red;color:white;}
     .grey{background-color:#c2c2c2;color:black;}        

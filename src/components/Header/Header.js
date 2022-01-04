@@ -49,6 +49,8 @@ const HeaderMenu = styled.div`
     .wrap {
         display: flex;
         align-items: center;
+
+        // border: 2px dashed green;
     }
     .menu_nav {
         min-width: 100px;
@@ -112,6 +114,8 @@ const HeaderMenu = styled.div`
     @media only screen and (min-width : 950px) and (max-width:1300px) {
         .searchBox{
             margin-left: 10px;
+            margin-right: 10px;
+            // width: ${window.innerWidth * 2 / 5}px;
         }
         .marginRight1 {
             margin-right: 25px;
@@ -246,7 +250,13 @@ class Header extends Component {
 
                         <div className="wrap">
                             <div className="searchBox">
-                                {window.location.href.search('/search') > -1 ? null : <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={1} />}
+                                {window.location.href.search('/search') > -1
+                                    ? null
+                                    : <SearchForm
+                                        formWidth={this.state.screenWidth}
+                                        searchCategory={this.state.selectCate}
+                                        visible={1}
+                                    />}
                             </div>
                         </div>
                         <div className="wrap">

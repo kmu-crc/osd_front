@@ -434,7 +434,7 @@ class Navigation extends Component {
     };
     gotoPage = (page) => {
         window.location.href = page;
-        this.props.onClickFolding();
+        // this.props.onClickFolding();
     }
     gotoMyPage = () => {
         // alert("!");

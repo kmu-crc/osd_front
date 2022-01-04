@@ -189,19 +189,8 @@ export function CheckTokenRequest(token) {
     dispatch(CkeckToken());
     return fetch(`${host}/users/check`, { headers: { 'x-access-token': token, 'Content-Type': 'application/json' } })
       .then(res => res.json())
-      .then(res => {
-        if (res.success) {
-          // console.log(res);
-          return dispatch(CkeckTokenSuccess(res.info, token));
-        } else {
-          // SetSession("opendesign_token", null);
-          return dispatch(CkeckTokenFailure());
-        }
-      })
-      .catch(err => {
-        // SetSession("opendesign_token", null);
-        dispatch(CkeckTokenFailure());
-      });
+      .then(res => res.success ? dispatch(CkeckTokenSuccess(res.info, token)) : dispatch(CkeckTokenFailure()))
+      .catch(_ => dispatch(CkeckTokenFailure()));
   };
 }
 export function CheckEmailRequest(email) {

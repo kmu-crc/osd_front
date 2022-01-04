@@ -70,7 +70,8 @@ const Control = styled.div`
 		transition-duration: 0.15s;
 		z-index: 500;
 
-		width: 32px;
+		min-width: 32px;
+		width: auto;
 		height: 32px;
 		opacity: 0.95;
 
