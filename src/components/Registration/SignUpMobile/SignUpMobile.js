@@ -304,13 +304,24 @@ const SignupWrapper = styled.div`
     .justityCenter{
         justify-content:center;
     }
-    .checkbox{
+    .checkbox_{
         width:30px !important;
         height:30px !important;
         border:1px solid #707070;
-        background-color:white;
+        background-color:white !important;
         margin-right:15px;
     }
+    .container .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        /* -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg); */
+      } 
     .join_button{
         width:124px;
         height:51px;
@@ -721,7 +732,9 @@ export default class SignUpMobile extends Component {
                             {this.state.error_not_same_both || this.state.warningType == 6 ? "패스워드가 일치하지 않습니다" : " "}
                         </div>
                         <div className="row marginTop3">
-                            <input type="checkbox" className="checkbox" id="agree" onChange={this.onChecked} checked={this.state.checked} value={this.state.checked} />
+                            <label className="coontainer">
+                            <input type="checkbox" className="checkbox_" id="agree" onChange={this.onChecked} checked={this.state.checked} value={this.state.checked} />
+                            </label>
                             <div className="font_normal">이용약관에 동의해 주세요!</div>
                             <div className="font_small marginLeft1 pointer" onClick={this.openterm}>이용약관 보기</div>
                         </div>
