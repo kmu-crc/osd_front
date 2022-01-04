@@ -195,7 +195,7 @@ class Me extends React.Component {
 		return (
 			<DivME
 				// style={`${this.props.pinned == me.id ? `border:1px solid red`: null}`}
-				style={{border:`${this.props.pinned == me.id? "1px solid red":"1px solid transparent"}`}}
+				style={{ border: `${this.props.pinned == me.id ? "1px solid red" : "1px solid transparent"}` }}
 				// style
 				// data-tip={tip}
 				// data-tip-disable={!tip}
@@ -257,6 +257,8 @@ class Me extends React.Component {
 				>
 
 					<PeerView
+						roomstate={this.props.roomstate}
+						connected={this.props.connected}
 						isMe
 						peer={me}
 						share={videoProducer && videoProducer.type === "share"}
@@ -308,6 +310,10 @@ class Me extends React.Component {
 		if (!prevProps.me.displayNameSet && this.props.me.displayNameSet) {
 			ReactTooltip.hide(this._rootNode)
 		}
+		if (this.props.roomstate === "closed" && prevProps !== "closed") {
+			alert("화상회의 서버와 연결이 종료되었습니다. 화상회의 창이 닫힙니다.");
+			window.close();
+		}
 	}
 }
 
@@ -328,6 +334,7 @@ const mapStateToProps = (state) => {
 	const videoProducer = producersArray.find((producer) => producer.track.kind === 'video')
 	return {
 		connected: state.room.state === 'connected',
+		roomstate: state.room.state,
 		me: state.me,
 		audioProducer: audioProducer,
 		videoProducer: videoProducer,
