@@ -75,7 +75,7 @@ class App extends Component {
             <Route path="/designDetail/:id" component={DesignDetailPage} />
             <Route path="/createdesign" component={RequiresAuth(CreateDesignPage)} />
             <Route path="/designModify/:id" component={RequiresAuth(ModifyDesignPage)} />
-            {/* GROUP C - group */},
+            {/* GROUP C - group */}
             <Route path="/group/:sorting?" component={GroupListPage} />
             <Route path="/groupDetail/:id/" component={GroupDetailPage} />
             <Route path="/createGroup" component={RequiresAuth(CreateGroupPage)} />

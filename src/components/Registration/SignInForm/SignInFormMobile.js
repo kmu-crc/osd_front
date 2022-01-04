@@ -90,7 +90,8 @@ const Wrapper = styled.div`
       }
       button {
         border: none;
-        width: 72px;
+        min-width: 72px;
+        width: auto;
         height: 18px;
         background-color: #7A7A7A;
         font-size: 8px;

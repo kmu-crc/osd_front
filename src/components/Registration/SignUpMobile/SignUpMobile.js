@@ -131,7 +131,8 @@ const JoinCongraWrapper = styled.div`
     button {
         margin: auto;
         cursor: pointer;
-        width: 277px;
+        min-width: 277px;
+        width: auto;
         height: 51px;
         display: flex;
         justify-content: center;

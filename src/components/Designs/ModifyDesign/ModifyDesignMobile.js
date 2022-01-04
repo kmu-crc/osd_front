@@ -138,7 +138,8 @@ const StepButtonWrapper = styled.div`
       margin-right: 0px;
     }
     border: none;
-    width: 40px;
+    min-width: 40px;
+    width: auto;
     height: 26px;
     box-shadow: 2px 2px 2px #0000002b;
 
