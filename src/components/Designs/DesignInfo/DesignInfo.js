@@ -891,7 +891,7 @@ class DesignInfo extends Component {
                                     :
                                     <div className="button_wrap pointer" onClick={this.like}>
                                         관심 디자인 {like ? "취소하기" : "등록하기"}
-                                        <img src={thumbup} className="icon" />
+                                        <img src={thumbup} className="icon" style={{opacity:`${like?1:0.5}`}} />
                                     </div>
                                 }
 

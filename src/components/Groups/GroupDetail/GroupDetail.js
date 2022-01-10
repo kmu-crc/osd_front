@@ -26,7 +26,6 @@ const Wrapper = styled.div`
   padding-left: 38px;
   flex-direction: column;
   display:flex;
-
   .content{
     // width:100%;
     // padding:27px 41px 38px 27px;
@@ -44,8 +43,9 @@ const BodyWrapper = styled.div`
   // padding-left: 38px;
   // padding-right: 38px;
   .menu-container {
+    overflow-x:hidden;
     width:100%;
-    max-width: 1737px;
+    max-width: 1740px;
     min-width: 900px;
     display: flex;
     flex-direction: row;
@@ -128,6 +128,7 @@ const TabMenu = styled.div`
 const ScrollWrapper = styled.div`
   margin-top: 15px;
   width: 100%;
+  overflow-x:hidden;
 `;
 class GroupDetail extends Component {
   constructor(props) {

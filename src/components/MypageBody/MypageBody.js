@@ -14,7 +14,7 @@ const Wrapper = styled.div`
     // margin-right: 38px;
     max-width:1740px;
     min-width: ${1000 - (38 * 2)}px;
-
+    overflow-x:hidden;
     // margin-left: ${100 + 38}px;
     // *{border: 1px solid red;}
 

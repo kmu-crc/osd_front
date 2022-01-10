@@ -9,7 +9,7 @@ const FormWrapper = styled.div`
 `;
 const FromFieldCard = styled.div`
   width:100%;
-  max-width:1706px;
+  max-width:1702px;
   min-width: ${1000 - (38 * 2)}px;
   background-color: white;
   box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);

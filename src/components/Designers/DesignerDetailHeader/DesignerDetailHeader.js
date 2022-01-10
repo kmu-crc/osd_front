@@ -434,9 +434,9 @@ class DesignerPageHeader extends Component {
                                     onClick={this.props.userInfo == null
                                         ? async () => await alert("로그인 해주세요", "확인")
                                         : () => this.like()}>
-                                    <div className="modify-text">관심디자이너 {like ? "취소하기" : "등록하기"}</div>
+                                    <div className="modify-text">관심 디자이너 {like ? "취소하기" : "등록하기"}</div>
                                     <div className="modify-icon">
-                                        <IconDiv width={22} height={20} className={`${like ? "active" : "inactive"}`} icon={iThumbUp} />
+                                        <IconDiv width={22} height={20} className={`${like ? "active" : "inactive"}`} icon={iThumbUp} style={{opacity:`${like?1:0.5}`}}/>
                                     </div>
                                 </div>
                                 <div className="modify" onClick={this.sendMessage}>

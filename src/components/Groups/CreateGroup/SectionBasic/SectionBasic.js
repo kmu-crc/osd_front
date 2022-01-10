@@ -64,7 +64,7 @@ const InputText =styled.input`
 `
 const InputTextArea =styled.textarea`
       width:880px;
-      height:323px;
+      height: 259px;
       background-color:#E9E9E9;
       border:none;
       outline:none;
@@ -75,6 +75,7 @@ const InputTextArea =styled.textarea`
       .placeholder{
         color:#707070;
       }
+      resize: none;
 `
 
 class SectionBasic extends Component {
