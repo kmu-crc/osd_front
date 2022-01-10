@@ -5,11 +5,12 @@ import styled from "styled-components";
 const FlexContainer = styled.div`
   height:100%;
   display:flex;
-  flex-wrap:wrap;
+  flex-flow:wrap;
   flex-direction:column;
   overflow-X:overlay;
   overflow-Y:hidden;
   scroll-behavior:smooth;
+  align-content:flex-start;
   gap: ${props => props.row}px ${props => props.col}px;
   ::-webkit-scrollbar { display: none; }
 
@@ -113,11 +114,11 @@ class ScrollListNew_mobile extends Component {
                 }
               }} >
               {dataListAdded.map((item, i) => {
-                return (<li key={item.uid + "-" + i} style={{ listStyle: "none" }}>
+                return (<React.Fragment>
                   {ListComponent
                     ? <ListComponent data={item} />
                     : null}     
-                </li>)
+                </React.Fragment>)
               })
               }
               {loading && <LoadingText>목록을 가져오고 있습니다.</LoadingText>}
