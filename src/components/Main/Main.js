@@ -311,8 +311,8 @@ export default class Main extends Component {
               <div style={{
                 position: "absolute",
                 left: "173px", bottom: "100px",
-                padding: "0px",
-                width: "208px", height: "55px",
+                padding: "0px 15px",
+                width: "238px", height: "55px",
                 backgroundColor: "black", //rgba(84,134,199,0.52)",
                 alignItems: "center", textAlign: "center",
                 color: "#fff", fontSize: "33px", lineHeight: "55px", fontFamily: "Spoqa Han Sans Neo", fontWeight: "700"

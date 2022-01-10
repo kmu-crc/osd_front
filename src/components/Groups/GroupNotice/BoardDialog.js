@@ -117,7 +117,10 @@ const BoardModalWrapper = styled(Modal)`
 
 
     .empty {
-        height: 150px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        height: 300px;
     }
     .bottom-buttons {
         width: 100%;
@@ -166,8 +169,11 @@ const BoardModalWrapper_mobile = styled(Modal)`
         background-color:#1e9b79;
     }
     .empty {
+        display:flex;
+        align-items:center;
+        justify-content:center;
         padding: 5px 11px 4px 11px;
-        height: 150px;
+        height: 300px;
     }
     .bottom-buttons {
         width: 100%;

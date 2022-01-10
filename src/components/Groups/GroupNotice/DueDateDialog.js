@@ -64,7 +64,11 @@ const DueDateModalWrapper = styled(Modal)`
       min-width:100%;
    }
     .empty {
-        height: 150px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding: 5px 11px 4px 11px;
+        height: 300px;
     }
     .bottom-buttons {
         width: 100%;
