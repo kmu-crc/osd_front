@@ -23,9 +23,14 @@ const Wrapper =styled.div`
   .buttonBox{
     width:100%;
     display:flex;
-    padding:0px 15px;
+    // padding:0px 15px;
+    justify-content:center;
     margin-top:10px;
       .marginRight{margin-right:10px;}
+      .blankButton{
+        width:172px;
+        height:30px;
+      }
       .redButton{
         width:172px;
         height:30px;
@@ -58,7 +63,7 @@ const Wrapper =styled.div`
     display:flex;
     justify-content:center;
     margin-top:15px;
-    margin-left:10px;
+    // margin-left:10px;
   }
 `
 const DropBox = styled(Dropdown)`
@@ -124,7 +129,7 @@ export default class MakerList_mobile extends Component {
                 this.props.userInfo != null ?
                     <Link to={`/requestTo${target}/null`}><div className="redButton">제작 의뢰</div></Link>
                   :
-                  null
+                  <div className="blankButton"/>
         }
         </div>
         <div className="filter">

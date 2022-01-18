@@ -135,6 +135,7 @@ const AlarmItem = styled.li`
     border-bottom: 0;
   }
   &.confirm {
+    width:100%;
     display: flex;
     flexDirection: row;
     justify-content: left;
@@ -285,7 +286,7 @@ export default class Alarm extends Component {
           }
           
         </AlarmBox>
-        {this.state.active && (
+        {true && (
           <AlarmDropDown innerWidth={window.innerWidth}>
             {alarms == null || alarms.length === 0 ? (
               <AlarmItem>
@@ -302,23 +303,25 @@ export default class Alarm extends Component {
                 }
                 {converted && converted.length > 0 && converted.map((item, index) => {
                   // return null
+
+                  console.log("=====:",item);
                   const alarmtype = this.showButton(item)
-                  const alarmItem = JSON.parse(item.content);
+                  // const alarmItem = JSON.parse(item.content);
                   let imgURL = noimg;
                   let locationURL = null;
                   switch (item.type) {
                     case "ITEM_PURCHASED_TO_EXPERT":
                     case "ITEM_PURCHASED_TO_USER":
                     case "ITEM_QUESTION_TO_OWNER":
-                      locationURL = "/productDetail/" + item.detail.itemId;
+                      // locationURL = "/productDetail/" + item.detail.itemId;
                       break;
                     case "ITEM_RESPONSE_TO_DESIGNER":
                     case "ITEM_REQUEST_TO_DESIGNER":
-                      locationURL = "/designerDetail/" + item.to;
+                      // locationURL = "/designerDetail/" + item.to;
                       break;
                     case "ITEM_RESPONSE_TO_MAKER":
                     case "ITEM_REQUEST_TO_MAKER":
-                      locationURL = "/makerDetail/" + item.to;
+                      // locationURL = "/makerDetail/" + item.to;
                       break;
                     default:
                       locationURL = null;
@@ -329,49 +332,50 @@ export default class Alarm extends Component {
                     case "ITEM_QUESTION_TO_OWNER":
                     case "ITEM_PURCHASED_TO_USER":
                     case "ITEM_LIKE_TO_OWNER":
-                      imgURL = alarmItem == null ? noimg : alarmItem.itemThumbnail == null ? noimg : alarmItem.itemThumbnail.m_img;
+                      // imgURL = alarmItem == null ? noimg : alarmItem.itemThumbnail == null ? noimg : alarmItem.itemThumbnail.m_img;
                       break;
                     case "ITEM_RESPONSE_TO_DESIGNER":
                     case "ITEM_RESPONSE_TO_MAKER":
-                      imgURL = alarmItem == null ? noimg : alarmItem.toThumbnail == null ? noimg : alarmItem.toThumbnail.m_img;
+                      // imgURL = alarmItem == null ? noimg : alarmItem.toThumbnail == null ? noimg : alarmItem.toThumbnail.m_img;
                       break;
                     case "ITEM_REQUEST_TO_DESIGNER":
                     case "ITEM_REQUEST_TO_MAKER":
                     case "ITEM_REVIEW_TO_OWNER":
                     case "ITEM_LIKE_TO_DESIGNER":
                     case "ITEM_LIKE_TO_MAKER":
-                      imgURL = alarmItem == null ? noimg : alarmItem.fromThumbnail == null ? noimg : alarmItem.fromThumbnail.m_img;
+                      // imgURL = alarmItem == null ? noimg : alarmItem.fromThumbnail == null ? noimg : alarmItem.fromThumbnail.m_img;
                       break;
                     default:
                       imgURL = noimg;
                   }
                   return (
-                    <AlarmItem key={index} className={item.confirm ? "confirm" : "unconfirm"} onClick={() => alarmtype ? null : this.alarmConfirm(item.uid, locationURL)}>
-                      <div style={item.confirm ? { width: "1%", height: "12px", backgroundColor: "#EAA" } : { width: "1%", height: "12px", backgroundColor: "red" }}>&nbsp;</div>
+                    //onClick={() => alarmtype ? null : this.alarmConfirm(item.uid, locationURL)}
+                    <AlarmItem key={index} className={item.confirm ? "confirm" : "unconfirm"} >
+                      {/* <div style={item.confirm ? { width: "1%", height: "12px", backgroundColor: "#EAA" } : { width: "1%", height: "12px", backgroundColor: "red" }}>&nbsp;</div>
                       <div style={{ paddingLeft: "3px" }} >
-                        <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "left" }}>
-                          <div>
+                          <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "left" }}>
                           </div>
-                        </div>
-                        <div style={{ height: "100%", display: "flex" }}>
+                        <div style={{ height: "100%", display: "flex" ,justifyContent:"space-between"}}>
                           <div style={{ verticalAlign: "middle", paddingLeft: "3px", display: "flex", flexDirection: "column", alignItems: "space-between", justifyContent: "space-between" }}>
-                            <div style={{ width: "100%", fontSize: market_style.font.size.tiny1 }}>{this.getMessageText(item)}</div>
-                            <div style={{ display: "flex" }}>
-                              <div style={{ fontSize: market_style.font.size.tiny1, color: "#960A0E" }}>{DateFormat(item.create_time)}</div>
-                            </div>
+                              <div style={{ minWidth: "100%", fontSize: market_style.font.size.tiny1 }}>{this.getMessageText(item)}</div>
+                              <div style={{ display: "flex" }}>
+                                <div style={{ fontSize: market_style.font.size.tiny1, color: "#960A0E" }}>{DateFormat(item.create_time)}</div>
+                              </div>
                           </div>
-                          {/* { item.type=="ITEN_REQUEST_TO_DESIGNER"||
-                            item.type=="ITEN_REQUEST_TO_MAKER"?
-                            <React.Fragment>
-                              <ResponseMsg width={72} height={72}>
-                                <div onClick={()=>{window.location.href=item.type==ITEN_REQUEST_TO_DESIGNER?"":"";}} style={{fontSize:"13px",color:"red"}}>의뢰 응답</div>
-                              </ResponseMsg>
-                            </React.Fragment>
-                            : */}
                           <CustomIcon imgURL={imgURL} width={72} height={72} />
-                          {/* } */}
-
                         </div>
+                      </div> */}
+                      <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
+                      <div style={{width:"100%"}}>
+                           <div style={{width:"100%",height:"100%",display:"flex",flexDirection:"column",justifyContent:"space-between"}}>
+                           <div style={{display:"flex"}}>
+                             <div style={item.confirm ? { width: "1%", height: "12px", backgroundColor: "#EAA" } : { width: "1%", height: "12px", backgroundColor: "red" }}>&nbsp;</div>
+                             <div style={{marginLeft:"3px", minWidth: "100%", fontSize: market_style.font.size.tiny1 }}>{this.getMessageText(item)}</div>
+                           </div>
+                           <div style={{ fontSize: market_style.font.size.tiny1, color: "#960A0E" }}>{DateFormat(item.create_time)}</div>
+                           </div>
+                      </div>
+                      <CustomIcon imgURL={imgURL} width={72} height={72} />
                       </div>
                     </AlarmItem>
                   )
@@ -385,3 +389,31 @@ export default class Alarm extends Component {
     )
   }
 }
+
+
+{/* <AlarmItem key={index} className={item.confirm ? "confirm" : "unconfirm"} onClick={() => alarmtype ? null : this.alarmConfirm(item.uid, locationURL)}>
+<div style={item.confirm ? { width: "1%", height: "12px", backgroundColor: "#EAA" } : { width: "1%", height: "12px", backgroundColor: "red" }}>&nbsp;</div>
+<div style={{ paddingLeft: "3px" }} >
+    <div style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "left" }}>
+      <div>
+      </div>
+    </div>
+  <div style={{ height: "100%", display: "flex" }}>
+    <div style={{ verticalAlign: "middle", paddingLeft: "3px", display: "flex", flexDirection: "column", alignItems: "space-between", justifyContent: "space-between" }}>
+    <div style={{ width: "100%", fontSize: market_style.font.size.tiny1 }}>{this.getMessageText(item)}</div>
+        <div style={{ display: "flex" }}>
+          <div style={{ fontSize: market_style.font.size.tiny1, color: "#960A0E" }}>{DateFormat(item.create_time)}</div>
+        </div>
+        </div> */}
+    {/* { item.type=="ITEN_REQUEST_TO_DESIGNER"||
+      item.type=="ITEN_REQUEST_TO_MAKER"?
+      <React.Fragment>
+        <ResponseMsg width={72} height={72}>
+          <div onClick={()=>{window.location.href=item.type==ITEN_REQUEST_TO_DESIGNER?"":"";}} style={{fontSize:"13px",color:"red"}}>의뢰 응답</div>
+        </ResponseMsg>
+      </React.Fragment>
+      : */}
+    {/* <CustomIcon imgURL={imgURL} width={72} height={72} />
+  </div>
+</div>
+</AlarmItem> */}

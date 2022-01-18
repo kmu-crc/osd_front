@@ -9,14 +9,22 @@ export const AlarmWrapper = styled.div`
     position: relative !important;
 `
 export const NewAlarmCircle = styled.div`
-    width: 13.5px;
-    height: 12.5px;
+    // width: 13.5px;
+    // height: 13.5px;
+    padding:2px;
     position: absolute;
     top: 50%;
     left: 50%;
     background-color: #FF3838;
     border-radius: 100%;
+    display:flex;
+    justify-content:center;
     .count {
+        width:10px;
+        height:10px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
         text-align: center;
         color: white;
         font-size: .75rem;
