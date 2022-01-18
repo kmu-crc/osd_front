@@ -11,6 +11,7 @@ import market_style from "market_style";
 
 const MainBox = styled.div`
   width:100%;
+  max-width:360px;
   padding:0px 10px;
   margin-top:100px;
   .wrapper{
@@ -184,6 +185,7 @@ class SignInForm_mobile extends Component {
     return (
       <React.Fragment>
         <form onSubmit={this.onSubmit}>
+        <div style={{width:"100%",display:"flex",justifyContent:"center"}}>
         <MainBox>
           <div className="wrapper">
           <div className="header marginBottom2">로그인</div>
@@ -216,6 +218,7 @@ class SignInForm_mobile extends Component {
           </div>
           </div>
         </MainBox>
+        </div>
         </form>
       </React.Fragment>
     );

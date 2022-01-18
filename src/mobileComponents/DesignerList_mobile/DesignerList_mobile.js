@@ -22,9 +22,14 @@ const Wrapper =styled.div`
   .buttonBox{
     width:100%;
     display:flex;
-    padding:0px 15px;
+    justify-content:center;
+    // padding:0px 15px;
     margin-top:10px;
       .marginRight{margin-right:10px;}
+      .blankButton{
+        width:172px;
+        height:30px;
+      }
       .redButton{
         width:172px;
         height:30px;
@@ -57,7 +62,7 @@ const Wrapper =styled.div`
     display:flex;
     justify-content:center;
     margin-top:15px;
-    margin-left:10px;
+    // margin-left:10px;
   }
 `
 const DropBox = styled(Dropdown)`
@@ -118,12 +123,15 @@ export default class DesignerList_mobile extends Component {
       <Wrapper>
         <div className="header"><Link to={`/designer`}>디자이너</Link></div>
         <div className="buttonBox">
-        {/* <Link to={`/request/designer`}><div className="redButton marginRight">디자이너 게시판</div></Link> */}
+        <Link to={`/request/designer`}><div className="redButton marginRight">디자이너 게시판</div></Link>
         {
                 this.props.userInfo != null ?
+                    <React.Fragment>
                     <Link to={`/requestToDesigner/null`}><div className="redButton">디자인 의뢰</div></Link>
+                    {/* <div className="blankButton"/> */}
+                    </React.Fragment>
                   :
-                  null
+                  <div className="blankButton"/>
         }
         </div>
         <div className="filter">
