@@ -206,8 +206,8 @@ export default class CardSourceDetail extends Component {
 
   render() {
     const { loading, content } = this.state
-
-    console.log({ content })
+    const {userInfo} = this.props;
+    console.log( this.props.userInfo )
 
     return (<React.Fragment>
 
@@ -274,7 +274,7 @@ export default class CardSourceDetail extends Component {
           ? content.length > 0
             ? <ViewContent>
               {this.bindPrivate(content).map((item, index) =>
-                item.private === 1 && this.props.bought === false
+                (item.private === 1 && this.props.bought === false)&&(userInfo&&userInfo.uid != item.user_id)
                   ? <PrivateContentWrapper key={index}> {item.count}개의 비공개 항목이 있습니다.<br /> 이 항목{item.count > 1 ? "들" : ""}을 열람하시고 싶으시다면 이 아이템을 구매해주세요.  </PrivateContentWrapper>
                   : item.content_type === "FILE" && item.data_type === "image"
                     ? <div className="imgContent" key={index}>
