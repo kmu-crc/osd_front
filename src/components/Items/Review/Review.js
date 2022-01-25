@@ -39,7 +39,7 @@ const Wrapper = styled.div`
       font-size:${market_style.font.size.small1};
     }
     .text_{
-      border:1px solid black;
+      // border:1px solid black;
       margin-top:28px;
       // margin-bottom: 10px;
       overflow:hidden;

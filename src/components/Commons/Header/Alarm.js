@@ -267,7 +267,7 @@ export default class Alarm extends Component {
     const { alarms } = this.props;
     const unread = (alarms && alarms.length > 0 && alarms.filter(item => item.confirm === 0).length) || 0;
     const converted = this.parseAlarms(alarms);
-    // console.log(converted);
+    console.log(converted);
     return (
       <button type="button" style={{ background: "none", border: "none", outline: "none" }} onClick={this.openAlarmHandler} onBlur={this.onAlarmHandler} ref={ref => (this.alarm = ref)} >
         {/* {this.props.children} */}
@@ -286,7 +286,7 @@ export default class Alarm extends Component {
           }
           
         </AlarmBox>
-        {true && (
+        {this.state.active && (
           <AlarmDropDown innerWidth={window.innerWidth}>
             {alarms == null || alarms.length === 0 ? (
               <AlarmItem>

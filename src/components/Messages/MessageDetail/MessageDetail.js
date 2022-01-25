@@ -125,7 +125,7 @@ class MessageDetail extends Component {
     const list = this.state.list_v1.length > 0 ? this.state.list_v1 : this.props.MessageDetail;
 
     console.log("list======", list);
-    // console.log("v1 : " + this.state.list_v1.length);
+    console.log("v1 : " + this.state.list_v1.length);
     // console.log("listlist : " + this.props.MessageDetail.length);
     const myId = this.props.userInfo.uid;
     return (
@@ -141,7 +141,7 @@ class MessageDetail extends Component {
                   <div className={item.from_user_id === myId ? "wrapper my" : "wrapper"} >
                     {item.from_user_id === myId && <div className="metadata">{DateFormat(item.create_time)}</div>}
                     {/* < div className="text">{item.message.split("\n").map((line, i) => { return (<span key={i}> {line} <br /></span>) })}</div> */}
-                    < div className="text">{item.message.split("\n").map((line, i) => { return (<span key={i} dangerouslySetInnerHTML={{ __html: `${line}` }}/>) })}</div>
+                    < div className="text">{item.message.split("\n")&&item.message.split("\n").map((line, i) => { return (<span key={i} dangerouslySetInnerHTML={{ __html: `${line}` }}/>) })}</div>
 
                     {item.from_user_id !== myId && <div className="metadata"><div>{DateFormat(item.create_time)}</div></div>}
                   </div>
