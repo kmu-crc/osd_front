@@ -14,7 +14,7 @@ const SectionBox = styled.div`
 .payment_content_box{
     *{
     }
-    border:1px solid black;
+    // border:1px solid black;
     width:100%;
     border:1px solid #EFEFEF;
     padding:15px;

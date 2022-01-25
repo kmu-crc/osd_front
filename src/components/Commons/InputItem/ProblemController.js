@@ -208,7 +208,7 @@ const CodingContainer = styled.div`
     opacity: 1;
     background-color:#EFEFEF;
     .blank{
-      border:1px solid black;
+      // border:1px solid black;
       width:100%;
       height:100%;
     }
