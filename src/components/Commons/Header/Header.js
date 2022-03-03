@@ -119,6 +119,7 @@ const HeaderContainer = styled.div`
       min-height:29px;
       max-width:29px;
       max-height:29px;
+      cursor:pointer;
     }
 
     .marginRight1{
@@ -420,6 +421,11 @@ class Header extends Component {
 
     window.location.href = `/search/${searchtype}/update/${this.state.keyword}`;
   }
+
+  changeState = async () => { // 리렌더링을 위한 state값 변경
+    await this.setState({ rendering: false });
+    await this.setState({ rendering: true });
+  }
   getNews = () => {
     const url = `${host}/common/notice`;
     return fetch(url, {
@@ -429,10 +435,56 @@ class Header extends Component {
       .then(data => this.setState({ news: data }))
       .catch(async err => await alert(`공지사항을 가져올 수 없습니다.\n${err}`));
   };
-  submitEnter = e => {
+  onSearchSubmit = async(data) => {
+    if (this.state.keyword == null || this.state.keyword === "") {
+      await alert("키워드를 입력해주세요");
+    } else {
+      this.props.history.replace(`/search/${this.props.type}/${this.props.sort}/${this.state.keyword}`);
+      this.changeState();
+    }
+  }
+
+  submitEnter = async e => {
+    console.log("?");
     if (e.keyCode === 13) {
-      const dom = document.getElementById("searchbox");
-      dom && dom.click();
+      // const dom = document.getElementById("searchLink");
+      // dom && dom.click();
+      this.onSearchSubmit(this.state.keyword);
+      const location = window.location.pathname;
+
+      const designerActive = (location.indexOf("/designer") !== -1 || location.indexOf("/designerDetail") !== -1) && (location.indexOf(`/request`) === -1)
+      const makerActive = (location.indexOf("/maker") !== -1 || location.indexOf("/makerDetail") !== -1) && (location.indexOf(`/request`) === -1)
+      const itemActive = (location.indexOf("/product") !== -1 || (location.indexOf("/createproduct") !== -1)|| (location.indexOf("/productModify") !== -1)|| location.indexOf("/productDetail") !== -1) && (location.indexOf(`/request`) === -1)
+      let searchtype = designerActive ? "designer" : makerActive ? "maker" : itemActive ? "item" : null;
+      console.log(this.state.keyword);
+      let countItem =-1;
+      let countMaker=-1;
+      let countDesigner=-1;
+      await this.props.GetItemSearchCountRequest(this.props.sort, this.props.cate1, this.props.cate2, this.state.keyword)
+      .then((data)=>{console.log(data);countItem=data.searchCount==null?-1:data.searchCount;});
+      await this.props.GetMakerSearchCountRequest(this.props.sort, this.props.cate1, this.props.cate2, this.state.keyword)
+      .then((data)=>{console.log(data);countMaker=data.searchCount==null?-1:data.searchCount;});
+      await this.props.GetDesignerSearchCountRequest(this.props.sort, this.props.cate1, this.props.cate2, this.state.keyword)
+      .then((data)=>{console.log(data);countDesigner=data.searchCount==null?-1:data.searchCount;});
+      if(makerActive){
+        searchtype=countMaker>0?"maker":
+        countDesigner>0?"designer":
+        countItem>0?"item":
+        "item";
+      }else if(itemActive){
+        searchtype=countItem>0?"item":
+        countDesigner>0?"designer":
+        countMaker>0?"maker":
+        "item";
+      }else{
+          searchtype=countDesigner>0?"designer":
+          countMaker>0?"maker":
+          countItem>0?"item":
+          "item";
+      }
+      console.log(searchtype);
+  
+      window.location.href = `/search/${searchtype}/update/${this.state.keyword}`;
     }
   };
   saveKeyword = async e => {

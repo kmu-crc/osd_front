@@ -564,7 +564,7 @@ const FormBox = styled.div`
     margin-right:10px;
   }
   .checkbox_wrapper{
-    border:1px solid black;
+    // border:1px solid black;
     margin-right:10px;
     margin-left:10px;
     width:max-content;
