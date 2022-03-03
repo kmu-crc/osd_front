@@ -16,13 +16,14 @@ const Content = styled.div`
   .title{
     width:60%;
     min-width:60px;
+    max-width:100px;
     font-size:${market_style.font.size.small1};
     font-weight:500;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     color:black;
-    margin-right:5%;
+    // margin-right:5%;
   }
   .complete{
     min-width:max-content;
@@ -47,6 +48,7 @@ const Content = styled.div`
     min-width:151px;
     display:flex;
     align-items:center;
+    justify-content:space-between;
     .writer{
       margin-left:5px;
       width:60px;
@@ -104,7 +106,7 @@ class RequestListElement_mobile extends Component {
           }
           <div className="title">{item.title||item.payment_title || "글 제목"}</div>
           <div className="sub">
-            <ThumbnailWriter src={item.imgURL||item.s_img} />
+            {/* <ThumbnailWriter src={item.imgURL||item.s_img} /> */}
             <div className="writer">{item.nick_name}</div>
             <div className="date">{DateFormat(item.create_time)}</div>
           </div>

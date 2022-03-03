@@ -17,6 +17,10 @@ const Wrapper = styled.div`
   display:flex;
   flex-direction:column;
   align-items:cemter;
+  
+  margin-left:3px;
+  margin-right:3px;
+  margin-bottom:5px;
   .face{
     min-width:150px;
     min-height:150px;

@@ -343,7 +343,7 @@ PointUp = async(type) => {
                <div className="addPointBtn marginRight" onClick={()=>this.setState({add:this.state.add+1000000})}>+100만</div>
           </div>
           <div className="row flex hCenter">
-               <div className="label">충전 금액</div>
+               <div className="label">결제 방법</div>
                <div>
                     <div className={`payButton marginBottom ${this.state.paymentType == 0 ?"payActive":null}`} onClick={()=>this.setState({paymentType:0})}>현금 결제</div>
                     <div className={`payButton marginBottom ${this.state.paymentType == 1 ?"payActive":null}`} onClick={()=>this.setState({paymentType:1})}>신용카드 결제</div>

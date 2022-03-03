@@ -286,7 +286,7 @@ export default class Alarm extends Component {
           }
           
         </AlarmBox>
-        {true && (
+        {this.state.active && (
           <AlarmDropDown innerWidth={window.innerWidth}>
             {alarms == null || alarms.length === 0 ? (
               <AlarmItem>
