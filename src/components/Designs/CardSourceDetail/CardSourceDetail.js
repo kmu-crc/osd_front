@@ -31,6 +31,7 @@ import Icon from "@material-ui/core/Icon";
 // import Table from "rc-table";
 // import DateFormat from "modules/DateFormat";
 // import { resolve } from "core-js/fn/promise";
+import { StlViewer } from 'react-stl-file-viewer';
 
 /*
   PROBLEM SUBMIT MODAL
@@ -1899,7 +1900,7 @@ class CardSourceDetail extends Component {
                 </ViewContent>
 
                 : item.type === "FILE"
-                  ? <ViewContent>
+                  ? <ViewContent key={index}>
                     {item.data_type === "image"
                       ? <div
                         className="imgContent"
@@ -2055,23 +2056,44 @@ class CardSourceDetail extends Component {
                             </div>
                             <PdfViewer pdf={item.content} height={true} />
                           </React.Fragment> :
-                          item.extension !== "pdf" &&
-                            item.data_type !== "image" &&
-                            item.data_type !== "video" ?
-                            <a
-                              className="iconWrap"
-                              href={item.content}
-                              download={item.file_name}
-                            >
-                              <FileIcon
-                                type={item.data_type}
-                                extension={item.extension}
+                          item.extension === "stl"
+                            ? <div style={{ width: "max-content", margin: "auto" }}>
+
+                              <a style={{ cursor: "pointer", fontSize: "2rem", width: "max-content", margin: "auto",  }} href={item.content} >{"다운로드"}</a>
+
+                              <StlViewer
+                                width={500}
+                                height={500}
+                                url={item.content}
+                                groundColor='rgb(255, 255, 255)'
+                                objectColor='rgb(50, 255, 255)'
+                                skyboxColor='rgb(255, 255, 255)'
+                                gridLineColor='rgb(0, 0, 0)'
+                                lightColor='rgb(255, 255, 255)'
+                                volume={volume => this.setState({ volume: volume })}
                               />
-                              <span className="LinkFileName">
-                                {item.file_name}
-                              </span>
-                            </a>
-                            : null}
+                            </div>
+                            : item.extension === "dxf"
+                              ? <div>
+                                {/*  */}
+                              </div>
+                              : item.extension !== "pdf" &&
+                                item.data_type !== "image" &&
+                                item.data_type !== "video" ?
+                                <a
+                                  className="iconWrap"
+                                  href={item.content}
+                                  download={item.file_name}
+                                >
+                                  <FileIcon
+                                    type={item.data_type}
+                                    extension={item.extension}
+                                  />
+                                  <span className="LinkFileName">
+                                    {item.file_name}
+                                  </span>
+                                </a>
+                                : null}
                   </ViewContent>
 
                   : item.type === "LINK"

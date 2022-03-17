@@ -11326,6 +11326,13 @@ react-spinner@^0.2.7:
   resolved "https://registry.yarnpkg.com/react-spinner/-/react-spinner-0.2.7.tgz#ea3ca3375dd7a54edbb5cc01d17496a2e2fc14db"
   integrity sha1-6jyjN13XpU7btcwB0XSWouL8FNs=
 
+react-stl-file-viewer@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/react-stl-file-viewer/-/react-stl-file-viewer-0.0.5.tgz#8706e79cbc6065dd9ebf2cfd0f6b6c861dc034b8"
+  integrity sha512-JC3wxgXD75dC3jMeEVgkMEqPjw4iHFer6076mJFkORk0t4dIV5lUEdf9k6Uri6qwEcje7El90CazbGCKsu7F/Q==
+  dependencies:
+    three "^0.125.2"
+
 react-tooltip@^4.2.10:
   version "4.2.10"
   resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-4.2.10.tgz#ed1a1acd388940c96f4b6309f4fd4dcce5e01bdc"
@@ -13066,6 +13073,11 @@ text-table@0.2.0, text-table@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
+
+three@^0.125.2:
+  version "0.125.2"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.125.2.tgz#dcba12749a2eb41522e15212b919cd3fbf729b12"
+  integrity sha512-7rIRO23jVKWcAPFdW/HREU2NZMGWPBZ4XwEMt0Ak0jwLUKVJhcKM55eCBWyGZq/KiQbeo1IeuAoo/9l2dzhTXA==
 
 throat@^4.0.0:
   version "4.1.0"
