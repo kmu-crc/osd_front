@@ -32,6 +32,7 @@ import Icon from "@material-ui/core/Icon";
 // import DateFormat from "modules/DateFormat";
 // import { resolve } from "core-js/fn/promise";
 import { StlViewer } from 'react-stl-file-viewer';
+import DxfViewer from "./DxfViewer";
 
 /*
   PROBLEM SUBMIT MODAL
@@ -2059,7 +2060,7 @@ class CardSourceDetail extends Component {
                           item.extension === "stl"
                             ? <div style={{ width: "max-content", margin: "auto" }}>
 
-                              <a style={{ cursor: "pointer", fontSize: "2rem", width: "max-content", margin: "auto",  }} href={item.content} >{"다운로드"}</a>
+                              <a style={{ cursor: "pointer", fontSize: "2rem", width: "max-content", margin: "auto", }} href={item.content} >{"다운로드"}</a>
 
                               <StlViewer
                                 width={500}
@@ -2074,7 +2075,9 @@ class CardSourceDetail extends Component {
                               />
                             </div>
                             : item.extension === "dxf"
-                              ? <div>
+                              ? <div style={{ width: "max-content", margin: "auto" }}>
+                                <a style={{ cursor: "pointer", fontSize: "2rem", width: "max-content", margin: "auto", }} href={item.content} >{"다운로드"}</a>
+                                <DxfViewer url={item.content} />
                                 {/*  */}
                               </div>
                               : item.extension !== "pdf" &&
