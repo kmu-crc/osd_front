@@ -234,7 +234,9 @@ class SignInFormMobile extends Component {
           if (window.location.pathname === "/" || window.location.pathname === "signin" || window.location.pathname === "signup") {
             window.location.href = "/";
           } else {
-            window.history.back();
+            window.location.href =
+            document.referrer;      
+            // window.history.back();
           }
         }
         else {

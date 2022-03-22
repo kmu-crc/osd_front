@@ -10,6 +10,7 @@
 
 # production
 deploy.sh
+deploy_dev.sh
 /build
 
 # misc
