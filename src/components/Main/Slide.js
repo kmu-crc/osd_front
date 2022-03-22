@@ -19,7 +19,7 @@ const BannerBox = styled.div`
     object-fit:contain;
     width:100%;
     height:100%;
-    background-image: url(${Banner_new});
+    // background-image: url(${Banner_new});
     background-repeat:no-repeat;
     background-size:contain;
   }

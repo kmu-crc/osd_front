@@ -233,25 +233,42 @@ callback =(rsp,type)=>{
   } else {
       var msg = '결제에 실패하였습니다.';
       msg += '에러내용 : ' + rsp.error_msg;
+      alert(msg);
   }
   // alert(msg);
 }
 PointUp = async(type) => {
     const {IMP} = window;
-    const pointMoney = this.state.point;
-    await IMP.request_pay({
-      pg : 'html5_inicis', // version 1.1.0부터 지원.
-      pay_method : 'card',
-      merchant_uid : 'merchant_' + new Date().getTime(),
-      name : '주문명:결제테스트',
-      amount : pointMoney,
-      buyer_email : 'iana6528@gmail.com',
-      buyer_name : '구매자이름',
-      buyer_tel : '010-1234-5678',
-      buyer_addr : '서울특별시 강남구 삼성동',
-      buyer_postcode : '123-456',
-      m_redirect_url : 'http://localhost:3000/mypage'
-  }, (rsp)=>this.callback(rsp,type));
+    const pointMoney = this.state.add;
+    if(window.innerWidth<500){
+            await IMP.request_pay({
+              pg : 'html5_inicis', // version 1.1.0부터 지원.
+              pay_method : 'card',
+              merchant_uid : 'merchant_' + new Date().getTime(),
+              name : '주문명:결제테스트',
+              amount : pointMoney,
+              buyer_email : 'iana6528@gmail.com',
+              buyer_name : '구매자이름',
+              buyer_tel : '010-1234-5678',
+              buyer_addr : '서울특별시 강남구 삼성동',
+              buyer_postcode : '123-456',
+              m_redirect_url : 'http://localhost:3000/mypage'
+          }, (rsp)=>this.callback(rsp,type));
+    }else{
+        await IMP.request_pay({
+          pg : 'html5_inicis', // version 1.1.0부터 지원.
+          pay_method : 'card',
+          merchant_uid : 'merchant_' + new Date().getTime(),
+          name : '주문명:결제테스트',
+          amount : pointMoney,
+          buyer_email : 'iana6528@gmail.com',
+          buyer_name : '구매자이름',
+          buyer_tel : '010-1234-5678',
+          buyer_addr : '서울특별시 강남구 삼성동',
+          buyer_postcode : '123-456',
+          m_redirect_url : 'http://localhost:3000/mypage'
+      }, (rsp)=>this.callback(rsp,type));
+    }
   };
   async PointToMoney(type) {
     console.log(this.props.Point, this.state.point);
@@ -326,7 +343,7 @@ PointUp = async(type) => {
                <div className="addPointBtn marginRight" onClick={()=>this.setState({add:this.state.add+1000000})}>+100만</div>
           </div>
           <div className="row flex hCenter">
-               <div className="label">충전 금액</div>
+               <div className="label">결제 방법</div>
                <div>
                     <div className={`payButton marginBottom ${this.state.paymentType == 0 ?"payActive":null}`} onClick={()=>this.setState({paymentType:0})}>현금 결제</div>
                     <div className={`payButton marginBottom ${this.state.paymentType == 1 ?"payActive":null}`} onClick={()=>this.setState({paymentType:1})}>신용카드 결제</div>
