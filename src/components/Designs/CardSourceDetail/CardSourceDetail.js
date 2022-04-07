@@ -7,6 +7,8 @@ import osdcss from "opendesign_style";
 import FileController from "./FileController";
 import TextController from "./TextControllerPlus";
 import LinkController from "./LinkController";
+import GithubController from "./GithubController";
+import GithubViewer from "./GithubViewer";
 import ProblemContainer from "containers/Designs/ProblemContainer";
 import { confirm } from "components/Commons/Confirm/Confirm";
 import { alert } from "components/Commons/Alert/Alert";
@@ -16,7 +18,7 @@ import Cross from "components/Commons/Cross";
 import host from "config";
 // import { geturl } from "config"
 import { Encrypt } from "components/Commons/EncryptDecrypt";
-
+import { SOFTWARE_CATEGORY } from "constant";
 // FOR EDITOR
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
@@ -1626,6 +1628,7 @@ class CardSourceDetail extends Component {
                             className="editBtn"
                             onClick={() => this.onDeleteCoding(item.order)}
                           >
+                            ????
                             <i className="trash alternate icon large" />
                           </DelBtn>
 
@@ -1727,7 +1730,7 @@ class CardSourceDetail extends Component {
 
         {this.props.edit
           ? content.map((item, index) =>
-            <Wrapper>
+            <Wrapper key={index}>
               <div
                 style={{
                   zIndex: "8888",
@@ -1870,379 +1873,396 @@ class CardSourceDetail extends Component {
                           }}
                         />
                       </ControllerWrap>
-                      : null}
+                      : item.type === "GITHUB"
+                        ? <ControllerWrap>
+                          <GithubController
+                            item={item}
+                            initClick={this.state.click}
+                            getValue={data => this.onChangeValue(data, item.order)}
+                          />
+                        </ControllerWrap>
+                        : null}
             </Wrapper>)
 
           : <>
             {/* view mode */}
             {content.map((item, index) =>
-              item.type === "TEXT"
-                ? <ViewContent>
-                  {/* {this.props.isEdit == false ? */}{" "}
-                  {/* <FontZoom> <div className="zoomRgn"> <div style={{ cursor: "default", paddingTop: "3px", lineHeight: "1rem", fontSize: "1rem" }}>폰트<br />크기</div> <div style={{ width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio < 3 ? "black" : "#EFEFEF", textAlign: "center", color: "white", cursor: this.state.fontratio < 3 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem" }} onClick={() => { this.state.fontratio < 3 && this.setState({ fontratio: this.state.fontratio + fontoffset }) }} >+</div> <div style={{ width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio > 1 ? "black" : "#EFEFEF", textAlign: "center", color: "white", cursor: this.state.fontratio > 1 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem" }} onClick={() => { this.state.fontratio > 1 && this.setState({ fontratio: this.state.fontratio - fontoffset }) }} >-</div> </div> </FontZoom> */}{" "}
-                  {/* : null */} {/* } */}
-                  <div
-                    style={{ minHeight: "50px", fontSize: `${this.state.fontratio}rem`, lineHeight: `${this.state.fontratio * 1.2}rem`, }}
-                    dangerouslySetInnerHTML={{
-                      __html: `${item.content == null ||
-                        item.content.replace(" ", "").length === 0
-                        ? '<center><p style="color:gray">(빈 텍스트)</p></center>'
-                        : item.content
-                          .replace(/font-size:14px;/g, `font-size:${0.875 * this.state.fontratio}rem;`)
-                          .replace(/font-size:18px;/g, `font-size:${1.125 * this.state.fontratio}rem;`)
-                          .replace(/font-size:24px;/g, `font-size:${1.5 * this.state.fontratio}rem;`)
-                          .replace(/font-size:30px;/g, `font-size:${1.875 * this.state.fontratio}rem;`)
-                          .replace(/font-size:36px;/g, `font-size:${2.25 * this.state.fontratio}rem;`)
-                          .replace(/font-size:48px;/g, `font-size:${3.5 * this.state.fontratio}rem;`)
-                        }`,
-                    }}
-                    onClick={() => this.props.edit && this.setState({ selectOrder: item.order })}
-                  />
-                </ViewContent>
-
-                : item.type === "FILE"
-                  ? <ViewContent key={index}>
-                    {item.data_type === "image"
-                      ? <div
-                        className="imgContent"
-                        onClick={() => {
-                          const url = item.content;
-                          const img = '<img id="image" src="' + url + '">';
-                          const popup = window.open(
-                            "",
-                            "_blank",
-                            "image-view"
-                          );
-                          popup.document.write(img);
-                          const imgnode =
-                            popup.document.getElementById("image");
-                          popup.resizeTo(
-                          /* width */ imgnode.naturalWidth >
-                              window.screen.width
-                              ? window.screen.width / 2
-                              : imgnode.naturalWidth * 1.06,
-                          /* height */ imgnode.naturalHeight >
-                              window.screen.height
-                              ? window.screen.height / 2
-                              : imgnode.naturalHeight * 1.06
-                          );
-                        }}
-                      >
-                        {/* <Zoom > */}
-                        <div
-                          style={{
-                            width: "100%",
-                            overflow: "auto",
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: `${(item.option && item.option.split(",")[0]) ||
-                              "center"
-                              }`,
-                          }}
-                        >
-                          {item.option &&
-                            item.option.split(",")[1] === "scale" ? (
-                            <img
-                              style={{
-                                width: "100%",
-                                objectFit: "contain",
-                              }}
-                              src={item.content}
-                              alt="이미지"
-                              download={item.file_name}
-                            />
-                          ) : (
-                            <img
-                              style={{ objectFit: "contain" }}
-                              src={item.content}
-                              alt="이미지"
-                              download={item.file_name}
-                            />
-                          )}
-                        </div>
-                        {/* <img src={item.content} alt="이미지" /> */}
-                        {/* </Zoom> */}
-                        {/* <p>이미지를 클릭하시면 원본크기로 보실 수 있습니다.</p> */}
-                      </div> : item.type === "video"
-                        ? <div
-                          style={{
-                            width: "100%",
-                            overflow: "auto",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: `${(item.option && item.option.split(",")[0]) ||
-                              "center"
-                              }`,
-                          }}
-                        >
-                          <span className="centering">
-                            <span className="LinkFileName">
-                              {item.file_name}
-                            </span>
-                          </span>
-                          <video
-                            key={item.content}
-                            className={`${item.option &&
-                              item.option.split(",")[0] === "center"
-                              ? "align-center"
-                              : item.option &&
-                                item.option.split(",")[0] === "left"
-                                ? "align-left"
-                                : "align-right"
-                              } iconWrap`}
-                            width={`${window.innerWidth > 480
-                              ? "975"
-                              : window.innerWidth - 55
-                              }`}
-                            height={`${window.innerWidth > 480
-                              ? "600"
-                              : (window.innerWidth - 55) * 0.55
-                              }`}
-                            controls="controls"
-                          >
-                            <source
-                              src={item.content}
-                              type="video/mp4"
-                              download={item.file_name}
-                            ></source>
-                          </video>
-                        </div> : item.extension === "pdf"
-                          ? <React.Fragment>
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "flex-end",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  cursor: "pointer",
-                                  fontSize: "1.25rem",
-                                  color: "#707070",
-                                  marginLeft: "auto",
-                                  border: "1px solid transparent",
-                                  width: "max-content",
-                                }}
-                              >
-                                <a
-                                  onClick={() =>
-                                    window.open(
-                                      `/pdfview/${Encrypt(
-                                        item.content,
-                                        "opendesign"
-                                      )}`,
-                                      "_blank",
-                                      null
-                                    )
-                                  }
-                                >
-                                  <i className="file pdf outline icon large" />
-                                  새탭으로열기
-                                </a>
-                              </div>
-                              <div
-                                style={{
-                                  fontSize: "1.25rem",
-                                  color: "#707070",
-                                  marginLeft: "25px",
-                                  border: "1px solid transparent",
-                                  width: "max-content",
-                                }}
-                              >
-                                <a href={item.content}>
-                                  <i className="save icon large" />
-                                  PDF다운로드
-                                </a>
-                              </div>
-                            </div>
-                            <PdfViewer pdf={item.content} height={true} />
-                          </React.Fragment> :
-                          item.extension === "stl"
-                            ? <div style={{ width: "max-content", margin: "auto" }}>
-
-                              <a style={{ cursor: "pointer", fontSize: "2rem", width: "max-content", margin: "auto", }} href={item.content} >{"다운로드"}</a>
-
-                              <StlViewer
-                                width={500}
-                                height={500}
-                                url={item.content}
-                                groundColor='rgb(255, 255, 255)'
-                                objectColor='rgb(50, 255, 255)'
-                                skyboxColor='rgb(255, 255, 255)'
-                                gridLineColor='rgb(0, 0, 0)'
-                                lightColor='rgb(255, 255, 255)'
-                                volume={volume => this.setState({ volume: volume })}
-                              />
-                            </div>
-                            : item.extension === "dxf"
-                              ? <div style={{ width: "max-content", margin: "auto" }}>
-                                <a style={{ cursor: "pointer", fontSize: "2rem", width: "max-content", margin: "auto", }} href={item.content} >{"다운로드"}</a>
-                                <DxfViewer url={item.content} />
-                                {/*  */}
-                              </div>
-                              : item.extension !== "pdf" &&
-                                item.data_type !== "image" &&
-                                item.data_type !== "video" ?
-                                <a
-                                  className="iconWrap"
-                                  href={item.content}
-                                  download={item.file_name}
-                                >
-                                  <FileIcon
-                                    type={item.data_type}
-                                    extension={item.extension}
-                                  />
-                                  <span className="LinkFileName">
-                                    {item.file_name}
-                                  </span>
-                                </a>
-                                : null}
+              <div key={index}>
+                {item.type === "TEXT"
+                  ? <ViewContent>
+                    {/* {this.props.isEdit == false ? */}{" "}
+                    {/* <FontZoom> <div className="zoomRgn"> <div style={{ cursor: "default", paddingTop: "3px", lineHeight: "1rem", fontSize: "1rem" }}>폰트<br />크기</div> <div style={{ width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio < 3 ? "black" : "#EFEFEF", textAlign: "center", color: "white", cursor: this.state.fontratio < 3 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem" }} onClick={() => { this.state.fontratio < 3 && this.setState({ fontratio: this.state.fontratio + fontoffset }) }} >+</div> <div style={{ width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio > 1 ? "black" : "#EFEFEF", textAlign: "center", color: "white", cursor: this.state.fontratio > 1 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem" }} onClick={() => { this.state.fontratio > 1 && this.setState({ fontratio: this.state.fontratio - fontoffset }) }} >-</div> </div> </FontZoom> */}{" "}
+                    {/* : null */} {/* } */}
+                    <div
+                      style={{ minHeight: "50px", fontSize: `${this.state.fontratio}rem`, lineHeight: `${this.state.fontratio * 1.2}rem`, }}
+                      dangerouslySetInnerHTML={{
+                        __html: `${item.content == null ||
+                          item.content.replace(" ", "").length === 0
+                          ? '<center><p style="color:gray">(빈 텍스트)</p></center>'
+                          : item.content
+                            .replace(/font-size:14px;/g, `font-size:${0.875 * this.state.fontratio}rem;`)
+                            .replace(/font-size:18px;/g, `font-size:${1.125 * this.state.fontratio}rem;`)
+                            .replace(/font-size:24px;/g, `font-size:${1.5 * this.state.fontratio}rem;`)
+                            .replace(/font-size:30px;/g, `font-size:${1.875 * this.state.fontratio}rem;`)
+                            .replace(/font-size:36px;/g, `font-size:${2.25 * this.state.fontratio}rem;`)
+                            .replace(/font-size:48px;/g, `font-size:${3.5 * this.state.fontratio}rem;`)
+                          }`,
+                      }}
+                      onClick={() => this.props.edit && this.setState({ selectOrder: item.order })}
+                    />
                   </ViewContent>
 
-                  : item.type === "LINK"
-                    ? <ViewContent>
-                      <LinkPreview>
-                        <div className="description">
-                          {((IsJsonString(item.content)
-                            && JSON.parse(item.content).hasOwnProperty("description")
-                            && JSON.parse(item.content).description)) || "-"}
-                        </div>
-                        <div className="url">
-                          {(((IsJsonString(item.content)
-                            && JSON.parse(item.content).hasOwnProperty("url")
-                            && JSON.parse(item.content).url))
-                            &&
-                            <a target="_blank" onClick={() => window.location.href = JSON.parse(item.content).url} >
-                              {JSON.parse(item.content).url}</a>) || "-"}
-                        </div>
-
-                      </LinkPreview>
-                    </ViewContent>
-
-                    : item.type === "PROBLEM"
-                      ? <ViewContent>
-                        <div className="problemWrap">
-                          <ProblemBox>
-                            <div className="titleBox">
-                              <div className="title">제목</div>
-                            </div>
-                            <div className="problemBox">
-                              <div className="board">
-                                {item.content && JSON.parse(item.content).name}
-                              </div>
-                            </div>
-                            <div className="titleBox">
-                              <div className="title">내용</div>
-                            </div>
-                            <div className="problemBox">
-                              <div className="board">
-                                {item.content && (
-                                  <React.Fragment>
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        flexDirection: "flex-end",
-                                      }}
-                                    >
-                                      <div
-                                        style={{
-                                          cursor: "pointer",
-                                          fontSize: "1.25rem",
-                                          color: "#707070",
-                                          marginLeft: "auto",
-                                          border: "1px solid transparent",
-                                          width: "max-content",
-                                        }}
-                                      >
-                                        <a
-                                          onClick={() =>
-                                            window.open(
-                                              window.open(
-                                                `/pdfview/${Encrypt(
-                                                  JSON.parse(item.content)
-                                                    .contents,
-                                                  "opendesign"
-                                                )}`,
-                                                "_blank",
-                                                null
-                                              )
-                                            )
-                                          }
-                                        >
-                                          <i className="file pdf outline icon large" />
-                                          새탭으로열기
-                                        </a>
-                                      </div>
-                                      <div
-                                        style={{
-                                          fontSize: "1.25rem",
-                                          color: "#707070",
-                                          marginLeft: "25px",
-                                          border: "1px solid transparent",
-                                          width: "max-content",
-                                        }}
-                                      >
-                                        <a
-                                          href={
-                                            JSON.parse(item.content).contents
-                                          }
-                                        >
-                                          <i className="save icon large" />
-                                          PDF다운로드
-                                        </a>
-                                      </div>
-                                    </div>
-                                    <PdfViewer
-                                      pdf={JSON.parse(item.content).contents}
-                                      height={true}
-                                    />
-                                  </React.Fragment>
-                                )}
-                              </div>
-                            </div>
-                          </ProblemBox>
-
+                  : item.type === "FILE"
+                    ? <ViewContent key={index}>
+                      {item.data_type === "image"
+                        ? <div
+                          className="imgContent"
+                          onClick={() => {
+                            const url = item.content;
+                            const img = '<img id="image" src="' + url + '">';
+                            const popup = window.open(
+                              "",
+                              "_blank",
+                              "image-view"
+                            );
+                            popup.document.write(img);
+                            const imgnode =
+                              popup.document.getElementById("image");
+                            popup.resizeTo(
+                          /* width */ imgnode.naturalWidth >
+                                window.screen.width
+                                ? window.screen.width / 2
+                                : imgnode.naturalWidth * 1.06,
+                          /* height */ imgnode.naturalHeight >
+                                window.screen.height
+                                ? window.screen.height / 2
+                                : imgnode.naturalHeight * 1.06
+                            );
+                          }}
+                        >
+                          {/* <Zoom > */}
                           <div
-                            onClick={async () => {
-                              if (
-                                permission === "LOG SUBMIT" ||
-                                permission === "LOG"
-                              ) {
-                                this.setState({
-                                  item: JSON.parse(item.content),
-                                  item_uid: item.uid,
-                                  item_user: item.user_id,
-                                  tab:
-                                    item.user_id === this.props.userInfo.uid
-                                      ? "code"
-                                      : "log",
-                                });
-                                this.setState({ submit: true });
-                                this.setState({ coding: [] });
-                              } else {
-                                await alert("해당문제의 제출 권한이 없습니다.");
-                              }
-                            }}
                             style={{
-                              width: "max-content",
-                              margin: "auto",
-                              cursor: "pointer",
+                              width: "100%",
+                              overflow: "auto",
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: `${(item.option && item.option.split(",")[0]) ||
+                                "center"
+                                }`,
                             }}
                           >
-                            {permission == "LOG" || permission === "LOG SUBMIT"
-                              ? <p style={{ padding: "5px 13px", color: "white", borderRadius: "18px", backgroundColor: "red" }}>
-                                {permission === "LOG" ? "제출내역보기" : permission === "LOG SUBMIT" ? "답안제출하기" : ""}
-                              </p>
-                              : null}
+                            {item.option &&
+                              item.option.split(",")[1] === "scale" ? (
+                              <img
+                                style={{
+                                  width: "100%",
+                                  objectFit: "contain",
+                                }}
+                                src={item.content}
+                                alt="이미지"
+                                download={item.file_name}
+                              />
+                            ) : (
+                              <img
+                                style={{ objectFit: "contain" }}
+                                src={item.content}
+                                alt="이미지"
+                                download={item.file_name}
+                              />
+                            )}
                           </div>
-                        </div>
-                      </ViewContent> : null)}
+                          {/* <img src={item.content} alt="이미지" /> */}
+                          {/* </Zoom> */}
+                          {/* <p>이미지를 클릭하시면 원본크기로 보실 수 있습니다.</p> */}
+                        </div> : item.type === "video"
+                          ? <div
+                            style={{
+                              width: "100%",
+                              overflow: "auto",
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: `${(item.option && item.option.split(",")[0]) ||
+                                "center"
+                                }`,
+                            }}
+                          >
+                            <span className="centering">
+                              <span className="LinkFileName">
+                                {item.file_name}
+                              </span>
+                            </span>
+                            <video
+                              key={item.content}
+                              className={`${item.option &&
+                                item.option.split(",")[0] === "center"
+                                ? "align-center"
+                                : item.option &&
+                                  item.option.split(",")[0] === "left"
+                                  ? "align-left"
+                                  : "align-right"
+                                } iconWrap`}
+                              width={`${window.innerWidth > 480
+                                ? "975"
+                                : window.innerWidth - 55
+                                }`}
+                              height={`${window.innerWidth > 480
+                                ? "600"
+                                : (window.innerWidth - 55) * 0.55
+                                }`}
+                              controls="controls"
+                            >
+                              <source
+                                src={item.content}
+                                type="video/mp4"
+                                download={item.file_name}
+                              ></source>
+                            </video>
+                          </div> : item.extension === "pdf"
+                            ? <React.Fragment>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "flex-end",
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    cursor: "pointer",
+                                    fontSize: "1.25rem",
+                                    color: "#707070",
+                                    marginLeft: "auto",
+                                    border: "1px solid transparent",
+                                    width: "max-content",
+                                  }}
+                                >
+                                  <a
+                                    onClick={() =>
+                                      window.open(
+                                        `/pdfview/${Encrypt(
+                                          item.content,
+                                          "opendesign"
+                                        )}`,
+                                        "_blank",
+                                        null
+                                      )
+                                    }
+                                  >
+                                    <i className="file pdf outline icon large" />
+                                    새탭으로열기
+                                  </a>
+                                </div>
+                                <div
+                                  style={{
+                                    fontSize: "1.25rem",
+                                    color: "#707070",
+                                    marginLeft: "25px",
+                                    border: "1px solid transparent",
+                                    width: "max-content",
+                                  }}
+                                >
+                                  <a href={item.content}>
+                                    <i className="save icon large" />
+                                    PDF다운로드
+                                  </a>
+                                </div>
+                              </div>
+                              <PdfViewer pdf={item.content} height={true} />
+                            </React.Fragment> :
+                            item.extension === "stl"
+                              ? <div style={{ width: "max-content", margin: "auto" }}>
+
+                                <a style={{ cursor: "pointer", fontSize: "2rem", width: "max-content", margin: "auto", }} href={item.content} >{"다운로드"}</a>
+
+                                <StlViewer
+                                  width={500}
+                                  height={500}
+                                  url={item.content}
+                                  groundColor='rgb(255, 255, 255)'
+                                  objectColor='rgb(50, 255, 255)'
+                                  skyboxColor='rgb(255, 255, 255)'
+                                  gridLineColor='rgb(0, 0, 0)'
+                                  lightColor='rgb(255, 255, 255)'
+                                  volume={volume => this.setState({ volume: volume })}
+                                />
+                              </div>
+                              : item.extension === "dxf"
+                                ? <div style={{ width: "max-content", margin: "auto" }}>
+                                  <a style={{ cursor: "pointer", fontSize: "2rem", width: "max-content", margin: "auto", }} href={item.content} >{"다운로드"}</a>
+                                  <DxfViewer url={item.content} />
+                                  {/*  */}
+                                </div>
+                                : item.extension !== "pdf" &&
+                                  item.data_type !== "image" &&
+                                  item.data_type !== "video" ?
+                                  <a
+                                    className="iconWrap"
+                                    href={item.content}
+                                    download={item.file_name}
+                                  >
+                                    <FileIcon
+                                      type={item.data_type}
+                                      extension={item.extension}
+                                    />
+                                    <span className="LinkFileName">
+                                      {item.file_name}
+                                    </span>
+                                  </a>
+                                  : null}
+                    </ViewContent>
+
+                    : item.type === "LINK"
+                      ? <ViewContent>
+                        <LinkPreview>
+                          <div className="description">
+                            {((IsJsonString(item.content)
+                              && JSON.parse(item.content).hasOwnProperty("description")
+                              && JSON.parse(item.content).description)) || "-"}
+                          </div>
+                          <div className="url">
+                            {(((IsJsonString(item.content)
+                              && JSON.parse(item.content).hasOwnProperty("url")
+                              && JSON.parse(item.content).url))
+                              &&
+                              <a target="_blank" onClick={() => window.location.href = JSON.parse(item.content).url} >
+                                {JSON.parse(item.content).url}</a>) || "-"}
+                          </div>
+
+                        </LinkPreview>
+                      </ViewContent>
+
+                      : item.type === "PROBLEM"
+                        ? <ViewContent>
+                          <div className="problemWrap">
+                            <ProblemBox>
+                              <div className="titleBox">
+                                <div className="title">제목</div>
+                              </div>
+                              <div className="problemBox">
+                                <div className="board">
+                                  {item.content && JSON.parse(item.content).name}
+                                </div>
+                              </div>
+                              <div className="titleBox">
+                                <div className="title">내용</div>
+                              </div>
+                              <div className="problemBox">
+                                <div className="board">
+                                  {item.content && (
+                                    <React.Fragment>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "flex-end",
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            cursor: "pointer",
+                                            fontSize: "1.25rem",
+                                            color: "#707070",
+                                            marginLeft: "auto",
+                                            border: "1px solid transparent",
+                                            width: "max-content",
+                                          }}
+                                        >
+                                          <a
+                                            onClick={() =>
+                                              window.open(
+                                                window.open(
+                                                  `/pdfview/${Encrypt(
+                                                    JSON.parse(item.content)
+                                                      .contents,
+                                                    "opendesign"
+                                                  )}`,
+                                                  "_blank",
+                                                  null
+                                                )
+                                              )
+                                            }
+                                          >
+                                            <i className="file pdf outline icon large" />
+                                            새탭으로열기
+                                          </a>
+                                        </div>
+                                        <div
+                                          style={{
+                                            fontSize: "1.25rem",
+                                            color: "#707070",
+                                            marginLeft: "25px",
+                                            border: "1px solid transparent",
+                                            width: "max-content",
+                                          }}
+                                        >
+                                          <a
+                                            href={
+                                              JSON.parse(item.content).contents
+                                            }
+                                          >
+                                            <i className="save icon large" />
+                                            PDF다운로드
+                                          </a>
+                                        </div>
+                                      </div>
+                                      <PdfViewer
+                                        pdf={JSON.parse(item.content).contents}
+                                        height={true}
+                                      />
+                                    </React.Fragment>
+                                  )}
+                                </div>
+                              </div>
+                            </ProblemBox>
+
+                            <div
+                              onClick={async () => {
+                                if (
+                                  permission === "LOG SUBMIT" ||
+                                  permission === "LOG"
+                                ) {
+                                  this.setState({
+                                    item: JSON.parse(item.content),
+                                    item_uid: item.uid,
+                                    item_user: item.user_id,
+                                    tab:
+                                      item.user_id === this.props.userInfo.uid
+                                        ? "code"
+                                        : "log",
+                                  });
+                                  this.setState({ submit: true });
+                                  this.setState({ coding: [] });
+                                } else {
+                                  await alert("해당문제의 제출 권한이 없습니다.");
+                                }
+                              }}
+                              style={{
+                                width: "max-content",
+                                margin: "auto",
+                                cursor: "pointer",
+                              }}
+                            >
+                              {permission == "LOG" || permission === "LOG SUBMIT"
+                                ? <p style={{ padding: "5px 13px", color: "white", borderRadius: "18px", backgroundColor: "red" }}>
+                                  {permission === "LOG" ? "제출내역보기" : permission === "LOG SUBMIT" ? "답안제출하기" : ""}
+                                </p>
+                                : null}
+                            </div>
+                          </div>
+                        </ViewContent>
+
+                        : item.type === "GITHUB"
+                          ? <ViewContent>
+                            <GithubViewer uid={item.uid} url={item.content} />
+                          </ViewContent>
+                          : null}
+              </div>)}
           </>}
 
 
         {this.props.edit
           ? <AddContent
             is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
+            is_github={(this.props.DesignDetail && this.props.DesignDetail.category_level1 === SOFTWARE_CATEGORY)}
             getValue={this.onAddValue}
             order={content.length || 0}
             open={(data) => this.setState({ addProblem: data })}
@@ -2475,8 +2495,8 @@ class AddContent extends Component {
           >
             하이퍼링크 등록하기
           </NewController>
-          {this.props.is_problem ? (
-            <NewController
+          {this.props.is_problem
+            ? <NewController
               onClick={() => {
                 this.addContent("PROBLEM");
                 this.props.open(true);
@@ -2485,9 +2505,19 @@ class AddContent extends Component {
               minWidth="134px"
               height="29px"
             >
-              문제 등록하기
-            </NewController>
-          ) : null}
+              문제 등록하기</NewController> : null}
+
+          {this.props.is_github
+            ? <NewController
+              onClick={() => {
+                this.addContent("GITHUB");
+              }}
+              width="max-content"
+              minWidth="134px"
+              height="29px"
+            >
+              깃허브파일 등록하기
+            </NewController> : null}
         </div>
 
         {this.state.type === "FILE" && (

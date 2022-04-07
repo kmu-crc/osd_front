@@ -9,13 +9,7 @@ import { ReactHeight } from 'react-height';
 import arrow from "source/arrow.svg";
 import SortableDesignSteps from "./SortableDesignSteps";
 import osdcss from "opendesign_style";
-
-import new_logo_chat from "source/new_logo_chat.svg";
-import new_logo_msg from "source/new_logo_msg.svg";
-// const SmallMinWidth = 0;
-// const MediumMinWidth = 480;
-// const LargeMinWidth = 1440;
-// const WideMinWidth = 1920;
+import { SOFTWARE_CATEGORY } from "constant";
 
 const LeftWhitePane = styled.div`
     position: absolute;
@@ -334,7 +328,7 @@ class GridEditor extends Component {
 
 
         return (
-            <div style={{ position: "relative",width:"100%",overflow:"hidden"}}>
+            <div style={{ position: "relative", width: "100%", overflow: "hidden" }}>
 
                 {/* {wire ? <Wiring gap={gap} wires={design && design.wires} /> : null} */}
 
@@ -358,6 +352,7 @@ class GridEditor extends Component {
                                 boardId={boardId}
                                 designId={this.props.design.uid}
                                 is_problem={this.props.design.is_problem}
+                                is_github={this.props.design.category_level1 === SOFTWARE_CATEGORY}
                                 open={newcard}
                                 close={() => this.setState({ newcard: false })} />
                             : null}
@@ -369,11 +364,11 @@ class GridEditor extends Component {
                             close={() => this.setState({ card: false })}
                             title={title}
                             boardId={boardId}
-                            open={(card_id) => {
-                                // console.log(id)
-                                // this.openCard(card, row, boardId);
-                                console.log(card_id, boardId, card, this.props, this.state);
-                            }}
+                            // open={(card_id) => {
+                            //     // console.log(id)
+                            //     // this.openCard(card, row, boardId);
+                            //     console.log(card_id, boardId, card, this.props, this.state);
+                            // }}
                             // wires={this.props.design.wires}
                             designId={this.props.design.uid}
                             card={cardDetail} />}
@@ -397,7 +392,7 @@ class GridEditor extends Component {
 
                         <ReactHeight onHeightReady={(height => { this.setState({ h: height }) })}>
                             <GridEditorWrapper onScroll={() => console.log('grid-editor: scroll')} ref={this.grid}>
-                                <div style={{ width:"100%" }} className="Editor" ref={this.temp}>
+                                <div style={{ width: "100%" }} className="Editor" ref={this.temp}>
                                     {/* ------------단계 ------------*/}
                                     {DesignDetailStep && DesignDetailStep.length > 0 &&
                                         <SortableDesignSteps editStep={this.OpenEditStep} design_id={this.props.design.uid} editor={editor ? true : false} items={DesignDetailStep} cardReorder={this.requestCardReorder} createCard={this.createNewCard} openCard={this.openCard} reorder={this.requestReorder} userInfo={userInfo} />}
