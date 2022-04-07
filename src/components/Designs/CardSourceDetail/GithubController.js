@@ -5,62 +5,22 @@ const Wrap = styled.div`
   padding: 10px;
   display: flex;
   flex-direction: column;
-  font-size: 1rem;
+  font-size: 1.7rem;
+  justify-content: center;
 
-  .go {
-    a {
-      display: flex;
-      align-items: center;
-      text-align: center;
-      width: max-content;
-      margin-left: auto;
-      // :hover { }
-    }
-    img {
-      width: 40px;
-      height: 40px;
-    }
+  input {
+    width: 50vw;
+    height: 2rem;
+    background-color: #EFEFEF;
+    border: 1px solid #707070;
+    padding: 3px;
+    outline: none;
+    color: #707070;
   }
-  pre {
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-  }
-  .input-field {
-    display: flex;
-    margin-top: 15px;
-    margin-left: 65px;
-    // .txt{
-    //     width: 97px;
-    //     height: 29px;
-    //     font-size: 20px;
-    //     font-weight: 500;
-    //     font-family: Noto Sans KR;
-    //     text-align: left;
-    //     line-height: 40px;
-    //     color: #707070;
-    // }
-    .input-container{
-        margin-left: 31px;
-        width: 505px;
-        height: 56px;
-        background-color: #EFEFEF;
-        border-radius: 5px;
-    }
-    .input-style{
-        border-radius: 5px;
-        width: 100%;
-        border: none;
-        background: transparent;
-        font-size: 20px;
-        font-weight: 500;
-        color: #707070;
-        height: 100%;
-        padding: 16px 23px 16px 23px;
-    }
-}
+
 `;
-
+const GitHubURL = (url) => {
+}
 export default class GithubController extends Component {
   constructor(props) {
     super(props);
@@ -75,8 +35,26 @@ export default class GithubController extends Component {
     });
   }
 
+  verification = async (url) => {
+    console.clear();
+    console.log(url);
+    const chunk = url.split('//')[1].split('/');
+    if (chunk[0] !== "github.com") {
+      return false;
+    }
+    if (chunk[3] !== "blob" && chunk[3] === "tree") {
+      return false;
+    }
+    const path = url.split(chunk[3] + '/main/')[1];
+    console.log(chunk[0], chunk[1], chunk[2], path)
+  }
+
   onSave = async () => {
-    this.props.getValue && this.props.getValue({ type: "GITHUB", content: this.state.content });
+    if (this.verification(this.state.content)) {
+
+    }
+    // GitHubURL(this.state.content);
+    // this.props.getValue && this.props.getValue({ type: "GITHUB", content: this.state.content });
   };
   onCancel = async () => {
     this.setState({
@@ -92,15 +70,21 @@ export default class GithubController extends Component {
 
     return (<Wrap>
 
-      <div className='input-field'>
-        <p className='txt'>링크</p>
-        <div className='input-container'>
-          <input className='input-style' value={content} onChange={(e) => this.setState({ content: e.target.value })} />
-        </div>
+      {content}
+      <h2>깃허브 링크등록</h2>
+      <h4>입력란에서 사용자이름 및 저장소 이름을 입력하면 </h4>
+      <div>
+        <input
+          className='input-style'
+          value={content}
+          onPaste={(e) => { this.setState({ content: e.clipboardData.getData('text/plain') }) }}
+          onChange={(e) => this.setState({ content: e.target.value })}
+          onBlur={_ => this.onSave()}
+        />
       </div>
 
       <div>
-        <button onClick={this.onSave}>저장</button>
+        {/* <button onClick={this.onSave}>저장</button> */}
         <button onClick={this.onCancel}>취소</button>
       </div>
 

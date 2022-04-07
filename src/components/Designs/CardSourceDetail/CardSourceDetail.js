@@ -716,6 +716,7 @@ class CardSourceDetail extends Component {
     }
   }
   componentWillUnmount() {
+    this.setState({ content: [], origin: [] });
     window.removeEventListener("scroll", null, true);
   }
   async verifyorder(content) {
