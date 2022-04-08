@@ -19,19 +19,19 @@ const Wrap = styled.div`
   }
 
 `;
-const GitHubURL = (url) => {
-}
 export default class GithubController extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: false,
       content: "",
+      origin: "",
     };
   }
   componentDidMount() {
     this.setState({
       content: (this.props.item && this.props.item.content) || "",
+      origin: (this.props.item && this.props.item.content) || "",
     });
   }
 
@@ -51,14 +51,13 @@ export default class GithubController extends Component {
 
   onSave = async () => {
     if (this.verification(this.state.content)) {
-
+      this.props.getValue && this.props.getValue({ type: "GITHUB", content: this.state.content });
     }
     // GitHubURL(this.state.content);
-    // this.props.getValue && this.props.getValue({ type: "GITHUB", content: this.state.content });
   };
   onCancel = async () => {
     this.setState({
-      content: (this.props.item && this.props.item.content) || "",
+      content: this.state.origin,
     });
   };
 
@@ -70,10 +69,13 @@ export default class GithubController extends Component {
 
     return (<Wrap>
 
-      {content}
+      {/* {content} */}
       <h2>깃허브 링크등록</h2>
-      <h4>입력란에서 사용자이름 및 저장소 이름을 입력하면 </h4>
+      {/* <h4>입력란에서 사용자이름 및 저장소 이름을 입력하면</h4> */}
       <div>
+        {/* https://github.com/
+        <input className='input-style' placeholder={'깃허브 사용자이름을 입력하세요.'} value={''} onChange={() => { }} onBlur={() => { }} /> /
+        <input className='input-style' placeholder={'깃허브 저장소이름을 입력하세요.'} value={''} onChange={() => { }} onBlur={() => { }} /> */}
         <input
           className='input-style'
           value={content}
@@ -81,11 +83,11 @@ export default class GithubController extends Component {
           onChange={(e) => this.setState({ content: e.target.value })}
           onBlur={_ => this.onSave()}
         />
+        <button onClick={this.onCancel}>취소</button>
       </div>
 
       <div>
-        {/* <button onClick={this.onSave}>저장</button> */}
-        <button onClick={this.onCancel}>취소</button>
+        {/* label */}
       </div>
 
     </Wrap>);

@@ -14,14 +14,11 @@ const LinkWrap = styled.div`
     padding: 3px;
     cursor: default;
     font-size: 1.2rem;
-    border-bottom: 1px solid #FAFAFA;
-    :last {
-      border-bottom: none;
-    }
+    border-bottom: 1px solid #F0F0F0;
     :hover {
-      text-decoration: under-line;
-      color: #99F;
-      background-color: #FAFAFA;
+      text-decoration: underline;
+      color: #F90;
+      background-color: #F0F0F0;
     }
   }
   .path {
@@ -124,7 +121,7 @@ export default class GithubViewer extends Component {
     await fetch(url)
       .then(res => res.json())
       .then(data => {
-        this.setState({ path: path, tree: data.tree.filter(e => e.type === "blob" || e.type === "tree"), treeUrl: data.url, });
+        this.setState({ path: path, tree: data.tree.filter(e => e.type === "blob" || e.type === "tree").sort((a, b) => { if (a.type > b.type) return -1; if (a.type < b.type) return 1; return }), treeUrl: data.url, });
       })
   }
   getFile = async () => {
@@ -190,7 +187,6 @@ export default class GithubViewer extends Component {
       reject(new Error("잘못된 경로입니다."));
     });
 
-
   render() {
     const { url } = this.props;
     const { valid, loading, type, tree, current, gitinfo, prevTreeUrl, path } = this.state;
@@ -222,14 +218,7 @@ export default class GithubViewer extends Component {
             {/* viewer */}
             {type === "tree"
               ? <>
-                {/* 
-                mode: "100644"
-                path: ".gitkeep"
-                sha: "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
-                size: 0
-                type: "blob"
-                url: "https://api.github.com/repos/highlightjs/highlight.js/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391" */}
-                {tree.sort((a, b) => { if (a.type > b.type) return -1; if (a.type < b.type) return 1; return }).map((e, index) =>
+                {tree.map((e, index) =>
                   <div
                     className='tree-element'
                     key={'tree' + this.props.uid + "_" + index}
@@ -253,7 +242,7 @@ export default class GithubViewer extends Component {
             }
             {/* link */}
             <div className='go'>
-              <a href={current} >
+              <a href={current} target="_blank" >
                 <img src={iGithub} />
                 Github로 이동
               </a>
