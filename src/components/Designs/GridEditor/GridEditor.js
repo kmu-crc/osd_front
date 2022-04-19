@@ -357,7 +357,7 @@ class GridEditor extends Component {
                                 close={() => this.setState({ newcard: false })} />
                             : null}
 
-                        {card && <CardModal
+                        {card ? <CardModal
                             isTeam={editor}
                             edit={userInfo && (userInfo.uid === cardDetail.user_id)}
                             open={card}
@@ -371,7 +371,7 @@ class GridEditor extends Component {
                             // }}
                             // wires={this.props.design.wires}
                             designId={this.props.design.uid}
-                            card={cardDetail} />}
+                            card={cardDetail} /> : null}
 
                         {editor &&
                             <NewStepModal

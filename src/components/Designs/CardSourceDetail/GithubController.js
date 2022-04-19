@@ -38,15 +38,21 @@ export default class GithubController extends Component {
   verification = async (url) => {
     console.clear();
     console.log(url);
-    const chunk = url.split('//')[1].split('/');
-    if (chunk[0] !== "github.com") {
-      return false;
+    try {
+      const chunk = url.split('//')[1].split('/');
+      if (chunk[0] !== "github.com") {
+        return false;
+      }
+      if (chunk[3] !== "blob" && chunk[3] === "tree") {
+        return false;
+      }
+      const path = url.split(chunk[3] + '/main/')[1];
+      console.log(chunk[0], chunk[1], chunk[2], path)
     }
-    if (chunk[3] !== "blob" && chunk[3] === "tree") {
-      return false;
+    catch (e) {
+      console.log('verifying aborted');
     }
-    const path = url.split(chunk[3] + '/main/')[1];
-    console.log(chunk[0], chunk[1], chunk[2], path)
+    return true;
   }
 
   onSave = async () => {

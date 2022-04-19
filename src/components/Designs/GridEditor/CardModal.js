@@ -444,25 +444,14 @@ class CardModal extends Component {
             private: this.props.card.private || false,
         }
     };
-    // componentDidMount() {
-    //     window.document.addEventListener("scroll", () => {
-    //         console.log("!!!!");
-    //     })
-    // }
-    // componentWillUnmount() {
-    //     window.document.removeEventListener("scroll");
-    // }
+    componentWillUnmount() {
+        this.setState(null);
+    }
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props.card) {
             return true;
         }
     }
-    //componentWillReceiveProps(nextProps) {
-    //    if (nextProps.card !== this.props.card) {
-    //        // this.setState({ private: nextProps.card.private });
-    //        return true;
-    //    }
-    //};
     handleUpdate = (obj) => {
         const modified = JSON.stringify(obj.content) !== JSON.stringify(obj.origin);
         this.setState({ isEdited: modified });
@@ -595,6 +584,7 @@ class CardModal extends Component {
                 }
             }
         }
+        await this.set
         this.props.close();
     };
 

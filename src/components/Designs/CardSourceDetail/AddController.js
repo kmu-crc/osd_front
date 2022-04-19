@@ -32,7 +32,7 @@ const ControllerWrap = styled.div`
   }
   .innerBox {
     display: flex;
-    height: 45px;
+    min-height: 45px;
     align-items: center;
     justify-content: center;
     list-style: none;

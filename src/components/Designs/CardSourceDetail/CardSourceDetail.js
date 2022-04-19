@@ -1323,7 +1323,9 @@ class CardSourceDetail extends Component {
     const {
       userInfo
     } = this.props;
-    console.log(this.props.isEdit);
+
+    console.log("props: card source detail: ", this.props);
+
     // console.log("codecode", this.props.code)
     // console.log("content:", content.find(item => item.type === "TEXT"));
     // console.log("result:", this.props, this.state)// && this.props.DesignDetail.category_level3 - 1);
@@ -2263,7 +2265,7 @@ class CardSourceDetail extends Component {
         {this.props.edit
           ? <AddContent
             is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
-            is_github={(this.props.DesignDetail && this.props.DesignDetail.category_level1 === SOFTWARE_CATEGORY)}
+            is_github={this.props.is_github || (this.props.DesignDetail && this.props.DesignDetail.category_level1 === SOFTWARE_CATEGORY)}
             getValue={this.onAddValue}
             order={content.length || 0}
             open={(data) => this.setState({ addProblem: data })}
@@ -2326,24 +2328,26 @@ const ControllerWrap2 = styled.div`
     }
   }
   .innerBox {
-                            display: flex;
+    display: flex;
     min-height: 45px;
-    // height:max-content;
+    // height: max-content;
     align-items: center;
     justify-content: center;
     list-style: none;
   }
 `;
 const NewController = styled.li`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  margin-left: 35px;
-  margin-right:35px;
+  min-width: ${(props) => props.width};
+  min-height: ${(props) => props.height};
+  font-size: 16px;
+  margin-right: 25px;
+  :last-child {
+    margin-right: 0px; 
+  }
   line-height: 29px;
   color: #FF0000;
   padding-bottom: 1.5px;
   // border-bottom: 1.5px solid #FF0000;
-  font-size: 16px;
   font-weight: 500;
   font-family: Noto Sans KR, Bold;
   text-align: center;
@@ -2469,6 +2473,7 @@ class AddContent extends Component {
   };
 
   render() {
+    console.log("props:", this.props)
     return (
       <ControllerWrap2>
         <div className="innerBox">
