@@ -27,7 +27,23 @@ export function setCookie(cookie_name, value, days) {
   exdate.setDate(exdate.getDate() + days);
   // 설정 일수만큼 현재시간에 만료값으로 지정
 
-  var cookie_value = atob(value) + ((days == null) ? '' : ';    expires=' + exdate.toUTCString());
+  /**
+ * Decodes a string into bytes using Latin-1 (ISO-8859), and encodes those bytes
+ * into a string using Base64.
+ *
+ * The `data` may be any JavaScript-value that can be coerced into a string.
+ *
+ * **This function is only provided for compatibility with legacy web platform APIs**
+ * **and should never be used in new code, because they use strings to represent**
+ * **binary data and predate the introduction of typed arrays in JavaScript.**
+ * **For code running using Node.js APIs, converting between base64-encoded strings**
+ * **and binary data should be performed using `Buffer.from(str, 'base64')` and`buf.toString('base64')`.**
+ * @since v15.13.0, v14.17.0
+ * @deprecated Use `buf.toString('base64')` instead.
+ * @param data An ASCII (Latin1) string.
+ */
+  // var cookie_value = atob(value) + ((days == null) ? '' : ';    expires=' + exdate.toUTCString());
+  var cookie_value = (value).toString('base64') + ((days == null) ? '' : ';    expires=' + exdate.toUTCString());
   document.cookie = cookie_name + '=' + cookie_value;
 }
 
@@ -65,7 +81,7 @@ export const GetSession = (key) => {
     } else {
       token = getCookie(key);
     }
-    if(token === "null" || token == null){
+    if (token === "null" || token == null) {
       reject(null);
     } else {
       resolve(token);
