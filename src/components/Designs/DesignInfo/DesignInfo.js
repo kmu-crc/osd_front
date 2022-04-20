@@ -689,7 +689,7 @@ class DesignInfo extends Component {
 
 
     render() {
-        const { isMyDesign, editor, DesignDetail, Count, like, WaitingList, CountDesignComment } = this.props
+        const { userInfo, isMyDesign, editor, DesignDetail, Count, like, WaitingList, CountDesignComment } = this.props
         const { w } = this.state;
         const thumbnail = (DesignDetail && DesignDetail.img && DesignDetail.img.l_img) || noimg
         console.log(DesignDetail);
@@ -891,7 +891,7 @@ class DesignInfo extends Component {
                                     :
                                     <div className="button_wrap pointer" onClick={this.like}>
                                         관심 디자인 {like ? "취소하기" : "등록하기"}
-                                        <img src={thumbup} className="icon" style={{opacity:`${like?1:0.5}`}} />
+                                        <img src={thumbup} className="icon" style={{ opacity: `${like ? 1 : 0.5}` }} />
                                     </div>
                                 }
 
@@ -920,7 +920,10 @@ class DesignInfo extends Component {
                     </div>
                 </DesignHeader>
 
-                {(DesignDetail && /*DesignDetail.is_project === 1 && */DesignDetail.member.length > 1)
+                {(
+                    userInfo && userInfo.uid
+                    && DesignDetail
+                    && /*DesignDetail.is_project === 1 && */DesignDetail.member.length > 1)
                     ? <ChatWrapper>
                         <div className="row">
                             <div
@@ -1071,7 +1074,7 @@ export default DesignInfo;
             //                 :
             //                 <div className="cursor_pointer font_red font_bold font_big"/>
 
-            //                 }                           
+            //                 }
             //                 {isMyDesign === false &&
             //                     <div className="flexBox margin_top1">
             //                         {editor === false ?

@@ -134,7 +134,8 @@ export function SignUpRequest(data) {
             })
             .then(function (res) {
                 if (res.success) {
-                    SetSession("opendesign_token", res.token)
+                    const { TokenName } = require("constant");
+                    SetSession(TokenName, res.token)
                 }
                 return dispatch(SignUpSuccess())
             }).catch((error) => {
@@ -158,7 +159,8 @@ export function SignInRequest(data) {
             })
             .then(function (res) {
                 if (res.isMember && res.isPassword) {
-                    SetSession("opendesign_token", res.token)
+                    const { TokenName } = require("constant");
+                    SetSession(TokenName, res.token)
                     return dispatch(SignInSuccess())
                 } else {
                     if (!res.isMember) {

@@ -30,7 +30,8 @@ class SignInForm extends Component {
     this.setState({ signin_modal: false })
   }
   signout = () => {
-    SetSession("opendesign_token", null)
+    const { TokenName } = require("constant");
+    SetSession(TokenName, null)
       .then(data => {
         this.props.SignOutRequest()
         this.setState({ sign_modal: false })

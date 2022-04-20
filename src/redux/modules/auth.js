@@ -169,7 +169,8 @@ export function SignInRequest(data) {
       .then(function (res) {
         //console.log("res", res)
         if (res.isMember && res.isPassword) {
-          SetSession("opendesign_token", res.token)
+          const { TokenName } = require("constant");
+          SetSession(TokenName, res.token)
           //console.log("success", res)
           return dispatch(SignInSuccess(res.token))
         } else {

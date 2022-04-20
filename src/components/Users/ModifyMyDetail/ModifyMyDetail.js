@@ -382,7 +382,8 @@ class ModifyMyDetail extends Component {
     if (isconfirm) {
       this.props.DeleteUserRequest(this.props.token)
         .then(() => {
-          SetSession("opendesign_token", null)
+          const { TokenName } = require("constant");
+          SetSession(TokenName, null)
             .then(data => {
               // console.log("data:", data)
               this.props.SignOutRequest()

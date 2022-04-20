@@ -22,7 +22,8 @@ export const STRING_ALREADY_LOGINED = "이미 로그인 상태입니다.";
 // bool
 export const NOT = false;
 
-
+// 
+export const TokenName = "opendesign_token";
 
 // 
 export const SOFTWARE_CATEGORY = 6;
