@@ -366,7 +366,7 @@ class SignInModal extends Component {
         }
 
 
-        this.props.signinrequest({ email: email, password: password })
+        this.props.signinrequest({ email: email, password: password, keep: this.state.isSavedPassword })
             .then(async (res) => {
                 if (res.type === "opendesign/authentication/AUTH_SIGNIN_SUCCESS") {
                     this.props.signin();

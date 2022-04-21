@@ -24,8 +24,9 @@ function storageAvailable(type) {
 
 export function setCookie(cookie_name, value, days) {
   const d = new Date();
-  d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-  // d.setTime(d.getTime() + (6 * 1000));
+  alert(days);
+  alert(days);
+  d.setTime(d.getTime());
   let expires = "expires=" + d.toUTCString();
   document.cookie = `${cookie_name}=${value};${expires};path=/`;
 }
@@ -52,6 +53,9 @@ export const SetSession = (key, data) => {
       window.localStorage.setItem(key, data)
     } else {
       setCookie(key, data, 7);
+    }
+    if (data == null || data === "null") {
+      window.localStorage.removeItem(key);
     }
     resolve(data);
   });

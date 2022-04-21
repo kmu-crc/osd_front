@@ -20,7 +20,7 @@ export default function CheckAuth(Components) {
         this.checkAuth()
       }
     }
-
+    
     checkAuth() {
       if (this.props.token != null) {
         SetSession(TokenName, this.props.token);

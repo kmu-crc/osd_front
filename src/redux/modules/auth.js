@@ -31,9 +31,9 @@ const SignInSuccess = (token) => ({ type: AUTH_SIGNIN_SUCCESS, token: token });
 const SignInFailure = () => ({ type: AUTH_SIGNIN_FAILURE, success: false });
 const SignInIsNotMember = () => ({ type: AUTH_SIGNIN_IS_NOT_MEMBER, success: false, });
 const SignInIsNotPassword = () => ({ type: AUTH_SIGNIN_IS_NOT_PASSWORD, success: false, });
-const CkeckToken = () => ({ type: AUTH_CHECK_TOKEN });
-const CkeckTokenSuccess = (info, token) => ({ type: AUTH_CHECK_TOKEN_SUCCESS, info, token });
-const CkeckTokenFailure = () => ({ type: AUTH_CHECK_TOKEN_FAILURE });
+const CheckToken = () => ({ type: AUTH_CHECK_TOKEN });
+const CheckTokenSuccess = (info, token) => ({ type: AUTH_CHECK_TOKEN_SUCCESS, info, token });
+const CheckTokenFailure = () => ({ type: AUTH_CHECK_TOKEN_FAILURE });
 const CheckEmail = () => ({ type: AUTH_CHECK_EMAIL });
 const CheckEmailSuccess = () => ({ type: AUTH_CHECK_EMAIL_SUCCESS, checkEmail: true });
 const CheckEmailFailure = (err) => ({ type: AUTH_CHECK_EMAIL_FAILURE, checkEmail: false, error: err });
@@ -187,11 +187,11 @@ export function SignInRequest(data) {
 }
 export function CheckTokenRequest(token) {
   return (dispatch) => {
-    dispatch(CkeckToken());
+    dispatch(CheckToken());
     return fetch(`${host}/users/check`, { headers: { 'x-access-token': token, 'Content-Type': 'application/json' } })
       .then(res => res.json())
-      .then(res => res.success ? dispatch(CkeckTokenSuccess(res.info, token)) : dispatch(CkeckTokenFailure()))
-      .catch(_ => dispatch(CkeckTokenFailure()));
+      .then(res => res.success ? dispatch(CheckTokenSuccess(res.info, token)) : dispatch(CheckTokenFailure()))
+      .catch(_ => dispatch(CheckTokenFailure()));
   };
 }
 export function CheckEmailRequest(email) {
