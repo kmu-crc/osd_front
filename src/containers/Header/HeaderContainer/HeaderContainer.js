@@ -5,20 +5,20 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { SignInRequest, SignOutRequest, CheckEmailRequest, CheckTokenRequest, GetDevNoticeRequest } from "redux/modules/auth"
 import { FindPwRequest } from "redux/modules/account";
-import { isMobile, TokenName } from "constant";
-import { SetSession, GetSession } from "modules/Sessions";
+import { msHour, isMobile, } from "constant";
 
 class HeaderContainer extends Component {
     componentDidMount() {
-        this.props.token && setInterval(() => this.check(), 1000);
+        this.props.token && setInterval(() => this.check(), msHour);
     }
 
     check = () => {
-        this.props.CheckTokenRequest(this.props.token).then(data => {
-            if (data && data.type === "AUTH_CHECK_TOKEN_FAILURE") {
-                window.document.location.reload();
-            }
-        });
+        this.props.CheckTokenRequest(this.props.token)
+            .then(data => {
+                if (data && data.type === "AUTH_CHECK_TOKEN_FAILURE") {
+                    window.document.location.reload();
+                }
+            });
     }
 
     render() {
