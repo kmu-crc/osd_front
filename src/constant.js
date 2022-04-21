@@ -26,5 +26,9 @@ export const NOT = false;
 export const TokenName = "opendesign_token";
 
 export const msHour = 60 * 60 * 1000;
+export const ms10Mins = 10 * 60 * 1000;
+export const msMin = 60 * 1000;
+export const ms10Secs = 10 * 1000;
+export const msSec = 10 * 1000;
 // 
 export const SOFTWARE_CATEGORY = 6;
