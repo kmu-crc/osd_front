@@ -57,7 +57,7 @@ class HeaderContainer extends Component {
                 else if (term < msMin) {
                     nextTimeOffset = ms10Secs;
                 } else {
-                    nextTimeOffset = msSec;
+                    // nextTimeOffset = msSec;
                 }
                 console.log("check:", nextTimeOffset);
                 setTimeout(() => this.checkwithterm(), nextTimeOffset);
@@ -93,4 +93,4 @@ const mapDispatchToProps = (dispatch) => ({
     CheckTokenRequest: (token) => dispatch(CheckTokenRequest(token)),
 });
 
-export default withRouter(connect(mapStateTopProps, mapDispatchToProps)(HeaderContainer))
+export default withRouter(connect(mapStateTopProps, mapDispatchToProps)(HeaderContainer));
