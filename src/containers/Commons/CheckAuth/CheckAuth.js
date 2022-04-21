@@ -5,6 +5,7 @@ import { CheckTokenRequest, SetActive } from "redux/modules/auth"
 import { SignOutRequest } from "redux/modules/account"
 import { SetSession, GetSession } from "modules/Sessions"
 import { Dimmer, Loader } from "semantic-ui-react"
+import { TokenName } from "constant";
 
 export default function CheckAuth(Components) {
   class AuthenticatedComponent extends Component {
@@ -19,14 +20,14 @@ export default function CheckAuth(Components) {
         this.checkAuth()
       }
     }
-
+    
     checkAuth() {
       if (this.props.token != null) {
-        SetSession("opendesign_token", this.props.token);
+        SetSession(TokenName, this.props.token);
       }
-      GetSession("opendesign_token").then(token => {
+      GetSession(TokenName).then(token => {
         this.props.CheckTokenRequest(token).then(data => {
-          // console.log(data);
+          console.log(data);
           if (data && data.info) {
             if (!data.info.isDetail || data.info.thumbnail == null) {
               if (this.props.location.pathname === "/insertUserDetail") {
@@ -43,6 +44,10 @@ export default function CheckAuth(Components) {
             this.setState({ valid: true })
           }
 
+          // exception
+          if (data && data.type === "AUTH_CHECK_TOKEN_FAILURE") {
+            SetSession(TokenName, null);
+          }
         })
       }).catch(data => {
         this.props.SignOutRequest()

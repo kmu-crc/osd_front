@@ -363,7 +363,8 @@ class Navigation extends Component {
 
     };
     SignOut = () => {
-        SetSession("opendesign_token", null)
+        const { TokenName } = require("constant");
+        SetSession(TokenName, null)
             .then(data => {
                 this.props.SignOutRequest();
                 window.location.href = "/";

@@ -366,11 +366,9 @@ class SignInModal extends Component {
         }
 
 
-        this.props.signinrequest({ email: email, password: password })
+        this.props.signinrequest({ email: email, password: password, keep: this.state.isSavedPassword })
             .then(async (res) => {
-                //console.log("cap", res)
                 if (res.type === "opendesign/authentication/AUTH_SIGNIN_SUCCESS") {
-                    // alert('로그인에 성공하였습니다.') // SetSession("opendesign_token",res.token)
                     this.props.signin();
                     if (window.location.pathname === "/" || window.location.pathname === "signin" || window.location.pathname === "signup") {
                         window.location.href = "/";

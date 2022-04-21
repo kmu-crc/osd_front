@@ -87,22 +87,22 @@ class Notice extends Component {
                 {notice && notice.length > 0
                     && blacklist.includes(whereami) === false
                     && notice.map(notifi => {
-                        let startDif = Math.floor((new Date()-new Date(notifi.start_time)) / (1000 * 60 * 60 * 24));
-                        let endDif = Math.ceil0((new Date(notifi.expiry_time)-new Date()) / (1000 * 60 * 60 * 24));
-                        console.log(startDif,endDif);
+                        let startDif = Math.floor((new Date() - new Date(notifi.start_time)) / (1000 * 60 * 60 * 24));
+                        let endDif = Math.ceil0((new Date(notifi.expiry_time) - new Date()) / (1000 * 60 * 60 * 24));
+                        console.log(startDif, endDif);
 
                         return (getCookie('noti_' + notifi.uid)) ? null :
-                        startDif>=0&&endDif>=0&&(
-                            <NoticeWrapper visible={notifi.visible || "visible"} key={notifi.uid} >
-                                <div className="text" dangerouslySetInnerHTML={{ __html: notifi.content }}></div>
-                                <div className="buttons">
-                                    <label>
-                                        <input type="checkbox" name={notifi.uid} ref={notifi.uid} /> 그만보기
-                                    </label>
-                                    <button type="button" onClick={this.close(notifi)} >닫기</button>
-                                </div>
-                            </NoticeWrapper>
-                        )
+                            startDif >= 0 && endDif >= 0 && (
+                                <NoticeWrapper visible={notifi.visible || "visible"} key={notifi.uid} >
+                                    <div className="text" dangerouslySetInnerHTML={{ __html: notifi.content }}></div>
+                                    <div className="buttons">
+                                        <label>
+                                            <input type="checkbox" name={notifi.uid} ref={notifi.uid} /> 그만보기
+                                        </label>
+                                        <button type="button" onClick={this.close(notifi)} >닫기</button>
+                                    </div>
+                                </NoticeWrapper>
+                            )
                     })
                 }
             </React.Fragment>

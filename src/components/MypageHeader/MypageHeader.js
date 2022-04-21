@@ -227,7 +227,8 @@ class MypageHeader extends Component {
         window.location.href = geturl() + '/mymodify';
     }
     SignOut = () => {
-        SetSession("opendesign_token", null)
+        const { TokenName } = require("constant");
+        SetSession(TokenName, null)
             .then(data => {
                 this.props.SignOutRequest();
                 window.location.href = "/";

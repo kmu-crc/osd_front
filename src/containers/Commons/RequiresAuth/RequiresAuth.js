@@ -9,16 +9,18 @@ import { alert } from "components/Commons/Alert/Alert";
 export default function RequiresAuth(Component) {
   class AuthenticatedComponent extends React.Component {
     componentWillMount() {
+      const { TokenName } = require("constant");
       // console.error(this.props.token, this.props.valid);
       if (this.props.token != null) {
-        SetSession("opendesign_token", this.props.token)
+        SetSession(TokenName, this.props.token)
       }
-      GetSession("opendesign_token")
+      GetSession(TokenName)
         .then(token => {
           this.props.CheckTokenRequest(token)
             .then((data) => {
               if (data.type === "AUTH_CHECK_TOKEN_FAILURE") {
-                SetSession("opendesign_token", null)
+                const { TokenName } = require("constant");
+                SetSession(TokenName, null)
                 return this._checkAndRedirect();
               }
               return this._checkAndRedirect();
