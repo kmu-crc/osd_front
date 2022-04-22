@@ -142,7 +142,9 @@ export default class GithubViewer extends Component {
     await fetch(url)
       .then(res => res.json())
       .then(data => {
-        this.setState({ path: path, tree: data.tree.filter(e => e.type === "blob" || e.type === "tree").sort((a, b) => { if (a.type > b.type) return -1; if (a.type < b.type) return 1; return }), treeUrl: data.url, });
+        this.setState({ 
+          path: path, 
+          tree: data.tree.filter(e => e.type === "blob" || e.type === "tree").sort((a, b) => { if (a.type > b.type) return -1; if (a.type < b.type) return 1; return }), treeUrl: data.url, });
       })
   }
   getFile = async () => {

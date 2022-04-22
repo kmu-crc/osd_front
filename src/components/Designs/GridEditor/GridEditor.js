@@ -361,7 +361,7 @@ class GridEditor extends Component {
                             isTeam={editor}
                             edit={userInfo && (userInfo.uid === cardDetail.user_id)}
                             open={card}
-                            close={() => this.setState({ card: false })}
+                            close={async () => { await this.setState({ card: false }); }}
                             title={title}
                             boardId={boardId}
                             // open={(card_id) => {

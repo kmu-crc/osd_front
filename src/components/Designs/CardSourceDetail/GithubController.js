@@ -85,7 +85,7 @@ export default class GithubController extends Component {
         <input
           className='input-style'
           value={content}
-          onPaste={(e) => { this.setState({ content: e.clipboardData.getData('text/plain') }) }}
+          // onPaste={(e) => { this.setState({ content: e.clipboardData.getData('text/plain') }) }}
           onChange={(e) => this.setState({ content: e.target.value })}
           onBlur={_ => this.onSave()}
         />

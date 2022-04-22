@@ -646,8 +646,10 @@ class CardSourceDetail extends Component {
 
     this.state = {
       edit: false,
-      content: this.props.content || [],
-      origin: this.props.origin || [],
+      // content: this.props.content || [],
+      // origin: this.props.origin || [],
+      content: [],
+      origin: [],
       loading: false,
       submit: false,
       tab: "code",
@@ -715,8 +717,8 @@ class CardSourceDetail extends Component {
       );
     }
   }
-  componentWillUnmount() {
-    this.setState({ content: [], origin: [] });
+  async componentWillUnmount() {
+    await this.setState({ content: [], origin: [] });
     window.removeEventListener("scroll", null, true);
   }
   async verifyorder(content) {
