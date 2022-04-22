@@ -26,7 +26,7 @@ const LinkWrap = styled.div`
       background-color: #F0F0F0;
     }
     .file-name {
-      margin-left: 1vw;
+      margin-left: 0.5vw;
     }
   }
   .path {
@@ -68,6 +68,10 @@ const LinkWrap = styled.div`
       height: 40px;
     }
   }
+  .center-text {
+    padding-top: 2rem;
+    text-align: center;
+  }
 `;
 const SvgFile = () => <svg aria-label="File" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" className="octicon octicon-file color-fg-muted">
   <path fillRule="evenodd" d="M3.75 1.5a.25.25 0 00-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 00.25-.25V6H9.75A1.75 1.75 0 018 4.25V1.5H3.75zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06zM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v8.086A1.75 1.75 0 0112.25 15h-8.5A1.75 1.75 0 012 13.25V1.75z"></path>
@@ -79,7 +83,7 @@ export default class GithubViewer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
+      loading: false, file_loading: false,
       valid: false,
       gitinfo: { owner: "", repo: "", branch: "" },
       type: "",
@@ -142,8 +146,11 @@ export default class GithubViewer extends Component {
       })
   }
   getFile = async () => {
+
+    await this.setState({ file_loading: true });
     const link = this.state.current.replace("github.com", "raw.githubusercontent.com").replace("/blob/", "/");
-    const resp = await fetch(link)
+    const resp = await fetch(link);
+    await this.setState({ file_loading: false });
     return resp.text();
   }
   update = async () => {
@@ -170,34 +177,36 @@ export default class GithubViewer extends Component {
     const { path, } = this.state;
     const { owner, repo, branch } = this.state.gitinfo;
     const basic = `https://github.com/${owner}/${repo}/${type}/${branch}`;
-    const newpath = `${path.join('/')}/${last}`.replace("//", "/");
+    const newpath = `${path.join('/')}/${last}`;//.replace("//", "/");
+    console.log("moveup", newpath, newpath.replace(/\/\//g, "/"));
+    // result= mystring.replace(/\/\//g, "/");
 
-    await this.setState({ current: `${basic}/${newpath}` });
+    await this.setState({ current: `${basic}${newpath.startsWith('/') ? newpath : '/' + newpath}` });
     this.update();
   }
   move2 = async (last, type) => {
     const { owner, repo, branch } = this.state.gitinfo;
     const basic = `https://github.com/${owner}/${repo}/${type}/${branch}/${last}`;
-    // const newpath = `${path.join('/')}/${last}`.replace("//", "/");
-    // await this.setState({ current: `${basic}/${newpath}` });
     await this.setState({ current: basic });
     this.update();
   }
   moveupdir = async () => {
     const { type, current, gitinfo } = this.state;
-    if (type === "tree") {
-      let _path = current; //current.split(type + '/' + gitinfo.branch)[1].split('/');
-      let split = _path.split(type + '/' + gitinfo.branch)[1].split('/');
-      alert(_path.slice(0, split.length - 2).join("/"));
-      // var path = "/bar/foo/moo/";
-      // var split = path.split("/");
-      // var x = split.slice(0, split.length - 2).join("/") + "/";
-      // alert(x);
+    const { owner, repo, branch } = gitinfo;
+    const split = current.split(type + '/' + branch)[1].split('/');
 
-    } else {
-
+    if (split.length > 1) {
+      split.shift();
     }
+    split.pop();
+    await this.setState({
+      current:
+        `https://github.com/${owner}/${repo}/tree/${branch}` + "/" + split.join("/")
+    });
+    this.update();
+
   }
+
   goHome = async () => {
     await this.setState({ current: this.state.home });
     this.update();
@@ -234,7 +243,7 @@ export default class GithubViewer extends Component {
 
   render() {
     const { url } = this.props;
-    const { valid, loading, type, tree, current, gitinfo, prevTreeUrl, path } = this.state;
+    const { valid, loading, file_loading, type, tree, current, gitinfo, prevTreeUrl, path } = this.state;
 
     console.log("path: _ ", type, current, path, prevTreeUrl)
 
@@ -260,30 +269,24 @@ export default class GithubViewer extends Component {
                 </p>
               </div>
 
-              <div>
-                {/* {current && gitinfo.branch && type &&
-                  current.split('/' + type + '/' + gitinfo.branch) &&
-                  current.split('/' + type + '/' + gitinfo.branch)[1] &&
-                  current.split('/' + type + '/' + gitinfo.branch)[1]
-                    .split('/')
-                    .map((dir, index) =>
-                      <a key={index} onClick={() => this.move2(dir, "tree")}> {dir}</a>)} */}
+              <div style={{ maxWidth: "700px", overflow: "hidden" }}>
+                &nbsp;
+                {current.split(`${type}/${gitinfo.branch}`)[1]}
               </div>
             </div>
 
-            {current}
             {/* viewer */}
             {type === "tree"
+              // directory
               ? <div className='tree-container'>
-                {
-                  current.split(type + '/' + gitinfo.branch)[1] &&
+                {current.split(type + '/' + gitinfo.branch)[1] &&
                   current.split(type + '/' + gitinfo.branch)[1].replace('/', '') !== '' &&
                   <div className='tree-element'>
-                    <a onClick={() => this.moveupdir()}>
+                    <a style={{ fontSize: "1.2rem" }} onClick={() => this.moveupdir()}>
                       ..
                     </a>
-                  </div>
-                }
+                  </div>}
+
                 {tree.map((e, index) =>
                   <div
                     className='tree-element'
@@ -298,13 +301,23 @@ export default class GithubViewer extends Component {
                   </div>
                 )}
               </div>
+
+              // file
               : <div className='code'>
-                <pre ref={(ref) => { this.ref = ref; }}>
-                  <code id={'code' + this.props.uid} />
-                </pre>
+                {file_loading
+                  ? <h2 className='loading-text center-text'>파일을 불러오고 있습니다.</h2>
+                  : <>
+                    <div className='tree-element'>
+                      <a style={{ fontSize: "1.2rem" }} onClick={() => this.moveupdir()}>
+                        ..
+                      </a>
+                    </div>
+                    <pre ref={(ref) => { this.ref = ref; }}>
+                      <code id={'code' + this.props.uid} />
+                    </pre>
+                  </>}
               </div>}
 
-            {/* link */}
             <div className='go'>
               <a href={current} target="_blank" >
                 <img src={iGithub} />Github로 이동
