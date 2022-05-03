@@ -1980,7 +1980,7 @@ class CardSourceDetail extends Component {
                           {/* <img src={item.content} alt="이미지" /> */}
                           {/* </Zoom> */}
                           {/* <p>이미지를 클릭하시면 원본크기로 보실 수 있습니다.</p> */}
-                        </div> : item.type === "video"
+                        </div> : item.data_type === "video"
                           ? <div
                             style={{
                               width: "100%",
