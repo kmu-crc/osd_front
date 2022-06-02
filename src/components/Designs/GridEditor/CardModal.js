@@ -584,7 +584,7 @@ class CardModal extends Component {
                 }
             }
         }
-        await this.set
+        // await this.set
         this.props.close();
     };
 

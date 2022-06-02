@@ -646,8 +646,10 @@ class CardSourceDetail extends Component {
 
     this.state = {
       edit: false,
-      content: this.props.content || [],
-      origin: this.props.origin || [],
+      // content: this.props.content || [],
+      // origin: this.props.origin || [],
+      content: [],
+      origin: [],
       loading: false,
       submit: false,
       tab: "code",
@@ -715,8 +717,8 @@ class CardSourceDetail extends Component {
       );
     }
   }
-  componentWillUnmount() {
-    this.setState({ content: [], origin: [] });
+  async componentWillUnmount() {
+    await this.setState({ content: [], origin: [] });
     window.removeEventListener("scroll", null, true);
   }
   async verifyorder(content) {
@@ -1978,7 +1980,7 @@ class CardSourceDetail extends Component {
                           {/* <img src={item.content} alt="이미지" /> */}
                           {/* </Zoom> */}
                           {/* <p>이미지를 클릭하시면 원본크기로 보실 수 있습니다.</p> */}
-                        </div> : item.type === "video"
+                        </div> : item.data_type === "video"
                           ? <div
                             style={{
                               width: "100%",
