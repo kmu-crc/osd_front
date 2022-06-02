@@ -16,7 +16,7 @@ class SignInForm extends Component {
     console.log(prev, this.props)
   }
   signin = () => {
-    this.closeModal()
+    // this.closeModal()
     this.setState({ signin_modal: false })
     if (window.location.href.search("signup") > -1) {
       window.location.replace("/")
@@ -24,7 +24,12 @@ class SignInForm extends Component {
       if (window.location.href.search("signin") !== -1) {
       } else {
       }
+      window.location.reload()
     }
+    // if (this.props.userInfo && window.location.href.search("signin") > -1) {
+
+    // }
+    // window.history.go(-1)
   }
   closeModal = () => {
     this.setState({ signin_modal: false })

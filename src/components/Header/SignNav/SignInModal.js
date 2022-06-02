@@ -373,7 +373,7 @@ class SignInModal extends Component {
                     if (window.location.pathname === "/" || window.location.pathname === "signin" || window.location.pathname === "signup") {
                         window.location.href = "/";
                     } else {
-                        window.history.back();
+                        // window.history.back();
                     }
                 }
                 else {
