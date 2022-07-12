@@ -172,8 +172,6 @@ export default class PeerView extends React.Component {
 			maxSpatialLayer
 		} = this.state;
 
-		console.log("PeerView.js: ", this.props, this.state);
-
 		return (<DivPeerView>
 			{!videoVisible ?
 				<div className="peerName">

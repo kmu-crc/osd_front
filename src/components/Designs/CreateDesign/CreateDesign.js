@@ -869,7 +869,7 @@ const DesignElement = styled.div`
   }
 `;
 const EditorWrapper = styled.div`
-  max-width:853px;
+  // max-width:853px;
   width:100%;
   .title {
     width: 100%;
@@ -1388,7 +1388,8 @@ class CreateDesign extends Component {
                       <InputText onChange={this.onChangeValueTitle} onKeyDown={this.onKeyDownEnter}
                                  name="title" maxLength="100" placeholder="디자인의 제목을 입력해주세요. (100자 이내)" />
                 </div>
-                <div className="board_label" style={{marginTop:"22px"}}>3. 디자인 설명<sub className="sub marginRight2">*</sub>
+                <div className="board_label" style={{marginTop:"22px"}}>3. 디자인 설명
+                {/* <sub className="sub marginRight2">*</sub> */}
                 </div>
                 <div className="board_box">
                       <InputTextArea id="textBox" onChange={this.onChangeValueExplanation} 
@@ -1406,8 +1407,8 @@ class CreateDesign extends Component {
                 </div>}
             </Section>
           
-            <Section isNone={ step === 1} >
-               <div className="board" >
+            <Section isNone={step === 1} >
+               <div className="board">
               <div className="maxFlex">
                <div className="board_label">1. 카테고리<sub className="sub marginRight1" >*</sub></div>
 

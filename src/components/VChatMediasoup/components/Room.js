@@ -11,16 +11,7 @@ import { Modal } from 'semantic-ui-react';
 import SearchMember from "./SearchMember";
 import { InvitedUserRequest, CancelInvitedUserRequest } from "redux/modules/design";
 import { confirm } from "components/Commons/Confirm/Confirm";
-import classnames from 'classnames';
 import new_logo_osd_big from "source/new_logo_osd_big.svg"
-// import ScrollContainer from 'react-indiana-drag-scroll';
-// import { SearchMemberRequest } from "redux/modules/search";
-// import SearchMember from "components/Commons/SearchDesignMember";
-// import SearchMemberContainer from "containers/Commons/SearchMemberContainer";
-// import Notifications from './Notifications';
-// import noimg from "source/noimg.png";
-
-// import RecordRTC from 'recordrtc';
 const VIDEO_SIZE = 128;
 const GAP = 8;
 class Mixer {
@@ -309,7 +300,8 @@ const RoomDiv = styled.div`
 `;
 const MenuBarContainer = styled.div`
   width: 100%;
-  height: max-content;
+//   height: 50px;
+//   height: max-content;
   padding:16px 17px;
   display: flex;
   justify-content: space-between;
@@ -378,16 +370,16 @@ const MenuBarContainer = styled.div`
 			margin-right:50px;
 		}
     &.chat {
-		width:100px;
-		height:44px;
+		width: 100px;
+		height: 44px;
 		box-shadow: 8px 8px 8px #0000002B;
-		display:flex;
-		align-items:center;
-		justify-content:center;
-		color:white;
-		font-size:22px;
-		font-family:Spoqa Han Sans Neo;
-		background-color:red;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		font-size: 22px;
+		font-family: Spoqa Han Sans Neo;
+		background-color: red;
     }
     &.share {
 		width:max-content;
@@ -481,6 +473,7 @@ const MiddleDynamicGrid = styled.div`
 	z-index: 110;
 	// background-color: rgba(255,255,255, 0.5);
 	width: 100%;
+	height: 100vh;
 	display: flex;
 	margin-bottom:38px;
 	// flex-direction: column;
@@ -631,7 +624,7 @@ class Room extends React.Component {
 		super(props);
 		this.state = {
 			h: window.innerHeight,
-			displayName:"",
+			displayName: "",
 			shareState: "off",
 			mode: "grid", // || "scroll",
 			hidepeer: false,
@@ -737,7 +730,7 @@ class Room extends React.Component {
 
 			{/* menubar */}
 			<MenuBarContainer>
-				<div className="flex" style={{padding:"5px 0px 5px 0px"}}>
+				<div className="flex" style={{ padding: "5px 0px 5px 0px" }}>
 					{/* chat */}
 					<div className='btn chat' onClick={() => this.openChatWin()}>채팅</div>
 					{/* invite */}
@@ -795,27 +788,27 @@ class Room extends React.Component {
 					</div>
 				</div>
 
-				<div className="flex flex-end" style={{padding:"5px 0px 5px 0px"}}>
+				<div className="flex flex-end" style={{ padding: "5px 0px 5px 0px" }}>
 					<div>
 						{/* layout */}
 						{mode === "scroll" ?
 							<React.Fragment>
-							<div style={{display:"flex",alignItems:"center"}}>
-								<div style={{width:"max-content",textAlign:"right",marginRight:"20px"}}>
-									<div style={{maxWidth:"100px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>
-										{this.state.pinned!=null && this.state.displayName != ""?this.state.displayName:null}
+								<div style={{ display: "flex", alignItems: "center" }}>
+									<div style={{ width: "max-content", textAlign: "right", marginRight: "20px" }}>
+										<div style={{ maxWidth: "100px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+											{this.state.pinned != null && this.state.displayName != "" ? this.state.displayName : null}
+										</div>
+										시청 중
 									</div>
-									 시청 중
+									<div className="btn return" onClick={() => {
+										this.setState({ mode: "grid" });
+										this.video.srcObject = null;
+										mixer && mixer.set_pinned_id(null);
+										this.setState({ displayName: "" });
+									}}>
+										<span className="txt">큰 화면 취소</span>
+									</div>
 								</div>
-								<div className="btn return" onClick={() => {
-									this.setState({ mode: "grid" });
-									this.video.srcObject = null;
-									mixer && mixer.set_pinned_id(null);
-									this.setState({displayName:""});
-								}}>	
-								<span className="txt">큰 화면 취소</span>
-								</div>
-							</div>
 							</React.Fragment> : null}
 					</div>
 					<div>
@@ -831,13 +824,14 @@ class Room extends React.Component {
 					</div>
 				</div>
 			</MenuBarContainer>
+
 			{mode === "scroll"
-							? <HideButtonWrapper>
-								<div className={`btn peer ${!hidepeer ? "hidepeer" : "showpeer"}`} onClick={() => this.setState({ hidepeer: !hidepeer })}>
-								<span className="txt">{!hidepeer ? "숨기기" : "보이기"}</span>
-								</div>
-							</HideButtonWrapper>
-							: null}
+				? <HideButtonWrapper>
+					<div className={`btn peer ${!hidepeer ? "hidepeer" : "showpeer"}`} onClick={() => this.setState({ hidepeer: !hidepeer })}>
+						<span className="txt">{!hidepeer ? "숨기기" : "보이기"}</span>
+					</div>
+				</HideButtonWrapper>
+				: null}
 			{/* contents */}
 			<ContentContainer>
 
@@ -867,12 +861,11 @@ class Room extends React.Component {
 
 				</BigScreenContainer>
 
-
 				{mode === "scroll"
 					? <RightVerticalScroll hidden={hidepeer}>
 						<div className="container">
 							<Me
-								pinned = { this.state.pinned }
+								pinned={this.state.pinned}
 								needReload={() => {
 									this.video.srcObject = null;
 									mixer && mixer.set_pinned_id(null);
@@ -885,7 +878,7 @@ class Room extends React.Component {
 								thumbnail={this.props.userInfo.thumbnail}
 							/>
 							<Peers
-								pinned = { this.state.pinned }
+								pinned={this.state.pinned}
 								clicked={(peer, stream) => this.clickedview(peer, stream)}
 								member={this.props.design.member} />
 
@@ -924,7 +917,33 @@ class Room extends React.Component {
 		const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
 		window.open(url, "chat", options);
 	};
+	recording = async () => {
+		mixer = new Mixer();
+		await mixer.init();
+		if (mixer.start() === false) {
+			return;
+		}
+		this.setState({ isRecording: true });
+	}
+	clickedview = async (peer, stream) => {
+		console.log(peer);
+		mixer && mixer.set_pinned_id(peer.id);
+		await this.setState({ pinned: peer.id, displayName: peer.displayName });
 
+		if (this.video && stream) {
+			stream.addEventListener('inactive', () => {
+				this.video.style.display = "none";
+				this.video.srcObject = null;
+				mixer && mixer.set_pinned_id(null);
+				this.setState({ mode: "grid", pinned: null });
+			});
+			stream.addEventListener('active', () => {
+				this.video.style.display = "block";
+			})
+			this.video.srcObject = stream;
+			this.setState({ mode: "scroll" });
+		}
+	};
 	pasueRecording = () => {
 		mixer.mediaRecorder && mixer.mediaRecorder.pause();
 		this.setState({ isPaused: true });
@@ -948,35 +967,6 @@ class Room extends React.Component {
 			await alert("녹화된 영상이 없습니다.");
 		}
 	}
-
-	recording = async () => {
-		mixer = new Mixer();
-		await mixer.init();
-		if (mixer.start() === false) {
-			return;
-		}
-		this.setState({ isRecording: true });
-	}
-
-	clickedview = async (peer, stream) => {
-		console.log(peer);
-		mixer && mixer.set_pinned_id(peer.id);
-		await this.setState({ pinned: peer.id, displayName:peer.displayName });
-
-		if (this.video && stream) {
-			stream.addEventListener('inactive', () => {
-				this.video.style.display = "none";
-				this.video.srcObject = null;
-				mixer && mixer.set_pinned_id(null);
-				this.setState({ mode: "grid", pinned: null });
-			});
-			stream.addEventListener('active', () => {
-				this.video.style.display = "block";
-			})
-			this.video.srcObject = stream;
-			this.setState({ mode: "scroll" });
-		}
-	};
 
 	componentDidMount() {
 
@@ -1016,729 +1006,3 @@ const mapStateToProps = (state) => {
 
 const RoomContainer = connect(mapStateToProps, null)(Room);
 export default RoomContainer;
-
-
-
-
-
-
-
-
-
-
-
-
-
-// let mediaRecorder;
-// let chunks = [];
-
-// for video recording
-// const media_source = new MediaSource();
-// media_source.addEventListener('sourceopen', handle_source_open, false);
-
-// let media_recorder;
-// let source_buffer;
-
-// const canvas = document.createElement('canvas');
-// const video = document.querySelector('video');
-// let video = null;
-
-// const record_button = ...
-// const play_button = ...
-// const download_button = ...
-// record_button.onclick = toggle_recording;
-// play_button.onclick = play;
-// download_button.onclick = download;
-
-// main();
-
-// let buttontext = "start recording";
-// const stream = canvas.captureStream();
-
-//handle_source_open = e => {
-//	const opt = 'video/webm; codes="vp8"';
-//	source_buffer = media_source.addSourceBuffer(opt);
-//};
-
-// const handle_data_available = e => {
-// if (e.data && e.data.size > 0)
-// recorded_blobs.push(e.data);
-// };
-
-// const handle_stop = e => {
-// const blob = new Blob(recorded_blobs, { type: 'video/webm' });
-// video.src = window.URL.createObjectURL(blob);
-// };
-
-// const toggle_recording = () => { // track, peers, consumers) => {
-// if (buttontext === "start recording") {
-// start_recording(); // track, peers, consumers);
-// buttontext = "stop recording";
-// } else {
-// stop_recording();
-// buttontext = "start recording";
-// }
-// };
-
-// const start_recording = () => { // (track, peers, consumers) => {
-// const options = [
-// 	{ mimeType: 'video/webm' },
-// 	{ mimeType: 'video/webm,codesc=vp9' },
-// 	{ mimeType: 'video/vp8' },
-// ];
-// recorded_blobs = [];
-// let idx = 0;
-// let _ = null;
-// if (peers == null || peers.length === 0) {
-// 	alert('peers is empty');
-// 	return;
-// }
-// peers.map(peer => {
-// 	const consumerAry = peer.consumers.map(id => consumers[id]);
-// 	const consumer = consumerAry.find(cnsmr => cnsmr.track.kind === "video").track;
-// 	_ = new MediaStream([consumer]);
-// });
-
-// // let _ = new MediaStream([track]);
-
-// // _.addTrack(track);
-// while (idx < options.length) {
-// 	try {
-// 		media_recorder = new MediaRecorder(_, options[idx]);
-// 		alert('set with ' + options[idx]);
-// 		break;
-// 	} catch (e) {
-// 		console.error(e);
-// 		idx++;
-// 	}
-// }
-// media_recorder.onstop = handle_stop;
-// media_recorder.ondataavailable = handle_data_available;
-// media_recorder.start(100);
-// };
-
-// const stop_recording = () => {
-// media_recorder.stop();
-// };
-
-
-
-
-// 			window.innerWidth > 500 ?
-
-//             <RoomDiv h={h || window.innerHeight}>
-//                 {/* notifications */}
-//                 {/* <Notifications /> */}
-
-//                 {/* modal */}
-//                 {/* invite modal */}
-//                 <InviteModal open={invite} onClose={() => this.setState({ invite: false })}>
-
-//                     <h2>화상회의 초대</h2>
-
-//                     <span style={{ width: "max-content", marginLeft: "auto", marginRight: "10px" }}>(디자인 맴버가 아닌 오픈소스사이트 사용자를 회의에 초대합니다.)</span>
-
-//                     <div className="close-box" onClick={() => this.setState({ invite: false })} >
-//                         <Cross angle={45} color={"#707070"} weight={3} width={35} height={35} />
-//                     </div>
-
-//                     <hr />
-
-//                     <div className="search-bar">
-//                         <SearchMember
-//                             id={this.props.userInfo.uid}
-//                             token={this.props.token}
-//                             members={(design && design.member) || []}
-//                             selected={mems => { this.setState({ selected: mems }) }} />
-//                     </div>
-
-//                     <hr />
-
-//                     <div className="button-bar" style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
-//                         <div style={{ cursor: "default", marginRight: "25px", color: "red", fontSize: "1.5rem", fontWeight: "500", width: "max-content" }}
-//                             onClick={() => {
-//                                 this.state.selected &&
-//                                     this.state.selected.length > 0 &&
-//                                     this.state.selected.map(async mem => {
-//                                         // alert(mem.uid); return;
-//                                         try {
-//                                             InvitedUserRequest(design.uid, this.props.token, mem.uid) //{ to_user_id: mem.uid })
-//                                         } catch (e) {
-//                                             await alert(e + '와 같은 이유로 초대에 실패하였습니다. 관리자에게 문의해주시기 바랍니다.');
-//                                         }
-//                                     });
-//                                 this.setState({ selected: null, invite: false });
-//                             }}>초대</div>
-//                         <div
-//                             style={{ cursor: "default", marginRight: "15px", color: "#707070", fontSize: "1.5rem", fontWeight: "500", width: "max-content" }}
-//                             onClick={() => {
-//                                 this.setState({ invite: false, selected: null });
-//                             }}>취소</div>
-//                     </div>
-//                 </InviteModal>
-
-//                 {/* menubar */}
-//                 <MenuBarContainer>
-//                     <div style={{ display: "flex", flexDirection: "row" }}>
-//                         <div>
-//                             {/* chat */}
-//                             <div className='btn chat' onClick={() => this.openChatWin()}>
-//                                 <span className='txt'>채팅</span>
-//                             </div>
-//                         </div>
-
-//                         <div>
-//                             {/* invite */}
-//                             <div className="btn chat invite" onClick={() => { this.setState({ invite: true }); }}>
-//                                 <span className="txt">초대</span>
-//                             </div>
-//                         </div>
-
-//                         <div>
-//                             {/* recording */}
-//                             {isRecording
-//                                 ? <div className="btn start">
-//                                     <div style={{ display: "flex", flexDirection: "row" }}>
-//                                         {/* pause / resume */}
-//                                         {isPaused
-//                                             ? <div onClick={() => this.resumeRecording()}>
-//                                                 <span className="txt">
-//                                                     <i className="icon play" /></span>
-//                                             </div>
-//                                             : <div onClick={() => this.pauseRecording()}>
-//                                                 <span className="txt">
-//                                                     <i className="icon pause" /></span>
-//                                             </div>}
-//                                         {/* stop */}
-//                                         <div onClick={() => this.stopRecording()}>
-//                                             <span className="txt">
-//                                                 <i className="icon stop" /></span>
-//                                         </div>
-
-//                                     </div>
-//                                 </div>
-//                                 :
-//                                 <div style={{ display: "flex", flexDirection: "row" }}>
-//                                     <div className="btn start" onClick={() => this.recording()} // me, peers, consumers)}
-//                                     >
-//                                         <span className="txt">
-//                                             <i className="record icon" />
-//                                         </span>
-//                                     </div>
-//                                 </div>}
-//                         </div>
-//                     </div>
-
-//                     <div>
-//                         {/* share */}
-//                         <div className='btn share' //ref={ref => this.sharebtn = ref}
-//                             onClick={async () => {
-//                                 if (shareState ||
-//                                     await roomClient.enableShare() === "cancelled") {
-//                                     roomClient.disableShare();
-//                                     roomClient.checkEnabledWebcam();
-//                                     return;
-//                                 }
-//                             }}>
-//                             <span className='txt'>
-//                                 {shareState ? "화면공유 종료" : "화면공유"}
-//                             </span>
-//                         </div>
-//                     </div>
-
-//                     <div style={{ display: "flex", flexDirection: "row" }}>
-//                         <div>
-//                             {/* layout */}
-//                             {mode === "scroll" ?
-//                                 <div className="btn return" onClick={() => {
-//                                     this.setState({ mode: "grid" });
-//                                     this.video.srcObject = null;
-//                                     mixer && mixer.set_pinned_id(null);
-//                                 }}>
-//                                     <span className="txt">큰 화면 취소</span></div> : null}
-//                             {mode === "scroll"
-//                                 ? <div className={`btn peer ${hidepeer}`} onClick={() => this.setState({ hidepeer: !hidepeer })}>
-//                                     <span className="txt">{!hidepeer ? "숨기기" : "보이기"}</span>
-//                                 </div>
-//                                 : null}
-//                         </div>
-//                         <div>
-//                             {/* exit */}
-//                             <div className='btn exit' onClick={() => {
-//                                 if (peers.length === 0) {
-//                                     CancelInvitedUserRequest(this.props.design.uid, this.props.token)
-//                                 }
-//                                 window.open('', '_self').close();
-//                             }}>
-//                                 <span className='txt'>나가기</span>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </MenuBarContainer>
-
-//                 {/* contents */}
-//                 <ContentContainer bg={bg}>
-
-//                     <div className="panel" />
-
-//                     {/* middle */}
-//                     <BigScreenContainer
-//                         scroll={mode === "scroll" ? true : false}
-//                         visible={(this.video && this.video.srcObject) ? true : false}
-//                         flip={
-//                             (this.state.pinned === this.props.userInfo.uid) && (myvideo && myvideo.type === "front")
-//                             ||
-//                             this.props.peersVids &&
-//                             this.props.peersVids.find(
-//                                 peer => peer &&
-//                                     peer.appData.peerId == String(this.state.pinned) &&
-//                                     peer.appData.share == null)
-//                             // this.props.peersVids &&
-//                             // this.props.peersVids.find(peer => peer.id === this.state.pinned && peer.appData && peer.appData.share)
-//                             // (this.props.peersVids.find(peer => peer.id === this.state.pinned && peer.appData && peer.appData.share).length)
-//                         }
-//                     >
-//                         {/* {peersVids.} */}
-//                         <video id="pinned-video" muted autoPlay loop="loop" ref={ref => this.video = ref} />
-
-//                     </BigScreenContainer>
-
-//                     {mode === "scroll"
-//                         ? <RightVerticalScroll hidden={hidepeer}>
-//                             <div className="container">
-//                                 <Me
-//                                     needReload={() => {
-//                                         this.video.srcObject = null;
-//                                         mixer && mixer.set_pinned_id(null);
-//                                         this.setState({ mode: "grid" });
-//                                     }}
-//                                     userInfo={this.props.userInfo}
-//                                     clicked={(me, stream) => shareState ? null : this.clickedview(me, stream)}
-//                                     thumbnail={this.props.userInfo.thumbnail}
-//                                 />
-
-//                                 <Peers
-//                                     clicked={(peer, stream) => this.clickedview(peer, stream)}
-//                                     member={this.props.design.member} />
-
-//                             </div>
-//                         </RightVerticalScroll> : null}
-
-//                     {mode === "grid"
-//                         ? <MiddleDynamicGrid grid={grid[idx]}>
-//                             <div className="container">
-//                                 <Me
-//                                     needReload={() => {
-//                                         this.video.srcObject = null
-//                                         mixer && mixer.set_pinned_id(null)
-//                                         this.setState({ mode: "grid" })
-//                                     }}
-//                                     userInfo={this.props.userInfo}
-//                                     thumbnail={this.props.userInfo.thumbnail}
-//                                     clicked={(me, stream) => shareState ? null : this.clickedview(me, stream)}
-//                                 />
-//                                 <Peers
-//                                     clicked={(peer, stream) => this.clickedview(peer, stream)}
-//                                     member={this.props.design.member} />
-//                             </div>
-//                         </MiddleDynamicGrid>
-//                         : null}
-
-//                 </ContentContainer>
-//             </RoomDiv>
-
-//             : // Mobile version
-//             <Mobile bg={bg}>
-//                 <div className="bg">&nbsp;</div>
-
-//                 <div>
-//                     <div>
-//                         <div className="button">
-//                             <button onClick={() => alert('aaa')}>
-//                                 <i className={"icon large chat"} />
-//                             </button>
-//                         </div>
-//                     </div>
-
-//                     <div>p.wo</div>
-//                 </div>
-
-//                 <div> v</div>
-
-//                 <div>
-//                     b</div>
-
-//             </Mobile >
-
-
-
-
-
-
-// // 	/* TOP */
-// // 	< div className = "top" >
-// //     <div className="row button-wrapper">
-// //         <Button
-// //             onClick={() => alert('aaa')}
-// //             iconClassNames="icon large chat"
-// //         />
-// //         <div className="button">
-// //             <button onClick={this.onChatButtonClicked}>
-// //                 <i className="icon large chat " /> </button>
-// //         </div>
-// //         <div className="button">
-// //             <button onClick={this.onLayoutButtonClicked}>
-// //                 <i className="icon large th" /> </button>
-// //         </div>
-// //         <div className="button">
-// //             <button onClick={this.onRefreshButtonClicked}>
-// //                 <i className="icon large refresh " /> </button>
-// //         </div>
-// //         <div className="button">
-// //             <button onClick={this.onCloseButtonClicked}>
-// //                 <i className="icon large close " /> </button>
-// //         </div>
-// //     </div>
-// //     <div className="row button-wrapper">
-// //         <div className="button">
-// //             <button onClick={this.onMicroButtonClicked}>
-// //                 <i className="icon large microphone" /></button>
-// //         </div>
-// //         <div className="button">
-// //             <button onClick={this.onVideoButtonClicked}>
-// //                 <i className="icon large video" /></button>
-// //         </div>
-// //     </div>
-// // </div >
-// // /* VIEW and GRID */
-// // <div className="view">
-// //     {this.state.mode}
-// //     {this.state.chat ?
-// //         <>
-// //             {chats.length > 0 && chats.map((chat, index) => <div key={index}>
-// //                 {chat.msg}
-// //             </div>)
-// //             }
-// //         </> : null}
-// // </div>
-// // /* BOTTOM and CHAT */
-// // <div className="bottom">
-// //     {this.state.chat ?
-// //         <div className="row chat">
-// //             <input type="text" id="mobile_chat_input" onKeyDown={this.onSendChatEnter} />
-// //             <div className="button">
-// //                 <button id="mobile_send_button" onClick={this.onSendButtonClicked}>
-// //                     <i className="icon large send" />
-// //                 </button>
-// //             </div>
-// //         </div>
-// //         : null}
-// //     {/* <div className="copyright"> &copy; 2021 </div> */}
-// // </div>
-
-
-// 
-// import React from 'react'
-// import { connect } from 'react-redux'
-
-// import Me from './Me'
-// import Peers from './Peers'
-// import { geturl } from "config"
-// import nobg from "source/hero1920.png"
-// import Cross from "components/Commons/Cross"
-// import { alert } from "components/Commons/Alert/Alert"
-// import SearchMember from "./SearchMember"
-// import { InvitedUserRequest, CancelInvitedUserRequest } from "redux/modules/design"
-
-// import { CgChevronDoubleLeft } from 'react-icons/cg'
-
-// import Mixer from "./Mixer"
-
-// import {
-// 	RoomDiv,
-// 	MenuBarContainer,
-// 	ContentContainer,
-// 	RightVerticalScroll,
-// 	MiddleDynamicGrid,
-// 	BigScreenContainer,
-// 	InviteModal,
-// 	// PeersContainer,
-// 	// VIDEO_SIZE,
-// 	// GAP
-
-// 	// mobile
-// 	Mobile,
-
-// 	// new layout
-// 	DesktopWrapper,
-// 	TopMenuContainer,
-// 	ViewContainer,
-// 	ButtomMenuContainer,
-
-// } from "./Room.style"
-
-// let mixer = new Mixer()
-
-// const chats = [
-// 	{ user_id: 0, msg: "aaaaaa" },
-// 	{ user_id: 1, msg: "abaaaa" },
-// 	{ user_id: 2, msg: "aabaaa" },
-// 	{ user_id: 3, msg: "aaabaa" },
-// 	{ user_id: 4, msg: "aaaaba" },
-// 	{ user_id: 5, msg: "aaaaab" },
-// 	{ user_id: 6, msg: "aaaaab" },
-// 	{ user_id: 7, msg: "aaaaaa" },
-// 	{ user_id: 8, msg: "aaaaaa" },
-// 	{ user_id: 9, msg: "aaaaaa" },
-// 	{ user_id: 10, msg: "aaaaaa" },
-// ]
-// class Room extends React.Component {
-// 	constructor(props) {
-// 		super(props)
-// 		this.state = {
-// 			h: window.innerHeight,
-
-// 			shareState: "off",
-// 			mode: "grid", // || "scroll",
-// 			hidepeer: false,
-// 			invite: false,
-
-// 			isRecording: false,
-// 			isPaused: false,
-
-// 			selected: null,
-// 			pinned: null,
-
-
-
-// 			// mobile
-// 			chat: false,
-// 			layout: "selected", // {"selected","grid"}
-// 			mute: false,
-// 			video: false,
-
-
-// 			//new layout
-
-// 		}
-// 		this.openChatWin = this.openChatWin.bind(this)
-// 		this.pauseRecording = this.pauseRecording.bind(this)
-// 		this.stopRecording = this.stopRecording.bind(this)
-// 		this.resumeRecording = this.resumeRecording.bind(this)
-// 		this.download = this.download.bind(this)
-// 		this.recording = this.recording.bind(this)
-// 		this.clickedview = this.clickedview.bind(this)
-// 		this.onChatButtonClicked = this.onChatButtonClicked.bind(this)
-// 		this.onLayoutButtonClicked = this.onLayoutButtonClicked.bind(this)
-// 		this.onRefreshButtonClicked = this.onRefreshButtonClicked.bind(this)
-// 		this.onCloseButtonClicked = this.onCloseButtonClicked.bind(this)
-// 		this.onMicroButtonClicked = this.onMicroButtonClicked.bind(this)
-// 		this.onVideoButtonClicked = this.onVideoButtonClicked.bind(this)
-// 		// 
-// 		this.handleExit = this.handleExit.bind(this)
-// 		this.onClickTitle = this.onClickTitle.bind(this)
-// 		this.handleMicrophone = this.handleMicrophone.bind(this)
-// 		this.handleVideo = this.handleVideo.bind(this)
-// 		this.handleShare = this.handleShare.bind(this)
-// 		this.handlePeers = this.handlePeers.bind(this)
-// 		this.handleETC = this.handleETC.bind(this)
-
-
-
-// 	}
-
-// 	openChatWin = () => {
-// 		const url = geturl() + `/chat/${this.props.design.uid}`
-// 		const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`
-// 		window.open(url, "chat", options)
-// 	}
-// 	pauseRecording = () => {
-// 		mixer.mediaRecorder && mixer.mediaRecorder.pause();
-// 		this.setState({ isPaused: true });
-// 	}
-// 	stopRecording = () => {
-// 		this.setState({ isRecording: false });
-// 		mixer.mediaRecorder && mixer.mediaRecorder.stop();
-// 		// mixer.stop();
-// 	}
-// 	resumeRecording = () => {
-// 		mixer.mediaRecorder && mixer.mediaRecorder.resume();
-// 		this.setState({ isPaused: false });
-// 	}
-// 	download = async () => {
-// 		if (mixer && mixer.mediaRecorder) {
-// 			mixer.download();
-// 			mixer = null;
-// 		}
-// 		else {
-// 			await alert("녹화된 영상이 없습니다.");
-// 		}
-// 	}
-// 	recording = async () => {
-// 		mixer = new Mixer();
-// 		await mixer.init();
-// 		if (mixer.start() === false) {
-// 			return;
-// 		}
-// 		this.setState({ isRecording: true });
-// 	}
-// 	clickedview = async (peer, stream) => {
-
-// 		mixer && mixer.set_pinned_id(peer.id);
-// 		await this.setState({ pinned: peer.id });
-
-// 		if (this.video && stream) {
-// 			stream.addEventListener('inactive', () => {
-// 				this.video.style.display = "none";
-// 				this.video.srcObject = null;
-// 				mixer && mixer.set_pinned_id(null);
-// 				this.setState({ mode: "grid", pinned: null });
-// 			});
-// 			stream.addEventListener('active', () => {
-// 				this.video.style.display = "block";
-// 			})
-// 			this.video.srcObject = stream;
-// 			this.setState({ mode: "scroll" });
-// 		}
-// 	}
-
-
-// 	// mobile button handle functions
-// 	onChatButtonClicked = () => {
-// 		this.setState({ chat: !this.state.chat })
-// 	}
-// 	onLayoutButtonClicked = () => {
-
-// 	}
-// 	onRefreshButtonClicked = () => {
-// 		window.location.reload()
-// 	}
-// 	onCloseButtonClicked = () => {
-// 		window.close()
-// 		window.history.back()
-// 	}
-// 	onMicroButtonClicked = () => {
-
-// 	}
-// 	onVideoButtonClicked = () => {
-
-// 	}
-
-// 	onSendChatEnter = (e) => {
-// 		if (e.keyCode === 13) {
-// 			const btn = document.getElementById('mobile_send_button')
-// 			if (btn.nodeName === "BUTTON") {
-// 				btn.click()
-// 			}
-// 		}
-// 	}
-// 	onSendButtonClicked = () => {
-// 		const msg = document.getElementById('mobile_chat_input')
-// 		console.log(msg.value) // send
-// 		msg.value = ""
-// 	}
-
-// 	componentDidMount() {
-// 		// join
-// 		const { roomClient } = this.props
-// 		roomClient.join()
-
-// 		// window size
-// 		this.setState({ w: window.innerWidth, h: window.innerHeight })
-
-// 		window.addEventListener("resize", () => {
-// 			this.setState({ w: window.innerWidth, h: window.innerHeight })
-// 		})
-// 	}
-// 	componentWillUnmount() {
-// 		window.removeEventListener("resize")
-// 	}
-
-// 	// new version
-// 	handleExit = () => { }
-// 	onClickTitle = () => { }
-// 	handleMicrophone = () => { }
-// 	handleVideo = () => { }
-// 	handleShare = () => { }
-// 	handlePeers = () => { }
-// 	handleETC = () => { }
-
-// 	render() {
-// 		const { design, peers, me, roomClient, /*  consumers, room, onRoomLinkCopy */ } = this.props
-// 		const bg = (design && design.img && design.img.l_img) || nobg
-// 		const { mode, hidepeer, invite, isRecording, isPaused } = this.state
-// 		const total = 1 + (peers.length || 0)
-// 		const myvideo = me.find(track => track && ["front", "back", "share"].includes(track.type))
-// 		const shareState = myvideo && myvideo.type === "share"
-// 		const grid = [
-// 			/* 0 */	{ row: 1, col: 1 },
-// 			/* 1 */	{ row: 1, col: 2 },
-// 			/* 2 */	{ row: 2, col: 2 },
-// 			/* 3 */	{ row: 2, col: 2 },
-// 			/* 4 */	{ row: 2, col: window.innerWidth > window.innerHeight ? 4 : 3 },
-// 		]
-// 		const idx = total > grid.length - 1 ? grid.length - 1 : total - 1
-
-// 		const DUMMY = () => <div style={{ position: "relative", width: "128px", height: "128px", border: "1px solid white", backgroundColor: "black", color: "white", fontSize: "3em", textAlign: "center" }}>DUMMY</div>
-// 		// console.log({ total }, this.state)
-
-// 		const { w, h } = this.state
-// 		// const { design } = this.props
-// 		console.log(this.props,)
-
-// 		return (<React.Fragment>
-// 			{w > 500 ?
-// 				<DesktopWrapper>
-// 					<TopMenuContainer>
-// 						<div className="top-menu row">
-// 							<div>
-// 								<button onClick={this.handleExit}>
-// 									<CgChevronDoubleLeft />
-// 								</button>
-// 							</div>
-// 							<div>
-// 								<div onClick={this.onClickTitle} className="title">{(design && design.title) || "디자인제목"}</div>
-// 							</div>
-// 							<div className="row">
-// 								<button onClick={this.handleMicrophone}>
-// 									{/* <i className="icon large microphone" /> */}
-// 								</button>
-// 								<button onClick={this.handleVideo}>
-// 									{/* <i className="icon large video " /> */}
-// 								</button>
-// 								<button onClick={this.handleShare}>
-// 									{/* <i className="icon large " /> */}
-// 								</button>
-// 								<button onClick={this.handlePeers}>
-// 									{/* <i className="icon large " /> */}
-// 								</button>
-// 								<button onClick={this.handleETC}>
-// 									{/* <i className="icon large " /> */}
-// 								</button>
-// 							</div>
-// 						</div>
-// 					</TopMenuContainer>
-
-// 					<ViewContainer>camera view </ViewContainer>
-
-// 					<ButtomMenuContainer> toggle </ButtomMenuContainer>
-// 				</DesktopWrapper>
-
-// 				: <React.Fragment></React.Fragment>}
-// 		</React.Fragment>)
-// 	}
-// }
-
-
-// const mapStateToProps = (state) => ({
-// 	consumers: state.consumers,
-// 	peers: Object.values(state.peers),
-// 	me: Object.values(state.producers),
-// 	activeSpeakerId: state.room.activeSpeakerId,
-// 	peersVids: Object.values(state.consumers).filter(consumers => consumers.track.kind === 'video'),
-// })
-// // const mapDispatchToProps = (dispatch) => { return { } }
-
-// const RoomContainer = connect(mapStateToProps, null)(Room)
-
-// export default RoomContainer
