@@ -27,9 +27,9 @@ import new_logo_plus from "source/new_logo_plus.png"
 import osdcss from "opendesign_style";
 
 const Section = styled.div`
-  display:${props=>props.isNone==true?props.isLast==null?"flex":"flex":"none"};
+  display:${props => props.isNone == true ? props.isLast == null ? "flex" : "flex" : "none"};
   @media only screen and (min-width : 500px) and (max-width:1400px) {
-    display:${props=>props.isNone==true?props.isLast==null?"block":"block":"none"};;
+    display:${props => props.isNone == true ? props.isLast == null ? "block" : "block" : "none"};;
   }
 `
 const LoadingBox = styled.div`
@@ -862,7 +862,7 @@ const DesignElement = styled.div`
   }
 `;
 const EditorWrapper = styled.div`
-  max-width:853px;
+  // max-width:853px;
   width:100%;
   .title {
     width: 100%;

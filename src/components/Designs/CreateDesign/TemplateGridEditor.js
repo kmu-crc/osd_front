@@ -27,6 +27,7 @@ const engineering = [
 ];
 
 const EditorWrapper = styled.div`
+
     padding-top: ${props => props.mobile ? 0 : 35}px;
     .steps {
         display: flex;
@@ -35,6 +36,7 @@ const EditorWrapper = styled.div`
         margin-right: 10px;
     }
     .create-step {
+        margin-top: 10px;
         width: max-content;
     }
 `;
