@@ -9,6 +9,7 @@ import Logger from '../Logger';
 import * as appPropTypes from './appPropTypes';
 import EditableInput from './EditableInput';
 import styled from "styled-components";
+const PeerWidth = 215;
 
 const logger = new Logger('PeerView');
 
@@ -51,7 +52,7 @@ const DivPeerView = styled.div`
 		p {
 			text-align: center;
 			margin: auto;
-			width: 215px;
+			width: ${PeerWidth}px;
 
 			word-wrap: break-word;
 			text-overflow: ellipsis;

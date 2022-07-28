@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
+import styled from "styled-components";
 import { GetDesignDetailRequest, CheckInvitedUserRequest } from "redux/modules/design";
 import host from "config";
 import NewVChat from "components/VChatMediasoup";
+
+const Verifying = styled.div`
+    color: #F0F0F0;
+    text-align: center;
+    font-size: 2rem;
+`;
 
 class VChat2Container extends Component {
     constructor(props) {
@@ -61,13 +68,21 @@ class VChat2Container extends Component {
         // alert("이미 접속중입니다. 열려있는 창이 있는지 다시 확인해주세요.");
         // window.history.back();
     }
-    render() {
-        return this.state.valid && this.props.userInfo && this.state.design
 
-            ? <NewVChat userInfo={this.props.userInfo} design={this.state.design} token={this.props.token} />
-            : <div style={{ color: "#F0F0F0", textAlign: "center", fontSize: "2rem" }}>
-                사용자 정보를 확인하고 있습니다.
-            </div>
+    render() {
+        const { valid, design } = this.state;
+        const { userInfo, token } = this.props;
+
+        return (
+            (valid && userInfo && design)
+                ?
+                <NewVChat userInfo={userInfo} design={design}
+                    token={token} />
+
+                : <Verifying>
+                    사용자 정보를 확인하고 있습니다.
+                </Verifying>
+        );
     }
 }
 
