@@ -131,7 +131,7 @@ class SearchList extends Component {
     const value = target.value;
     let regExp = /^[a-zA-Zㄱ-힣0-9\"\_\-\s]*$/;
     if (!value.match(regExp)) {
-      await alert("특수문자는 사용할 수 없습니다.","확인");
+      await alert("특수문자는 사용할 수 없습니다.", "확인");
       target.value = "";
       return;
     } else {
@@ -157,9 +157,10 @@ class SearchList extends Component {
   }
 
   typeChange = async (e, { value }) => {
-    await alert(value);
-    return;
     this.props.history.replace(`/search/${this.props.sort}/${this.props.keyword}`);
+    this.changeState();
+    // await alert(value);
+    // return;
   }
 
   sortChange = (e, { value }) => {
