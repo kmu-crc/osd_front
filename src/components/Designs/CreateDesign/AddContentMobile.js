@@ -174,7 +174,7 @@ export default class AddContent extends React.Component {
             링크<br /> 등록
           </NewController>
 
-          {this.props.is_problem === 1 && (
+          {/* {this.props.is_problem === 1 && (
             <NewController
               className="txt"
               onClick={() => { this.addContent("PROBLEM"); this.props.open(true); }}
@@ -184,7 +184,7 @@ export default class AddContent extends React.Component {
             >
               문제<br /> 등록
             </NewController>
-          )}
+          )} */}
         </div>
 
         {this.state.type === "FILE" && (
