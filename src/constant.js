@@ -31,4 +31,5 @@ export const msMin = 60 * 1000;
 export const ms10Secs = 10 * 1000;
 export const msSec = 10 * 1000;
 // 
-export const SOFTWARE_CATEGORY = 6;
+export const CATEGORY1_SOFTWARE = 6;
+export const CATEGORY1_PRODUCT = 2;

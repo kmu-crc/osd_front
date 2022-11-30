@@ -18,7 +18,7 @@ import Cross from "components/Commons/Cross";
 import host from "config";
 // import { geturl } from "config"
 import { Encrypt } from "components/Commons/EncryptDecrypt";
-import { SOFTWARE_CATEGORY } from "constant";
+import { CATEGORY1_SOFTWARE, CATEGORY1_PRODUCT } from "constant";
 // FOR EDITOR
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
@@ -2372,6 +2372,7 @@ class CardSourceDetail extends Component {
                       <GithubViewer uid={item.uid} url={item.content} />
                     </ViewContent>
                   ) : null}
+                  {item.type}
                 </div>
               ))}
             </>
@@ -2386,7 +2387,10 @@ class CardSourceDetail extends Component {
               is_github={
                 this.props.is_github ||
                 (this.props.DesignDetail &&
-                  this.props.DesignDetail.category_level1 === SOFTWARE_CATEGORY)
+                  (this.props.DesignDetail.category_level1 ===
+                    CATEGORY1_SOFTWARE ||
+                    this.props.DesignDetail.category_level1 ===
+                      CATEGORY1_PRODUCT))
               }
               getValue={this.onAddValue}
               order={content.length || 0}

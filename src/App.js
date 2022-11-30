@@ -54,7 +54,8 @@ class App extends Component {
             {/* no client template */}
             <Route path="/chat/:id" component={CheckAuth(ChatDesignPage)} />
             <Route path="/chatg/:id" component={CheckAuth(ChatGroupPage)} />
-            <Route path="/vchat2/:id" component={CheckAuth(VChatDesignPage)} />
+            {/* <Route path="/vchat2/:id" component={CheckAuth(VChatDesignPage)} /> */}
+            <Route path="/vchat2" component={(VChatDesignPage)} />
             <Route path="/vchatg/:id" component={CheckAuth(VChatGroupPage)} />
             <Route path="/codeview" component={CheckAuth(CodeViewPage)} />
             <Route path="/pdfview/:uri" component={CheckAuth(PdfViewPage)} />
