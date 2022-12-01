@@ -9,6 +9,7 @@ import styled from "styled-components";
 import who from "source/thumbnail.png";
 import icon_remote_mic_white_off from 'resources/images/icon_remote_mic_white_off.svg';
 import icon_remote_webcam_white_off from 'resources/images/icon_remote_webcam_white_off.svg';
+const PeerWidth = 215;
 
 const DivPeer = styled.div`
 	width: 250px;
@@ -27,7 +28,7 @@ const DivPeer = styled.div`
 		p {
 			text-align: center;
 			margin: auto;
-			width: 215px;
+			width: ${PeerWidth}px;
 
 			word-wrap: break-word;
 			text-overflow: ellipsis;

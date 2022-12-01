@@ -9,15 +9,15 @@ import Logger from '../Logger';
 import * as appPropTypes from './appPropTypes';
 import EditableInput from './EditableInput';
 import styled from "styled-components";
-
+const PeerWidth = 215;
 const logger = new Logger('PeerView');
 
 const DivPeerView = styled.div`
   video {
 		z-index: 400;
 	  // border: 1px solid white;
-	  width: 215px;
-	  height: 215px;
+	  width: ${PeerWidth}px;
+	  height: ${PeerWidth}px;
 		object-fit: cover;
 		z-index: 500;
 
@@ -41,8 +41,8 @@ const DivPeerView = styled.div`
 	}
 
 	.peerName {
-		width: 215px;
-		height: 215px;
+		width: ${PeerWidth}px;
+		height: ${PeerWidth}px;
 		margin: auto;
 		background-color: #36454f;
 		display: flex;
@@ -51,7 +51,7 @@ const DivPeerView = styled.div`
 		p {
 			text-align: center;
 			margin: auto;
-			width: 215px;
+			width: ${PeerWidth}px;
 
 			word-wrap: break-word;
 			text-overflow: ellipsis;

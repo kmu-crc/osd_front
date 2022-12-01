@@ -40,7 +40,11 @@ a{
   transition: all 0.5s
 }
 
-
+button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
 .partical-scroll-none::-webkit-scrollbar {
   position: block;
   width: 0px;

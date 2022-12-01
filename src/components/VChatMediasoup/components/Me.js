@@ -281,13 +281,13 @@ class Me extends React.Component {
 					/>
 				</div>
 
-				{/* <ReactTooltip
+				<ReactTooltip
 					type='light'
 					effect='solid'
 					delayShow={100}
 					delayHide={100}
 					delayUpdate={50}
-				/> */}
+				/>
 			</DivME >
 		)
 	}

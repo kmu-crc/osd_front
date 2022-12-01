@@ -18,7 +18,7 @@ import Cross from "components/Commons/Cross";
 import host from "config";
 // import { geturl } from "config"
 import { Encrypt } from "components/Commons/EncryptDecrypt";
-import { SOFTWARE_CATEGORY } from "constant";
+import { CATEGORY1_SOFTWARE, CATEGORY1_PRODUCT } from "constant";
 // FOR EDITOR
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
@@ -33,7 +33,7 @@ import Icon from "@material-ui/core/Icon";
 // import Table from "rc-table";
 // import DateFormat from "modules/DateFormat";
 // import { resolve } from "core-js/fn/promise";
-import { StlViewer } from 'react-stl-file-viewer';
+import { StlViewer } from "react-stl-file-viewer";
 import DxfViewer from "./DxfViewer";
 
 /*
@@ -639,7 +639,11 @@ const EditorBottonWrapper = styled.div`
     }
   }
 `;
-
+const NotEnabledAnymore = () => (
+  <h3 style={{ textAlign: "center", color: "#808080" }}>
+    {"더 이상 지원하지 않는 기능입니다."}
+  </h3>
+);
 class CardSourceDetail extends Component {
   constructor(props) {
     super(props);
@@ -694,32 +698,32 @@ class CardSourceDetail extends Component {
             content: this.props.content || [],
             origin: this.props.origin || [],
           });
-          this.props.content &&
-            this.props.content.length > 0 &&
-            this.props.content.forEach(async (item) => {
-              if (item.type === "PROBLEM") {
-                const permission = await this.setPermission(item);
-                await this.setState({ permission: permission });
-              }
-            });
+          // this.props.content &&
+          //   this.props.content.length > 0 &&
+          //   this.props.content.forEach(async (item) => {
+          //     if (item.type === "PROBLEM") {
+          //       const permission = await this.setPermission(item);
+          //       await this.setState({ permission: permission });
+          //     }
+          //   });
         }
       });
     }
-    const node = window.document.getElementById("card-source-detail-root-node");
-    if (node) {
-      window.addEventListener(
-        "scroll",
-        (e) => {
-          // console.log(e.target.scrollTop);
-          this.setState({ fontsizer_pos_top: e.target.scrollTop });
-        },
-        true
-      );
-    }
+    // const node = window.document.getElementById("card-source-detail-root-node");
+    // if (node) {
+    //   window.addEventListener(
+    //     "scroll",
+    //     (e) => {
+    //       // console.log(e.target.scrollTop);
+    //       this.setState({ fontsizer_pos_top: e.target.scrollTop });
+    //     },
+    //     true
+    //   );
+    // }
   }
-  async componentWillUnmount() {
-    await this.setState({ content: [], origin: [] });
-    window.removeEventListener("scroll", null, true);
+  componentWillUnmount() {
+    this.setState({ content: [], origin: [] });
+    // window.removeEventListener("scroll", null, true);
   }
   async verifyorder(content) {
     // console.log("verify:", content);
@@ -1322,9 +1326,7 @@ class CardSourceDetail extends Component {
       item_uid,
       item_user,
     } = this.state;
-    const {
-      userInfo
-    } = this.props;
+    const { userInfo } = this.props;
 
     console.log("props: card source detail: ", this.props);
 
@@ -1338,28 +1340,29 @@ class CardSourceDetail extends Component {
     let __code = result && result.code && result.code.replaceAll("\n", "<br/>");
     __code = __code && __code.replaceAll("   ", "&emsp;");
 
-    console.log(content)
-    return (<div id="card-source-detail-root-node" style={{ padding: "15px" }}>
-      <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
-        {loading ? <Loading /> : null}
+    console.log(content);
+    return (
+      <div id="card-source-detail-root-node" style={{ padding: "15px" }}>
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.0.279/build/pdf.worker.min.js">
+          {loading ? <Loading /> : null}
 
-        {content.find((item) => item.type === "TEXT") != null ? (
-          <div
-            style={{
-              zIndex: "900",
-              width: "max-content",
-              height: "50px",
-              borderRadius: "25%",
-              display: "flex",
-              // background: "gray",
-              // border: "1px solid red",
-              lineHeight: "3.5rem",
-              position: "fixed",
-              right: 15,
-              top: 200 + this.state.fontsizer_pos_top + "px",
-            }}
-          >
-            {/* {this.props.isEdit==false?
+          {content.find((item) => item.type === "TEXT") != null ? (
+            <div
+              style={{
+                zIndex: "900",
+                width: "max-content",
+                height: "50px",
+                borderRadius: "25%",
+                display: "flex",
+                // background: "gray",
+                // border: "1px solid red",
+                lineHeight: "3.5rem",
+                position: "fixed",
+                right: 15,
+                top: 200 + this.state.fontsizer_pos_top + "px",
+              }}
+            >
+              {/* {this.props.isEdit==false?
           <React.Fragment>
           <div style={{ cursor: "default", paddingTop: "3px", lineHeight: "1rem", fontSize: "1rem" }}>폰트<br />크기</div>
 
@@ -1377,17 +1380,17 @@ class CardSourceDetail extends Component {
           </React.Fragment>
           :null
           } */}
-          </div>
-        ) : null}
+            </div>
+          ) : null}
 
-        {submit ? (
-          <SubmitModalWrapper
-            open={submit ? true : false}
-            onClose={() => this.setState({ submit: false })}
-          >
-            {loading ? <Loading msg="문제를 제출 중입니다." /> : null}
+          {submit ? (
+            <SubmitModalWrapper
+              open={submit ? true : false}
+              onClose={() => this.setState({ submit: false })}
+            >
+              {loading ? <Loading msg="문제를 제출 중입니다." /> : null}
 
-            {/* 
+              {/* 
             avg_memory: "0"
             avg_time: "0"
             code: "zxcvxzcv"
@@ -1400,65 +1403,65 @@ class CardSourceDetail extends Component {
             uid: 50
             user_id: 762
           */}
-            {result ? (
-              <SubmitResultModal open={result ? true : false}>
-                <div
-                  className="close-box"
-                  onClick={() =>
-                    this.setState({ result: false, loading: false })
-                  }
-                >
-                  <Cross
-                    angle={45}
-                    color={"#707070"}
-                    weight={2}
-                    width={25}
-                    height={25}
-                  />
-                </div>
-                <div className="title">문제</div>
-                <div className="content_box">
-                  <div className="name">제출 언어 </div>
-                  <div className="msg">
-                    {this.props.DesignDetail
-                      ? this.props.DesignDetail.category_level3 === 1
-                        ? "C/C++"
-                        : this.props.DesignDetail.category_level3 === 2
+              {result ? (
+                <SubmitResultModal open={result ? true : false}>
+                  <div
+                    className="close-box"
+                    onClick={() =>
+                      this.setState({ result: false, loading: false })
+                    }
+                  >
+                    <Cross
+                      angle={45}
+                      color={"#707070"}
+                      weight={2}
+                      width={25}
+                      height={25}
+                    />
+                  </div>
+                  <div className="title">문제</div>
+                  <div className="content_box">
+                    <div className="name">제출 언어 </div>
+                    <div className="msg">
+                      {this.props.DesignDetail
+                        ? this.props.DesignDetail.category_level3 === 1
+                          ? "C/C++"
+                          : this.props.DesignDetail.category_level3 === 2
                           ? "Python"
                           : // this.props.DesignDetail.category_level3 === 3 ?
-                          //   "C" :
-                          "etc."
-                      : null}
+                            //   "C" :
+                            "etc."
+                        : null}
+                    </div>
                   </div>
-                </div>
-                <div className="content_box">
-                  <div className="name">제출 결과 </div>
-                  {result.result === "S" ? (
-                    <div className="msg font_green">성공</div>
-                  ) : result.result === "F" ? (
-                    <div className="msg font_red">실패</div>
-                  ) : result.result === "T" ? (
-                    <div className="msg font_red">실패(시간초과)</div>
-                  ) : result.result === "M" ? (
-                    <div className="msg font_red">실패(메모리초과)</div>
-                  ) : result.result === "C" ? (
-                    <div className="msg font_red">실패(컴파일에러)</div>
-                  ) : result.result === "R" ? (
-                    <div className="msg font_red">실패(런타임에러)</div>
-                  ) : result.result === "E" ? (
-                    <div className="msg font_red">실패(서버에러)</div>
-                  ) : result.result === "P" ? (
-                    <div className="msg font_red">실패(문제에러)</div>
-                  ) : (
-                    <div className="msg font_red">실패</div>
-                  )}
-                </div>
-                <div className="content_box">
-                  <div className="msg">{result.message}</div>
-                </div>
-                {/* <div className="content_box" style={{ display: "flex", flexDirection: "column" }}> */}
+                  <div className="content_box">
+                    <div className="name">제출 결과 </div>
+                    {result.result === "S" ? (
+                      <div className="msg font_green">성공</div>
+                    ) : result.result === "F" ? (
+                      <div className="msg font_red">실패</div>
+                    ) : result.result === "T" ? (
+                      <div className="msg font_red">실패(시간초과)</div>
+                    ) : result.result === "M" ? (
+                      <div className="msg font_red">실패(메모리초과)</div>
+                    ) : result.result === "C" ? (
+                      <div className="msg font_red">실패(컴파일에러)</div>
+                    ) : result.result === "R" ? (
+                      <div className="msg font_red">실패(런타임에러)</div>
+                    ) : result.result === "E" ? (
+                      <div className="msg font_red">실패(서버에러)</div>
+                    ) : result.result === "P" ? (
+                      <div className="msg font_red">실패(문제에러)</div>
+                    ) : (
+                      <div className="msg font_red">실패</div>
+                    )}
+                  </div>
+                  <div className="content_box">
+                    <div className="msg">{result.message}</div>
+                  </div>
+                  {/* <div className="content_box" style={{ display: "flex", flexDirection: "column" }}> */}
 
-                {/* <div className="name" style={{ cursor: "pointer" }}
+                  {/* <div className="name" style={{ cursor: "pointer" }}
                     onClick={() => { this.setState({ mySource: !this.state.mySource }) }}
                   >{this.state.mySource == false ? "내가 제출한 소스보기∧" : "내가 제출한 소스보기∨"}</div>
                   {this.state.mySource == true ?
@@ -1477,41 +1480,41 @@ class CardSourceDetail extends Component {
                     }):null
                     : null
                   } */}
-                {/* </div> */}
-                <div className="button-wrapper">
-                  <div
-                    className="close"
-                    onClick={() =>
-                      this.setState({
-                        result: false,
-                        submit: true,
-                        loading: false,
-                      })
-                    }
-                  >
-                    확인
+                  {/* </div> */}
+                  <div className="button-wrapper">
+                    <div
+                      className="close"
+                      onClick={() =>
+                        this.setState({
+                          result: false,
+                          submit: true,
+                          loading: false,
+                        })
+                      }
+                    >
+                      확인
+                    </div>
                   </div>
-                </div>
-              </SubmitResultModal>
-            ) : null}
+                </SubmitResultModal>
+              ) : null}
 
-            <div
-              className="close-box"
-              onClick={() => this.setState({ submit: false })}
-            >
-              <Cross
-                angle={45}
-                color={"#707070"}
-                weight={2}
-                width={25}
-                height={25}
-              />
-            </div>
-            <div className="title">{item.name}</div>
-            <div className="language">
-              <div className="label">제출 언어</div>
-              <div className="combo-box">
-                {/* <LanguageDropDown
+              <div
+                className="close-box"
+                onClick={() => this.setState({ submit: false })}
+              >
+                <Cross
+                  angle={45}
+                  color={"#707070"}
+                  weight={2}
+                  width={25}
+                  height={25}
+                />
+              </div>
+              <div className="title">{item.name}</div>
+              <div className="language">
+                <div className="label">제출 언어</div>
+                <div className="combo-box">
+                  {/* <LanguageDropDown
                 disabled
                 selection
                 ref="dropdown"
@@ -1525,205 +1528,206 @@ class CardSourceDetail extends Component {
                 this.props.DesignDetail&&this.props.DesignDetail.category_level3==2?'py'
                 :null}
               /> */}
-                {
-                  this.props.DesignDetail &&
+                  {
+                    this.props.DesignDetail &&
                     this.props.DesignDetail.category_level3 == 1
-                    ? "C/C++"
-                    : this.props.DesignDetail &&
-                      this.props.DesignDetail.category_level3 == 2
+                      ? "C/C++"
+                      : this.props.DesignDetail &&
+                        this.props.DesignDetail.category_level3 == 2
                       ? "Python"
                       : null
-                  // :"C"
-                }
-              </div>
-            </div>
-            <div className="coding-area">
-              <div className="tab">
-                {item_user === this.props.userInfo.uid ? (
-                  <div
-                    onClick={() => this.setState({ tab: "code" })}
-                    className={`label ${tab === "code" ? "active" : ""}`}
-                  >
-                    코딩 영역
-                  </div>
-                ) : null}
-                <div
-                  onClick={() => this.setState({ tab: "log" })}
-                  className={`label ${tab === "log" ? "active" : ""}`}
-                >
-                  제출 내역
+                    // :"C"
+                  }
                 </div>
               </div>
-              <div className="blank" />
+              <div className="coding-area">
+                <div className="tab">
+                  {item_user === this.props.userInfo.uid ? (
+                    <div
+                      onClick={() => this.setState({ tab: "code" })}
+                      className={`label ${tab === "code" ? "active" : ""}`}
+                    >
+                      코딩 영역
+                    </div>
+                  ) : null}
+                  <div
+                    onClick={() => this.setState({ tab: "log" })}
+                    className={`label ${tab === "log" ? "active" : ""}`}
+                  >
+                    제출 내역
+                  </div>
+                </div>
+                <div className="blank" />
 
-              <div className="editor">
-                {tab === "code" ? (
-                  <React.Fragment>
-                    {coding.map((item, index) => {
-                      return (
-                        <ControllerWrap key={item + index}>
-                          <div className="contentWrap">
-                            {item.type === "FILE" ? (
-                              <FileController
-                                item={item}
-                                name="source"
-                                initClick={this.state.click}
-                                getValue={this.onChangeFile}
-                                extension=".cpp,.hpp,.h,.js"
-                                setController={this.setController}
-                              />
-                            ) : null}
-                            {item.type === "TEXT" ? (
-                              <React.Fragment>
-                                <FileName
-                                  placeholder={
-                                    "파일 이름을 입력하세요(ex:helloWorld.cpp)"
-                                  }
-                                  onChange={(e) => {
-                                    this.onChangeFileName(
-                                      e.target.value,
-                                      item.order
-                                    );
-                                  }}
-                                  value={
-                                    this.state.coding &&
-                                    this.state.coding[item.order] &&
-                                    this.state.coding[item.order].name
-                                  }
+                <div className="editor">
+                  {tab === "code" ? (
+                    <React.Fragment>
+                      {coding.map((item, index) => {
+                        return (
+                          <ControllerWrap key={item + index}>
+                            <div className="contentWrap">
+                              {item.type === "FILE" ? (
+                                <FileController
+                                  item={item}
+                                  name="source"
+                                  initClick={this.state.click}
+                                  getValue={this.onChangeFile}
+                                  extension=".cpp,.hpp,.h,.js"
+                                  setController={this.setController}
                                 />
-                                <AceEditor
-                                  width={"100%"}
-                                  height={"278px"}
-                                  ref={(ref) => (this.ace = ref)}
-                                  setOptions={{
-                                    fontSize: "20px",
-                                  }}
-                                  value={
-                                    this.state.coding &&
-                                    this.state.coding[item.order] &&
-                                    this.state.coding[item.order].content
-                                  }
-                                  mode={ //"python"
-                                    this.props.DesignDetail &&
+                              ) : null}
+                              {item.type === "TEXT" ? (
+                                <React.Fragment>
+                                  <FileName
+                                    placeholder={
+                                      "파일 이름을 입력하세요(ex:helloWorld.cpp)"
+                                    }
+                                    onChange={(e) => {
+                                      this.onChangeFileName(
+                                        e.target.value,
+                                        item.order
+                                      );
+                                    }}
+                                    value={
+                                      this.state.coding &&
+                                      this.state.coding[item.order] &&
+                                      this.state.coding[item.order].name
+                                    }
+                                  />
+                                  <AceEditor
+                                    width={"100%"}
+                                    height={"278px"}
+                                    ref={(ref) => (this.ace = ref)}
+                                    setOptions={{
+                                      fontSize: "20px",
+                                    }}
+                                    value={
+                                      this.state.coding &&
+                                      this.state.coding[item.order] &&
+                                      this.state.coding[item.order].content
+                                    }
+                                    mode={
+                                      //"python"
+                                      this.props.DesignDetail &&
                                       (this.props.DesignDetail
                                         .category_level3 == 1 ||
                                         this.props.DesignDetail
                                           .category_level3 == 3)
-                                      ? "c_cpp"
-                                      : this.props.DesignDetail &&
-                                        this.props.DesignDetail
-                                          .category_level3 == 2
+                                        ? "c_cpp"
+                                        : this.props.DesignDetail &&
+                                          this.props.DesignDetail
+                                            .category_level3 == 2
                                         ? "python"
                                         : ""
-                                  }
-                                  theme="github"
-                                  // onChange={(data) => this.onChangeValue(data, item.order)}
-                                  onChange={(data) => {
-                                    this.onChangeCode(data, item.order);
-                                  }}
-                                  // onChange={console.log}
-                                  name={`UNIQUE_ID_OF_DIV${index}`}
-                                  editorProps={{ $blockScrolling: true }}
-                                />
-                              </React.Fragment>
-                            ) : null}
-                          </div>
-                          <DelBtn
-                            type="button"
-                            className="editBtn"
-                            onClick={() => this.onDeleteCoding(item.order)}
-                          >
-                            ????
-                            <i className="trash alternate icon large" />
-                          </DelBtn>
+                                    }
+                                    theme="github"
+                                    // onChange={(data) => this.onChangeValue(data, item.order)}
+                                    onChange={(data) => {
+                                      this.onChangeCode(data, item.order);
+                                    }}
+                                    // onChange={console.log}
+                                    name={`UNIQUE_ID_OF_DIV${index}`}
+                                    editorProps={{ $blockScrolling: true }}
+                                  />
+                                </React.Fragment>
+                              ) : null}
+                            </div>
+                            <DelBtn
+                              type="button"
+                              className="editBtn"
+                              onClick={() => this.onDeleteCoding(item.order)}
+                            >
+                              ????
+                              <i className="trash alternate icon large" />
+                            </DelBtn>
 
-                          {coding.length - 1 >= item.order &&
+                            {coding.length - 1 >= item.order &&
                             item.order !== 0 ? (
-                            <UpBtn
-                              type="button"
-                              className="editBtn"
-                              onClick={() =>
-                                this.moveCoding(item.order, item.order - 1)
-                              }
-                            >
-                              <i className="angle up alternate icon large" />
-                            </UpBtn>
-                          ) : null}
+                              <UpBtn
+                                type="button"
+                                className="editBtn"
+                                onClick={() =>
+                                  this.moveCoding(item.order, item.order - 1)
+                                }
+                              >
+                                <i className="angle up alternate icon large" />
+                              </UpBtn>
+                            ) : null}
 
-                          {coding.length - 1 !== item.order &&
+                            {coding.length - 1 !== item.order &&
                             item.order >= 0 ? (
-                            <DownBtn
-                              type="button"
-                              className="editBtn"
-                              onClick={() =>
-                                this.moveCoding(item.order, item.order + 1)
-                              }
-                            >
-                              <i className="angle down alternate icon large" />
-                            </DownBtn>
-                          ) : null}
-                        </ControllerWrap>
-                      );
-                    })}
-                    <CodingContent
-                      categoryType={
-                        this.props.DesignDetail &&
-                        this.props.DesignDetail.category_level3
-                      }
-                      getValue={this.onAddCoding}
-                      order={coding.length}
+                              <DownBtn
+                                type="button"
+                                className="editBtn"
+                                onClick={() =>
+                                  this.moveCoding(item.order, item.order + 1)
+                                }
+                              >
+                                <i className="angle down alternate icon large" />
+                              </DownBtn>
+                            ) : null}
+                          </ControllerWrap>
+                        );
+                      })}
+                      <CodingContent
+                        categoryType={
+                          this.props.DesignDetail &&
+                          this.props.DesignDetail.category_level3
+                        }
+                        getValue={this.onAddCoding}
+                        order={coding.length}
+                      />
+                    </React.Fragment>
+                  ) : (
+                    // <AceEditor
+                    //   width={"100%"}
+                    //   height={"478px"}
+                    //   ref={ref => this.ace = ref}
+                    //   setOptions={{
+                    //     fontSize: "20px",
+                    //   }}
+                    //   mode= //"python"
+                    //   {this.props.DesignDetail &&
+                    //     (this.props.DesignDetail.category_level3 == 1 ||
+                    //       this.props.DesignDetail.category_level3 == 3)
+                    //     ? 'c_cpp'
+                    //     : this.props.DesignDetail &&
+                    //       this.props.DesignDetail.category_level3 == 2
+                    //       ? 'python'
+                    //       : ""}
+                    //   theme="github"
+                    //   onChange={console.log}
+                    //   name="UNIQUE_ID_OF_DIV"
+                    //   editorProps={{ $blockScrolling: true }} />
+                    <SubmitLogContainer
+                      {...this.props}
+                      // SetViewCode={this.props.SetViewCode}
+                      user_id={this.state.item_user}
+                      content_id={item_uid}
                     />
-                  </React.Fragment>
-                ) : (
-                  // <AceEditor
-                  //   width={"100%"}
-                  //   height={"478px"}
-                  //   ref={ref => this.ace = ref}
-                  //   setOptions={{
-                  //     fontSize: "20px",
-                  //   }}
-                  //   mode= //"python"
-                  //   {this.props.DesignDetail &&
-                  //     (this.props.DesignDetail.category_level3 == 1 ||
-                  //       this.props.DesignDetail.category_level3 == 3)
-                  //     ? 'c_cpp'
-                  //     : this.props.DesignDetail &&
-                  //       this.props.DesignDetail.category_level3 == 2
-                  //       ? 'python'
-                  //       : ""}
-                  //   theme="github"
-                  //   onChange={console.log}
-                  //   name="UNIQUE_ID_OF_DIV"
-                  //   editorProps={{ $blockScrolling: true }} />
-                  <SubmitLogContainer
-                    {...this.props}
-                    // SetViewCode={this.props.SetViewCode}
-                    user_id={this.state.item_user}
-                    content_id={item_uid}
-                  />
-                )}
+                  )}
+                </div>
               </div>
-            </div>
 
-            <div className="button-wrapper">
-              <div
-                onClick={() => this.submitCode(item)}
-                className="btn submit"
-              >
-                제출
+              <div className="button-wrapper">
+                <div
+                  onClick={() => this.submitCode(item)}
+                  className="btn submit"
+                >
+                  제출
+                </div>
+                <div
+                  onClick={() => this.setState({ submit: false, item: null })}
+                  className="btn cancel"
+                >
+                  취소
+                </div>
               </div>
-              <div
-                onClick={() => this.setState({ submit: false, item: null })}
-                className="btn cancel"
-              >
-                취소
-              </div>
-            </div>
-          </SubmitModalWrapper>
-        ) : // <SubmitModal open={submit} close={this.setState({ submit: false })} /> : null}
+            </SubmitModalWrapper>
+          ) : // <SubmitModal open={submit} close={this.setState({ submit: false })} /> : null}
           null}
 
-        {/* 
+          {/* 
         <ButtonContainer>
         {edit === false && !this.props.edit && this.props.isTeam && (content && content.length > 0 ?
           (<div className="content-edit-wrapper">
@@ -1733,95 +1737,131 @@ class CardSourceDetail extends Component {
       </ButtonContainer> 
       */}
 
-        {this.props.edit
-          ? content.map((item, index) =>
-            <Wrapper key={index}>
-              <div
-                style={{
-                  zIndex: "8888",
-                  position: "absolute",
-                  display: "flex",
-                  flexDirection: "row",
-                  width: "max-content",
-                  left: "90%",
-                }}
-              >
-                {/* move button */}
-                {content.length - 1 >= item.order && item.order !== 0 ? (
-                  <UpBtn
-                    type="button"
-                    className="editBtn"
-                    onClick={() =>
-                      this.moveItem(item.order, item.order - 1)
-                    }
-                  >
-                    <i className="angle up alternate icon large" />
-                  </UpBtn>
-                ) : null}
+          {this.props.edit ? (
+            content.map((item, index) => (
+              <Wrapper key={index}>
+                <div
+                  style={{
+                    zIndex: "8888",
+                    position: "absolute",
+                    display: "flex",
+                    flexDirection: "row",
+                    width: "max-content",
+                    left: "90%",
+                  }}
+                >
+                  {/* move button */}
+                  {content.length - 1 >= item.order && item.order !== 0 ? (
+                    <UpBtn
+                      type="button"
+                      className="editBtn"
+                      onClick={() => this.moveItem(item.order, item.order - 1)}
+                    >
+                      <i className="angle up alternate icon large" />
+                    </UpBtn>
+                  ) : null}
 
-                {content.length - 1 !== item.order && item.order >= 0 ? (
-                  <DownBtn
-                    type="button"
-                    className="editBtn"
-                    onClick={() =>
-                      this.moveItem(item.order, item.order + 1)
-                    }
-                  >
-                    <i className="angle down alternate icon large" />
-                  </DownBtn>
-                ) : null}
+                  {content.length - 1 !== item.order && item.order >= 0 ? (
+                    <DownBtn
+                      type="button"
+                      className="editBtn"
+                      onClick={() => this.moveItem(item.order, item.order + 1)}
+                    >
+                      <i className="angle down alternate icon large" />
+                    </DownBtn>
+                  ) : null}
 
-                {/* delete button */}
-                {item.user_id === (userInfo && userInfo.uid) && (
-                  <DelBtn
-                    type="button"
-                    className="editBtn"
-                    onClick={() => this.onDelete(item.order)}
-                  >
-                    {" "}
-                    <i className="trash alternate icon large" />{" "}
-                  </DelBtn>
-                )}
-              </div>
+                  {/* delete button */}
+                  {item.user_id === (userInfo && userInfo.uid) && (
+                    <DelBtn
+                      type="button"
+                      className="editBtn"
+                      onClick={() => this.onDelete(item.order)}
+                    >
+                      {" "}
+                      <i className="trash alternate icon large" />{" "}
+                    </DelBtn>
+                  )}
+                </div>
 
-              {item.type === "TEXT"
-
-                ? (this.state.selectOrder !== -1 && this.state.selectOrder === index) || item.initClick
-                  ? <ControllerWrap>
-                    <TextController
-                      item={item}
-                      initClick={this.state.click}
-                      onBlurOrder={() => this.setState({ selectOrder: -1 })}
-                      getValue={(data) =>
-                        this.onChangeValue(data, item.order)
-                      }
-                    />
-                  </ControllerWrap>
-                  : <ViewContent>
-                    {/* {this.props.isEdit == false ? */}{" "}
-                    {/* <FontZoom> <div className="zoomRgn"> <div style={{ cursor: "default", paddingTop: "3px", lineHeight: "1rem", fontSize: "1rem" }}>폰트<br />크기</div> <div style={{ width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio < 3 ? "black" : "#EFEFEF", textAlign: "center", color: "white", cursor: this.state.fontratio < 3 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem" }} onClick={() => { this.state.fontratio < 3 && this.setState({ fontratio: this.state.fontratio + fontoffset }) }} >+</div> <div style={{ width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio > 1 ? "black" : "#EFEFEF", textAlign: "center", color: "white", cursor: this.state.fontratio > 1 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem" }} onClick={() => { this.state.fontratio > 1 && this.setState({ fontratio: this.state.fontratio - fontoffset }) }} >-</div> </div> </FontZoom> */}{" "}
-                    {/* : null */} {/* } */}
-                    <div
-                      style={{ minHeight: "50px", fontSize: `${this.state.fontratio}rem`, lineHeight: `${this.state.fontratio * 1.2}rem`, }}
-                      dangerouslySetInnerHTML={{
-                        __html: `${item.content == null ||
-                          item.content.replace(" ", "").length === 0
-                          ? '<center><p style="color:gray">(빈 텍스트)</p></center>'
-                          : item.content
-                            .replace(/font-size:14px;/g, `font-size:${0.875 * this.state.fontratio}rem;`)
-                            .replace(/font-size:18px;/g, `font-size:${1.125 * this.state.fontratio}rem;`)
-                            .replace(/font-size:24px;/g, `font-size:${1.5 * this.state.fontratio}rem;`)
-                            .replace(/font-size:30px;/g, `font-size:${1.875 * this.state.fontratio}rem;`)
-                            .replace(/font-size:36px;/g, `font-size:${2.25 * this.state.fontratio}rem;`)
-                            .replace(/font-size:48px;/g, `font-size:${3.5 * this.state.fontratio}rem;`)
+                {item.type === "TEXT" ? (
+                  (this.state.selectOrder !== -1 &&
+                    this.state.selectOrder === index) ||
+                  item.initClick ? (
+                    <ControllerWrap>
+                      <TextController
+                        item={item}
+                        initClick={this.state.click}
+                        onBlurOrder={() => this.setState({ selectOrder: -1 })}
+                        getValue={(data) =>
+                          this.onChangeValue(data, item.order)
+                        }
+                      />
+                    </ControllerWrap>
+                  ) : (
+                    <ViewContent>
+                      {/* {this.props.isEdit == false ? */}{" "}
+                      {/* <FontZoom> <div className="zoomRgn"> <div style={{ cursor: "default", paddingTop: "3px", lineHeight: "1rem", fontSize: "1rem" }}>폰트<br />크기</div> <div style={{ width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio < 3 ? "black" : "#EFEFEF", textAlign: "center", color: "white", cursor: this.state.fontratio < 3 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem" }} onClick={() => { this.state.fontratio < 3 && this.setState({ fontratio: this.state.fontratio + fontoffset }) }} >+</div> <div style={{ width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio > 1 ? "black" : "#EFEFEF", textAlign: "center", color: "white", cursor: this.state.fontratio > 1 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem" }} onClick={() => { this.state.fontratio > 1 && this.setState({ fontratio: this.state.fontratio - fontoffset }) }} >-</div> </div> </FontZoom> */}{" "}
+                      {/* : null */} {/* } */}
+                      <div
+                        style={{
+                          minHeight: "50px",
+                          fontSize: `${this.state.fontratio}rem`,
+                          lineHeight: `${this.state.fontratio * 1.2}rem`,
+                        }}
+                        dangerouslySetInnerHTML={{
+                          __html: `${
+                            item.content == null ||
+                            item.content.replace(" ", "").length === 0
+                              ? '<center><p style="color:gray">(빈 텍스트)</p></center>'
+                              : item.content
+                                  .replace(
+                                    /font-size:14px;/g,
+                                    `font-size:${
+                                      0.875 * this.state.fontratio
+                                    }rem;`
+                                  )
+                                  .replace(
+                                    /font-size:18px;/g,
+                                    `font-size:${
+                                      1.125 * this.state.fontratio
+                                    }rem;`
+                                  )
+                                  .replace(
+                                    /font-size:24px;/g,
+                                    `font-size:${
+                                      1.5 * this.state.fontratio
+                                    }rem;`
+                                  )
+                                  .replace(
+                                    /font-size:30px;/g,
+                                    `font-size:${
+                                      1.875 * this.state.fontratio
+                                    }rem;`
+                                  )
+                                  .replace(
+                                    /font-size:36px;/g,
+                                    `font-size:${
+                                      2.25 * this.state.fontratio
+                                    }rem;`
+                                  )
+                                  .replace(
+                                    /font-size:48px;/g,
+                                    `font-size:${
+                                      3.5 * this.state.fontratio
+                                    }rem;`
+                                  )
                           }`,
-                      }}
-                      onClick={() => this.props.edit && this.setState({ selectOrder: index })}
-                    />
-                  </ViewContent>
-
-                : item.type === "FILE"
-                  ? <ControllerWrap>
+                        }}
+                        onClick={() =>
+                          this.props.edit &&
+                          this.setState({ selectOrder: index })
+                        }
+                      />
+                    </ViewContent>
+                  )
+                ) : item.type === "FILE" ? (
+                  <ControllerWrap>
                     <FileController
                       item={item}
                       name="source"
@@ -1830,19 +1870,18 @@ class CardSourceDetail extends Component {
                       setController={this.setController}
                     />
                   </ControllerWrap>
-                  : item.type === "LINK"
-                    ? <ControllerWrap>
-                      <LinkController
-                        item={item}
-                        initClick={this.state.click}
-                        getValue={(data) =>
-                          this.onChangeValue(data, item.order)
-                        }
-                      />
-                    </ControllerWrap>
-                    : item.type === "PROBLEM"
-                      ? <ControllerWrap>
-                        <ProblemContainer
+                ) : item.type === "LINK" ? (
+                  <ControllerWrap>
+                    <LinkController
+                      item={item}
+                      initClick={this.state.click}
+                      getValue={(data) => this.onChangeValue(data, item.order)}
+                    />
+                  </ControllerWrap>
+                ) : item.type === "PROBLEM" ? (
+                  <ControllerWrap>
+                    <NotEnabledAnymore />
+                    {/* <ProblemContainer
                           open={this.state.addProblem}
                           openModal={async (show) => {
                             this.setState({ addProblem: show });
@@ -1876,51 +1915,89 @@ class CardSourceDetail extends Component {
                               this.onChangeValue(data, item.order);
                             }
                           }}
-                        />
-                      </ControllerWrap>
-                      : item.type === "GITHUB"
-                        ? <ControllerWrap>
-                          <GithubController
-                            item={item}
-                            initClick={this.state.click}
-                            getValue={data => this.onChangeValue(data, item.order)}
-                          />
-                        </ControllerWrap>
-                        : null}
-            </Wrapper>)
-
-          : <>
-            {/* view mode */}
-            {content.map((item, index) =>
-              <div key={index}>
-                {item.type === "TEXT"
-                  ? <ViewContent>
-                    {/* {this.props.isEdit == false ? */}{" "}
-                    {/* <FontZoom> <div className="zoomRgn"> <div style={{ cursor: "default", paddingTop: "3px", lineHeight: "1rem", fontSize: "1rem" }}>폰트<br />크기</div> <div style={{ width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio < 3 ? "black" : "#EFEFEF", textAlign: "center", color: "white", cursor: this.state.fontratio < 3 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem" }} onClick={() => { this.state.fontratio < 3 && this.setState({ fontratio: this.state.fontratio + fontoffset }) }} >+</div> <div style={{ width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio > 1 ? "black" : "#EFEFEF", textAlign: "center", color: "white", cursor: this.state.fontratio > 1 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem" }} onClick={() => { this.state.fontratio > 1 && this.setState({ fontratio: this.state.fontratio - fontoffset }) }} >-</div> </div> </FontZoom> */}{" "}
-                    {/* : null */} {/* } */}
-                    <div
-                      style={{ minHeight: "50px", fontSize: `${this.state.fontratio}rem`, lineHeight: `${this.state.fontratio * 1.2}rem`, }}
-                      dangerouslySetInnerHTML={{
-                        __html: `${item.content == null ||
-                          item.content.replace(" ", "").length === 0
-                          ? '<center><p style="color:gray">(빈 텍스트)</p></center>'
-                          : item.content
-                            .replace(/font-size:14px;/g, `font-size:${0.875 * this.state.fontratio}rem;`)
-                            .replace(/font-size:18px;/g, `font-size:${1.125 * this.state.fontratio}rem;`)
-                            .replace(/font-size:24px;/g, `font-size:${1.5 * this.state.fontratio}rem;`)
-                            .replace(/font-size:30px;/g, `font-size:${1.875 * this.state.fontratio}rem;`)
-                            .replace(/font-size:36px;/g, `font-size:${2.25 * this.state.fontratio}rem;`)
-                            .replace(/font-size:48px;/g, `font-size:${3.5 * this.state.fontratio}rem;`)
-                          }`,
-                      }}
-                      onClick={() => this.props.edit && this.setState({ selectOrder: item.order })}
+                        /> */}
+                  </ControllerWrap>
+                ) : item.type === "GITHUB" ? (
+                  <ControllerWrap>
+                    <GithubController
+                      item={item}
+                      initClick={this.state.click}
+                      getValue={(data) => this.onChangeValue(data, item.order)}
                     />
-                  </ViewContent>
-
-                  : item.type === "FILE"
-                    ? <ViewContent key={index}>
-                      {item.data_type === "image"
-                        ? <div
+                  </ControllerWrap>
+                ) : null}
+              </Wrapper>
+            ))
+          ) : (
+            <>
+              {/* view mode */}
+              {content.map((item, index) => (
+                <div key={index}>
+                  {item.type === "TEXT" ? (
+                    <ViewContent>
+                      {/* {this.props.isEdit == false ? */}{" "}
+                      {/* <FontZoom> <div className="zoomRgn"> <div style={{ cursor: "default", paddingTop: "3px", lineHeight: "1rem", fontSize: "1rem" }}>폰트<br />크기</div> <div style={{ width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio < 3 ? "black" : "#EFEFEF", textAlign: "center", color: "white", cursor: this.state.fontratio < 3 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem" }} onClick={() => { this.state.fontratio < 3 && this.setState({ fontratio: this.state.fontratio + fontoffset }) }} >+</div> <div style={{ width: "35px", height: "35px", borderRadius: "100%", background: this.state.fontratio > 1 ? "black" : "#EFEFEF", textAlign: "center", color: "white", cursor: this.state.fontratio > 1 ? "pointer" : "not-allowed", fontSize: "3.5rem", lineHeight: "2rem" }} onClick={() => { this.state.fontratio > 1 && this.setState({ fontratio: this.state.fontratio - fontoffset }) }} >-</div> </div> </FontZoom> */}{" "}
+                      {/* : null */} {/* } */}
+                      <div
+                        style={{
+                          minHeight: "50px",
+                          fontSize: `${this.state.fontratio}rem`,
+                          lineHeight: `${this.state.fontratio * 1.2}rem`,
+                        }}
+                        dangerouslySetInnerHTML={{
+                          __html: `${
+                            item.content == null ||
+                            item.content.replace(" ", "").length === 0
+                              ? '<center><p style="color:gray">(빈 텍스트)</p></center>'
+                              : item.content
+                                  .replace(
+                                    /font-size:14px;/g,
+                                    `font-size:${
+                                      0.875 * this.state.fontratio
+                                    }rem;`
+                                  )
+                                  .replace(
+                                    /font-size:18px;/g,
+                                    `font-size:${
+                                      1.125 * this.state.fontratio
+                                    }rem;`
+                                  )
+                                  .replace(
+                                    /font-size:24px;/g,
+                                    `font-size:${
+                                      1.5 * this.state.fontratio
+                                    }rem;`
+                                  )
+                                  .replace(
+                                    /font-size:30px;/g,
+                                    `font-size:${
+                                      1.875 * this.state.fontratio
+                                    }rem;`
+                                  )
+                                  .replace(
+                                    /font-size:36px;/g,
+                                    `font-size:${
+                                      2.25 * this.state.fontratio
+                                    }rem;`
+                                  )
+                                  .replace(
+                                    /font-size:48px;/g,
+                                    `font-size:${
+                                      3.5 * this.state.fontratio
+                                    }rem;`
+                                  )
+                          }`,
+                        }}
+                        onClick={() =>
+                          this.props.edit &&
+                          this.setState({ selectOrder: item.order })
+                        }
+                      />
+                    </ViewContent>
+                  ) : item.type === "FILE" ? (
+                    <ViewContent key={index}>
+                      {item.data_type === "image" ? (
+                        <div
                           className="imgContent"
                           onClick={() => {
                             const url = item.content;
@@ -1934,11 +2011,11 @@ class CardSourceDetail extends Component {
                             const imgnode =
                               popup.document.getElementById("image");
                             popup.resizeTo(
-                          /* width */ imgnode.naturalWidth >
+                              /* width */ imgnode.naturalWidth >
                                 window.screen.width
                                 ? window.screen.width / 2
                                 : imgnode.naturalWidth * 1.06,
-                          /* height */ imgnode.naturalHeight >
+                              /* height */ imgnode.naturalHeight >
                                 window.screen.height
                                 ? window.screen.height / 2
                                 : imgnode.naturalHeight * 1.06
@@ -1952,13 +2029,14 @@ class CardSourceDetail extends Component {
                               overflow: "auto",
                               display: "flex",
                               flexDirection: "row",
-                              justifyContent: `${(item.option && item.option.split(",")[0]) ||
+                              justifyContent: `${
+                                (item.option && item.option.split(",")[0]) ||
                                 "center"
-                                }`,
+                              }`,
                             }}
                           >
                             {item.option &&
-                              item.option.split(",")[1] === "scale" ? (
+                            item.option.split(",")[1] === "scale" ? (
                               <img
                                 style={{
                                   width: "100%",
@@ -1980,165 +2058,200 @@ class CardSourceDetail extends Component {
                           {/* <img src={item.content} alt="이미지" /> */}
                           {/* </Zoom> */}
                           {/* <p>이미지를 클릭하시면 원본크기로 보실 수 있습니다.</p> */}
-                        </div> : item.data_type === "video"
-                          ? <div
-                            style={{
-                              width: "100%",
-                              overflow: "auto",
-                              display: "flex",
-                              flexDirection: "column",
-                              justifyContent: `${(item.option && item.option.split(",")[0]) ||
-                                "center"
-                                }`,
-                            }}
-                          >
-                            <span className="centering">
-                              <span className="LinkFileName">
-                                {item.file_name}
-                              </span>
+                        </div>
+                      ) : item.data_type === "video" ? (
+                        <div
+                          style={{
+                            width: "100%",
+                            overflow: "auto",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: `${
+                              (item.option && item.option.split(",")[0]) ||
+                              "center"
+                            }`,
+                          }}
+                        >
+                          <span className="centering">
+                            <span className="LinkFileName">
+                              {item.file_name}
                             </span>
-                            <video
-                              key={item.content}
-                              className={`${item.option &&
-                                item.option.split(",")[0] === "center"
+                          </span>
+                          <video
+                            key={item.content}
+                            className={`${
+                              item.option &&
+                              item.option.split(",")[0] === "center"
                                 ? "align-center"
                                 : item.option &&
                                   item.option.split(",")[0] === "left"
-                                  ? "align-left"
-                                  : "align-right"
-                                } iconWrap`}
-                              width={`${window.innerWidth > 480
+                                ? "align-left"
+                                : "align-right"
+                            } iconWrap`}
+                            width={`${
+                              window.innerWidth > 480
                                 ? "975"
                                 : window.innerWidth - 55
-                                }`}
-                              height={`${window.innerWidth > 480
+                            }`}
+                            height={`${
+                              window.innerWidth > 480
                                 ? "600"
                                 : (window.innerWidth - 55) * 0.55
-                                }`}
-                              controls="controls"
+                            }`}
+                            controls="controls"
+                          >
+                            <source
+                              src={item.content}
+                              type="video/mp4"
+                              download={item.file_name}
+                            ></source>
+                          </video>
+                        </div>
+                      ) : item.extension === "pdf" ? (
+                        <React.Fragment>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "flex-end",
+                            }}
+                          >
+                            <div
+                              style={{
+                                cursor: "pointer",
+                                fontSize: "1.25rem",
+                                color: "#707070",
+                                marginLeft: "auto",
+                                border: "1px solid transparent",
+                                width: "max-content",
+                              }}
                             >
-                              <source
-                                src={item.content}
-                                type="video/mp4"
-                                download={item.file_name}
-                              ></source>
-                            </video>
-                          </div> : item.extension === "pdf"
-                            ? <React.Fragment>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "flex-end",
-                                }}
+                              <button 
+                                onClick={() =>
+                                  window.open(
+                                    `/pdfview/${Encrypt(
+                                      item.content,
+                                      "opendesign"
+                                    )}`,
+                                    "_blank",
+                                    null
+                                  )
+                                }
                               >
-                                <div
-                                  style={{
-                                    cursor: "pointer",
-                                    fontSize: "1.25rem",
-                                    color: "#707070",
-                                    marginLeft: "auto",
-                                    border: "1px solid transparent",
-                                    width: "max-content",
-                                  }}
-                                >
-                                  <a
-                                    onClick={() =>
-                                      window.open(
-                                        `/pdfview/${Encrypt(
-                                          item.content,
-                                          "opendesign"
-                                        )}`,
-                                        "_blank",
-                                        null
-                                      )
-                                    }
-                                  >
-                                    <i className="file pdf outline icon large" />
-                                    새탭으로열기
-                                  </a>
-                                </div>
-                                <div
-                                  style={{
-                                    fontSize: "1.25rem",
-                                    color: "#707070",
-                                    marginLeft: "25px",
-                                    border: "1px solid transparent",
-                                    width: "max-content",
-                                  }}
-                                >
-                                  <a href={item.content}>
-                                    <i className="save icon large" />
-                                    PDF다운로드
-                                  </a>
-                                </div>
-                              </div>
-                              <PdfViewer pdf={item.content} height={true} />
-                            </React.Fragment> :
-                            item.extension === "stl"
-                              ? <div style={{ width: "max-content", margin: "auto" }}>
+                                <i className="file pdf outline icon large" />
+                                새탭으로열기
+                              </button>
+                            </div>
+                            <div
+                              style={{
+                                fontSize: "1.25rem",
+                                color: "#707070",
+                                marginLeft: "25px",
+                                border: "1px solid transparent",
+                                width: "max-content",
+                              }}
+                            >
+                              <button  href={item.content}>
+                                <i className="save icon large" />
+                                PDF다운로드
+                              </button>
+                            </div>
+                          </div>
+                          <PdfViewer pdf={item.content} height={true} />
+                        </React.Fragment>
+                      ) : item.extension === "stl" ? (
+                        <div style={{ width: "max-content", margin: "auto" }}>
+                          <button 
+                            style={{
+                              cursor: "pointer",
+                              fontSize: "2rem",
+                              width: "max-content",
+                              margin: "auto",
+                            }}
+                            href={item.content}
+                          >
+                            {"다운로드"}
+                          </button>
 
-                                <a style={{ cursor: "pointer", fontSize: "2rem", width: "max-content", margin: "auto", }} href={item.content} >{"다운로드"}</a>
-
-                                <StlViewer
-                                  width={500}
-                                  height={500}
-                                  url={item.content}
-                                  groundColor='rgb(255, 255, 255)'
-                                  objectColor='rgb(50, 255, 255)'
-                                  skyboxColor='rgb(255, 255, 255)'
-                                  gridLineColor='rgb(0, 0, 0)'
-                                  lightColor='rgb(255, 255, 255)'
-                                  volume={volume => this.setState({ volume: volume })}
-                                />
-                              </div>
-                              : item.extension === "dxf"
-                                ? <div style={{ width: "max-content", margin: "auto" }}>
-                                  <a style={{ cursor: "pointer", fontSize: "2rem", width: "max-content", margin: "auto", }} href={item.content} >{"다운로드"}</a>
-                                  <DxfViewer url={item.content} />
-                                  {/*  */}
-                                </div>
-                                : item.extension !== "pdf" &&
-                                  item.data_type !== "image" &&
-                                  item.data_type !== "video" ?
-                                  <a
-                                    className="iconWrap"
-                                    href={item.content}
-                                    download={item.file_name}
-                                  >
-                                    <FileIcon
-                                      type={item.data_type}
-                                      extension={item.extension}
-                                    />
-                                    <span className="LinkFileName">
-                                      {item.file_name}
-                                    </span>
-                                  </a>
-                                  : null}
+                          <StlViewer
+                            width={500}
+                            height={500}
+                            url={item.content}
+                            groundColor="rgb(255, 255, 255)"
+                            objectColor="rgb(50, 255, 255)"
+                            skyboxColor="rgb(255, 255, 255)"
+                            gridLineColor="rgb(0, 0, 0)"
+                            lightColor="rgb(255, 255, 255)"
+                            volume={(volume) =>
+                              this.setState({ volume: volume })
+                            }
+                          />
+                        </div>
+                      ) : item.extension === "dxf" ? (
+                        <div style={{ width: "max-content", margin: "auto" }}>
+                          <button 
+                            style={{
+                              cursor: "pointer",
+                              fontSize: "2rem",
+                              width: "max-content",
+                              margin: "auto",
+                            }}
+                            href={item.content}
+                          >
+                            {"다운로드"}
+                          </button>
+                          <DxfViewer url={item.content} />
+                          {/*  */}
+                        </div>
+                      ) : item.extension !== "pdf" &&
+                        item.data_type !== "image" &&
+                        item.data_type !== "video" ? (
+                        <button 
+                          className="iconWrap"
+                          href={item.content}
+                          download={item.file_name}
+                        >
+                          <FileIcon
+                            type={item.data_type}
+                            extension={item.extension}
+                          />
+                          <span className="LinkFileName">{item.file_name}</span>
+                        </button>
+                      ) : null}
                     </ViewContent>
-
-                    : item.type === "LINK"
-                      ? <ViewContent>
-                        <LinkPreview>
-                          <div className="description">
-                            {((IsJsonString(item.content)
-                              && JSON.parse(item.content).hasOwnProperty("description")
-                              && JSON.parse(item.content).description)) || "-"}
-                          </div>
-                          <div className="url">
-                            {(((IsJsonString(item.content)
-                              && JSON.parse(item.content).hasOwnProperty("url")
-                              && JSON.parse(item.content).url))
-                              &&
-                              <a target="_blank" onClick={() => window.location.href = JSON.parse(item.content).url} >
-                                {JSON.parse(item.content).url}</a>) || "-"}
-                          </div>
-
-                        </LinkPreview>
-                      </ViewContent>
-
-                      : item.type === "PROBLEM"
-                        ? <ViewContent>
-                          <div className="problemWrap">
+                  ) : item.type === "LINK" ? (
+                    <ViewContent>
+                      <LinkPreview>
+                        <div className="description">
+                          {(IsJsonString(item.content) &&
+                            JSON.parse(item.content).hasOwnProperty(
+                              "description"
+                            ) &&
+                            JSON.parse(item.content).description) ||
+                            "-"}
+                        </div>
+                        <div className="url">
+                          {(IsJsonString(item.content) &&
+                            JSON.parse(item.content).hasOwnProperty("url") &&
+                            JSON.parse(item.content).url && (
+                              <button 
+                                target="_blank"
+                                onClick={() =>
+                                  (window.location.href = JSON.parse(
+                                    item.content
+                                  ).url)
+                                }
+                              >
+                                {JSON.parse(item.content).url}
+                              </button>
+                            )) ||
+                            "-"}
+                        </div>
+                      </LinkPreview>
+                    </ViewContent>
+                  ) : item.type === "PROBLEM" ? (
+                    <ViewContent>
+                      <NotEnabledAnymore />
+                      {/* <div className="problemWrap">
                             <ProblemBox>
                               <div className="titleBox">
                                 <div className="title">제목</div>
@@ -2171,7 +2284,7 @@ class CardSourceDetail extends Component {
                                             width: "max-content",
                                           }}
                                         >
-                                          <a
+                                          <button 
                                             onClick={() =>
                                               window.open(
                                                 window.open(
@@ -2188,7 +2301,7 @@ class CardSourceDetail extends Component {
                                           >
                                             <i className="file pdf outline icon large" />
                                             새탭으로열기
-                                          </a>
+                                          </button>
                                         </div>
                                         <div
                                           style={{
@@ -2199,14 +2312,14 @@ class CardSourceDetail extends Component {
                                             width: "max-content",
                                           }}
                                         >
-                                          <a
+                                          <button 
                                             href={
                                               JSON.parse(item.content).contents
                                             }
                                           >
                                             <i className="save icon large" />
                                             PDF다운로드
-                                          </a>
+                                          </button>
                                         </div>
                                       </div>
                                       <PdfViewer
@@ -2252,52 +2365,63 @@ class CardSourceDetail extends Component {
                                 </p>
                                 : null}
                             </div>
-                          </div>
-                        </ViewContent>
-
-                        : item.type === "GITHUB"
-                          ? <ViewContent>
-                            <GithubViewer uid={item.uid} url={item.content} />
-                          </ViewContent>
-                          : null}
-              </div>)}
-          </>}
-
-
-        {this.props.edit
-          ? <AddContent
-            is_problem={this.props.is_problem || (this.props.DesignDetail && this.props.DesignDetail.is_problem)}
-            is_github={this.props.is_github || (this.props.DesignDetail && this.props.DesignDetail.category_level1 === SOFTWARE_CATEGORY)}
-            getValue={this.onAddValue}
-            order={content.length || 0}
-            open={(data) => this.setState({ addProblem: data })}
-          />
-          : null}
-
-        <ButtonContainer>
-          {this.props.edit && this.props.uid && (
-            <EditorBottonWrapper>
-              <button
-                onClick={this.onSubmit}
-                className="submit"
-                type="button"
-              >
-                <i className="icon outline save" />
-                저장
-              </button>
-              <button
-                onClick={this.onCancel}
-                className="cancel"
-                type="button"
-              >
-                <i className="icon trash" />
-                취소
-              </button>
-            </EditorBottonWrapper>
+                          </div> */}
+                    </ViewContent>
+                  ) : item.type === "GITHUB" ? (
+                    <ViewContent>
+                      <GithubViewer uid={item.uid} url={item.content} />
+                    </ViewContent>
+                  ) : null}
+                </div>
+              ))}
+            </>
           )}
-        </ButtonContainer>
-      </Worker>
-    </div>);
+
+          {this.props.edit ? (
+            <AddContent
+              is_problem={
+                this.props.is_problem ||
+                (this.props.DesignDetail && this.props.DesignDetail.is_problem)
+              }
+              is_github={
+                this.props.is_github ||
+                (this.props.DesignDetail &&
+                  (this.props.DesignDetail.category_level1 ===
+                    CATEGORY1_SOFTWARE ||
+                    this.props.DesignDetail.category_level1 ===
+                      CATEGORY1_PRODUCT))
+              }
+              getValue={this.onAddValue}
+              order={content.length || 0}
+              open={(data) => this.setState({ addProblem: data })}
+            />
+          ) : null}
+
+          <ButtonContainer>
+            {this.props.edit && this.props.uid && (
+              <EditorBottonWrapper>
+                <button
+                  onClick={this.onSubmit}
+                  className="submit"
+                  type="button"
+                >
+                  <i className="icon outline save" />
+                  저장
+                </button>
+                <button
+                  onClick={this.onCancel}
+                  className="cancel"
+                  type="button"
+                >
+                  <i className="icon trash" />
+                  취소
+                </button>
+              </EditorBottonWrapper>
+            )}
+          </ButtonContainer>
+        </Worker>
+      </div>
+    );
   }
 }
 
@@ -2475,7 +2599,7 @@ class AddContent extends Component {
   };
 
   render() {
-    console.log("props:", this.props)
+    console.log("props:", this.props);
     return (
       <ControllerWrap2>
         <div className="innerBox">
@@ -2503,7 +2627,7 @@ class AddContent extends Component {
           >
             하이퍼링크 등록하기
           </NewController>
-          {this.props.is_problem
+          {/* {this.props.is_problem
             ? <NewController
               onClick={() => {
                 this.addContent("PROBLEM");
@@ -2513,10 +2637,10 @@ class AddContent extends Component {
               minWidth="134px"
               height="29px"
             >
-              문제 등록하기</NewController> : null}
+              문제 등록하기</NewController> : null} */}
 
-          {this.props.is_github
-            ? <NewController
+          {this.props.is_github ? (
+            <NewController
               onClick={() => {
                 this.addContent("GITHUB");
               }}
@@ -2525,7 +2649,8 @@ class AddContent extends Component {
               height="29px"
             >
               깃허브파일 등록하기
-            </NewController> : null}
+            </NewController>
+          ) : null}
         </div>
 
         {this.state.type === "FILE" && (
@@ -2606,8 +2731,8 @@ class CodingContent extends Component {
               this.props.categoryType == "1"
                 ? ".c, .cpp, .h"
                 : this.props.categoryType == "2"
-                  ? ".py"
-                  : null
+                ? ".py"
+                : null
             }
             item={this.state}
             getValue={this.returnData}
@@ -2674,48 +2799,48 @@ class SubmitLogContainer extends React.Component {
           create_Date == null
             ? null
             : create_Date.getFullYear().toString().substr(2, 2) +
-            ":" +
-            (create_Date.getMonth() + 1 < 10
-              ? "0" + (create_Date.getMonth() + 1)
-              : create_Date.getMonth() + 1) +
-            ":" +
-            (create_Date.getDate() < 10
-              ? "0" + create_Date.getDate()
-              : create_Date.getDate()) +
-            ":" +
-            (create_Date.getHours() < 10
-              ? "0" + create_Date.getHours()
-              : create_Date.getHours()) +
-            ":" +
-            (create_Date.getMinutes() < 10
-              ? "0" + create_Date.getMinutes()
-              : create_Date.getMinutes());
+              ":" +
+              (create_Date.getMonth() + 1 < 10
+                ? "0" + (create_Date.getMonth() + 1)
+                : create_Date.getMonth() + 1) +
+              ":" +
+              (create_Date.getDate() < 10
+                ? "0" + create_Date.getDate()
+                : create_Date.getDate()) +
+              ":" +
+              (create_Date.getHours() < 10
+                ? "0" + create_Date.getHours()
+                : create_Date.getHours()) +
+              ":" +
+              (create_Date.getMinutes() < 10
+                ? "0" + create_Date.getMinutes()
+                : create_Date.getMinutes());
 
         let result =
           submit.result === "S"
             ? "성공"
             : submit.result === "F"
-              ? "실패"
-              : submit.result === "T"
-                ? "실패(시간초과)"
-                : submit.result === "M"
-                  ? "실패(메모리초과)"
-                  : submit.result === "C"
-                    ? "실패(컴파일에러)"
-                    : submit.result === "R"
-                      ? "실패(런타임에러)"
-                      : submit.result === "E"
-                        ? "실패(서버에러)"
-                        : submit.result === "P"
-                          ? "실패(문제에러)"
-                          : "실패";
+            ? "실패"
+            : submit.result === "T"
+            ? "실패(시간초과)"
+            : submit.result === "M"
+            ? "실패(메모리초과)"
+            : submit.result === "C"
+            ? "실패(컴파일에러)"
+            : submit.result === "R"
+            ? "실패(런타임에러)"
+            : submit.result === "E"
+            ? "실패(서버에러)"
+            : submit.result === "P"
+            ? "실패(문제에러)"
+            : "실패";
         result =
           submit.result === "S"
             ? result
             : result +
-            ":<br/>" +
-            (submit.message && submit.message.slice(0, 512)) +
-            (submit.message && submit.message.lnegth > 512 ? "..." : "");
+              ":<br/>" +
+              (submit.message && submit.message.slice(0, 512)) +
+              (submit.message && submit.message.lnegth > 512 ? "..." : "");
         // console.log(result, submit.message);
 
         const row = {

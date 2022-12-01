@@ -473,38 +473,45 @@ const MiddleDynamicGrid = styled.div`
 	z-index: 110;
 	// background-color: rgba(255,255,255, 0.5);
 	width: 100%;
-	height: 100vh;
+	// height: 100vh;
 	display: flex;
-	margin-bottom:38px;
+	margin-bottom: 38px;
+	align-items: center;
 	// flex-direction: column;
-	// justify-content: center;
+	justify-content: center;
+
   .hand {
 		cursor: grab;
 	}
 	.container {
-		background-color:#5656561A;
-		width:max-content;
-		min-height:238px;
-		overflow-x: hidden;
-		overflow-y: auto;
-		:hover {
-			::-webkit-scrollbar {
-				width: 5px;
-			}
-		}
-		::-webkit-scrollbar {
-			position: absolute;
-			width: 3px;
-		}
-		::-webkit-scrollbar-thumb {
-			background: rgba(255, 112, 112, 1) !important;
-		}
-		// height: max-content;
-		padding: 10px;
-		justify-items: center;
-		align-items: center;
+		width: max-content;
 		margin: auto;
-		margin-bottom: 50px;
+		// display: flex;
+		// justify-content: center;
+		// align-items: center;
+		// background-color:#5656561A;
+		// width: max-content;
+		// min-height: 238px;
+		// overflow-x: hidden;
+		// overflow-y: auto;
+		// :hover {
+		// 	::-webkit-scrollbar {
+		// 		width: 5px;
+		// 	}
+		// }
+		// ::-webkit-scrollbar {
+		// 	position: absolute;
+		// 	width: 3px;
+		// }
+		// ::-webkit-scrollbar-thumb {
+		// 	background: rgba(255, 112, 112, 1) !important;
+		// }
+		// height: max-content;
+		// padding: 10px;
+		// justify-items: center;
+		// align-items: center;
+		// margin: auto;
+		// margin-bottom: 50px;
 		display: flex;
 		grid-template-rows: repeat(${props => props.grid.row || 1}, 252px);
 		grid-template-columns: repeat(${props => props.grid.col || 1}, 252px);
@@ -907,8 +914,6 @@ class Room extends React.Component {
 					</MiddleDynamicGrid>
 					: null}
 			</ContentContainer>
-
-
 		</RoomDiv >);
 	};
 

@@ -20,7 +20,7 @@ class PdfViewContainer extends React.Component {
         return (
             pdf
                 ? <div style={{ height: `${h}px`, overflow: "auto", padding: "10px" }}>
-                    <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+                    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.0.279/build/pdf.worker.min.js">
                         <PdfViewer pdf={decoded} height={false} />
                     </Worker>
                 </div>

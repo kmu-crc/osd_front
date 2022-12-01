@@ -1344,14 +1344,14 @@ class ModifyDesign extends Component {
                   </div>
                 </div>
                 <div className="board_box paddingLeft1" style={{ marginTop: "70px" }}>
-                  {
+                  {/* {
                     this.state.categoryLevel3 != null ?
                       <IsProblemBox>
                         <CheckBox2 onChange={this.onCheckIsProblem} checked={this.state.is_problem ? true : false} type="checkbox" />
                         <span className="textLabel">문제 등록 기능을 사용합니다.</span>
                       </IsProblemBox>
                       : null
-                  }
+                  } */}
                 </div>
                 <div className="maxFlex">
                   <div className="board_label " style={{ marginRight: "5px" }}>2. 멤버 초대하기</div>
