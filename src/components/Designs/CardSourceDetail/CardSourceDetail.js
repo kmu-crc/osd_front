@@ -1343,7 +1343,7 @@ class CardSourceDetail extends Component {
     console.log(content);
     return (
       <div id="card-source-detail-root-node" style={{ padding: "15px" }}>
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.0.279/build/pdf.worker.min.js">
           {loading ? <Loading /> : null}
 
           {content.find((item) => item.type === "TEXT") != null ? (
@@ -2125,7 +2125,7 @@ class CardSourceDetail extends Component {
                                 width: "max-content",
                               }}
                             >
-                              <a
+                              <button 
                                 onClick={() =>
                                   window.open(
                                     `/pdfview/${Encrypt(
@@ -2139,7 +2139,7 @@ class CardSourceDetail extends Component {
                               >
                                 <i className="file pdf outline icon large" />
                                 새탭으로열기
-                              </a>
+                              </button>
                             </div>
                             <div
                               style={{
@@ -2150,17 +2150,17 @@ class CardSourceDetail extends Component {
                                 width: "max-content",
                               }}
                             >
-                              <a href={item.content}>
+                              <button  href={item.content}>
                                 <i className="save icon large" />
                                 PDF다운로드
-                              </a>
+                              </button>
                             </div>
                           </div>
                           <PdfViewer pdf={item.content} height={true} />
                         </React.Fragment>
                       ) : item.extension === "stl" ? (
                         <div style={{ width: "max-content", margin: "auto" }}>
-                          <a
+                          <button 
                             style={{
                               cursor: "pointer",
                               fontSize: "2rem",
@@ -2170,7 +2170,7 @@ class CardSourceDetail extends Component {
                             href={item.content}
                           >
                             {"다운로드"}
-                          </a>
+                          </button>
 
                           <StlViewer
                             width={500}
@@ -2188,7 +2188,7 @@ class CardSourceDetail extends Component {
                         </div>
                       ) : item.extension === "dxf" ? (
                         <div style={{ width: "max-content", margin: "auto" }}>
-                          <a
+                          <button 
                             style={{
                               cursor: "pointer",
                               fontSize: "2rem",
@@ -2198,14 +2198,14 @@ class CardSourceDetail extends Component {
                             href={item.content}
                           >
                             {"다운로드"}
-                          </a>
+                          </button>
                           <DxfViewer url={item.content} />
                           {/*  */}
                         </div>
                       ) : item.extension !== "pdf" &&
                         item.data_type !== "image" &&
                         item.data_type !== "video" ? (
-                        <a
+                        <button 
                           className="iconWrap"
                           href={item.content}
                           download={item.file_name}
@@ -2215,7 +2215,7 @@ class CardSourceDetail extends Component {
                             extension={item.extension}
                           />
                           <span className="LinkFileName">{item.file_name}</span>
-                        </a>
+                        </button>
                       ) : null}
                     </ViewContent>
                   ) : item.type === "LINK" ? (
@@ -2233,7 +2233,7 @@ class CardSourceDetail extends Component {
                           {(IsJsonString(item.content) &&
                             JSON.parse(item.content).hasOwnProperty("url") &&
                             JSON.parse(item.content).url && (
-                              <a
+                              <button 
                                 target="_blank"
                                 onClick={() =>
                                   (window.location.href = JSON.parse(
@@ -2242,7 +2242,7 @@ class CardSourceDetail extends Component {
                                 }
                               >
                                 {JSON.parse(item.content).url}
-                              </a>
+                              </button>
                             )) ||
                             "-"}
                         </div>
@@ -2284,7 +2284,7 @@ class CardSourceDetail extends Component {
                                             width: "max-content",
                                           }}
                                         >
-                                          <a
+                                          <button 
                                             onClick={() =>
                                               window.open(
                                                 window.open(
@@ -2301,7 +2301,7 @@ class CardSourceDetail extends Component {
                                           >
                                             <i className="file pdf outline icon large" />
                                             새탭으로열기
-                                          </a>
+                                          </button>
                                         </div>
                                         <div
                                           style={{
@@ -2312,14 +2312,14 @@ class CardSourceDetail extends Component {
                                             width: "max-content",
                                           }}
                                         >
-                                          <a
+                                          <button 
                                             href={
                                               JSON.parse(item.content).contents
                                             }
                                           >
                                             <i className="save icon large" />
                                             PDF다운로드
-                                          </a>
+                                          </button>
                                         </div>
                                       </div>
                                       <PdfViewer
@@ -2372,7 +2372,6 @@ class CardSourceDetail extends Component {
                       <GithubViewer uid={item.uid} url={item.content} />
                     </ViewContent>
                   ) : null}
-                  {item.type}
                 </div>
               ))}
             </>

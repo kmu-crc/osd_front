@@ -1300,7 +1300,7 @@ export class CardSourceDetailMobile extends Component {
         id="card-source-detail-root-node"
         style={{ padding: "5px", width: "98wh", backgroundColor: "white" }}
       >
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.0.279/build/pdf.worker.min.js">
           {loading ? <Loading /> : null}
           {/*  */}
           {content.find((item) => item.type === "TEXT") != null ? (

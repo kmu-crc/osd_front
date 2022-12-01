@@ -1,81 +1,78 @@
-import React from 'react';
-import { SpecialZoomLevel, Viewer } from '@react-pdf-viewer/core';
-import '@react-pdf-viewer/core/lib/styles/index.css';
-import styled from 'styled-components';
+import React from "react";
+import { SpecialZoomLevel, Viewer } from "@react-pdf-viewer/core";
+import "@react-pdf-viewer/core/lib/styles/index.css";
+import styled from "styled-components";
 
-import { zoomPlugin } from '@react-pdf-viewer/zoom';
-import '@react-pdf-viewer/zoom/lib/styles/index.css';
-import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-import { RenderZoomProps } from '@react-pdf-viewer/zoom';
+import { zoomPlugin } from "@react-pdf-viewer/zoom";
+import "@react-pdf-viewer/zoom/lib/styles/index.css";
+import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
+import { RenderZoomProps } from "@react-pdf-viewer/zoom";
 // const zoomPluginInstance = zoomPlugin();
 // const { ZoomInButton, ZoomOutButton, ZoomPopover } = zoomPluginInstance;
-
 
 const PDFwrapper = styled.div`
   width: 100%;
   &.fixed-height {
     height: 750px;
   }
-  background-color: #EFEFEF;
+  background-color: #efefef;
   border: 1px dashed #707070;
   overflow-y: hidden;
   @media only screen and (max-width: 480px) {
-    &.fixed-height{
-      height:300px;
+    &.fixed-height {
+      height: 300px;
     }
   }
 `;
 const ZoomBox = styled.div`
-  display:flex;
-  width:100%;
-`
+  display: flex;
+  width: 100%;
+`;
 export const PdfViewer = (props) => {
-  const zoomPluginInstance = zoomPlugin(
-
-  );
+  const zoomPluginInstance = zoomPlugin();
   const { ZoomInButton, ZoomOutButton, ZoomPopover } = zoomPluginInstance;
-//   const defaultLayoutPluginInstance = defaultLayoutPlugin({
-//     toolbarPlugin: {
-//         fullScreenPlugin: {
-//             // Zoom to fit the screen after entering and exiting the full screen mode
-//             onEnterFullScreen: (zoom) => {
-//                 zoom(SpecialZoomLevel.PageFit);
-//             },
-//             onExitFullScreen: (zoom) => {
-//                 zoom(SpecialZoomLevel.PageFit);
-//             },
-//         },
-//     },
-// });
-const defaultLayoutPluginInstance = defaultLayoutPlugin();
-
-  return (<PDFwrapper className={props.height ? "fixed-height" : ""}>
-    <div className="ZoomBox">
-      <div
-        style={{
-          alignItems: 'center',
-          backgroundColor: '#eeeeee',
-          borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
-          display: 'flex',
-          justifyContent: 'center',
-          padding: '4px',
-        }}
-      >
-        <ZoomOutButton />
-        <ZoomPopover />
-        <ZoomInButton />
+  //   const defaultLayoutPluginInstance = defaultLayoutPlugin({
+  //     toolbarPlugin: {
+  //         fullScreenPlugin: {
+  //             // Zoom to fit the screen after entering and exiting the full screen mode
+  //             onEnterFullScreen: (zoom) => {
+  //                 zoom(SpecialZoomLevel.PageFit);
+  //             },
+  //             onExitFullScreen: (zoom) => {
+  //                 zoom(SpecialZoomLevel.PageFit);
+  //             },
+  //         },
+  //     },
+  // });
+  const defaultLayoutPluginInstance = defaultLayoutPlugin();
+  console.log(props);
+  return (
+    <PDFwrapper className={props.height ? "fixed-height" : ""}>
+      <div className="ZoomBox">
+        <div
+          style={{
+            alignItems: "center",
+            backgroundColor: "#eeeeee",
+            borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+            display: "flex",
+            justifyContent: "center",
+            padding: "4px",
+          }}
+        >
+          <ZoomOutButton />
+          <ZoomPopover />
+          <ZoomInButton />
+        </div>
       </div>
-    </div>
 
-    <Viewer
-      fileUrl={props.pdf}
-      defaultScale={SpecialZoomLevel.PageFit}
-      plugins={[
-        zoomPluginInstance,
-      ]}
-    />
-  </PDFwrapper>)
-}
+      <Viewer
+        fileUrl={props.pdf}
+        defaultScale={SpecialZoomLevel.PageFit}
+        plugins={[zoomPluginInstance]}
+      />
+    </PDFwrapper>
+  );
+};
 
 // import React from 'react';
 // import Loading from "components/Commons/Loading";
