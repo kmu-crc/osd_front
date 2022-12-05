@@ -738,10 +738,11 @@ class DesignInfo extends Component {
       this.props.DesignDetail.uid
     }`;
     const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,scrollbars=no,\
-        top=0,left=0,width=${window.screen.width},height=${
-      window.screen.height - 100
+        top=0,left=0,width=${window.screen.width / 4},height=${
+      (window.screen.height - 100) / 4
     }`;
     this.vchatwindow = window.open(url, "vchat", options);
+    // this.vchatwindow.postMessage("TITLE", "*");
     //try {
     //    if (this.state.liveVC === false) {
     //        // if (this.props.userInfo.uid === this.props.DesignDetail.user_id) {
