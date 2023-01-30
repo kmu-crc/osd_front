@@ -14,7 +14,7 @@ class VChat2Page extends Component {
     return (
       <iframe
         id="ifr"
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "100%", height: window.innerHeight }}
         src={"https://localhost:8080/" + window.location.search}
       />
     );

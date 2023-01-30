@@ -733,13 +733,11 @@ class DesignInfo extends Component {
   };
   openVideoChat = () => {
     if (this.checkMember() === false) return;
-
-    const url = `${geturl()}/vchat2?auth=${this.props.token}&room=${
-      this.props.DesignDetail.uid
-    }`;
+    // alert(process.env.REACT_APP_LOCAL_URL);
+    const url = `${process.env.REACT_APP_VCHAT_URL}?auth=${this.props.token}&room=${this.props.DesignDetail.uid}`;
     const options = `toolbar=no,status=no,menubar=no,resizable=0,location=no,scrollbars=no,\
-        top=0,left=0,width=${window.screen.width / 4},height=${
-      (window.screen.height - 100) / 4
+        top=0,left=0,width=${window.screen.width},height=${
+      window.screen.height - 100
     }`;
     this.vchatwindow = window.open(url, "vchat", options);
     // this.vchatwindow.postMessage("TITLE", "*");
