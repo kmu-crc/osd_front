@@ -1,7 +1,7 @@
 export const isMobile = () => 500 > window.innerWidth;
-export const isOpen = ws => ws.readyState === ws.OPEN;
+export const isOpen = (ws) => ws.readyState === ws.OPEN;
 
-// 
+//
 export const MOBILE_WIDTH = 360;
 export const SLIDE_MENU_WIDTH = 160;
 
@@ -22,7 +22,7 @@ export const STRING_ALREADY_LOGINED = "이미 로그인 상태입니다.";
 // bool
 export const NOT = false;
 
-// 
+//
 export const TokenName = "opendesign_token";
 
 export const msHour = 60 * 60 * 1000;
@@ -30,6 +30,8 @@ export const ms10Mins = 10 * 60 * 1000;
 export const msMin = 60 * 1000;
 export const ms10Secs = 10 * 1000;
 export const msSec = 10 * 1000;
-// 
+//
 export const CATEGORY1_SOFTWARE = 6;
 export const CATEGORY1_PRODUCT = 2;
+
+export const PDFVIEWER_VERSION = "3.1.81";

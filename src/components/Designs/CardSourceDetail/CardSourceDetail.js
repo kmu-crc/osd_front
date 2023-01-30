@@ -26,6 +26,7 @@ import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-github";
 import { Worker } from "@react-pdf-viewer/core";
 import { PdfViewer } from "./PDFviewer";
+import { PDFVIEWER_VERSION } from "constant";
 
 import Icon from "@material-ui/core/Icon";
 
@@ -643,6 +644,121 @@ const NotEnabledAnymore = () => (
   <h3 style={{ textAlign: "center", color: "#808080" }}>
     {"더 이상 지원하지 않는 기능입니다."}
   </h3>
+  /* <div className="problemWrap">
+                            <ProblemBox>
+                              <div className="titleBox">
+                                <div className="title">제목</div>
+                              </div>
+                              <div className="problemBox">
+                                <div className="board">
+                                  {item.content && JSON.parse(item.content).name}
+                                </div>
+                              </div>
+                              <div className="titleBox">
+                                <div className="title">내용</div>
+                              </div>
+                              <div className="problemBox">
+                                <div className="board">
+                                  {item.content && (
+                                    <React.Fragment>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "flex-end",
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            cursor: "pointer",
+                                            fontSize: "1.25rem",
+                                            color: "#707070",
+                                            marginLeft: "auto",
+                                            border: "1px solid transparent",
+                                            width: "max-content",
+                                          }}
+                                        >
+                                          <button 
+                                            onClick={() =>
+                                              window.open(
+                                                window.open(
+                                                  `/pdfview/${Encrypt(
+                                                    JSON.parse(item.content)
+                                                      .contents,
+                                                    "opendesign"
+                                                  )}`,
+                                                  "_blank",
+                                                  null
+                                                )
+                                              )
+                                            }
+                                          >
+                                            <i className="file pdf outline icon large" />
+                                            새탭으로열기
+                                          </button>
+                                        </div>
+                                        <div
+                                          style={{
+                                            fontSize: "1.25rem",
+                                            color: "#707070",
+                                            marginLeft: "25px",
+                                            border: "1px solid transparent",
+                                            width: "max-content",
+                                          }}
+                                        >
+                                          <button 
+                                            href={
+                                              JSON.parse(item.content).contents
+                                            }
+                                          >
+                                            <i className="save icon large" />
+                                            PDF다운로드
+                                          </button>
+                                        </div>
+                                      </div>
+                                      <PdfViewer
+                                        pdf={JSON.parse(item.content).contents}
+                                        height={true}
+                                      />
+                                    </React.Fragment>
+                                  )}
+                                </div>
+                              </div>
+                            </ProblemBox>
+
+                            <div
+                              onClick={async () => {
+                                if (
+                                  permission === "LOG SUBMIT" ||
+                                  permission === "LOG"
+                                ) {
+                                  this.setState({
+                                    item: JSON.parse(item.content),
+                                    item_uid: item.uid,
+                                    item_user: item.user_id,
+                                    tab:
+                                      item.user_id === this.props.userInfo.uid
+                                        ? "code"
+                                        : "log",
+                                  });
+                                  this.setState({ submit: true });
+                                  this.setState({ coding: [] });
+                                } else {
+                                  await alert("해당문제의 제출 권한이 없습니다.");
+                                }
+                              }}
+                              style={{
+                                width: "max-content",
+                                margin: "auto",
+                                cursor: "pointer",
+                              }}
+                            >
+                              {permission == "LOG" || permission === "LOG SUBMIT"
+                                ? <p style={{ padding: "5px 13px", color: "white", borderRadius: "18px", backgroundColor: "red" }}>
+                                  {permission === "LOG" ? "제출내역보기" : permission === "LOG SUBMIT" ? "답안제출하기" : ""}
+                                </p>
+                                : null}
+                            </div>
+                          </div> */
 );
 class CardSourceDetail extends Component {
   constructor(props) {
@@ -1328,8 +1444,6 @@ class CardSourceDetail extends Component {
     } = this.state;
     const { userInfo } = this.props;
 
-    console.log("props: card source detail: ", this.props);
-
     // console.log("codecode", this.props.code)
     // console.log("content:", content.find(item => item.type === "TEXT"));
     // console.log("result:", this.props, this.state)// && this.props.DesignDetail.category_level3 - 1);
@@ -1340,10 +1454,11 @@ class CardSourceDetail extends Component {
     let __code = result && result.code && result.code.replaceAll("\n", "<br/>");
     __code = __code && __code.replaceAll("   ", "&emsp;");
 
-    console.log(content);
     return (
       <div id="card-source-detail-root-node" style={{ padding: "15px" }}>
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.0.279/build/pdf.worker.min.js">
+        <Worker
+          workerUrl={`https://unpkg.com/pdfjs-dist@${PDFVIEWER_VERSION}/build/pdf.worker.min.js`}
+        >
           {loading ? <Loading /> : null}
 
           {content.find((item) => item.type === "TEXT") != null ? (
@@ -2125,7 +2240,7 @@ class CardSourceDetail extends Component {
                                 width: "max-content",
                               }}
                             >
-                              <button 
+                              <a
                                 onClick={() =>
                                   window.open(
                                     `/pdfview/${Encrypt(
@@ -2139,7 +2254,7 @@ class CardSourceDetail extends Component {
                               >
                                 <i className="file pdf outline icon large" />
                                 새탭으로열기
-                              </button>
+                              </a>
                             </div>
                             <div
                               style={{
@@ -2150,17 +2265,17 @@ class CardSourceDetail extends Component {
                                 width: "max-content",
                               }}
                             >
-                              <button  href={item.content}>
+                              <a href={item.content}>
                                 <i className="save icon large" />
                                 PDF다운로드
-                              </button>
+                              </a>
                             </div>
                           </div>
                           <PdfViewer pdf={item.content} height={true} />
                         </React.Fragment>
                       ) : item.extension === "stl" ? (
                         <div style={{ width: "max-content", margin: "auto" }}>
-                          <button 
+                          <a
                             style={{
                               cursor: "pointer",
                               fontSize: "2rem",
@@ -2170,7 +2285,7 @@ class CardSourceDetail extends Component {
                             href={item.content}
                           >
                             {"다운로드"}
-                          </button>
+                          </a>
 
                           <StlViewer
                             width={500}
@@ -2188,7 +2303,7 @@ class CardSourceDetail extends Component {
                         </div>
                       ) : item.extension === "dxf" ? (
                         <div style={{ width: "max-content", margin: "auto" }}>
-                          <button 
+                          <a
                             style={{
                               cursor: "pointer",
                               fontSize: "2rem",
@@ -2198,14 +2313,14 @@ class CardSourceDetail extends Component {
                             href={item.content}
                           >
                             {"다운로드"}
-                          </button>
+                          </a>
                           <DxfViewer url={item.content} />
                           {/*  */}
                         </div>
                       ) : item.extension !== "pdf" &&
                         item.data_type !== "image" &&
                         item.data_type !== "video" ? (
-                        <button 
+                        <a
                           className="iconWrap"
                           href={item.content}
                           download={item.file_name}
@@ -2215,7 +2330,7 @@ class CardSourceDetail extends Component {
                             extension={item.extension}
                           />
                           <span className="LinkFileName">{item.file_name}</span>
-                        </button>
+                        </a>
                       ) : null}
                     </ViewContent>
                   ) : item.type === "LINK" ? (
@@ -2233,7 +2348,7 @@ class CardSourceDetail extends Component {
                           {(IsJsonString(item.content) &&
                             JSON.parse(item.content).hasOwnProperty("url") &&
                             JSON.parse(item.content).url && (
-                              <button 
+                              <button
                                 target="_blank"
                                 onClick={() =>
                                   (window.location.href = JSON.parse(
@@ -2251,121 +2366,6 @@ class CardSourceDetail extends Component {
                   ) : item.type === "PROBLEM" ? (
                     <ViewContent>
                       <NotEnabledAnymore />
-                      {/* <div className="problemWrap">
-                            <ProblemBox>
-                              <div className="titleBox">
-                                <div className="title">제목</div>
-                              </div>
-                              <div className="problemBox">
-                                <div className="board">
-                                  {item.content && JSON.parse(item.content).name}
-                                </div>
-                              </div>
-                              <div className="titleBox">
-                                <div className="title">내용</div>
-                              </div>
-                              <div className="problemBox">
-                                <div className="board">
-                                  {item.content && (
-                                    <React.Fragment>
-                                      <div
-                                        style={{
-                                          display: "flex",
-                                          flexDirection: "flex-end",
-                                        }}
-                                      >
-                                        <div
-                                          style={{
-                                            cursor: "pointer",
-                                            fontSize: "1.25rem",
-                                            color: "#707070",
-                                            marginLeft: "auto",
-                                            border: "1px solid transparent",
-                                            width: "max-content",
-                                          }}
-                                        >
-                                          <button 
-                                            onClick={() =>
-                                              window.open(
-                                                window.open(
-                                                  `/pdfview/${Encrypt(
-                                                    JSON.parse(item.content)
-                                                      .contents,
-                                                    "opendesign"
-                                                  )}`,
-                                                  "_blank",
-                                                  null
-                                                )
-                                              )
-                                            }
-                                          >
-                                            <i className="file pdf outline icon large" />
-                                            새탭으로열기
-                                          </button>
-                                        </div>
-                                        <div
-                                          style={{
-                                            fontSize: "1.25rem",
-                                            color: "#707070",
-                                            marginLeft: "25px",
-                                            border: "1px solid transparent",
-                                            width: "max-content",
-                                          }}
-                                        >
-                                          <button 
-                                            href={
-                                              JSON.parse(item.content).contents
-                                            }
-                                          >
-                                            <i className="save icon large" />
-                                            PDF다운로드
-                                          </button>
-                                        </div>
-                                      </div>
-                                      <PdfViewer
-                                        pdf={JSON.parse(item.content).contents}
-                                        height={true}
-                                      />
-                                    </React.Fragment>
-                                  )}
-                                </div>
-                              </div>
-                            </ProblemBox>
-
-                            <div
-                              onClick={async () => {
-                                if (
-                                  permission === "LOG SUBMIT" ||
-                                  permission === "LOG"
-                                ) {
-                                  this.setState({
-                                    item: JSON.parse(item.content),
-                                    item_uid: item.uid,
-                                    item_user: item.user_id,
-                                    tab:
-                                      item.user_id === this.props.userInfo.uid
-                                        ? "code"
-                                        : "log",
-                                  });
-                                  this.setState({ submit: true });
-                                  this.setState({ coding: [] });
-                                } else {
-                                  await alert("해당문제의 제출 권한이 없습니다.");
-                                }
-                              }}
-                              style={{
-                                width: "max-content",
-                                margin: "auto",
-                                cursor: "pointer",
-                              }}
-                            >
-                              {permission == "LOG" || permission === "LOG SUBMIT"
-                                ? <p style={{ padding: "5px 13px", color: "white", borderRadius: "18px", backgroundColor: "red" }}>
-                                  {permission === "LOG" ? "제출내역보기" : permission === "LOG SUBMIT" ? "답안제출하기" : ""}
-                                </p>
-                                : null}
-                            </div>
-                          </div> */}
                     </ViewContent>
                   ) : item.type === "GITHUB" ? (
                     <ViewContent>

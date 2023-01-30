@@ -644,7 +644,7 @@ class CardModal extends Component {
                                 <div className="card-header-first">
                                     <div className="header-title">{card.title}</div>
                                     <div className="header-edit-button">
-                                        {this.props.edit ?
+                                        {this.props.edit || this.props.isTeam?
                                             <React.Fragment>
                                                 <button className="edit-btn" onClick={() => this.setState({ edit: !this.state.edit, title: card.title, content: card.content })} >수정</button>
                                                 <button className="cancel-btn" onClick={(event) => this.removeCard(event)} >삭제</button>
