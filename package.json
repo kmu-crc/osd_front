@@ -158,11 +158,11 @@
     "generate-meta-tag": "node ./node_modules/react-cache-buster/dist/generate-meta-tag.js",
     "prebuild": "npm run generate-build-version",
     "start": "HTTPS=true REACT_APP_TYPE=aws node scripts/start.js",
-    "local": "REACT_APP_TYPE=local node scripts/start.js",
+    "local": "PORT=13080 REACT_APP_TYPE=aws node scripts/start.js",
     "dev": "HTTPS=true REACT_APP_TYPE=aws_dev node scripts/start.js",
-    "build": "yarn generate-meta-tag && REACT_APP_VERSION=$npm_package_version REACT_APP_BUILD=true REACT_APP_TYPE=aws node scripts/build.js",
+    "build": "REACT_APP_BUILD=true REACT_APP_TYPE=aws node scripts/build.js",
     "DevBuild": "HTTPS=true REACT_APP_BUILD=true REACT_APP_TYPE=aws_dev node scripts/build.js",
-    "test": "node scripts/test.js"
+    "move":"sudo cp -rf build/ /var/www/html/"
   },
   "eslintConfig": {
     "extends": "react-app"
