@@ -42,7 +42,7 @@
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "clipboard-copy": "^3.1.0",
     "core-js": "2.5.3",
-    "crypto-js": "^4.1.1",
+    "crypto-js": "^4.2.0",
     "css-loader": "2.1.1",
     "domready": "^1.0.8",
     "dotenv": "6.2.0",
