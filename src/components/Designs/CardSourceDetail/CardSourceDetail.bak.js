@@ -175,7 +175,7 @@ class CardSourceDetail extends Component {
   }
 
   onChangValue = async data => {
-    console.log("debug>onChangeValue", data);
+    //console.log("debug>onChangeValue", data);
     let copyContent = [...this.state.content];
     delete data.initClick;
     delete data.target;
@@ -280,8 +280,8 @@ class CardSourceDetail extends Component {
       <ButtonContainer >
         {this.state.edit &&
           <EditorBottonWrapper top={this.state.top} left={this.state.left}>
-            <button onClick={this.onSubmit} className="submit" type="button"><i className="icon outline save" />등록</button>
             <button onClick={this.onCancel} className="cancel" type="button"><i className="icon trash" />취소</button>
+            <button onClick={this.onSubmit} className="submit" type="button"><i className="icon outline save" />등록</button>
           </EditorBottonWrapper>
         }
         {this.state.edit === false && this.props.isTeam && (content.length > 0 ? (
@@ -319,7 +319,7 @@ class CardSourceDetail extends Component {
               ) : item.type === "FILE" && item.data_type === "video" ? (
                 <span>
                   <span className="LinkFileName">{item.file_name}</span>
-                  <video key={index} width="640" height="360" controls="controls" className="iconWrap" >
+                  <video key={index} width="960" height="480" controls="controls" className="iconWrap" >
                     <source src={item.content} type="video/mp4" download={item.file_name}></source>
                   </video>
                 </span>

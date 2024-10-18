@@ -7,9 +7,38 @@ import opendesign_style from "opendesign_style";
 import MyDesignListContainer from "containers/Groups/MyDesignListContainer";
 import MyGroupListContainer from "containers/Groups/MyGroupListContainer";
 import Cross from "components/Commons/Cross";
-
+// import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
+import { Icon } from 'semantic-ui-react'
 
 const ModalContent = styled.div`
+  border:1px solid black;
+  max-width:632px;
+  width:100%;
+  padding:22px 64px 42px 64px;
+  position:relative;
+  .close-box{
+    width:60px;
+    height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:absolute;
+    top:0px;
+    right:0px;
+  }
+  .title_ {
+    width:100%;
+    height:52px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:center;
+    cursor: default;
+    font-family:Spoqa Han Sans Neo;
+    font-weight:500;
+    font-size:37px;
+  }
   & .icon.close {
     position: absolute;
     top: 10px;
@@ -20,20 +49,41 @@ const ModalContent = styled.div`
 `;
 
 //const ModalBtn = styled(Button)``;
-
+const JoinModal = styled(Modal)`
+  max-width:632px;
+  width:100%;
+`
 const JoinGroupWrap = styled.div`
   display: inline-block;
+  width:max-content;
+  .header{
+  }
+  .font_small{width:max-content;font-size:12px;}
+  .icon-wrapper{
+    width:20%;
+    min-width:50px;
+    height:100%;  
+    }
+    .icon-piece{
+        cursor:pointer;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        width:95%;
+        height:95%;
+        border-radius:5px;
+        background-color:#DEDEDE;
+    }
 `;
 
-const Title = styled.h2`
-  padding-left:20px;
-  width:100%;
-  height:30px;
-`;
 
 const JoinTab = styled.div`
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
+  width:100%;
+  display:flex;
+  margin-top:14px;
+  margin-bottom:67px;
+  justify-content:center;
   &::after {
     display: block;
     content: "";
@@ -45,11 +95,29 @@ const TabItem = styled.button`
   padding:20px;
   border: 0;
   font-size:20px;
+  font-family:Spoqa Han Sans Neo;
+  font-weight:Medium;
   background-color: transparent;
+  cursor:pointer;
   &.active {
-    color: #eb3324;
+    color: #1E9B79;
   }
 `;
+
+const JoinButton = styled.div`
+  width:142px;
+  height:41px;
+  display:flex;
+  font-size:20px;
+  font-family:Spoqa Han Sans Neo;
+  font-weight:400;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  box-shadow: 8px 8px 8px #0000002B;
+  cursor:pointer;
+
+`
 
 class JoinGroup extends Component {
   state = {
@@ -57,9 +125,9 @@ class JoinGroup extends Component {
     active: "design"
   };
 
-  handleModal = () => {
+  handleModal = async () => {
     if (!this.props.token) {
-      alert("로그인을 해주세요.");
+      await alert("로그인 해주세요.","확인");
       return;
     } else {
       this.setState({ open: true });
@@ -76,24 +144,31 @@ class JoinGroup extends Component {
     this.setState({ active: tab });
   };
   render() {
+    console.log(this.props);
     const { open, active } = this.state;
     return (
       <JoinGroupWrap>
-        <div onClick={this.handleModal}>
-          가입 신청
-        </div>
-        <Modal
+        {this.props.isIcon==null?
+          <JoinButton style={{backgroundColor:"black"}} onClick={this.handleModal}>
+          그룹 가입 신청
+          </JoinButton>
+          :
+          <JoinButton style={{backgroundColor:"#1E9B79"}} onClick={this.handleModal}>
+            그룹 가입
+          </JoinButton>
+        }
+        <JoinModal
           open={open}
           closeOnEscape={true}
           closeOnDimmerClick={true}
           onClose={this.handleCloseModal}
         >
-          <Modal.Content>
+          {/* <Modal.Content> */}
             <ModalContent>
-              <div onClick={this.handleCloseModal} style={{position:"absolute",top:"20px",right:"20px"}}>
-                <Cross angle={45} color={"#707070"} weight={3} width={25} height={25} />
+              <div className="close-box" onClick={this.handleCloseModal} >
+                <Cross angle={45} color={"#707070"} weight={3} width={35} height={35} />
               </div>
-              <Title>그룹 가입 신청</Title>
+              <div className="title_">그룹 가입 신청</div>
               <JoinTab>
                 <TabItem
                   className={active === "design" && "active"}
@@ -119,8 +194,8 @@ class JoinGroup extends Component {
                 />
               ) : null}
             </ModalContent>
-          </Modal.Content>
-        </Modal>
+          {/* </Modal.Content> */}
+        </JoinModal>
       </JoinGroupWrap>
     );
   }

@@ -2,269 +2,301 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 //img
-import noimg from "source/noimg.png"
-import iForked from "source/baseline_library_books_black_48dp.png"
-import iThumbUp from "source/thumbup_icon_black.png"
-import IconView from "source/IconView"
+import iconView from "source/mypage_icon_view.svg";
+import iconLike from "source/mypage_icon_like.svg";
+import iconArticle from "source/mypage_icon_article.svg";
+import iconEdit from "source/mypage_icon_edit.svg";
+import noimg from "source/noimg.png";
 import DateFormat from 'modules/DateFormat';
 import NumberFormat from "modules/NumberFormat";
-import iEdit from 'source/edit_1.png';
-import { geturl } from "config"
+import { geturl } from "config";
+import { SetSession } from 'modules/Sessions';
 
+// css
+const Wrapper = styled.div`
+    margin-top: 24px;
+    margin-left: 38px;
+    // margin-right: 38px;
 
-const ProfileBox = styled.div`
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    top: 90px;
-    left: 70px;
-    border-radius: 200px;
-    background: #D6D6D6;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    background-size: cover;
-    background-image: url(${props => props.img});
+    // margin-top: ${100 + 24}px;
+    // margin-left: ${100 + 38}px;
+    // *{border: 1px solid red;}
 `;
-//CSS
-const MypageSummaryBox = styled.div`
-    width:1920px;
-    height:336px;
-    position:relative;
-    overflow:hidden;
-    margin-top:36px;
-    background:#EFEFEF;
-    .name_label{
-        width:200px;
-        height:29px;
-        position:absolute;
-        top:41px;
-        left:70px;
-        font-size:20px;
-        font-weignt:500;
-        font-family:Noto Sans KR;
-        color:#707070;
-        text-align:center;
-    }
-    .category_label{
-        width:479px;
-        height:29px;
-        position:absolute;
-        top:41px;
-        left:418px;
-        font-size:20px;
-        font-weight:200;
-        font-family:Noto Sans KR;
-        color:#FF0000;
-        text-align:left;
-    }
-    .explainBox01{
-        width:479px;
-        height:149px;
-        position:absolute;
-        top:90px;
-        left:418px;
-        overflow:hidden;
-        font-size:20px;
-        font-weight:200;
-        font-family:Noto Sans KR;
-        color:#707070;
-        text-align:left;
-        line-height:35px;
-        word-wrap:break-word;
-    }
-    .explainBox02{
-        width:479px;
-        height:149px;
-        position:absolute;
-        top:90px;
-        left:976px;
-        overflow:hidden;
-        font-size:20px;
-        font-weight:200;
-        font-family:Noto Sans KR;
-        color:#707070;
-        text-align:left;
-        line-height:35px;
-        word-wrap:break-word;
-    }
-    .countBox{
-        width:300px;
-        height:22px;
-        position:absolute;
-        display:flex;
-        left:418px;
-        bottom:50px;
-    }
-    .countItem{
-        display:flex;
-        width:75px;
-        height:100%;
-        
-        .count_label{
-            width:54px;
-            height:100%
-            margin-left:5px;
-        }
-    } 
-    .sideMenuBox{
-        width:250px;
-        height:100%;
-        position:absolute;
-        right:67px;
-        padding-top:26px;
+const MyInfoBox = styled.div`
+    padding: 12px 12px 12px 34px;
 
-        .sideItemBox{
-            display:flex;
-            justify-content:flex-end;
-            align-items:flex-end;
-            width:100%;
-            height:36px;
-        }
-        .sideMenu_label{
-            cursor:pointer;
-            width:164px;
-            height:18px;
-            color:#707070;
-            font-family:Noto Sans KR;
-            font-size:17px;
-            font-weight:200;
-            text-align:right;
-        }
-        .updateTime_label
-        {
-            width:200px;
-            height:25px;
-            position:absolute;
-            top:273px;
-            right:0px;
-            font-size:17px;
-            font-weight:200;
-            font-family:Noto Sans KR;
-            color:#707070;
-            text-align:right;
-        }
+    max-width:1740px;
+    min-width: ${1000}px;
 
-    }
- 
-`
-const SideItemIcon=styled.div`
-    cursor:pointer;
-    height:26px;
-    width:26px;
-    margin-left:15px;
-    background:${props => `url(${props.imageURL})`};
-    background-repeat:no-repeat;
-    background-size:contain;
-    background-position:center center;
-`
-const MiniIcon = styled.div`
-    width:17px;
-    height:17px;
-    background-image: ${props => `url(${props.imageURL})`};
-    background-position:center center;
-    background-size:contain;
-    background-repeat:no-repeat;
-    opacity:${props=>props.opacity};
+    display: flex;
+    flex-direction: row;
 
-`
-const LikeDialog = styled.div`
-    width:396px;
-    height:138px;
-    position:absolute;
-    top:47px;
-    left:763px;
-    background:#FFFFFF 0% 0% no-repeat padding-box;
-    border-radius:5px;
-    box-shadow:0px 3px 6px #000000;
-    opacity:1;
-    .message
-    {
-        width:273px;
-        height:69px;
-        margin-top:31px;
-        margin-left:62px;
-        font-size:20px;
-        font-weight:500;
-        font-family:Noto Sans KR;
-        color:#707070;
-        line-height:40px;
-        text-align:center;
+    .wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
-`
-const UpdateTimeBox = {
-    position: "absolute", width: "200px", height: "25px", top: "273px", right: "72px",
-    color: "#707070", fontFamily: "Noto Sans KR", fontSize: "17px", fontWeight: "200", textAlign: "right"
-}
-const defaultCount = {
-    total_like: 0,
-    total_group: 0,
-    total_design: 0,
-    total_view: 0,
-}
-let about_me = ["", ""];
-let descriptionLengthCheck = "";
+    background-color: #E0E0E0;
+    box-shadow: rgba(38, 57, 77, 0.25) 0px 10px 15px -5px;
+`;
+const Thumbnail = styled.div`
+    width: 226px;
+    height: 226px;
+    min-width: 226px;
+    min-height: 226px;
+    background-image: url(${props => props.face});
+    background-position: center center;
+    background-size: cover;
+    border-radius: 100%;
+
+    box-shadow: rgba(38, 57, 77, 0.25) 0px 10px 15px -5px;
+`;
+const Details = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .nick {
+        width: max-content;
+        height: 41px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 28px;
+        line-height: 41px;
+        font-family: Spoqa Han Sans;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+    }
+     .cate {
+        margin-top: 5px;
+        width: max-content;
+        height: 28px;
+        text-align: left;
+        font-weight: normal;
+        font-size: 19px;
+        line-height: 28px;
+        font-family: Spoqa Han Sans;
+        letter-spacing: 0px;
+        color: #FF0000;
+        opacity: 1;
+    }
+    .about {
+        padding-left: 5px;
+        padding-right: 10px;
+        margin-top: 14px;
+        text-align: left;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 27px;
+        font-family: Spoqa Han Sans;
+        letter-spacing: 0px;
+        color: #777777;
+        opacity: 1;
+    }
+
+    .count { 
+        display: flex;
+        flex-direction: row;
+
+        .element {
+            display: flex;
+            flex-direction: row;
+            .icon {
+                width: 42px;
+                height: 42px;
+                display: flex;
+                align-items: center;
+
+                margin-right: 7px;
+            }
+            .num {
+                width: max-content;
+                height: 38px;
+                text-align: left;
+                font-weight: normal;
+                font-size: 26px;
+                line-height: 38px;
+                font-family: Spoqa Han Sans;
+                letter-spacing: 0px;
+                color: #000000;
+                opacity: 1;
+
+            }
+            margin-right: 20px;
+            :last-child { margin-right: 0px;}
+        }
+    }
+`;
+const IconDiv = styled.div`
+    width: ${props => props.width}px;
+    height: ${props => props.height}px;
+    background-image: url(${props => props.icon});
+    background-position: center center;
+    background-size: cover;
+`;
+const Additional = styled.div`
+    width: 203px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+    .modify {
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+        :hover {
+            opacity: 0.8;
+            background-color: #E4E4E4;
+        }
+    }
+    .logout {
+        margin-left: auto;
+        width: max-content;
+        margin-top: 15px;
+    }
+    .logout-text {
+        cursor: pointer;
+        width: max-content;
+        color: #FF0000;
+        font-size: 1rem;
+        height: 1.2rem;
+        line-height: 1.2rem;
+        font-family: Spoqa Han Sans Neo;
+    }
+    .modify-text {
+        width: max-content;
+        height: 33px;
+        text-align: center;
+        font-weight: medium;
+        font-size: 24px;
+        line-height: 33px;
+        font-family: Spoqa Han Sans Neo;
+        letter-spacing: 0px;
+        color: #4F4F4F;
+        opacity: 1;
+
+        margin-top: 6px;
+        margin-right: 12px;
+    }
+    .modify-icon {
+        width: 53px;
+        height: 53px;
+    }
+    .date {
+        width: 100%;
+        text-align: right;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 26px
+        font-family: Spoqa Han Sans Neo;
+        letter-spacing: 0px;
+        color: #777777;
+        opacity: 1;
+        .update-date{
+            min-width:max-content;
+        }
+        .create-date{
+            min-width:max-content;
+        }
+    }
+`;
 
 class MypageHeader extends Component {
     constructor(props) {
         super(props);
-        this.state = { tmpLike: false, likeDialog: false, forkDialog: 0 };
+        this.state = {
+            w: window.innerWidth > 1920 ? 1920 : window.innerWidth,
+            tmpLike: false,
+            likeDialog: false,
+            forkDialog: 0,
+            isSeeMore: false,
+        };
     }
     gotoMyModify = () => {
         window.location.href = geturl() + '/mymodify';
     }
+    SignOut = () => {
+        const { TokenName } = require("constant");
+        SetSession(TokenName, null)
+            .then(data => {
+                this.props.SignOutRequest();
+                window.location.href = "/";
+            });
+    }
     render() {
-        const MypageInfo = this.props.MyDetail;
+        console.log("MyDetail:", this.props);
 
-        const countInfo = MypageInfo.count || defaultCount;
+        // const { likeDialog, w } = this.state;
+        const { MyDetail } = this.props;
+
+        const MypageInfo = this.props.MyDetail;
+        const countInfo = MypageInfo.count || { total_like: 0, total_group: 0, total_design: 0, total_view: 0, };
         const thumbnailInfo = MypageInfo.profileImg ? MypageInfo.profileImg.m_img : noimg;
 
-        if (MypageInfo&&MypageInfo.about_me !=null ) {
-            about_me[0] = MypageInfo.about_me.length < 199 ? MypageInfo.about_me : MypageInfo.about_me.slice(0, 199);
-            descriptionLengthCheck = MypageInfo.about_me.length < 400 ? "" : " ...";
-            about_me[1] = MypageInfo.about_me.length < 199 ? "" : MypageInfo.about_me.slice(200, 399) + descriptionLengthCheck;
-        }
+        return (<Wrapper>
+            <MyInfoBox>
+                {/* thumbnail */}
+                <Thumbnail face={thumbnailInfo} />
 
-        //console.log("updatetime==", DateFormat(MypageInfo.update_time));
-        return (
-            <React.Fragment>
-                    <MypageSummaryBox>
-                    <div className="name_label">{MypageInfo.nick_name}</div>
-                    <ProfileBox img={thumbnailInfo} />
-                    <div className="category_label">{MypageInfo.categoryName}</div>
-                    <div className="explainBox01">{about_me[0]}</div>
-                    <div className="explainBox02">{about_me[1]}</div>
-                    <div className="countBox">
-                        <div className="countItem">
-                            <MiniIcon><IconView width="17px" height="13px" fill="#707070" /></MiniIcon>                        
-                            <div className="count_label">{NumberFormat(countInfo.total_view==null?0:countInfo.total_view)}</div>
+                <div className="wrapper">
+                    {/* nick, intro, counter */}
+                    <Details>
+                        <div className="wrapper">
+                            <div className="nick">{MyDetail.nick_name}</div>
+                            <div className="cate">{MyDetail.categoryName}</div>
+                            <div className="about">{MyDetail.about_me}</div>
                         </div>
-                        <div className="countItem">
-                            <MiniIcon imageURL={iThumbUp} opacity="0.5"></MiniIcon>
-                            <div className="count_label">{NumberFormat(countInfo.total_like==null?0:countInfo.total_like)}</div>
-                        </div>
-                        <div className="countItem">
-                            <MiniIcon imageURL={iForked} opacity="0.5"></MiniIcon>
-                            <div className="count_label">{NumberFormat(countInfo.total_group + countInfo.total_design)}</div>
-                        </div>
-                    </div>
-                <div className="sideMenuBox">
-                    <div onClick = {this.gotoMyModify}  className="sideItemBox">
-                    <div className="sideMenu_label">정보 수정하기</div>
-                    <SideItemIcon imageURL={iEdit}/>
-                    </div>
 
-                    <div className="updateTime_label">최근 업데이트 {DateFormat(this.props.MyDetail&&this.props.MyDetail.update_time)}</div>
+                        <div className="count">
+                            <div className="element">
+                                <div className="icon"><IconDiv width={38} height={38} icon={iconView} /></div>
+                                <div className="num">{NumberFormat(countInfo.total_view)}</div>
+                            </div>
+                            <div className="element">
+                                <div className="icon"><IconDiv width={38} height={38} icon={iconLike} /></div>
+                                <div className="num">{NumberFormat(countInfo.total_like)}</div>
+                            </div>
+                            <div className="element">
+                                <div className="icon"><IconDiv width={28} height={28} icon={iconArticle} /></div>
+                                <div className="num">{NumberFormat(countInfo.total_design + countInfo.total_group)}</div>
+                            </div>
+                        </div>
+                    </Details>
+
+                    {/* button, update, create */}
+                    <Additional>
+                        <div className="wrapper">
+                            <a className="modify" onClick={this.gotoMyModify}>
+                                {/* <div  > */}
+                                <div className="modify-text">정보 수정하기</div>
+                                <div className="modify-icon"><IconDiv width={53} height={53} icon={iconEdit} /></div>
+                                {/* </div> */}
+                            </a>
+                            {/* <a className="logout" onClick={this.SignOut}>
+                                <div className="logout-text">로그아웃</div>
+                                <div className="logout-icon"><IconDiv width={53} height={53} icon={?} /></div>
+                            </a> */}
+                        </div>
+                        <div className="date">
+                            <div className="update-date">최근&nbsp;업데이트&nbsp;{MyDetail && DateFormat(MyDetail.update_time)}</div>
+                            <div className="create-date">등록일자&nbsp;{MyDetail ? new Date(MyDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(MyDetail.create_time).toLocaleDateString('ko-KR').length - 1) : "none"}</div>
+                        </div>
+                    </Additional>
                 </div>
-                    {this.state.likeDialog === false ? null :
-                        <LikeDialog>
-                            <div className="message">관심 디자이너로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.
-                        </div>
-                        </LikeDialog>}
-                </MypageSummaryBox>
+            </MyInfoBox>
 
-            </React.Fragment>
-        );
-
+        </Wrapper>);
     };
 }
 export default MypageHeader;

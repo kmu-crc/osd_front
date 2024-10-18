@@ -1,36 +1,40 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import MessageList from "components/Messages/MessageList"
-import { GetMyMsgListRequest, SendMessageRequest} from "redux/modules/message"
-import { SearchMemberRequest } from "redux/modules/search"
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import MessageList from "components/Messages/MessageList";
+import MessageListMobile from "components/Messages/MessageListMobile";
+import {
+  GetMyChatRoomsListRequest, GetMyMsgListRequest, SendMessageRequest
+} from "redux/modules/message";
+import { SearchMemberRequest } from "redux/modules/search";
+import { isMobile } from "constant";
 
 class MessageListContainer extends Component {
-  render() {
-    return (<MessageList {...this.props} />)
+  componentDidMount() {
+    this.props.userInfo && this.props.GetMyChatRoomsListRequest(this.props.token);
   }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    token: state.Authentication.status.token,
-    MessageList: state.Message.status.MsgList,
-    userInfo: state.Authentication.status.userInfo,
-    members: state.Search.status.members,
+  render() {
+    return (
+      isMobile()
+        ? <MessageListMobile {...this.props} />
+        : <MessageList {...this.props} />);
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    GetMyMsgListRequest: (token) => {
-      return dispatch(GetMyMsgListRequest(token));
-    },
-    SendMessageRequest: (token, data, id) => {
-      return dispatch(SendMessageRequest(token, data, id));
-    },
-    SearchMemberRequest: (id, data, token) => {
-      return dispatch(SearchMemberRequest(id, data, token));
-    },
-  };
-};
+const mapStateToProps = (state) => ({
+  MyDetail: state.Personal.status.MyDetail,
+  Count: state.DesignerList.status.Count,
+  ChatRooms: state.Message.status.Rooms,
+  token: state.Authentication.status.token,
+  MessageList: state.Message.status.MsgList,
+  userInfo: state.Authentication.status.userInfo,
+  members: state.Search.status.members,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  GetMyChatRoomsListRequest: (token) => dispatch(GetMyChatRoomsListRequest(token)),
+  GetMyMsgListRequest: (token) => dispatch(GetMyMsgListRequest(token)),
+  SendMessageRequest: (token, data, id) => dispatch(SendMessageRequest(token, data, id)),
+  SearchMemberRequest: (id, data, token) => dispatch(SearchMemberRequest(id, data, token)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageListContainer);

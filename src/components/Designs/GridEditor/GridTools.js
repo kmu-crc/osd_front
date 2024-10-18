@@ -1,53 +1,71 @@
 import React from 'react';
-import Cross from "components/Commons/Cross";
 import DateFormat from "modules/DateFormat";
 import styled from "styled-components";
 import PxtoRem from "modules/PxtoRem";
+import TextFormat from 'modules/TextFormat';
+import new_logo_cross from "source/new_logo_cross.svg";
+import new_logo_lock from "source/new_logo_lock.svg";
 
 const CreateStepContainer = styled.div`
     position: relative;
     display: flex;
-    width: 200px;
-    height: 77px;
-    border-radius: 15px;
+    align-items:center;
+    width:250px;
+    height:43px;
+    background-color:#707070;
+    display:flex;
     background-clip: padding-box;
     margin-right: ${props => props.marginRight}px;
     border: 2px solid rgba(112,112,112, 0.5);
     cursor: pointer;
+    display:flex;
+    justify-content:center;
+    align-items:center;
     .close-box{
         poistion: relative;
-        margin-top: 22.5px;
+        // margin-top: 22.5px;
         margin-left: 19.5px;
         margin-right: 15px;
+        display:flex;
+        align-items:center;
     }
     .create-button{
         opacity: ${props => props.disabled}; 
-        margin-top: 23px;
-        height: 29px;
-        color: #707070;
+        // margin-top: 23px;
         font-family: Noto Sans KR;
-        font-size: 20px;
-        text-align: left;
-        line-height: 29px;
+        font-size: 24px;
+        font-weight:700;
+        color:white;
+        text-align: center;
+        cursor:pointer;
+
     }
 `;
+
+const Cross =styled.img`
+    width:${props=>props.width}px;
+    height:${props=>props.height}px;
+    object-fit:contain;
+`
 export const CreateStep = (props) => {
     return (<CreateStepContainer marginRight={props.marginRight} disabled={props.disabled ? 0.5 : 1.0} onClick={props.onClick}>
         <div className="close-box">
-            <Cross angle={90} width={33} height={33} disabled={false} /></div>
+        <Cross width={19} height={19} src={new_logo_cross} disabled={false} /></div>
         <div className="create-button">{props.step} 생성하기</div>
     </CreateStepContainer>)
 }
 export const CreateCard = (props) => {
     return (<div onClick={props.onClick}
         style={{
-            width: "200px", height: "200px", marginRight: props.marginRight,
-            borderRadius: "15px", backgroundClip: "padding-box", border: "2px solid rgba(112,112,112, 0.5)",
-            cursor: "pointer"
+            width: "250px", height: "250px", marginRight: props.marginRight,
+            background: "white", border:"2px solid #A3A0A0",
+            backgroundClip: "padding-box",boxShadow:" 8px 8px 8px #4141411A",
+            cursor: "pointer", marginBottom: "10px",position:"relative"
         }}>
-        <div style={{ position: "relative", marginTop: "38.58px", marginLeft: "66.59px" }}>
-            <Cross angle={90} width={66.68} height={66.68} disabled={false} /></div>
-        <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "32.23px", height: "29px", color: "#707070", fontFamily: "Noto Sans KR", fontSize: "20px", textAlign: "center", lineHeight: "29px" }}>{props.step}생성하기</div>
+        <div style={{ width:"100%",display:"flex",justifyContent:"center",marginTop:"40px" }}>
+            <Cross width={100} height={100} src={new_logo_cross} disabled={false} />
+        </div>
+        <div style={{ opacity: props.disabled ? "0.5" : "1.0", marginTop: "30px", height: "29px", color: "#cccccc", fontFamily: "Noto Sans KR", fontWeight:"700",fontSize: "24px", textAlign: "center" }}>컨텐츠 등록하기</div>
     </div>)
 }
 export const TipDiv = (props) => {
@@ -57,125 +75,250 @@ export const TipDiv = (props) => {
     </div>)
 }
 const StepCardStyle = styled.div`
+    *{
+        cursor: pointer;
+    }
     position: relative;
-    cursor: pointer;
     display: flex;
-    width: 200px;
-    height: 77px;
-    border-radius: 15px;
-    border: 2px solid #707070;
-    margin-top: ${props => props.marginTop}px;
+    align-items:center;
+    // width: 200px;
+    // height: 77px;
+    // border-radius: 15px;
+    // background-color: white;
+    // border: 2px solid #707070;
+    width:250px;
+    height:43px;
+    background-color:#707070;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:10px;
     margin-left: ${props => props.marginLeft}px;
     margin-right: ${props => props.marginRight}px;
     margin-bottom: ${props => props.marginBottom}px;
     background-clip: padding-box;
-    background-color: white;
     overflow:hidden;
     .text-area{
-        margin-top: 24px;
-        margin-left: 12px;
-        height: 29px;
+        // margin-top: 24px;
+        // margin-left: 12px;
+        // height: 29px;
         width: 178px;
         color: #707070;
         font-family: Noto Sans KR;
-        font-size: 20px;
+        font-size: 24px;
+        font-weight:700;
+        color:white;
         text-align: center;
         line-height: 29px;
+        cursor:pointer;
     }
     :hover{
         .icon-area{
-            display: block;
+            display: ${props => props.editor === true ? "block" : "none"};
         }
     }
     .icon-area{
         opacity: 0.5;
         display: none;
         position: absolute;
+        z-index:0;
+        // border:3px solid black;
         margin-left: 165px;
         margin-top: 25px;
+        cursor:${props => props.editor === true ? "move" : "default"};;
     }
 `;
 export const StepCard = (props) => {
-    return (<StepCardStyle marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} onClick={props.onClick} id={props.id} uid={props.uid} title={props.title}>
+    return (<StepCardStyle editor={props.editor} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} onClick={props.onClick} id={props.id} uid={props.uid} title={props.title}>
         <div className="icon-area">{props.children}</div>
-        <div className="text-area" id={props.id} uid={props.uid} title={props.title}>{props.title.slice(0, 10)} {props.title.length > 10 ? "..." : ""} </div>
+        <div className="text-area" id={props.id} uid={props.uid} title={props.title}>
+            <TextFormat txt={props.title} />
+        </div>
     </StepCardStyle >)
 }
 const CardContainer = styled.div`
-    div{
-        // border:1px dashed red;
-    }
+
+    // *{
+    //     // border:1px solid black;
+    //     cursor:pointer;
+    // }
+
     position: relative;
-    z-index: 700;
-    cursor: pointer;
-    // width: 200px;
-    // height: 200px;
-    width: ${PxtoRem(200)};
-    height: ${PxtoRem(200)};
-    border-radius: 15px;
-    overflow:hidden;
-    border: 2px solid rgba(112, 112, 112, 1);
-    background-color: rgba(112, 112, 112, .15);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index: 702;
+    // width: ${PxtoRem(215)};
+    // height: ${PxtoRem(215)};
+    // overflow:hidden;
+    // border-radius: 15px;
+    // border: 2px solid rgba(112, 112, 112, 1);
+    // background-color: rgba(112, 112, 112, .15);
+
+    width:250px;
+    height:250px;
+    background-color:
+    border:1px solid #A3A0A0;
+    background-color:#CCCCCC;
+
     margin-top:${props => props.marginTop};
     margin-left:${props => props.marginLeft};
     margin-right:${props => props.marginRight};
     margin-bottom:${props => props.marginBottom};
     background-clip: padding-box;
     background-size: cover;
-    background-position: 50%;
-    background-image: url(${props => props.first_img && props.first_img.m_img});
+    background-position: center;
+    cursor: pointer;
+    box-shadow: 8px 8px 8px #4141411A;
+
     :hover{
         .icon-area{
-            display: block;
+            display: ${props => props.editor === true ? "block" : "none"};
+            cursor:${props => props.editor === true ? "move" : "default"};;
         }
     }
     .icon-area{
+        position: absolute;
+        width:110%;
+        height:110%;
         color: ${props => props.first_img ? "white" : "black"};
-        z-index: 720;
+        z-index: 2;
         opacity: 0.5;
         display: none;
-        position: absolute;
-        margin-left: 165px;
-        margin-top: 25px;
+        cursor:${props => props.editor === true ? "move" : "default"};
+        border-radius:15px;
+        background-color:gray;
+        opacity:0.1;
+        // margin-left: 165px;
+        // margin-top: 25px;
+
     }
-}}>
+    .bound_box_{
+        width:100%;
+        height:100%;
+        // border-radius:15px;
+        overflow:hidden;
+        cursor:pointer;
+        position:absolute;
+        z-index: 700;
+        // background: #EFEFEF;
+        border:1px solid #A3A0A0;
+        background-color:#CCCCCC;
+        background-image: url(${props => props.first_img && props.first_img.m_img});
+        background-size: cover;
+        background-position: center;
+        .gradient {
+            z-index: 701;
+            cursor: pointer;
+            // border-radius: 15px;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent linear-gradient(-180deg, rgba(32,32,32, 0.5) 0%, rgba(255,255,255, 0) 50%);
+        }
+        .text {
+            z-index: 702;
+            position: absolute;
+            width: 100%; 
+            height: 74px;
+            font-size: 20px; 
+            font-family: Noto Sans KR;
+            font-weight: 500;
+            color: #FFFFFF; 
+            text-align: center; 
+            line-height: 40px; 
+            margin-top: 27px;
+        }
+       }
+`;
+const AuthorBox = styled.div`
+z-index: 702;
+background: rgba(234, 234, 234, 0.35);
+width: 100%;
+height: 63px;
+border-radius: 5px;
+font-family: Noto Sans KR;
+font-weight: 300;
+color: #707070;
+text-align: center;
+margin-top: 120px;
+//   margin-left: 13px;
+padding: 8px;
+`;
+
+const LockContainer = styled.div`
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 703;
+    display: flex;
+
+    .icon-wrapper {
+        height:26px;
+        display:flex;
+        align-items:center;
+        .icon{
+            width:26px;
+            height:26px;
+            min-width:26px;
+            min-height:26px;
+            object-fit:contain;
+        }
+        .text{
+            color:#707070;
+            font: normal normal 300 15px/22px Spoqa Han Sans Neo;
+        }
+    }
 `;
 export const ContentCard = (props) => {
     // const { card, marginTop, marginRight, marginBottom, marginLeft } = props;
     return (props.card
-        ? <CardContainer uid={props.uid} id={props.id} onClick={props.onClick} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} first_img={props.card.first_img}>
+        ?
+
+        <CardContainer editor={props.editor} uid={props.uid} id={props.id} onClick={props.onClick} marginTop={props.marginTop} marginLeft={props.marginLeft} marginRight={props.marginRight} marginBottom={props.marginBottom} first_img={props.card.first_img}>
+
+            {props.card.private === 1 ?
+                <LockContainer>
+                    <div className="icon-wrapper">
+                        <img src={new_logo_lock} className="icon"/>
+                        <div className="text">비공개</div>
+                    </div>
+                </LockContainer>
+                : null}
+
             <div className="icon-area">{props.children}</div>
             {props.card.first_img ?
+                <div id={`div_card_${props.uid}`} className="bound_box_">
+                    <div className="gradient" />
+                    <div className="text">
+                        <TextFormat txt={props.card.title} />
+                    </div>
+                    {/* #EAEAEA */}
+                    <AuthorBox>
+                        <div style={{ fontSize: "18px", fontWeight: "400" }}>
+                            <TextFormat txt={props.card.nick_name} /></div>
+                        <div style={{ fontSize: "18px", marginTop: "6px", fontWeight: "400" }}>
+                            {DateFormat(props.card.update_time)}</div>
+                    </AuthorBox>
+                </div>
+                :
                 <React.Fragment>
-                    {/* <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(180deg, #000000 0%, #020202F7 16%, #FFFFFF26 100%)" }} /> */}
-                    <div style={{ zIndex: "701", cursor: "pointer", position: "absolute", width: "100%", height: "100%", background: "transparent linear-gradient(-180deg, rgba(32,32,32, 0.5) 0%, rgba(255,255,255, 0) 50%)" }} />
-                    <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#FFFFFF", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
-                        {props.card.title.slice(0, 10)}
-                    </div>
-                    {/* <div style={{ zIndex: "702", background: "transparent linear-gradient(270deg, #00000000 0%, #FFFFFFA1 13%, #FFFFFF 52%, #FFFFFF94 82%, #80808000 100%)", position: "absolute", width: "195px", height: "53px", fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "128px", marginLeft: "auto" }}> */}
-                    <div style={{ zIndex: "702", background: "#EAEAEA", width: "170px", height: "63px", borderRadius:"5px",opacity:"0.8",
-                        fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "120px", marginLeft: "13px",padding:"8px" }}>
-                        <div style={{ fontSize: "17px",fontWeight:"400"}}>
-                            {props.card.nick_name.slice(0, 10)}
+                    <div id={`div_card_${props.uid}`} className="bound_box_">
+                        <div style={{  zIndex: "702", position: "absolute", width: "100%",paddingLeft:"20px",paddingRight:"20px", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", textAlign: "center", lineHeight: "40px", marginTop: "27px", }}>
+                            <TextFormat txt={props.card.title || ""} />
                         </div>
-                        <div style={{ fontSize: "15px", marginTop: "6px",fontWeight:"400" }}>
-                            {DateFormat(props.card.update_time)}
+                        <div style={{ zIndex: "702", position: "absolute", width: "100%", height: "53px", fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "173px", marginLeft: "auto" }}>
+                            <div style={{ fontSize: "17px" }}>
+                                <TextFormat txt={props.card.nick_name || ""} />
+                            </div>
+                            <div style={{ fontSize: "15px", marginTop: "6px" }}>
+                                {DateFormat(props.card.update_time)}
+                            </div>
                         </div>
                     </div>
-                </React.Fragment> :
-                <React.Fragment>
-                    <div style={{ zIndex: "702", position: "absolute", width: "165px", height: "74px", fontSize: "20px", fontFamily: "Noto Sans KR", fontWeight: "500", color: "#707070", textAlign: "center", lineHeight: "40px", marginTop: "27px", marginLeft: "19px" }}>
-                        {props.card.title.slice(0, 10)}
-                    </div>
-                    <div style={{ zIndex: "702", position: "absolute", width: "195px", height: "53px", fontFamily: "Noto Sans KR", fontWeight: "300", color: "#707070", textAlign: "center", marginTop: "128px", marginLeft: "auto" }}>
-                        <div style={{ fontSize: "17px" }}>
-                            {props.card.nick_name.slice(0, 10)}
-                        </div>
-                        <div style={{ fontSize: "15px", marginTop: "6px" }}>
-                            {DateFormat(props.card.update_time)}
-                        </div>
-                    </div>
-                </React.Fragment>}
+                    {/* // </div> */}
+                </React.Fragment>
+            }
         </CardContainer>
         : <CardContainer />
     )

@@ -13,7 +13,7 @@ class ProfileImage extends Component {
     imgUrl : null
   }
   onChangeImgUrl = (url) => {
-    console.log("url", url);
+    //console.log("url", url);
     let reader = new FileReader();
     reader.onloadend = () => {
       this.setState({

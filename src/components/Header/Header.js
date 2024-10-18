@@ -2,181 +2,189 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import MenuContext from "Global/Context/GlobalContext"
 
-// import Notification from "components/Commons/Notification"
 import Message from "components/Header/Message"
-import logo from "source/logo.png"
 import AlarmContainer from "containers/Header/AlarmContainer"
 import SearchForm from "components/Header/SearchForm"
-import SignNav from "components/Header/SignNav"
+// import SignNav from "components/Header/SignNav"
 import Socket from "modules/Socket"
 
-const SmallMinWidth = 0;
-const SmallMaxWidth = 480;
-const MediumMinWidth = 480;
-const MediumMaxWidth = 1440;
-const LargeMinWidth = 1440;
-const LargeMaxWidth = 1920;
-// CSS
-const Menu = styled.div`
-    z-index: 900;
+import new_logo_opendesign from "source/new_logo_opendesign.svg";
+import new_logo_opendesign_purple from "source/new_logo_opendesign_purple.svg";
+import new_logo_opendesign_green from "source/new_logo_opendesign_green.svg";
+import new_logo_opendesign_blue from "source/new_logo_opendesign_blue.svg";
+
+const Profile = styled.div`
+    min-width:57px;
+    max-width:57px;
+    min-height:57px;
+    max-height:57px;
+    border-radius:50%;
+    box-shadow: 8px 8px 6px #00000029;
+    border:1px solid #912525;
+    background-color:white;
+    background-image:url(${props => props.img});
+    background-size:cover;
+    border:4px solid ${window.location.pathname.indexOf("designer") != -1 ? "#7E1E9B"
+        : window.location.pathname.indexOf("Designer") != -1 ? "#7E1E9B"
+            : window.location.pathname.indexOf("design") != -1 ? "#1262AB"
+                : window.location.pathname.indexOf("Design") != -1 ? "#1262AB"
+                    : window.location.pathname.indexOf("group") != -1 ? "#1E9B79"
+                        : window.location.pathname.indexOf("Group") != -1 ? "#1E9B79"
+                            : "red"
+    };
+`
+
+const HeaderMenu = styled.div`
     width: 100%;
+    height: 90px;
+    background-color: ${props => props.bgColor};
     position: fixed;
     display: flex;
-    flex-direction:row-reverse;
-    @media only screen and (max-width : 900px) {
-        display:block;
+    // justify-content: space-between;
+    align-items: center;
+    z-index: 903;
+    * {
+        font-family: Noto Sans KR;
     }
-    justify-content: space-between;
-    font-size: 20px;
-    font-weight: 500;
-    font-family: Noto Sans KR;
-    color: #707070;
-    background-color: #FFFFFF;
-    &.hidemenu {
-        top: -55px;
-        opacity: 0;
+    .wrap {
+        display: flex;
+        align-items: center;
+
+        // border: 2px dashed green;
     }
-    -webkit-transition: all 0.45s;
-    -moz-transition: all 0.45s;
-    -ms-transition: all 0.45s;
-    -o-transition: all 0.45s;
-    transition: all 0.45s;    
-`
-const LeftMenu = styled.ul`
-    // position: absolute;
-    left: 0px;
-    min-width: 400px;
-    margin: 0px;
-    padding: 0px;
-    vertical-align: top;
-    display: flex;
-    line-height: 29px;
-    list-style: none;
-    @media only screen and (max-width: 900px) {
+    .menu_nav {
+        min-width: 100px;
+        height:90px;
+        display:flex;
         justify-content:center;
+        align-items:center;
+        background-color:${window.location.pathname.indexOf("designer") != -1 ? "#522058"
+        : window.location.pathname.indexOf("Designer") != -1 ? "#522058"
+            : window.location.pathname.indexOf("design") != -1 ? "#193356"
+                : window.location.pathname.indexOf("Design") != -1 ? "#193356"
+                    : window.location.pathname.indexOf("group") != -1 ? "#205847"
+                        : window.location.pathname.indexOf("Group") != -1 ? "#205847"
+                            : "#7A7A7A"
+    };
     }
-    .logoBox{
-        height: 55px;
-        min-width: 55px;
-        margin-left: 10px;
-        .logo{
-            width: 55px;
-            height: 55px;
-        }
+    .menu_icon{
+        width:60px;
+        height:60px;
+        cursor:pointer;
     }
-`
-const MenuItem = styled.li`
-    min-width:55px;
-    height:29px;
-    margin-left:50px;
-    margin-top:11px;
-    text-align:center;
-    .link_tag{
-        color:${props => props.isSelect == true ? "#FF0000" : "#707070"}
+    .home_logo{
+        width: 120px;
+        height: 51px;
+        min-width: 120px;
+        min-height: 51px;
+        margin-left: 35px;
     }
-
-    // @media only screen and (min-width : ${SmallMinWidth}px) and (max-width : ${SmallMaxWidth}px) {
-    //     width: ${SmallMaxWidth}px;
-    // }
-    //   @media only screen and (min-width : ${MediumMinWidth}px) and (max-width : ${MediumMaxWidth}px) {
-    //     width: ${MediumMaxWidth}px;
-    // }
-    //   @media only screen and (min-width : ${LargeMinWidth}px) and (max-width : ${LargeMaxWidth}px) {
-    //     width: ${LargeMaxWidth}px;
-    // }
-    //   @media only screen and (min-width : ${LargeMaxWidth}px){
-    //     width: ${LargeMaxWidth}px;
-    // }
-`
-const RightMenu = styled.ul`
-    min-width:480px;
-    // position:absolute;
-    background-color:#FFFFFF;
-
-    right:0px;
-    margin:0px;
-    padding:0px;
-    list-style:none;
-    display:flex;
-    line-height:29px;
-    vertical-align:top;
-
-    @media only screen and (max-width : 900px) {
-        background-color:#EFEFEF;
+    .searchBox{
+        margin-left:100px;
+    }
+    .icon_wrap{
+        width:44px;
+        height:44px;
+        position:relative;
+    }
+    .marginRight1{
+        margin-right:45px;
+    }
+    .design_button{
+        width:170px;
+        height:40px;
+        display:flex;
+        align-items:center;
         justify-content:center;
+        color:white;
+        font-family:Spoqa Han Sans Neo,Noto Sans KR;
+        font-size:20px;
+        background-color:red;
+        box-shadow: 8px 8px 8px #0000002B;
+        margin-right:46px;
+        cursor:pointer;
     }
-
-    .searchItem{
-        height:36px;
-        margin-right:50px;
-        margin-top:9px
-        border:none;
-        @media only screen and (max-width : 900px) {
-            margin-top:5px;
-            margin-bottom:5px;
-        }
-    }
-    .IconItem{
-        width:34px;
-        height:34px;
-        margin-right:50px;
-        margin-top:10px;
-        @media only screen and (max-width : 900px) {
-            margin-top:5px;
-            margin-bottom:5px;
-        }
-    }
-    .redItem{
-        min-width:97px;
-        line-height:29px;
-        height:29px;
-        margin-right:50px;
-        margin-top:11px
-        color: red;
-        border-bottom: 1.5px solid red;
+    .login_button {
+        font-family: Spoqa Han Sans;
+        font-size: 18px;
+        color: white;
         cursor: pointer;
-        @media only screen and (max-width : 900px) {
-            margin-top:5px;
-            margin-bottom:5px;
-        }
     }
-    .profileItem{
-        min-width:55px;
-        height:29px;
-        margin-right:17px;
-        margin-top:11px;
-        @media only screen and (max-width : 900px) {
-            margin-top:5px;
-            margin-bottom:5px;
-        }
-    }
-`
 
+    @media only screen and (min-width : 950px) and (max-width:1300px) {
+        .searchBox{
+            margin-left: 10px;
+            margin-right: 10px;
+            // width: ${window.innerWidth * 2 / 5}px;
+        }
+        .marginRight1 {
+            margin-right: 25px;
+        }
+        .design_button {
+            margin-right: 20px;
+        }
+    }
+    @media only screen and (min-width : 0px) and (max-width: 950px) {
+        display: flex;
+        justify-content: start;
+        .searchBox{
+            margin-left: 10px;
+        }
+        .marginRight1 {
+            margin-right: 5px;
+        }
+        .design_button {
+            margin-right: 10px;
+        }
+        .home_logo {
+            margin-left: 15px;
+        }
+    }
+`;
+
+const isOpen = ws => ws.readyState === ws.OPEN;
 class Header extends Component {
     constructor(props) {
         super(props);
-        this.state = { alarm: {}, selectCate: -1, screenWidth: window.innerWidth };
+        this.state = {
+            play: false,
+            notice: {}, alarm: {},
+            selectCate: -1,
+            screenWidth: window.innerWidth
+        };
         this.gotoCreateDesignPage = this.gotoCreateDesignPage.bind(this);
-
     }
     static contextType = MenuContext
     componentDidMount() {
-        if (this.props.valid) {
+        if (isOpen(Socket) && this.props.valid) {
             try {
-                Socket.emit("INIT", this.props.userInfo.uid)
+                if (isOpen(Socket))
+                    Socket.emit("INIT", this.props.userInfo.uid)
                 Socket.on("getNoti", alarm => {
                     this.setState({ alarm: alarm })
-                    console.log("getNoti", alarm)
+                    console.log(alarm)
+                    if (alarm.count) {
+                    }
+                })
+                Socket.on("disconnect", () => {
                 })
             } catch (err) {
-                //TODO v2: doesn't meaning in client, so! report administrator e-mail
-                console.log(err)
+                console.error(err);
             }
         }
         window.addEventListener("resize", this.handleResize, false);
+    };
+    componentWillUpdate(nextProps) {
+        if (this.props.userInfo != null && nextProps.userInfo != null && this.props.userInfo.uid != null && nextProps.userInfo.uid != null) {
+            if (this.props.userInfo.uid !== nextProps.userInfo.uid) {
+                window.history.go(0);
+            }
+        }
+
     }
     componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize, false);
+
     };
     gotoCreateDesignPage() {
         window.location.href = "/createDesign"
@@ -184,37 +192,87 @@ class Header extends Component {
     handleResize = () => {
         this.setState({ screenWidth: window.innerWidth })
     };
-    render() {
-        return (
-            <Menu className={(this.context.hidemenu ? " hidemenu" : "")}>
-                <RightMenu>
-                    <li className="searchItem">
-                        <SearchForm formWidth={this.state.screenWidth} searchCategory={this.state.selectCate} visible={window.location.href.search('/search') > -1 ? 0 : 1} /></li>
-                    {this.props.userInfo != null ? (
-                        <React.Fragment>
-                            <li className="IconItem"><Message noti={this.state.alarm} /></li>
-                            <li className="IconItem"><AlarmContainer {...this.props} alarm={this.state.alarm} /></li>
-                        </React.Fragment>
-                    ) : null}
-                    <li className="redItem">
-                        <div onClick={this.gotoCreateDesignPage}>디자인 등록</div></li>
-                    <li className="profileItem">
-                        <SignNav formWidth={this.state.screenWidth} {...this.props} /></li> {/* <SignNavContainer /> */}
-                </RightMenu>
-                
-                <LeftMenu>
-                    <li className="logoBox">
-                        <a href="/"><img alt="logo" className="logo" src={logo} /></a></li>
-                    <MenuItem isSelect={window.location.pathname === '/design' || (window.location.pathname.search('/designDetail/') > -1 ? true : false)}>
-                        <a className="link_tag" href="/design">디자인</a></MenuItem>
-                    <MenuItem isSelect={window.location.pathname === '/group' || (window.location.pathname.search('/groupDetail/') > -1 ? true : false)}>
-                        <a className="link_tag" href="/group">그룹</a></MenuItem>
-                    <MenuItem isSelect={window.location.pathname === '/designer' || (window.location.pathname.search('/designerDetail/') > -1 ? true : false)}>
-                        <a className="link_tag" href="/designer">디자이너</a></MenuItem>
-                </LeftMenu>
-            </Menu>
-        )
-    }
-}
 
-export default Header
+    render() {
+
+        return (<React.Fragment>
+
+            {window.location.pathname.indexOf("/sign") != -1 ?
+                <HeaderMenu bgColor={"#cccccc"}>
+                    {/* <div className="wrap"> */}
+                    {/* <div className="menu_nav"> */}
+                    {/* {this.props.sidemenu == true&&this.props.isLogin?  <img className="menu_icon" src={new_logo_menu_close}/> :<img className="menu_icon" src={new_logo_menu_open}/> } */}
+                    {/* </div> */}
+                    {/* </div> */}
+
+                    <div style={{ width: "100%", display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+                        <div className="wrap">
+                            <a href="/">
+                                <img src={new_logo_opendesign} className="home_logo" />
+                            </a>
+                        </div>
+                        <div className="wrap">
+                            {this.props.userInfo != null
+                                ? <React.Fragment>
+                                    <div className="design_button">디자인 등록</div>
+                                    <div className="icon_wrap marginRight1"><AlarmContainer {...this.props} alarm={this.state.alarm} /></div>
+                                    <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
+                                </React.Fragment>
+                                : null}
+                        </div>
+                    </div>
+                </HeaderMenu>
+
+                : <HeaderMenu bgColor={"#00000033"}>
+
+                    <div style={{ width: "100%", display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+                        <div className="wrap">
+                            <div className="menu_nav">
+                                {/* { this.props.sidemenu == true?  <img className="menu_icon" src={new_logo_menu_close}/> :<img className="menu_icon" src={new_logo_menu_open}/> } */}
+                                {this.props.userInfo != null ?
+                                    <a href="/myPage">
+                                        <Profile img={this.props.userInfo.thumbnail && this.props.userInfo.thumbnail.s_img} />
+                                    </a>
+                                    : <div className="login_button"
+                                        onClick={() => this.props.onClickLogin()}>로그인</div>
+                                }
+                            </div>
+                            <a href="/"><img src={
+                                window.location.pathname.indexOf("designer") != -1 ? `${new_logo_opendesign_purple}`
+                                    : window.location.pathname.indexOf("Designer") != -1 ? `${new_logo_opendesign_purple}`
+                                        : window.location.pathname.indexOf("design") != -1 ? `${new_logo_opendesign_blue}`
+                                            : window.location.pathname.indexOf("Design") != -1 ? `${new_logo_opendesign_blue}`
+                                                : window.location.pathname.indexOf("group") != -1 ? `${new_logo_opendesign_green}`
+                                                    : window.location.pathname.indexOf("Group") != -1 ? `${new_logo_opendesign_green}`
+                                                        : `${new_logo_opendesign}`
+                            } className="home_logo" /></a>
+                        </div>
+
+                        <div className="wrap">
+                            <div className="searchBox">
+                                {window.location.href.search('/search') > -1
+                                    ? null
+                                    : <SearchForm
+                                        formWidth={this.state.screenWidth}
+                                        searchCategory={this.state.selectCate}
+                                        visible={1}
+                                    />}
+                            </div>
+                        </div>
+                        <div className="wrap">
+                            {this.props.userInfo != null ?
+                                <React.Fragment>
+                                    {/* <div className="design_button" onClick={() => { window.location.href = "/createDesign" }}>디자인 등록</div> */}
+                                    <div className="icon_wrap marginRight1"><AlarmContainer {...this.props} alarm={this.state.alarm} /></div>
+                                    <div className="icon_wrap marginRight1"><Message noti={this.state.alarm} /></div>
+                                </React.Fragment>
+                                : null}
+                        </div>
+                    </div>
+                </HeaderMenu >
+            }
+        </React.Fragment>);
+    };
+};
+
+export default Header;

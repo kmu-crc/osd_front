@@ -7,6 +7,8 @@ import BoardUpdate from "components/Designs/DesignBoard/BoardUpdate";
 import opendesign_style from "opendesign_style";
 import { SortableContainer, SortableElement, arrayMove, SortableHandle } from "react-sortable-hoc";
 import TextFormat from "modules/TextFormat";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const CustomModal = styled(Modal)`
   border: "1px solid";
@@ -270,13 +272,12 @@ class DesignBoard extends Component {
   ModifyComplete = () => {
     this.setState({ active: false });
   };
-  onDelete = () => {
+  onDelete = async () => {
     if (this.props.board.cards && this.props.board.cards.length > 0) {
-      alert("컨텐츠가 있는 단계는 삭제할 수 없습니다.");
+      await alert("컨텐츠가 있는 단계는 삭제할 수 없습니다.","확인");
       return;
     }
-    const confirm = window.confirm("단계를 삭제하시겠습니까?");
-    if (confirm) {
+    if (confirm("단계를 삭제하시겠습니까?","예","아니오")) {
       this.props
         .DeleteDesignBoardRequest(
           this.props.board.design_id,
@@ -353,8 +354,8 @@ class DesignBoard extends Component {
                 <SortableComponent getCardList={this.handleGetCardList} items={cardList} />
               </div><br />
               <ButtonWrapper align="right" >
-                <button className="submit" onClick={this.requestReSortCardList}>완료</button>
                 <button className="cancel" onClick={this.closeSortableModal}> 취소</button>
+                <button className="submit" onClick={this.requestReSortCardList}>완료</button>
               </ButtonWrapper>
             </Modal.Content>
           </CustomModal>

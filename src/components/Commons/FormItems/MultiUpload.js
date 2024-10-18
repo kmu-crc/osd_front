@@ -114,7 +114,7 @@ export class MultiUpload extends Component {
       ) {
         let reader = new FileReader();
         reader.onloadend = async () => {
-          console.log("result", reader.result);
+          //console.log("result", reader.result);
           // reader.result 이미지 경로
           // imageUrl = reader.result;
           newUrls.push(reader.result);
@@ -153,7 +153,7 @@ export class MultiUpload extends Component {
   };
 
   returnData = async e => {
-    console.log("multi", this.state);
+    //console.log("multi", this.state);
     if (this.props.getValue) await this.props.getValue(this.state);
     if (e && this.props.onBlur) await this.props.onBlur();
   };
@@ -176,8 +176,8 @@ export class MultiUpload extends Component {
         )}
         {this.state.value.length > 0 &&
           this.state.value.map((item, index) => {
-            console.log("item", index, item);
-            console.log("item", this.state.urls, this.state.urls[index]);
+            //console.log("item", index, item);
+            //console.log("item", this.state.urls, this.state.urls[index]);
             return (
               <FileItem key={`file${index}`}>
                 <FileImg img={this.state.render ? this.state.urls[index] : null} />

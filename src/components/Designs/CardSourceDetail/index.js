@@ -1,1 +1,2 @@
-export {default} from "./CardSourceDetail";
+export { default } from "./CardSourceDetail";
+export * from "./CardSourceDetailMobile";

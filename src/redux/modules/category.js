@@ -18,7 +18,7 @@ const GET_CATEGORY_ALL_FAILURE = "GET_CATEGORY_ALL_FAILURE"
 const GetCategoryAll = () => ({ type: GET_CATEGORY_ALL })
 const GetCategoryLevel1 = () => ({ type: GET_CATEGORY_LEVEL1 })
 const GetCategoryLevel2 = () => ({ type: GET_CATEGORY_LEVEL2 })
-const GetCategoryAllSuccess = (cate1, cate2) => ({ type: GET_CATEGORY_ALL_SUCCESS, category1: cate1, category2: cate2 })
+const GetCategoryAllSuccess = (cate1, cate2, cate3) => ({ type: GET_CATEGORY_ALL_SUCCESS, category1: cate1, category2: cate2, category3: cate3 })
 const GetCategoryLevel1Success = (category) => ({ type: GET_CATEGORY_LEVEL1_SUCCESS, category: category })
 const GetCategoryLevel2Success = (category) => ({ type: GET_CATEGORY_LEVEL2_SUCCESS, category: category })
 const GetCategoryAllFailure = () => ({ type: GET_CATEGORY_ALL_FAILURE })
@@ -28,7 +28,7 @@ const GetCategoryLevel2Failure = () => ({ type: GET_CATEGORY_LEVEL2_FAILURE })
 
 const initialState = {
   category: { status: "INIT" },
-  status: { level1: [], level2: [], category1: [], category2: [] }
+  status: { level1: [], level2: [], category1: [], category2: [], category3: [] }
 }
 
 
@@ -44,7 +44,7 @@ export default function Category(state, action) {
     case GET_CATEGORY_ALL_SUCCESS:
       return update(state, {
         category: { status: { $set: "SUCCESS" } },
-        status: { category1: { $set: action.category1 }, category2: { $set: action.category2 } }
+        status: { category1: { $set: action.category1 }, category2: { $set: action.category2 }, category3: { $set: action.category3 } }
       })
     case GET_CATEGORY_ALL_FAILURE:
       return update(state, {
@@ -81,33 +81,35 @@ export default function Category(state, action) {
 
 
 export function GetCategoryAllRequest() {
-  console.log("GetAllCate")
+  //console.log("GetAllCate")
   return (dispatch) => {
     dispatch(GetCategoryAll())
-    return fetch(`${host}/categorys/getCategoryAll`, { method: "GET" })
+    return fetch(`${host}/categorys/getCategoryAll2`, { method: "GET" })
       .then((res) => {
         return res.json()
       }).then(function (res) {
+        // console.log("========category",res.data);
         let category1 = res.data.category1.map(data => {
           return { text: data.name, value: data.uid }
         })
-        // category1.unshift({ text: "전체", value: 0 })
-        // category1.push({ text: "기타", value: 0 })
-        // category1.shift();
-        // console.log("1",category1)
-        // category1.push({ text: "기타", value: 0 })
-        // console.log("2",category1)
         let category2 = []
         category2 = res.data.category2.map(data => {
           let arr = data.map(item => { return { text: item.name, value: item.uid, parent: item.parents_id } })
-          // arr.unshift({ text: "전체", value: 0 })
-          return (arr)
-        })
-        // category2.unshift([{ text: "전체", value: 0 }])
-        console.log("cate1:", category1, "cate2:", category2)
-        return dispatch(GetCategoryAllSuccess(category1, category2))
+          return (arr);
+        });
+        let category3 = []
+        category3 = res.data.category3.map(data => {
+          // console.log(data);
+          if (data == null) return [];
+          else {
+            let arr = data.map(item => { return { text: item.name, value: item.uid, parent: item.parents_id } })
+            return (arr);
+          }
+        });
+      
+        return dispatch(GetCategoryAllSuccess(category1, category2, category3))
       }).catch((error) => {
-        console.log(error)
+        console.error(error)
         return dispatch(GetCategoryAllFailure())
       })
   }
@@ -122,7 +124,7 @@ export function GetCategoryLevel1Request() {
         return res.json()
       })
       .then(function (res) {
-        console.log("cateogry1", res)
+        //console.log("cateogry1", res)
         let category = res.category.map(data => {
           return { text: data.name, value: data.uid }
         })

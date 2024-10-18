@@ -54,13 +54,13 @@ class ModifyDesignSection01 extends Component
 
     render()
     {
-        console.log("THUMBNAIL",this.props);
+        //console.log("THUMBNAIL",this.props);
         const thumbnaileURL = this.props.DesignDetail.img && this.props.designThumbnail;
         return(
             <section style={BasicSecBox} >
             {/* thumbnail */}
                 <div style={BasicSec_thumb_Box}>
-                    <div style={BasicSecTitle}>섬네일 사진
+                    <div style={BasicSecTitle}>디자인 이미지
                     {/* <input hidden type="file" value={null} /> */}
                     </div>
                     <div style={{marginLeft: "67px", width: "210px", height: "210px", borderRadius: "10px", 

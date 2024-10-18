@@ -1,31 +1,38 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { GetMyDetailRequest, UpdateUserDetailRequest } from "redux/modules/personal"
+import { GetMyDetailRequest, UpdateUserDetailRequest, DeleteUserRequest } from "redux/modules/personal"
 import { GetCategoryAllRequest } from "redux/modules/category"
-import {  CheckNickNameRequest } from "redux/modules/auth"
+import { CheckNickNameRequest, SignOutRequest } from "redux/modules/auth"
 
 import ModifyMyDetail from "components/Users/ModifyMyDetail"
+import ModifyMyDetail_mobile from "components/Users/ModifyMyDetail_mobile"
 
 class ModifyMyDetailContainer extends Component {
-componentDidMount()
-{
-  this.props.GetCategoryAllRequest();
-  this.props.GetMyDetailRequest(this.props.token);
-}
+  componentDidMount() {
+    this.props.GetCategoryAllRequest();
+    this.props.GetMyDetailRequest(this.props.token);
+  }
   render() {
-    console.log("MYDETAIL::::::",this.props);
-    return (<ModifyMyDetail {...this.props} />)
+    console.log("MYDETAIL::::::", this.props);
+    return (
+      window.innerWidth<500?
+      <ModifyMyDetail_mobile {...this.props}/>
+      : 
+      <ModifyMyDetail {...this.props} />
+    )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
+    Count: state.Designer.status.Count,
+    userInfo: state.Authentication.status.userInfo,
     MyDetail: state.Personal.status.MyDetail,
     token: state.Authentication.status.token,
     category1: state.Category.status.category1,
     category2: state.Category.status.category2,
+    category3: state.Category.status.category3,
     CheckNickName: state.Authentication.checkStatus.checkNickName
-
   }
 }
 
@@ -42,7 +49,13 @@ const mapDispatchToProps = (dispatch) => {
     },
     CheckNickNameRequest: (NickName) => {
       return dispatch(CheckNickNameRequest(NickName))
-    }
+    },
+    DeleteUserRequest: (token) => {
+      return dispatch(DeleteUserRequest(token))
+    },
+    SignOutRequest: () => {
+      return dispatch(SignOutRequest())
+    },
   }
 }
 

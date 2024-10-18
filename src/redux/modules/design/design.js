@@ -26,6 +26,9 @@ const CHANGE_TO_PROJECT_FAILURE = "CHANGE_TO_PROJECT_FAILURE"
 const GET_WAITING_LIST = "GET_WAITING_LIST"
 const GET_WAITING_LIST_SUCCESS = "GET_WAITING_LIST_SUCCESS"
 const GET_WAITING_LIST_FAILURE = "GET_WAITING_LIST_FAILURE"
+const GET_WAITING_TO_ACCEPT_LIST = "GET_WAITING_TO_ACCEPT_LIST"
+const GET_WAITING_TO_ACCEPT_LIST_SUCCESS = "GET_WAITING_TO_ACCEPT_LIST_SUCCESS"
+const GET_WAITING_TO_ACCEPT_LIST_FAILURE = "GET_WAITING_TO_ACCEPT_LIST_FAILURE"
 const JOIN_DESIGN = "JOIN_DESIGN"
 const JOIN_DESIGN_SUCCESS = "JOIN_DESIGN_SUCCESS"
 const JOIN_DESIGN_FAILURE = "JOIN_DESIGN_FAILURE"
@@ -59,9 +62,12 @@ const initialState = {
     UpdateDesignInfo: { status: "INIT" },
     DesignDetailView: { status: "INIT" },
     WaitingList: { status: 'INIT' },
+    WaitingToAcceptList: { status: 'INIT' },
     status: {
+        PDFURL: "",
         Message: "", list: null, like: false, new_design_id: null,
-        WaitingList: [], DesignDetail: [], DesignDetailView: [], DesignForked: [],
+        WaitingList: [], WaitingToAcceptList: [],
+        DesignDetail: [], DesignDetailView: [], DesignForked: [],
         Count: { like_count: 0, member_count: 0, card_count: 0, view_count: 0 }
     }
 }
@@ -95,6 +101,9 @@ const ForkDesignListFailure = () => ({ type: FORK_DESIGN_LIST_FAILURE })
 const DesignWaitingList = () => ({ type: GET_WAITING_LIST })
 const DesignWaitingListSuccess = (data) => ({ type: GET_WAITING_LIST_SUCCESS, list: data })
 const DesignWaitingListFailure = () => ({ type: GET_WAITING_LIST_FAILURE, list: [] })
+const DesignWaitingToAcceptList = () => ({ type: GET_WAITING_TO_ACCEPT_LIST })
+const DesignWaitingToAcceptListSuccess = (data) => ({ type: GET_WAITING_TO_ACCEPT_LIST_SUCCESS, list: data })
+const DesignWaitingToAcceptListFailure = () => ({ type: GET_WAITING_TO_ACCEPT_LIST_FAILURE, list: [] })
 const GetDesignDetailStepCard = (data) => ({ type: GET_DESIGN_DETAIL_STEP_CARD, DesignDetailStepCard: data })
 const GetLikeDesign = () => ({ type: GET_LIKE_DESIGN })
 const GetLikeDesignSuccess = (data) => ({ type: GET_LIKE_DESIGN_SUCCESS, like: data })
@@ -122,89 +131,36 @@ export function Design(state, action) {
         state = initialState
 
     switch (action.type) {
-        case FORK_DESIGN:
-            return update(state, { status: { DesignForked: { $set: "WAIT_FORK" } } })
-        case FORK_DESIGN_SUCCESS:
-            return update(state, { status: { DesignForked: { $set: "SUCCESS_FORK" }, new_design_id: { $set: action.new_design_id }, Message: { $set: action.message } } })
-        case FORK_DESIGN_FAILURE:
-            return update(state, { status: { DesignForked: { $set: "FAILURE_FORK" } } })
-        case FORK_DESIGN_LIST:
-            return update(state, { status: { DesignForked: { $set: "WAIT_FORK_LIST" } } })
-        case FORK_DESIGN_LIST_SUCCESS:
-            return update(state, { status: { DesignForked: { $set: "SUCCESS_FORK_LIST" }, list: { $set: action.list }, Message: { $set: action.message } } })
-        case FORK_DESIGN_LIST_FAILURE:
-            return update(state, { status: { DesignForked: { $set: "FAILURE_FORK_LIST" } } })
-        case GET_LIKE_DESIGN:
-            return update(state, { LikeDesign: { status: { $set: "WATTING" } } });
-        case GET_LIKE_DESIGN_SUCCESS:
-            return update(state, { LikeDesign: { status: { $set: "SUCCESS" } }, status: { like: { $set: action.like } } });
-        case GET_LIKE_DESIGN_FAILURE:
-            return update(state, { LikeDesign: { status: { $set: "FAILURE" } }, status: { like: { $set: action.like } } });
-        case LIKE_DESIGN:
-            return update(state, { LikeDesign: { status: { $set: "WATING" } } });
-        case LIKE_DESIGN_SUCCESS:
-            return update(state, { LikeDesign: { status: { $set: "SUCCESS" } } });
-        case LIKE_DESIGN_FAILURE:
-            return update(state, { LikeDesign: { status: { $set: "FAILURE" } } });
-        case UNLIKE_DESIGN:
-            return update(state, { LikeDesign: { status: { $set: "WATING" } } });
-        case UNLIKE_DESIGN_SUCCESS:
-            return update(state, { LikeDesign: { status: { $set: "SUCCESS" } } });
-        case UNLIKE_DESIGN_FAILURE:
-            return update(state, { LikeDesign: { status: { $set: "FAILURE" } } });
-        case DESIGN_NOT_FOUND:
-            return update(state, { DesignDetail: { status: { $set: DESIGN_NOT_FOUND } }, })
-        case GET_WAITING_LIST:
-            return update(state, {
-                WaitingList: { status: { $set: "WAITING" } }
-            })
-        case GET_WAITING_LIST_SUCCESS:
-            return update(state, {
-                status: { WaitingList: { $set: action.list } },
-                WaitingList: { status: { $set: "SUCCESS" } }
-            })
-        case GET_WAITING_LIST_FAILURE:
-            return update(state, {
-                status: { WaitingList: { $set: action.list } },
-                WaitingList: { status: { $set: "FAILURE" } }
-            })
-        case UPDATE_DESIGN_INFO:
-            return update(state, {
-                UpdateDesignInfo: { status: { $set: "WATTING" } }
-            })
-        case UPDATE_DESIGN_INFO_SUCCESS:
-            return update(state, {
-                UpdateDesignInfo: { status: { $set: "SUCCESS" } }
-            })
-        case UPDATE_DESIGN_INFO_FAILURE:
-            return update(state, {
-                UpdateDesignInfo: { status: { $set: "FAILURE" } }
-            })
-        case GET_DESIGN_DETAIL:
-            return update(state, {
-                DesignDetail: { status: { $set: action.type } },
-                status: { DesignDetail: { $set: action.DesignDetail } }
-            })
-        case DESIGN_DETAIL_RESET:
-            return update(state, {
-                status: { DesignDetail: { $set: action.DesignDetail } }
-            })
-        case GET_DESIGN_COUNT:
-            return update(state, {
-                status: { Count: { $set: action.Count } }
-            })
-        case GET_DESIGN_DETAIL_VIEW:
-            return update(state, {
-                status: {
-                    DesignDetailView: { $set: action.DesignDetailView }
-                }
-            });
-        case DESIGN_DETAIL_VIEW_RESET:
-            return update(state, {
-                status: {
-                    DesignDetailView: { $set: action.DesignDetailView }
-                }
-            });
+        case FORK_DESIGN: return update(state, { status: { DesignForked: { $set: "WAIT_FORK" } } })
+        case FORK_DESIGN_SUCCESS: return update(state, { status: { DesignForked: { $set: "SUCCESS_FORK" }, new_design_id: { $set: action.new_design_id }, Message: { $set: action.message } } })
+        case FORK_DESIGN_FAILURE: return update(state, { status: { DesignForked: { $set: "FAILURE_FORK" } } })
+        case FORK_DESIGN_LIST: return update(state, { status: { DesignForked: { $set: "WAIT_FORK_LIST" } } })
+        case FORK_DESIGN_LIST_SUCCESS: return update(state, { status: { DesignForked: { $set: "SUCCESS_FORK_LIST" }, list: { $set: action.list }, Message: { $set: action.message } } })
+        case FORK_DESIGN_LIST_FAILURE: return update(state, { status: { DesignForked: { $set: "FAILURE_FORK_LIST" } } })
+        case GET_LIKE_DESIGN: return update(state, { LikeDesign: { status: { $set: "WATTING" } } });
+        case GET_LIKE_DESIGN_SUCCESS: return update(state, { LikeDesign: { status: { $set: "SUCCESS" } }, status: { like: { $set: action.like } } });
+        case GET_LIKE_DESIGN_FAILURE: return update(state, { LikeDesign: { status: { $set: "FAILURE" } }, status: { like: { $set: action.like } } });
+        case LIKE_DESIGN: return update(state, { LikeDesign: { status: { $set: "WATING" } } });
+        case LIKE_DESIGN_SUCCESS: return update(state, { LikeDesign: { status: { $set: "SUCCESS" } } });
+        case LIKE_DESIGN_FAILURE: return update(state, { LikeDesign: { status: { $set: "FAILURE" } } });
+        case UNLIKE_DESIGN: return update(state, { LikeDesign: { status: { $set: "WATING" } } });
+        case UNLIKE_DESIGN_SUCCESS: return update(state, { LikeDesign: { status: { $set: "SUCCESS" } } });
+        case UNLIKE_DESIGN_FAILURE: return update(state, { LikeDesign: { status: { $set: "FAILURE" } } });
+        case DESIGN_NOT_FOUND: return update(state, { DesignDetail: { status: { $set: DESIGN_NOT_FOUND } }, })
+        case GET_WAITING_LIST: return update(state, { WaitingList: { status: { $set: "WAITING" } } })
+        case GET_WAITING_LIST_SUCCESS: return update(state, { status: { WaitingList: { $set: action.list } }, WaitingList: { status: { $set: "SUCCESS" } } })
+        case GET_WAITING_LIST_FAILURE: return update(state, { status: { WaitingList: { $set: action.list } }, WaitingList: { status: { $set: "FAILURE" } } })
+        case GET_WAITING_TO_ACCEPT_LIST: return update(state, { WaitingToAcceptList: { status: { $set: "WAITING" } } })
+        case GET_WAITING_TO_ACCEPT_LIST_SUCCESS: return update(state, { status: { WaitingToAcceptList: { $set: action.list } }, WaitingToAcceptList: { status: { $set: "SUCCESS" } } })
+        case GET_WAITING_TO_ACCEPT_LIST_FAILURE: return update(state, { status: { WaitingToAcceptList: { $set: action.list } }, WaitingToAcceptList: { status: { $set: "FAILURE" } } })
+        case UPDATE_DESIGN_INFO: return update(state, { UpdateDesignInfo: { status: { $set: "WATTING" } } })
+        case UPDATE_DESIGN_INFO_SUCCESS: return update(state, { UpdateDesignInfo: { status: { $set: "SUCCESS" } } })
+        case UPDATE_DESIGN_INFO_FAILURE: return update(state, { UpdateDesignInfo: { status: { $set: "FAILURE" } } })
+        case GET_DESIGN_DETAIL: return update(state, { DesignDetail: { status: { $set: action.type } }, status: { DesignDetail: { $set: action.DesignDetail } } })
+        case DESIGN_DETAIL_RESET: return update(state, { status: { DesignDetail: { $set: action.DesignDetail } } })
+        case GET_DESIGN_COUNT: return update(state, { status: { Count: { $set: action.Count } } })
+        case GET_DESIGN_DETAIL_VIEW: return update(state, { status: { DesignDetailView: { $set: action.DesignDetailView } } });
+        case DESIGN_DETAIL_VIEW_RESET: return update(state, { status: { DesignDetailView: { $set: action.DesignDetailView } } });
         default:
             return state
     }
@@ -219,15 +175,15 @@ export function GetDesignDetailStepCardRequest(id, card_id) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("design Detail Card data >>", data)
+            //console.log("design Detail Card data >>", data)
             if (!data || data.length === 0) {
-                console.log("no data")
+                //console.log("no data")
                 return
             } else {
                 return dispatch(GetDesignDetailStepCard(data))
             }
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -250,14 +206,14 @@ export function GetDesignDetailViewRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("design Detail View data >>", data)
+            //console.log("design Detail View data >>", data)
             if (!data || data.length === 0) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             return dispatch(GetDesignDetailView(data))
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -269,13 +225,13 @@ export function UpdateDesignViewRequest(id) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("increase view count >>", data)
+            //console.log("increase view count >>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
             }
             dispatch(UpdateDesignView())
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -287,16 +243,18 @@ export function GetDesignCountRequest(id) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("design count >>", data)
+            //console.log("design count >>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = {
                     like_count: 0, member_count: 0, card_count: 0, view_count: 0
                 }
             }
             dispatch(GetDesignCount(data))
         }).catch((err) => {
-            console.log("err", err)
+            // alert("디자인 정보를 가져오지 못했습니다. 메인페이지로 돌아갑니다.");
+            window.location.href = '/notfound';
+            console.error("err", err)
         })
     }
 }
@@ -316,15 +274,16 @@ export function GetDesignDetailRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("design Detail data >>", data)
+            //console.log("design Detail data >>", data)
             if (!data || (Object.entries(data).length === 0 && data.constructor === Object)) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
                 return dispatch(DesignNotFound())
             }
-            return dispatch(GetDesignDetail(data))
+            dispatch(GetDesignDetail(data));
+            return data;
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -336,15 +295,15 @@ export function GetDesignDetailStepRequest(id) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("design Detail Step data >>", data)
+            //console.log("design Detail Step data >>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 return
             } else {
                 dispatch(GetDesignDetailStep(data))
             }
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -360,11 +319,11 @@ export function ChangeToProjectRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("change request >>>", data)
+            //console.log("change request >>>", data)
             dispatch(ChangeToProjectSuccess(data))
             return data
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             ChangeToProjectFailure(error)
         })
     }
@@ -378,14 +337,14 @@ export function UnlikeDesignRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("unlike >>>", data)
+            //console.log("unlike >>>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
             }
             dispatch(UnlikeDesignSuccess(data))
             return data
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             UnlikeDesignFailure(error)
         })
     }
@@ -399,14 +358,14 @@ export function LikeDesignRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("like >>>", data)
+            //console.log("like >>>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
             }
             dispatch(LikeDesignSuccess())
             return data
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             LikeDesignFailure(error)
         })
     }
@@ -420,16 +379,36 @@ export function GetLikeDesignRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("Design like >>", data)
+            //console.log("Design like >>", data)
             if (!data) {
-                console.log("no like info")
+                //console.log("no like info")
                 data = false
             }
             dispatch(GetLikeDesignSuccess(data.like))
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             GetLikeDesignFailure(false)
         })
+    }
+}
+export function DesignWaitingToAcceptListRequest(id, token) {
+    return (dispatch) => {
+        dispatch(DesignWaitingToAcceptList())
+        return fetch(`${host}/design/designDetail/${id}/waitingListAccept`, {
+            headers: { "Content-Type": "application/json", 'x-access-token': token },
+            method: "get"
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            //console.log("list >>>", data.data)
+            if (!data) {
+                //console.log("no data")
+            }
+            return dispatch(DesignWaitingToAcceptListSuccess(data.data))
+        }).catch((error) => {
+            console.error("err", error)
+            return dispatch(DesignWaitingToAcceptListFailure(error))
+        });
     }
 }
 export function DesignWaitingListRequest(id, token) {
@@ -441,13 +420,13 @@ export function DesignWaitingListRequest(id, token) {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log("list >>>", data.data)
+            //console.log("list >>>", data.data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
             }
             return dispatch(DesignWaitingListSuccess(data.data))
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             return dispatch(DesignWaitingListFailure(error))
         })
     }
@@ -462,13 +441,13 @@ export function JoinDesignRequest(id, data, flag, token) {
         }).then((response) => {
             return response.json();
         }).then((data) => {
-            console.log("가입신청 >>>", data);
+            //console.log("가입신청 >>>", data);
             if (!data) {
-                console.log("no data");
+                //console.log("no data");
             }
             return dispatch(JoinDesignSuccess(data));
         }).catch((error) => {
-            console.log("err", error);
+            console.error("err", error);
             return dispatch(JoinDesignFailure(error));
         });
     }
@@ -481,10 +460,10 @@ export function CreateDesignRequest(data, token) {
                 return res.json();
             })
             .then(function (res) {
-                console.log("insert detail", res.desing_id);
+                //console.log("insert detail", res.desing_id);
                 return dispatch(CreateDesignSuccess(res));
             }).catch((error) => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(CreateDesignFailure(error));
             })
     }
@@ -498,13 +477,13 @@ export function GetoutDesignRequest(id, memberId, token, refuse) {
         }).then((response) => {
             return response.json();
         }).then((data) => {
-            console.log("디자인 탈퇴 >>>", data);
+            //console.log("디자인 탈퇴 >>>", data);
             if (!data) {
-                console.log("no data");
+                //console.log("no data");
             }
             return dispatch(GetoutDesignSuccess(data));
         }).catch((error) => {
-            console.log("err", error);
+            console.error("err", error);
             return dispatch(GetoutDesignFailure(error));
         });
     }
@@ -523,12 +502,12 @@ export function AcceptDesignRequest(id, memberId, token) {
             return response.json();
         }).then((data) => {
             if (!data) {
-                console.log("no data");
+                //console.log("no data");
             }
-            console.log("가입승낙 >>>", data);
+            //console.log("가입승낙 >>>", data);
             return dispatch(AcceptDesignSuccess(data));
         }).catch((error) => {
-            console.log("err", error);
+            console.error("err", error);
             return dispatch(AcceptDesignFailure(error));
         });
     }
@@ -538,7 +517,7 @@ export function ForkDesignRequest(design_id, user_id, token) {
         dispatch(ForkDesign())
         return fetch(`${host}/design/forkDesign/${design_id}/${user_id}`, {
             headers: { "Content-Type": "application/json", 'x-access-token': token },
-            method: "get"
+            method: "GET"
         }).then((response) => {
             return response.json()
         }).then((data) => {
@@ -548,7 +527,7 @@ export function ForkDesignRequest(design_id, user_id, token) {
             }
             return dispatch(ForkDesignFailure())
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             return ForkDesignFailure()
         })
     }
@@ -567,7 +546,7 @@ export function ForkDesignListRequest(design_id, token) {
             }
             return dispatch(ForkDesignListFailure())
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
             return dispatch(ForkDesignListFailure())
         })
     }
@@ -584,18 +563,18 @@ export function UpdateDesignInfoRequest(data, id, token) {
                 return res.json();
             })
             .then(function (res) {
-                console.log("update design", res);
+                //console.log("update design", res);
                 return dispatch(UpdateDesignInfoSuccess(res));
             })
             .catch(error => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(UpdateDesignInfoFailure(error));
             });
     }
 }
 export function UpdateDesignTime(id, token) {
     const url = `${host}/design/updateDesignTime/${id}`;
-    console.log("update-time:", url);
+    //console.log("update-time:", url);
     return dispatch => {
         dispatch(UpdateDesignInfo());
         return fetch(url, {
@@ -606,13 +585,26 @@ export function UpdateDesignTime(id, token) {
                 return res.json();
             })
             .then(function (res) {
-                console.log("update designTIME", res);
+                //console.log("update designTIME", res);
                 return dispatch(UpdateDesignInfoSuccess(res));
             })
             .catch(err => {
-                console.log("time update err", err);
+                //console.log("time update err", err);
                 return dispatch(UpdateDesignInfoFailure(err));
             });
+    }
+}
+export function UpdateDesignCardTime(id, token) {
+    const url = `${host}/design/updateDesignCardTimeByContent/${id}`;
+    return dispatch => {
+        dispatch(UpdateDesignInfo());
+        return fetch(url, {
+            headers: { "x-access-token": token, "Content-Type": "application/json" },
+            method: "POST"
+        })
+            .then(res => res.json())
+            .then(res => dispatch(UpdateDesignInfoSuccess(res)))
+            .catch(err => dispatch(UpdateDesignInfoFailure(err)));
     }
 }
 export function DeleteDesignRequest(id, token) {
@@ -624,11 +616,75 @@ export function DeleteDesignRequest(id, token) {
         }).then(res => {
             return res.json();
         }).then(res => {
-            console.log("design deleted", res);
+            //console.log("design deleted", res);
             return dispatch(DeleteDesignSuccess(res));
         }).catch((error) => {
-            console.log(error);
+            console.error(error);
             return dispatch(DeleteDesignFailure(error));
         });
     }
+}
+export function YesIHaveReadNewComment(id, token) {
+    return new Promise((resolve, reject) => {
+        const url = `${host}/design/designDetail/${id}/confirmDesignComment/`;
+        fetch(url, {
+            headers: { "x-access-token": token }, method: "GET"
+        })
+            .then(res => res.json())
+            .then(res => {
+                //console.log("success confirm design comment", res); 
+                resolve(true)
+            })
+            .catch((error) => { console.error(error); reject(error) });
+    })
+}
+export function CheckInvitedUserRequest(id, token) {
+    return new Promise((resolve, reject) => {
+        const url = `${host}/design/${id}/video-chat/check-invited`;
+        fetch(url, {
+            headers: { "x-access-token": token },
+            method: "GET"
+        })
+            .then(res => res.json())
+            .then(res => {
+                // console.log("check result", res);
+                resolve(res);
+            }).catch(error => {
+                console.error(error);
+                reject(false);
+            });
+    });
+}
+export function InvitedUserRequest(id, token, data) {
+    return new Promise((resolve/*, reject*/) => {
+        const url = `${host}/design/${id}/video-chat/invite-user`;
+        fetch(url, {
+            headers: { "x-access-token": token },
+            method: "POST",
+            body: JSON.stringify({ to_user_id: data })
+        })
+            .then(res => res.json())
+            .then(res => {
+                resolve(res);
+            }).catch(error => {
+                // reject(error);
+                throw error;
+            });
+    });
+}
+export function CancelInvitedUserRequest(id, token) {
+    return new Promise((resolve, reject) => {
+        const url = `${host}/design/${id}/video-chat/cancel-invited-user`;
+        fetch(url, {
+            headers: { "x-access-token": token },
+            method: "POST",
+        })
+            .then(res => res.json())
+            .then(res => {
+                resolve(res);
+            }).catch(error => {
+                console.error(error);
+                reject(false);
+            });
+    });
 }

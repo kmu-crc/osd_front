@@ -53,7 +53,7 @@ const FileWrap = styled.div`
 `;
 class FileIcon extends React.Component {
   render() {
-    console.log("FileWrap:", this.props);
+    // console.log("FileWrap:", this.props);
     return (
       <FileWrap>
         <Icon name="code" />

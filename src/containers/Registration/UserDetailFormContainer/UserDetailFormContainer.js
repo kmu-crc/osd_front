@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import UserDetailForm from "components/Registration/UserDetailFrom";
+// import UserDetailForm from "components/Registration/UserDetailFrom";
 import { InsertUserDetailRequest, GetMyDetailRequest, UpdateUserDetailRequest } from "redux/modules/personal"
 import { GetCategoryAllRequest } from "redux/modules/category"
-
+import ModifyMyDetail from "components/Users/ModifyMyDetail"
 class UpdateUserInfoContainer extends Component {
 
   componentDidMount() {
@@ -12,9 +12,10 @@ class UpdateUserInfoContainer extends Component {
     this.props.GetMyDetailRequest(this.props.token);
   }
   render() {
-    console.log("this.props:upaderUserIfno", this.props)
+    //console.log("this.props:upaderUserIfno", this.props)
     return (
-      <UserDetailForm {...this.props} />
+      <ModifyMyDetail {...this.props} />
+      // <UserDetailForm {...this.props} />
     );
   }
 }
@@ -24,7 +25,8 @@ const mapStateToProps = (state) => {
     MyDetail: state.Personal.status.MyDetail,
     token: state.Authentication.status.token,
     category1: state.Category.status.category1,
-    category2: state.Category.status.category2
+    category2: state.Category.status.category2,
+    category3: state.Category.status.category3,
   }
 };
 

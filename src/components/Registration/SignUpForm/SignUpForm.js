@@ -7,6 +7,8 @@ import { FormControl, ValidationGroup } from "modules/FormControl"
 import SignUpModal from "./SignUpModal"
 import opendesign_style from "opendesign_style"
 import FooterPara from "components/Commons/FooterTerm/FooterPara";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const SignUpBtn = styled(Button)`
   margin-bottom: 30px;
@@ -80,32 +82,32 @@ class SignUpForm extends Component {
     let formData = this.state;
     var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<React.Fragment>?])/;
     if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {
-      alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오");
+      await alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오","확인");
       return false;
     }
 
     if (formData.password.value !== formData.password2.value) {
-      alert("비밀번호 확인을 다시 해주십시오");
+      await alert("비밀번호 확인을 다시 해주십시오","확인");
       return false;
     }
 
     if (!this.state.agree) {
-      alert("이용약관에 동의해주십시오");
+      await alert("이용약관에 동의해주십시오","확인");
       return false;
     }
 
     delete formData.password2;
 
     ValidationGroup(formData, true).then(data => {
-      this.props.SignUpRequest(data).then(res => {
+      this.props.SignUpRequest(data).then(async res => {
         if (res.type === "AUTH_SIGNUP_SUCCESS") {
           this.setState({ success: true });
         } else {
-          alert("다시 시도해주세요")
+          await alert("다시 시도해주세요","확인")
         }
       })
     }).catch(e => {
-      console.log("실패", e);
+      //console.log("실패", e);
     })
   }
   openTermModal = () => { this.setState({ openTerm: true }) }
@@ -114,9 +116,9 @@ class SignUpForm extends Component {
     obj.checked = true
     await this.setState({ openTerm: false, agree: true })
   }
-  preventClick = () => {
+  preventClick = async() => {
     if (this.state.agree === false) {
-      alert("`이용약관 보기`를 통해 동의하실 수 있습니다")
+      await alert("`이용약관 보기`를 통해 동의하실 수 있습니다","확인")
       this.refs.use_agreement.checked = false
     }
   }

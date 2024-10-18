@@ -5,357 +5,333 @@ import iEdit from "source/edit.png"
 import iForked from "source/baseline_library_books_black_48dp.png"
 import iThumbUp from "source/thumbup_icon_black.png"
 import iINOUT from "source/inout.svg"
-import thumbup from "source/baseline_thumb_up_black_48dp_2x.png"
-import { Modal } from "semantic-ui-react";
-
-import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
-import dots from "source/baseline_more_vert_black_48dp.png";
+import thumbup from "source/thumbup_icon_black.png"
 import noimg from "source/noimg.png";
 import DateFormat from "modules/DateFormat";
-import TextFormat from "modules/TextFormat";
 import NumberFormat from "modules/NumberFormat";
-
-import Cross from "components/Commons/Cross"
 import { geturl } from 'config';
+import JoinGroupContainer from "containers/Groups/JoinGroupContainer";
+import TextFormat from 'modules/TextFormat';
+import { alert } from "components/Commons/Alert/Alert";
+import opendesign_style from "opendesign_style";
+import { Icon } from 'semantic-ui-react'
+import { GetPermissionCouldJoinVideoChatRequest } from "redux/modules/group";
+import GroupNoticeContainer from "containers/Groups/GroupNoticeContainer";
+import GotoDetail from 'components/Commons/GotoDetail';
 
+import new_logo_view from "source/new_logo_view.svg";
+import new_logo_favorite from "source/new_logo_favorite.svg";
+import iconLike from "source/mypage_icon_like.svg";
+import new_logo_share from "source/new_logo_share.svg";
+import new_logo_note from "source/new_logo_note.svg";
 
-const Arrow = styled.div`
-    width: 12px;
-    height: 14px;
-    bacgkground: #707070;
-    opacity: 0.55;
-    border-left: 14px solid #707070;
-    border-bottom: 6px solid transparent;
-    border-top: 6px solid transparent;
-    margin:22px 3px;
+import new_logo_chat from "source/new_logo_chat.svg";
+import new_logo_msg from "source/new_logo_msg.svg";
+
+const Wrapper = styled.div`
+
+    // *{border: 1px dashed red;}
 `;
-
-const LoadingBox = styled.div`
-    width:100%;
-    display:flex;
-    margin-left:65px;
-    opacity:0.5;
-    .titleBox{
-        width:197px;
-        height:25px;
-        margin-top:15px;
-        background-color:#707070;
-        border-radius:15px;
-    }
-    .thumbnailBox{
-        width:170px;
-        height:170px;
-        margin-left:14px;
-        margin-top:9px;
-        background-color:#D6D6D6;
-        border-radius:15px;
-    }
-    .InfoBox{
-        margin-left:51px;
-            .cateBox{
-                width:95px;
-                height:25px;
-                margin-top:15px;
-                background-color:#FFA0A0;
-                border-radius:15px;
-            }
-            .MemberBox{
-                width:273px;
-                height:30px;
-                margin-top:15px;
-                background-color:#707070;
-                border-radius:15px;
-            }
-            .ExplainBox{
-                width:1284px;
-                height:90px;
-                display:flex;
-                margin-top:11px;
-                .explain_label{
-                    width:621px;
-                    height:100%;
-                    margin-right:42px;
-                    background-color:#A3A7A3;
-                    border-radius:15px;
-                }
-            }
-            .cntBox{
-                width:250px;
-                height:25px;
-                margin-top:17px;
-                background-color:#0FA0A0;
-                border-radius:15px;
-            }
-       
-        }
-        .BtnBox{
-            margin-left:auto;
-            margin-right:72px;
-            order:2;
-            .likeBox{
-                width:95px;
-                height:29px;
-                margin-left:auto;
-                margin-right:0px;
-                margin-top:15px;
-                background-color:#FFD6D6;
-                border-radius:15px;
-            }
-            .modifyBox{
-                width:183px;
-                height:45px;
-                margin-left:auto;
-                margin-right:0px;
-                margin-top:37px;
-                background-color:#D6D6D6;
-                border-radius:15px;
-            }
-            .timeBox{
-                width:147px;
-                height:55px;
-                margin-left:auto;
-                margin-right:0px;
-                margin-top:43px;
-                background-color:#D6D6D6;
-                border-radius:15px;
-            }
-    }
-
-`
-const Header = styled.div`
-    width:1920px;
-    height:237px;
-    background-color:#EFEFEF;
-    display:flex;
-`
-const GroupHeaderBox = styled.div`
+const GroupHeader = styled.div`
     width: 100%;
+    max-width: 1740px;
+    min-width: ${1000 - (38 - 2)}px;
+    height: 319px;
+    box-shadow: 8px 8px 8px #4141411A;
+    border: 1px solid #eaeaea;
     display: flex;
-    padding-left: 30px;
-    .profileBox{
-        width: max-content;
-        .parentBox{
-            display: flex;
-            cursor: default;
-            .grandparent{
-                width: 15px;
-                height: 15px;
-                margin-top: 22px;
-                margin-right: 10px;
-                opacity: 0.55;
-                transform: rotate(90deg);
-                cursor: pointer;
-            }
-            .parent{
-                margin-left: 10px;
-                margin-top: 17px;
-                font-size: 20px;
-                font-weight: 300;
-                color: #707070;
-                cursor: pointer;
-           }    
-        }
+    flex-direction: row;
+
+    .ellipsis {
+        display: -webkit-box;
+        min-width: 300px;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
-    .ExplainBox{
-        margin-left:10px;
-        position:relative;
-        .title{
-            width:max-content;
-            height:30px;
-            color:#707070;
-            font-size:20px;
-            font-weight:500;
+
+    .thumbnail {
+        width: 319px;
+        height: 319px;
+        min-width: 319px !important;
+        min-height: 319px !important;
+        border: 1px solid #eaeaea;
+        overflow: hidden;
+        object-fit: cover;
+    }
+    
+    .infoBox{
+        padding: 12px 22px;
+        width: 100%;
+        min-width: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .design_name {
+            max-width: 1000px;
+            width: 100%;
+            height: 42px;
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap; 
+            line-height:41px;
+            color:black;
+            font-size:31px;
             font-family:Noto Sans KR;
-            text-align:left;
-            line-height:25px;
-            margin-top:15px;
+            font-weight:Bold;
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap; 
+            line-height:41px;
         }
-        .board{
-            margin-left:50px;
-            .creater{
-                width:max-content;
-                height:30px;
-                margin-top:5px;
-                font-size:17px;
-                font-weight:500;
-                color:#707070;
-                text-align:left;
-                line-height:29px;
-            }
-            .explanationRegion{
-                
-                display:flex;
-                height:90px;
-                font-size:17px;
-                color:#707070;
-                line-height:30px;
-                margin-top:10px;
-                .explaination{
-                    width:500px;
-                    margin-right:41px;
-                    word-wrap:break-word;
-                    overflow:hidden;
-                }
-            }
-        }
-        .CountView{
-            width:300px;
-            height:22px;
-            position:absolute;
+        .row{
+            width:100%;
             display:flex;
-            left:231px;
-            bottom:0px;
-            .countItem{
-                height:100%;
-                display:flex;
-                margin-right: 20px;
-                .count_label{
-                    width: max-content;
-                    height:100%
-                    margin-left:5px;
-                }
-            } 
+        }
+        .detail_height{height:190px;}
+        .column{flex-direction:column;}
+        .red_label{font-size:14px;color:red;margin-top:12px;}
+        .black_label{font-size:14px;color:black;margin-top:12px;}
+        .pointer{cursor:pointer;}
+        .left_box{
+            width:145px;
+            height:100%;
+            margin-right:10px;  
+        }
+        .right_box{
+            max-width: 900px;
+            width:100%;
+            height:100%;
         }
     }
+    .bottom_box{
+        margin-top: auto;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
 
-    .ButtonRegion{
 
-        margin-left:auto;
-        margin-right:72px;
-        cursor:pointer;
-
-        .ButtonItem{
-            width: max-content;
-            height: 30px;
-            display: flex;
-            margin-top: 10px;
-
-            .button_text_label{
-                width: 150px;
-                height: 20px;
-                margin-top: 10px;
-                font-size: 17px;
-                font-weight: 300;
-                font-family: Noto Sans KR;
-                text-align: right;
-                color: #707070
-            }
+        .asset_icon{
+            max-width:29px;
+            max-height:29px;
+            object-fit:contain;
         }
-        .time_label{
-            font-size:17px;
-            font-weight:300;
-            font-family:Noto Sans KR;
-            color:#707070;
-            letter-spacing:0;
+        .asset_text{
+            width:max-content;
+            max-width:40px;
+            margin-left:8px;
+            margin-right:16px;
+            font-family:Spoqa Han Sans;
+            font-size:19px;
+            font-weight:400;
+        }
+    }
+    .menuBox{
+        width:100%;
+        max-width:180px;
+        min-width:180px;
+        height:100%;
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
+        padding:11px;
+        .pointer{cursor:pointer;}
+        .button_wrap{
+            display:flex;
+            align-items:center;
+            justify-content:flex-end;
+            margin-top:5px;
+        }
+        .fork_label{
+            height:28px;
+            font-family:Spoqa Han Sans Neo;
+            font-weight:Bold;
+            font-size:20px;
+            color:red;
             text-align:right;
-            line-height:27px;
-            margin-top:46px;
+            line-height:28px;
         }
-        .Join_label {
-            width: 79px;
-            height: 40px;
-            margin-top: 15px;
-            margin-left: auto;
-            color: #FF0000;
-            font-size: 20px;
-            cursor: pointer
+        .black_label{
+            font-family:Spoqa Han Sans Neo;
+            font-weight:Bold;
+            font-size:14px;
+            color:black;
+        }
+        .icon{
+            width:24px;
+            height:24px;
+            object-fit:contain;
+            margin-left:10px;
+        }
+        .ssl{
+            width:20px;
+            height:20px;
+            object-fit:contain;
+            margin-left:5px;
+        }
+        .date{
+            text-align:right;
+            margin-top:5px;
         }
     }
-    
+    .explanationRegion {
+        width: 100%;
+        height: 150px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .nick_name {
+        margin-bottom: 10px;
+        width: 100%;
+        height: 21px;
+        line-height: 21px;
+        font-family: Noto Sans KR;
+        font-size: 16px;
+        font-weight: 300;
+        cursor: pointer;
+    }
+    .parent-title {
+        // border: 1px dashed blue;
+        width: max-content; // 100%;
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    // responsive
 
-    
-`
-const MiniIcon = styled.div`
-    width:17px;
-    height:17px;
-    background-image: ${props => `url(${props.imageURL})`};
-    background-position:center center;
-    background-size:contain;
-    background-repeat:no-repeat;
-    opacity:${props => props.opacity};
-
-`
+    .ButtonItem{
+        display:flex;
+        align-items:flex-end;
+        justify-content:flex-end;
+        font-size:15px;
+        font-family:Spoqa Han Sans Neo;
+        font-weight:Regular;
+        color:#707070;
+        cursor:pointer;
+    }
+    .date_time{
+        width:100%;
+        height:48px;
+        font-family:Noto Sans KR;
+        font-size:15px;
+        font-weight:300;
+        .time_detail{
+            text-align:right;
+        }
+    }
+    // responsive
+    @media only screen and (min-width: 500px) and (max-width: 1150px) {
+        .thumbnail {
+            width: 100%;
+            min-width: 250px !important;
+            max-width:250px;
+            object-fit: contain;
+        }
+    }
+`;
 const NormalIcon = styled.div`
-    width: 35px;
-    height: 35px;
+    width: 22px;
+    height: 22px;
     margin-left: 5px;
     background-image: ${props => `url(${props.imageURL})`};
-    background-position:center center;
-    background-size:contain;
-    background-repeat:no-repeat;
-    opacity:${props => props.opacity};
-
-`
-const ThumbnailBox = styled.div`
-        width:170px;
-        height:170px;
-        margin-left:14px;
-        margin-top:9px;
-        border-radius:15px;
-        background-color:#D6D6D6;
-        background-repeat:no-repeat;
-        background-size:cover;
-        background-position:center center;
-        background-image:${props => `url(${props.imageURL})`};
-`
-const PopupBox = styled.div`
-    position:absolute;
-    top:47px;
-    left:763px;
-    width:396px;
-    height:138px;
-    background:#FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow:0px 3px 6px #000000;
-    border-radius:5px;
-    opacity:1;
-    z-index:500;
-    .message_label{
-        width:273px;
-        height:69px;
-        margin-top:31px;
-        margin-left:62px;
-        font-size:20px;
-        font-weight:500;
-        font-family:Noto Sans KR;
-        color:#707070
-        text-align:center;
-        line-height:40px;
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: ${props => props.opacity};
+`;
+const NewAlarmLogo = styled.div`
+    width: 10px;
+    height: 100%;
+    display: flex;
+    margin-right: 2px;
+    .circle {
+        background-color: red;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
     }
-`
-const GroupInfoData = {
-    userName: "name",
-    child_update_time: "0",
-    create_time: "0",
-    img: { l_img: noimg },
-    title: "title",
-    parentName: "parent",
-    parentId: "",
-    grand_parentTitle: "grand_parent",
-    grand_parentGroup: "grand_group",
-    url: "URL",
-    category: "CATEGORY",
-    designer: "DESIGNER",
-    view: 0,
-    design: 0,
-    description: "Description"
-};
+`;
+const ChatWrapper = styled.div`
+    margin-left: 38px;
 
+    width:100%;
+    max-width:1740px;
+    height:100px;
+    display:flex;
+    justify-content:flex-end;
+    align-items:flex-end;
+    .row{
+        display:flex;
+    }
+    .icon_wrap{
+        margin-left:44px;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        cursor:pointer;
+    }
+    .icon{
+        width:66px;
+        height:66px;
+        object-fit:contain;
+    }
+    .icon_black{
+        filter: invert(100%);
+    }
+    .icon_label{
+        font-size:17px;
+        font-family:Spoqa Han Sans Neo;
+        font-weight:Medium;
+    }
+`;
 class GroupInfoComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = { joinDialog: false, likeDialog: false, forkDialog: 0, manager: false };
+        this.state = {
+            w: window.innerWidth > 1920 ? 1920 : window.innerWidth,
+            joinDialog: false,
+            likeDialog: false,
+            forkDialog: 0,
+            manager: false,
+            isSeeMore: false,
+
+        };
         this.needLogin = this.needLogin.bind(this);
         this.like = this.like.bind(this);
         this.handleMoreViewDescription = this.handleMoreViewDescription.bind(this);
         this.gotoGroupModify = this.gotoGroupModify.bind(this);
         this.changeEditMode = this.changeEditMode.bind(this);
         this.gotoGroup = this.gotoGroup.bind(this);
+        this.handleResize = this.handleResize.bind(this);
+    }
+
+    handleResize = () => {
+        this.setState({ w: window.innerWidth > 1920 ? 1920 : window.innerWidth });
+    }
+    componentDidMount() {
+        window.addEventListener("resize", this.handleResize);
+    }
+    // async componentDidUpdate(prevProp) {
+    // if (prevProp.GroupDetail != this.props.GroupDetail && this.props.GroupDetail != null) {
+    // if (this.props.GroupDetail != null && this.props.token != null) {
+    // const couldJoinVChat = await GetPermissionCouldJoinVideoChatRequest(this.props.token, this.props.GroupDetail.uid);
+    // this.setState({ couldJoinVChat: couldJoinVChat });
+    // }
+    // }
+    // }
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.handleResize);
     }
     gotoGroup(id) {
         window.location.href = geturl() + `/groupDetail/${id}`
     }
-    needLogin() {
-        alert("로그인을 해주세요.");
+    async needLogin() {
+        await alert("로그인 해주세요.", "확인");
     }
     async like() {
         if (!this.props.userInfo) {
@@ -374,197 +350,145 @@ class GroupInfoComponent extends Component {
             setTimeout(() => { this.setState({ likeDialog: false }) }, 2500);
         }
     }
-    handleMoreViewDescription(description) {
-        alert(description);
+    async handleMoreViewDescription(description) {
+        await alert(description, "확인");
     }
     gotoGroupModify() {
         let href = window.location.href.substring(0, window.location.href.search("groupDetail"));
-        window.location.href = href + 'modifygroup/' + this.props.GroupInfo.uid;
+        window.location.href = href + 'modifygroup/' + this.props.GroupDetail.uid;
     }
     changeEditMode() {
         this.setState({ manager: !this.state.manager });
         this.props.handleSwitchMode();
-    }
-    render() {
-        console.log(this.props.GroupInfo);
-        const group_user_id = this.props.GroupInfo && this.props.GroupInfo.user_id;
-        const user_id = this.props.userInfo && this.props.userInfo.uid;
-
-        const LoadingGroupInfo = () => {
-            return (
-                <LoadingBox>
-                    <div>
-                        <div className="titleBox" />
-                        <div className="thumbnailBox" />
-                    </div>
-                    <div className="InfoBox">
-                        <div className="cateBox" />
-                        <div className="MemberBox" />
-                        <div className="ExplainBox">
-                            <div className="explain_label" />
-                            <div className="explain_label" />
-                        </div>
-                        <div className="cntBox" />
-                    </div>
-                    <div className="BtnBox">
-                        <div className="likeBox" />
-                        <div className="modifyBox" />
-                        <div className="timeBox" />
-                    </div>
-                </LoadingBox>)
+        if (!this.state.manager === false) {
+            window.location.reload();
         }
+    }
 
-        const GroupInfo = (props) => {
-            let info = GroupInfoData;
-            let parentName = null;
-            if (props.GroupInfo !== 0) {
-                info = props.GroupInfo;
-                if (info.parentName != null) {
-                    parentName = info.parentName && info.parentName.slice(0, 14);
-                    parentName += info.parentName && info.parentName.length > 14 ? " ... " : "";
-                }
-            }
-            const { manager } = this.state;
-            const isEditor = group_user_id === user_id;
-            const { like } = this.props;
+    openVideoChat = () => {
+        const url = geturl() + `/vchatg/${this.props.GroupDetail.uid}`
+        const options =
+            `toolbar=no,status=no,menubar=no,resizable=0,location=no,scrollbars=no,\\
+        top=0,left=0,width=${window.screen.width},height=${window.screen.height - 100}`;
+        this.vchatwindow = window.open(url, "vchat", options);
+    }
 
-            console.log("info:", info);
-            return (
-                <GroupHeaderBox>
-                    <div className="profileBox">
-                        {parentName &&
-                            <div className="parentBox">
-                                {info.grand_parentTitle &&
-                                    <React.Fragment>
-                                        <img onClick={() => this.gotoGroup(info.grand_parentId)} src={dots} alt={dots} title={info.grand_parentTitle} className="grandparent" /> <Arrow />
-                                    </React.Fragment>}
-                                {info.parentName &&
-                                    <React.Fragment>
-                                        <div onClick={() => this.gotoGroup(info.parentId)} className="parent" title={info.parentName}>{parentName}</div><Arrow />
-                                    </React.Fragment>}
-                            </div>}
+    openChat = () => {
+        const url = geturl() + `/chatg/${this.props.GroupDetail.uid}`;
+        const options = `toolbar=no,status=no,menubar=no,resizable=no,location=no,top=100,left=100,width=496,height=600,scrollbars=no`;
+        this.chatwindow = window.open(url, "chat", options);
+    }
+
+
+
+    render() {
+        const { like, GroupDetail, userInfo } = this.props;
+        const group_user_id = GroupDetail && GroupDetail.user_id;
+        const user_id = userInfo && userInfo.uid;
+        const isEditor = group_user_id === user_id;
+        const { w, couldJoinVChat, manager } = this.state;
+        const thumbnail = (GroupDetail && GroupDetail.img && GroupDetail.img.l_img) || noimg;
+
+
+        return (<Wrapper>
+            <GroupHeader>
+                <div className='thumbnail'>
+                    <img className="thumbnail" src={thumbnail} />
+                </div>
+                <div className="infoBox">
+                    <div className="design_name">
+                        {GroupDetail.title}
                     </div>
+                    <div className='black_label ellipsis'>
+                        <div className="explanationRegion">
+                            <p
+                                dangerouslySetInnerHTML={{
+                                    __html: GroupDetail.explanation
+                                        ? GroupDetail.explanation.replace(/\n/g, "<br/>")
+                                        : null
+                                }} />
+                            {/* {GroupDetail.explanation} */}
+                        </div>
 
-                    <div className="ExplainBox">
-                        <div className="title"><TextFormat txt={info.title} /></div>
-                        <div style={{ display: "flex" }}>
-                            <ThumbnailBox imageURL={info && info.img && info.img.l_img ? info.img.l_img : noimg} />
-                            <div className="board">
-                                <div className="creater">개설자 : {info.userName && info.userName.slice(0, 32)}</div>
-                                <div className="explanationRegion">
-                                    <div className="explaination">
-                                        {info.explanation ? info.explanation.slice(0, 200) : `${info.userName}님의 "${info.title}" 그룹입니다.`}
-                                    </div>
-                                    <div className="explaination">
-                                        {info.explanation && info.explanation.slice(200, 400)}
-                                        {info.explanation && info.explanation.length > 400 && <React.Fragment>...</React.Fragment>}
-                                    </div>
-                                </div>
-                                <div style={{ backgroundColor: "#EFEFEF", width: "200px", marginTop: "19px", height: "22px", display: "flex", justifyContent: "space-start", textAlign: "left", lineHeight: "40px", fontSize: "15px", fontWeight: "500", alignItems: "center" }}>
-                                    <div style={{ display: "flex", marginRight: "20px" }}>
-                                        <div><IconView width="22px" height="11px" fill="#000000" opacity="0.55" /></div>
-                                        <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(info.view || 0)}</div>
-                                    </div>
-                                    <div style={{ display: "flex", marginRight: "20px" }}>
-                                        <div><img alt="icon" src={iThumbUp} style={{ width: "15px", height: "15px", opacity: "0.55" }} /></div>
-                                        <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px' }}>{NumberFormat(info.like || 0)}</div>
-                                    </div>
-                                    <div style={{ display: "flex" }}>
-                                        <div style={{ marginTop: "5px" }}><img alt="icon" src={iForked} style={{ width: "19px", height: "19px", opacity: "0.55", marginTop: "10px" }} /></div>
-                                        <div style={{ color: "#707070", marginLeft: "5px", width: "max-content", fontSize: '15px', marginTop: "4px" }}>{NumberFormat(info.design || 0 + info.group || 0)}</div>
-                                    </div>
-                                </div>
+                    </div>
+                    <div className="bottom_box">
+
+                        <div className="nick_name">
+                            <GotoDetail type="designer" id={GroupDetail.user_id}>
+                                {`개설자 : ${GroupDetail.userName}`}
+                            </GotoDetail>
+                        </div>
+
+                        <div style={{ width: "100%", display: "flex", justifyContent: "flex-start" }}>
+                            <img src={new_logo_view} className="asset_icon" />
+                            <div className="asset_text">{NumberFormat(GroupDetail.view || 0)}</div>
+                            <img src={iconLike} className="asset_icon" />
+                            <div className="asset_text">{NumberFormat(GroupDetail.like || 0)}</div>
+                            <img src={new_logo_note} className="asset_icon" />
+                            <div className="asset_text">{NumberFormat(GroupDetail.design || 0 + GroupDetail.group || 0)}</div>
+                            <div style={{ marginLeft: "38px" }}>
+                                {GroupDetail.uid
+                                    ? <GroupNoticeContainer loading={this.props.loading} id={GroupDetail.uid} />
+                                    : ""}
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div className="ButtonRegion">
-                        {isEditor ?
-                            <React.Fragment>
-                                <div className="Join_label">
-                                    <JoinGroupContainer />
-                                </div>
+                <div className="menuBox">
+                    <JoinGroupContainer isIcon={false} />
+                    <div>
+                        {isEditor
+                            ? <React.Fragment>
                                 <div className="ButtonItem" onClick={this.gotoGroupModify}>
                                     <div className="button_text_label">그룹 정보 수정하기</div>
-                                    <NormalIcon imageURL={iEdit} opacity={0.5} />
-                                </div>
+                                    <NormalIcon imageURL={iEdit} opacity={0.5} /></div>
                                 <div className="ButtonItem" onClick={this.changeEditMode}>
-                                    <div className="button_text_label">{manager ? "관리모드 종료" : "그룹 관리하기"}</div>
+                                    <div className="button_text_label displayFlex">
+                                        {manager ? "관리모드 종료" : "그룹 관리하기"}</div>
                                     <NormalIcon imageURL={iINOUT} opacity={0.5} />
+                                    {this.props.waitingDesign.length > 0 || this.props.waitingGroup.length > 0 ?
+                                        manager ? null : <NewAlarmLogo>
+                                            <div className="circle" /></NewAlarmLogo>
+                                        : null}
                                 </div>
                             </React.Fragment>
-                            :
-                            <React.Fragment>
-                                <div className="Join_label">
-                                    <JoinGroupContainer />
-                                </div>
+                            : <React.Fragment>
                                 <div className="ButtonItem" onClick={this.like}>
                                     <div className="button_text_label">관심 그룹 {like ? "취소하기" : "등록하기"}</div>
-                                    <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} />
-                                </div>
+                                    <NormalIcon opacity={like ? "1" : "0.45"} imageURL={thumbup} /></div>
                             </React.Fragment>}
-                        <div className="time_label">
-                            <div>최근 업데이트 {info && DateFormat(info.child_update_time)}</div>
-                            <div>{info && DateFormat(info.create_time)} 등록</div>
+                    </div>
+                    <div className="date_time">
+                        <div className="time_detail">최근 업데이트 {GroupDetail && DateFormat(GroupDetail.update_time)}</div>
+                        <div className="time_detail" style={{ marginTop: "8px" }}>등록 일자 {GroupDetail && new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').substring(0, new Date(GroupDetail.create_time).toLocaleDateString('ko-KR').length - 1)}</div>
+                    </div>
+                </div>
+            </GroupHeader>
+
+
+
+
+            {couldJoinVChat ?
+                <ChatWrapper>
+                    <div className="row">
+                        <div
+                            title="그룹 멤버들과 화상회의를 시작합니다."
+                            className="notice icon_wrap" onClick={this.openVideoChat}>
+                            <img src={new_logo_msg} className="icon" />
+                            <div className="icon_label">화상회의</div>
+                        </div>
+                        <div
+                            title="디자인 멤버들과 채팅을 시작합니다."
+                            className="notice icon_wrap" onClick={this.openChat}>
+                            <img src={new_logo_chat} className="icon" />
+                            <div className="icon_label">채팅</div>
                         </div>
                     </div>
-                </GroupHeaderBox >
-            )
-        }
-        const info = this.props.GroupInfo
-        return (
-            <React.Fragment>
-                {
-                    this.state.likeDialog &&
-                    <PopupBox><div className="message_label">관심 그룹으로 등록되었습니다.<br />마이페이지에서 확인 가능합니다.</div></PopupBox>
-                }
-                < Header > {info ? <GroupInfo GroupInfo={info} /> : <LoadingGroupInfo />}</Header >
-            </React.Fragment >)
+                </ChatWrapper>
+                : null}
+        </Wrapper >);
     }
-}
+};
 
 export default GroupInfoComponent;
-
-// const JoinModal = () => {
-//     const title = this.props.GroupInfo && this.props.GroupInfo.title;
-//     return (
-//         this.state.showPopup === 1 &&
-//         <CustomModal>
-//             <div onClick={() => this.handleShowPopup(-1)} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
-//                 <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
-//             </div>
-//             <div style={{
-//                 marginTop: "31.5px", marginLeft: "62.5px", width: "394px", height: "69px", textAlign: "center", fontWeight: "500",
-//                 fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1"
-//             }}>
-//                 {title && title.slice(0, 20)}<br />
-//                 가입 신청을 하시겠습니까?</div>
-//             <div onClick={() => this.handleShowPopup(-1)} style={{
-//                 cursor: "pointer", marginTop: "31px", marginLeft: "210px", width: "130px", height: "29px",
-//                 textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", letterSpacing: "0",
-//                 color: "#FF0000", opacity: "1", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000"
-//             }}>
-//                 네, 가입합니다.</div>
-//         </CustomModal>
-//     );
-// }
-// const JoinCancelModal = () => {
-//     const title = this.props.GroupInfo.title;
-//     return (
-//         this.state.showPopup === 2 &&
-//         <div style={{ zIndex: "950", position: "fixed", top: "255px", left: "618px", width: "576px", height: "200px", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #000000", borderRadius: "5px", opacity: "1" }}>
-//             <div onClick={() => this.handleShowPopup(-1)} style={{ position: "absolute", left: "100%", marginTop: "7.32px", marginLeft: "34.32px" }}>
-//                 <Cross angle={45} color={"#707070"} weight={3} width={45} height={45} />
-//             </div>
-//             <div style={{
-//                 marginTop: "31.5px", marginLeft: "62.5px", width: "394px", height: "69px", textAlign: "center", fontWeight: "500",
-//                 fontSize: "20px", lineHeight: "40px", fontFamily: "Noto Sans KR", letterSpacing: "0", color: "#707070", opacity: "1"
-//             }}>{title && title.slice(0, 20)}<br />가입 신청을 취소 하시겠습니까?</div>
-//             <div onClick={() => this.handleShowPopup(-1)} style={{
-//                 cursor: "pointer", marginTop: "31px", marginLeft: "210px", width: "130px", height: "29px",
-//                 textAlign: "center", fontWeight: "500", fontSize: "20px", lineHeight: "29px", fontFamily: "Noto Sans KR", letterSpacing: "0",
-//                 color: "#FF0000", opacity: "1", paddingBottom: "1.5px", borderBottom: "1.5px solid #FF0000"
-//             }}>네, 취소합니다.</div>
-//         </div>
-//     );
-// }

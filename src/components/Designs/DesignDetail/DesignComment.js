@@ -10,6 +10,8 @@ import { GetDesignCommentRequest, CreateDesignCommentRequest, DeleteDesignCommen
 import DateFormat from "modules/DateFormat";
 import FormDataToJson from "modules/FormDataToJson";
 import logo from "source/thumbnail.png";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const CustomModal = styled(Modal)`
   padding: 20px;
@@ -77,15 +79,15 @@ class DesignComment extends React.Component {
       d_flag: d_flag,
     }
     if (!this.props.token) {
-      alert("로그인을 해주세요.");
+      await alert("로그인 해주세요.","확인");
       return;
     }
     if (!this.state.reply && (packet.comment.length === 0 || packet.comment.trim() === "")) {
-      alert("내용을 입력해 주세요.");
+      await alert("내용을 입력해 주세요.","확인");
       return;
     }
     if (this.state.reply && packet.comment.replace(toWhom, "").trim() === "") {
-      alert("내용을 입력해 주세요.");
+      await alert("내용을 입력해 주세요.","확인");
       return;
     }
 
@@ -95,9 +97,9 @@ class DesignComment extends React.Component {
   commentFormBlur = () => {
     this.setState({ reply: null, toWhom: null })
   }
-  onDeleteComment = data => {
+  onDeleteComment = async (data) => {
     if (data.replies.length > 0) {
-      alert("이 댓글에 답변글이 있어 지우실 수 없습니다.");
+      await alert("이 댓글에 답변글이 있어 지우실 수 없습니다.","확인");
       return;
     }
     this.props.DeleteDesignCommentRequest(this.props.id, data.uid, this.props.token)

@@ -1,25 +1,35 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import Comment from 'components/Commons/Comment';
-import { GetDesignCommentRequest, CreateDesignCommentRequest, DeleteDesignCommentRequest } from "redux/modules/design";
+import Comment_mobile from 'components/Commons/Comment_mobile';
+
+import {
+    GetCountDesignCommentRequest, GetDesignCountRequest, GetDesignCommentRequest,
+    CreateDesignCommentRequest, DeleteDesignCommentRequest
+} from "redux/modules/design";
 
 class DesignComment extends Component {
     componentDidMount() {
-        this.props.GetDesignCommentRequest(this.props.designId);
+        this.props.GetDesignCommentRequest(this.props.designId)
     }
+
     comment = (data) => {
         this.props.CreateDesignCommentRequest(data, this.props.designId, this.props.token)
             .then(res => {
                 this.props.GetDesignCommentRequest(this.props.designId);
-            }).then(()=>{
+            }).then(() => {
                 this.props.requestDesignDetail(this.props.designId);
-            }
-            );
+            }).then(() => {
+                this.props.GetDesignCountRequest(this.props.designId);
+            })
     }
     removeComment = (commentId) => {
         this.props.DeleteDesignCommentRequest(this.props.designId, commentId, this.props.token)
             .then(res => {
                 this.props.GetDesignCommentRequest(this.props.designId);
+            })
+            .then(() => {
+                this.props.GetDesignCountRequest(this.props.designId);
             })
     }
     render() {
@@ -30,9 +40,16 @@ class DesignComment extends Component {
             return { ...parent, replies };
         })
         console.log(comments);
-        return (<div>
-          <Comment comments={comments} my={this.props.userInfo} comment={this.comment} removeComment={this.removeComment}/>
-        </div>)
+        return (
+            <React.Fragment>
+                {
+                    window.innerWidth<500?
+                    <Comment_mobile comments={comments} my={this.props.userInfo} comment={this.comment} removeComment={this.removeComment} />
+                    :
+                    <Comment comments={comments} my={this.props.userInfo} comment={this.comment} removeComment={this.removeComment} />
+                }
+            </React.Fragment>
+        )
     }
 };
 const mapStateToProps = state => {
@@ -44,6 +61,9 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
+        GetDesignCountRequest: (design_id) => {
+            return dispatch(GetDesignCountRequest(design_id));
+        },
         GetDesignCommentRequest: (design_id) => {
             return dispatch(GetDesignCommentRequest(design_id));
         },
@@ -52,7 +72,10 @@ const mapDispatchToProps = dispatch => {
         },
         DeleteDesignCommentRequest: (design_id, comment_id, token) => {
             return dispatch(DeleteDesignCommentRequest(design_id, comment_id, token));
-        }
+        },
+        GetCountDesignCommentRequest: (id) => {
+            return dispatch(GetCountDesignCommentRequest(id))
+        },
     }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DesignComment);

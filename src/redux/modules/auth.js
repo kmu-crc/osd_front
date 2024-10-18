@@ -20,30 +20,39 @@ const AUTH_CHECK_NICKNAME_SUCCESS = "opendesign/authentication/AUTH_CHECK_NICKNA
 const AUTH_CHECK_NICKNAME_FAILURE = "opendesign/authentication/AUTH_CHECK_NICKNAME_FAILURE"
 const SET_ACTIVE = "opendesign/authentication/SET_ACTIVE"
 
+const GET_DEV_NOTICE = "GET_DEV_NOTICE";
+const GET_DEV_NOTICE_SUCCESS = "GET_DEV_NOTICE_SUCCESS";
+const GET_DEV_NOTICE_FAILURE = "GET_DEV_NOTICE_FAILURE";
+
 // action creators
-const SignIn = () => ({ type: AUTH_SIGNIN })
-const SignInSuccess = (token) => ({ type: AUTH_SIGNIN_SUCCESS, token: token })
-const SignInFailure = () => ({ type: AUTH_SIGNIN_FAILURE, success: false })
-const SignInIsNotMember = () => ({ type: AUTH_SIGNIN_IS_NOT_MEMBER, success: false, })
-const SignInIsNotPassword = () => ({ type: AUTH_SIGNIN_IS_NOT_PASSWORD, success: false, })
-const CkeckToken = () => ({ type: AUTH_CHECK_TOKEN })
-const CkeckTokenSuccess = (info, token) => ({ type: AUTH_CHECK_TOKEN_SUCCESS, info, token })
-const CkeckTokenFailure = () => ({ type: AUTH_CHECK_TOKEN_FAILURE })
-const CheckEmail = () => ({ type: AUTH_CHECK_EMAIL })
-const CheckEmailSuccess = () => ({ type: AUTH_CHECK_EMAIL_SUCCESS, checkEmail: true })
-const CheckEmailFailure = (err) => ({ type: AUTH_CHECK_EMAIL_FAILURE, checkEmail: false, error: err })
-const CheckNickName = () => ({ type: AUTH_CHECK_NICKNAME })
-const CheckNickNameSuccess = () => ({ type: AUTH_CHECK_NICKNAME_SUCCESS, checkNickName: true })
-const CheckNickNameFailure = (err) => ({ type: AUTH_CHECK_NICKNAME_FAILURE, checkNickName: false, error: err })
-const SignOut = () => ({ type: AUTH_SIGNOUT })
+const SignIn = () => ({ type: AUTH_SIGNIN });
+const SignOut = () => ({ type: AUTH_SIGNOUT });
+const SignInSuccess = (token) => ({ type: AUTH_SIGNIN_SUCCESS, token: token });
+const SignInFailure = () => ({ type: AUTH_SIGNIN_FAILURE, success: false });
+const SignInIsNotMember = () => ({ type: AUTH_SIGNIN_IS_NOT_MEMBER, success: false, });
+const SignInIsNotPassword = () => ({ type: AUTH_SIGNIN_IS_NOT_PASSWORD, success: false, });
+const CheckToken = () => ({ type: AUTH_CHECK_TOKEN });
+const CheckTokenSuccess = (info, token) => ({ type: AUTH_CHECK_TOKEN_SUCCESS, info, token });
+const CheckTokenFailure = () => ({ type: AUTH_CHECK_TOKEN_FAILURE });
+const CheckEmail = () => ({ type: AUTH_CHECK_EMAIL });
+const CheckEmailSuccess = () => ({ type: AUTH_CHECK_EMAIL_SUCCESS, checkEmail: true });
+const CheckEmailFailure = (err) => ({ type: AUTH_CHECK_EMAIL_FAILURE, checkEmail: false, error: err });
+const CheckNickName = () => ({ type: AUTH_CHECK_NICKNAME });
+const CheckNickNameSuccess = () => ({ type: AUTH_CHECK_NICKNAME_SUCCESS, checkNickName: true });
+const CheckNickNameFailure = (err) => ({ type: AUTH_CHECK_NICKNAME_FAILURE, checkNickName: false, error: err });
+const GetDevNotice = () => ({ type: GET_DEV_NOTICE });
+const GetDevNoticeSuccess = (data) => ({ type: GET_DEV_NOTICE_SUCCESS, data });
+const GetDevNoticeFailure = (error) => ({ type: GET_DEV_NOTICE_FAILURE, error });
+export const SetActive = (active) => ({ type: SET_ACTIVE, active })
 
 // initial state
 const initialState = {
+  isActive: "INIT",
   login: { status: "INIT" },
-  status: { valid: false, isLoggedIn: false, token: null, userInfo: null },
   check: { status: "INIT" },
+  status: { valid: false, isLoggedIn: false, token: null, userInfo: null },
   checkStatus: { checkEmail: false, checkNickNAme: false },
-  isActive: "INIT"
+  devNotice: { status: "INIT", notice: [], },
 }
 
 // reducer
@@ -144,7 +153,6 @@ export default function Authentication(state, action) {
 
 
 // api
-export const SetActive = (active) => ({ type: SET_ACTIVE, active })
 export function SignOutRequest() {
   return (dispatch) => {
     return dispatch(SignOut())
@@ -159,10 +167,11 @@ export function SignInRequest(data) {
         return res.json()
       })
       .then(function (res) {
-        console.log("res", res)
+        //console.log("res", res)
         if (res.isMember && res.isPassword) {
-          SetSession("opendesign_token", res.token)
-          console.log("success", res)
+          const { TokenName } = require("constant");
+          SetSession(TokenName, res.token)
+          //console.log("success", res)
           return dispatch(SignInSuccess(res.token))
         } else {
           if (!res.isMember) {
@@ -178,21 +187,11 @@ export function SignInRequest(data) {
 }
 export function CheckTokenRequest(token) {
   return (dispatch) => {
-    dispatch(CkeckToken());
+    dispatch(CheckToken());
     return fetch(`${host}/users/check`, { headers: { 'x-access-token': token, 'Content-Type': 'application/json' } })
       .then(res => res.json())
-      .then(res => {
-        if (res.success) {
-          return dispatch(CkeckTokenSuccess(res.info, token));
-        } else {
-          // SetSession("opendesign_token", null);
-          return dispatch(CkeckTokenFailure());
-        }
-      })
-      .catch(err => {
-        // SetSession("opendesign_token", null);
-        dispatch(CkeckTokenFailure());
-      });
+      .then(res => res.success ? dispatch(CheckTokenSuccess(res.info, token)) : dispatch(CheckTokenFailure()))
+      .catch(_ => dispatch(CheckTokenFailure()));
   };
 }
 export function CheckEmailRequest(email) {
@@ -210,10 +209,36 @@ export function CheckEmailRequest(email) {
       .catch(err => dispatch(CheckEmailFailure()));
   };
 }
+export function ReadDevNoticeRequest(id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/users/dev-notice/${id}`
+    return fetch(url, {
+      headers: { 'Content-Type': 'app;ocation/json', 'x-access-token': token },
+      method: "PUT"
+    }).then(res => res.json())
+      .then(data => resolve(data && data.success))
+      .catch(err => reject(err))
+  });
+};
+export function GetDevNoticeRequest(token) {
+  return (dispatch) => {
+    dispatch(GetDevNotice());
+    const url = `${host}/users/dev-notice`
+    return fetch(url, {
+      headers: { 'Content-Type': 'application/json', 'x-access-token': token },
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(res => res && res.success
+        ? dispatch(GetDevNoticeSuccess(res.result))
+        : dispatch(GetDevNoticeFailure(res.error)))
+      .catch(err => dispatch(GetDevNoticeSuccess(err)));
+  };
+}
 export function CheckNickNameRequest(NickName) {
   return (dispatch) => {
     dispatch(CheckNickName());
-    return fetch(`${host}/users/checkNickName`, { headers: { 'Content-Type': 'application/json'}, method: "POST", body: JSON.stringify(NickName) })
+    return fetch(`${host}/users/checkNickName`, { headers: { 'Content-Type': 'application/json' }, method: "POST", body: JSON.stringify(NickName) })
       .then(res => res.json())
       .then(res => {
         if (res.success) {

@@ -58,6 +58,21 @@ const UNLIKE_GROUP = "UNLIKE_GROUP"
 const UNLIKE_GROUP_SUCCESS = "UNLIKE_GROUP_SUCCESS"
 const UNLIKE_GROUP_FAILURE = "UNLIKE_GROUP_FAILURE"
 
+const GET_GROUP_NOTICE = "GET_GROUP_NOTICE"
+const GET_GROUP_NOTICE_SUCCESS = "GET_GROUP_NOTICE_SUCCESS"
+const GET_GROUP_NOTICE_FAILURE = "GET_GROUP_NOTICE_FAILURE"
+const GET_GROUP_MY_NOTICE_SUCCESS = "GET_GROUP_MY_NOTICE_SUCCESS"
+const GET_GROUP_MY_NOTICE_FAILURE = "GET_GROUP_MY_NOTICE_FAILURE"
+
+// new 
+const GET_HAVE_GROUP_IN_DESIGN = "GET_HAVE_GROUP_IN_DESIGN"
+const GET_HAVE_GROUP_IN_DESIGN_SUCCESS = "GET_HAVE_GROUP_IN_DESIGN_SUCCESS"
+const GET_HAVE_GROUP_IN_DESIGN_FAILURE = "GET_HAVE_GROUP_IN_DESIGN_FAILURE"
+//new
+const GetHaveGroupInDesign = () => ({ type: GET_HAVE_GROUP_IN_DESIGN });
+const GetHaveGroupInDesignSuccess = data => ({ type: GET_HAVE_GROUP_IN_DESIGN_SUCCESS, success: true, data: data });
+const GetHaveGroupInDesignFailure = error => ({ type: GET_HAVE_GROUP_IN_DESIGN_FAILURE, success: false, error: error });
+
 
 const GetGroupDetail = (data) => ({ type: GET_GROUP_DETAIL, GroupDetail: data })
 const GetGroupCount = (data) => ({ type: GET_GROUP_COUNT, Count: data })
@@ -116,6 +131,13 @@ const GetMyExistGroupListSuccess = (data) => ({ type: GET_MY_EXIST_GROUP_LIST_SU
 const GetExistGroupListFailure = (data) => ({ type: GET_MY_EXIST_GROUP_LIST_FAILURE, success: data.success })
 
 
+const GetGroupNotice = () => ({ type: GET_GROUP_NOTICE });
+const GetGroupNoticeSuccess = data => ({ type: GET_GROUP_NOTICE_SUCCESS, success: true, data: data });
+const GetGroupNoticeFailure = error => ({ type: GET_GROUP_NOTICE_FAILURE, success: false, error: error });
+const GetGroupNoticeYouJoined = (data) => ({ type: GET_GROUP_MY_NOTICE_SUCCESS, sucess: true, data: data });
+const GetGroupNoticeYouJoinedFailed = (error) => ({ type: GET_GROUP_MY_NOTICE_FAILURE, sucess: false, error: error });
+
+
 const initialState = {
   DeleteGroup: { status: "INIT" },
   WaitingList: { status: "INIT" },
@@ -124,6 +146,8 @@ const initialState = {
   MyExistList: { status: "INIT" },
   MyList: { status: "INIT" },
   CreateGroup: { status: "INIT" },
+  GroupNotice: { status: "INIT" },
+  SubmitStatus:{status:"INIT"},
   status: {
     GroupDetail: [],
     Count: { like: 0, design: 0, group: 0 },
@@ -134,14 +158,18 @@ const initialState = {
     MyDesignList: [],
     MyGroupList: [],
     MyExistDesignList: [],
-    MyExistGroupList: []
+    MyExistGroupList: [],
+    GroupNotice: [],
+    GroupMyNotice: [],
+    SubmitStatus:[],
   }
 }
 
 
 export function Group(state, action) {
-  if (typeof state === "undefined")
-    state = initialState
+  if (typeof state === "undefined") {
+    state = initialState;
+  }
 
   switch (action.type) {
     case DELETE_GROUP:
@@ -403,6 +431,52 @@ export function Group(state, action) {
           status: { $set: "Failure" }
         }
       })
+
+    case GET_GROUP_NOTICE:
+      return update(state, {
+        GroupNotice: { status: { $set: "WAITING" } }
+      })
+    case GET_GROUP_NOTICE_SUCCESS:
+      return update(state, {
+        GroupNotice: {
+          status: { $set: "SUCCESS" }
+        },
+        status: {
+          GroupNotice: { $set: action.data },
+        }
+      })
+    case GET_GROUP_NOTICE_FAILURE:
+      return update(state, {
+        GroupNotice: {
+          status: { $set: "Failure" }
+        },
+        status: {
+          GroupNotice: { $set: [] },
+        }
+      })
+    case GET_GROUP_MY_NOTICE_SUCCESS:
+      return update(state, {
+        status: { GroupMyNotice: { $set: action.data }, }
+      })
+    case GET_GROUP_MY_NOTICE_FAILURE:
+      return update(state, {
+        status: { GroupMyNotice: { $set: [] }, }
+      })
+
+      //new
+      case GET_HAVE_GROUP_IN_DESIGN:
+        return update(state, {
+          SubmitStatus: { status: { $set: "WAITING" } }
+        })
+      case GET_HAVE_GROUP_IN_DESIGN_SUCCESS:
+        return update(state, {
+          status: { SubmitStatus: { $set: action.data.data }, }
+        })
+      case GET_HAVE_GROUP_IN_DESIGN_FAILURE:
+        return update(state, {
+          status: { SubmitStatus: { $set: [] }, }
+        })
+
     default:
       return state
   }
@@ -416,11 +490,11 @@ export function UpdateDesignInGroupRequest(id, designid) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("result >>", data)
+      // console.log("result >>", data)
       return dispatch(UpdateDesignInGroupSuccess(data))
     }).catch((error) => {
       dispatch(UpdateDesignInGroupFail())
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -432,11 +506,11 @@ export function UpdateGroupInGroupRequest(id, groupid) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("result >>", data)
+      // console.log("result >>", data)
       return dispatch(UpdateGroupInGroupSuccess(data))
     }).catch((error) => {
       dispatch(UpdateGroupInGroupFail())
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -448,11 +522,11 @@ export function DeleteGroupInGroupRequest(id, groupid) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("result >>", data)
+      // console.log("result >>", data)
       return dispatch(DeleteGroupInGroupSuccess(data))
     }).catch((error) => {
       dispatch(DeleteGroupInGroupFail())
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -466,9 +540,9 @@ export function GetMyExistGroupListRequest(token, id) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("GetMyGroupListRequest >>", data)
+      // console.log("GetMyGroupListRequest >>", data)
       if (!data.list) {
-        console.log("no data")
+        // console.log("no data")
         data = []
       }
       data.list = data.list.map(item => {
@@ -477,7 +551,7 @@ export function GetMyExistGroupListRequest(token, id) {
       dispatch(GetMyExistGroupListSuccess(data))
     }).catch((error) => {
       dispatch(GetExistGroupListFailure(error))
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -490,9 +564,8 @@ export function GetMyExistDesignListRequest(token, id) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("GetMyDesignListRequest >>", data)
       if (!data.list) {
-        console.log("no data")
+        // console.log("no data")
         data = []
       }
       data.list = data.list.map(item => {
@@ -501,7 +574,7 @@ export function GetMyExistDesignListRequest(token, id) {
       dispatch(GetMyExistDesignListSuccess(data))
     }).catch((error) => {
       dispatch(GetExistDesignListFailure(error))
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -514,14 +587,14 @@ export function UnlikeGroupRequest(id, token) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("unlike >>>", data)
+      // console.log("unlike >>>", data)
       if (!data) {
-        console.log("no data")
+        // console.log("no data")
       }
       dispatch(UnlikeGroupSuccess(data))
       return data
     }).catch((error) => {
-      console.log("err", error)
+      console.error("err", error)
       UnlikeGroupFailure(error)
     })
   }
@@ -535,14 +608,13 @@ export function LikeGroupRequest(id, token) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("like >>>", data)
       if (!data) {
-        console.log("no data")
+        // console.log("no data")
       }
       dispatch(LikeGroupSuccess())
       return data
     }).catch((error) => {
-      console.log("err", error)
+      console.error("err", error)
       LikeGroupFailure(error)
     })
   }
@@ -563,7 +635,7 @@ export function DeleteGroupRequest(id, token) {
       }
     }).catch((error) => {
       dispatch(DeleteGroupFailure())
-      console.log(error)
+      // console.error(error)
     })
   }
 }
@@ -580,7 +652,7 @@ export function UpdateGroupRequest(id, data, token) {
       return dispatch(UpdateGroupSuccess(res))
     }).catch((error) => {
       dispatch(UpdateGroupFailure())
-      console.log(error)
+      console.error(error)
     })
   }
 }
@@ -598,7 +670,7 @@ export function CreateNewGroupRequest(data, token) {
         return dispatch(CreateNewGroupSuccess(res.id))
       }).catch((error) => {
         dispatch(CreateGroupFailure())
-        console.log(error)
+        console.error(error)
       })
   }
 }
@@ -630,9 +702,8 @@ export function GetGroupInGroupRequest(id, page, sort) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("group in group data >>", data)
       if (!data) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       if (page === 0) {
@@ -655,9 +726,9 @@ export function GetDesignInGroupRequest(id, page, sort) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("design in group data >>", data)
+      //console.log("design in group data >>", data)
       if (!data) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       if (page === 0) {
@@ -678,14 +749,14 @@ export function GetLikeGroupRequest(id, token) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("group like >>", data)
+      //console.log("group like >>", data)
       if (!data) {
-        console.log("no like info")
+        //console.log("no like info")
         data = false
       }
       dispatch(GetLikeGroupSuccess(data.like))
     }).catch((error) => {
-      console.log("err", error)
+      console.error("err", error)
       GetLikeGroupFailure(false)
     })
   }
@@ -700,7 +771,7 @@ export function GetGroupCountRequest(id) {
     }).then((data) => {
       // console.log("group count >>", data)
       if (!data) {
-        console.log("no data")
+        //console.log("no data")
         data = {
           like: 0,
           design: 0,
@@ -709,7 +780,7 @@ export function GetGroupCountRequest(id) {
       }
       dispatch(GetGroupCount(data))
     }).catch((err) => {
-      console.log("err", err)
+      console.error("err", err)
     })
   }
 }
@@ -721,17 +792,31 @@ export function GetGroupDetailRequest(id) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("group Detail data >>", data)
       if (!data) {
         console.log("no data")
         data = []
       }
       dispatch(GetGroupDetail(data))
+      return data;
     }).catch((error) => {
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
+export function GetGroupMemberRequest(id) {
+  return new Promise((resolve) => {
+    fetch(`${host}/group/groupMember/${id}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "get"
+    }).then(res => res.json()
+    ).then(data => resolve(data)
+    ).catch((error) => {
+      console.error("err", error)
+      resolve(null);
+    });
+  });
+};
+
 export function JoinGroupRequest(data, token, id) {
   return (dispatch) => {
     return fetch(`${host}/group/groupDetail/${id}/DesignJoinGroup`, {
@@ -741,9 +826,9 @@ export function JoinGroupRequest(data, token, id) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("waiting group list is >>", data)
+      //console.log("waiting group list is >>", data)
       if (!data) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       dispatch(JoinGroupSuccess(data))
@@ -762,9 +847,9 @@ export function GetMyDesignListRequest(token, id) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("GetMyDesignListRequest >>", data)
+      //console.log("GetMyDesignListRequest >>", data)
       if (!data.list) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       data.list = data.list.map(item => {
@@ -773,7 +858,7 @@ export function GetMyDesignListRequest(token, id) {
       dispatch(GetMyDesignListSuccess(data))
     }).catch((error) => {
       dispatch(GetMyDesignListFailure(error))
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -785,15 +870,15 @@ export function GroupJoinGroupRequest(data, token, id) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("waiting group list is >>", data)
+      //console.log("waiting group list is >>", data)
       if (!data) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       dispatch(GetWaitingGroup(data))
     }).catch((error) => {
       dispatch(GetWaitingDataFail())
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -807,9 +892,9 @@ export function GetMyGroupListRequest(token, id) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("GetMyGroupListRequest >>", data)
+      //console.log("GetMyGroupListRequest >>", data)
       if (!data.list) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       data.list = data.list.map(item => {
@@ -818,7 +903,7 @@ export function GetMyGroupListRequest(token, id) {
       dispatch(GetMyGroupListSuccess(data))
     }).catch((error) => {
       dispatch(GetMyGroupListFailure(error))
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
@@ -831,9 +916,9 @@ export function GetWaitingDesignRequest(id, sort) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("waiting design list is >>", data)
+      //console.log("waiting design list is >>", data)
       if (!data) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       return dispatch(GetWaitingDesign(data))
@@ -844,7 +929,7 @@ export function GetWaitingDesignRequest(id, sort) {
 }
 export function GetWaitingGroupRequest(id, sort) {
   const url = `${host}/group/groupDetail/${id}/waitingGroup/${sort}`
-  console.log("url:", url);
+  // console.log("url:", url);
   return (dispatch) => {
     return fetch(url, {
       headers: { "Content-Type": "application/json" },
@@ -852,9 +937,9 @@ export function GetWaitingGroupRequest(id, sort) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("waiting group list is >>", data)
+      //console.log("waiting group list is >>", data)
       if (!data) {
-        console.log("no data")
+        //console.log("no data")
         data = []
       }
       return dispatch(GetWaitingGroup(data))
@@ -871,11 +956,358 @@ export function DeleteDesignInGroupRequest(id, designid) {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.log("result >>", data)
+      //console.log("result >>", data)
       return dispatch(DeleteDesignInGroupSuccess(data))
     }).catch((error) => {
       dispatch(DeleteDesignInGroupFail())
-      console.log("err", error)
+      console.error("err", error)
     })
   }
 }
+
+// predicated
+export function GetAllNoticeYourGroupRequest(id) {
+  const url = `${host}/group/getAllNotiMygroup/${id}`;
+  // console.log("URL:", url);
+
+  return (dispatch) => {
+    dispatch(GetGroupNotice());
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        dispatch(GetGroupNoticeSuccess(data.data))
+      })
+      .catch(error => {
+        console.error(error);
+        dispatch(GetGroupNoticeFailure(error))
+      })
+  }
+}
+export function GetGroupNoticeYouJoinedRequest(id, user_id) {
+  const url = `${host}/group/getNotiGroupIJoined/${id}/${user_id}`;
+  // console.log("URL:", url);
+
+  return (dispatch) => {
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET"
+    }).then(res => res.json())
+      .then(data => {
+        //console.log("group >>", data)
+        return dispatch(GetGroupNoticeYouJoined(!data ? [] : data.data))
+      })
+      .catch(error => {
+        console.error(error);
+        return dispatch(GetGroupNoticeYouJoinedFailed())
+      })
+  }
+}
+export function HasReadNoticeRequest(id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/`;
+    fetch(url, { headers: { "Content-Type": "application/json" }, method: "GET" })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(err => reject(err));
+  })
+}
+
+// group-notice
+export function DeleteGroupNoticeRequest(token, obj) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/deleteGroupNotice/${obj.notice_id}`
+    return fetch(url, {
+      headers: { "x-access-token": token },
+      method: "DELETE",
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(error => reject(error));
+  });
+}
+export function UpdateGroupNoticeRequest(token, obj) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/updateGroupNotice`
+    return fetch(url, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(obj)
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(error => reject(error));
+  });
+}
+export function CreateGroupNoticeRequest(token, obj) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/createGroupNotice`
+    return fetch(url, {
+      headers: { "x-access-token": token, "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(obj)
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(error => reject(error));
+  });
+}
+export function checkHaveProgrammingDesign(group_id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/check-has-programming-design/${group_id}`;
+    return fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token
+      },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(e => reject(e));
+  })
+}
+export function GetLastestGroupNoticeRequest(group_id) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/lastest-notice/${group_id}`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(error => reject(error));
+  });
+};
+export function GetTotalCountGroupNoticeRequest(group_id) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/total-count-notice/${group_id}`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(error => reject(error));
+  });
+};
+export function GetGroupNoticeListRequest(group_id, page) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/notice-list/${group_id}/${page}`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(error => reject(error));
+  });
+};
+
+// GROUP BOARD
+export function CreateGroupBoardRequest(data, group_id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/board`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject);
+  });
+};
+export function GetGroupBoardRequest(group_id, page) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/board/${page}`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(error => reject(error));
+  });
+};
+export function UpdateGroupBoardRequest(data, group_id, board_id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/board/${board_id}`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "PATCH",
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject);
+  });
+};
+export function DeleteGroupBoardRequest(group_id, board_id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/board/${board_id}`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "DELETE"
+    })
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject);
+  });
+};
+// GROUP BOARD COMMENT
+export function CreateGroupBoardCommentRequest(data, group_id, board_id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/board/${board_id}/comment`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject);
+  });
+};
+export function GetBoardCommentRequest(group_id, board_id) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/board/${board_id}/comment`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject);
+  });
+};
+export function UpdateGroupBoardCommentRequest(data, group_id, board_id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/board/${board_id}/comment/${data.uid}`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "PATCH",
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject);
+  });
+};
+export function DeleteGroupBoardCommentRequest(id, group_id, board_id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/board/${board_id}/comment/${id}`;
+    return fetch(url, {
+      headers: { "ContentType": "application/json", "x-access-token": token },
+      method: "DELETE",
+    })
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject);
+  });
+};
+
+
+// 
+export function CheckInvitedUserRequest(id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${id}/video-chat/check-invited`;
+    fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(res => resolve(res))
+      .catch(error => reject(false));
+  });
+};
+export function InvitedUserRequest(id, token, data) {
+  return new Promise((resolve/*, reject*/) => {
+    const url = `${host}/group/${id}/video-chat/invite-user`;
+    console.log("dock:", url, { to_user_id: data });
+    fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "POST",
+      body: JSON.stringify({ to_user_id: data })
+    })
+      .then(res => res.json())
+      .then(res => resolve(res))
+      .catch(error => { throw error; });
+  });
+};
+export function CancelInvitedUserRequest(id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${id}/video-chat/cancel-invited-user`;
+    fetch(url, {
+      headers: { "x-access-token": token },
+      method: "POST",
+    })
+      .then(res => res.json())
+      .then(res => resolve(res))
+      .catch(error => reject(false));
+  });
+};
+export function GetPermissionCouldJoinVideoChatRequest(token, group_id) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/check-could-join-vchat`;
+    return fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token,
+      },
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(error => reject(error));
+  });
+};
+
+/////// new
+export function GetHaveGroupInDesignRequest(token,group_id) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/getHaveGroupInDesign/${group_id}`;
+    return fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token,
+      },
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(data => resolve(data))
+      .catch(error => reject(error));
+  });
+  // return (dispatch) => {
+  //   dispatch(GetHaveGroupInDesign())
+  //   return fetch(`${host}/group/getHaveGroupInDesign/${group_id}`, {
+  //     headers: { "Content-Type": "application/json", 'x-access-token': token },
+  //     method: "get"
+  //   }).then((response) => {
+  //     return response.json()
+  //   }).then((data) => {
+  //     dispatch(GetHaveGroupInDesignSuccess(data))
+  //     return data;
+  //   }).catch((error) => {
+  //     dispatch(GetHaveGroupInDesignFailure(error))
+  //     console.error("err", error)
+  //   })
+  // }
+}
+
+// duedate
+export function GetProblemListFromDesignInGroupRequest(group_id, token) {
+  return new Promise((resolve, reject) => {
+    const url = `${host}/group/${group_id}/problemcontents`;
+    return fetch(url, {
+      headers: { "Content-Type": "application/json", "x-access-token": token },
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(resolve)
+      .catch(reject);
+  });
+};

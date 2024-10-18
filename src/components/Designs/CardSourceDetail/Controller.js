@@ -4,7 +4,8 @@ import osdcss from "opendesign_style";
 import TextController from "./TextControllerClassic";
 import FileController from "./FileController";
 import EmbController from "./EmbController";
-
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 // css styling
 const ControllerWrap = styled.div`
   position: relative;
@@ -132,12 +133,12 @@ export class Controller extends Component {
     // if (e && this.props.onBlur)
     // await this.props.onBlur();
     // };
-    console.log("updated:(changed):", this.props.item.content, this.state.content);
+    //console.log("updated:(changed):", this.props.item.content, this.state.content);
   };
 
   async deleteItem() {
     if (this.props.deleteItem) {
-      if (window.confirm("선택된 항목을 정말 삭제하시겠습니까?")) {
+      if (await confirm("선택된 항목을 정말 삭제하시겠습니까?","예","아니오")) {
         this.props.deleteItem(this.props.item.order)
       }
     }

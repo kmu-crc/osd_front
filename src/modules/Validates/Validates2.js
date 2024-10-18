@@ -14,7 +14,7 @@ Validates.NotRequired = function(data) {
 };
 // 필수항목 체크 내용이 비어있는지를 검사한다.
 Validates.Required = function(data, target) {
-  console.log("1", data);
+  //console.log("1", data);
   return new Promise(function(resolve, reject) {
     if (
       data === "" ||
@@ -60,7 +60,7 @@ Validates.Checked = function(data, target) {
 };
 
 Validates.MaxLength = function(data, target, length) {
-  console.log("length", length);
+  //console.log("length", length);
   return new Promise(function(resolve, reject) {
     let leng = Number(length);
     let strValue;
@@ -73,7 +73,7 @@ Validates.MaxLength = function(data, target, length) {
     }
 
     // 넘어가는 글자는 자른다.
-    console.log("총 글자의 길이 : ", strLen);
+    //console.log("총 글자의 길이 : ", strLen);
     if (strLen <= leng) {
       resolve(true);
     } else {
@@ -83,7 +83,7 @@ Validates.MaxLength = function(data, target, length) {
   });
 };
 Validates.MinLength = function(data, target, length) {
-  console.log("min", length);
+  //console.log("min", length);
   return new Promise(function(resolve, reject) {
     let leng = Number(length);
     let strValue;
@@ -96,7 +96,7 @@ Validates.MinLength = function(data, target, length) {
     }
 
     // 넘어가는 글자는 자른다.
-    console.log("총 글자의 길이 : ", strLen);
+    //console.log("총 글자의 길이 : ", strLen);
     if (strLen >= leng) {
       resolve(true);
     } else {
@@ -107,7 +107,7 @@ Validates.MinLength = function(data, target, length) {
 };
 
 Validates.IsEmail = function(data, target) {
-  console.log("3");
+  //console.log("3");
   return new Promise(function(resolve, reject) {
     let regExp = /[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
     if (data === [] || data === undefined || data === null || data === "") {
@@ -123,7 +123,7 @@ Validates.IsEmail = function(data, target) {
 };
 
 Validates.IsPhone = function(data, target) {
-  console.log("phone Data :", data);
+  //console.log("phone Data :", data);
   return new Promise(function(resolve, reject) {
     let regExp = /^[0-9]+$/;
     let isPhoneArray = [];
@@ -133,7 +133,7 @@ Validates.IsPhone = function(data, target) {
     ];
     new Promise.all(isPhoneArray).then(
       function(res) {
-        console.log("isPhone:", res);
+        //console.log("isPhone:", res);
         if (data.match(regExp)) {
           resolve(true);
         } else {
@@ -186,7 +186,7 @@ Validates.OnlyImages = (data, target) => {
         resolve(true);
       }
       for (let item of data) {
-        console.log("OnlyImages", item);
+        //console.log("OnlyImages", item);
         if (
           item.type === "image/jpeg" ||
           item.type === "image/png" ||
@@ -257,7 +257,7 @@ Validates.NotBlank = (data, target) => {
 };
 
 Validates.CheckEmail = (data, target) => {
-  console.log("??", data);
+  //console.log("??", data);
   return new Promise(async (resolve, reject) => {
     if (Validates.NotRequired(data)) {
       await resolve(true);

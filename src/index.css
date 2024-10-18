@@ -6,8 +6,11 @@
   (500, Medium) 
   (700, Bold) 
 */
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
+
 
 html, body {
+  height: 100%;
   width:100vw;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -25,7 +28,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, monospace, 
   "Courier New", Consolas;
 }
-
+a{
+  color: inherit;
+}
 
 .partial-scroll-on{
   -webkit-transition: all 0.5s;
@@ -35,7 +40,11 @@ code {
   transition: all 0.5s
 }
 
-
+button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
 .partical-scroll-none::-webkit-scrollbar {
   position: block;
   width: 0px;
@@ -44,11 +53,12 @@ code {
   background: transparent; 
 }
 .partical-scroll-none::-webkit-scrollbar-thumb {
-  background: transparent;
+  background: rgba(255, 0, 0, 0.45) !important;
+  /* background: transparent; */
 }
 .partial-scroll-on::-webkit-scrollbar {
   position: block;
-  width: 3.9px;
+  width: 4px;
 }
 .partial-scroll-on::-webkit-scrollbar * {
   background: transparent;
@@ -64,7 +74,14 @@ code {
 .card-detail-scroll::-webkit-scrollbar-thumb {
   background: #707070 !important;
 }
-
+/* ck editor classic global */
+.ck-editor__editable {
+  min-height: 120px;
+  height: 120px;
+}
+.ui.dimmer {
+  position: fixed!important;
+}
 /* .partical-scroll-none::-webkit-scrollbar {
   position: absolute;
   width: 0px;

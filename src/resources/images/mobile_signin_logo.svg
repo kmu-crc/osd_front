@@ -1,0 +1,8 @@
+<svg id="구성_요소_22_8" data-name="구성 요소 22 – 8" xmlns="http://www.w3.org/2000/svg" width="61.477" height="25.126" viewBox="0 0 61.477 25.126">
+  <circle id="타원_2" data-name="타원 2" cx="12.5" cy="12.5" r="12.5" transform="translate(0 0.126)" fill="red"/>
+  <path id="패스_4" data-name="패스 4" d="M511.407,14.26A12.5,12.5,0,0,0,498.93,1.76v25A12.5,12.5,0,0,0,511.407,14.26Z" transform="translate(-449.93 -1.634)" fill="red"/>
+  <g id="그룹_752" data-name="그룹 752" transform="translate(-90.223 -59.415)">
+    <path id="패스_5" data-name="패스 5" d="M299.824,2.958a10.1,10.1,0,0,0-.014,14.266L314.091,2.945a10.1,10.1,0,0,0-14.267.013Z" transform="translate(-178.256 59.414)" fill="red"/>
+    <path id="패스_6" data-name="패스 6" d="M297.082,112.451a10.083,10.083,0,0,0,0-14.259l-.014-.013L282.81,112.439l.013.013A10.082,10.082,0,0,0,297.082,112.451Z" transform="translate(-164.199 -30.99)" fill="red"/>
+  </g>
+</svg>

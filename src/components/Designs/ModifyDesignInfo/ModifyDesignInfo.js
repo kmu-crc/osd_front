@@ -6,6 +6,8 @@ import Button from "components/Commons/Button";
 import { FormInput, FormThumbnail, FormCheckBox, FormSelect } from "components/Commons/FormItems";
 import { FormControl, ValidationGroup } from "modules/FormControl";
 import opendesign_style from "opendesign_style";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const FromFieldCard = styled.div`
   width: 100%;
@@ -118,21 +120,21 @@ class ModifyDesignInfo extends Component {
     e.preventDefault();
     // this.state.member.value = JSON.stringify(this.state.member.value);
     ValidationGroup(this.state, false).then(data => {
-      console.log("성공", data);
+      //console.log("성공", data);
       this.props.setLoader();
       this.props.UpdateDesignInfoRequest(data, this.props.DesignDetail.uid,
         this.props.token)
-        .then(data => {
+        .then(async (data) => {
           if (data.res && data.res.success) {
             this.props.history.push(`/designDetail/${data.res.design_id}`);
           } else {
-            alert("다시 시도해주세요");
+            await alert("다시 시도해주세요","확인");
             // this.state.member.value = JSON.parse(this.state.member.value);
             this.props.setLoader();
           }
         })
     }).catch(e => {
-      console.log("실패", e);
+      //console.log("실패", e);
       // this.state.member.value = JSON.parse(this.state.member.value);
     });
   };
@@ -209,7 +211,7 @@ class ModifyDesignInfo extends Component {
             <FromFieldCard>
               <Grid>
                 <Grid.Column mobile={16} computer={4}>
-                  <FormHeader as="h2">라이센스</FormHeader>
+                  <FormHeader as="h2">라이센스<sup style={{ color: "red" }}>*</sup></FormHeader>
                 </Grid.Column>
                 <Grid.Column mobile={16} computer={12}>
                   <Form.Group widths={4}>
@@ -241,10 +243,10 @@ class ModifyDesignInfo extends Component {
                 </Grid.Column>
               </Grid>
             </FromFieldCard>
-            <Button type="submit">수정</Button>
             <Link to={`/designDetail/${this.props.DesignDetail.uid}`}>
               <Button type="button">취소</Button>
             </Link>
+            <Button type="submit">수정</Button>
           </form>
         }
       </InfoWrapper>

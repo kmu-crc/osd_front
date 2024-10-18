@@ -3,6 +3,15 @@ import DesignInfo from "components/Designs/DesignInfo"
 import DesignDetailStepContainer from "containers/Designs/DesignDetailStepContainer"
 import Loading from "components/Commons/Loading";
 import DesignDetailViewContainer from "containers/Designs/DesignDetailViewContainer";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  max-width: 1740px;
+  min-width: 1000px;
+  .marginLeft{
+    margin-left:38px;
+  }
+`
 
 class DesignDetail extends Component {
 
@@ -10,11 +19,14 @@ class DesignDetail extends Component {
     super(props);
     this.state = { isMyDesign: false, editor: false };
   }
+
   componentDidMount() {
     this.props.GetDesignDetailRequest(this.props.id, this.props.token)
       .then(async () => {
         if (this.props.userInfo === null) this.setState({ isMyDesign: false });
         else if (this.props.userInfo.uid === this.props.DesignDetail.user_id) {
+          this.props.DesignWaitingListRequest(this.props.id, this.props.token);
+          this.props.GetCountDesignCommentRequest(this.props.id);
           this.setState({ isMyDesign: true });
         }
         else {
@@ -28,15 +40,13 @@ class DesignDetail extends Component {
       this.props.GetLikeDesignRequest(this.props.id, this.props.token);
     } // 로그인 한 경우 좋아요 했는지 여부 가져오기
   }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.DesignDetail !== nextProps.DesignDetail) {
-      // console.log("???");
       return true;
     }
   }
-  gotoModifyPage = () => {
-    window.location.href = "/groupDetail/" + this.props.id + "/modify"
-  }
+
   checkEditorPermission() {
     return (
       this.props.userInfo &&
@@ -44,20 +54,25 @@ class DesignDetail extends Component {
         this.props.DesignDetail.member &&
         this.props.DesignDetail.member.find(peer => { return peer.user_id === this.props.userInfo.uid }) ? true : false);
   }
+
   render() {
-    console.log(this.props,"designdetail");
-    // console.log("userinfo", this.props, this.state)
+
     const DesignDetail = this.props.DesignDetail;
-    return (<React.Fragment>
-      {DesignDetail && DesignDetail.uid ? <React.Fragment>
-        {/* design info */}
-        <DesignInfo {...this.props} {...this.state} />
-        {/* design detail */}
-        {DesignDetail && DesignDetail.is_project === 1
-          ? (<DesignDetailStepContainer design={DesignDetail} {...this.state} />)
-          : (<DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} />)}
-      </React.Fragment> : <Loading />}
-    </React.Fragment>)
+
+    return (<Wrapper>
+      {DesignDetail && DesignDetail.uid
+        ? <React.Fragment>
+          {/* design info */}
+          <DesignInfo {...this.props} {...this.state} />
+
+          {/* design detail */}
+          
+          {DesignDetail && DesignDetail.is_project === 1
+            ? (<DesignDetailStepContainer design={DesignDetail} {...this.state} />)
+            : (<div className="marginLeft"><DesignDetailViewContainer id={this.props.id} {...this.state} history={this.props.history} /></div>)}
+        </React.Fragment>
+        : <Loading />}
+    </Wrapper>)
   }
 }
 

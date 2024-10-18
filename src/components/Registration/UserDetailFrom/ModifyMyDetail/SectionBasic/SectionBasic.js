@@ -29,7 +29,7 @@ class SectionBasic extends Component
     {
       if(this.props.MyDetail !=nextProps.MyDetail)
       {
-        console.log("MYDETAIL",nextProps.MyDetail.nick_name);
+        //console.log("MYDETAIL",nextProps.MyDetail.nick_name);
         this.setState({nickname:nextProps.MyDetail.nick_name==null?"":nextProps.MyDetail.nick_name,
                       introduce:nextProps.MyDetail.about_me==null?"":nextProps.MyDetail.about_me,
                       thumbnail:nextProps.MyDetail.profileImg.m_img==null?"":nextProps.MyDetail.profileImg.m_img});

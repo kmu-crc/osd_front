@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { GetCardDetailRequest, UpdateDesignTime, GetDesignSourceRequest, UpdateDesignSourceRequest, DesignSourceResetRequest } from "redux/modules/design";
+import { GetDesignDetailRequest, GetCardDetailRequest, UpdateDesignTime, UpdateDesignCardTime, GetDesignSourceRequest, UpdateDesignSourceRequest, DesignSourceResetRequest, } from "redux/modules/design";
 import CardSourceDetail from "components/Designs/CardSourceDetail";
+import { CardSourceDetailMobile } from "components/Designs/CardSourceDetail";
+import { isMobile } from "constant";
 
 class CardSourceDetailContainer extends Component {
-  constructor(props) {
-    super(props);
+  async componentDidMount() {
+    await this.props.GetDesignDetailRequest(this.props.design_id, this.props.token);
   }
   render() {
     return (
-      <CardSourceDetail {...this.props} upDateRequest={this.props.UpdateDesignSourceRequest} />
+      isMobile()
+        ? <CardSourceDetailMobile {...this.props} upDateRequest={this.props.UpdateDesignSourceRequest} />
+        : <CardSourceDetail {...this.props} upDateRequest={this.props.UpdateDesignSourceRequest} />
     );
   }
 }
@@ -20,12 +24,18 @@ const mapStateToProps = (state) => {
     content: state.DesignCard.status.content,
     origin: state.DesignCard.status.origin,
     status: state.DesignCard.DesignSourceDetail.status,
-    editStatus: state.DesignCard.DesignSourceEdit.status
+    editStatus: state.DesignCard.DesignSourceEdit.status,
+    userInfo: state.Authentication.status.userInfo,
+    DesignDetail: state.Design.status.DesignDetail,
+    PDFURL: state.Design.status.PDFURL,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    GetDesignDetailRequest: (id, token) => {
+      return dispatch(GetDesignDetailRequest(id, token))
+    },
     GetDesignSourceRequest: (id) => {
       return dispatch(GetDesignSourceRequest(id));
     },
@@ -40,7 +50,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     UpdateDesignTime: (design_id, token) => {
       return dispatch(UpdateDesignTime(design_id, token))
-    }
+    },
+    UpdateDesignCardTime: (id, token) => {
+      return dispatch(UpdateDesignCardTime(id, token))
+    },
   }
 }
 

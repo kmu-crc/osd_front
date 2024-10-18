@@ -6,6 +6,8 @@ import Button from "components/Commons/Button";
 import eximg from "source/myPage.jpeg";
 import { AcceptDesignRequest, GetoutDesignRequest } from "redux/modules/design";
 import { GetMyInvitedListRequest } from "redux/modules/personal";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 // css styling
 const List = styled.li`
@@ -84,17 +86,17 @@ class MyInvitedContainer extends Component {
     this.props.GetMyInvitedListRequest(this.props.token);
   }
 
-  getoutMember = (e, id) => {
+  getoutMember = async (e, id) => {
     e.stopPropagation();
-    const confirm = window.confirm("가입을 거절하시겠습니까?");
-    if (confirm) {
+    const isconfirm = await confirm("가입을 거절하시겠습니까?","예","아니오");
+    if (isconfirm) {
       this.props.GetoutDesignRequest(id, this.props.userInfo.uid, this.props.token, "DesignInviteReject")
-      .then(res => {
+      .then(async res => {
         if (res.data && res.data.success) {
-          alert("가입 요청을 거절하였습니다.");
+          // alert("가입 요청을 거절하였습니다.");
           this.props.GetMyInvitedListRequest(this.props.token);
         } else {
-          alert("다시 시도해주세요.");
+          await alert("다시 시도해주세요.","확인");
         }
       });
     } else {
@@ -102,17 +104,17 @@ class MyInvitedContainer extends Component {
     }
   }
 
-  acceptMember = (e, id) => {
+  acceptMember = async (e, id) => {
     e.stopPropagation();
-    const confirm = window.confirm("가입을 승인하시겠습니까?");
-    if (confirm) {
+    const isconfirm = await confirm("가입을 승인하시겠습니까?","예","아니오");
+    if (isconfirm) {
       this.props.AcceptDesignRequest(id, this.props.userInfo.uid, this.props.token)
-      .then(res => {
+      .then(async res => {
         if (res.data && res.data.success) {
-          alert("승인되었습니다.");
+          // alert("승인되었습니다.");
           this.props.GetMyInvitedListRequest(this.props.token);
         } else {
-          alert("다시 시도해주세요.");
+          await alert("다시 시도해주세요.","확인");
         }
       });
     } else {

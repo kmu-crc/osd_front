@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetGroupListRequest, GetGroupTotalCountRequest } from "redux/modules/group";
 import OrderOption from "components/Commons/OrderOption";
@@ -6,78 +6,70 @@ import styled from 'styled-components';
 import ScrollList from "components/Commons/ScrollList";
 import Loading from "components/Commons/Loading";
 import osdstyle from "opendesign_style";
+import Category from "components/Commons/Category"
 
-const TextWrapper = styled.div`
-      top: 25px;
-      font-size: 25px;
-      font-family: Noto Sans KR;
-      font-weight: 700;
-      color: red;
-      cursor: pointer;
-      margin-top:100px;
-      @media only screen and (max-width : 900px) {
-        margin-top:150px;
-        
-      }
-    .title{
-      width:300px;
-      text-align:center;
-      position:absolute;
-      @media only screen {
-        right:${props=>(props.centerPos-300)/2}px;
-      }
+const Wrapper = styled.div`
+  .category_wrapper{
+    padding-left:41px;
+    padding-top:19px;
+  }
+  .content{
+    padding-left:41px;
+    width:100%;
+    min-width:1000px;
+  }
+  .scroll_wrapper{
+    margin-top:21px;
+    margin-bottom:100px;
+    min-width:1000px;
+  }
+  .header_box{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:13px;
+    padding-right:39px;
+    .category_title{
+      min-width:200px;
+      height:32px;
+      font-family:Spoqa Han Sans Neo;
+      font-weight:Medium;
+      font-size:24px;
+      color:#1E9B79;
+      display:flex;
+      align-items:center;
     }
-`;
-const JoinGroupContainer = styled.div`
-    position: relative;
-`;
-const JoinGroup = styled.div`
-    position: relative;
-    left: 1761px;
-    width: 115px;
-    text-align: left;
-    font-size: 20px;
-    cursor: pointer;
-    font-family: Noto Sans KR;
-    font-weight: 500;
-    color: red;
-    line-height: 29px;
-    border-bottom: 1.5px solid red;
-`;
-const ScrollListContainer = styled.div`
-    position: relative;
-    padding-top: 100px;
-`;
-
+  }
+`
 class GroupListContainer extends Component {
 
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
     this.state = {
-      screenWidth:window.innerWidth,
+      screenWidth: window.innerWidth,
       reload: false,
       search: null,
       count: 0,
-      this_order: { text: "최신순", keyword: "update" }
+      this_order: this.props.sort=="like"?{text:"인기순",keyword:"like"}:{ text: "최신순", keyword: "update" }
     }
     this.handleResize = this.handleResize.bind(this);
   }
-  
-  componentDidMount(){
+
+  componentDidMount() {
     this.props.GetGroupTotalCountRequest()
       .then(() => { this.setState({ count: this.props.Count }) })
       .then(() => { this.props.GetGroupListRequest(0, null, null) });
     window.addEventListener("resize", this.handleResize, false);
 
-    }
+  }
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleResize, false);
   };
-  handleResize(){
+  handleResize() {
     console.log(window.innerWidth);
-    this.setState({screenWidth:window.innerWidth})
-   }
+    this.setState({ screenWidth: window.innerWidth })
+  }
   handleReload = () => {
     this.setState({ reload: !this.state.reload });
   }
@@ -88,6 +80,8 @@ class GroupListContainer extends Component {
     await this.setState({ this_order: order });
     this.handleReload();
     this.getList(0);
+    const orderkeyword = order.keyword==null?"update":`${order.keyword}`;
+    window.location.href = "/group/"+orderkeyword;
   }
   getList = async (page) => {
     const keyword = this.state.search
@@ -102,18 +96,29 @@ class GroupListContainer extends Component {
     const { dataList, dataListAdded } = this.props
     return (
       <React.Fragment>
-        <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
-
-        <TextWrapper centerPos={this.state.screenWidth}><div className="title">그룹({count})</div></TextWrapper>
-
-        <JoinGroupContainer><JoinGroup onClick={() => this.createGroup()}>그룹 등록하기</JoinGroup></JoinGroupContainer>
-
-        <ScrollListContainer id="list">
-          {this.props.status === "INIT" ?
-            <Loading /> :
-            <ScrollList {...osdstyle.group_margin} type="group" reload={reload} handleReload={this.handleReload}
-              dataList={dataList} dataListAdded={dataListAdded} getListRequest={this.getList} />}
-        </ScrollListContainer>
+        <Wrapper>
+        <div className="category_wrapper">
+            <Category/>
+        </div>
+        <div className="content">
+            <div className="header_box">
+                <div className="category_title">그룹({count})</div>
+                <OrderOption order_clicked={this.changeOrderOps} selected={this_order} />
+            </div>
+            <div className="scroll_wrapper">
+                {this.props.status === "INIT"
+                ? <Loading />
+                : <ScrollList
+                  {...osdstyle.group_margin}
+                  type="group"
+                  reload={reload}
+                  handleReload={this.handleReload}
+                  dataList={dataList}
+                  dataListAdded={dataListAdded}
+                  getListRequest={this.getList} />}
+              </div>
+          </div>
+        </Wrapper>
       </React.Fragment>
     )
   }

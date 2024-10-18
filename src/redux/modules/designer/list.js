@@ -25,6 +25,7 @@ export function DesignerList(state, action) {
   switch (action.type) {
     case GET_DESIGNER_LIST:
       return update(state, {
+        DesignerList: { status: { $set: action.type } },
         status: {
           DesignerList: { $set: action.DesignerList },
           DesignerListAdded: { $push: action.DesignerList }
@@ -32,6 +33,7 @@ export function DesignerList(state, action) {
       });
     case DESIGNER_LIST_CLEAR:
       return update(state, {
+        DesignerList: { status: { $set: action.type } },
         status: {
           DesignerList: { $set: [] },
           DesignerListAdded: { $set: [] }
@@ -39,6 +41,7 @@ export function DesignerList(state, action) {
       });
     case DESIGNER_LIST_FAIL:
       return update(state, {
+        DesignerList: { status: { $set: action.type } },
         status: {
           DesignerList: { $set: action.DesignerList },
           DesignerListAdded: { $set: action.DesignerListAdded }
@@ -62,8 +65,8 @@ export function DesignerList(state, action) {
 };
 
 
-export function GetDesignerListRequest(page, sort, cate1, cate2, keyword) {
-  const sql = `${host}/designer/designerList/${page}/${sort}/${cate1}/${cate2}/${keyword}`
+export function GetDesignerListRequest(page, sort, cate1, cate2, cate3, keyword) {
+  const sql = `${host}/designer/designerList_newversion/${page}/${sort}/${cate1 || "null"}/${cate2 || "null"}/${cate3}/${keyword}`
   console.log("sql:", sql)
   return (dispatch) => {
     return fetch(sql, {
@@ -74,7 +77,7 @@ export function GetDesignerListRequest(page, sort, cate1, cate2, keyword) {
     }).then((data) => {
       console.log("Designer data >>", data);
       if (!data) {
-        console.log("no data");
+        //console.log("no data");
         data = [];
       }
       if (page === 0) {
@@ -83,7 +86,7 @@ export function GetDesignerListRequest(page, sort, cate1, cate2, keyword) {
       dispatch(GetDesignerList(data));
     }).catch((error) => {
       dispatch(DesignerListFail());
-      console.log("err", error);
+      console.error("err", error);
     })
   }
 };
@@ -111,16 +114,16 @@ export function DesignerListFail() {
   }
 };
 
-export function GetDesignerTotalCountRequest(cate1, cate2) {
+export function GetDesignerTotalCountRequest(cate1, cate2, cate3) {
   return (dispatch) => {
-    return fetch(`${host}/designer/designerCount/${cate1}/${cate2}`, {
+    return fetch(`${host}/designer/designerCount_newversion/${cate1}/${cate2}/${cate3}`, {
       headers: { "Content-Type": "application/json" },
       method: "get"
     }).then((response) => {
       return response.json();
     }).then((data) => {
       if (!data) {
-        console.log("no data");
+        // console.log("no data");
         data = 0;
       } else {
         data = data["count(*)"];
@@ -128,7 +131,7 @@ export function GetDesignerTotalCountRequest(cate1, cate2) {
       dispatch(GetDesignerTotalCount(data));
     }).catch((error) => {
       dispatch(DesignerTotalCountFail());
-      console.log("err", error);
+      console.error("err", error);
     })
   }
 };

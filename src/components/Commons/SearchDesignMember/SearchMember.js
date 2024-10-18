@@ -12,6 +12,7 @@ const MemberItem = styled.div`
   margin-right: 5px;
   margin-bottom: 5px;
   font-size: 12px;
+  cursor:pointer;
 `
 const DeleteBtn = styled.button`
   background-color: transparent;
@@ -26,24 +27,31 @@ const MemberWrap = styled.div`
 `
 const SearchWrap = styled.div`
   position: relative;
-
   &.searchRect {
     display: inline-block;
+    width:100%;
+
     .form-input {
-      background: #EFEFEF;
-      border: none;
-      width: 550px;
-      height: 30px;
-      font-size: 18px;
+      border:none;
+      background: #8E8E8E;
+      width:100%;
+      height: 41px;
+      font-size: 22px;
       margin-top: 15px;
-      margin-left: 50px;
+      padding:10px;
+      outline:none;
+      color:white;
+      ::placeholder{
+        color:white;
+      }
+      
     }
   }
 `;
 const MemberList = styled.ul`
   display: ${props => props.display};
-  width: 353px;
-  margin-left: 50px;
+  width: 100%;
+  margin-left: 0px;
   padding: 0.5rem;
   min-height: 0px;
   max-height: 300px;
@@ -53,12 +61,18 @@ const MemberList = styled.ul`
   background: #EFEFEF;
   border-radius: 3px;
   z-index: 999;
+  position:absolute;
 `;
 const MemberListItem = styled.li`
   width: 100%;
   padding: 10px;
   border-radius: 3px;
   margin-bottom: 5px;
+  cursor:pointer;
+  opacity:0.8;
+  &:hover{
+    opacity:1;
+  }
 `;
 
 class SearchMember extends Component {
@@ -75,6 +89,7 @@ class SearchMember extends Component {
       this.setState({ open: false });
       return;
     }
+    console.log("search:", value);
     this.props.SearchMemberRequest(null, { key: value }, this.props.token).then(data => { })
   }
 
@@ -99,12 +114,14 @@ class SearchMember extends Component {
   render() {
     return (
       <SearchWrap className="searchRect">
-        <FormInput className="form-input" type="text" name="search" placeholder=" 찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue} />
-        <MemberList display={this.state.open ? "block" : "none"}>
+        <FormInput className="form-input" type="text" name="search" placeholder="추가할 멤버의 닉네임을 입력해 주세요" validates={this.props.validates} getValue={this.getValue} />
+        <div style={{ width: "100%", height: "100%", }}>
+          <MemberList display={this.state.open ? "block" : "none"}>
           {this.props.members && this.props.members.map((item, index) => {
             return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item)}>{item.email}</MemberListItem>);
           })}
         </MemberList>
+        </div>
         <MemberWrap className="searchRect">
           {this.state.member.map((data, index) => {
             return (<MemberItem className="searchRect" key={index}>

@@ -69,7 +69,7 @@ class CreateBoard extends Component {
           .then(this.props.UpdateDesignTime(this.props.designId, this.props.token))
         this.setState({ active: false });
       })
-      .catch(err => console.log(err, "실패"));
+      .catch(err => console.error(err, "실패"));
   };
   handelClose = (e) => {
     if (e.type === "blur" && !this.form.contains(
@@ -97,9 +97,7 @@ class CreateBoard extends Component {
 
             <ButtonWrap>
               <Button color="Primary" type="submit" size="small">생성</Button>
-              <Button color="Primary" type="button" size="small" onClick={this.handelClose}>
-                취소
-              </Button>
+              <Button color="Primary" type="button" size="small" onClick={this.handelClose}>취소</Button>
             </ButtonWrap>
           </form>
         ) : (

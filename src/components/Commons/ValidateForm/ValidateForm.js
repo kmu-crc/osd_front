@@ -6,7 +6,7 @@ class ValidateForm extends Component {
   }
   handelSubmit = async (event) => {
     event.preventDefault();
-    console.log("ignore", this.props.ignore)
+    //console.log("ignore", this.props.ignore)
     const target = event.target;
     const formData = new FormData(target);
     for (let data of Array.from(target.elements)) {
@@ -17,7 +17,7 @@ class ValidateForm extends Component {
           break;
         } else {
           if (data.type === "checkbox") {
-            console.log("checkbox value", data.value);
+            //console.log("checkbox value", data.value);
             data.value === "1" ? formData.set(data.name, 1) : formData.set(data.name, 0);
           } else if (data.type === "file") {
             data.files[0] == null && formData.delete(data.name);

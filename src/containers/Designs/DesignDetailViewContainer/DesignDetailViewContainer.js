@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DetailView from "components/Designs/DetailView";
+import DetailViewMobile from "components/Designs/DetailViewMobile";
+import { isMobile } from "constant";
+
 import { GetDesignDetailViewRequest, UpdateDesignTime, ChangeToProjectRequest, DesignDetailViewResetRequest, GetCardCommentRequest, CreateCardCommentRequest, DeleteCardCommentRequest } from "redux/modules/design";
 
 class DesignDetailViewContainer extends Component {
   render() {
-    console.log("Detail view");
-    return (
-      <DetailView {...this.props} />
+    return (isMobile()
+      ? <DetailViewMobile {...this.props} />
+      : <DetailView {...this.props} />
     )
   }
 }

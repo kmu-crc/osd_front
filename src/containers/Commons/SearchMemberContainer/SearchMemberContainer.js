@@ -1,20 +1,19 @@
 import React, { Component } from "react";
-import SearchMember from "components/Commons/SearchMember";
 import { connect } from "react-redux";
+import SearchMember from "components/Commons/SearchMember";
 import { SearchMemberRequest } from "redux/modules/search";
 
+
 class SearchMemberContainer extends Component {
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
-    this.state = {addMemberItem:null}
+    this.state = { addMemberItem: null }
   }
   render() {
-    return(
-      <SearchMember {...this.props}/>
-    );
+    return (<SearchMember {...this.props} />);
   }
 }
+
 
 const mapStateToProps = (state) => {
   return {

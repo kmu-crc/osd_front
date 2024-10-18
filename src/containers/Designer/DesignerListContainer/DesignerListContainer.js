@@ -10,60 +10,55 @@ import Loading from "components/Commons/Loading"
 import { connect } from "react-redux";
 import opendesign_style from 'opendesign_style';
 
-const TextWrapper = styled.div`
-    top: 25px;
-    font-size: 25px;
-    font-family: Noto Sans KR;
-    font-weight: 700;
-    color: red;
-    cursor: pointer;
-    margin-top:100px;
-    @media only screen and (max-width : 900px) {
-      margin-top:150px;
-      
-    }
-    .title{
-    width:300px;
-    text-align:center;
-    position:absolute;
-    @media only screen {
-        right:${props=>(props.centerPos-300)/2}px;
+const Wrapper = styled.div`
+  // margin-left:100px;
+  // margin-top:90px;
+  .category_wrapper{
+    padding-left:41px;
+    padding-top:19px;
   }
-}
-`;
-const JoinDesigner = styled.div`
-    position: relative;
-    left: 1724px;
-    width:max-content;
-    text-align: left;
-    font-size: 20px;
-    cursor: pointer;
-    font-family: Noto Sans KR;
-    font-weight:500;
-    color: red;
-    line-height: 29px;
-    border-bottom: 1.5px solid red;
-`;
-const JoinDesignerContainer = styled.div`
-    position: relative;
-`;
-const ScrollListContainer = styled.div`
-    padding-top: 100px;
-    padding-bottom: 68px;
-`;
+  .content{
+    padding-left:41px;
+    width:100%;
+  }
+  .scroll_wrapper{
+    margin-top:42px;
+    margin-bottom:100px;
+  }
+  .header_box{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:13px;
+    padding-right:39px;
+    .category_title{
+      min-width:200px;
+      height:32px;
+      font-family:Spoqa Han Sans Neo;
+      font-weight:Medium;
+      font-size:24px;
+      color:#7E1E9B;
+      display:flex;
+      align-items:center;
+    }
+  }
+`
 class DesignerListContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            screenWidth:window.innerWidth,
+            screenWidth: window.innerWidth,
             reload: false,
-            this_order: { text: "최신순", keyword: "update" },
+            this_order: this.props.sort=="like"?{ text: "인기순", keyword: "like" }:{ text: "등록순", keyword: "update" },
             this_category: { text: null, value: null },
-            main_category: { text: null, value: null }, sub_category: { text: null, value: null },
+            main_category: { text: null, value: null }, sub_category: { text: null, value: null },third_category:{text:null,value:null},
+            category2:[],
         };
         this.handleReload = this.handleReload.bind(this);
         this.handleChangeCategory = this.handleChangeCategory.bind(this);
         this.handleChangeSubCategory = this.handleChangeSubCategory.bind(this);
+        this.handleChangeThirdCategory = this.handleChangeThirdCategory.bind(this);
         this.handleChangeOrderOps = this.handleChangeOrderOps.bind(this);
         this.getList = this.getList.bind(this);
         this.changeCategory = this.changeCategory.bind(this);
@@ -73,39 +68,119 @@ class DesignerListContainer extends Component {
     }
     componentDidMount() {
         this.props.GetCategoryAllRequest()
-            .then(() => { this.props.GetDesignerTotalCountRequest() });
-        this.props.GetDesignerListRequest(0, this.state.this_order.keyword)
+            .then(() => { this.props.GetDesignerTotalCountRequest(this.props.cate1,this.props.cate2,this.props.cate3) });
+        this.props.GetDesignerListRequest(0,this.props.sort,this.props.cate1,this.props.cate2, this.props.cate3, null)
         window.addEventListener("resize", this.handleResize, false);
+    }
+    componentWillUpdate(nextProps){
+        if(this.props.category1!==nextProps.category1){
+            let main_category={text:"",value:""};
+            nextProps.category1.map((item,index)=>{
+              if(this.props.cate1==item.value){
+                main_category.text=item.text;
+                main_category.value=item.value;
+              }
+            })
+            this.setState({main_category:main_category,this_category:main_category});
+        }
+        if(this.props.category2!==nextProps.category2){
+          let sub_category={text:null,value:null};
+          let nCount = 0;
+          let nParent=-1;
+          this.props.cate1&&nextProps.category1.map((item,index)=>{
+            if(this.props.cate1==item.value){
+              nParent=nCount;
+            }
+            nCount++;
+          })
+          nParent!=-1&&nextProps.category2[nParent].map((item,index)=>{
+            if(this.props.cate2==item.value){
+              sub_category.text=item.text;
+              sub_category.value=item.value;
+              sub_category.parent=nParent;
+            }
+          })
+          this.setState({sub_category:sub_category,category2:nextProps.category2[nParent]});
+          if(this.props.cate2!==null){
+            this.setState({this_category:sub_category});
+          }
+        }
+        if (this.props.category3 !== nextProps.category3) {
+            let third_category = {text:null,value:null};
+            let nCount=0;
+            let nParent;
+            for(let i in nextProps.category2){
+              nextProps.category2&&nextProps.category2[i]&&nextProps.category2[i].map((item,index)=>{
+                if(this.props.cate2==item.value){
+                  nParent = nCount;
+                }
+                nCount++;
+              })
+            }
+            nParent != -1 &&nextProps.category3[nParent]&&nextProps.category3[nParent].map((item, index) => {
+              if (this.props.cate3 == item.value) {
+                third_category.text = item.text;
+                third_category.value = item.value;
+                third_category.parent = nParent;
+              }
+            })
+            this.setState({ third_category: third_category, category3: nextProps.category3[nParent] });
+            if (this.props.cate3 !== null) {
+              this.setState({ this_category: third_category });
+            }
+          }
     }
     componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize, false);
-      };
+    };
     handleReload() {
         this.setState({ reload: !this.state.reload });
     }
-    handleResize(){
-        this.setState({screenWidth:window.innerWidth})
-       }
+    handleResize() {
+        this.setState({ screenWidth: window.innerWidth })
+    }
     async handleChangeCategory(category) {
         await this.setState({ main_category: category, this_category: category, sub_category: { text: null, value: null } })
-        this.props.GetDesignerTotalCountRequest(category.value, null);
+        this.props.GetDesignerTotalCountRequest(category.value, null, null);
         this.handleReload();
         this.getList(0);
+
+        const orderkeyword=this.props.sort==null?"update":`${this.props.sort}`;
+
+        window.location.href = "/designer"+`/${orderkeyword}`+"/"+category.value;
     }
     async handleChangeSubCategory(parent, category) {
         await this.setState({ main_category: parent, this_category: category, sub_category: category });
-        this.props.GetDesignerTotalCountRequest(this.state.main_category.value, category.value);
+        this.props.GetDesignerTotalCountRequest(this.state.main_category.value, category.value, null);
         this.handleReload();
         this.getList(0);
+
+        const orderkeyword=this.props.sort==null?"update":`${this.props.sort}`;
+
+        window.location.href="/designer"+`/${orderkeyword}`+"/"+parent.value+"/"+category.value;
     }
+    async handleChangeThirdCategory(old_parent,parent,category){
+        console.log(old_parent,parent,category.value);
+        await this.setState({ main_category: old_parent, this_category: category, sub_category: parent, third_category:category });
+        this.props.GetDesignerTotalCountRequest(this.state.main_category.value, this.state.sub_category.value, category.value);
+        this.handleReload();
+        this.getList(0);
+        const orderkeyword = this.props.sort == null ? "update" : `${this.props.sort}`;
+        window.location.href = "/designer" + `/${orderkeyword}` + "/" + old_parent.value + "/" + parent.value+ "/" + category.value;
+      }
     async handleChangeOrderOps(order) {
         await this.setState({ this_order: order })
         this.handleReload();
         this.getList(0);
+
+        const orderkeyword=order.keyword==null?"":`/${order.keyword}`;
+        const cate1=this.props.cate1==null?"":`/${this.props.cate1}`;
+        const cate2=this.props.cate2==null?"":`/${this.props.cate2}`;
+        window.location.href = "/designer"+orderkeyword+cate1+cate2;
     }
     async getList(page) {
-        const { main_category, sub_category, keyword, this_order } = this.state;
-        this.props.GetDesignerListRequest(page, this_order.keyword, main_category.value, sub_category.value, keyword);
+        const { main_category, sub_category, third_category, keyword, this_order } = this.state;
+        this.props.GetDesignerListRequest(page, this_order.keyword, main_category.value, sub_category.value, third_category.value, keyword);
     }
     changeCategory(category) {
         if (this.state.this_category === category) {
@@ -119,24 +194,33 @@ class DesignerListContainer extends Component {
     }
 
     render() {
-        const { this_category, main_category, sub_category, reload, this_order } = this.state
-        const { category1, category2, Count, status } = this.props
+        const { main_category, this_category, sub_category,third_category, reload, this_order } = this.state
+        const { category1, category2, category3, Count, status } = this.props;
         return (<React.Fragment>
-            <Category subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
-                category1={category1} category2={category2[category1.indexOf(main_category)]} main_selected={main_category} sub_selected={sub_category} />
-
-            <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
-
-            <TextWrapper centerPos={this.state.screenWidth} onClick={() => this.changeCategory(main_category)}>
-            <div className="title">{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</div>
-            </TextWrapper>
-            <JoinDesignerContainer><JoinDesigner onClick={() => this.handleCreateDesigner()}>디자이너 등록하기</JoinDesigner></JoinDesignerContainer>
-            <ScrollListContainer>
+            <Wrapper>
+              <div className="category_wrapper">                
+              <Category thirdcategory_clicked={this.handleChangeThirdCategory} subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
+              category1={category1} category2={this.state.category2} category3={this.state.category3} main_selected={main_category} sub_selected={sub_category} third_selected={third_category} />
+              </div>
+            <div className="content">
+              <div className="header_box">
+                <div className="category_title">{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</div>
+                <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
+              </div>
+            <div className="scroll_wrapper">
                 {status === "INIT"
-                    ? <Loading />
-                    : <ScrollList {...opendesign_style.designer_margin} reload={reload} handleReload={this.handleReload}
-                        type="designer" dataList={this.props.dataList} dataListAdded={this.props.dataListAdded} getListRequest={this.getList} />}
-            </ScrollListContainer>
+                ? <Loading />
+                : <ScrollList
+                    {...opendesign_style.designer_margin}
+                    type="designer"
+                    reload={reload}
+                    handleReload={this.handleReload}
+                    dataList={this.props.dataList}
+                    dataListAdded={this.props.dataListAdded}
+                    getListRequest={this.getList} />}
+            </div>
+            </div>
+            </Wrapper>
         </React.Fragment>)
     }
 }
@@ -147,18 +231,18 @@ const mapStateToProps = (state) => {
         dataListAdded: state.DesignerList.status.DesignerListAdded,
         category1: state.Category.status.category1,
         category2: state.Category.status.category2,
+        category3: state.Category.status.category3,
         Count: state.DesignerList.status.Count,
         status: state.DesignerList.status
     }
 }
-
 const mapDispatchToProps = (dispatch) => {
     return {
-        GetDesignerListRequest: (page, sort, cate1, cate2, keyword) => {
-            return dispatch(GetDesignerListRequest(page, sort, cate1, cate2, keyword))
+        GetDesignerListRequest: (page, sort, cate1, cate2, cate3, keyword) => {
+            return dispatch(GetDesignerListRequest(page, sort, cate1, cate2, cate3, keyword))
         },
-        GetDesignerTotalCountRequest: (cate1, cate2) => {
-            return dispatch(GetDesignerTotalCountRequest(cate1, cate2))
+        GetDesignerTotalCountRequest: (cate1, cate2, cate3) => {
+            return dispatch(GetDesignerTotalCountRequest(cate1, cate2, cate3))
         },
         GetCategoryAllRequest: () => {
             return dispatch(GetCategoryAllRequest())
@@ -167,3 +251,100 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DesignerListContainer)
+
+{/* <Wrapper>
+<Category thirdcategory_clicked={this.handleChangeThirdCategory} subcategory_clicked={this.handleChangeSubCategory} category_clicked={this.handleChangeCategory}
+category1={category1} category2={this.state.category2} category3={this.state.category3} main_selected={main_category} sub_selected={sub_category} third_selected={third_category} />
+<WrapperSub>
+    <JoinDesignerContainer>
+        <div className="joinDesigner" onClick={() => this.handleCreateDesigner()}>디자이너 등록하기</div>
+    </JoinDesignerContainer>
+
+    <TextWrapper centerPos={this.state.screenWidth} onClick={() => this.changeCategory(main_category)}>
+        <div className="title">{(this_category && this_category.text === "전체" ? "디자이너" : this_category.text) || "디자이너"}&nbsp;({Count})</div>
+    </TextWrapper>
+
+
+    <div className="orderBox">
+        <OrderOption order_clicked={this.handleChangeOrderOps} selected={this_order} />
+    </div>
+    </WrapperSub>
+    <ScrollListContainer>
+        {status === "INIT"
+            ? <Loading />
+            : <ScrollList
+                {...opendesign_style.designer_margin}
+                type="designer"
+                reload={reload}
+                handleReload={this.handleReload}
+                dataList={this.props.dataList}
+                dataListAdded={this.props.dataListAdded}
+                getListRequest={this.getList} />}
+    </ScrollListContainer>
+</Wrapper>
+<BlankDiv /> */}
+
+// const Wrapper = styled.div`
+//   position:relative;
+//   .orderBox{
+//     width:max-content;
+//     height:max-content;
+//   }
+//   margin-top:100px;
+//   @media only screen and (max-width : 900px) {
+//   margin-top:150px;
+//   }
+// `
+// const TextWrapper = styled.div`
+//     width:100%;
+//     display:flex;
+//     justify-content:center;
+//     align-items:center;
+//     top: 25px;
+//     font-size: 25px;
+//     font-family: Noto Sans KR;
+//     font-weight: 700;
+//     color: red;
+//     cursor: pointer;
+//     // margin-top:100px;
+//     @media only screen and (max-width : 900px) {
+//     // margin-top:150px;
+//     }
+//     .title{
+//     width:300px;
+//     text-align:center;
+//     }
+// `;
+// const WrapperSub = styled.div`
+//     display:flex;
+//     padding-left:36px;
+//     padding-right:45px;
+// `
+// const JoinDesignerContainer = styled.div`
+// display:flex;
+// align-items:center;
+// .joinDesigner{
+//     background: #707070 0% 0% no-repeat padding-box;
+//     border-radius: 18px;
+//     width:max-content;
+//     height:29px;
+//     text-align: left;
+//     font-size: 20px;
+//     cursor: pointer;
+//     font-family: Noto Sans KR;
+//     font-weight:500;
+//     color: white;
+//     padding:4px 16px;
+// }
+
+
+// `;
+// const ScrollListContainer = styled.div`
+//     padding-top: 30px;
+//     padding-bottom: 68px;
+
+//     padding-left:20px;
+// `
+// const BlankDiv = styled.div`
+//     padding-top: 50px;
+// `;

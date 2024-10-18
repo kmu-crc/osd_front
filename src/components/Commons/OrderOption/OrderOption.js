@@ -1,60 +1,63 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import opendesigncss from "opendesign_style";
 
 const OrderWrapper = styled.div`
-    width:${1920+"px"};
-    z-index:820;
-    display:flex;
+    z-index: 820;
+    display: flex;
+    align-items:center;
     justify-content:flex-end;
-    top: 180px;
-    font-size: 20px;
     font-family: Noto Sans KR;
-    position:absolute;
-    // z-index:1000;
-    // display: flex;
-    // justify-content: flex-end;
-    // padding-top: 55px;
-    // font-size: 20px;
-    // font-family: Noto Sans KR;
-    // color: #707070;
-    // font-weight: 500;
-    // line-height: 29px;
-    // text-align: center;
+    flex-wrap:wrap;
 `
 const OrderElement = styled.div`
+    width:128px;
+    height:34px;
     font-family: Noto Sans KR;
     font-weight: 500;
-    line-height: 29px;
-    font-size: 20px;
+    font-size: 18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
     cursor: pointer;
-    z-index: 800;
+    color: black;
 
     &.selected {
-        color: #FF0000;
-        margin-right: ${props => props.marginRight};
-        border-bottom: 1.5px solid red;
+        color:red;
+        margin-left: ${props => props.marginRight};
+        border:1px solid red;
     }
     &.unselected {
-        color: #707070;
-        margin-right: ${props => props.marginRight};
+        margin-left: ${props => props.marginRight};
+    }
+    @media only screen and (min-width : ${opendesigncss.resolutions.SmallMinWidth}px) and (max-width : ${opendesigncss.resolutions.SmallMaxWidth}px) {
+        font-size: 15px;
+        width: max-content;
+        &.unselected {
+            margin-left: 10px;
+        }
+        &.selected {
+            margin-left: 10px;
+        }
     }
 `
 class OrderOption extends Component {
     state = {
         options:
             [{ text: "인기순", keyword: "like", marginRight: "30px" },
-            { text: "최신순", keyword: "update", marginRight: "44px" }]
+            { text: "최신순", keyword: "update", marginRight: "30px" }]
     }
+
     handleClicked = (order) => {
         console.log(order);
         this.props.order_clicked(order)
     }
     render() {
         const { options } = this.state
-        const { selected } = this.props
+        const { selected, style } = this.props
         return (
 
-            <OrderWrapper>
+            <OrderWrapper wrap={this.props.wrap} style={style}>
 
                 {options.map(opt => {
                     return (<OrderElement

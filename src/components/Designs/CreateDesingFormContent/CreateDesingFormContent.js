@@ -134,7 +134,7 @@ class CreateDesingFormContent extends Component {
               <CheckBoxFieldContainer />
               <Form.Group widths="equal">
                 <FormField
-                  label="맴버추가"
+                  label="멤버추가"
                   RenderComponent={SearchMemberContainer}
                   validates={["MinLength2"]}
                   onChangeMembers={this.props.onChangeMembers}
@@ -153,7 +153,7 @@ class CreateDesingFormContent extends Component {
                   />
                   <FormField
                     name="is_project"
-                    placeholder="프로젝트 형태"
+                    placeholder="단계가지는 디자인 형태"
                     value="1"
                     currentValue={this.state.currentValue}
                     onChange={this.onChangeRadio}
@@ -168,7 +168,7 @@ class CreateDesingFormContent extends Component {
         <FromFieldCard>
           <Grid>
             <Grid.Column mobile={16} computer={4}>
-              <FormHeader as="h2">라이센스</FormHeader>
+              <FormHeader as="h2">라이센스<sup style={{ color: "red" }}>*</sup></FormHeader>
             </Grid.Column>
             <Grid.Column mobile={16} computer={12}>
               <Form.Group widths={4}>

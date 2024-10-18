@@ -13,6 +13,8 @@ import CardSourceModifyContainer from "containers/Designs/CardSourceModifyContai
 import DateFormat from "modules/DateFormat";
 import NumberFormat from "modules/NumberFormat";
 import TextFormat from "modules/TextFormat";
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
 
 const BoardCard = styled.li`
   background-color: white;
@@ -134,15 +136,15 @@ class DesignBoardCard extends Component {
     return true;
   }
 
-  onClose = () => {
-    let confirm = true;
+  onClose = async () => {
+    let isconfirm = true;
     if (this.state.modify && this.state.edit) {
-      confirm = window.confirm(
-        "수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?"
+      isconfirm = await confirm(
+        "수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?", "예", "아니오"
       );
     }
     // confirm = window.confirm("수정중인 내용이 저장되지 않습니다. 그래도 닫으시겠습니까?");
-    if (confirm) {
+    if (isconfirm) {
       this.setState({
         open: false,
         active: "INIT",
@@ -179,10 +181,10 @@ class DesignBoardCard extends Component {
     // console.log(data);
   };
 
-  onDelete = e => {
+  onDelete = async (e) => {
     e.stopPropagation();
-    const confirm = window.confirm("컨텐츠를 삭제하시겠습니까?");
-    if (confirm) {
+    const isconfirm = await confirm("컨텐츠를 삭제하시겠습니까?", "예", "아니오");
+    if (isconfirm) {
       this.props
         .DeleteDesignCardRequest(
           this.props.boardId,
@@ -200,11 +202,11 @@ class DesignBoardCard extends Component {
 
   onSubmitCmtForm = async data => {
     if (!this.props.token) {
-      alert("로그인을 해주세요.");
+      await alert("로그인 해주세요.", "확인");
       return;
     }
     if (FormDataToJson(data) && FormDataToJson(data).comment === "") {
-      alert("내용을 입력해 주세요.");
+      await alert("내용을 입력해 주세요.", "확인");
       return;
     }
     this.props
@@ -281,10 +283,10 @@ class DesignBoardCard extends Component {
             <img src={card.first_img.m_img} alt="thumbnail" />
           ) : null}
           <div className="content">
-            <div className="cardTitle"><TextFormat txt={card.title}/></div>
+            <div className="cardTitle"><TextFormat txt={card.title} /></div>
             <div className="cardInfo">
-              <div className="first"><TextFormat txt={card.nick_name} chars={6}/></div>
-              <div className="second">&nbsp;<Icon name="comment outline"/>{card.comment_count?NumberFormat(card.comment_count):0}</div>
+              <div className="first"><TextFormat txt={card.nick_name} chars={6} /></div>
+              <div className="second">&nbsp;<Icon name="comment outline" />{card.comment_count ? NumberFormat(card.comment_count) : 0}</div>
               <div className="cardUpdateTime">&nbsp;{DateFormat(card.update_time)}</div>
             </div>
           </div>
@@ -313,8 +315,8 @@ class DesignBoardCard extends Component {
               ) : (
                 <div>
                   {this.props.userInfo &&
-                  this.props.userInfo.uid === this.props.card.user_id &&
-                  !this.state.edit ? (
+                    this.props.userInfo.uid === this.props.card.user_id &&
+                    !this.state.edit ? (
                     <div>
                       <Button
                         type="button"
@@ -336,6 +338,7 @@ class DesignBoardCard extends Component {
                   <h2> {detail.title} <CardUpdateDate> ({DateFormat(detail.update_time)}) </CardUpdateDate> </h2>
                   <p>{detail.content ? detail.content : ""}</p>
                   <CardSourceDetailContainer
+                    designId={detail.design_id}
                     uid={card.uid}
                     isTeam={this.props.isTeam}
                     edit={this.state.edit}

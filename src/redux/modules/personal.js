@@ -1,7 +1,6 @@
 import host from "config"
 import update from "react-addons-update"
 
-
 const GET_MY_DETAIL = "GET_MY_DETAIL"
 const GET_MY_DESIGN = "GET_MY_DESIGN"
 const GET_MY_DESIGN_CLEAR = "GET_MY_DESIGN_CLEAR"
@@ -30,6 +29,27 @@ const UPDATE_USER_DETAIL = "UPDATE_USER_DETAIL"
 const UPDATE_USER_DETAIL_SUCCESS = "UPDATE_USER_DETAIL_SUCCESS"
 const UPDATE_USER_DETAIL_FAILURE = "UPDATE_USER_DETAIL_FAILURE"
 const MY_LIKE_GROUP_FAIL = "MY_LIKE_GROUP_FAIL";
+
+
+const GET_MY_MAIN_DESIGN_LIST = "GET_MY_MAIN_DESIGN_LIST";
+const MY_MAIN_DESIGN_LIST_CLEAR = "MY_MAIN_DESIGN_LIST_CLEAR";
+const MY_MAIN_DESIGN_LIST_FAIL = "MY_MAIN_DESIGN_LIST_FAIL";
+
+const GET_MY_MAIN_GROUP_LIST = "GET_MY_MAIN_GROUP_LIST";
+const MY_MAIN_GROUP_LIST_CLEAR = "MY_MAIN_GROUP_LIST_CLEAR";
+const MY_MAIN_GROUP_LIST_FAIL = "MY_MAIN_GROUP_LIST_FAIL";
+
+const DELETE_USER = "DELETE_USER";
+const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
+const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
+
+const GetMyMainGroupList = (data) => ({ type: GET_MY_MAIN_GROUP_LIST, MyMainGroup: data })
+const MyMainGroupListClear = (data) => ({ type: MY_MAIN_GROUP_LIST_CLEAR, MyMainGroup: data, MyMainGroupAdded: [] })
+const MyMainGroupListFail = () => ({ type: MY_MAIN_GROUP_LIST_FAIL, MyMainGroup: [], MyMainGroupAdded: [] })
+
+const GetMyMainDesignList = (data) => ({ type: GET_MY_MAIN_DESIGN_LIST, MyMainDesign: data })
+const MyMainDesignListClear = (data) => ({ type: MY_MAIN_DESIGN_LIST_CLEAR, MyMainDesign: data, MyMainDesignAdded: [] })
+const MyMainDesignListFail = () => ({ type: MY_MAIN_DESIGN_LIST_FAIL, MyMainDesign: [], MyMainDesignAdded: [] })
 
 const GetMyDetail = (data) => ({ type: GET_MY_DETAIL, MyDetail: data })
 const GetMyDesignList = (data) => ({ type: GET_MY_DESIGN, MyDesign: data })
@@ -62,6 +82,9 @@ const UpdateUserDetail = () => ({ type: UPDATE_USER_DETAIL })
 const UpdateUserDetailSuccess = () => ({ type: UPDATE_USER_DETAIL_SUCCESS, success: true })
 const UpdateUserDetailFailure = () => ({ type: UPDATE_USER_DETAIL_FAILURE, success: false })
 const GetMyInvitingListFailure = () => ({ type: GET_MY_INVITING_LIST_FAILURE, list: [] })
+const DeleteUser = () => ({ type: DELETE_USER })
+const DeleteUserSuccess = () => ({ type: DELETE_USER_SUCCESS, success: true })
+const DeleteUserFailure = () => ({ type: DELETE_USER_FAILURE, success: false })
 
 export default function Personal(state, action) {
     if (typeof state === "undefined")
@@ -245,6 +268,50 @@ export default function Personal(state, action) {
                     MyLikeDesignerAdded: { $set: action.MyLikeDesignerAdded }
                 }
             })
+
+        case GET_MY_MAIN_DESIGN_LIST:
+            return update(state, {
+                status: {
+                    MyMainDesign: { $set: action.MyMainDesign },
+                    MyMainDesignAdded: { $push: action.MyMainDesign }
+                }
+            })
+        case MY_MAIN_DESIGN_LIST_CLEAR:
+            return update(state, {
+                status: {
+                    MyMainDesign: { $set: action.MyMainDesign },
+                    MyMainDesignAdded: { $set: action.MyMainDesign }
+                }
+            })
+        case MY_MAIN_DESIGN_LIST_FAIL:
+            return update(state, {
+                status: {
+                    MyMainDesign: { $set: action.MyMainDesign },
+                    MyMainDesignAdded: { $set: action.MyMainDesignAdded }
+                }
+            })
+        case GET_MY_MAIN_GROUP_LIST:
+            return update(state, {
+                status: {
+                    MyMainGroup: { $set: action.MyMainGroup },
+                    MyMainGroupAdded: { $push: action.MyMainGroup }
+                }
+            })
+        case MY_MAIN_GROUP_LIST_CLEAR:
+            return update(state, {
+                status: {
+                    MyMainGroup: { $set: action.MyMainGroup },
+                    MyMainGroupAdded: { $set: action.MyMainGroup }
+                }
+            })
+        case MY_MAIN_GROUP_LIST_FAIL:
+            return update(state, {
+                status: {
+                    MyMainGroup: { $set: action.MyMainGroup },
+                    MyMainGroupAdded: { $set: action.MyMainGroupAdded }
+                }
+            })
+
         default:
             return state
     }
@@ -259,6 +326,8 @@ const initialState = {
         InvitingList: [],
         MyDetail: [],
         MyDesign: [], MyDesignAdded: [],
+        MyMainDesign: [], MyMainDesignAdded: [],
+        MyMainGroup: [], MyMainDesignGroup: [],
         MyGroup: [], MyGroupAdded: [],
         MyLikeDesign: [], MyLikeDesignAdded: [],
         MyLikeDesigner: [], MyLikeDesignerAdded: [],
@@ -279,19 +348,21 @@ export function GetMyDetailRequest(token) {
             return response.json()
         }).then((data) => {
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             return dispatch(GetMyDetail(data))
         }).catch((error) => {
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
 // 내 디자인 리스트 불러오기
 export function GetMyDesignListRequest(token, page) {
+    const url = `${host}/users/myPage/allDesign/${page}`;
+    // const url = `${host}/users/myPage/design/${page}`;
     return (dispatch) => {
-        return fetch(`${host}/users/myPage/design/${page}`, {
+        return fetch(url, {
             headers: {
                 "Content-Type": "application/json",
                 "x-access-token": token
@@ -301,7 +372,7 @@ export function GetMyDesignListRequest(token, page) {
             return response.json()
         }).then((data) => {
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -311,7 +382,7 @@ export function GetMyDesignListRequest(token, page) {
             dispatch(GetMyDesignList(data))
         }).catch((error) => {
             dispatch(MyDesignListFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -327,9 +398,9 @@ export function GetMyGroupListRequest(token, page) {
         }).then(response => {
             return response.json()
         }).then((data) => {
-            console.log("my group list data >>", data)
+            //console.log("my group list data >>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -339,13 +410,13 @@ export function GetMyGroupListRequest(token, page) {
             dispatch(GetMyGroupList(data))
         }).catch((error) => {
             dispatch(MyGroupListFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
 // 내 좋아요 디자인 불러오기
 export function GetMyLikeDesignRequest(token, page) {
-    console.log("designer" + page);
+    //console.log("designer" + page);
     return (dispatch) => {
         return fetch(`${host}/users/myPage/likeDesign/${page}`, {
             headers: {
@@ -358,7 +429,7 @@ export function GetMyLikeDesignRequest(token, page) {
             return response.json()
         }).then((data) => {
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -368,13 +439,13 @@ export function GetMyLikeDesignRequest(token, page) {
             dispatch(GetMyLikeDesign(data))
         }).catch((error) => {
             dispatch(MyLikeDesignFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
 
 export function GetMyLikeGroupRequest(token, page) {
-    console.log("group" + page);
+    //console.log("group" + page);
     return (dispatch) => {
         return fetch(`${host}/users/myPage/likeGroup/${page}`, {
             headers: {
@@ -387,7 +458,7 @@ export function GetMyLikeGroupRequest(token, page) {
         }).then((data) => {
             console.log(data, page);
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -397,14 +468,14 @@ export function GetMyLikeGroupRequest(token, page) {
             dispatch(GetMyLikeGroup(data))
         }).catch((error) => {
             dispatch(MyLikeGroupFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
 
 // 내 좋아요 디자이너 불러오기
 export function GetMyLikeDesignerRequest(token, page) {
-    console.log("designer" + page);
+    //console.log("designer" + page);
     return (dispatch) => {
         return fetch(`${host}/users/myPage/likeDesigner/${page}`, {
             headers: { "Content-Type": "application/json", "x-access-token": token }, method: "get"
@@ -412,7 +483,7 @@ export function GetMyLikeDesignerRequest(token, page) {
             return response.json()
         }).then((data) => {
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             if (page === 0) {
@@ -422,7 +493,7 @@ export function GetMyLikeDesignerRequest(token, page) {
             dispatch(GetMyLikeDesigner(data))
         }).catch((error) => {
             dispatch(MyLikeDesignerFail())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -440,15 +511,15 @@ export function GetMyInvitedListRequest(token) {
         }).then(response => {
             return response.json()
         }).then((data) => {
-            console.log("my invited list data >>", data)
+            //console.log("my invited list data >>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             dispatch(GetMyInvitedListSuccess(data))
         }).catch((error) => {
             dispatch(GetMyInvitedListFailure())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -465,15 +536,15 @@ export function GetMyInvitingListRequest(token) {
         }).then(response => {
             return response.json()
         }).then((data) => {
-            console.log("my inviting list data >>", data)
+            //console.log("my inviting list data >>", data)
             if (!data) {
-                console.log("no data")
+                //console.log("no data")
                 data = []
             }
             dispatch(GetMyInvitingListSuccess(data))
         }).catch((error) => {
             dispatch(GetMyInvitingListFailure())
-            console.log("err", error)
+            console.error("err", error)
         })
     }
 }
@@ -481,34 +552,90 @@ export function InsertUserDetailRequest(data, token) {
     return (dispatch) => {
         dispatch(InsertUserDetail())
 
-        return fetch(`${host}/users/insertDetail`, { headers: { "x-access-token": token, "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
+        return fetch(`${host}/users/insertDetail_newversion`, { headers: { "x-access-token": token, "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) })
             .then(function (res) {
                 return res.json()
             })
             .then(function (res) {
-                console.log("insert detail", res)
+                //console.log("insert detail", res)
                 return dispatch(InsertUserDetailSuccess(res))
             }).catch((error) => {
-                console.log("insert detail err", error)
+                //console.log("insert detail err", error)
                 return dispatch(InsertUserDetailFailure())
             })
     }
 }
 export function UpdateUserDetailRequest(data, token) {
-    console.log("UpdateUserDetailRequest", data);
+    //console.log("UpdateUserDetailRequest", data);
     return (dispatch) => {
         dispatch(UpdateUserDetail())
-        return fetch(`${host}/users/modifyDetail`, { headers: { "x-access-token": token, "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) }).then(function (res) {
+        return fetch(`${host}/users/modifyDetail_newversion`, { headers: { "x-access-token": token, "Content-Type": "application/json" }, method: "POST", body: JSON.stringify(data) }).then(function (res) {
             return res.json()
         }).then(function (res) {
-            console.log("update detail", res)
+            //console.log("update detail", res)
             if (res.success === true) {
                 return dispatch(UpdateUserDetailSuccess())
             }
             return dispatch(UpdateUserDetailFailure())
         }).catch((error) => {
-            console.log("update detail err", error)
+            //console.log("update detail err", error)
             return dispatch(UpdateUserDetailFailure())
         })
+    }
+}
+
+
+
+
+/////// 메인페이지 ///////
+export function GetMyMainDesignListRequest(token, page) {
+    return (dispatch) => {
+        // https://https.opensrcdesign.com/users/myMain/0
+        const url = `${host}/users/myMainDesign/${page}`;
+        // console.log("url:", url);
+        return fetch(url, {
+            headers: { "Content-Type": "application/json", "x-access-token": token },
+            method: "GET"
+        }).then(res => res.json())
+            .then(data => {
+                dispatch(page === 0 ? MyMainDesignListClear(data || []) : GetMyMainDesignList(data || []))
+            }).catch(error => {
+                console.error("err:", error)
+                dispatch(MyMainDesignListFail())
+            })
+    }
+}
+
+export function GetMyMainGroupListRequest(token, page) {
+    return (dispatch) => {
+        const url = `${host}/users/myMainGroup/${page}`;
+        // console.log("url:", url);
+        return fetch(url, {
+            headers: { "Content-Type": "application/json", "x-access-token": token },
+            method: "GET"
+        }).then(res => res.json())
+            .then(data => {
+                dispatch(page === 0 ? MyMainGroupListClear(data || []) : GetMyMainGroupList(data || []))
+            }).catch(error => {
+                console.error("err:", error)
+                dispatch(MyMainGroupListFail())
+            })
+    }
+}
+
+export function DeleteUserRequest(token){
+    return (dispatch) => {
+        dispatch(DeleteUser())
+        return fetch(`${host}/users/deleteUser`, 
+        { headers: { "x-access-token": token, "Content-Type": "application/json" }, 
+            method: "POST" })
+            .then(function (res) {
+                return res.json()
+            })
+            .then(function (res) {
+                return dispatch(DeleteUserSuccess())
+            }).catch((error) => {
+                return dispatch(DeleteUserFailure())
+            })
     }
 }

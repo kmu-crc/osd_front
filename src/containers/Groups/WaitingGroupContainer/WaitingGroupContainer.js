@@ -3,18 +3,32 @@ import { connect } from 'react-redux';
 import { GetWaitingGroupRequest, DeleteGroupInGroupRequest, UpdateGroupInGroupRequest, GetGroupInGroupRequest } from "redux/modules/group";
 import opendesign_style from 'opendesign_style';
 import styled from 'styled-components';
+import ScrollList_mobile from 'components/Commons/ScrollList_mobile';
 import ScrollList from 'components/Commons/ScrollList';
-import Group from "components/Groups/Group";
+import osdstyle_mobile from "opendesign_mobile_style";
 import osdstyle from "opendesign_style";
+
 import Loading from 'components/Commons/Loading';
 
 const GroupBox = styled.div`
-  margin-bottom: 1rem;
-  & .boxTitle {
-    margin-left: 1rem;
-    padding-bottom: 1rem;
-    font-size: ${opendesign_style.font.size.heading4};
-  }
+margin-bottom: 5px;
+& .boxTitle {
+  margin-bottom:5px;
+  font-size: 20px;
+}
+.boxContent{
+  margin-top:22px;
+}
+`;
+const GroupBox_mobile = styled.div`
+margin-bottom: 5px;
+& .boxTitle {
+  margin-bottom:5px;
+  font-size: 20px;
+}
+.boxContent{
+  margin-top:22px;
+}
 `;
 
 class WaitingGroupContainer extends Component {
@@ -33,7 +47,7 @@ class WaitingGroupContainer extends Component {
             .then(() => { this.handleReload(); })
         }
       }).catch(err => {
-        console.log(err);
+        console.error(err);
       });
   }
   setAccept = (id) => {
@@ -45,27 +59,68 @@ class WaitingGroupContainer extends Component {
             .then(() => { this.handleReload(); })
         }
       }).then((data) => { console.log(data) }).catch(err => {
-        console.log(err);
+        console.error(err);
       });
   }
 
   render() {
     const { reload } = this.state;
     return (
-      <GroupBox>
-        <div className="boxTitle">가입 신청중인 그룹 ({this.props.waitingGroup.length})</div>
-        {this.props.status === "INIT" ?
-          <Loading /> :
-          <ScrollList
-            {...osdstyle.group_margin}
-            reload={reload}
-            handleReload={this.handleReload}
-            type="group"
-            dataListAdded={this.props.waitingGroup}
-            getListRequest={null}
-            handleReject={this.setOut} handleAccept={this.setAccept} />
+      <React.Fragment>
+        {
+          window.innerWidth<500?
+          <GroupBox_mobile style={{marginBottom:`${this.props.waitingGroup&&this.props.waitingGroup.length==0?"0px":"75px"}`}}>
+          <div className="boxTitle">가입 신청중인 그룹 ({this.props.waitingGroup.length})</div>
+          {this.props.status === "INIT" ?
+            <Loading /> :
+            <div className="boxContent">
+              <ScrollList_mobile
+              {...osdstyle_mobile.group_margin}
+              type="group"
+              reload={reload}
+              handleReload={this.handleReload}
+              dataListAdded={this.props.waitingGroup}
+              getListRequest={null}
+              rejectText={"거절"}
+              handleReject={this.setOut} 
+              handleAccept={this.setAccept}
+              />
+            {/* <ScrollList
+              height={"max-content"}
+              {...osdstyle.group_margin}
+              reload={reload}
+              handleReload={this.handleReload}
+              type="group"
+              dataListAdded={this.props.waitingGroup}
+              getListRequest={null}
+              rejectText={"거절"}
+              handleReject={this.setOut} 
+              handleAccept={this.setAccept} /> */}
+              </div>
+          }
+        </GroupBox_mobile>
+          :
+          <GroupBox style={{marginBottom:`${this.props.waitingGroup&&this.props.waitingGroup.length==0?"0px":"75px"}`}}>
+          <div className="boxTitle">가입 신청중인 그룹 ({this.props.waitingGroup.length})</div>
+          {this.props.status === "INIT" ?
+            <Loading /> :
+            <div className="boxContent">
+            <ScrollList
+              height={"max-content"}
+              {...osdstyle.group_margin}
+              reload={reload}
+              handleReload={this.handleReload}
+              type="group"
+              dataListAdded={this.props.waitingGroup}
+              getListRequest={null}
+              rejectText={"거절"}
+              handleReject={this.setOut} 
+              handleAccept={this.setAccept} />
+              </div>
+          }
+        </GroupBox>
         }
-      </GroupBox>
+      </React.Fragment>
     );
   }
 }

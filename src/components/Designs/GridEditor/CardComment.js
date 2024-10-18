@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import Comment from 'components/Commons/Comment';
+import Comment_mobile from 'components/Commons/Comment_mobile';
 import { GetCardCommentRequest, CreateCardCommentRequest, DeleteCardCommentRequest } from "redux/modules/design";
+import { isMobile } from "constant";
+
 
 class CardComment extends Component {
     componentDidMount() {
@@ -21,16 +24,17 @@ class CardComment extends Component {
             })
     }
     render() {
-        // console.log(this.props.Comment);
         let parentComments = this.props.Comment.filter(item => item.d_flag === null);
         let comments = parentComments.map(parent => {
             let replies = this.props.Comment.filter(item => item.d_flag === parent.uid);
             return { ...parent, replies };
         })
-        // console.log(comments);
-        return (<React.Fragment>
-            <Comment comments={comments} my={this.props.my} comment={this.comment} removeComment={this.removeComment} />
-        </React.Fragment>)
+        return (<div >
+            {isMobile()
+                ? <Comment_mobile comments={comments} my={this.props.my} comment={this.comment} removeComment={this.removeComment} />
+                : <Comment comments={comments} my={this.props.my} comment={this.comment} removeComment={this.removeComment} />
+            }
+        </div>)
     }
 };
 const mapStateToProps = state => {

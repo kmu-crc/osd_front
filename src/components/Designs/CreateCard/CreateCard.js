@@ -61,7 +61,7 @@ class CreateCard extends Component {
           .then(this.props.GetDesignDetailRequest(this.props.designId, this.props.token));
         this.setState({ active: false });
       })
-      .catch(err => console.log("실패", err));
+      .catch(err => //console.log("실패", err));
   };
 
   handelClose = (e) => {
@@ -90,9 +90,7 @@ class CreateCard extends Component {
 
             <ButtonWrap>
               <Button color="Primary" type="submit" size="small">생성</Button>
-              <Button color="Primary" type="button" size="small" onClick={this.handelClose}>
-                취소
-              </Button>
+              <Button color="Primary" type="button" size="small" onClick={this.handelClose}>취소</Button>
             </ButtonWrap>
           </form>
         ) : (

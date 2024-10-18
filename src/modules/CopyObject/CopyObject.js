@@ -1,5 +1,5 @@
 function copyObject(obj) {
-  console.log("----", obj);
+  //console.log("----", obj);
   if (obj === null || typeof obj !== 'object') {
     return obj;
   }

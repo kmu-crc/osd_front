@@ -4,34 +4,51 @@ import { FormControl } from "modules/FormControl";
 import SectionBasic from "components/Designers/CreateDesigner/ModifyMyDetail/SectionBasic"
 import SectionAdditional from "components/Designers/CreateDesigner/ModifyMyDetail/SectionAdditional"
 import SectionBuziness from "components/Designers/CreateDesigner/ModifyMyDetail/SectionBuziness"
+import { confirm } from "components/Commons/Confirm/Confirm";
+import { alert } from "components/Commons/Alert/Alert";
+import opendesign_style from "opendesign_style";
 
 const scrollmenu_data = [
   { txt: "기본 정보", tag: "#basic" }, { txt: "부가 정보", tag: "#additional" }
 ]
 const MainBanner = styled.div`
-  width: 1920px;
-  display: flex;
-  justify-content: center;
-  .title{
-    width: 196px;
-    height: 37px;
-    margin-top: 45px;
-    font-size: 25px;
-    font-family: Noto Sans KR;
-    color: #707070;
-    line-height: 37px;
-    font-weight: 700;
-    text-align: center;
-  }
+width: 100%;
+height:140px;
+display: flex;
+justify-content: center;
+.title{
+  width: 196px;
+  height: 37px;
+  margin-top: 45px;
+  font-size: 25px;
+  font-family: Noto Sans KR;
+  color: #707070;
+  line-height: 37px;
+  font-weight: 700;
+}
+
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
+  align-items:flex-end;
+}
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+  margin-bottom:20px;
+}
 `
 const MainSection = styled.div`
-  display: flex;
-  margin-top: 60px;
-  margin-bottom: 111px;
+display: flex;
+flex-direction:row;
+@media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
+    flex-direction:column;
+}
 `
 
 const NavMenu = styled.div`
-  width: 433px;
+  min-width:433px;
+  height:300px;
+  position:relative;
   .menuBox{
     width:325px;
     position: fixed;
@@ -47,18 +64,31 @@ const NavMenu = styled.div`
     lineHeight:29px;
     border-bottom:${props => props.borderBottom ? "none" : "2px solid #FFFFFF"};
     cursor:pointer;
-
+  }
+  .deleteText{
+    font-family:Noto Sans KR;
+    font-size:20px;
+    font-family:Noto Sans KR;
+    font-weight:500;
+    text-align:left;
+    color:#FF0000;
+    border-bottom:${props => props.borderBottom};
   }
 
-    .deleteText{
-      font-family:Noto Sans KR;
-      font-size:20px;
-      font-family:Noto Sans KR;
-      font-weight:500;
-      text-align:left;
-      color:#FF0000;
-      border-bottom:${props => props.borderBottom};
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.MediumMaxWidth}px) {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    .menuBox{
+      margin-left:0px;   
+      position: static; 
     }
+  }
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    display:none;
+  }
 `
 const MenuText = styled.div`
   font-size:20px;
@@ -73,32 +103,73 @@ const Arrow = styled.span`
     font-size:15px;
 `
 const InputBoard = styled.div`
-      width:1422px;
-      height:${props => props.isModifyAnother === true ? "1750px" : "925px"};
-      position:relative;
-      padding-top:45px;
-      border-radius:5px;
-      border:8px solid #F5F4F4;
-
-      .buttonBox{
-        display: flex;
-        margin-top: 20.54px;
-        justifyContent: flex-end;
-      }
-
+  width:${window.innerWidth > 1920 ? 1422 + 'px' : 100 + '%'};
+  padding-bottom:100px;
+  margin-bottom:100px;
+  position:relative;
+  padding-top:45px;
+  border-radius:5px;
+  border:8px solid #F5F4F4;
+  .buttonBox{
+    width: max-content;
+    display: flex;
+    justify-content:flex-end;
+    margin-top: 21px;
+    margin-left: auto;
+    padding:10px 0px 10px 10px;
+    position:absolute;
+    right:0px;
+    bottom:0px;
+  }
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    display:none;
+  }
+`
+const MobileBoard = styled.div`
+  display:none;
+  width:${window.innerWidth > 1920 ? 1422 + 'px' : 100 + '%'};
+  padding-bottom:100px;
+  margin-bottom:100px;
+  position:relative;
+  padding-top:45px;
+  border-radius:5px;
+  border:8px solid #F5F4F4;
+  .buttonBox{
+    width: max-content;
+    display: flex;
+    justify-content:flex-end;
+    margin-top: 21px;
+    margin-left: auto;
+    padding:10px 0px 10px 10px;
+    position:absolute;
+    right:0px;
+    bottom:0px;
+  }
+  @media only screen and (min-width : ${opendesign_style.resolutions.SmallMinWidth}px) 
+  and (max-width:${opendesign_style.resolutions.SmallMaxWidth}px) {
+    display:block;
+  }
+`
+const BackButton = styled.div`
+      cursor: pointer;
+      width: 104.5px;
+      height: 44px;
+      border-radius: 5px;
+      background-color: ${props => props.isComplete ? "#FF0000" : "#707070"};
+      padding-top: 6px;
+      padding-left: 15px;
+      margin-right: 25px;
 `
 const CompleteButton = styled.div`
-      position:absolute;
-      right:9px;
-      bottom:35px;
-      cursor:pointer;
-      width:104.5px;
-      height:44px;
-      border-radius:5px;
-      background-color:${props => props.isComplete ? "#FF0000" : "#707070"};
-      padding-top:6px;
-      padding-left:15px;
-      margin-right:53px;
+        cursor: pointer;
+        width: 104.5px;
+        height: 44px;
+        border-radius: 5px;
+        background-color: ${props => props.isComplete ? "#FF0000" : "#707070"};
+        padding-top: 6px;
+        padding-left: 15px;
+        margin-right: 25px;
   `
 const HRline = styled.div`
 
@@ -127,8 +198,9 @@ class ModifyMyDetail extends Component {
       change_password: false, selected: 0, loading: false, isClickModify: false,
       thumbnail: "", thumbnail_name: "", nick_name: "", about_me: "",
       password: "", passwordCheck: "",
-      category_level1: 0, category_level2: 0,
+      category_level1: 0, category_level2: 0, category_level3: 0,
       is_designer: false, team: "", career: "", location: "", contact: "",
+      careerlist: [{ number: 0, task: "", explain: "", during: "" }],
     }
     this.updateNickName = this.updateNickName.bind(this);
     this.updateIntroduce = this.updateIntroduce.bind(this);
@@ -137,14 +209,14 @@ class ModifyMyDetail extends Component {
     this.updatePasswordCheck = this.updatePasswordCheck.bind(this);
     this.updateCategory1 = this.updateCategory1.bind(this);
     this.updateCategory2 = this.updateCategory2.bind(this);
+    this.updateCategory3 = this.updateCategory3.bind(this);
     this.updateIsDesigner = this.updateIsDesigner.bind(this);
-    this.updateTeam = this.updateTeam.bind(this);
-    this.updateCareer = this.updateCareer.bind(this);
-    this.updateLocation = this.updateLocation.bind(this);
-    this.updateContact = this.updateContact.bind(this);
-
+    // this.updateTeam = this.updateTeam.bind(this);
+    // this.updateCareer = this.updateCareer.bind(this);
+    // this.updateLocation = this.updateLocation.bind(this);
+    // this.updateContact = this.updateContact.bind(this);
     this.handleClickModifyMyProfile = this.handleClickModifyMyProfile.bind(this);
-
+    this.updateCareerlist = this.updateCareerlist.bind(this);
   }
   shouldComponentUpdate(nextProps) {
     if (this.props.MyDetail && this.props.MyDetail !== nextProps.MyDetail) {
@@ -153,7 +225,8 @@ class ModifyMyDetail extends Component {
         thumbnail: nextProps.MyDetail.profileImg && nextProps.MyDetail.profileImg.m_img == null ? "" : nextProps.MyDetail.profileImg && nextProps.MyDetail.profileImg.m_img,
         nick_name: nextProps.MyDetail.nick_name == null ? "" : nextProps.MyDetail.nick_name,
         about_me: nextProps.MyDetail.about_me == null ? "" : nextProps.MyDetail.about_me,
-        password: "", passwordCheck: "",
+        password: "", passwordCheck: "", screenWidth: window.innerWidth,
+        careerlist: [{ number: 0, task: "", explain: "", during: "" }],
       });
     }
     return true;
@@ -178,34 +251,44 @@ class ModifyMyDetail extends Component {
     this.setState({ passwordCheck: modifyvalue })
   }
   updateCategory1(modifyvalue) {
-    this.setState({ category_level1: modifyvalue });
+    this.setState({ category_level1: modifyvalue, category_level2:null,category_level3:null });
   }
   updateCategory2(modifyvalue) {
-    this.setState({ category_level2: modifyvalue });
+    this.setState({ category_level2: modifyvalue,category_level3:null });
+  }
+  updateCategory3(modifyvalue){
+    this.setState({category_level3: modifyvalue});
   }
   updateIsDesigner(modifyvalue) {
     this.setState({ is_designer: modifyvalue });
   }
-  updateTeam(modifyvalue) {
-    this.setState({ team: modifyvalue });
-  }
-  updateCareer(modifyvalue) {
-    this.setState({ career: modifyvalue });
-  }
-  updateLocation(modifyvalue) {
-    this.setState({ location: modifyvalue });
-  }
-  updateContact(modifyvalue) {
-    this.setState({ contact: modifyvalue });
+  // updateTeam(modifyvalue) {
+  //   this.setState({ team: modifyvalue });
+  // }
+  // updateCareer(modifyvalue) {
+  //   this.setState({ career: modifyvalue });
+  // }
+  // updateLocation(modifyvalue) {
+  //   this.setState({ location: modifyvalue });
+  // }
+  // updateContact(modifyvalue) {
+  //   this.setState({ contact: modifyvalue });
+  // }
+  updateCareerlist(modifyvalue) {
+    this.setState({ careerlist: modifyvalue });
   }
 
   componentDidMount() {
-    document.addEventListener("scroll", this.handleScroll, true)
+    document.addEventListener("scroll", this.handleScroll, true);
+    window.addEventListener("resize", this.handleResize, false);
   }
   handleScroll = () => {
     //let sections = document.querySelectorAll("section")
     document.querySelectorAll("section")
   }
+  handleResize = () => {
+    this.setState({ screenWidth: window.innerWidth })
+  };
   scrollMove = (menu, selected) => {
     this.setState({ selected: selected })
     window.location.href = menu.tag
@@ -253,37 +336,46 @@ class ModifyMyDetail extends Component {
         }
       }
     );
-    console.log("qwer", returnvalue);
+    //console.log("qwer", returnvalue);
     return returnvalue;
   }
   onSubmit = async e => {
-
     e.preventDefault();
+
+    let careerlist = "";
+    this.state.careerlist.map((item, index) => { // 넘버,업무,설명,기간/넘버,업무,설명,기간/넘버, ...
+      return (
+        careerlist += item.number + "," + item.task + "," + item.explain + "," + item.during + "/"
+      );
+    })
+
 
     let formData = {
       change_password: this.change_password,
       nick_name: this.state.nick_name, about_me: this.state.about_me,
-      password: this.state.password,
-      category_level1: this.state.category_level1, category_level2: this.state.category_level2,
-      is_designer: this.state.is_designer, team: this.state.team, career: this.state.career,
-      location: this.state.location, contact: this.state.contact, files: []
+      password: this.state.password, thumbnail: "",
+      category_level1: this.state.category_level1, category_level2: this.state.category_level2, category_level3: this.state.category_level3,
+      is_designer: this.state.is_designer,
+      careerlist: careerlist,
+      files: []
     };
 
     let file = { value: this.state.thumbnail, name: this.state.thumbnail_name, key: 0 };
-
-    formData.files.push(file);
-    if (formData.files.length <= 0 || formData.files[0].value === this.props.MyDetail.profileImg.m_img) {
+    if (this.state.thumbnail != null || this.state.thumbnail !== "") {
+      formData.files.push(file);
+    }
+    if (formData.files.length <= 0 || formData.files[0].value === (this.props.MyDetail.profileImg && this.props.MyDetail.profileImg.m_img)) {
       delete formData.files;
     }
     if (this.state.nick_name !== this.props.MyDetail.nick_name) {
       if (await this.checkNickname() === false) {
-        alert("중복된 닉네임입니다");
+        await alert("중복된 닉네임입니다", "확인");
         return;
       }
     }
 
     if (this.state.nick_name === "") {
-      alert("닉네임을 입력해주세요");
+      await alert("닉네임을 입력해주세요", "확인");
       return;
     }
 
@@ -292,38 +384,40 @@ class ModifyMyDetail extends Component {
     if (this.state.password) {
       var reg_pw = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~!@#$%^&*<React.Fragment>?])/;
       if (!reg_pw.test(formData.password.value) || formData.password.value.length < 6 || formData.password.value.length > 15) {
-        alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오");
+        await alert("비밀번호는 6자~15자 이내로 영문, 숫자, 특수문자를 모두 조합하여 작성해 주십시오", "확인");
         return false;
       }
       if (this.state.password !== this.state.passwordCheck) {
-        alert("비밀번호 확인을 다시 해주십시오");
+        await alert("비밀번호 확인을 다시 해주십시오", "확인");
         return false;
       }
       delete formData.passwordCheck;
     }
 
     if (this.state.category_level1 === -1) {
-      alert("카테고리를 선택해주세요!");
+      await alert("카테고리를 선택해주세요!", "확인");
       return;
     }
 
+    // console.log(formData);
+    // return;
     await this.setState({ loading: true });
     this.props.UpdateUserDetailRequest(formData, this.props.token)
-      .then(res => {
+      .then(async (res) => {
         if (res.success) {
-          alert("정보가 수정되었습니다.");
-          //this.props.history.push(`/`);
-          window.location.href = "/designer";
+          await alert("정보가 수정되었습니다.", "확인");
+
+        window.location.href = "/designer";
         } else {
-          alert("다시 시도해주세요");
+          await alert("다시 시도해주세요", "확인");
           this.setState({
             loading: false
           });
         }
       })
-      .catch(e => {
-        console.log("실패", e);
-        alert("다시 시도해주세요");
+      .catch(async e => {
+        //console.log("실패", e);
+        await alert("다시 시도해주세요", "확인");
         this.setState({
           loading: false
         });
@@ -335,9 +429,8 @@ class ModifyMyDetail extends Component {
   onChangePassword = () => {
     this.setState({ change_password: true })
   }
-  onDeleteUser = () => {
-    let confirm = window.confirm("정말 탈퇴하시겠습니까?");
-    if (confirm) {
+  onDeleteUser = async () => {
+    if (await confirm("정말 탈퇴하시겠습니까?", "예", "아니오")) {
       this.props.SecessionRequest(this.props.token);
     }
   }
@@ -346,8 +439,7 @@ class ModifyMyDetail extends Component {
   render() {
     // const myInfo = this.props.MyDetail;
     const scrollmenu = scrollmenu_data
-    const { selected } = this.state
-
+    // const { selected } = this.state
     return (<React.Fragment>
       <MainBanner>
         <div className="title">내 프로필 수정하기</div>
@@ -396,23 +488,82 @@ class ModifyMyDetail extends Component {
               MyDetail={this.props.MyDetail}
               category1={this.props.category1}
               category2={this.props.category2}
+              category3={this.props.category3}
               updateCategory1={this.updateCategory1}
-              updateCategory2={this.updateCategory2} />
+              updateCategory2={this.updateCategory2}
+              updateCategory3={this.updateCategory3} />
             <HRline />
             <SectionBuziness
               MyDetail={this.props.MyDetail}
               updateIsDesigner={this.updateIsDesigner}
-              updateTeam={this.updateTeam}
-              updateCareer={this.updateCareer}
-              updateLocation={this.updateLocation}
-              updateContact={this.updateContact} />
+              updateCareerlist={this.updateCareerlist}
+            // updateTeam={this.updateTeam}
+            // updateCareer={this.updateCareer}
+            // updateLocation={this.updateLocation}
+            // updateContact={this.updateContact} 
+            />
           </form>
           <div className="buttonBox">
+          <BackButton
+                  onClick={async() => 
+                    {    
+                      if (await confirm("등록 중인 내용이 저장되지 않습니다. 취소하시겠습니까?", "예", "아니오")) {
+                      window.history.go(-1)
+                    }
+                  }}
+                  isComplete={false}>
+                  <BtnText>취소</BtnText>
+            </BackButton> 
             <CompleteButton isComplete={true} onClick={this.onSubmit}>
-              <BtnText>등록하기</BtnText>
+              <BtnText>등록</BtnText>
             </CompleteButton>
           </div>
         </InputBoard>
+        <MobileBoard isModifyAnother={this.state.isClickModify}>
+          <form>
+            <SectionBasic
+                  updateThumbnail={this.updateThumbnail}
+                  updateNickName={this.updateNickName}
+                  updateIntroduce={this.updateIntroduce}
+                  MyDetail={this.props.MyDetail} />
+            <HRline />
+
+            <SectionAdditional
+              MyDetail={this.props.MyDetail}
+              category1={this.props.category1}
+              category2={this.props.category2}
+              category3={this.props.category3}
+              updateCategory1={this.updateCategory1}
+              updateCategory2={this.updateCategory2} 
+              updateCategory3={this.updateCategory3}/>
+            <HRline />
+            <SectionBuziness
+              MyDetail={this.props.MyDetail}
+              updateIsDesigner={this.updateIsDesigner}
+              updateCareerlist={this.updateCareerlist}
+            // updateTeam={this.updateTeam}
+            // updateCareer={this.updateCareer}
+            // updateLocation={this.updateLocation}
+            // updateContact={this.updateContact} 
+            />
+          </form>
+          <div className="buttonBox">
+          <BackButton
+                  onClick={async() => 
+                    {    
+                      if (await confirm("수정 중인 내용이 저장되지 않습니다. 취소하시겠습니까?", "예", "아니오")) {
+                      window.history.go(-1)
+                    }
+                  }}
+                  isComplete={false}>
+                  <BtnText>취소</BtnText>
+            </BackButton> 
+            <CompleteButton isComplete={true} onClick={this.onSubmit}>
+              <BtnText>등록</BtnText>
+            </CompleteButton>
+            
+          </div>
+        </MobileBoard>
       </MainSection>
     </React.Fragment>)
   }

@@ -1,7 +1,7 @@
 function storageAvailable(type) {
   try {
     var storage = window[type],
-      x = '__storage_test__';
+      x = '__storage_opendesign__';
     storage.setItem(x, x);
     storage.removeItem(x);
     return true;
@@ -23,27 +23,28 @@ function storageAvailable(type) {
 }
 
 export function setCookie(cookie_name, value, days) {
-  var exdate = new Date();
-  exdate.setDate(exdate.getDate() + days);
-  // 설정 일수만큼 현재시간에 만료값으로 지정
-
-  var cookie_value = atob(value) + ((days == null) ? '' : ';    expires=' + exdate.toUTCString());
-  document.cookie = cookie_name + '=' + cookie_value;
+  const d = new Date();
+  alert(days);
+  alert(days);
+  d.setTime(d.getTime());
+  let expires = "expires=" + d.toUTCString();
+  document.cookie = `${cookie_name}=${value};${expires};path=/`;
 }
 
 export const getCookie = (cookie_name) => {
-  var x, y;
-  var val = document.cookie.split(';');
-
-  for (var i = 0; i < val.length; i++) {
-    x = val[i].substr(0, val[i].indexOf('='));
-    y = val[i].substr(val[i].indexOf('=') + 1);
-    x = x.replace(/^\s+|\s+$/g, ''); // 앞과 뒤의 공백 제거하기
-    if (x === cookie_name) {
-      return btoa(y); // unescape로 디코딩 후 값 리턴
+  let name = `${cookie_name}=`;
+  let decoded = decodeURIComponent(document.cookie);
+  let ca = decoded.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
     }
   }
-  return null;
+  return "";
 };
 
 export const SetSession = (key, data) => {
@@ -52,6 +53,9 @@ export const SetSession = (key, data) => {
       window.localStorage.setItem(key, data)
     } else {
       setCookie(key, data, 7);
+    }
+    if (data == null || data === "null") {
+      window.localStorage.removeItem(key);
     }
     resolve(data);
   });
@@ -65,7 +69,7 @@ export const GetSession = (key) => {
     } else {
       token = getCookie(key);
     }
-    if(token === "null" || token == null){
+    if (token === "null" || token == null) {
       reject(null);
     } else {
       resolve(token);

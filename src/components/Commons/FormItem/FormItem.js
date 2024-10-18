@@ -25,7 +25,7 @@ const checkValidate = async (value, validates) => {
       if (!next) break;
       if (!Validates[vali]) {
         // Validates에 전달받은 이름의 검증 로직이 없으면 잘못전달되었다고 콘솔에 띄운다.
-        console.log("잘못된 값입니다.");
+        //console.log("잘못된 값입니다.");
       } else {
         await Validates[vali](value).then(whatIsStatus);
       }
@@ -60,9 +60,10 @@ const CheckBoxLabel = styled.label`
 `
 
 const RadioLabel = styled.label`
-position: relative;
+  position: relative;
   padding-left: 2rem;
   box-sizing: border-box;
+
   &::before{
     position: absolute;
     width: 1.4rem;
@@ -130,14 +131,28 @@ export class FormInput extends Component {
   }
 
   render() {
-    const { type, name, placeholder } = this.props;
+    const { type, name, placeholder, marginLeft, InputWidth } = this.props;
     let newProps = { ...this.props };
+    delete newProps.marginLeft;
+    delete newProps.InputWidth;
     delete newProps.getValue;
     delete newProps.onChange;
     return (
       <div>
-        <input status={this.state.status} {...newProps} type={type} name={name} placeholder={placeholder} value={this.state.value} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
-        {this.state.status == null ? <span>{this.state.message}</span> : null}
+        <input
+          {...newProps}
+          autoComplete="off"
+          status={this.state.status}
+          inputwidth={InputWidth}
+          marginleft={marginLeft}
+          type={type}
+          name={name}
+          placeholder={placeholder}
+          value={this.state.value}
+          onChange={this.onChangeValue}
+          onBlur={this.onChangeValue} />
+        {this.state.status == null ?
+          <span>{this.state.message}</span> : null}
       </div>
     );
   }
@@ -335,8 +350,8 @@ export class FormTextAreaRed extends Component {
           status={this.state.status} name={name} {...newProps} value={this.state.value} placeholder={placeholder} onChange={this.onChangeValue} onBlur={this.onChangeValue} />
         {this.state.status == null ? <span>{this.state.message}</span> : null}
         <div className="wrapperr">
-          <button className="submit" type="submit">게시</button>
           <button className="cancel" onClick={this.Reset} type="reset">취소</button>
+          <button className="submit" type="submit">게시</button>
         </div>
       </FormTextAreaRedContainer>
     );
@@ -456,7 +471,7 @@ export class FormMultiSelect extends Component {
     console.log(value);
     await this.setState({ value });
     checkValidate(value, this.props.validates).then(data => {
-      console.log("222", value);
+      //console.log("222", value);
       if (this.props.getValue) this.props.getValue(value);
       this.setState(data);
     })

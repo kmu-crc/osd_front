@@ -51,6 +51,22 @@ const GET_DESIGN_SOURCE = "GET_DESIGN_SOURCE"
 const GET_DESIGN_SOURCE_SUCCESS = "GET_DESIGN_SOURCE_SUCCESS"
 const GET_DESIGN_SOURCE_FAILURE = "GET_DESIGN_SOURCE_FAILURE"
 
+////////// Problem //////////
+const GET_PROBLEM_LIST = "GET_PROBLEM_LIST"
+const GET_PROBLEM_LIST_SUCCESS = "GET_PROBLEM_LIST_SUCCESS"
+const GET_PROBLEM_LIST_FAILURE = "GET_PROBLEM_LIST_FAILURE"
+const GET_PROBLEM_FILTER_LIST = "GET_PROBLEM_FILTER_LIST"
+const GET_PROBLEM_FILTER_LIST_SUCCESS = "GET_PROBLEM_FILTER_LIST_SUCCESS"
+const GET_PROBLEM_FILTER_LIST_FAILURE = "GET_PROBLEM_FILTER_LIST_FAILURE"
+const GET_PROBLEM_DETAIL = "GET_PROBLEM_DETAIL"
+const GET_PROBLEM_DETAIL_SUCCESS = "GET_PROBLEM_DETAIL_SUCCESS"
+const GET_PROBLEM_DETAIL_FAILURE = "GET_PROBLEM_DETAIL_FAILURE"
+const UPDATE_SUBMIT_PROBLEM_ANSWER="UPDATE_SUBMIT_PROBLEM_ANSWER"
+const UPDATE_SUBMIT_PROBLEM_ANSWER_SUCCESS="UPDATE_SUBMIT_PROBLEM_ANSWER_SUCCESS"
+const UPDATE_SUBMIT_PROBLEM_ANSWER_FAILURE="UPDATE_SUBMIT_PROBLEM_ANSWER_FAILURE"
+const GET_PROBLEM_CATEGORY = "GET_PROBLEM_CATEGORY";
+const GET_PROBLEM_CATEGORY_SUCCESS = "GET_PROBLEM_CATEGORY_SUCCESS";
+const GET_PROBLEM_CATEGORY_FAILURE = "GET_PROBLEM_CATEGORY_FAILURE"
 
 const CreateBoard = () => ({ type: CREATE_BOARD })
 const CreateBoardSuccess = (res) => ({ type: CREATE_BOARD_SUCCESS, success: res.success })
@@ -96,6 +112,22 @@ const GetDesignSourceSuccess = res => ({ type: GET_DESIGN_SOURCE_SUCCESS, data: 
 const GetDesignSourceFailure = error => ({ type: GET_DESIGN_SOURCE_FAILURE })
 const DesignSourceReset = () => ({ type: DESIGN_SOURCE_RESET, data: [] })
 
+////////// problem //////////
+const GetProblemList = ()=>({type:GET_PROBLEM_LIST})
+const GetProblemListSuccess = (data)=>({type:GET_PROBLEM_LIST_SUCCESS, data:data})
+const GetProblemListFailure = ()=>({type:GET_PROBLEM_LIST_FAILURE})
+const GetProblemFilterList = ()=>({type:GET_PROBLEM_FILTER_LIST})
+const GetProblemFilterListSuccess = (data)=>({type:GET_PROBLEM_FILTER_LIST_SUCCESS, data:data})
+const GetProblemFilterListFailure = ()=>({type:GET_PROBLEM_FILTER_LIST_FAILURE})
+const GetProblemDetail = ()=>({type:GET_PROBLEM_DETAIL})
+const GetProblemDetailSuccess = (data)=>({type:GET_PROBLEM_DETAIL_SUCCESS,data:data})
+const GetProblemDetailFailure = ()=>({type:GET_PROBLEM_DETAIL_FAILURE})
+const UpdateSubmitAnswer = ()=>({type:UPDATE_SUBMIT_PROBLEM_ANSWER})
+const UpdateSubmitAnswerSuccess = (data)=>({type:UPDATE_SUBMIT_PROBLEM_ANSWER_SUCCESS,data:data})
+const UpdateSubmitAnswerFailure = error=>({type:UPDATE_SUBMIT_PROBLEM_ANSWER_FAILURE})
+const getProblemCategory = ()=>({type:GET_PROBLEM_CATEGORY})
+const getProblemCategorySuccess = (data)=>({type:GET_PROBLEM_CATEGORY_SUCCESS,data:data})
+const getProblemCategoryFailure = error=>({type:GET_PROBLEM_CATEGORY_FAILURE})
 
 const initialState = {
     DesignDetailStep: { status: "INIT" },
@@ -103,9 +135,12 @@ const initialState = {
     DesignSourceDetail: { status: "INIT" },
     DesignSourceEdit: { status: "INIT" },
     DesignDetailStepCard: { status: "INIT" },
-    status: {
-        DesignDetailStepCard: {}, DesignDetailStep: [], allData: null, content: [], origin:[]
-    }
+    ProblemList:{status:"INIT"},
+    ProblemDetail:{status:"INIT"},
+    ProblemCategory:{status:"INIT"},
+    UpdateAnswer:{status:"INIT"},
+    status: { DesignDetailStepCard: {}, DesignDetailStep: [], allData: null
+    , content: [], origin: [], ProblemList:[],ProblemCount:0,Category:[]}
 }
 
 export function DesignCard(state, action) {
@@ -203,6 +238,100 @@ export function DesignCard(state, action) {
                 DesignDetailStepCard: { $set: "FAILURE" },
                 status: { DesignDetailStepCard: { $set: {} } }
             })
+            ///problemlist///
+        case GET_PROBLEM_LIST:
+            return update(state,{
+                ProblemList:{$set:"WATING"},
+            })
+        case GET_PROBLEM_LIST_SUCCESS:
+            console.log(action.data);
+                return update(state,{
+                    ProblemList:{$set:"SUCESS"},
+                    status:{ProblemList: { $set: action.data.results }, ProblemCount:{$set:action.data.count||action.data.results.length} }
+            })
+        case GET_PROBLEM_LIST_FAILURE:
+                return update(state,{
+                    ProblemList:{$set:"FAILURE"},
+                    status:{ProblemList: { $set: {} } }
+            })
+        // problem filter list
+        case GET_PROBLEM_FILTER_LIST:
+            return update(state,{
+                ProblemList:{$set:"WATING"},
+            })
+        case GET_PROBLEM_FILTER_LIST_SUCCESS:
+            console.log(action.data);
+                return update(state,{
+                    ProblemList:{$set:"SUCESS"},
+                    status:{ProblemList: { $set: action.data.results }, ProblemCount:{$set:action.data.results.length} }
+            })
+        case GET_PROBLEM_FILTER_LIST_FAILURE:
+                return update(state,{
+                    ProblemList:{$set:"FAILURE"},
+                    status:{ProblemList: { $set: {} } }
+            })
+        case GET_PROBLEM_LIST:
+            return update(state,{
+                ProblemList:{$set:"WATING"},
+            })
+        case GET_PROBLEM_LIST_SUCCESS:
+            console.log(action.data,action.data.length);
+                return update(state,{
+                    ProblemList:{$set:"SUCESS"},
+                    status:{ProblemList: { $set: action.data } }
+            })
+        case GET_PROBLEM_LIST_FAILURE:
+                return update(state,{
+                    ProblemList:{$set:"FAILURE"},
+                    status:{ProblemList: { $set: {} } }
+            })
+        case GET_PROBLEM_DETAIL:
+            return update(state,{
+                    ProblemDetail:{$set:"WATING"},
+            })
+        case GET_PROBLEM_DETAIL_SUCCESS:
+            console.log(action.data);
+                return update(state,{
+                    ProblemDetail:{$set:"SUCESS"},
+                    status:{ProblemDetail: { $set: action.data } }
+            })
+        case GET_PROBLEM_DETAIL_FAILURE:
+                return update(state,{
+                    ProblemDetail:{$set:"FAILURE"},
+                    status:{ProblemDetail: { $set: {} } }
+            })
+        case UPDATE_SUBMIT_PROBLEM_ANSWER:
+            return update(state, {
+                UpdateAnswer: {
+                status: { $set: "WATTING" }
+                }
+            })
+        case UPDATE_SUBMIT_PROBLEM_ANSWER_SUCCESS:
+        return update(state, {
+            UpdateAnswer: {
+            status: { $set: "SUCCESS" }
+            }
+        })
+        case UPDATE_SUBMIT_PROBLEM_ANSWER_SUCCESS:
+            return update(state, {
+            UpdateAnswer: {
+            status: { $set: "FAILURE" }
+            }
+        })
+        case GET_PROBLEM_CATEGORY:
+                return update(state,{
+                    ProblemCategory:{$set:"WATING"},
+            })
+        case GET_PROBLEM_CATEGORY_SUCCESS:
+            console.log(action.data);
+                return update(state,{
+                    ProblemCategory:{$set:"SUCESS"},
+                    status:{Category: { $set: action.data } }
+            })
+        case GET_PROBLEM_CATEGORY_SUCCESS:
+                return update(state,{
+                    ProblemCategory:{$set:"FAILURE"},
+            })        
         default:
             return state
     }
@@ -232,16 +361,32 @@ export const GetDesignSourceRequest = id => {
                 return dispatch(GetDesignSourceSuccess(res));
             })
             .catch(error => {
-                console.log("insert issue err", error);
+                //console.log("insert issue err", error);
                 return dispatch(GetDesignSourceFailure(error));
             });
     };
 }
+export const FileUploadRequest = file => {
+    console.log(file);
+    return new Promise(async (resolve, reject) => {
+        const formData = new FormData();
+        await formData.append('source', file[0]);
+        console.log(formData);
+        fetch(`${host}/upload/tmp`, {
+            header: { 'Content-Type': 'multipart/form-data' },
+            method: "POST",
+            body: formData,
+        })
+            .then(res => res.json())
+            .then(data => resolve(data || null))
+            .catch(err => reject(err));
+    });
+}
 export const UpdateCardSourceRequest = (data, card_id, token) => {
-    return dispatch => {
+    return async dispatch => {
         dispatch(UpdateDesignSource());
-        console.log("request", data);
-        return fetch(`${host}/design/designDetail/updateCardAllData/${card_id}`, {
+        //console.log("request", data);
+        return fetch(`${host}/design/designDetail/updateCardAllData_temp/${card_id}`, {
             headers: {
                 "x-access-token": token,
                 "Content-Type": "application/json"
@@ -249,23 +394,16 @@ export const UpdateCardSourceRequest = (data, card_id, token) => {
             method: "POST",
             body: JSON.stringify(data)
         })
-            .then(function (res) {
-                return res.json();
-            })
-            .then(function (res) {
-                return dispatch(UpdateDesignSourceSuccess(res));
-            })
-            .catch(error => {
-                console.log("insert issue err", error);
-                return dispatch(UpdateDesignSourceFailure(error));
-            });
+            .then(res => res.json())
+            .then(res => dispatch(UpdateDesignSourceSuccess(res)))
+            .catch(error => dispatch(UpdateDesignSourceFailure(error)))
     };
 }
 export const UpdateDesignSourceRequest = (data, card_id, token) => {
     return dispatch => {
         dispatch(UpdateDesignSource());
-        console.log("request", data);
-        return fetch(`${host}/design/designDetail/updateCardSource/${card_id}`, {
+        //console.log("request", data);
+        return fetch(`${host}/design/designDetail/updateCardSource_temp/${card_id}`, {
             headers: {
                 "x-access-token": token,
                 "Content-Type": "application/json"
@@ -280,7 +418,7 @@ export const UpdateDesignSourceRequest = (data, card_id, token) => {
                 return dispatch(UpdateDesignSourceSuccess(res));
             })
             .catch(error => {
-                console.log("insert issue err", error);
+                //console.log("insert issue err", error);
                 return dispatch(UpdateDesignSourceFailure(error));
             });
     };
@@ -296,7 +434,7 @@ export const DeleteDesignBoardRequest = (id, board_id, token) => {
                 console.log(res);
                 return dispatch(DeleteBoardSuccess(res));
             }).catch((error) => {
-                console.log("DeleteDesignBoardRequest err", error);
+                //console.log("DeleteDesignBoardRequest err", error);
                 return dispatch(DeleteBoardFailure(error));
             })
     }
@@ -312,40 +450,34 @@ export const UpdateDesignBoardRequest = (id, token, data) => {
                 console.log(res);
                 return dispatch(UpdateBoardSuccess(res));
             }).catch((error) => {
-                console.log("UpdateDesignBoardRequest err", error);
+                //console.log("UpdateDesignBoardRequest err", error);
                 return dispatch(UpdateBoardFailure(error));
             });
     };
 }
-export const GetDesignBoardRequest = (id) => {
+export const GetDesignBoardRequest = (id) => (dispatch) => {
+    dispatch(GetBoard())
     const url = `${host}/design/designDetail/${id}/getBoardList`
-    console.log(url);
-    return (dispatch) => {
-        dispatch(GetBoard());
-        return fetch(url, { headers: { 'Content-Type': 'application/json' }, method: "GET" })
-            .then(function (res) {
-                return res.json();
-            })
-            .then(function (res) {
-                return dispatch(GetBoardSuccess(res));
-            }).catch((error) => {
-                return dispatch(GetBoardFailure(error));
-            });
-    };
+    return fetch(url, {
+        headers: { 'Content-Type': 'application/json' },
+        method: "GET"
+    })
+        .then(res => res.json())
+        .then(res => dispatch(GetBoardSuccess(res)))
 }
 export const CreateDesignBoardRequest = (data, design_id, token) => {
     return (dispatch) => {
         dispatch(CreateBoard());
-        console.log("request", data);
+        //console.log("request", data);
         return fetch(`${host}/design/designDetail/${design_id}/createBoard`, { headers: { "x-access-token": token, 'Content-Type': 'application/json' }, method: "POST", body: JSON.stringify(data) })
             .then(function (res) {
                 return res.json();
             })
             .then(function (res) {
-                console.log("insert detail", res.desing_id);
+                //console.log("insert detail", res.desing_id);
                 return dispatch(CreateBoardSuccess(res));
             }).catch((error) => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(CreateBoardFailure(error));
             });
     };
@@ -353,7 +485,7 @@ export const CreateDesignBoardRequest = (data, design_id, token) => {
 export const CreateDesignCardRequest = (data, design_id, board_id, token) => {
     return dispatch => {
         dispatch(CreateCard());
-        console.log("request", data);
+        //console.log("request", data);
         return fetch(
             `${host}/design/designDetail/${design_id}/${board_id}/createCard`,
             {
@@ -369,11 +501,11 @@ export const CreateDesignCardRequest = (data, design_id, board_id, token) => {
                 return res.json();
             })
             .then(function (res) {
-                console.log("insert detail", res);
+                //console.log("insert detail", res);
                 return dispatch(CreateCardSuccess(res));
             })
             .catch(error => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(CreateCardFailure(error));
             });
     };
@@ -399,7 +531,7 @@ export const DeleteDesignCardRequest = (board_id, card_id, token) => {
                 return dispatch(DeleteCardSuccess(res));
             })
             .catch(error => {
-                console.log("DeleteDesignCardRequest err", error);
+                //console.log("DeleteDesignCardRequest err", error);
                 return dispatch(DeleteCardFailure(error));
             });
     };
@@ -419,7 +551,7 @@ export const GetCardDetailRequest = id => {
                 return dispatch(GetCardDetailSuccess(res));
             })
             .catch(error => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(GetCardDetailFailure(error));
             });
     };
@@ -439,7 +571,7 @@ export const GetDesignCardRequest = (id, board_id) => {
                 return dispatch(GetCardSuccess(res, board_id));
             })
             .catch(error => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(GetCardFailure(error));
             });
     };
@@ -461,7 +593,7 @@ export const UpdateCardTitleRequest = (data, token, id) => {
                 return dispatch(UpdateCardTitleSuccess(res));
             })
             .catch(error => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(UpdateCardTitleFailure(error));
             });
     };
@@ -482,7 +614,7 @@ export const UpdateCardContentRequest = (data, token, id) => {
                 return dispatch(UpdateCardContentSuccess(res));
             })
             .catch(error => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(UpdateCardContentFailure(error));
             });
     };
@@ -503,7 +635,7 @@ export const UpdateCardImagesRequest = (data, token, id) => {
                 return dispatch(UpdateCardImagesSuccess(res));
             })
             .catch(error => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(UpdateCardImagesFailure(error));
             });
     };
@@ -524,8 +656,101 @@ export const UpdateCardSourcesRequest = (data, token, id) => {
                 return dispatch(UpdateCardSourcesSuccess(res));
             })
             .catch(error => {
-                console.log("insert detail err", error);
+                //console.log("insert detail err", error);
                 return dispatch(UpdateCardSourcesFailure(error));
             });
     };
+}
+
+/////// problem
+export const getProblemListRequest = (page)=>{
+    const url = `${host}/design/problem/list/${page}`;
+    return (dispatch) => {
+        dispatch(GetProblemList())
+        return fetch(`${url}`, {
+            headers: { "Content-Type": "application/json" },
+            method: "get"
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            console.log(data);
+            // return dispatch(GetProblemListSuccess(data.results))
+            return dispatch(GetProblemListSuccess(data))
+        }).catch((error) => {
+            console.error("err", error)
+            return dispatch(GetProblemListFailure(error))
+        })
+    }
+}
+export const getProblemListFilterRequest = (category_id)=>{
+    const url = `${host}/design/problem/list/${category_id}`;
+    return (dispatch) => {
+        dispatch(GetProblemFilterList())
+        return fetch(`${url}`, {
+            headers: { "Content-Type": "application/json" },
+            method: "get"
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            console.log(data);
+            // return dispatch(GetProblemListSuccess(data.results))
+            return dispatch(GetProblemFilterListSuccess(data))
+        }).catch((error) => {
+            console.error("err", error)
+            return dispatch(GetProblemFilterListFailure(error))
+        })
+    }
+}
+
+export const getProblemDetailRequest = (uid)=>{
+    const url = `${host}/design/problem/detail/${uid}`;
+    return (dispatch) => {
+        dispatch(GetProblemDetail())
+        return fetch(`${url}`, {
+            headers: { "Content-Type": "application/json" },
+            method: "get"
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            return dispatch(GetProblemDetailSuccess(data))
+        }).catch((error) => {
+            console.error("err", error)
+            return dispatch(GetProblemDetailFailure(error))
+        })
+    }
+}
+export const UpdateAnswerRequest = (token,data) => {
+    return async dispatch => {
+        dispatch(UpdateSubmitAnswer());
+        return fetch(`${host}/design/problem/updateAnswer`, {
+            headers: {
+                "x-access-token": token,
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(res => dispatch(UpdateSubmitAnswerSuccess(res)))
+            .catch(error => dispatch(UpdateSubmitAnswerFailure(error)))
+    };
+}
+
+export const getProblemCategoryRequest = ()=>{
+    const url = `${host}/design/problem/category`;
+    return (dispatch) => {
+        dispatch(getProblemCategory())
+        return fetch(`${url}`, {
+            headers: { "Content-Type": "application/json" },
+            method: "get"
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            console.log(data);
+            return dispatch(getProblemCategorySuccess(data.results))
+        }).catch((error) => {
+            console.error("err", error)
+            return dispatch(getProblemCategoryFailure(error))
+        })
+    }
 }

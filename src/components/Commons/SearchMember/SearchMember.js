@@ -25,24 +25,25 @@ const MemberWrap = styled.div`
   margin-top: 1rem;
 `
 const SearchWrap = styled.div`
+  width:100%;
+  max-width:400px;
   display: ${props => props.display};
   position: relative;
   .input-style {
     box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
     border-radius: 10px;
-    padding-left: 10px;
+    // padding-left: 10px;
     outline: none;
     border: none;
     width: 353px;
     height: 40px;
     font-size: 18px;
-    margin-left: 50px;
+    // margin-left: 50px;
   }
 `
 const MemberList = styled.ul`
   display: ${props => props.display};
-  width: 353px;
-  margin-left: 50px;
+  width:100%;
   padding: 0.5rem;
   min-height: 0px;
   max-height: 300px;
@@ -51,6 +52,9 @@ const MemberList = styled.ul`
   background: white;
   border-radius: 10px;
   box-shadow:0px 2px 10px 2px rgba(0,0,0,0.1);
+  position:absolute;
+  left:0px;
+  top:40px;
 `
 const MemberListItem = styled.li`
   width: 100%;
@@ -59,17 +63,22 @@ const MemberListItem = styled.li`
   color:#707070;
   border-radius: 10px;
   margin-bottom: 5px;
+  cursor:pointer;
+  opacity:0.8;
+  &:hover{
+    opacity:1;
+  }
 `
 const SearchInputText = styled(FormInput)`
-    box-shadow:0px 1px 2px #000000 ;
-    border-radius:10px;
+    box-shadow: 0px 1px 2px #000000;
+    // border-radius:10px;
     padding-left:10px;
     outline:none;
     border:none;
-    width:353px;
+    width:${props => props.InputWidth == null ? "350px" : props.InputWidth + "%"};
     height:40px;
-    font-size:18px;
-    margin-left:50px;
+    // font-size:18px;
+    margin-left: ${props => props.marginLeft == null ? "20px" : props.marginLeft + "px"};
 
 `
 
@@ -79,14 +88,12 @@ class SearchMember extends Component {
 
   componentDidMount() {
     if (this.props.originalMember) {
-      this.setState({
-        member: this.props.originalMember
-      });
+      this.setState({ member: this.props.originalMember });
     }
   }
 
   getValue = (value) => {
-    console.log("get", value);
+    // console.log("get", value);
     this.setState({ open: true });
     if (!value) {
       this.setState({ open: false });
@@ -96,11 +103,12 @@ class SearchMember extends Component {
   }
 
   addMember = async (data) => {
-    console.log("ADDMEMBER:", data)
-    this.props.addMemberItem && this.props.addMemberItem(data.uid, data.nick_name);
+    //console.log("ADDMEMBER:", data)
+    await this.props.addMemberItem && this.props.addMemberItem(data.uid, data.nick_name);
+    await this.props.setMsgID && this.props.setMsgID(data.group_id == null ? -1 : data.group_id, data.uid, data.nick_name);
   }
   closeList = () => {
-    console.log("close")
+    //console.log("close")
     this.setState({ open: false });
   }
 
@@ -121,22 +129,22 @@ class SearchMember extends Component {
 
   render() {
     return (
-      <SearchWrap id = "searchRect" style={{display:"inline-block"}}>
-        <SearchInputText  id = "searchRect" type="text" 
-        name="search" placeholder="찾고자 하는 회원의 닉네임을 입력해 주세요." validates={this.props.validates} getValue={this.getValue}/>
-        <MemberList  id = "searchRect" style={this.state.open ? {display: "block"} : {display: "none"}}>
+      <SearchWrap id="searchRect" style={{ display: "inline-block" }}>
+        <SearchInputText InputWidth={this.props.inputWidth} marginLeft={this.props.marginLeft} id="searchRect" type="text"
+          name="search" placeholder="회원 검색" validates={this.props.validates} getValue={this.getValue} />
+        <MemberList id="searchRect" style={this.state.open ? { display: "block" } : { display: "none" }}>
           {this.props.members && this.props.members.map((item, index) => {
-            return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item)}>{item.email}</MemberListItem>);
+            return (<MemberListItem key={`member${index}`} onClick={() => this.addMember(item)}>{item.nick_name}</MemberListItem>);
           })}
         </MemberList>
-        <MemberWrap  id = "searchRect">
+        <MemberWrap id="searchRect">
           {this.state.member.map((data, index) => {
             console.log(data);
-            return (<MemberItem  id = "searchRect" key={index}>
+            return (<MemberItem id="searchRect" key={index}>
               {data.nick_name}
               <span>
-                <DeleteBtn  id = "searchRect" type="button" onClick={() => this.deleteMember(index)}>
-                  <Icon  id = "searchRect" name="remove" />
+                <DeleteBtn id="searchRect" type="button" onClick={() => this.deleteMember(index)}>
+                  <Icon id="searchRect" name="remove" />
                 </DeleteBtn>
               </span>
             </MemberItem>)
